@@ -1,0 +1,15 @@
+.container {
+  background-color: #fff;
+  :global(.ant-collapse-content > .ant-collapse-content-box) {
+    padding: 0;
+  }
+  .collapse {
+    background-color: #fff;
+    .list {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      
+    }
+  }
+}

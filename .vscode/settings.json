@@ -1,0 +1,46 @@
+{
+  "typescript.tsdk": "node_modules/typescript/lib",
+  // 自动 import 语句中路径的首选样式。
+  //  - auto: 推断最短的路径类型。
+  //  - relative: 相对于文件位置。
+  //  - non-relative: 根据 `jsconfig.json` 或 `tsconfig.json` 中配置的 `baseUrl` 。
+  "javascript.preferences.importModuleSpecifier": "auto",
+  "typescript.preferences.importModuleSpecifier": "auto",
+  // 启用或禁用自动导入建议。要求工作区使用高于 2.6.1 版本的 TypeScript。
+  "javascript.suggest.autoImports": true,
+  "javascript.suggest.enabled": true,
+  // 控制是否在打开文件时，基于文件内容自动检测 `editor.tabSize#` 和 `#editor.insertSpaces`。
+  "editor.detectIndentation": true,
+  // 一个制表符等于的空格数。在 `editor.detectIndentation` 启用时，根据文件内容，该设置可能会被覆盖。
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  // 删除自动插入的尾随空白符号。
+  "editor.trimAutoWhitespace": true,
+  // 定义非必要分号的处理方式。要求在工作区内使用 TypeScript 3.7 或更高版本。
+  //  - ignore: 不要插入或删除任何分号。
+  //  - insert: 在语句末尾插入分号。
+  //  - remove: 删除不必要的分号。
+  "typescript.format.semicolons": "insert",
+  // 用于快速修复的首选引用样式: `single` (单引号)、`double` (双引号) 或 `auto` (从已有 import 语句中推测引号类型)。要求工作区使用高于 2.9 版本的 TypeScript。
+  "typescript.preferences.quoteStyle": "single",
+  "javascript.preferences.quoteStyle": "single",
+  // 默认行尾字符。
+  //  - \n: LF
+  //  - \r\n: CRLF
+  //  - auto: 使用具体操作系统规定的行末字符。
+  "files.eol": "\r\n",
+  // 控制折行的方式。
+  //  - off: 永不换行。
+  //  - on: 将在视区宽度处换行。
+  //  - wordWrapColumn: 在 `editor.wordWrapColumn` 处折行。
+  //  - bounded: 在视区宽度和 `editor.wordWrapColumn` 中的较小值处折行。
+  "editor.wordWrap": "bounded",
+  // 在 `editor.wordWrap` 为 `wordWrapColumn`  或 `bounded` 时，控制编辑器的折行列。
+  "editor.wordWrapColumn": 120,
+  "files.trimTrailingWhitespace": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
+}

@@ -1,0 +1,137 @@
+
+$polaris-spacing: (
+  'none': 0,
+  'extra-tight': 4px,
+  'tight': 8px,
+  'base-tight': 12px,
+  'base': 16px,
+  'loose': 20px,
+  'extra-loose': 32px,
+);
+
+$spacing-data: $polaris-spacing;
+$base-font-size: 10px;
+
+
+/// Returns the spacing value for a given variant.
+///
+/// @param {String} $variant - The key for the given variant.
+/// @return {Number} The spacing for the variant.
+
+@function spacing($variant: base) {
+  $fetched-value: map-get($spacing-data, $variant);
+
+  @if type-of($fetched-value) == number {
+    @return $fetched-value;
+  } @else {
+    @error 'Spacing variant `#{$variant}` not found. Available variants: #{available-names($spacing-data)}';
+  }
+}
+
+@mixin stack-spacing($spacing: base) {
+  margin-top: -1 * spacing($spacing);
+  margin-left: -1 * spacing($spacing);
+  > .Item {
+    margin-top: spacing($spacing);
+    margin-left: spacing($spacing);
+    max-width: 100%;
+  }
+}
+
+.Stack {
+  @include stack-spacing;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+
+.noWrap {
+  flex-wrap: nowrap;
+}
+
+.spacingNone {
+  @include stack-spacing(none);
+}
+
+.spacingExtraTight {
+  @include stack-spacing(extra-tight);
+}
+
+.spacingTight {
+  @include stack-spacing(tight);
+}
+
+.spacingLoose {
+  @include stack-spacing(loose);
+}
+
+.spacingExtraLoose {
+  @include stack-spacing(extra-loose);
+}
+
+.distributionLeading {
+  justify-content: flex-start;
+}
+
+.distributionTrailing {
+  justify-content: flex-end;
+}
+
+.distributionCenter {
+  justify-content: center;
+}
+
+.distributionEqualSpacing {
+  justify-content: space-between;
+}
+
+.distributionFill > .Item {
+  flex: 1 1 auto;
+}
+
+.distributionFillEvenly > .Item {
+  flex: 1 1 auto;
+
+  @supports (min-width: fit-content) {
+    flex: 1 0 0%;
+    min-width: fit-content;
+  }
+}
+
+.alignmentLeading {
+  align-items: flex-start;
+}
+
+.alignmentTrailing {
+  align-items: flex-end;
+}
+
+.alignmentCenter {
+  align-items: center;
+}
+
+.alignmentFill {
+  align-items: stretch;
+}
+
+.alignmentBaseline {
+  align-items: baseline;
+}
+
+.vertical {
+  flex-direction: column;
+  margin-left: spacing(none);
+
+  > .Item {
+    margin-left: spacing(none);
+  }
+}
+
+.Item {
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+.Item-fill {
+  flex: 1 1 auto;
+}
