@@ -24,15 +24,16 @@ const backgroundRepeatOptions = [
   }
 ];
 
-const onChangeAdapter = (url: string | (string[])) => {
-  const pic = Array.isArray(url) ? url[0] : url;
-  if (!pic) return '';
-  return `url(${pic})`;
-};
+// 'background-color': string;
+// 'background-position': string;
+// 'background-position-x': string;
+// 'background-position-y': string;
+// 'background-repeat': 'repeat' | 'no-repeat';
+// 'background-size': string;
+// 'background-url': string;
 
 export function Background() {
   const { focusIdx } = useBlock();
-  const { values: { props: { uploadHandler } } } = useEditorContext();
 
   return useMemo(() => {
     return (
@@ -42,40 +43,26 @@ export function Background() {
         </TextStyle>
         <ColorPickerField
           label='颜色'
-          name={`${focusIdx}.style.backgroundColor`}
+          name={`${focusIdx}.attribute.background-color`}
           inline
           alignment='center'
         />
-        <TextStyle>
-          背景图
-        </TextStyle>
         <Stack vertical spacing="none">
-          <ImageUploaderField
-            label=''
-            lableHidden
-            name={`${focusIdx}.style.backgroundImage`}
-            inline
-            valueAdapter={((text: string) => text?.replace(/url\((.*)?\)/, '$1') || '')}
-            onChangeAdapter={onChangeAdapter}
-            uploadHandler={uploadHandler}
-          />
-          <TextField label="" inline
-            lableHidden name={`${focusIdx}.style.backgroundImage`}
-            valueAdapter={((text: string) => text?.replace(/url\((.*)?\)/, '$1') || '')}
-            onChangeAdapter={onChangeAdapter}
+          <TextField label="背景图" inline
+            name={`${focusIdx}.attribute.background-url`}
           />
           <TextField label="背景大小" inline
-            name={`${focusIdx}.style.backgroundSize`}
+            name={`${focusIdx}.attribute.background-size`}
 
           />
         </Stack>
         <SelectField
           label='背景重复'
-          name={`${focusIdx}.style.backgroundRepleat`}
+          name={`${focusIdx}.attribute.background-repeat`}
           options={backgroundRepeatOptions}
           inline
         />
       </Stack>
     );
-  }, [focusIdx, uploadHandler]);
+  }, [focusIdx]);
 }

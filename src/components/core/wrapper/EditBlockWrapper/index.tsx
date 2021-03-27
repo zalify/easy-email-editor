@@ -43,7 +43,6 @@ export function EditBlockWrapper(props: EditBlockWrapperProps) {
     ['data-node-idx']: idx,
     style: {
       ...(children.props.style || {}),
-      ...node.style,
       cursor: 'grab',
     },
     className: classnames(

@@ -9,7 +9,7 @@ export const createInstance: CreateInstance<IPage> = (payload) => {
     data: {
       value: {},
     },
-    style: {
+    attribute: {
       width: '100%',
       height: 'auto',
       minHeight: '667px',

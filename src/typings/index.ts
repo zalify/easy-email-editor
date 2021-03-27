@@ -10,16 +10,14 @@ export interface IBlock<T extends IBlockData = any> {
   validChildrenType: BlockType[];
 }
 
-export interface IBlockData<T extends any = any> {
-  style: Partial<React.CSSProperties>;
+export interface IBlockData<T extends any = any, K extends { [key: string]: any; } = any> {
   type: BlockType;
   data: {
     value: T;
-    link?: string;
-    action?: string;
     variable?: string;
   };
-  children: IBlockData<any>[];
+  attribute: K;
+  children: IBlockData[];
 }
 
 export interface IEmailTemplate {

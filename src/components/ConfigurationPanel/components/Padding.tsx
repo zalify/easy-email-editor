@@ -17,7 +17,7 @@ export function Padding() {
             <TextField
               label="上"
               quickchange
-              name={`${focusIdx}.style.paddingTop`}
+              name={`${focusIdx}.attribute.padding-top`}
               inline
             />
           </Stack.Item>
@@ -25,7 +25,7 @@ export function Padding() {
             <TextField
               label="下"
               quickchange
-              name={`${focusIdx}.style.paddingBottom`}
+              name={`${focusIdx}.attribute.padding-bottom`}
               inline
             />
           </Stack.Item>
@@ -36,7 +36,7 @@ export function Padding() {
             <TextField
               label="左"
               quickchange
-              name={`${focusIdx}.style.paddingLeft`}
+              name={`${focusIdx}.attribute.padding-left`}
               inline
             />
           </Stack.Item>
@@ -44,7 +44,7 @@ export function Padding() {
             <TextField
               label="右"
               quickchange
-              name={`${focusIdx}.style.paddingRight`}
+              name={`${focusIdx}.attribute.padding-right`}
               inline
             />
 

@@ -2,26 +2,25 @@ import { BasicType } from '@/constants';
 import { CreateInstance } from '@/typings';
 import { merge } from 'lodash';
 import { ISection } from '.';
-
 export const createInstance: CreateInstance<ISection> = (payload) => {
   const defaultData: ISection = {
-    type: BasicType.Section,
+    type: BasicType.SECTION,
     data: {
-      value: null,
+      value: {
+
+      },
     },
-    style: {
-      position: 'relative',
-      width: '100%',
-      height: '200px',
-      paddingTop: 0,
-      paddingRight: 0,
-      paddingBottom: 0,
-      paddingLeft: 0,
-      marginTop: 0,
-      marginRight: 0,
-      marginBottom: 0,
-      marginLeft: 0,
-      opacity: 1,
+    attribute: {
+      'padding-top': '20px',
+      'padding-bottom': '20px',
+      'padding-left': '0px',
+      'padding-right': '0px',
+      'background-repeat': 'repeat',
+      'background-size': 'auto',
+      'background-position': 'top center',
+      border: 'none',
+      direction: 'ltr',
+      'text-align': 'center'
     },
     children: [],
   };

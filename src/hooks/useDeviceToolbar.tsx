@@ -60,13 +60,13 @@ export const scaleOptions = [
 export function useDeviceToolbar() {
   const [width, setWidth] = useState(1200);
   const [height, setHeight] = useState(768);
-  const [selectedPlatform, setSelectedPlatform] = useState('mobile');
+  const [selectedPlatform, setSelectedPlatform] = useState('laptop');
   const [scale, setScale] = useState(1);
   const isSelectedOther = selectedPlatform === 'other';
 
   useEffect(() => {
     if (selectedPlatform === 'laptop') {
-      setWidth(1200);
+      setWidth(600);
       setHeight(768);
     }
     if (selectedPlatform === 'mobile') {

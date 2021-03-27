@@ -2,7 +2,7 @@ import { Panel } from './Panel';
 import { Editor } from './Editor';
 import { createInstance } from './createInstance';
 import { IBlock, IBlockData } from '@/typings';
-import { BasicType, MarketingType } from '@/constants';
+import { BasicType } from '@/constants';
 
 export type IPage = IBlockData<{}>;
 
@@ -16,6 +16,5 @@ export const Page: IBlock<IPage> = {
     ...Object.values(BasicType).filter(
       (type) => ![BasicType.PAGE].includes(type)
     ),
-    ...Object.values({ ...MarketingType }),
   ],
 };

@@ -21,6 +21,7 @@ export const Editor = () => {
     width,
     height,
     margin: '0 auto',
+    backgroundColor: '#fff'
   };
 
   const { moveByIdx } = useBlock();

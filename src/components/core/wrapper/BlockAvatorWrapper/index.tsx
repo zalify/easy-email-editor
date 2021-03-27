@@ -94,17 +94,6 @@ export const BlockAvatorWrapper: React.FC<{ type: BlockType; }> = (props) => {
       const parent = get(values, parentIdx);
       if (parent) {
         ev.preventDefault();
-        const payload: RecursivePartial<IBlockData> = {};
-
-        if (type === BasicType.BOX) {
-          // 最大300，最小100，每次递减40
-          const min = Math.max(blockNode.getBoundingClientRect().height / 2, 100);
-          const max = 300;
-          payload.style = {
-            height: Math.min(Math.max(blockNode.getBoundingClientRect().height - 40, min), max)
-          };
-        }
-
         const direction = getTangentDirection(ev);
         if (direction === 'top') {
           addBlock({ type, parentIdx: getParentIdx(parentIdx)!, positionIndex: +getIndexByIdx(parentIdx) });
