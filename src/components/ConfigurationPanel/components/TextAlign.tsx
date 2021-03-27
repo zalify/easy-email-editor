@@ -25,8 +25,8 @@ export function TextAlign() {
     return (
       <Stack>
         <RadioGroupField
-          label='对齐方式'
-          name={`${focusIdx}.style.textAlign`}
+          label='textAlign'
+          name={`${focusIdx}.attribute.textAlign`}
           options={textAlignOptions}
           inline
         />

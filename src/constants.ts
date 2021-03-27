@@ -4,6 +4,12 @@ export type BlockType = BasicType | MarketingType;
 export enum BasicType {
   PAGE = 'page',
   SECTION = 'section',
+  COLUMN = 'column',
+  GROUP = 'group',
+  TEXT = 'text',
+  IMAGE = 'img',
+  DEVIDER = 'divider',
+  SPACER = 'spacer',
 }
 
 // 营销组件

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { ColorPickerField, ImageUploaderField, NumberField, TextField } from '@/components/core/Form';
+import { NumberField, TextField } from '@/components/core/Form';
 import { Stack } from '@/components/Stack';
 import { useBlock } from '@/hooks/useBlock';
 import { TextStyle } from '@/components/TextStyle';

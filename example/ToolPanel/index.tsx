@@ -21,11 +21,34 @@ export const ToolPanel = function () {
     <div className={styles.container}>
       <Collapse className={styles.collapse} defaultActiveKey={['1', '2', '3']}>
         <Panel header='基础组件' key='1'>
-          <BlockIcon
-            text='section'
-            type={BasicType.SECTION}
-            icon={<FormOutlined />}
-          />
+          <div className={styles.list}>
+            <BlockIcon
+              text='行'
+              type={BasicType.SECTION}
+              icon={<FormOutlined />}
+            />
+            <BlockIcon
+              text='列'
+              type={BasicType.COLUMN}
+              icon={<FormOutlined />}
+            />
+            <BlockIcon
+              text='分组'
+              type={BasicType.GROUP}
+              icon={<FormOutlined />}
+            />
+            <BlockIcon
+              text='图片'
+              type={BasicType.IMAGE}
+              icon={<FormOutlined />}
+            />
+            <BlockIcon
+              text='文本'
+              type={BasicType.TEXT}
+              icon={<FormOutlined />}
+            />
+          </div>
+
         </Panel>
       </Collapse>
     </div>

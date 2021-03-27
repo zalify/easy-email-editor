@@ -4,33 +4,28 @@ import { createInstance } from './createInstance';
 import { IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
 import { CSSProperties } from 'react';
-export type ISection = IBlockData<{}, {
+export type IColumn = IBlockData<{}, {
   'background-color'?: string;
-  'background-position'?: string;
-  'background-position-x'?: string;
-  'background-position-y'?: string;
-  'background-repeat'?: 'repeat' | 'no-repeat';
-  'background-size'?: string;
-  'background-url'?: string;
   'border'?: string;
   'border-radius'?: string;
-  'direction'?: 'ltr' | 'rtl';
-  'full-width'?: 'ltr' | 'rtl';
+  'inner-border'?: string;
+  'inner-border-radius'?: string;
   'padding-top'?: string;
   'padding-bottom'?: string;
   'padding-left'?: string;
   'padding-right'?: string;
   'text-align'?: CSSProperties['textAlign'];
-  'max-width'?: string;
+  'vertical-align'?: CSSProperties['verticalAlign'];
+  'width'?: string;
 }>;
 
-export const Section = {
-  name: '行',
-  type: BasicType.SECTION,
+export const Column = {
+  name: '列',
+  type: BasicType.COLUMN,
   Editor,
   Panel,
   createInstance,
   validChildrenType: [
-    BasicType.COLUMN
+    BasicType.TEXT
   ],
 };
