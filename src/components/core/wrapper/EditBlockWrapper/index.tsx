@@ -1,6 +1,5 @@
 import { classnames } from '@/utils/classnames';
 import {
-  BasicType,
   BlockType,
   BLOCK_HOVER_CLASSNAME,
   BLOCK_SELECTED_CLASSNAME,
@@ -9,7 +8,7 @@ import {
 } from '@/constants';
 import { findBlockByType, getIndexByIdx, getParentIdx, getValueByIdx } from '@/utils/block';
 import { Tooltip } from 'antd';
-import React, { DOMAttributes, useEffect, useState } from 'react';
+import React, { DOMAttributes } from 'react';
 import { useBlock } from '@/hooks/useBlock';
 import { findBlockNode } from '@/utils/findBlockNode';
 import { get } from 'lodash';

@@ -2,10 +2,9 @@ import { useDeviceToolbar } from '@/hooks/useDeviceToolbar';
 import { Tabs, Tooltip } from 'antd';
 import React, { useCallback, useState } from 'react';
 import { useEditorContext } from '../hooks/useEditorContext';
-import { EditorItem } from './components/EditorItem';
+import { EditorContent } from './components/EditorContent';
 import styles from './index.module.scss';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
-import { getPageIdx } from '@/utils/block';
 import root from 'react-shadow';
 import { useBlock } from '@/hooks/useBlock';
 import { ToolBar } from './components/ToolBar';
@@ -13,7 +12,6 @@ import { ToolBar } from './components/ToolBar';
 const TabPane = Tabs.TabPane;
 
 export const Editor = () => {
-  const { pageData } = useEditorContext();
   const [activeTab, setActiveTab] = useState('editor');
 
   const { width, height, content } = useDeviceToolbar();
@@ -87,7 +85,7 @@ export const Editor = () => {
                           title={<ToolBar />}
                         >
 
-                          <EditorItem idx={getPageIdx()} />
+                          <EditorContent />
                         </Tooltip>
                         <style type="text/css">
                           {

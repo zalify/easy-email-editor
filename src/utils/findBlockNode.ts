@@ -1,11 +1,11 @@
-export const findBlockNode = (target?: Element | null): Element | null => {
+export const findBlockNode = (target?: HTMLElement | null): HTMLElement | null => {
   if (!target) return null;
 
-  if (target.getAttribute?.('data-node-idx')) {
+  if (target.classList?.toString().includes?.('node-idx')) {
     return target;
   }
   if (target.parentNode) {
-    return findBlockNode(target.parentNode as Element);
+    return findBlockNode(target.parentNode as HTMLElement);
   }
   return null;
 };

@@ -8,6 +8,120 @@ import { Layout, Button, PageHeader } from 'antd';
 import React from 'react';
 import { ToolPanel } from './ToolPanel';
 
+const data = {
+  'type': 'page',
+  'data': {
+    'value': {
+
+    }
+  },
+  'attribute': {
+
+  },
+  'children': [
+    {
+      'type': 'section',
+      'data': {
+        'value': {
+
+        }
+      },
+      'attribute': {
+        'padding-top': '20px',
+        'padding-bottom': '20px',
+        'padding-left': '0px',
+        'padding-right': '0px',
+        'background-repeat': 'repeat',
+        'background-size': 'auto',
+        'background-position': 'top center',
+        'border': 'none',
+        'direction': 'ltr',
+        'text-align': 'center'
+      },
+      'children': [
+        {
+          'type': 'column',
+          'data': {
+            'value': {
+
+            }
+          },
+          'attribute': {
+            'padding-top': '0px',
+            'padding-bottom': '0px',
+            'padding-left': '0px',
+            'padding-right': '0px',
+            'border': 'none',
+            'vertical-align': 'top'
+          },
+          'children': [
+            {
+              'type': 'img',
+              'data': {
+                'value': {
+
+                }
+              },
+              'attribute': {
+                'align': 'center',
+                'height': '40px',
+                'padding-top': '10px',
+                'padding-bottom': '10px',
+                'padding-left': '25px',
+                'padding-right': '25px',
+                'src': 'https://assets.aftership.com/img/logos/traffic_logo_main.png',
+                'target': '',
+                'width': '275px'
+              },
+              'children': []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      'type': 'section',
+      'data': {
+        'value': {
+
+        }
+      },
+      'attribute': {
+        'padding-top': '20px',
+        'padding-bottom': '20px',
+        'padding-left': '0px',
+        'padding-right': '0px',
+        'background-repeat': 'none',
+        'background-size': 'auto',
+        'background-position': 'top center',
+        'border': 'none',
+        'direction': 'ltr',
+        'text-align': 'center',
+        'background-url': 'https://assets.aftership.com/img/trafficreport.png'
+      },
+      'children': [
+        {
+          'type': 'column',
+          'data': {
+            'value': {
+
+            }
+          },
+          'attribute': {
+            'padding-top': '0px',
+            'padding-bottom': '0px',
+            'padding-left': '0px',
+            'padding-right': '0px',
+            'border': 'none',
+            'vertical-align': 'top'
+          },
+          'children': []
+        }
+      ]
+    }
+  ]
+};
+
 export default function App() {
   const onSubmit = () => { };
 

@@ -1,4 +1,5 @@
 import { IEmailTemplate } from '@/typings';
+import { transformToMjml } from '@/utils/transformToMjml';
 import { Formik } from 'formik';
 import React, { ReactNode, useMemo } from 'react';
 import { IPage } from '../core/blocks/basic/Page';
@@ -48,6 +49,7 @@ export const EditorProvider = (props: EditorProviderProps<IEmailTemplate>) => {
   }, [data, uploadHandler]);
 
   if (!initialValues.content) return null;
+
   return (
     <Formik<EditorProps>
       initialValues={initialValues}
