@@ -2,7 +2,6 @@ import { BasicType } from '@/constants';
 import { CreateInstance } from '@/typings';
 import { merge } from 'lodash';
 import { IColumn } from '.';
-import { Text } from '../Text';
 export const createInstance: CreateInstance<IColumn> = (payload) => {
   const defaultData: IColumn = {
     type: BasicType.COLUMN,
@@ -20,11 +19,7 @@ export const createInstance: CreateInstance<IColumn> = (payload) => {
       'vertical-align': 'top'
     },
     children: [
-      Text.createInstance({
-        data: {
-          value: 'Hi here’s your weekly summary for'
-        }
-      })
+
     ],
   };
   return merge(defaultData, payload);

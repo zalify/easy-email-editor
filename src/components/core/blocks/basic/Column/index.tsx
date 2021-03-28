@@ -4,7 +4,7 @@ import { createInstance } from './createInstance';
 import { IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
 import { CSSProperties } from 'react';
-export type IColumn = IBlockData<{}, {
+export type IColumn = IBlockData<{
   'background-color'?: string;
   'border'?: string;
   'border-radius'?: string;
@@ -17,6 +17,8 @@ export type IColumn = IBlockData<{}, {
   'text-align'?: CSSProperties['textAlign'];
   'vertical-align'?: CSSProperties['verticalAlign'];
   'width'?: string;
+}, {
+
 }>;
 
 export const Column = {
@@ -26,6 +28,7 @@ export const Column = {
   Panel,
   createInstance,
   validChildrenType: [
-    BasicType.TEXT
+    BasicType.TEXT,
+    BasicType.IMAGE
   ],
 };

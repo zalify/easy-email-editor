@@ -1,8 +1,9 @@
+import React from 'react';
 
 const deviation = 5;
 type Direction = 'top' | 'right' | 'bottom' | 'left';
 
-export function getTangentDirection(ev: DragEvent | MouseEvent): Direction | '' {
+export function getTangentDirection(ev: DragEvent | MouseEvent | React.DragEvent): Direction | '' {
   const target = ev.target as HTMLElement;
   const { top, height, left, width } = target.getBoundingClientRect();
   const mouseY = ev.clientY;

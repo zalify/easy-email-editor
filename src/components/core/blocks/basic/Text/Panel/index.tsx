@@ -2,15 +2,25 @@ import React from 'react';
 import { Padding } from '@/components/ConfigurationPanel/components/Padding';
 import { Stack } from '@/components/Stack';
 import { TextAlign } from '@/components/ConfigurationPanel/components/TextAlign';
-import { ColorPickerField, TextField } from '@/components/core/Form';
+import { ColorPickerField, TextAreaField, TextField } from '@/components/core/Form';
 import { useBlock } from '@/hooks/useBlock';
 import { Width } from '@/components/ConfigurationPanel/components/Width';
+import { TextDecoration } from '@/components/ConfigurationPanel/components/TextDecoration';
+import { FontWeight } from '@/components/ConfigurationPanel/components/FontWeight';
+import { FontStyle } from '@/components/ConfigurationPanel/components/FontStyle';
+import { TextTransform } from '@/components/ConfigurationPanel/components/TextTransform';
+import { TextTitle } from '@/components/ConfigurationPanel/components/TextTitle';
 
 export function Panel() {
   const { focusIdx } = useBlock();
 
   return (
     <Stack>
+      <TextAreaField
+        label='Content'
+        name={`${focusIdx}.data.value.content`}
+        inline
+      />
       <ColorPickerField
         label='color'
         name={`${focusIdx}.attribute.color`}
@@ -25,25 +35,14 @@ export function Panel() {
       />
       <TextField
         label="line-height"
+        quickchange
         name={`${focusIdx}.attribute.line-height`}
         inline
       />
-      <TextField
-        label="font-family"
-        name={`${focusIdx}.attribute.font-family`}
-        inline
-      />
-      <TextField
-        label="font-style"
-        name={`${focusIdx}.attribute.font-style`}
-        inline
-      />
-      <TextField
-        label="font-weight"
-        name={`${focusIdx}.attribute.font-weight`}
-        inline
-      />
+      <TextTitle />
 
+      <FontStyle />
+      <FontWeight />
       <TextField
         label="letter-spacing"
         name={`${focusIdx}.attribute.letter-spacing`}
@@ -55,16 +54,13 @@ export function Panel() {
         inline
       />
       <TextField
-        label="text-decoration"
-        name={`${focusIdx}.attribute.text-decoration`}
+        label="font-family"
+        name={`${focusIdx}.attribute.font-family`}
         inline
       />
-      <TextField
-        label="text-transform"
-        name={`${focusIdx}.attribute.text-transform`}
-        inline
-      />
-      <TextAlign />
+      <TextDecoration />
+      <TextTransform />
+      <TextAlign attributeName="align" />
       <ColorPickerField
         label='container-background-color'
         name={`${focusIdx}.attribute.container-background-color`}
@@ -73,7 +69,6 @@ export function Panel() {
       />
       <Width />
       <Padding />
-      <TextAlign />
     </Stack>
   );
 

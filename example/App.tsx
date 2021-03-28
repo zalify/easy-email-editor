@@ -1,14 +1,15 @@
 import { ConfigurationPanel } from '@/components/ConfigurationPanel';
+import { Stack } from '@/components/Stack';
 import { BasicType } from '@/constants';
 import { EmailEditorProvider, EmailEditor } from '@/index';
 import { IEmailTemplate } from '@/typings';
 import services from '@example/services';
-import { Layout, Button } from 'antd';
+import { Layout, Button, PageHeader } from 'antd';
 import React from 'react';
 import { ToolPanel } from './ToolPanel';
 
 export default function App() {
-  const onSubmit = () => {};
+  const onSubmit = () => { };
 
   const data: IEmailTemplate = {
     content: {
@@ -16,7 +17,7 @@ export default function App() {
       data: {
         value: {},
       },
-      style: {},
+      attribute: {},
       children: [],
     },
     subject: '',
@@ -37,6 +38,14 @@ export default function App() {
               overflow: 'hidden',
             }}
           >
+            <PageHeader
+              style={{ backgroundColor: '#fff' }}
+              extra={(
+                <Stack>
+                  <Button type="primary" onClick={() => handleSubmit()}>export</Button>
+                </Stack>
+              )}
+            />
             <Layout>
               <div style={{ display: 'flex', width: '100vw' }}>
                 <Layout.Sider theme='light' width={302}>

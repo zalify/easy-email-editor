@@ -4,7 +4,7 @@ import { createInstance } from './createInstance';
 import { IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
 import { CSSProperties } from 'react';
-export type ISection = IBlockData<{}, {
+export type ISection = IBlockData<{
   'background-color'?: string;
   'background-position'?: string;
   'background-position-x'?: string;
@@ -22,7 +22,7 @@ export type ISection = IBlockData<{}, {
   'padding-right'?: string;
   'text-align'?: CSSProperties['textAlign'];
   'max-width'?: string;
-}>;
+}, {}>;
 
 export const Section = {
   name: '行',
@@ -31,6 +31,7 @@ export const Section = {
   Panel,
   createInstance,
   validChildrenType: [
-    BasicType.COLUMN
+    BasicType.COLUMN,
+    BasicType.GROUP
   ],
 };

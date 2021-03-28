@@ -6,7 +6,6 @@ import { useCallback } from 'react';
 import { message } from 'antd';
 import {
   getIndexByIdx,
-  getPageIdx,
   getParentIdx,
   getValueByIdx,
 } from '@/utils/block';
@@ -22,7 +21,7 @@ export function useBlock() {
     handleChange,
   } = useEditorContext();
 
-  const focusIdx = values.focusIdx;
+  const { focusIdx, hoverIdx } = values;
   const focusBlock = get(values, focusIdx) as IBlockData | null;
 
   const addBlock = useCallback(
@@ -36,11 +35,7 @@ export function useBlock() {
       setFormikState((formState) => {
         let parent = get(formState.values, parentIdx) as IBlockData | null;
         const child = createBlockItem(type);
-        if (type === BasicType.DIALOG) {
-          parentIdx = getPageIdx();
-          parent = get(formState.values, parentIdx);
-          set(formState.values, 'dialogUid', child.data.value.uid);
-        }
+
         if (!parent) {
           throw new Error('无效节点');
         }
@@ -77,9 +72,8 @@ export function useBlock() {
         const copyBlock = cloneDeep(get(formState.values, idx));
 
         parent.children.push(copyBlock);
-        formState.values.focusIdx = `${parentIdx}.children.[${
-          parent.children.length - 1
-        }]`;
+        formState.values.focusIdx = `${parentIdx}.children.[${parent.children.length - 1
+          }]`;
         return { ...formState };
       });
     },
@@ -179,6 +173,19 @@ export function useBlock() {
     [setFormikState]
   );
 
+  const setHoverIdx = useCallback(
+    (idx: string) => {
+      setFormikState((formState) => {
+        if (formState.values.hoverIdx === idx) {
+          return formState;
+        }
+        formState.values.hoverIdx = idx;
+        return { ...formState };
+      });
+    },
+    [setFormikState]
+  );
+
   const setFocusBlockValue = useCallback(
     (val) => {
       setFormikState((formState) => {
@@ -195,8 +202,10 @@ export function useBlock() {
     values,
     focusIdx,
     focusBlock,
+    hoverIdx,
     setFocusBlockValue,
     setValueByIdx,
+    setHoverIdx,
     addBlock,
     copyBlock,
     removeBlock,

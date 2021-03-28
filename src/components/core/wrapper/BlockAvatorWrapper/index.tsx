@@ -23,16 +23,17 @@ export const BlockAvatorWrapper: React.FC<{ type: BlockType; }> = (props) => {
 
   const ele = document.getElementById('VisualEditorEditMode');
 
-  const onDragStart = useCallback(() => {
+  const onDragStart = useCallback((ev: React.DragEvent) => {
+    ev.dataTransfer.setData('Text', type);
     setDraging(true);
-  }, []);
+  }, [type]);
 
   useEffect(() => {
     if (!ele) return;
 
     const onDragOver = (ev: DragEvent) => {
       const target = ev.target as Element;
-
+      ev.stopPropagation();
       if (ref.current !== target) {
         ref.current?.classList.remove(DRAG_HOVER_CLASSNAME);
         ref.current?.classList.remove(DRAG_TANGENT_CLASSNAME);

@@ -1,5 +1,4 @@
 import React from 'react';
-import { IBlockData } from '@/typings';
 import { IPage } from '..';
 import { useField } from 'formik';
 import { EditorItem } from '@/Editor/components/EditorItem';
@@ -10,12 +9,12 @@ type IProps = {
 };
 
 export function Editor(props: IProps) {
-  const [field] = useField<IBlockData<IPage>>(props.idx);
-  const { children } = field.value;
+  const [{ value, value: { attribute } }] = useField<IPage>(props.idx);
+  const { children } = value;
 
   return (
     <EditBlockWrapper idx={props.idx}>
-      <div style={{ minHeight: '100%' }}>
+      <div style={{ minHeight: '100%', backgroundColor: attribute['background-color'] }}>
         <style>
           {
             `

@@ -4,7 +4,7 @@ import { createInstance } from './createInstance';
 import { IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
 import { CSSProperties } from 'react';
-export type IText = IBlockData<{}, {
+export type IText = IBlockData<{
   'color'?: string;
   'font-family'?: string;
   'font-size'?: string;
@@ -22,6 +22,9 @@ export type IText = IBlockData<{}, {
   'padding-bottom'?: string;
   'padding-left'?: string;
   'padding-right'?: string;
+}, {
+  title?: string;
+  content: string;
 }>;
 
 export const Text = {

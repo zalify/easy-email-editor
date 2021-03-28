@@ -4,11 +4,13 @@ import { Background } from '@/components/ConfigurationPanel/components/Backgroun
 import { Stack } from '@/components/Stack';
 import { TextAlign } from '@/components/ConfigurationPanel/components/TextAlign';
 import { Border } from '@/components/ConfigurationPanel/components/Border';
+import { Width } from '@/components/ConfigurationPanel/components/Width';
 
 export function Panel() {
 
   return (
     <Stack>
+      <Width />
       <Padding />
       <Background />
       <TextAlign />

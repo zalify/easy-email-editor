@@ -14,10 +14,11 @@ export function ConfigurationPanel() {
   const block = value && findBlockByType(value.type);
 
   const code = useMemo(() => {
-    // return jsonFormat(value, {
-    //   type: 'space',
-    //   size: 2
-    // }) || '';
+    if (!value) return '';
+    return jsonFormat(value, {
+      type: 'space',
+      size: 2
+    }) || '';
     return '';
   }, [value]);
 
@@ -40,11 +41,11 @@ export function ConfigurationPanel() {
       <Tabs.TabPane key='配置' tab='配置'>
         <Card
           bodyStyle={{ paddingTop: 0, backgroundColor: '#fff' }}
-          title={
+          title={(
             <TextStyle variation='strong' size='large'>
               {block.name}属性
             </TextStyle>
-          }
+          )}
         >
           <Stack vertical>
             {<block.Panel />}

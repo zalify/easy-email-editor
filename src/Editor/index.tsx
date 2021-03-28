@@ -6,6 +6,7 @@ import { EditorItem } from './components/EditorItem';
 import styles from './index.module.scss';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { getPageIdx } from '@/utils/block';
+import root from 'react-shadow';
 import { useBlock } from '@/hooks/useBlock';
 import { ToolBar } from './components/ToolBar';
 
@@ -61,7 +62,7 @@ export const Editor = () => {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div style={{ width: '100%' }}>
-        {/* {content} */}
+        {content}
         <Tabs
           activeKey={activeTab}
           tabBarStyle={{ paddingLeft: 20 }}
@@ -76,7 +77,7 @@ export const Editor = () => {
                       className={styles.container}
                       style={{ paddingTop: window.innerHeight < 900 ? 0 : 20 }}
                     >
-                      <div
+                      <root.div
                         id='VisualEditorEditMode'
                         style={innerContainerStyles}
                       >
@@ -85,9 +86,36 @@ export const Editor = () => {
                           placement={smallSceen ? 'topRight' : 'topLeft'}
                           title={<ToolBar />}
                         >
+
                           <EditorItem idx={getPageIdx()} />
                         </Tooltip>
-                      </div>
+                        <style type="text/css">
+                          {
+                            `
+                            .block-selected {
+                              outline-offset: -2px;
+                              outline: 2px solid #3b97e3 !important;
+                            }
+
+                            .block-hover {
+                              outline-offset: -1px;
+                              outline: 1px solid #3b97e3;
+                            }
+
+                            .block-dragover {
+                              outline-offset: -2px;
+                              outline: 2px solid #D0021B !important;
+                            }
+
+                            .block-tangent {
+                              outline-offset: -2px;
+                              outline: 2px solid #F5A623 !important;
+                            }
+
+                            `
+                          }
+                        </style>
+                      </root.div>
                     </div>
                     <div style={{ opacity: 0 }}>{provided.placeholder}</div>
                   </div>

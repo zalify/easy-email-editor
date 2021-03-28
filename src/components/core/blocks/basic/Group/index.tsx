@@ -1,23 +1,24 @@
 import { Panel } from './Panel';
 import { Editor } from './Editor';
 import { createInstance } from './createInstance';
-import { IBlock, IBlockData } from '@/typings';
+import { IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
 
-export type IPage = IBlockData<{
+export type IGroup = IBlockData<{
+  'width'?: string;
+  'vertical-align'?: 'middle' | 'top' | 'bottom';
   'background-color'?: string;
-}, {
-  breakpoint?: string;
+  'direction'?: 'ltr' | 'rtl';
+
 }>;
 
-export const Page: IBlock<IPage> = {
-  name: 'Layout',
-  type: BasicType.PAGE,
+export const Group = {
+  name: 'Group',
+  type: BasicType.GROUP,
   Editor,
   Panel,
   createInstance,
   validChildrenType: [
-    BasicType.SECTION,
-
+    BasicType.COLUMN
   ],
 };

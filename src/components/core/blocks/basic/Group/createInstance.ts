@@ -1,18 +1,18 @@
 import { BasicType } from '@/constants';
 import { CreateInstance } from '@/typings';
 import { merge } from 'lodash';
-import { IPage } from '.';
-
-export const createInstance: CreateInstance<IPage> = (payload) => {
-  const defaultData: IPage = {
-    type: BasicType.PAGE,
+import { IGroup } from '.';
+export const createInstance: CreateInstance<IGroup> = (payload) => {
+  const defaultData: IGroup = {
+    type: BasicType.GROUP,
     data: {
       value: {
 
       },
     },
     attribute: {
-
+      'vertical-align': 'top',
+      'direction': 'ltr',
     },
     children: [],
   };

@@ -7,12 +7,12 @@ export interface EditorProviderProps<T extends IEmailTemplate = any> {
   data: T;
   onSubmit: (data: EditorProps) => void;
   children:
-    | ((params: {
-        handleSubmit: (
-          e?: React.FormEvent<HTMLFormElement> | undefined
-        ) => void;
-      }) => ReactNode)
-    | ReactNode;
+  | ((params: {
+    handleSubmit: (
+      e?: React.FormEvent<HTMLFormElement> | undefined
+    ) => void;
+  }) => ReactNode)
+  | ReactNode;
   uploadHandler: EditorProps['props']['uploadHandler'];
 }
 
@@ -21,8 +21,9 @@ export interface EditorProps {
   subTitle: string;
   content: IPage;
   focusIdx: string;
-  variableMap: { [key: string]: any };
-  actionMap: { [key: string]: any };
+  hoverIdx: string;
+  variableMap: { [key: string]: any; };
+  actionMap: { [key: string]: any; };
   props: {
     uploadHandler: (file: File) => Promise<string>;
   };
@@ -37,6 +38,7 @@ export const EditorProvider = (props: EditorProviderProps<IEmailTemplate>) => {
       subTitle: data.subTitle,
       content: data.content,
       focusIdx: 'content',
+      hoverIdx: '',
       variableMap: {},
       actionMap: {},
       props: {

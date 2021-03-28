@@ -10,7 +10,7 @@ export interface IBlock<T extends IBlockData = any> {
   validChildrenType: BlockType[];
 }
 
-export interface IBlockData<T extends any = any, K extends { [key: string]: any; } = any> {
+export interface IBlockData<K extends { [key: string]: any; } = any, T extends any = any,> {
   type: BlockType;
   data: {
     value: T;
