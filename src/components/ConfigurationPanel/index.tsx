@@ -6,6 +6,7 @@ import React, { useCallback, useMemo } from 'react';
 import { findBlockByType, getValueByIdx } from '../../utils/block';
 import jsonFormat from 'json-format';
 import { useBlock } from '@/hooks/useBlock';
+import { transformToMjml } from '@/utils/transformToMjml';
 
 export function ConfigurationPanel() {
   const { focusIdx, setValueByIdx, values } = useBlock();
@@ -34,7 +35,7 @@ export function ConfigurationPanel() {
     [focusIdx, setValueByIdx]
   );
 
-  if (!block) return null;
+  if (!block || !value) return null;
 
   return (
     <Tabs tabBarStyle={{ paddingLeft: 20 }}>
@@ -63,6 +64,15 @@ export function ConfigurationPanel() {
             defaultValue={code}
             autoSize={{ maxRows: 25 }}
             onBlur={onChaneCode}
+          />
+        </Card>
+      </Tabs.TabPane>
+      <Tabs.TabPane key='MjML源码' tab='查看MjML源码'>
+        <Card>
+          <Input.TextArea
+            key={code}
+            value={transformToMjml(value)}
+            autoSize={{ maxRows: 25 }}
           />
         </Card>
       </Tabs.TabPane>

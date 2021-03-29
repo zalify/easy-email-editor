@@ -79,14 +79,7 @@ export const Editor = () => {
                         id='VisualEditorEditMode'
                         style={innerContainerStyles}
                       >
-                        <Tooltip
-                          visible
-                          placement={smallSceen ? 'topRight' : 'topLeft'}
-                          title={<ToolBar />}
-                        >
-
-                          <EditorContent />
-                        </Tooltip>
+                        <EditorContent />
                         <style type="text/css">
                           {
                             `

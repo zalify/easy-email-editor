@@ -10,6 +10,7 @@ export enum BasicType {
   IMAGE = 'img',
   DEVIDER = 'divider',
   SPACER = 'spacer',
+  BUTTON = 'button',
 }
 
 // 营销组件

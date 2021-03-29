@@ -3,12 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { transformToMjml } from '@/utils/transformToMjml';
 import mjml2Html from 'mjml-browser';
 import { useEditorContext } from '@/hooks/useEditorContext';
-import { getIndexByIdx, getNodeIdxFromClassName, getNodeTypeFromClassName, getPageIdx, getParentIdx } from '@/utils/block';
+import { findBlockByType, getIndexByIdx, getNodeIdxFromClassName, getNodeTypeFromClassName, getPageIdx, getParentIdx } from '@/utils/block';
 import { findBlockNode } from '@/utils/findBlockNode';
 import { BlockType, BLOCK_HOVER_CLASSNAME, BLOCK_SELECTED_CLASSNAME, DRAG_HOVER_CLASSNAME, DRAG_TANGENT_CLASSNAME } from '@/constants';
 import { useBlock } from '@/hooks/useBlock';
 import { getTangentDirection } from '@/utils/getTangentDirection';
 import { get } from 'lodash';
+import { Tooltip } from 'antd';
+import { ToolBar } from '../ToolBar';
 
 export interface EditorProps {
 
@@ -17,7 +19,9 @@ export interface EditorProps {
 export function EditorContent(props: EditorProps) {
   const { pageData } = useEditorContext();
   const [ref, setRef] = useState<HTMLElement | null>(null);
-  const { focusIdx, values, setFocusIdx, hoverIdx, setHoverIdx, addBlock } = useBlock();
+  const { focusIdx, values, setFocusIdx, hoverIdx, setHoverIdx, addBlock, focusBlock } = useBlock();
+
+  const html = mjml2Html(transformToMjml(pageData, getPageIdx())).html;
   useEffect(() => {
     if (ref) {
       const onClick = (ev: MouseEvent) => {
@@ -126,7 +130,7 @@ export function EditorContent(props: EditorProps) {
       }
     });
 
-  }, [focusIdx, ref]);
+  }, [focusIdx, ref, html]);
 
   return (
     <>
@@ -136,13 +140,21 @@ export function EditorContent(props: EditorProps) {
           .node-type-page {
             min-height: 100%
           }
-          .node-type-column {
+          .node-type-column , .node-type-group{
             min-height: 30px
           }
         `
         }
       </style>
-      <div style={{ height: '100%' }} ref={setRef} dangerouslySetInnerHTML={{ __html: mjml2Html(transformToMjml(pageData, getPageIdx())).html }} />
+      <Tooltip
+        key={2}
+        placement="topLeft"
+        title={<ToolBar />}
+        visible={!!focusBlock}
+      >
+        <div style={{ height: '100%' }} ref={setRef} dangerouslySetInnerHTML={{ __html: html }} />
+      </Tooltip>
+
     </>
   );
 }

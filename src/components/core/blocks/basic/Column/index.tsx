@@ -29,6 +29,7 @@ export const Column = {
   createInstance,
   validChildrenType: [
     BasicType.TEXT,
-    BasicType.IMAGE
+    BasicType.IMAGE,
+    BasicType.BUTTON,
   ],
 };

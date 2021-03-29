@@ -2,13 +2,15 @@ import { BasicType } from '@/constants';
 import { IBlockData } from '@/typings';
 import { getChildIdx, getNodeIdxClassName, getNodeTypeClassName } from './block';
 
-export function transformToMjml(data: IBlockData, idx: string): string {
+export function transformToMjml(data: IBlockData, idx?: string): string {
   const att = {
     ...data.attribute,
-    'css-class': getNodeIdxClassName(idx) + ' ' + getNodeTypeClassName(data.type)
   };
+  if (idx) {
+    att['css-class'] = getNodeIdxClassName(idx) + ' ' + getNodeTypeClassName(data.type);
+  }
   const attributeStr = Object.keys(att).map(key => `${key}="${att[key]}"`).join(' ');
-  const children = data.children.map((child, index) => transformToMjml(child, getChildIdx(idx, index)));
+  const children = data.children.map((child, index) => transformToMjml(child, idx ? getChildIdx(idx, index) : undefined));
   switch (data.type) {
     case BasicType.PAGE:
       return (
@@ -61,6 +63,14 @@ export function transformToMjml(data: IBlockData, idx: string): string {
           <mj-text ${attributeStr}>
           ${data.data.value?.content}
           </mj-text>
+        `
+      );
+    case BasicType.BUTTON:
+      return (
+        `
+          <mj-button ${attributeStr}>
+          ${data.data.value?.content}
+          </mj-button>
         `
       );
   }

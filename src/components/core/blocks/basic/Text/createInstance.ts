@@ -19,7 +19,6 @@ export const createInstance: CreateInstance<IText> = (payload) => {
       'padding-left': '25px',
       'padding-right': '25px',
       'line-height': 1,
-      'letter-spacing': 'none',
       align: 'left'
     },
     children: [],

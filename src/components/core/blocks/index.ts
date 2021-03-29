@@ -7,6 +7,7 @@ import { Column } from './basic/Column';
 import { Text } from './basic/Text';
 import { Image } from './basic/Image';
 import { Group } from './basic/Group';
+import { Button } from './basic/Button';
 
 export const BlocksMap = {
   Page,
@@ -14,7 +15,8 @@ export const BlocksMap = {
   Column,
   Text,
   Image,
-  Group
+  Group,
+  Button
 };
 
 export function getBlockByType(type: BlockType): IBlock<any> {
