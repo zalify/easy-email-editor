@@ -103,6 +103,11 @@ export const Editor = () => {
                               outline: 2px solid #F5A623 !important;
                             }
 
+                            .email-block {
+                              outline: 1px dashed rgba(170,170,170,0.7);
+                              outline-offset: -2px;
+                          }
+
                             `
                           }
                         </style>

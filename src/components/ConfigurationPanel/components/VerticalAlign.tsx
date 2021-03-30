@@ -37,5 +37,5 @@ export function VerticalAlign({
         />
       </Stack>
     );
-  }, [focusIdx]);
+  }, [attributeName, focusIdx]);
 }

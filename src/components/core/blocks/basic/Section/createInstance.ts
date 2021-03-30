@@ -11,10 +11,7 @@ export const createInstance: CreateInstance<ISection> = (payload) => {
       },
     },
     attribute: {
-      'padding-top': '20px',
-      'padding-bottom': '20px',
-      'padding-left': '0px',
-      'padding-right': '0px',
+      'padding': '20px 0px 20px 0px',
       'background-repeat': 'repeat',
       'background-size': 'auto',
       'background-position': 'top center',

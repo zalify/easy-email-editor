@@ -15,14 +15,8 @@ export type IButton = IBlockData<{
   'rel'?: string;
   'target'?: string;
   'title'?: string;
-  'padding-top'?: string;
-  'padding-bottom'?: string;
-  'padding-left'?: string;
-  'padding-right'?: string;
-  'inner-padding-top'?: string;
-  'inner-padding-bottom'?: string;
-  'inner-padding-left'?: string;
-  'inner-padding-right'?: string;
+  'padding'?: string;
+  'inner-padding'?: string;
   'text-align'?: CSSProperties['textAlign'];
   'vertical-align'?: 'middle' | 'top' | 'bottom';
   'width'?: string;

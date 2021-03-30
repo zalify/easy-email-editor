@@ -1,31 +1,53 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { TextField } from '@/components/core/Form';
 import { Stack } from '@/components/Stack';
 import { useBlock } from '@/hooks/useBlock';
 import { TextStyle } from '@/components/TextStyle';
 
-export function Padding() {
-  const { focusIdx } = useBlock();
+export interface PaddingProps {
+  title?: string;
+  attributeName?: string;
+}
+export function Padding(props: PaddingProps = {}) {
+  const { title = 'Padding', attributeName = 'padding' } = props;
+  const { focusIdx, focusBlock } = useBlock();
+
+  const getVal = useCallback((index: number) => {
+    return () => {
+      return focusBlock?.attribute[attributeName]?.split(' ')[index];
+    };
+  }, [attributeName, focusBlock?.attribute]);
+
+  const setVal = useCallback((index: number) => {
+    return (newVal: string) => {
+      const vals = focusBlock?.attribute[attributeName]?.split(' ') || [];
+      vals[index] = newVal || '0px';
+      return vals.join(' ');
+    };
+  }, [attributeName, focusBlock?.attribute]);
 
   return useMemo(() => {
     return (
-
-      <Stack vertical spacing="extraTight">
-        <TextStyle size="large">内边距</TextStyle>
+      <Stack vertical spacing='extraTight'>
+        <TextStyle size='large'>{title}</TextStyle>
         <Stack wrap={false}>
           <Stack.Item fill>
             <TextField
-              label="上"
+              label='Top'
               quickchange
-              name={`${focusIdx}.attribute.padding-top`}
+              name={`${focusIdx}.attribute.${attributeName}`}
+              valueAdapter={getVal(0)}
+              onChangeAdapter={setVal(0)}
               inline
             />
           </Stack.Item>
           <Stack.Item fill>
             <TextField
-              label="下"
+              label='Bottom'
               quickchange
-              name={`${focusIdx}.attribute.padding-bottom`}
+              name={`${focusIdx}.attribute.${attributeName}`}
+              valueAdapter={getVal(2)}
+              onChangeAdapter={setVal(2)}
               inline
             />
           </Stack.Item>
@@ -34,24 +56,26 @@ export function Padding() {
         <Stack wrap={false}>
           <Stack.Item fill>
             <TextField
-              label="左"
+              label='Left'
               quickchange
-              name={`${focusIdx}.attribute.padding-left`}
+              name={`${focusIdx}.attribute.${attributeName}`}
+              valueAdapter={getVal(3)}
+              onChangeAdapter={setVal(3)}
               inline
             />
           </Stack.Item>
           <Stack.Item fill>
             <TextField
-              label="右"
+              label='Right'
               quickchange
-              name={`${focusIdx}.attribute.padding-right`}
+              name={`${focusIdx}.attribute.${attributeName}`}
+              valueAdapter={getVal(1)}
+              onChangeAdapter={setVal(1)}
               inline
             />
-
           </Stack.Item>
         </Stack>
       </Stack>
-
     );
-  }, [focusIdx]);
+  }, [attributeName, focusIdx, getVal, setVal, title]);
 }

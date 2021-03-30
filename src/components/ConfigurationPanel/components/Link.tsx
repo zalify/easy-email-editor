@@ -10,11 +10,11 @@ export function Link() {
 
   return useMemo(() => {
     return (
-      <Stack wrap={false}>
+      <Stack vertical>
         <Stack.Item fill>
           <TextField
             prefix={<LinkOutlined />}
-            label="href"
+            label={<span>Href&nbsp;&nbsp;&nbsp;</span>}
             name={`${focusIdx}.attribute.href`}
             inline
           />
@@ -23,7 +23,7 @@ export function Link() {
         <div style={{ minWidth: 150 }}>
           <SelectField
 
-            label='target'
+            label='Target'
             name={`${focusIdx}.attribute.target`}
             options={[
               {

@@ -16,10 +16,7 @@ export type ISection = IBlockData<{
   'border-radius'?: string;
   'direction'?: 'ltr' | 'rtl';
   'full-width'?: 'ltr' | 'rtl';
-  'padding-top'?: string;
-  'padding-bottom'?: string;
-  'padding-left'?: string;
-  'padding-right'?: string;
+  'padding'?: string;
   'text-align'?: CSSProperties['textAlign'];
   'max-width'?: string;
 }, {}>;
