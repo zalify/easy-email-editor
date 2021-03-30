@@ -5,21 +5,20 @@ import { IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
 export type IDivider = IBlockData<
   {
-    border?: string;
+    'border-color'?: string;
+    'border-style'?: string;
+    'border-width'?: string;
     'container-background-color'?: string;
     width?: string;
-    align?: string;
-    'padding-top'?: string;
-    'padding-bottom'?: string;
-    'padding-left'?: string;
-    'padding-right'?: string;
+    align?: 'left' | 'center' | 'right';
+    'padding'?: string;
   },
   {}
 >;
 
 export const Divider = {
   name: 'divider',
-  type: BasicType.DEVIDER,
+  type: BasicType.DIVIDER,
   Editor,
   Panel,
   createInstance,

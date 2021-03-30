@@ -29,5 +29,6 @@ export const Column = {
     BasicType.TEXT,
     BasicType.IMAGE,
     BasicType.BUTTON,
+    BasicType.DIVIDER,
   ],
 };

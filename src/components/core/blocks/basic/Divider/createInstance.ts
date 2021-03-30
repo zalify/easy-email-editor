@@ -5,17 +5,16 @@ import { IDivider } from '.';
 
 export const createInstance: CreateInstance<IDivider> = (payload) => {
   const defaultData: IDivider = {
-    type: BasicType.DEVIDER,
+    type: BasicType.DIVIDER,
     data: {
       value: {},
     },
     attribute: {
       align: 'center',
-      border: '4px solid #000',
-      'padding-top': '10px',
-      'padding-bottom': '10px',
-      'padding-left': '25px',
-      'padding-right': '25px',
+      'border-width': '4px',
+      'border-style': 'solid',
+      'border-color': '#000',
+      'padding': '10px 25px 10px 25px',
     },
     children: [],
   };

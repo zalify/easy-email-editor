@@ -8,7 +8,7 @@ export enum BasicType {
   GROUP = 'group',
   TEXT = 'text',
   IMAGE = 'img',
-  DEVIDER = 'divider',
+  DIVIDER = 'divider',
   SPACER = 'spacer',
   BUTTON = 'button',
 }

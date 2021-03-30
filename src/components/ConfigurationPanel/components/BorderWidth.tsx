@@ -2,15 +2,15 @@ import React, { useMemo } from 'react';
 import { useBlock } from '@/hooks/useBlock';
 import { TextField } from '@/components/core/Form';
 
-export function FontSize() {
+export function BorderWidth() {
   const { focusIdx } = useBlock();
 
   return useMemo(() => {
     return (
       <TextField
-        label='Font-size'
+        label='Border width'
         quickchange
-        name={`${focusIdx}.attribute.font-size`}
+        name={`${focusIdx}.attribute.border-width`}
         inline
       />
     );

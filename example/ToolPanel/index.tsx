@@ -52,6 +52,11 @@ export const ToolPanel = function () {
               type={BasicType.BUTTON}
               icon={<FormOutlined />}
             />
+            <BlockIcon
+              text='Divider'
+              type={BasicType.DIVIDER}
+              icon={<FormOutlined />}
+            />
           </div>
 
         </Panel>

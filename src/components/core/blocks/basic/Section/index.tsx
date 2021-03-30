@@ -29,6 +29,6 @@ export const Section = {
   createInstance,
   validChildrenType: [
     BasicType.COLUMN,
-    BasicType.GROUP
+    BasicType.GROUP,
   ],
 };

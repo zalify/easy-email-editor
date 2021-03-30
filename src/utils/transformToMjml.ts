@@ -74,6 +74,12 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
           </mj-button>
         `
       );
+    case BasicType.DIVIDER:
+      return (
+        `
+          <mj-divider ${attributeStr} />
+        `
+      );
   }
 
   return '';
