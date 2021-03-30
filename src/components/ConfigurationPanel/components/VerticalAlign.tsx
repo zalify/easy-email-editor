@@ -18,7 +18,11 @@ const options = [
   },
 ];
 
-export function VerticalAlign() {
+export function VerticalAlign({
+  attributeName = 'vertical-align',
+}: {
+  attributeName: string;
+}) {
   const { focusIdx } = useBlock();
 
   return useMemo(() => {
@@ -27,7 +31,7 @@ export function VerticalAlign() {
         <SelectField
           style={{ width: 120 }}
           label='Vertical align'
-          name={`${focusIdx}.attribute.vertical-align`}
+          name={`${focusIdx}.attribute.${attributeName}`}
           options={options}
           inline
         />
