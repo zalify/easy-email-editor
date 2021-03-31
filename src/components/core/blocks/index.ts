@@ -9,6 +9,7 @@ import { Image } from './basic/Image';
 import { Group } from './basic/Group';
 import { Button } from './basic/Button';
 import { Divider } from './basic/Divider';
+import { Wrapper } from './basic/Wrapper';
 
 export const BlocksMap = {
   Page,
@@ -19,6 +20,7 @@ export const BlocksMap = {
   Group,
   Button,
   Divider,
+  Wrapper,
 };
 
 export function getBlockByType(type: BlockType): IBlock<any> {

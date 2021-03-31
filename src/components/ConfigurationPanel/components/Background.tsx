@@ -1,5 +1,10 @@
 import React, { useMemo } from 'react';
-import { ColorPickerField, ImageUploaderField, SelectField, TextField } from '@/components/core/Form';
+import {
+  ColorPickerField,
+  ImageUploaderField,
+  SelectField,
+  TextField,
+} from '@/components/core/Form';
 import { Stack } from '@/components/Stack';
 import { useBlock } from '@/hooks/useBlock';
 import { TextStyle } from '@/components/TextStyle';
@@ -7,7 +12,7 @@ import { useEditorContext } from '@/hooks/useEditorContext';
 
 const backgroundRepeatOptions = [
   {
-    value: 'none',
+    value: 'no-repeat',
     label: '不重复',
   },
   {
@@ -21,7 +26,7 @@ const backgroundRepeatOptions = [
   {
     value: 'repeat-y',
     label: 'y轴重复',
-  }
+  },
 ];
 
 // 'background-color': string;
@@ -38,22 +43,23 @@ export function Background() {
   return useMemo(() => {
     return (
       <Stack key={focusIdx} vertical spacing='extraTight'>
-        <TextStyle size='large'>
-          背景
-        </TextStyle>
+        <TextStyle size='large'>背景</TextStyle>
         <ColorPickerField
           label='颜色'
           name={`${focusIdx}.attribute.background-color`}
           inline
           alignment='center'
         />
-        <Stack vertical spacing="none">
-          <TextField label="背景图" inline
+        <Stack vertical spacing='none'>
+          <TextField
+            label='背景图'
+            inline
             name={`${focusIdx}.attribute.background-url`}
           />
-          <TextField label="背景大小" inline
+          <TextField
+            label='背景大小'
+            inline
             name={`${focusIdx}.attribute.background-size`}
-
           />
         </Stack>
         <SelectField

@@ -2,7 +2,11 @@ import React from 'react';
 import { Padding } from '@/components/ConfigurationPanel/components/Padding';
 import { Stack } from '@/components/Stack';
 import { TextAlign } from '@/components/ConfigurationPanel/components/TextAlign';
-import { ColorPickerField, TextAreaField, TextField } from '@/components/core/Form';
+import {
+  ColorPickerField,
+  TextAreaField,
+  TextField,
+} from '@/components/core/Form';
 import { useBlock } from '@/hooks/useBlock';
 import { Width } from '@/components/ConfigurationPanel/components/Width';
 import { TextDecoration } from '@/components/ConfigurationPanel/components/TextDecoration';
@@ -10,6 +14,12 @@ import { FontWeight } from '@/components/ConfigurationPanel/components/FontWeigh
 import { FontStyle } from '@/components/ConfigurationPanel/components/FontStyle';
 import { TextTransform } from '@/components/ConfigurationPanel/components/TextTransform';
 import { TextTitle } from '@/components/ConfigurationPanel/components/TextTitle';
+import { FontFamily } from '@/components/ConfigurationPanel/components/FontFamliy';
+import { Height } from '@/components/ConfigurationPanel/components/Height';
+import { ContainerBackgroundColor } from '@/components/ConfigurationPanel/components/ContainerBackgroundColor';
+import { Align } from '@/components/ConfigurationPanel/components/Align';
+import { FontSize } from '@/components/ConfigurationPanel/components/FontSize';
+import { Color } from '@/components/ConfigurationPanel/components/Color';
 
 export function Panel() {
   const { focusIdx } = useBlock();
@@ -21,20 +31,10 @@ export function Panel() {
         name={`${focusIdx}.data.value.content`}
         inline
       />
-      <ColorPickerField
-        label='color'
-        name={`${focusIdx}.attribute.color`}
-        inline
-        alignment='center'
-      />
+      <Color />
+      <FontSize />
       <TextField
-        label="font-size"
-        quickchange
-        name={`${focusIdx}.attribute.font-size`}
-        inline
-      />
-      <TextField
-        label="line-height"
+        label='line-height'
         quickchange
         name={`${focusIdx}.attribute.line-height`}
         inline
@@ -44,32 +44,18 @@ export function Panel() {
       <FontStyle />
       <FontWeight />
       <TextField
-        label="letter-spacing"
+        label='letter-spacing'
         name={`${focusIdx}.attribute.letter-spacing`}
         inline
       />
-      <TextField
-        label="height"
-        name={`${focusIdx}.attribute.height`}
-        inline
-      />
-      <TextField
-        label="font-family"
-        name={`${focusIdx}.attribute.font-family`}
-        inline
-      />
+      <Height />
+      <FontFamily />
       <TextDecoration />
       <TextTransform />
-      <TextAlign attributeName="align" />
-      <ColorPickerField
-        label='container-background-color'
-        name={`${focusIdx}.attribute.container-background-color`}
-        inline
-        alignment='center'
-      />
+      <Align />
+      <ContainerBackgroundColor />
       <Width />
       <Padding />
     </Stack>
   );
-
 }

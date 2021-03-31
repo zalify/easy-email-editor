@@ -8,18 +8,15 @@ export const createInstance: CreateInstance<IText> = (payload) => {
     data: {
       value: {
         content: 'Your weekly report',
-        title: ''
-      }
+        title: '',
+      },
     },
     attribute: {
       color: '#000000',
       'font-size': '13px',
-      'padding-top': '10px',
-      'padding-bottom': '10px',
-      'padding-left': '25px',
-      'padding-right': '25px',
+      padding: '10px 25px 10px 25px',
       'line-height': 1,
-      align: 'left'
+      align: 'left',
     },
     children: [],
   };

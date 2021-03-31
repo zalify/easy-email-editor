@@ -23,6 +23,11 @@ export const ToolPanel = function () {
         <Panel header='基础组件' key='1'>
           <div className={styles.list}>
             <BlockIcon
+              text='Wrapper'
+              type={BasicType.WRAPPER}
+              icon={<FormOutlined />}
+            />
+            <BlockIcon
               text='行'
               type={BasicType.SECTION}
               icon={<FormOutlined />}
@@ -58,7 +63,6 @@ export const ToolPanel = function () {
               icon={<FormOutlined />}
             />
           </div>
-
         </Panel>
       </Collapse>
     </div>

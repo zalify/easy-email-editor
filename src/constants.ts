@@ -11,6 +11,7 @@ export enum BasicType {
   DIVIDER = 'divider',
   SPACER = 'spacer',
   BUTTON = 'button',
+  WRAPPER = 'Wrapper',
 }
 
 // 营销组件

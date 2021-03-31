@@ -4,7 +4,7 @@ import { createInstance } from './createInstance';
 import { IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
 import { CSSProperties } from 'react';
-export type ISection = IBlockData<
+export type IWrapper = IBlockData<
   {
     'background-color'?: string;
     'background-position'?: string;
@@ -24,9 +24,9 @@ export type ISection = IBlockData<
   {}
 >;
 
-export const Section = {
-  name: '行',
-  type: BasicType.SECTION,
+export const Wrapper = {
+  name: 'Wrapper',
+  type: BasicType.WRAPPER,
   Editor,
   Panel,
   createInstance,
