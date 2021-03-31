@@ -7,11 +7,12 @@ export enum BasicType {
   COLUMN = 'column',
   GROUP = 'group',
   TEXT = 'text',
-  IMAGE = 'img',
+  IMAGE = 'image',
   DIVIDER = 'divider',
   SPACER = 'spacer',
   BUTTON = 'button',
-  WRAPPER = 'Wrapper',
+  WRAPPER = 'wrapper',
+  RAW = 'raw',
 }
 
 // 营销组件

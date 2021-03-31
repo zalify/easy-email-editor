@@ -8,12 +8,15 @@ import jsonFormat from 'json-format';
 import { useBlock } from '@/hooks/useBlock';
 import { transformToMjml } from '@/utils/transformToMjml';
 import mjml from 'mjml-browser';
+import { MjmlToJson } from '@/utils/MjmlToJson';
 
 export function ConfigurationPanel() {
   const { focusIdx, setValueByIdx, values } = useBlock();
   const value = getValueByIdx(values, focusIdx);
 
   const block = value && findBlockByType(value.type);
+
+  console.log(transformToMjml(value));
 
   const code = useMemo(() => {
     if (!value) return '';
@@ -38,13 +41,14 @@ export function ConfigurationPanel() {
 
   const onMjmlChange = useCallback(
     (event: React.FocusEvent<HTMLTextAreaElement>) => {
-      // try {
-      //   console.log(mjml(event.target.value));
-      // } catch (error) {
-      //   message.error(error.message);
-      // }
+      try {
+        const parseValue = MjmlToJson(mjml(event.target.value).json);
+        setValueByIdx(focusIdx, parseValue);
+      } catch (error) {
+        message.error(error.message);
+      }
     },
-    []
+    [focusIdx, setValueByIdx]
   );
 
   if (!block || !value) return null;

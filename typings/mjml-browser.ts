@@ -1,6 +1,8 @@
 
 declare module 'mjml-browser' {
-  const transform: (vml: string, options?: { [key: string]: any; }) => {
+  const transform: (vml: string, options?: {
+    [key: string]: any;
+  }) => {
     json: MjmlBlockItem,
     html: string,
     error: string[];
@@ -11,20 +13,41 @@ declare module 'mjml-browser' {
 interface MjmlBlockItem {
   file: string;
   absoluteFilePath: string;
-  line: number; includedIn: any[];
+  line: number;
+  includedIn: any[];
   tagName: string;
   children: IChildrenItem[];
   attributes: IAttributes;
+  content?: string;
 }
 interface IChildrenItem {
-  file: string;
-  absoluteFilePath: string;
+  file?: string;
+  absoluteFilePath?: string;
   line: number;
   includedIn: any[];
   tagName: string;
   children?: IChildrenItem[];
   attributes: IAttributes;
+  content?: string;
 }
 interface IAttributes {
   width?: string;
+  'background-color'?: string;
+  padding?: string;
+  height?: string;
+  src?: string;
+  'background-url'?: string;
+  align?: string;
+  'font-size'?: string;
+  'font-weight'?: string;
+  'line-height'?: string;
+  color?: string;
+  'padding-top'?: string;
+  'padding-left'?: string;
+  'padding-right'?: string;
+  'padding-bottom'?: string;
+  'font-family'?: string;
+  href?: string;
+  'border-width'?: string;
+  'border-color'?: string;
 }

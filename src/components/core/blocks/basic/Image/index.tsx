@@ -18,10 +18,7 @@ export type IImage = IBlockData<{
   'align'?: CSSProperties['textAlign'];
   'container-background-color'?: string;
   'width'?: string;
-  'padding-top'?: string;
-  'padding-bottom'?: string;
-  'padding-left'?: string;
-  'padding-right'?: string;
+  'padding'?: string;
 }>;
 
 export const Image = {

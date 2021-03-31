@@ -5,7 +5,6 @@ import {
   TabletOutlined,
 } from '@ant-design/icons';
 import { Button, InputNumber, Tooltip } from 'antd';
-import { TextStyle } from '@/components/TextStyle';
 
 export const platformType = [
   {
@@ -22,7 +21,6 @@ export const platformType = [
 
 export function useDeviceToolbar() {
   const [width, setWidth] = useState(1200);
-  const [height, setHeight] = useState(800);
   const [selectedPlatform, setSelectedPlatform] = useState('laptop');
   const isSelectedOther = selectedPlatform === 'other';
 
@@ -66,24 +64,16 @@ export function useDeviceToolbar() {
                 value={width}
                 onChange={(val) => setWidth(Number(val))}
               />
-              <TextStyle>X</TextStyle>
-              <InputNumber
-                disabled={!isSelectedOther}
-                size='small'
-                style={{ width: 50 }}
-                value={height}
-                onChange={(val) => setHeight(Number(val))}
-              />
+
             </Stack>
           </Stack>
         </Stack>
       </div>
     );
-  }, [height, isSelectedOther, selectedPlatform, width]);
+  }, [isSelectedOther, selectedPlatform, width]);
 
   return {
     content,
     width,
-    height,
   };
 }

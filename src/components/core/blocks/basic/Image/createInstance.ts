@@ -14,10 +14,7 @@ export const createInstance: CreateInstance<IImage> = (payload) => {
     attribute: {
       align: 'center',
       height: 'auto',
-      'padding-top': '10px',
-      'padding-bottom': '10px',
-      'padding-left': '25px',
-      'padding-right': '25px',
+      'padding': '10px 25px',
       src: 'https://documentation.mjml.io/images/logo.png',
       target: '',
       width: '100%'

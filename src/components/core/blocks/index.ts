@@ -10,6 +10,8 @@ import { Group } from './basic/Group';
 import { Button } from './basic/Button';
 import { Divider } from './basic/Divider';
 import { Wrapper } from './basic/Wrapper';
+import { Spacer } from './basic/Spacer';
+import { Raw } from './basic/Raw';
 
 export const BlocksMap = {
   Page,
@@ -21,6 +23,8 @@ export const BlocksMap = {
   Button,
   Divider,
   Wrapper,
+  Spacer,
+  Raw
 };
 
 export function getBlockByType(type: BlockType): IBlock<any> {

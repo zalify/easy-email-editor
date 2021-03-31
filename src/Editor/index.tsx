@@ -15,13 +15,14 @@ const TabPane = Tabs.TabPane;
 export const Editor = () => {
   const [activeTab, setActiveTab] = useState('editor');
 
-  const { width, height, content } = useDeviceToolbar();
+  const { width, content } = useDeviceToolbar();
 
   const innerContainerStyles: React.CSSProperties = {
     width,
-    height,
+    height: 'calc(100vh - 200px)',
     margin: '0 auto',
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    overflow: 'auto'
   };
 
   const { moveByIdx } = useBlock();
@@ -56,7 +57,7 @@ export const Editor = () => {
     [moveByIdx]
   );
 
-  const smallSceen = window.innerHeight < 850;
+  const smallSceen = window.innerWidth < 1920;
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>

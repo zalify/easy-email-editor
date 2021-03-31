@@ -25,7 +25,7 @@ export type ISection = IBlockData<
 >;
 
 export const Section = {
-  name: '行',
+  name: 'Section',
   type: BasicType.SECTION,
   Editor,
   Panel,

@@ -22,7 +22,7 @@ export function EditorContent(props: EditorProps) {
   const [ref, setRef] = useState<HTMLElement | null>(null);
   const { focusIdx, values, setFocusIdx, hoverIdx, setHoverIdx, addBlock, focusBlock } = useBlock();
 
-  const smallSceen = window.innerHeight < 850;
+  const smallSceen = window.innerWidth < 1920;
 
   const html = mjml2Html(transformToMjml(pageData, getPageIdx())).html;
   useEffect(() => {

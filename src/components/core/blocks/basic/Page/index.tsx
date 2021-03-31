@@ -11,7 +11,7 @@ export type IPage = IBlockData<{
 }>;
 
 export const Page: IBlock<IPage> = {
-  name: 'Layout',
+  name: 'Page',
   type: BasicType.PAGE,
   Editor,
   Panel,
