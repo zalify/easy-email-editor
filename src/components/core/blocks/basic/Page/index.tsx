@@ -18,6 +18,7 @@ export const Page: IBlock<IPage> = {
   createInstance,
   validChildrenType: [
     BasicType.SECTION,
+    BasicType.WRAPPER,
 
   ],
 };

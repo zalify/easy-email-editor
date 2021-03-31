@@ -10,9 +10,6 @@ export const createInstance: CreateInstance<IWrapper> = (payload) => {
     },
     attribute: {
       padding: '20px 0px 20px 0px',
-      'background-repeat': 'repeat',
-      'background-size': 'auto',
-      'background-position': 'top center',
       border: 'none',
       direction: 'ltr',
       'text-align': 'center',

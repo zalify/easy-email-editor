@@ -7,6 +7,7 @@ import { findBlockByType, getValueByIdx } from '../../utils/block';
 import jsonFormat from 'json-format';
 import { useBlock } from '@/hooks/useBlock';
 import { transformToMjml } from '@/utils/transformToMjml';
+import mjml from 'mjml-browser';
 
 export function ConfigurationPanel() {
   const { focusIdx, setValueByIdx, values } = useBlock();
@@ -33,6 +34,17 @@ export function ConfigurationPanel() {
       }
     },
     [focusIdx, setValueByIdx]
+  );
+
+  const onMjmlChange = useCallback(
+    (event: React.FocusEvent<HTMLTextAreaElement>) => {
+      // try {
+      //   console.log(mjml(event.target.value));
+      // } catch (error) {
+      //   message.error(error.message);
+      // }
+    },
+    []
   );
 
   if (!block || !value) return null;
@@ -73,6 +85,7 @@ export function ConfigurationPanel() {
             key={code}
             value={transformToMjml(value)}
             autoSize={{ maxRows: 25 }}
+            onChange={onMjmlChange}
           />
         </Card>
       </Tabs.TabPane>

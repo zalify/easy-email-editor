@@ -17,9 +17,12 @@ export interface EditorProps {
 }
 
 export function EditorContent(props: EditorProps) {
+
   const { pageData } = useEditorContext();
   const [ref, setRef] = useState<HTMLElement | null>(null);
   const { focusIdx, values, setFocusIdx, hoverIdx, setHoverIdx, addBlock, focusBlock } = useBlock();
+
+  const smallSceen = window.innerHeight < 850;
 
   const html = mjml2Html(transformToMjml(pageData, getPageIdx())).html;
   useEffect(() => {
@@ -148,7 +151,7 @@ export function EditorContent(props: EditorProps) {
       </style>
       <Tooltip
         key={2}
-        placement="topLeft"
+        placement={smallSceen ? 'topRight' : 'topLeft'}
         title={<ToolBar />}
         visible={!!focusBlock}
       >

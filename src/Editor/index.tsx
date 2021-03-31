@@ -8,6 +8,7 @@ import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import root from 'react-shadow';
 import { useBlock } from '@/hooks/useBlock';
 import { ToolBar } from './components/ToolBar';
+import { PreviewContent } from './components/PreviewContent';
 
 const TabPane = Tabs.TabPane;
 
@@ -73,7 +74,7 @@ export const Editor = () => {
                   <div ref={provided.innerRef} {...provided.droppableProps}>
                     <div
                       className={styles.container}
-                      style={{ paddingTop: window.innerHeight < 900 ? 0 : 20 }}
+                      style={{ paddingTop: smallSceen ? 0 : 20 }}
                     >
                       <root.div
                         id='VisualEditorEditMode'
@@ -124,7 +125,9 @@ export const Editor = () => {
               className={styles.container}
               style={{ paddingTop: smallSceen ? 0 : 20 }}
             >
-              <div style={innerContainerStyles}>preview</div>
+              <root.div style={innerContainerStyles}>
+                <PreviewContent />
+              </root.div>
             </div>
           </TabPane>
         </Tabs>

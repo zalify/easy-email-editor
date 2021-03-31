@@ -18,12 +18,20 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
         `
         <mjml>
           <mj-head>
-            <mj-breakpoint width="0px" />
+            <mj-breakpoint width="${data.data.value.breakpoint}" />
           </mj-head>
           <mj-body ${attributeStr}>
             ${children}
           </mj-body>
         </mjml>
+        `
+      );
+    case BasicType.WRAPPER:
+      return (
+        `
+          <mj-wrapper ${attributeStr}>
+           ${children}
+          </mj-wrapper>
         `
       );
     case BasicType.SECTION:
