@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import { useBlock } from '@/hooks/useBlock';
 import { LinkOutlined } from '@ant-design/icons';
 import { SelectField, TextField } from '@/components/core/Form';
-import { getOptionsByStringArray } from '@/utils/getOptionsByStringArray';
 import { Stack } from '@/components/Stack';
 
 export function Link() {

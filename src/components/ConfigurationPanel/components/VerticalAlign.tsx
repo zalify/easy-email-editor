@@ -21,7 +21,7 @@ const options = [
 export function VerticalAlign({
   attributeName = 'vertical-align',
 }: {
-  attributeName: string;
+  attributeName?: string;
 }) {
   const { focusIdx } = useBlock();
 

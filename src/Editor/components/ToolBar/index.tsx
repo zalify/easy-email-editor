@@ -2,7 +2,7 @@ import React, {
   useMemo
 } from 'react';
 
-import { Tooltip, Popconfirm } from 'antd';
+import { Tooltip } from 'antd';
 import { UpOutlined, DownOutlined, UpSquareOutlined, DownSquareOutlined, CopyOutlined, CloseOutlined, BorderOuterOutlined } from '@ant-design/icons';
 import { Stack } from '@/components/Stack';
 import { TextStyle } from '@/components/TextStyle';
@@ -27,21 +27,21 @@ export const ToolBar = () => {
     return [
       {
         icon: <UpOutlined />,
-        title: '上移',
+        title: 'Move up',
         method() {
           moveByIdx(focusIdx, getSiblingIdx(focusIdx, -1));
         }
       },
       {
         icon: <DownOutlined />,
-        title: '下移',
+        title: 'Move down',
         method() {
           moveByIdx(focusIdx, getSiblingIdx(focusIdx, 1));
         }
       },
       {
         icon: <UpSquareOutlined />,
-        title: '选中父级',
+        title: 'Select parent',
         method() {
           const parentIdx = getParentIdx(focusIdx);
           if (parentIdx) {
@@ -52,11 +52,11 @@ export const ToolBar = () => {
       },
       hasChildren && {
         icon: <DownSquareOutlined />,
-        title: '选中子级',
+        title: 'Select child',
         toolTip: (
           <Stack>            {
             focusBlock.children.map((item, index) => {
-              return <Tooltip key={index} placement="topLeft" title={`选中子节点 ${index + 1}`}><BorderOuterOutlined onClick={() => setFocusIdx(`${focusIdx}.children.[${index}]`)} /></Tooltip>;
+              return <Tooltip key={index} placement="topLeft" title={`Select child node ${findBlockByType(item.type)?.name}`}><BorderOuterOutlined onClick={() => setFocusIdx(`${focusIdx}.children.[${index}]`)} /></Tooltip>;
             })
           }
           </Stack>
@@ -65,15 +65,14 @@ export const ToolBar = () => {
       },
       {
         icon: <CopyOutlined />,
-        title: '复制',
+        title: 'Copy',
         method() {
           copyBlock(focusIdx);
         }
       },
       {
         icon: <CloseOutlined />,
-        title: '删除',
-        confirm: true,
+        title: 'Remove',
         method() {
           removeBlock(focusIdx);
         }
@@ -91,23 +90,7 @@ export const ToolBar = () => {
             return (
               <Tooltip key={item.title} placement="topRight" title={item.toolTip || item.title}>
 
-                {
-                  item.confirm
-                    ? (
-                      <Popconfirm
-                        title={`你确定要${item.title}吗`}
-                        onConfirm={item.method}
-                        okText="确定"
-                        cancelText="取消"
-                      >
-                        {item.icon}
-                      </Popconfirm>
-                    )
-                    : (
-                      <span style={{ cursor: 'pointer' }} onClick={item.method}>{item.icon}</span>
-                    )
-                }
-
+                <span style={{ cursor: 'pointer' }} onClick={item.method}>{item.icon}</span>
               </Tooltip>
             );
           })

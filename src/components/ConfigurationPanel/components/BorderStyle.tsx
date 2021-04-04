@@ -1,9 +1,21 @@
 import React, { useMemo } from 'react';
 import { useBlock } from '@/hooks/useBlock';
 import { SelectField } from '@/components/core/Form';
-import { getOptionsByStringArray } from '@/utils/getOptionsByStringArray';
 
-const options = getOptionsByStringArray(['dashed', 'dotted', 'solid']);
+const options = [
+  {
+    value: 'dashed',
+    label: 'Dashed',
+  },
+  {
+    value: 'dotted',
+    label: 'Dotted',
+  },
+  {
+    value: 'solid',
+    label: 'Solid',
+  },
+];
 
 export function BorderStyle() {
   const { focusIdx } = useBlock();

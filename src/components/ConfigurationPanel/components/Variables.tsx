@@ -18,9 +18,9 @@ export function Variables() {
   const { focusIdx } = useBlock();
   return (
 
-    <TreeSelectField title="变量"
+    <TreeSelectField title="Variable"
       treeDefaultExpandAll
-      style={{ width: '100%' }} label='绑定变量'
+      style={{ width: '100%' }} label='Variable'
       name={`${focusIdx}.data.variable`}
       inline options={options}
 

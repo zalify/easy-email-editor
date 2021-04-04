@@ -19,7 +19,7 @@ export type IColumn = IBlockData<{
 }>;
 
 export const Column = {
-  name: '列',
+  name: 'Column',
   type: BasicType.COLUMN,
   Panel,
   createInstance,

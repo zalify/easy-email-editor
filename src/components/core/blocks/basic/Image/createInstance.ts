@@ -15,9 +15,7 @@ export const createInstance: CreateInstance<IImage> = (payload) => {
       align: 'center',
       height: 'auto',
       'padding': '10px 25px',
-      src: 'https://documentation.mjml.io/images/logo.png',
-      target: '',
-      width: '100%'
+      src: 'https://assets.maocanhua.cn/FsEjdcDqV6HYphntqWQC1m1OJCjI',
     },
     children: [],
   };

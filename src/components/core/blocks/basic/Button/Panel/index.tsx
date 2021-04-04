@@ -23,15 +23,15 @@ export function Panel() {
         inline
       />
       <Color />
-      <ContainerBackgroundColor />
       <BackgroundColor />
       <Width />
       <Align />
       <Padding title="Inner padding" attributeName="inner-padding" />
       <Padding title="Padding" attributeName="padding" />
-      <TextAlign />
       <Link />
       <Border />
+      <ContainerBackgroundColor />
+      <TextAlign />
     </Stack>
   );
 }

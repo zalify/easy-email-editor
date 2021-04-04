@@ -11,21 +11,21 @@ export function Decoration() {
     return (
       <Stack key={focusIdx} vertical spacing='extraTight'>
         <TextStyle variation='strong' size='large'>
-          装饰
+          Decoration
         </TextStyle>
         <TextField
-          label="圆角"
+          label="Border radius"
           name={`${focusIdx}.style.borderRadius`}
           inline
         />
         <TextField
-          label='边框'
+          label='Border'
           name={`${focusIdx}.style.border`}
           inline
           alignment='center'
         />
         <NumberField
-          label='透明度'
+          label='Opacity'
           max={1}
           min={0}
           step={0.1}

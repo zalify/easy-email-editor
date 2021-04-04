@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { transformToMjml } from '@/utils/transformToMjml';
 import mjml2Html from 'mjml-browser';
 import { useEditorContext } from '@/hooks/useEditorContext';
-import { findBlockByType, getIndexByIdx, getNodeIdxFromClassName, getNodeTypeFromClassName, getPageIdx, getParentIdx } from '@/utils/block';
+import { getIndexByIdx, getNodeIdxClassName, getNodeIdxFromClassName, getNodeTypeFromClassName, getPageIdx, getParentIdx } from '@/utils/block';
 import { findBlockNode } from '@/utils/findBlockNode';
 import { BlockType, BLOCK_HOVER_CLASSNAME, BLOCK_SELECTED_CLASSNAME, DRAG_HOVER_CLASSNAME, DRAG_TANGENT_CLASSNAME } from '@/constants';
 import { useBlock } from '@/hooks/useBlock';
@@ -12,12 +12,9 @@ import { get } from 'lodash';
 import { Tooltip } from 'antd';
 import { ToolBar } from '../ToolBar';
 import { IBlockData } from '@/typings';
+import { getBlockByType } from '@/components/core/blocks';
 
-export interface EditorProps {
-
-}
-
-export function EditorContent(props: EditorProps) {
+export function EditorContent() {
 
   const { pageData } = useEditorContext();
   const [ref, setRef] = useState<HTMLElement | null>(null);
@@ -26,6 +23,7 @@ export function EditorContent(props: EditorProps) {
   const smallSceen = window.innerWidth < 1920;
 
   const html = mjml2Html(transformToMjml(pageData, getPageIdx())).html;
+
   useEffect(() => {
     if (ref) {
       const onClick = (ev: MouseEvent) => {
@@ -38,14 +36,17 @@ export function EditorContent(props: EditorProps) {
       const onMouseover = (ev: MouseEvent) => {
 
         const blockNode = findBlockNode(ev.target as HTMLElement);
-        if (blockNode) {
 
+        if (blockNode) {
+          const idx = getNodeIdxFromClassName(blockNode.classList)!;
+          setHoverIdx(idx);
           blockNode.classList.add(BLOCK_HOVER_CLASSNAME);
         }
       };
       const onMouseOut = (ev: MouseEvent) => {
         const blockNode = findBlockNode(ev.target as HTMLElement);
         if (blockNode) {
+          setHoverIdx('');
           blockNode.classList.remove(BLOCK_HOVER_CLASSNAME);
         }
       };
@@ -82,7 +83,7 @@ export function EditorContent(props: EditorProps) {
         ref.removeEventListener('dragleave', onDragLeave);
       };
     }
-  }, [ref, setFocusIdx]);
+  }, [ref, setFocusIdx, setHoverIdx]);
 
   useEffect(() => {
 
@@ -97,7 +98,6 @@ export function EditorContent(props: EditorProps) {
       if (!blockNode) return;
 
       const type = ev.dataTransfer?.getData('Text') as BlockType;
-      console.log('ev.dataTransfer?.getData(\'Payload\')', typeof ev.dataTransfer?.getData('Payload'));
       const payload = ev.dataTransfer?.getData('Payload') ? JSON.parse(ev.dataTransfer?.getData('Payload')) : {} as IBlockData;
 
       const parentIdx = getNodeIdxFromClassName(blockNode.classList)!;
@@ -137,7 +137,7 @@ export function EditorContent(props: EditorProps) {
   useEffect(() => {
     if (!ref) return;
 
-    ref.querySelectorAll('[class]').forEach(child => {
+    ref.querySelectorAll('.email-block').forEach(child => {
       child.classList.remove(BLOCK_SELECTED_CLASSNAME);
       const idx = getNodeIdxFromClassName(child.classList);
       if (idx === focusIdx) {
@@ -147,6 +147,20 @@ export function EditorContent(props: EditorProps) {
 
   }, [focusIdx, ref, html]);
 
+  const hoverBlock = useMemo(() => {
+    if (!ref) return null;
+
+    const blockNode = Array.from(ref.querySelectorAll('.email-block')).find(child => child.classList.contains(getNodeIdxClassName(hoverIdx)));
+
+    if (blockNode) {
+      const block = getBlockByType(getNodeTypeFromClassName(blockNode.classList) as BlockType);
+      const { left, top } = blockNode.getBoundingClientRect();
+      return { left, top, name: block.name };
+    }
+
+    return null;
+  }, [hoverIdx, ref]);
+
   return (
     <>
       <style>
@@ -155,7 +169,7 @@ export function EditorContent(props: EditorProps) {
           .node-type-page {
             min-height: 100%
           }
-          .node-type-column , .node-type-group{
+          .node-type-group{
             min-height: 30px
           }
         `
@@ -168,6 +182,14 @@ export function EditorContent(props: EditorProps) {
         visible={!!focusBlock}
       >
         <div style={{ height: '100%' }} ref={setRef} dangerouslySetInnerHTML={{ __html: html }} />
+      </Tooltip>
+      <Tooltip
+        key={hoverIdx}
+        placement={smallSceen ? 'topRight' : 'topLeft'}
+        title={hoverBlock?.name}
+        visible={!!hoverBlock && (hoverIdx !== focusIdx)}
+      >
+        <div style={{ height: '100%', position: 'fixed', top: hoverBlock?.top, left: hoverBlock?.left }} />
       </Tooltip>
 
     </>

@@ -31,11 +31,11 @@ export type IButton = IBlockData<{
 }, { content: string; }>;
 
 export const Button = {
-  name: 'button',
+  name: 'Button',
   type: BasicType.BUTTON,
   Panel,
   createInstance,
   validChildrenType: [
-    BasicType.TEXT,
+
   ],
 };

@@ -8,7 +8,7 @@ export function FontSize() {
   return useMemo(() => {
     return (
       <TextField
-        label='Font-size'
+        label='Font size'
         quickchange
         name={`${focusIdx}.attribute.font-size`}
         inline

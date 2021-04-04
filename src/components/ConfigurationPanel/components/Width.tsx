@@ -11,7 +11,7 @@ export function Width() {
       <Stack wrap={false}>
         <Stack.Item fill>
           <TextField
-            label='width'
+            label='Width'
             name={`${focusIdx}.attribute.width`}
             inline
             quickchange

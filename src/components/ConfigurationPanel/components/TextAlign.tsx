@@ -3,35 +3,34 @@ import { Stack } from '@/components/Stack';
 import { useBlock } from '@/hooks/useBlock';
 import { RadioGroupField } from '@/components/core/Form';
 
-const textAlignOptions = [
+const options = [
   {
     value: 'left',
-    label: 'left',
+    label: 'Left',
   },
   {
     value: 'center',
-    label: 'center',
+    label: 'Center',
   },
   {
     value: 'right',
-    label: 'right',
+    label: 'Right',
   },
 ];
 
-export function TextAlign(props: { attributeName?: string; } = { attributeName: 'text-align' }) {
-  const { attributeName = 'text-align' } = props;
+export function TextAlign() {
   const { focusIdx } = useBlock();
 
   return useMemo(() => {
     return (
       <Stack>
         <RadioGroupField
-          label='textAlign'
-          name={`${focusIdx}.attribute.${attributeName}`}
-          options={textAlignOptions}
+          label='Text align'
+          name={`${focusIdx}.attribute.text-align`}
+          options={options}
           inline
         />
       </Stack>
     );
-  }, [attributeName, focusIdx]);
+  }, [focusIdx]);
 }

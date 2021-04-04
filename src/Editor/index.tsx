@@ -67,7 +67,7 @@ export const Editor = () => {
           tabBarStyle={{ paddingLeft: 20 }}
           onChange={setActiveTab}
         >
-          <TabPane tab='编辑' key='editor'>
+          <TabPane tab='Edit' key='editor'>
             <div style={{ position: 'relative' }}>
               <Droppable droppableId='Editor'>
                 {(provided) => (
@@ -84,15 +84,22 @@ export const Editor = () => {
                         <style type="text/css">
                           {
                             `
+
+                            .email-block {
+                              outline: 1px dashed rgba(170,170,170,0.7);
+                              outline-offset: -2px;
+                            }
+                            .block-hover {
+                              outline-offset: -1px;
+                              outline: 1px solid #3b97e3;
+                            }
+
                             .block-selected {
                               outline-offset: -2px;
                               outline: 2px solid #3b97e3 !important;
                             }
 
-                            .block-hover {
-                              outline-offset: -1px;
-                              outline: 1px solid #3b97e3;
-                            }
+
 
                             .block-dragover {
                               outline-offset: -2px;
@@ -103,13 +110,6 @@ export const Editor = () => {
                               outline-offset: -2px;
                               outline: 2px solid #F5A623 !important;
                             }
-
-                            .email-block {
-                              outline: 1px dashed rgba(170,170,170,0.7);
-                              outline-offset: -2px;
-                          }
-
-
 
                           `
                           }
@@ -122,7 +122,7 @@ export const Editor = () => {
               </Droppable>
             </div>
           </TabPane>
-          <TabPane tab='预览' key='preview'>
+          <TabPane tab='Preview' key='preview'>
             <div
               className={styles.container}
               style={{ paddingTop: smallSceen ? 0 : 20 }}

@@ -27,7 +27,7 @@ export type IText = IBlockData<
 >;
 
 export const Text = {
-  name: '文本',
+  name: 'Text',
   type: BasicType.TEXT,
   Panel,
   createInstance,

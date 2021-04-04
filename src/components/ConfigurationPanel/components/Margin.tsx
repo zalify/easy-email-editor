@@ -10,11 +10,11 @@ export function Margin() {
   return useMemo(() => {
     return (
       <Stack vertical spacing='extraTight'>
-        <TextStyle size="large">外边距</TextStyle>
+        <TextStyle size="large">Margin</TextStyle>
         <Stack wrap={false}>
           <Stack.Item fill>
             <TextField
-              label='上'
+              label='Top'
               quickchange
               name={`${focusIdx}.style.marginTop`}
               inline
@@ -22,7 +22,7 @@ export function Margin() {
           </Stack.Item>
           <Stack.Item fill>
             <TextField
-              label='下'
+              label='Bottom'
               quickchange
               name={`${focusIdx}.style.marginBottom`}
               inline
@@ -33,7 +33,7 @@ export function Margin() {
         <Stack wrap={false}>
           <Stack.Item fill>
             <TextField
-              label='左'
+              label='Left'
               quickchange
               name={`${focusIdx}.style.marginLeft`}
               inline
@@ -41,7 +41,7 @@ export function Margin() {
           </Stack.Item>
           <Stack.Item fill>
             <TextField
-              label='右'
+              label='Right'
               quickchange
               name={`${focusIdx}.style.marginRight`}
               inline

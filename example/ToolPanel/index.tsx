@@ -21,13 +21,13 @@ export const ToolPanel = function () {
   return (
     <div className={styles.container}>
       <Collapse className={styles.collapse} defaultActiveKey={['1', '2', '3']}>
-        <Panel header='布局组件' key='2'>
+        <Panel header='Layout' key='2'>
           <div style={{ padding: '10px 20px' }}>
             <ColumnBlockIconPanel />
           </div>
 
         </Panel>
-        <Panel header='基础组件' key='1'>
+        <Panel header='Content' key='1'>
           <div className={styles.list}>
             <BlockIcon
               text='Wrapper'
@@ -35,27 +35,27 @@ export const ToolPanel = function () {
               icon={<FormOutlined />}
             />
             <BlockIcon
-              text='行'
+              text='Row'
               type={BasicType.SECTION}
               icon={<FormOutlined />}
             />
             <BlockIcon
-              text='列'
-              type={BasicType.COLUMN}
-              icon={<FormOutlined />}
-            />
-            <BlockIcon
-              text='分组'
+              text='Group'
               type={BasicType.GROUP}
               icon={<FormOutlined />}
             />
             <BlockIcon
-              text='图片'
+              text='Column'
+              type={BasicType.COLUMN}
+              icon={<FormOutlined />}
+            />
+            <BlockIcon
+              text='Image'
               type={BasicType.IMAGE}
               icon={<FormOutlined />}
             />
             <BlockIcon
-              text='文本'
+              text='Text'
               type={BasicType.TEXT}
               icon={<FormOutlined />}
             />
@@ -67,6 +67,11 @@ export const ToolPanel = function () {
             <BlockIcon
               text='Divider'
               type={BasicType.DIVIDER}
+              icon={<FormOutlined />}
+            />
+            <BlockIcon
+              text='Spacer'
+              type={BasicType.SPACER}
               icon={<FormOutlined />}
             />
           </div>

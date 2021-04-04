@@ -13,7 +13,6 @@ export const createInstance: CreateInstance<ISpacer> = (payload) => {
     },
     attribute: {
       height: '20px',
-      'vertical-align': 'middle',
 
     },
     children: [],

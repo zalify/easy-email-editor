@@ -8,7 +8,7 @@ export type IRaw = IBlockData<{
 }>;
 
 export const Raw = {
-  name: 'Row',
+  name: 'Raw',
   type: BasicType.RAW,
   Panel,
   createInstance,

@@ -28,7 +28,7 @@ export function TextTransform() {
     return (
       <SelectField
         label="Text transform"
-        name={`${focusIdx}.style.text-transform`}
+        name={`${focusIdx}.attribute.text-transform`}
         options={options}
         inline
       />

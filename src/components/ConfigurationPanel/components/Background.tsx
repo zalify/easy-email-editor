@@ -1,41 +1,31 @@
 import React, { useMemo } from 'react';
 import {
-  ColorPickerField,
-  ImageUploaderField,
   SelectField,
   TextField,
 } from '@/components/core/Form';
 import { Stack } from '@/components/Stack';
 import { useBlock } from '@/hooks/useBlock';
 import { TextStyle } from '@/components/TextStyle';
-import { useEditorContext } from '@/hooks/useEditorContext';
+import { Color } from './Color';
 
 const backgroundRepeatOptions = [
   {
     value: 'no-repeat',
-    label: '不重复',
+    label: 'No repeat',
   },
   {
     value: 'repeat',
-    label: '重复',
+    label: 'Repeat',
   },
   {
     value: 'repeat-x',
-    label: 'x轴重复',
+    label: 'Repeat X',
   },
   {
     value: 'repeat-y',
-    label: 'y轴重复',
+    label: 'Repeat Y',
   },
 ];
-
-// 'background-color': string;
-// 'background-position': string;
-// 'background-position-x': string;
-// 'background-position-y': string;
-// 'background-repeat': 'repeat' | 'no-repeat';
-// 'background-size': string;
-// 'background-url': string;
 
 export function Background() {
   const { focusIdx } = useBlock();
@@ -43,27 +33,22 @@ export function Background() {
   return useMemo(() => {
     return (
       <Stack key={focusIdx} vertical spacing='extraTight'>
-        <TextStyle size='large'>背景</TextStyle>
-        <ColorPickerField
-          label='颜色'
-          name={`${focusIdx}.attribute.background-color`}
-          inline
-          alignment='center'
-        />
+        <TextStyle size='large'>Background</TextStyle>
+        <Color />
         <Stack vertical spacing='none'>
           <TextField
-            label='背景图'
+            label='Background image'
             inline
             name={`${focusIdx}.attribute.background-url`}
           />
           <TextField
-            label='背景大小'
+            label='Background size'
             inline
             name={`${focusIdx}.attribute.background-size`}
           />
         </Stack>
         <SelectField
-          label='背景重复'
+          label='Background repeat'
           name={`${focusIdx}.attribute.background-repeat`}
           options={backgroundRepeatOptions}
           inline

@@ -53,12 +53,12 @@ export function ConfigurationPanel() {
 
   return (
     <Tabs tabBarStyle={{ paddingLeft: 20 }}>
-      <Tabs.TabPane key='配置' tab='配置'>
+      <Tabs.TabPane key='Config' tab='Configarution'>
         <Card
           bodyStyle={{ paddingTop: 0, backgroundColor: '#fff' }}
           title={(
             <TextStyle variation='strong' size='large'>
-              {block.name}属性
+              {block.name} attributes
             </TextStyle>
           )}
         >
@@ -71,7 +71,7 @@ export function ConfigurationPanel() {
           </Stack>
         </Card>
       </Tabs.TabPane>
-      <Tabs.TabPane key='源码' tab='查看源码'>
+      <Tabs.TabPane key='Source' tab='Json source'>
         <Card>
           <Input.TextArea
             key={code}
@@ -81,7 +81,7 @@ export function ConfigurationPanel() {
           />
         </Card>
       </Tabs.TabPane>
-      <Tabs.TabPane key='MjML源码' tab='查看MjML源码'>
+      <Tabs.TabPane key='MjML source' tab='Mjml source'>
         <Card>
           <Input.TextArea
             key={code}

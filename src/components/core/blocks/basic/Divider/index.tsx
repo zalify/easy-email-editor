@@ -16,7 +16,7 @@ export type IDivider = IBlockData<
 >;
 
 export const Divider = {
-  name: 'divider',
+  name: 'Divider',
   type: BasicType.DIVIDER,
   Panel,
   createInstance,

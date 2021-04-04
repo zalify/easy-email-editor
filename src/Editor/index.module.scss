@@ -5,32 +5,4 @@
   padding: 20px 5px 0px 5px;
   overflow-y: scroll;
   overflow-x: auto;
-  // height: calc(100vh - 72px);
-
-
-  &::-webkit-scrollbar
-  {
-      width: 16px;
-      height: 16px;
-  }
-
-
-  &::-webkit-scrollbar-track
-  {
-      box-shadow: inset 0 0 6px rgba(0,0,0, .2);
-  }
-
-  &::-webkit-scrollbar-thumb
-  {
-      box-shadow: inset 0 0 6px rgba(0,0,0, .2);
-      background-color:rgba(0,0,0,0.3);
-  }
-  &::-webkit-scrollbar-corner {
-    background-color:rgba(0,0,0,0.3);
-    width: 16px;
-    height: 16px;
-  }
-  * {
-    list-style: none;
-  }
 }

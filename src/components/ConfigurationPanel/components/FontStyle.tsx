@@ -1,9 +1,17 @@
 import React, { useMemo } from 'react';
 import { useBlock } from '@/hooks/useBlock';
 import { RadioGroupField } from '@/components/core/Form';
-import { getOptionsByStringArray } from '@/utils/getOptionsByStringArray';
 
-const options = getOptionsByStringArray(['normal', 'italic']);
+const options = [
+  {
+    value: 'normal',
+    label: 'Normal',
+  },
+  {
+    value: 'italic',
+    label: 'Italic',
+  },
+];
 
 export function FontStyle() {
   const { focusIdx } = useBlock();
@@ -11,7 +19,7 @@ export function FontStyle() {
   return useMemo(() => {
     return (
       <RadioGroupField
-        label="倾斜"
+        label="Font style"
         name={`${focusIdx}.style.fontStyle`}
         options={options}
         inline

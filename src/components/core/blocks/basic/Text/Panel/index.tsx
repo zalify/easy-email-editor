@@ -1,9 +1,7 @@
 import React from 'react';
 import { Padding } from '@/components/ConfigurationPanel/components/Padding';
 import { Stack } from '@/components/Stack';
-import { TextAlign } from '@/components/ConfigurationPanel/components/TextAlign';
 import {
-  ColorPickerField,
   TextAreaField,
   TextField,
 } from '@/components/core/Form';
@@ -13,7 +11,6 @@ import { TextDecoration } from '@/components/ConfigurationPanel/components/TextD
 import { FontWeight } from '@/components/ConfigurationPanel/components/FontWeight';
 import { FontStyle } from '@/components/ConfigurationPanel/components/FontStyle';
 import { TextTransform } from '@/components/ConfigurationPanel/components/TextTransform';
-import { TextTitle } from '@/components/ConfigurationPanel/components/TextTitle';
 import { FontFamily } from '@/components/ConfigurationPanel/components/FontFamliy';
 import { Height } from '@/components/ConfigurationPanel/components/Height';
 import { ContainerBackgroundColor } from '@/components/ConfigurationPanel/components/ContainerBackgroundColor';
@@ -39,7 +36,6 @@ export function Panel() {
         name={`${focusIdx}.attribute.line-height`}
         inline
       />
-      <TextTitle />
 
       <FontStyle />
       <FontWeight />

@@ -1,4 +1,4 @@
-export type BlockType = BasicType | MarketingType;
+export type BlockType = BasicType;
 
 // 基础组件
 export enum BasicType {
@@ -13,11 +13,6 @@ export enum BasicType {
   BUTTON = 'button',
   WRAPPER = 'wrapper',
   RAW = 'raw',
-}
-
-// 定制组件
-export enum CustomType {
-  LAYOUT = 'layout',
 }
 
 export const DRAG_HOVER_CLASSNAME = 'block-dragover';

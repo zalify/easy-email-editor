@@ -35,11 +35,16 @@ export function useBlock() {
 
       setFormikState((formState) => {
         let parent = get(formState.values, parentIdx) as IBlockData | null;
-        let child = createBlockItem(type, payload);
         if (!parent) {
-          throw new Error('无效节点');
+          throw new Error('Invalid block');
         }
 
+        let child = createBlockItem(type, payload);
+
+        if (typeof positionIndex === 'undefined') {
+          positionIndex = parent.children.length;
+        }
+        let focusIdx = `${parentIdx}.children.[${positionIndex}]`;
         const block = getBlockByType(type);
         const parentBlock = getBlockByType(parent.type);
 
@@ -53,7 +58,12 @@ export function useBlock() {
           BasicType.BUTTON
         ].includes(block.type)) {
 
-          if (parentBlock.type === BasicType.PAGE) {
+          if (parentBlock.type === BasicType.SECTION) {
+            child = createBlockItem(BasicType.COLUMN, {
+              children: [child]
+            });
+            focusIdx += '.children.[0]';
+          } else if (parentBlock.type === BasicType.PAGE) {
             child = createBlockItem(BasicType.SECTION, {
               children: [
                 createBlockItem(BasicType.COLUMN, {
@@ -61,26 +71,21 @@ export function useBlock() {
                 })
               ]
             });
+            focusIdx += '.children.[0].children.[0]';
           }
 
-          if (parentBlock.type === BasicType.SECTION) {
-            child = createBlockItem(BasicType.COLUMN, {
-              children: [child]
-            });
-          }
         }
+
+        console.log('focusIdx', focusIdx);
 
         if (!parentBlock.validChildrenType.includes(child.type)) {
           message.warning(`${block.name} can not insert to ${parentBlock.name}`);
           return formState;
         }
-        if (typeof positionIndex === 'undefined') {
-          positionIndex = parent.children.length;
-        }
 
         parent.children.splice(positionIndex!, 0, child);
         set(formState.values, parentIdx, { ...parent });
-        formState.values.focusIdx = `${parentIdx}.children.[${positionIndex}]`;
+        formState.values.focusIdx = focusIdx;
 
         return { ...formState };
       });
@@ -112,7 +117,7 @@ export function useBlock() {
       setFormikState((formState) => {
         const block = getValueByIdx(values, idx);
         if (!block) {
-          throw new Error('无效节点');
+          throw new Error('Invalid block');
         }
         const parentIdx = getParentIdx(idx);
         const parent = get(
@@ -122,10 +127,10 @@ export function useBlock() {
         const blockIndex = getIndexByIdx(idx);
         if (!parentIdx || !parent) {
           if (block.type === BasicType.PAGE) {
-            message.warning('页面节点不能删除');
+            message.warning('Page node can not remove');
             return formState;
           }
-          throw new Error('未找到父节点');
+          throw new Error('Invalid block');
         }
 
         parent.children.splice(blockIndex, 1);
@@ -154,8 +159,7 @@ export function useBlock() {
         const destinationParentIdx = getParentIdx(destinationIdx);
 
         if (!sourceParentIdx || !destinationParentIdx) {
-          console.log(sourceIdx, destinationIdx);
-          message.warning('未找到父级');
+          message.warning('Something error');
           return formState;
         }
 
