@@ -35,7 +35,7 @@ export function useBlock() {
 
       setFormikState((formState) => {
         let parent = get(formState.values, parentIdx) as IBlockData | null;
-        const child = createBlockItem(type, payload);
+        let child = createBlockItem(type, payload);
         if (!parent) {
           throw new Error('无效节点');
         }
@@ -43,7 +43,34 @@ export function useBlock() {
         const block = getBlockByType(type);
         const parentBlock = getBlockByType(parent.type);
 
-        if (!parentBlock.validChildrenType.includes(type)) {
+        if ([
+          BasicType.TEXT,
+          BasicType.IMAGE,
+          BasicType.SPACER,
+          BasicType.DIVIDER,
+          BasicType.COLUMN,
+          BasicType.GROUP,
+          BasicType.BUTTON
+        ].includes(block.type)) {
+
+          if (parentBlock.type === BasicType.PAGE) {
+            child = createBlockItem(BasicType.SECTION, {
+              children: [
+                createBlockItem(BasicType.COLUMN, {
+                  children: [child]
+                })
+              ]
+            });
+          }
+
+          if (parentBlock.type === BasicType.SECTION) {
+            child = createBlockItem(BasicType.COLUMN, {
+              children: [child]
+            });
+          }
+        }
+
+        if (!parentBlock.validChildrenType.includes(child.type)) {
           message.warning(`${block.name} can not insert to ${parentBlock.name}`);
           return formState;
         }
@@ -94,7 +121,7 @@ export function useBlock() {
         ) as IBlockData | null;
         const blockIndex = getIndexByIdx(idx);
         if (!parentIdx || !parent) {
-          if (block.type !== BasicType.PAGE) {
+          if (block.type === BasicType.PAGE) {
             message.warning('页面节点不能删除');
             return formState;
           }
