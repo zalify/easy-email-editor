@@ -11,6 +11,7 @@ import { getTangentDirection } from '@/utils/getTangentDirection';
 import { get } from 'lodash';
 import { Tooltip } from 'antd';
 import { ToolBar } from '../ToolBar';
+import { IBlockData } from '@/typings';
 
 export interface EditorProps {
 
@@ -96,6 +97,8 @@ export function EditorContent(props: EditorProps) {
       if (!blockNode) return;
 
       const type = ev.dataTransfer?.getData('Text') as BlockType;
+      console.log('ev.dataTransfer?.getData(\'Payload\')', typeof ev.dataTransfer?.getData('Payload'));
+      const payload = ev.dataTransfer?.getData('Payload') ? JSON.parse(ev.dataTransfer?.getData('Payload')) : {} as IBlockData;
 
       const parentIdx = getNodeIdxFromClassName(blockNode.classList)!;
 
@@ -105,13 +108,22 @@ export function EditorContent(props: EditorProps) {
         ev.preventDefault();
 
         const direction = getTangentDirection(ev);
+        const blockData: Parameters<typeof addBlock>[0] = {
+          payload,
+          type,
+          parentIdx
+        };
+
         if (direction === 'top') {
-          addBlock({ type, parentIdx: getParentIdx(parentIdx)!, positionIndex: +getIndexByIdx(parentIdx) });
+          blockData.parentIdx = getParentIdx(parentIdx)!;
+          blockData.positionIndex = +getIndexByIdx(parentIdx);
+
         } else if (direction === 'bottom') {
-          addBlock({ type, parentIdx: getParentIdx(parentIdx)!, positionIndex: +getIndexByIdx(parentIdx) + 1 });
-        } else {
-          addBlock({ type, parentIdx });
+          blockData.parentIdx = getParentIdx(parentIdx)!;
+          blockData.positionIndex = +getIndexByIdx(parentIdx) + 1;
         }
+
+        addBlock(blockData);
       }
     };
 

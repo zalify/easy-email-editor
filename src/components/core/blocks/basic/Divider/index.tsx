@@ -1,5 +1,4 @@
 import { Panel } from './Panel';
-import { Editor } from './Editor';
 import { createInstance } from './createInstance';
 import { IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
@@ -19,7 +18,6 @@ export type IDivider = IBlockData<
 export const Divider = {
   name: 'divider',
   type: BasicType.DIVIDER,
-  Editor,
   Panel,
   createInstance,
   validChildrenType: [],

@@ -1,6 +1,6 @@
 import { BlockType, BasicType } from '../constants';
 import { cloneDeep, get, set } from 'lodash';
-import { IBlockData } from '../typings';
+import { IBlockData, RecursivePartial } from '../typings';
 import { getBlockByType } from '../components/core/blocks';
 import { useCallback } from 'react';
 import { message } from 'antd';
@@ -29,13 +29,13 @@ export function useBlock() {
       type: BlockType;
       parentIdx: string;
       positionIndex?: number;
+      payload?: RecursivePartial<IBlockData>;
     }) => {
-      let { type, parentIdx, positionIndex } = params;
+      let { type, parentIdx, positionIndex, payload } = params;
 
       setFormikState((formState) => {
         let parent = get(formState.values, parentIdx) as IBlockData | null;
-        const child = createBlockItem(type);
-
+        const child = createBlockItem(type, payload);
         if (!parent) {
           throw new Error('无效节点');
         }
@@ -44,7 +44,7 @@ export function useBlock() {
         const parentBlock = getBlockByType(parent.type);
 
         if (!parentBlock.validChildrenType.includes(type)) {
-          message.warning(`${block.name} 不能嵌套在 ${parentBlock.name} 下面`);
+          message.warning(`${block.name} can not insert to ${parentBlock.name}`);
           return formState;
         }
         if (typeof positionIndex === 'undefined') {

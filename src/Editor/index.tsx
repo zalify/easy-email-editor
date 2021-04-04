@@ -1,14 +1,13 @@
 import { useDeviceToolbar } from '@/hooks/useDeviceToolbar';
-import { Tabs, Tooltip } from 'antd';
+import { Tabs } from 'antd';
 import React, { useCallback, useState } from 'react';
-import { useEditorContext } from '../hooks/useEditorContext';
 import { EditorContent } from './components/EditorContent';
 import styles from './index.module.scss';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import root from 'react-shadow';
 import { useBlock } from '@/hooks/useBlock';
-import { ToolBar } from './components/ToolBar';
 import { PreviewContent } from './components/PreviewContent';
+import { IframeComponent } from '@/components/IframeComponent';
 
 const TabPane = Tabs.TabPane;
 
@@ -110,7 +109,9 @@ export const Editor = () => {
                               outline-offset: -2px;
                           }
 
-                            `
+
+
+                          `
                           }
                         </style>
                       </root.div>
@@ -126,9 +127,12 @@ export const Editor = () => {
               className={styles.container}
               style={{ paddingTop: smallSceen ? 0 : 20 }}
             >
-              <root.div style={innerContainerStyles}>
-                <PreviewContent />
-              </root.div>
+              <div style={innerContainerStyles}>
+                <IframeComponent height="100%" width="100%" style={{ border: 'none', paddingTop: -16 }}>
+                  <PreviewContent />
+                </IframeComponent>
+              </div>
+
             </div>
           </TabPane>
         </Tabs>

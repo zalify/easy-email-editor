@@ -13,6 +13,7 @@ import {
 } from '@ant-design/icons';
 import { BlockIcon } from './components/BlockIcon';
 import { BasicType } from '@/constants';
+import { ColumnBlockIconPanel } from './components/ColumnBlockIcon';
 
 const { Panel } = Collapse;
 
@@ -20,6 +21,12 @@ export const ToolPanel = function () {
   return (
     <div className={styles.container}>
       <Collapse className={styles.collapse} defaultActiveKey={['1', '2', '3']}>
+        <Panel header='布局组件' key='2'>
+          <div style={{ padding: '10px 20px' }}>
+            <ColumnBlockIconPanel />
+          </div>
+
+        </Panel>
         <Panel header='基础组件' key='1'>
           <div className={styles.list}>
             <BlockIcon
@@ -64,6 +71,7 @@ export const ToolPanel = function () {
             />
           </div>
         </Panel>
+
       </Collapse>
     </div>
   );

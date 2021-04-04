@@ -1,5 +1,4 @@
 import { Panel } from './Panel';
-import { Editor } from './Editor';
 import { createInstance } from './createInstance';
 import { IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
@@ -22,7 +21,6 @@ export type IColumn = IBlockData<{
 export const Column = {
   name: '列',
   type: BasicType.COLUMN,
-  Editor,
   Panel,
   createInstance,
   validChildrenType: [

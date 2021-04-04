@@ -1,5 +1,4 @@
 import { Panel } from './Panel';
-import { Editor } from './Editor';
 import { createInstance } from './createInstance';
 import { IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
@@ -15,7 +14,6 @@ export type IGroup = IBlockData<{
 export const Group = {
   name: 'Group',
   type: BasicType.GROUP,
-  Editor,
   Panel,
   createInstance,
   validChildrenType: [

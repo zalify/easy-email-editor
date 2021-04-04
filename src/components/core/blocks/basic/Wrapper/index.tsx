@@ -1,5 +1,4 @@
 import { Panel } from './Panel';
-import { Editor } from './Editor';
 import { createInstance } from './createInstance';
 import { IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
@@ -20,7 +19,6 @@ export type IWrapper = IBlockData<
 export const Wrapper = {
   name: 'Wrapper',
   type: BasicType.WRAPPER,
-  Editor,
   Panel,
   createInstance,
   validChildrenType: [BasicType.SECTION],

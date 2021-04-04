@@ -15,9 +15,9 @@ export enum BasicType {
   RAW = 'raw',
 }
 
-// 营销组件
-export enum MarketingType {
-  COUNTDOWN = 'countdown',
+// 定制组件
+export enum CustomType {
+  LAYOUT = 'layout',
 }
 
 export const DRAG_HOVER_CLASSNAME = 'block-dragover';

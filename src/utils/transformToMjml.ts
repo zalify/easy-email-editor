@@ -1,4 +1,4 @@
-import { BasicType } from '@/constants';
+import { BasicType, CustomType } from '@/constants';
 import { IBlockData } from '@/typings';
 import { getChildIdx, getNodeIdxClassName, getNodeTypeClassName } from './block';
 import { classnames } from './classnames';
@@ -7,11 +7,18 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
   const att = {
     ...data.attribute
   };
-  if (idx) {
+  const isTest = !!idx;
+  if (isTest) {
     att['css-class'] = classnames('email-block', getNodeIdxClassName(idx), getNodeTypeClassName(data.type));
   }
   const attributeStr = Object.keys(att).map(key => `${key}="${att[key]}"`).join(' ');
   const children = data.children.map((child, index) => transformToMjml(child, idx ? getChildIdx(idx, index) : undefined)).join('\n');
+
+  const placeholder = isTest ? `
+                    <mj-image width="150px" height="150px" src="https://assets.maocanhua.cn/FgsKCRd2a-9R3RD6UEtYgvlskg6L" />
+                    <mj-text color="rgb(85, 85, 85)" font-size="16px" align="center">Drop a content block here</mj-text>
+                      ` : '';
+
   switch (data.type) {
     case BasicType.PAGE:
       const breakpoint = data.data.value.breakpoint ? `<mj-breakpoint width="${data.data.value.breakpoint}" />` : '';
@@ -43,7 +50,7 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
       return (
         `
           <mj-column ${attributeStr}>
-           ${children}
+           ${children || placeholder}
           </mj-column>
         `
       );
@@ -93,6 +100,13 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
           <mj-raw ${attributeStr}>${data.data.value?.content}</mj-raw>
         `
       );
+    case CustomType.LAYOUT:
+      return (
+        `
+          <mj-wrapper  ${attributeStr}>${children}</mj-wrapper >
+        `
+      );
+
   }
 
   throw new Error(`No match block ${JSON.stringify(data)}`);

@@ -1,5 +1,4 @@
 import { Panel } from './Panel';
-import { Editor } from './Editor';
 import { createInstance } from './createInstance';
 import { IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
@@ -24,7 +23,6 @@ export type IImage = IBlockData<{
 export const Image = {
   name: 'image',
   type: BasicType.IMAGE,
-  Editor,
   Panel,
   createInstance,
   validChildrenType: [],

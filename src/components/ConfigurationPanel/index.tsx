@@ -16,8 +16,6 @@ export function ConfigurationPanel() {
 
   const block = value && findBlockByType(value.type);
 
-  console.log(transformToMjml(value));
-
   const code = useMemo(() => {
     if (!value) return '';
     return jsonFormat(value, {

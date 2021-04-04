@@ -1,5 +1,4 @@
 import { Panel } from './Panel';
-import { Editor } from './Editor';
 import { createInstance } from './createInstance';
 import { IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
@@ -27,7 +26,6 @@ export type ISection = IBlockData<
 export const Section = {
   name: 'Section',
   type: BasicType.SECTION,
-  Editor,
   Panel,
   createInstance,
   validChildrenType: [BasicType.SECTION, BasicType.COLUMN, BasicType.GROUP],

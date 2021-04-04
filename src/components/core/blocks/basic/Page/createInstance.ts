@@ -8,7 +8,7 @@ export const createInstance: CreateInstance<IPage> = (payload) => {
     type: BasicType.PAGE,
     data: {
       value: {
-
+        breakpoint: '400px'
       },
     },
     attribute: {

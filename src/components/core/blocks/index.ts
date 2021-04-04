@@ -12,6 +12,7 @@ import { Divider } from './basic/Divider';
 import { Wrapper } from './basic/Wrapper';
 import { Spacer } from './basic/Spacer';
 import { Raw } from './basic/Raw';
+import { Layout } from './custom/Layout';
 
 export const BlocksMap = {
   Page,
@@ -24,7 +25,9 @@ export const BlocksMap = {
   Divider,
   Wrapper,
   Spacer,
-  Raw
+  Raw,
+
+  Layout
 };
 
 export function getBlockByType(type: BlockType): IBlock<any> {
