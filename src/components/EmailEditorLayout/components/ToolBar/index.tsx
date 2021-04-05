@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 
 import { Tooltip } from 'antd';
-import { UpOutlined, DownOutlined, UpSquareOutlined, DownSquareOutlined, CopyOutlined, CloseOutlined, BorderOuterOutlined } from '@ant-design/icons';
+import { ArrowUpOutlined, ArrowDownOutlined, UpSquareOutlined, DownSquareOutlined, CopyOutlined, CloseOutlined, BorderOuterOutlined } from '@ant-design/icons';
 import { Stack } from '@/components/Stack';
 import { TextStyle } from '@/components/TextStyle';
 import { findBlockByType, getParentIdx, getSiblingIdx } from '@/utils/block';
@@ -26,14 +26,14 @@ export const ToolBar = () => {
     const hasChildren = focusBlock.children.length > 0;
     return [
       {
-        icon: <UpOutlined />,
+        icon: <ArrowUpOutlined />,
         title: 'Move up',
         method() {
           moveByIdx(focusIdx, getSiblingIdx(focusIdx, -1));
         }
       },
       {
-        icon: <DownOutlined />,
+        icon: <ArrowDownOutlined />,
         title: 'Move down',
         method() {
           moveByIdx(focusIdx, getSiblingIdx(focusIdx, 1));
@@ -89,7 +89,6 @@ export const ToolBar = () => {
           sidebarList.map(item => {
             return (
               <Tooltip key={item.title} placement="topRight" title={item.toolTip || item.title}>
-
                 <span style={{ cursor: 'pointer' }} onClick={item.method}>{item.icon}</span>
               </Tooltip>
             );

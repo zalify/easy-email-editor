@@ -1,4 +1,4 @@
-import { EditorProps } from '@/components/EditorProvider';
+import { EditorProps } from '@/components/EmailEditorProvider';
 import { useFormikContext } from 'formik';
 
 export function useEditorContext() {

@@ -9,6 +9,7 @@ import { useBlock } from '@/hooks/useBlock';
 import { transformToMjml } from '@/utils/transformToMjml';
 import mjml from 'mjml-browser';
 import { MjmlToJson } from '@/utils/MjmlToJson';
+import { BlockLayerManager } from './components/BlockLayerManager';
 
 export function ConfigurationPanel() {
   const { focusIdx, setValueByIdx, values } = useBlock();
@@ -71,6 +72,9 @@ export function ConfigurationPanel() {
           </Stack>
         </Card>
       </Tabs.TabPane>
+      <Tabs.TabPane key='Block layer' tab='Block layer'>
+        <BlockLayerManager />
+      </Tabs.TabPane>
       <Tabs.TabPane key='Source' tab='Json source'>
         <Card>
           <Input.TextArea
@@ -91,6 +95,7 @@ export function ConfigurationPanel() {
           />
         </Card>
       </Tabs.TabPane>
+
     </Tabs>
   );
 }

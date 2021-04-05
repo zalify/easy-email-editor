@@ -13,7 +13,7 @@ export interface IBlockData<K extends { [key: string]: any; } = any, T extends a
   type: BlockType;
   data: {
     value: T;
-    variable?: string;
+    hidden?: boolean;
   };
   attribute: K;
   children: IBlockData[];

@@ -36,7 +36,7 @@ export function useDeviceToolbar() {
   const content = useMemo(() => {
     return (
       <div
-        style={{ position: 'absolute', top: 0, height: 72, lineHeight: '72px' }}
+        style={{ height: 72, lineHeight: '72px', background: '#fff', display: 'flex', alignItems: 'center', paddingLeft: 16 }}
       >
         <Stack distribution='equalSpacing' alignment='center'>
           <Stack>

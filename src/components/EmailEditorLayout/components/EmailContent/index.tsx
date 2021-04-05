@@ -14,7 +14,7 @@ import { ToolBar } from '../ToolBar';
 import { IBlockData } from '@/typings';
 import { getBlockByType } from '@/components/core/blocks';
 
-export function EditorContent() {
+export function EmailContent() {
 
   const { pageData } = useEditorContext();
   const [ref, setRef] = useState<HTMLElement | null>(null);
@@ -58,8 +58,13 @@ export function EditorContent() {
           blockNode.classList.remove(DRAG_HOVER_CLASSNAME);
           blockNode.classList.remove(DRAG_TANGENT_CLASSNAME);
           if (['top', 'bottom'].includes(getTangentDirection(ev))) {
+            const idx = getParentIdx(getNodeIdxFromClassName(blockNode.classList)!)!;
+            setHoverIdx(idx);
+
             blockNode.classList.add(DRAG_TANGENT_CLASSNAME);
           } else {
+            const idx = getNodeIdxFromClassName(blockNode.classList)!;
+            setHoverIdx(idx);
             blockNode.classList.add(DRAG_HOVER_CLASSNAME);
           }
         }
@@ -166,6 +171,31 @@ export function EditorContent() {
       <style>
         {
           `
+          .email-block {
+            outline: 1px dashed rgba(170,170,170,0.7);
+            outline-offset: -2px;
+          }
+
+          .block-hover {
+            outline-offset: -1px;
+            outline: 1px solid #3b97e3;
+          }
+
+          .block-selected {
+            outline-offset: -2px;
+            outline: 2px solid #3b97e3 !important;
+          }
+
+          .block-dragover {
+            outline-offset: -2px;
+            outline: 2px solid #D0021B !important;
+          }
+
+          .block-tangent {
+            outline-offset: -2px;
+            outline: 2px solid #F5A623 !important;
+          }
+
           .node-type-page {
             min-height: 100%
           }
@@ -185,7 +215,7 @@ export function EditorContent() {
       </Tooltip>
       <Tooltip
         key={hoverIdx}
-        placement={smallSceen ? 'topRight' : 'topLeft'}
+        placement="leftTop"
         title={hoverBlock?.name}
         visible={!!hoverBlock && (hoverIdx !== focusIdx)}
       >

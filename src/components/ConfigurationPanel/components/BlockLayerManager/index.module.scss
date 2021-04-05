@@ -1,0 +1,25 @@
+.blockItem {
+  height: 40px;
+  line-height: 40px;
+  list-style-position: inside;
+  list-style-type: none;
+  padding-left: 14px;
+  padding-right: 16px;
+  display: flex;
+  cursor: pointer;
+  &:hover {
+    color: #1890ff;
+    background-color: #e6f7ff;
+  }
+}
+
+.blockList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.blockItemSelected {
+  color: #1890ff;
+  background-color: #e6f7ff;
+}

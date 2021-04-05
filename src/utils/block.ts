@@ -35,7 +35,7 @@ export function findBlockByType(type: BlockType) {
 }
 
 export const getIndexByIdx = (idx: string) => {
-  return Number(idx.match(/\.\[(\d+)\]$/)?.[1]);
+  return Number(idx?.match(/\.\[(\d+)\]$/)?.[1]) || 0;
 };
 
 export const getParentIdx = (idx: string) => {

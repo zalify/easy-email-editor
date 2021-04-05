@@ -1,7 +1,7 @@
 export const findBlockNode = (target?: HTMLElement | null): HTMLElement | null => {
   if (!target) return null;
 
-  if (target.classList?.toString().includes?.('node-idx')) {
+  if (target.classList?.contains('email-block')) {
     return target;
   }
   if (target.parentNode) {

@@ -4,7 +4,7 @@ import { transformToMjml } from '@/utils/transformToMjml';
 import mjml2Html from 'mjml-browser';
 import { useEditorContext } from '@/hooks/useEditorContext';
 
-export function PreviewContent() {
+export function PreviewEmail() {
 
   const { pageData } = useEditorContext();
 

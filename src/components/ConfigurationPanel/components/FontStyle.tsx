@@ -20,7 +20,7 @@ export function FontStyle() {
     return (
       <RadioGroupField
         label="Font style"
-        name={`${focusIdx}.style.fontStyle`}
+        name={`${focusIdx}.attribute.font-style`}
         options={options}
         inline
       />

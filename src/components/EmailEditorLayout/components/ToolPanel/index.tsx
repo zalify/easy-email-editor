@@ -2,14 +2,16 @@ import React from 'react';
 import styles from './index.module.scss';
 import { Collapse } from 'antd';
 import {
-  CustomerServiceOutlined,
-  VideoCameraOutlined,
   PictureOutlined,
   LayoutOutlined,
   FontSizeOutlined,
-  MergeCellsOutlined,
-  FormOutlined,
-  FieldTimeOutlined,
+  DatabaseOutlined,
+  MinusOutlined,
+  ColumnHeightOutlined,
+  BorderOuterOutlined,
+  PicCenterOutlined,
+  YoutubeOutlined,
+  TableOutlined
 } from '@ant-design/icons';
 import { BlockIcon } from './components/BlockIcon';
 import { BasicType } from '@/constants';
@@ -32,47 +34,48 @@ export const ToolPanel = function () {
             <BlockIcon
               text='Wrapper'
               type={BasicType.WRAPPER}
-              icon={<FormOutlined />}
+              icon={<BorderOuterOutlined />}
             />
             <BlockIcon
               text='Row'
               type={BasicType.SECTION}
-              icon={<FormOutlined />}
+              icon={<PicCenterOutlined />}
             />
+
             <BlockIcon
               text='Group'
               type={BasicType.GROUP}
-              icon={<FormOutlined />}
+              icon={<TableOutlined />}
             />
             <BlockIcon
               text='Column'
               type={BasicType.COLUMN}
-              icon={<FormOutlined />}
+              icon={<DatabaseOutlined />}
             />
             <BlockIcon
               text='Image'
               type={BasicType.IMAGE}
-              icon={<FormOutlined />}
+              icon={<PictureOutlined />}
             />
             <BlockIcon
               text='Text'
               type={BasicType.TEXT}
-              icon={<FormOutlined />}
+              icon={<FontSizeOutlined />}
             />
             <BlockIcon
               text='Button'
               type={BasicType.BUTTON}
-              icon={<FormOutlined />}
+              icon={<YoutubeOutlined />}
             />
             <BlockIcon
               text='Divider'
               type={BasicType.DIVIDER}
-              icon={<FormOutlined />}
+              icon={<MinusOutlined />}
             />
             <BlockIcon
               text='Spacer'
               type={BasicType.SPACER}
-              icon={<FormOutlined />}
+              icon={<ColumnHeightOutlined />}
             />
           </div>
         </Panel>

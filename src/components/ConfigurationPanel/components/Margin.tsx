@@ -16,7 +16,7 @@ export function Margin() {
             <TextField
               label='Top'
               quickchange
-              name={`${focusIdx}.style.marginTop`}
+              name={`${focusIdx}.attribute.marginTop`}
               inline
             />
           </Stack.Item>
@@ -24,7 +24,7 @@ export function Margin() {
             <TextField
               label='Bottom'
               quickchange
-              name={`${focusIdx}.style.marginBottom`}
+              name={`${focusIdx}.attribute.marginBottom`}
               inline
             />
           </Stack.Item>
@@ -35,7 +35,7 @@ export function Margin() {
             <TextField
               label='Left'
               quickchange
-              name={`${focusIdx}.style.marginLeft`}
+              name={`${focusIdx}.attribute.marginLeft`}
               inline
             />
           </Stack.Item>
@@ -43,7 +43,7 @@ export function Margin() {
             <TextField
               label='Right'
               quickchange
-              name={`${focusIdx}.style.marginRight`}
+              name={`${focusIdx}.attribute.marginRight`}
               inline
             />
           </Stack.Item>

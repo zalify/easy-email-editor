@@ -15,12 +15,12 @@ export function Decoration() {
         </TextStyle>
         <TextField
           label="Border radius"
-          name={`${focusIdx}.style.borderRadius`}
+          name={`${focusIdx}.attribute.borderRadius`}
           inline
         />
         <TextField
           label='Border'
-          name={`${focusIdx}.style.border`}
+          name={`${focusIdx}.attribute.border`}
           inline
           alignment='center'
         />
@@ -29,7 +29,7 @@ export function Decoration() {
           max={1}
           min={0}
           step={0.1}
-          name={`${focusIdx}.style.opacity`}
+          name={`${focusIdx}.attribute.opacity`}
           inline
           alignment='center'
         />

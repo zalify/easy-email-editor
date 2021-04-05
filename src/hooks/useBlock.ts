@@ -167,10 +167,15 @@ export function useBlock() {
           formState.values,
           sourceParentIdx
         ) as IBlockData;
+
         const destinationParent = get(
           formState.values,
           sourceParentIdx
         ) as IBlockData;
+
+        if (destinationIndex >= destinationParent.children.length) {
+          return formState;
+        }
 
         const [removed] = sourceParent.children.splice(Number(sourceIndex), 1);
         destinationParent.children.splice(Number(destinationIndex), 0, removed);

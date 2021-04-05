@@ -8,14 +8,16 @@ import {
 import { classnames } from './classnames';
 
 export function transformToMjml(data: IBlockData, idx?: string): string {
+  if (data.data.hidden) return '';
   const att = {
     ...data.attribute,
   };
+
   const isTest = !!idx;
   if (isTest) {
     att['css-class'] = classnames(
       'email-block',
-      getNodeIdxClassName(idx),
+      getNodeIdxClassName(idx!),
       getNodeTypeClassName(data.type)
     );
   }
@@ -30,9 +32,8 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
 
   const placeholder = isTest
     ? `
-                    <mj-image width="150px" src="https://assets.maocanhua.cn/FgsKCRd2a-9R3RD6UEtYgvlskg6L" />
-                    <mj-text color="rgb(85, 85, 85)" font-size="16px" align="center">Drop a content block here</mj-text>
-                      `
+        <mj-image width="150px" src="https://assets.maocanhua.cn/Fn56mk7TdHP6qJOf1xTLzDx_Y3iW" />
+      `
     : '';
 
   switch (data.type) {
@@ -98,5 +99,4 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
         `;
   }
 
-  throw new Error(`No match block ${JSON.stringify(data)}`);
 }
