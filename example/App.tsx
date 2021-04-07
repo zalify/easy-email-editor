@@ -21,9 +21,11 @@ export default function App() {
   };
 
   return (
-    <EmailEditor
-      data={data}
-      onSubmit={onSubmit}
-    />
+    <div>
+      <EmailEditor
+        data={data}
+        onSubmit={onSubmit}
+      />
+    </div>
   );
 }

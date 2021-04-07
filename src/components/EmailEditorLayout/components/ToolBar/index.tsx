@@ -8,6 +8,7 @@ import { Stack } from '@/components/Stack';
 import { TextStyle } from '@/components/TextStyle';
 import { findBlockByType, getParentIdx, getSiblingIdx } from '@/utils/block';
 import { useBlock } from '@/hooks/useBlock';
+import { BasicType } from '@/constants';
 
 type SideBarItem = {
   icon: React.ReactNode;
@@ -24,6 +25,24 @@ export const ToolBar = () => {
   const sidebarList = useMemo(() => {
     if (!focusBlock) return [];
     const hasChildren = focusBlock.children.length > 0;
+    const isPage = focusBlock.type === BasicType.PAGE;
+    if (isPage) {
+      return [
+        hasChildren && {
+          icon: <DownSquareOutlined />,
+          title: 'Select child',
+          toolTip: (
+            <Stack>            {
+              focusBlock.children.map((item, index) => {
+                return <Tooltip key={index} placement="topLeft" title={`Select child node ${findBlockByType(item.type)?.name}`}><BorderOuterOutlined onClick={() => setFocusIdx(`${focusIdx}.children.[${index}]`)} /></Tooltip>;
+              })
+            }
+            </Stack>
+          ),
+          method() { }
+        },
+      ].filter(Boolean) as SideBarItem[];
+    }
     return [
       {
         icon: <ArrowUpOutlined />,
@@ -77,7 +96,7 @@ export const ToolBar = () => {
           removeBlock(focusIdx);
         }
       }
-    ].filter(item => !!item) as SideBarItem[];
+    ].filter(Boolean) as SideBarItem[];
   }, [copyBlock, focusBlock, focusIdx, moveByIdx, removeBlock, setFocusIdx]);
 
   return useMemo(() => {

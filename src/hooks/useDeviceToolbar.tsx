@@ -1,20 +1,19 @@
-import { Stack } from '@/components/Stack';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   DesktopOutlined,
   TabletOutlined,
 } from '@ant-design/icons';
-import { Button, InputNumber, Tooltip } from 'antd';
+import { Button, Tooltip } from 'antd';
 
-export const platformType = [
+export const platformList = [
   {
     value: 'laptop',
-    label: '电脑',
+    label: 'Preview on laptop',
     icon: <DesktopOutlined />,
   },
   {
     value: 'mobile',
-    label: '手机',
+    label: 'Preview on mobile',
     icon: <TabletOutlined />,
   },
 ];
@@ -22,7 +21,6 @@ export const platformType = [
 export function useDeviceToolbar() {
   const [width, setWidth] = useState(1200);
   const [selectedPlatform, setSelectedPlatform] = useState('laptop');
-  const isSelectedOther = selectedPlatform === 'other';
 
   useEffect(() => {
     if (selectedPlatform === 'laptop') {
@@ -33,47 +31,30 @@ export function useDeviceToolbar() {
     }
   }, [selectedPlatform]);
 
-  const content = useMemo(() => {
+  const renderPlatform = useCallback((item: {
+    value: string;
+    label: string;
+    icon: JSX.Element;
+  }) => {
     return (
-      <div
-        style={{ height: 72, lineHeight: '72px', background: '#fff', display: 'flex', alignItems: 'center', paddingLeft: 16 }}
-      >
-        <Stack distribution='equalSpacing' alignment='center'>
-          <Stack>
-            <Stack spacing='extraTight'>
-              {platformType.map((item) => (
-                <Tooltip title={item.label} key={item.value}>
-                  <Button
-                    type={
-                      selectedPlatform === item.value ? 'primary' : undefined
-                    }
-                    ghost={selectedPlatform === item.value}
-                    size='small'
-                    onClick={() => setSelectedPlatform(item.value)}
-                  >
-                    {item.icon}
-                  </Button>
-                </Tooltip>
-              ))}
-            </Stack>
-            <Stack spacing='extraTight'>
-              <InputNumber
-                disabled={!isSelectedOther}
-                size='small'
-                style={{ width: 50 }}
-                value={width}
-                onChange={(val) => setWidth(Number(val))}
-              />
-
-            </Stack>
-          </Stack>
-        </Stack>
-      </div>
+      <Tooltip title={item.label} key={item.value}>
+        <Button
+          type={
+            selectedPlatform === item.value ? 'primary' : undefined
+          }
+          ghost={selectedPlatform === item.value}
+          size='small'
+          onClick={() => setSelectedPlatform(item.value)}
+        >
+          {<DesktopOutlined />}
+        </Button>
+      </Tooltip>
     );
-  }, [isSelectedOther, selectedPlatform, width]);
+  }, [selectedPlatform]);
 
   return {
-    content,
+    laptopIcon: renderPlatform(platformList[0]),
+    mobileIcon: renderPlatform(platformList[1]),
     width,
   };
 }

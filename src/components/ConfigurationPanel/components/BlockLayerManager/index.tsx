@@ -8,7 +8,6 @@ import { useBlock } from '@/hooks/useBlock';
 import { BasicType, BLOCK_HOVER_CLASSNAME } from '@/constants';
 import { Stack } from '@/components/Stack';
 import { TextStyle } from '@/components/TextStyle';
-import { Droppable } from 'react-beautiful-dnd';
 import styles from './index.module.scss';
 import { classnames } from '@/utils/classnames';
 import { findBlockNodeByIdx } from '@/utils/findBlockNodeByIdx';
@@ -18,18 +17,7 @@ export function BlockLayerManager() {
   const { pageData } = useEditorContext();
 
   return (
-    <Droppable droppableId='Editor'>
-      {(provided) => (
-        <div
-          ref={provided.innerRef}
-          {...provided.droppableProps}
-        >
-          <BlockLayerItem blockData={pageData} idx={getPageIdx()} />
-          <div style={{ opacity: 0 }}>{provided.placeholder}</div>
-        </div>
-      )}
-
-    </Droppable>
+    <BlockLayerItem blockData={pageData} idx={getPageIdx()} />
 
   );
 }
@@ -150,7 +138,7 @@ function EyeIcon({ idx, blockData }: { idx: string; blockData: IBlockData; }) {
 }
 
 function ShortcutTool({ idx, blockData }: { idx: string; blockData: IBlockData; }) {
-  const { moveByIdx, copyBlock } = useBlock();
+  const { copyBlock } = useBlock();
 
   const enHanceHandler = (handler: (...rest: any) => void) => {
 
@@ -159,7 +147,7 @@ function ShortcutTool({ idx, blockData }: { idx: string; blockData: IBlockData; 
       handler();
     };
   };
-
+  if (blockData.type === BasicType.PAGE) return null;
   return (
     <Stack>
       <CopyOutlined onClick={enHanceHandler(() => copyBlock(idx))} />

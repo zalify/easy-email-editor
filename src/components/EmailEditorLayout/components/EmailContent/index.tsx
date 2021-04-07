@@ -20,8 +20,6 @@ export function EmailContent() {
   const [ref, setRef] = useState<HTMLElement | null>(null);
   const { focusIdx, values, setFocusIdx, hoverIdx, setHoverIdx, addBlock, focusBlock } = useBlock();
 
-  const smallSceen = window.innerWidth < 1920;
-
   const html = mjml2Html(transformToMjml(pageData, getPageIdx())).html;
 
   useEffect(() => {
@@ -57,7 +55,7 @@ export function EmailContent() {
 
           blockNode.classList.remove(DRAG_HOVER_CLASSNAME);
           blockNode.classList.remove(DRAG_TANGENT_CLASSNAME);
-          if (['top', 'bottom'].includes(getTangentDirection(ev))) {
+          if (['top', 'bottom', 'right', 'left'].includes(getTangentDirection(ev))) {
             const idx = getParentIdx(getNodeIdxFromClassName(blockNode.classList)!)!;
             setHoverIdx(idx);
 
@@ -119,11 +117,11 @@ export function EmailContent() {
           parentIdx
         };
 
-        if (direction === 'top') {
+        if (direction === 'top' || direction === 'left') {
           blockData.parentIdx = getParentIdx(parentIdx)!;
           blockData.positionIndex = +getIndexByIdx(parentIdx);
 
-        } else if (direction === 'bottom') {
+        } else if (direction === 'bottom' || direction === 'right') {
           blockData.parentIdx = getParentIdx(parentIdx)!;
           blockData.positionIndex = +getIndexByIdx(parentIdx) + 1;
         }
@@ -207,7 +205,7 @@ export function EmailContent() {
       </style>
       <Tooltip
         key={2}
-        placement={smallSceen ? 'topRight' : 'topLeft'}
+        placement="topRight"
         title={<ToolBar />}
         visible={!!focusBlock}
       >
