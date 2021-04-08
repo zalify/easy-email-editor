@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 
 import { Tooltip } from 'antd';
-import { ArrowUpOutlined, ArrowDownOutlined, UpSquareOutlined, DownSquareOutlined, CopyOutlined, CloseOutlined, BorderOuterOutlined } from '@ant-design/icons';
+import { ArrowUpOutlined, ArrowDownOutlined, UpSquareOutlined, DownSquareOutlined, CopyOutlined, CloseOutlined, BorderOuterOutlined, RedoOutlined, UndoOutlined } from '@ant-design/icons';
 import { Stack } from '@/components/Stack';
 import { TextStyle } from '@/components/TextStyle';
 import { findBlockByType, getParentIdx, getSiblingIdx } from '@/utils/block';
@@ -18,7 +18,7 @@ type SideBarItem = {
   toolTip?: React.ReactNode;
 };
 
-export const ToolBar = () => {
+export const BlockToolbar = () => {
 
   const { moveByIdx, focusBlock, copyBlock, removeBlock, focusIdx, setFocusIdx } = useBlock();
   const block = focusBlock && findBlockByType(focusBlock.type);

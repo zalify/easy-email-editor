@@ -9,11 +9,12 @@ import styles from './index.module.scss';
 import root from 'react-shadow';
 import { IframeComponent } from '@/components/IframeComponent';
 import { ConfigurationPanel } from '@/components/ConfigurationPanel';
-import { ToolPanel } from './components/ToolPanel';
+import { ComponentsPanel } from './components/ComponentsPanel';
 import { EmailContent } from './components/EmailContent';
 import { PreviewEmail } from './components/PreviewEmail';
 import { Stack } from '../Stack';
 import { TextStyle } from '../TextStyle';
+import { ToolsPanel } from './components/ToolsPanel';
 
 const TabPane = Tabs.TabPane;
 
@@ -30,7 +31,7 @@ export const EmailEditorLayout = () => {
     marginLeft: 'auto',
     marginRight: 'auto',
     textAlign: 'center',
-    backgroundColor: '#fff'
+
   };
 
   return (
@@ -45,7 +46,7 @@ export const EmailEditorLayout = () => {
               overflow: 'overlay',
             }}
           >
-            <ToolPanel />
+            <ComponentsPanel />
           </div>
         </Layout.Sider>
 
@@ -56,18 +57,19 @@ export const EmailEditorLayout = () => {
               activeKey={activeTab}
               tabBarStyle={{ paddingLeft: 20, backgroundColor: '#fff' }}
               onChange={setActiveTab}
+              tabBarExtraContent={<ToolsPanel />}
             >
               <TabPane tab={<Stack spacing="none"><EditOutlined /><TextStyle>Edit</TextStyle></Stack>} key='editor' style={{ backgroundColor: 'transparent' }}>
                 <root.div
                   id='VisualEditorEditMode'
 
-                  style={innerContainerStyles}
+                  style={{ ...innerContainerStyles, backgroundColor: '#fff' }}
                 >
                   <EmailContent />
                 </root.div>
               </TabPane>
               <TabPane tab={<Stack spacing="none"><DesktopOutlined /><TextStyle>Preview</TextStyle></Stack>} key='laptopIcon' style={{ backgroundColor: 'transparent' }}>
-                <div style={innerContainerStyles}>
+                <div style={{ ...innerContainerStyles, backgroundColor: '#fff' }}>
                   <IframeComponent height="100%" width="100%" style={{ border: 'none', paddingTop: -16 }}>
                     <PreviewEmail />
                   </IframeComponent>

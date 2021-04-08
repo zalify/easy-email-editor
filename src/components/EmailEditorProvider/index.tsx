@@ -3,6 +3,7 @@ import { Formik } from 'formik';
 import React, { useMemo } from 'react';
 import { IPage } from '../core/blocks/basic/Page';
 import { EmailEditorLayout } from '../EmailEditorLayout';
+import { RecordProvider } from '../RecordProvider';
 
 export interface EmailEditorProviderProps<T extends IEmailTemplate = any> {
   data: T;
@@ -26,7 +27,7 @@ export const EmailEditorProvider = (props: EmailEditorProviderProps<IEmailTempla
       subTitle: data.subTitle,
       content: data.content,
       focusIdx: 'content',
-      hoverIdx: ''
+      hoverIdx: '',
 
     };
   }, [data]);
@@ -36,10 +37,13 @@ export const EmailEditorProvider = (props: EmailEditorProviderProps<IEmailTempla
   return (
     <Formik<EditorProps>
       initialValues={initialValues}
-      enableReinitialize
       onSubmit={onSubmit}
     >
-      <EmailEditorLayout />
+      <RecordProvider>
+        <EmailEditorLayout />
+      </RecordProvider>
+
     </Formik>
   );
 };
+

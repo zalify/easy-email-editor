@@ -3,7 +3,6 @@ import styles from './index.module.scss';
 import { Collapse } from 'antd';
 import {
   PictureOutlined,
-  LayoutOutlined,
   FontSizeOutlined,
   DatabaseOutlined,
   MinusOutlined,
@@ -19,7 +18,7 @@ import { ColumnBlockIconPanel } from './components/ColumnBlockIcon';
 
 const { Panel } = Collapse;
 
-export const ToolPanel = function () {
+export const ComponentsPanel = function () {
   return (
     <div className={styles.container}>
       <Collapse className={styles.collapse} defaultActiveKey={['1', '2', '3']}>

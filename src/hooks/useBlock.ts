@@ -2,7 +2,7 @@ import { BlockType, BasicType } from '../constants';
 import { cloneDeep, get, set } from 'lodash';
 import { IBlockData, RecursivePartial } from '../typings';
 import { getBlockByType } from '../components/core/blocks';
-import { useCallback } from 'react';
+import { useCallback, useContext } from 'react';
 import { message } from 'antd';
 import {
   getIndexByIdx,
@@ -11,6 +11,8 @@ import {
 } from '@/utils/block';
 import { createBlockItem } from '@/utils/createBlockItem';
 import { useEditorContext } from './useEditorContext';
+import { useFormikContext } from 'formik';
+import { RecordContext } from '@/components/RecordProvider';
 
 export function useBlock() {
   const {
@@ -23,6 +25,7 @@ export function useBlock() {
 
   const { focusIdx, hoverIdx } = values;
   const focusBlock = get(values, focusIdx) as IBlockData | null;
+  const { redo, undo, redoable, undoable, reset } = useContext(RecordContext);
 
   const addBlock = useCallback(
     (params: {
@@ -76,8 +79,6 @@ export function useBlock() {
 
         }
 
-        console.log('focusIdx', focusIdx);
-
         if (!parentBlock.validChildrenType.includes(child.type)) {
           message.warning(`${block.name} can not insert to ${parentBlock.name}`);
           return formState;
@@ -99,7 +100,7 @@ export function useBlock() {
         const parentIdx = getParentIdx(idx);
         const parent = get(formState.values, getParentIdx(idx) || '');
         if (!parent) {
-          throw new Error('未找到插入的父节点');
+          throw new Error('Invalid block');
         }
         const copyBlock = cloneDeep(get(formState.values, idx));
 
@@ -251,5 +252,10 @@ export function useBlock() {
     setFormikState,
     setValues,
     handleChange,
+    redo,
+    undo,
+    reset,
+    redoable,
+    undoable
   };
 }

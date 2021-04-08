@@ -10,7 +10,7 @@ import { useBlock } from '@/hooks/useBlock';
 import { getTangentDirection } from '@/utils/getTangentDirection';
 import { get } from 'lodash';
 import { Tooltip } from 'antd';
-import { ToolBar } from '../ToolBar';
+import { BlockToolbar } from '../BlockToolbar';
 import { IBlockData } from '@/typings';
 import { getBlockByType } from '@/components/core/blocks';
 
@@ -204,10 +204,10 @@ export function EmailContent() {
         }
       </style>
       <Tooltip
-        key={2}
         placement="topRight"
-        title={<ToolBar />}
+        title={<BlockToolbar />}
         visible={!!focusBlock}
+        overlayStyle={{ maxWidth: 400 }}
       >
         <div style={{ height: '100%' }} ref={setRef} dangerouslySetInnerHTML={{ __html: html }} />
       </Tooltip>
