@@ -17,17 +17,19 @@ import { ContainerBackgroundColor } from '@/components/ConfigurationPanel/compon
 import { FontSize } from '@/components/ConfigurationPanel/components/AttributesManager/components/FontSize';
 import { Color } from '@/components/ConfigurationPanel/components/AttributesManager/components/Color';
 import { Align } from '@/components/ConfigurationPanel/components/AttributesManager/components/Align';
+import { RichText } from '@/components/RichText';
 
 export function Panel() {
-  const { focusIdx } = useBlock();
+  const { focusIdx, focusBlock } = useBlock();
 
   return (
-    <Stack>
+    <Stack vertical>
       <TextAreaField
         label='Content'
         name={`${focusIdx}.data.value.content`}
         inline
       />
+      <RichText content={focusBlock?.data.value.content} />
       <Color />
       <FontSize />
       <TextField
