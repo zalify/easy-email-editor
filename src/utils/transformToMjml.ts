@@ -10,7 +10,7 @@ import { classnames } from './classnames';
 export function transformToMjml(data: IBlockData, idx?: string): string {
   if (data.data.hidden) return '';
   const att = {
-    ...data.attribute,
+    ...data.attributes,
   };
 
   const isTest = !!idx;
@@ -98,5 +98,4 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
           <mj-raw ${attributeStr}>${data.data.value?.content}</mj-raw>
         `;
   }
-
 }

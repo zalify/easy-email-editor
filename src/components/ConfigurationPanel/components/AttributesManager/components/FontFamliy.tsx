@@ -10,7 +10,7 @@ export function FontFamily() {
       <TextField
         label='Font family'
         quickchange
-        name={`${focusIdx}.attribute.font-family`}
+        name={`${focusIdx}.attributes.font-family`}
         inline
       />
     );

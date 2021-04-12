@@ -9,7 +9,7 @@ export function BackgroundColor() {
     return (
       <ColorPickerField
         label='Background color'
-        name={`${focusIdx}.attribute.background-color`}
+        name={`${focusIdx}.attributes.background-color`}
         inline
         alignment='center'
       />

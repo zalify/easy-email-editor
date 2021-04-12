@@ -7,11 +7,11 @@ export const createInstance: CreateInstance<IText> = (payload) => {
     type: BasicType.TEXT,
     data: {
       value: {
-        content: 'Your weekly report',
+        content: 'Easy-Eamil makes it easier to edit emails!',
         title: '',
       },
     },
-    attribute: {
+    attributes: {
       color: '#000000',
       'font-size': '13px',
       padding: '10px 25px 10px 25px',

@@ -6,13 +6,11 @@ export const createInstance: CreateInstance<IGroup> = (payload) => {
   const defaultData: IGroup = {
     type: BasicType.GROUP,
     data: {
-      value: {
-
-      },
+      value: {},
     },
-    attribute: {
+    attributes: {
       'vertical-align': 'top',
-      'direction': 'ltr',
+      direction: 'ltr',
     },
     children: [],
   };

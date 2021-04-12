@@ -1,8 +1,5 @@
 import React, { useMemo } from 'react';
-import {
-  SelectField,
-  TextField,
-} from '@/components/core/Form';
+import { SelectField, TextField } from '@/components/core/Form';
 import { Stack } from '@/components/Stack';
 import { useBlock } from '@/hooks/useBlock';
 import { TextStyle } from '@/components/TextStyle';
@@ -39,17 +36,17 @@ export function Background() {
           <TextField
             label='Background image'
             inline
-            name={`${focusIdx}.attribute.background-url`}
+            name={`${focusIdx}.attributes.background-url`}
           />
           <TextField
             label='Background size'
             inline
-            name={`${focusIdx}.attribute.background-size`}
+            name={`${focusIdx}.attributes.background-size`}
           />
         </Stack>
         <SelectField
           label='Background repeat'
-          name={`${focusIdx}.attribute.background-repeat`}
+          name={`${focusIdx}.attributes.background-repeat`}
           options={backgroundRepeatOptions}
           inline
         />

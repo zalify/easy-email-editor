@@ -11,11 +11,11 @@ export function Panel() {
     <Stack>
       <ColorPickerField
         label='Background color'
-        name={`${focusIdx}.attribute.background-color`}
+        name={`${focusIdx}.attributes.background-color`}
         inline
       />
       <TextField
-        label="Breakpoint"
+        label='Breakpoint'
         name={`${focusIdx}.data.value.breakpoint`}
         inline
       />

@@ -9,12 +9,12 @@ export const createInstance: CreateInstance<IDivider> = (payload) => {
     data: {
       value: {},
     },
-    attribute: {
+    attributes: {
       align: 'center',
       'border-width': '4px',
       'border-style': 'solid',
       'border-color': '#000',
-      'padding': '10px 25px 10px 25px',
+      padding: '10px 25px 10px 25px',
     },
     children: [],
   };

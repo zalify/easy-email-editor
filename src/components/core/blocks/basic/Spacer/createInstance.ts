@@ -7,13 +7,10 @@ export const createInstance: CreateInstance<ISpacer> = (payload) => {
   const defaultData: ISpacer = {
     type: BasicType.SPACER,
     data: {
-      value: {
-
-      },
+      value: {},
     },
-    attribute: {
+    attributes: {
       height: '20px',
-
     },
     children: [],
   };

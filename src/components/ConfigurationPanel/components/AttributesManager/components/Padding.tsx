@@ -12,19 +12,25 @@ export function Padding(props: PaddingProps = {}) {
   const { title = 'Padding', attributeName = 'padding' } = props;
   const { focusIdx, focusBlock } = useBlock();
 
-  const getVal = useCallback((index: number) => {
-    return () => {
-      return focusBlock?.attribute[attributeName]?.split(' ')[index];
-    };
-  }, [attributeName, focusBlock?.attribute]);
+  const getVal = useCallback(
+    (index: number) => {
+      return () => {
+        return focusBlock?.attributes[attributeName]?.split(' ')[index];
+      };
+    },
+    [attributeName, focusBlock?.attributes]
+  );
 
-  const setVal = useCallback((index: number) => {
-    return (newVal: string) => {
-      const vals = focusBlock?.attribute[attributeName]?.split(' ') || [];
-      vals[index] = newVal || '0px';
-      return vals.join(' ');
-    };
-  }, [attributeName, focusBlock?.attribute]);
+  const setVal = useCallback(
+    (index: number) => {
+      return (newVal: string) => {
+        const vals = focusBlock?.attributes[attributeName]?.split(' ') || [];
+        vals[index] = newVal || '0px';
+        return vals.join(' ');
+      };
+    },
+    [attributeName, focusBlock?.attributes]
+  );
 
   return useMemo(() => {
     return (
@@ -35,7 +41,7 @@ export function Padding(props: PaddingProps = {}) {
             <TextField
               label='Top'
               quickchange
-              name={`${focusIdx}.attribute.${attributeName}`}
+              name={`${focusIdx}.attributes.${attributeName}`}
               valueAdapter={getVal(0)}
               onChangeAdapter={setVal(0)}
               inline
@@ -45,7 +51,7 @@ export function Padding(props: PaddingProps = {}) {
             <TextField
               label='Bottom'
               quickchange
-              name={`${focusIdx}.attribute.${attributeName}`}
+              name={`${focusIdx}.attributes.${attributeName}`}
               valueAdapter={getVal(2)}
               onChangeAdapter={setVal(2)}
               inline
@@ -58,7 +64,7 @@ export function Padding(props: PaddingProps = {}) {
             <TextField
               label='Left'
               quickchange
-              name={`${focusIdx}.attribute.${attributeName}`}
+              name={`${focusIdx}.attributes.${attributeName}`}
               valueAdapter={getVal(3)}
               onChangeAdapter={setVal(3)}
               inline
@@ -68,7 +74,7 @@ export function Padding(props: PaddingProps = {}) {
             <TextField
               label='Right'
               quickchange
-              name={`${focusIdx}.attribute.${attributeName}`}
+              name={`${focusIdx}.attributes.${attributeName}`}
               valueAdapter={getVal(1)}
               onChangeAdapter={setVal(1)}
               inline

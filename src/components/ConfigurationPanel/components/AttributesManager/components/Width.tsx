@@ -12,12 +12,11 @@ export function Width() {
         <Stack.Item fill>
           <TextField
             label='Width'
-            name={`${focusIdx}.attribute.width`}
+            name={`${focusIdx}.attributes.width`}
             inline
             quickchange
           />
         </Stack.Item>
-
       </Stack>
     );
   }, [focusIdx]);

@@ -26,7 +26,7 @@ export function Align() {
       <Stack>
         <RadioGroupField
           label='Align'
-          name={`${focusIdx}.attribute.align`}
+          name={`${focusIdx}.attributes.align`}
           options={options}
           inline
         />

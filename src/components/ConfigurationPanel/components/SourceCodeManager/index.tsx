@@ -36,7 +36,7 @@ export function SourceCodeManager() {
   const onMjmlChange = useCallback(
     (event: React.FocusEvent<HTMLTextAreaElement>) => {
       try {
-        const parseValue = MjmlToJson(mjml(event.target.value).json);
+        const parseValue = MjmlToJson(mjml(event.target.value, { validationLevel: 'strict' }).json,);
         setValueByIdx(focusIdx, parseValue);
       } catch (error) {
         message.error(error.message);

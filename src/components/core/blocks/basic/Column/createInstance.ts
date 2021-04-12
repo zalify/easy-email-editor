@@ -6,18 +6,14 @@ export const createInstance: CreateInstance<IColumn> = (payload) => {
   const defaultData: IColumn = {
     type: BasicType.COLUMN,
     data: {
-      value: {
-
-      },
+      value: {},
     },
-    attribute: {
-      'padding': '0px 0px 0px 0px',
+    attributes: {
+      padding: '0px 0px 0px 0px',
       border: 'none',
-      'vertical-align': 'top'
+      'vertical-align': 'top',
     },
-    children: [
-
-    ],
+    children: [],
   };
   return merge(defaultData, payload);
 };

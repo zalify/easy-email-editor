@@ -7,13 +7,9 @@ export const createInstance: CreateInstance<IRaw> = (payload) => {
   const defaultData: IRaw = {
     type: BasicType.RAW,
     data: {
-      value: {
-
-      },
+      value: {},
     },
-    attribute: {
-
-    },
+    attributes: {},
     children: [],
   };
   return merge(defaultData, payload);

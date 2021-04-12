@@ -8,7 +8,7 @@ export const createInstance: CreateInstance<IWrapper> = (payload) => {
     data: {
       value: {},
     },
-    attribute: {
+    attributes: {
       padding: '20px 0px 20px 0px',
       border: 'none',
       direction: 'ltr',

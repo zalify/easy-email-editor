@@ -14,13 +14,13 @@ export function Decoration() {
           Decoration
         </TextStyle>
         <TextField
-          label="Border radius"
-          name={`${focusIdx}.attribute.borderRadius`}
+          label='Border radius'
+          name={`${focusIdx}.attributes.borderRadius`}
           inline
         />
         <TextField
           label='Border'
-          name={`${focusIdx}.attribute.border`}
+          name={`${focusIdx}.attributes.border`}
           inline
           alignment='center'
         />
@@ -29,11 +29,10 @@ export function Decoration() {
           max={1}
           min={0}
           step={0.1}
-          name={`${focusIdx}.attribute.opacity`}
+          name={`${focusIdx}.attributes.opacity`}
           inline
           alignment='center'
         />
-
       </Stack>
     );
   }, [focusIdx]);

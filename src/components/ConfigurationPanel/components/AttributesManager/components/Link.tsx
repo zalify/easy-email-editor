@@ -14,16 +14,15 @@ export function Link() {
           <TextField
             prefix={<LinkOutlined />}
             label={<span>Href&nbsp;&nbsp;&nbsp;</span>}
-            name={`${focusIdx}.attribute.href`}
+            name={`${focusIdx}.attributes.href`}
             inline
           />
         </Stack.Item>
 
         <div style={{ minWidth: 150 }}>
           <SelectField
-
             label='Target'
-            name={`${focusIdx}.attribute.target`}
+            name={`${focusIdx}.attributes.target`}
             options={[
               {
                 value: '',
@@ -31,13 +30,12 @@ export function Link() {
               },
               {
                 value: '_blank',
-                label: '_blank'
-              }
+                label: '_blank',
+              },
             ]}
             inline
           />
         </div>
-
       </Stack>
     );
   }, [focusIdx]);

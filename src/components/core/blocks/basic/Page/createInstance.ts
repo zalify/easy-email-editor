@@ -8,12 +8,10 @@ export const createInstance: CreateInstance<IPage> = (payload) => {
     type: BasicType.PAGE,
     data: {
       value: {
-        breakpoint: '376px'
+        breakpoint: '376px',
       },
     },
-    attribute: {
-
-    },
+    attributes: {},
     children: [],
   };
   return merge(defaultData, payload);

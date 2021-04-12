@@ -31,7 +31,7 @@ export function VerticalAlign({
         <SelectField
           style={{ width: 120 }}
           label='Vertical align'
-          name={`${focusIdx}.attribute.${attributeName}`}
+          name={`${focusIdx}.attributes.${attributeName}`}
           options={options}
           inline
         />

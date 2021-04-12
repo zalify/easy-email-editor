@@ -208,6 +208,7 @@ export function EmailContent() {
         title={<BlockToolbar />}
         visible={!!focusBlock}
         overlayStyle={{ maxWidth: 400 }}
+        style={{ zIndex: 100 }}
       >
         <div style={{ height: '100%' }} ref={setRef} dangerouslySetInnerHTML={{ __html: html }} />
       </Tooltip>

@@ -9,7 +9,7 @@ export function Color() {
     return (
       <ColorPickerField
         label='Color'
-        name={`${focusIdx}.attribute.color`}
+        name={`${focusIdx}.attributes.color`}
         inline
         alignment='center'
       />

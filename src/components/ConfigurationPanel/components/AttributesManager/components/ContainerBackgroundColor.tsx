@@ -9,7 +9,7 @@ export function ContainerBackgroundColor() {
     return (
       <ColorPickerField
         label='Container background color'
-        name={`${focusIdx}.attribute.container-background-color`}
+        name={`${focusIdx}.attributes.container-background-color`}
         inline
         alignment='center'
       />

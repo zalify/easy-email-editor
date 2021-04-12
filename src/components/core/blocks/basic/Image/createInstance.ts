@@ -7,14 +7,12 @@ export const createInstance: CreateInstance<IImage> = (payload) => {
   const defaultData: IImage = {
     type: BasicType.IMAGE,
     data: {
-      value: {
-
-      },
+      value: {},
     },
-    attribute: {
+    attributes: {
       align: 'center',
       height: 'auto',
-      'padding': '10px 25px',
+      padding: '10px 25px',
       src: 'https://assets.maocanhua.cn/FsEjdcDqV6HYphntqWQC1m1OJCjI',
     },
     children: [],

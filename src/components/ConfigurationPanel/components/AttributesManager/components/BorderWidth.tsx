@@ -10,7 +10,7 @@ export function BorderWidth() {
       <TextField
         label='Border width'
         quickchange
-        name={`${focusIdx}.attribute.border-width`}
+        name={`${focusIdx}.attributes.border-width`}
         inline
       />
     );

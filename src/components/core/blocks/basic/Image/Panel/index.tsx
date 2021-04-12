@@ -15,44 +15,31 @@ export function Panel() {
     <Stack>
       <ColorPickerField
         label='color'
-        name={`${focusIdx}.attribute.color`}
+        name={`${focusIdx}.attributes.color`}
         inline
         alignment='center'
       />
       <TextField
-        label="src"
+        label='src'
         quickchange
-        name={`${focusIdx}.attribute.src`}
+        name={`${focusIdx}.attributes.src`}
         inline
       />
       <Width />
       <Height />
 
       <Link />
-      <TextField
-        label="border"
-        name={`${focusIdx}.attribute.border`}
-        inline
-      />
+      <TextField label='border' name={`${focusIdx}.attributes.border`} inline />
       <TextAlign />
       <ColorPickerField
         label='container-background-color'
-        name={`${focusIdx}.attribute.container-background-color`}
+        name={`${focusIdx}.attributes.container-background-color`}
         inline
         alignment='center'
       />
       <Padding />
-      <TextField
-        label="title"
-        name={`${focusIdx}.attribute.title`}
-        inline
-      />
-      <TextField
-        label="alt"
-        name={`${focusIdx}.attribute.alt`}
-        inline
-      />
+      <TextField label='title' name={`${focusIdx}.attributes.title`} inline />
+      <TextField label='alt' name={`${focusIdx}.attributes.alt`} inline />
     </Stack>
   );
-
 }

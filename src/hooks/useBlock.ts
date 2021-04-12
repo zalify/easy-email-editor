@@ -11,7 +11,6 @@ import {
 } from '@/utils/block';
 import { createBlockItem } from '@/utils/createBlockItem';
 import { useEditorContext } from './useEditorContext';
-import { useFormikContext } from 'formik';
 import { RecordContext } from '@/components/RecordProvider';
 
 export function useBlock() {
@@ -25,7 +24,7 @@ export function useBlock() {
 
   const { focusIdx, hoverIdx } = values;
   const focusBlock = get(values, focusIdx) as IBlockData | null;
-  const { redo, undo, redoable, undoable, reset } = useContext(RecordContext);
+  const { redo, undo, redoable, undoable, reset, status: recordStatus } = useContext(RecordContext);
 
   const addBlock = useCallback(
     (params: {
@@ -256,6 +255,7 @@ export function useBlock() {
     undo,
     reset,
     redoable,
-    undoable
+    undoable,
+    recordStatus
   };
 }

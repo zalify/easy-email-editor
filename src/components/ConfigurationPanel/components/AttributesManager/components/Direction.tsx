@@ -11,7 +11,7 @@ const options = [
   {
     value: 'rtl',
     label: 'rtl',
-  }
+  },
 ];
 
 export function Direction() {
@@ -22,7 +22,7 @@ export function Direction() {
       <Stack>
         <RadioGroupField
           label='Direction'
-          name={`${focusIdx}.attribute.direction`}
+          name={`${focusIdx}.attributes.direction`}
           options={options}
           inline
         />

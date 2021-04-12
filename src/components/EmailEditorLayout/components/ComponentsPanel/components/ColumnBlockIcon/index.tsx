@@ -79,12 +79,12 @@ function TwoColumns() {
         BlocksMap.Section.createInstance({
           children: [
             BlocksMap.Column.createInstance({
-              attribute: {
+              attributes: {
                 width: scale.scale[0] ? +scale.scale[0] + '%' : undefined,
               },
             }),
             BlocksMap.Column.createInstance({
-              attribute: {
+              attributes: {
                 width: scale.scale[1] ? +scale.scale[1] + '%' : undefined,
               },
             }),
@@ -159,17 +159,17 @@ function ThreeColumns() {
         BlocksMap.Section.createInstance({
           children: [
             BlocksMap.Column.createInstance({
-              attribute: {
+              attributes: {
                 width: scale.scale[0] ? +scale.scale[0] + '%' : undefined,
               },
             }),
             BlocksMap.Column.createInstance({
-              attribute: {
+              attributes: {
                 width: scale.scale[1] ? +scale.scale[1] + '%' : undefined,
               },
             }),
             BlocksMap.Column.createInstance({
-              attribute: {
+              attributes: {
                 width: scale.scale[2] ? +scale.scale[2] + '%' : undefined,
               },
             }),

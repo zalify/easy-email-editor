@@ -5,7 +5,10 @@ import { EditorProps } from '../EmailEditorProvider';
 
 const MAX_RECORD_SIZE = 100;
 
+export type RecordStatus = 'add' | 'redo' | 'undo';
+
 export const RecordContext = React.createContext<{
+  status: RecordStatus;
   records: Array<EditorProps>;
   redo: () => void;
   undo: () => void;
@@ -13,6 +16,7 @@ export const RecordContext = React.createContext<{
   redoable: boolean;
   undoable: boolean;
 }>({
+  status: 'add',
   records: [],
   redo: () => { },
   undo: () => { },
@@ -26,18 +30,22 @@ export const RecordProvider: React.FC<{}> = (props) => {
   const { current: initialValues } = useRef<EditorProps>(cloneDeep(formikContext.values));
   const [data, setData] = useState<Array<EditorProps>>([]);
   const [index, setIndex] = useState(0);
+  const [status, setStatus] = useState<RecordStatus>('add');
 
   const value = useMemo(() => {
     return {
+      status,
       records: data,
       redo: () => {
         const nextIndex = Math.min(MAX_RECORD_SIZE - 1, index + 1);
         setIndex(nextIndex);
+        setStatus('redo');
         formikContext.setValues(data[nextIndex]);
       },
       undo: () => {
         const prevIndex = Math.max(0, index - 1);
         setIndex(prevIndex);
+        setStatus('undo');
         formikContext.setValues(data[prevIndex]);
       },
       reset: () => {
@@ -46,7 +54,7 @@ export const RecordProvider: React.FC<{}> = (props) => {
       undoable: index > 0,
       redoable: index < data.length - 1,
     };
-  }, [data, formikContext, index, initialValues]);
+  }, [data, formikContext, index, initialValues, status]);
 
   useEffect(() => {
     const currentItem = data[index];
@@ -54,6 +62,7 @@ export const RecordProvider: React.FC<{}> = (props) => {
 
     if (isChanged) {
       setIndex(Math.max(Math.min(data.length, MAX_RECORD_SIZE), 0));
+      setStatus('add');
       setData([...data, cloneDeep(formikContext.values)]);
     }
   }, [data, formikContext, index]);

@@ -54,14 +54,12 @@ export function FontWeight() {
 
   return useMemo(() => {
     return (
-
       <SelectField
-        label="Font weight"
-        name={`${focusIdx}.attribute.font-weight`}
+        label='Font weight'
+        name={`${focusIdx}.attributes.font-weight`}
         options={options}
         inline
       />
-
     );
   }, [focusIdx]);
 }

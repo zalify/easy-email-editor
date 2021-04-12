@@ -1,0 +1,20 @@
+.contaner {
+
+  .editorWrapper {
+
+    div[contentEditable] {
+      outline: none;
+      padding: 10px;
+
+      border: 1px solid #ccc;
+      cursor: text;
+      &:hover {
+        border-color: #40a9ff;
+      }
+      &:focus{
+        border-color: #40a9ff;
+        box-shadow: 0 0 0 2px rgb(24 144 255 / 20%);
+      }
+    }
+  }
+}

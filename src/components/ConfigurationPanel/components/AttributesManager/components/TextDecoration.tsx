@@ -35,8 +35,8 @@ export function TextDecoration() {
   return useMemo(() => {
     return (
       <SelectField
-        label="Text decoration"
-        name={`${focusIdx}.attribute.text-decoration`}
+        label='Text decoration'
+        name={`${focusIdx}.attributes.text-decoration`}
         options={options}
         inline
       />

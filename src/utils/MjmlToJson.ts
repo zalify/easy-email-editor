@@ -3,30 +3,29 @@ import { IPage, Page } from '@/components/core/blocks/basic/Page';
 import { IBlockData } from '@/typings';
 
 export function MjmlToJson(data: MjmlBlockItem): IPage {
-
   const transform = (item: IChildrenItem): IBlockData => {
     const attributes = item.attributes as any;
 
     switch (item.tagName) {
       case 'mjml':
-        const body = item.children?.find(item => item.tagName === 'mj-body')!;
+        const body = item.children?.find((item) => item.tagName === 'mj-body')!;
         return Page.createInstance({
-          attribute: body.attributes,
-          children: body.children?.map(transform)
+          attributes: body.attributes,
+          children: body.children?.map(transform),
         });
 
       default:
         const tag = item.tagName.replace('mj-', '').toLowerCase();
-        const block = Object.values(BlocksMap).find(item => item.type === tag)!;
+        const block = Object.values(BlocksMap).find(
+          (item) => item.type === tag
+        )!;
         const payload: IBlockData<any> = {
           type: block.type,
-          attribute: attributes,
+          attributes: attributes,
           data: {
-            value: {
-
-            }
+            value: {},
           },
-          children: []
+          children: [],
         };
 
         if (item.content) {

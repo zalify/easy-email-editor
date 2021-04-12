@@ -19,12 +19,11 @@ export function FontStyle() {
   return useMemo(() => {
     return (
       <RadioGroupField
-        label="Font style"
-        name={`${focusIdx}.attribute.font-style`}
+        label='Font style'
+        name={`${focusIdx}.attributes.font-style`}
         options={options}
         inline
       />
-
     );
   }, [focusIdx]);
 }

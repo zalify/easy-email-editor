@@ -27,12 +27,11 @@ export function TextTransform() {
   return useMemo(() => {
     return (
       <SelectField
-        label="Text transform"
-        name={`${focusIdx}.attribute.text-transform`}
+        label='Text transform'
+        name={`${focusIdx}.attributes.text-transform`}
         options={options}
         inline
       />
-
     );
   }, [focusIdx]);
 }

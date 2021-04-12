@@ -8,11 +8,12 @@ export interface ColorPickerProps {
   value?: string;
   label: string;
   size?: 'small' | 'normal' | 'large';
+  children?: React.ReactNode;
 }
 
 export function ColorPicker(props: ColorPickerProps) {
   const [color, setColor] = useState('#fff');
-  const { value = '#fff', onChange } = props;
+  const { value = '', onChange, children } = props;
 
   useEffect(() => {
     setColor(value);
@@ -42,31 +43,35 @@ export function ColorPicker(props: ColorPickerProps) {
       )}
       title={props.label}
       trigger='click'
-    >
-      <div style={{
-        display: 'inline-block',
-        height: size,
-        width: size,
-        padding: 4,
-        border: '1px solid #e6e6e6',
-        borderRadius: 4,
-        fontSize: 0,
-        position: 'relative',
-        cursor: 'pointer',
-      }}
-      ><span style={{
-        position: 'relative',
-        display: 'block',
-        border: '1px solid #999',
-        borderRadius: 2,
-        width: '100%',
-        height: '100%',
-        textAlign: 'center',
-        backgroundColor: value
-      }}
-      />
-        <DownOutlined />
-      </div>
+    >{
+        children || (
+          <div style={{
+            display: 'inline-block',
+            height: size,
+            width: size,
+            padding: 4,
+            border: '1px solid #e6e6e6',
+            borderRadius: 4,
+            fontSize: 0,
+            position: 'relative',
+            cursor: 'pointer',
+          }}
+          ><span style={{
+            position: 'relative',
+            display: 'block',
+            border: '1px solid #999',
+            borderRadius: 2,
+            width: '100%',
+            height: '100%',
+            textAlign: 'center',
+            backgroundColor: value
+          }}
+            />
+            <DownOutlined />
+          </div>
+        )
+      }
+
     </Popover>
 
   );

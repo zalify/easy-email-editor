@@ -6,13 +6,9 @@ export const createInstance: CreateInstance<ILayout> = (payload) => {
   const defaultData: ILayout = {
     type: CustomType.LAYOUT,
     data: {
-      value: {
-
-      },
+      value: {},
     },
-    attribute: {
-
-    },
+    attributes: {},
     children: [],
   };
   return merge(defaultData, payload);

@@ -3,9 +3,8 @@ import {
   TabletOutlined,
   EditOutlined
 } from '@ant-design/icons';
-import { Button, Layout, Tabs } from 'antd';
-import React, { useMemo, useRef, useState } from 'react';
-import styles from './index.module.scss';
+import { Layout, Tabs } from 'antd';
+import React, { useMemo, useState } from 'react';
 import root from 'react-shadow';
 import { IframeComponent } from '@/components/IframeComponent';
 import { ConfigurationPanel } from '@/components/ConfigurationPanel';

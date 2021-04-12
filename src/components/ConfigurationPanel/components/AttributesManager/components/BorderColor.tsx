@@ -9,7 +9,7 @@ export function BorderColor() {
     return (
       <ColorPickerField
         label='Border color'
-        name={`${focusIdx}.attribute.border-color`}
+        name={`${focusIdx}.attributes.border-color`}
         inline
       />
     );
