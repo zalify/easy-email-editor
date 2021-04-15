@@ -1,7 +1,5 @@
 import qRCode from 'qrcode-generator';
 import _ from 'lodash';
-import qs from 'qs';
-import domtoimage from 'dom-to-image';
 
 export function isPC() {
   return !isIOS() && !isAndroid();
@@ -27,18 +25,6 @@ export function getCookie(key: string) {
     }
   });
   return value;
-}
-export function addStyle(
-  element: HTMLElement,
-  styles: Partial<CSSStyleDeclaration>
-) {
-  Object.keys(styles).forEach((key) => {
-    element.style[key] = styles[key];
-  });
-}
-
-export function getLocationParamValue(key: string): string | undefined {
-  return qs.parse(window.location.search.replace('?', ''))[key];
 }
 
 /**
@@ -183,31 +169,4 @@ export async function createQrcode(url: string, logo?: string) {
 
 export function getPublishPath() {
   return window.location.origin + '/';
-}
-
-export async function domToImage<T extends HTMLElement = any>(element: T) {
-  return domtoimage.toBlob(element) as Promise<Blob>;
-}
-
-export function lockContaier(id: string | HTMLElement) {
-  const element = typeof id === 'string' ? document.getElementById(id) : id;
-  if (!element) return;
-  const style = window.getComputedStyle(element);
-  window['lockBodyElement'] = {
-    height: style.height,
-    overflowY: style.overflowY,
-    scrollTop: element.scrollTop,
-  };
-  element.style.overflowY = 'hidden';
-}
-
-export function unlockContaier(id: string | HTMLElement) {
-  const element = typeof id === 'string' ? document.getElementById(id) : id;
-  if (!element || !window['lockBodyElement']) return;
-  const { scrollTop = 0 } = window['lockBodyElement'];
-  element.style.overflowY = 'auto';
-  try {
-    element.scrollTo(0, scrollTop);
-  } catch (error) {}
-  delete window['lockBodyElement'];
 }

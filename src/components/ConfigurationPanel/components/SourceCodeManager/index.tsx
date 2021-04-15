@@ -8,16 +8,18 @@ import mjml from 'mjml-browser';
 import { MjmlToJson } from '@/utils/MjmlToJson';
 
 export function SourceCodeManager() {
-
   const { focusIdx, setValueByIdx, values } = useBlock();
   const value = getValueByIdx(values, focusIdx);
+  console.log('value', value);
 
   const code = useMemo(() => {
     if (!value) return '';
-    return jsonFormat(value, {
-      type: 'space',
-      size: 2
-    }) || '';
+    return (
+      jsonFormat(value, {
+        type: 'space',
+        size: 2,
+      }) || ''
+    );
     return '';
   }, [value]);
 
@@ -36,7 +38,9 @@ export function SourceCodeManager() {
   const onMjmlChange = useCallback(
     (event: React.FocusEvent<HTMLTextAreaElement>) => {
       try {
-        const parseValue = MjmlToJson(mjml(event.target.value, { validationLevel: 'strict' }).json,);
+        const parseValue = MjmlToJson(
+          mjml(event.target.value, { validationLevel: 'strict' }).json
+        );
         setValueByIdx(focusIdx, parseValue);
       } catch (error) {
         message.error(error.message);
@@ -48,16 +52,15 @@ export function SourceCodeManager() {
   if (!value) return null;
   return (
     <Collapse>
-      <Collapse.Panel key="json" header="Json source">
+      <Collapse.Panel key='json' header='Json source'>
         <Input.TextArea
           key={code}
           defaultValue={code}
           autoSize={{ maxRows: 25 }}
           onBlur={onChaneCode}
         />
-
       </Collapse.Panel>
-      <Collapse.Panel key="mjml" header="MJML source">
+      <Collapse.Panel key='mjml' header='MJML source'>
         <Input.TextArea
           key={code}
           value={transformToMjml(value)}
@@ -65,7 +68,6 @@ export function SourceCodeManager() {
           onChange={onMjmlChange}
         />
       </Collapse.Panel>
-
     </Collapse>
   );
 }

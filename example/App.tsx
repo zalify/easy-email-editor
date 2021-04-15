@@ -1,53 +1,25 @@
-import { EmailEditorLayout } from '@/components/EmailEditorLayout';
-import { EditorProps } from '@/components/EmailEditorProvider';
-import { Stack } from '@/components/Stack';
-import { BasicType } from '@/constants';
-import { EmailEditor } from '@/index';
-import { IEmailTemplate } from '@/typings';
-import { transformToMjml } from '@/utils/transformToMjml';
-import { Button, PageHeader } from 'antd';
 import React from 'react';
-import mjml from 'mjml-browser';
+import { Router, Switch, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import Page from '@example/components/Page';
+import Home from '@example/pages/Home';
+import store from '@example/store';
+import 'antd/dist/antd.css';
+import '@example/styles/common.scss';
+import Editor from '@example/pages/Editor';
+import { history } from './util/history';
 
 export default function App() {
-  const onSubmit = (values: EditorProps) => { };
-
-  const onExportHtml = (values: EditorProps) => {
-    console.log(mjml(transformToMjml(values.content), { beautify: true, validationLevel: 'strict' }).html);
-  };
-
-  const data: IEmailTemplate = {
-    content: {
-      type: BasicType.PAGE,
-      data: {
-        value: {},
-      },
-      attributes: {},
-      children: [],
-    },
-    subject: '',
-    subTitle: 'string',
-  };
-
   return (
-    <div>
-
-      <EmailEditor data={data}>
-        {
-          ({ values }) => (
-            <>
-              <PageHeader title="Edit" extra={(
-                <Stack>
-                  <Button onClick={() => onExportHtml(values)}>Export html</Button>
-                  <Button type="primary" onClick={() => onSubmit(values)}>Save</Button>
-                </Stack>
-              )}
-              />
-              <EmailEditorLayout />
-            </>
-          )
-        }
-      </EmailEditor>
-    </div>
+    <Provider store={store}>
+      <Page>
+        <Router history={history}>
+          <Switch>
+            <Route path='/' exact component={Home} />
+            <Route path='/editor' component={Editor} />
+          </Switch>
+        </Router>
+      </Page>
+    </Provider>
   );
 }

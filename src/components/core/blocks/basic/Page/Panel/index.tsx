@@ -9,6 +9,8 @@ export function Panel() {
   if (!focusBlock) return null;
   return (
     <Stack>
+      <TextField label='Subject' name={'subject'} inline />
+      <TextField label='SubTitle' name={'subTitle'} inline />
       <ColorPickerField
         label='Background color'
         name={`${focusIdx}.attributes.background-color`}

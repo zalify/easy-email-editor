@@ -6,29 +6,45 @@ export const article = {
   async getArticle(id: number | string): Promise<IArticle> {
     return request.get<IArticle>('/article/user/detail', {
       params: {
-        article_id: id
-      }
+        article_id: id,
+      },
     });
   },
-  async getArticleList(page: number, size: number, categoryId: number = CATEGORY_ID): Promise<ListResponse<IArticle>> {
+  async getArticleList(
+    page: number,
+    size: number,
+    categoryId: number = CATEGORY_ID
+  ): Promise<ListResponse<IArticle>> {
     return request.get<ListResponse<IArticle>>('/article/user/list', {
       params: {
         page,
         size,
-        category_id: categoryId
-      }
+        category_id: categoryId,
+      },
     });
   },
-  async addArticle(data: { title: string, content: string, picture: string; }): Promise<IArticle> {
+  async addArticle(data: {
+    title: string;
+    content: string;
+    picture: string;
+    summary: string;
+  }): Promise<IArticle> {
     return request.post<IArticle>('/article/user/create-article', {
-      summary: '这个人很懒，什么都没有写',
       ...data,
       category_id: CATEGORY_ID,
       tags: [74],
-      secret: 0
+      secret: 0,
     });
   },
-  async updateArticle(id: number, options: { title?: string, content?: string, picture?: string, summary?: string; }): Promise<IArticle> {
+  async updateArticle(
+    id: number,
+    options: {
+      title?: string;
+      content?: string;
+      picture?: string;
+      summary?: string;
+    }
+  ): Promise<IArticle> {
     return request.post<IArticle>('/article/user/update-article', {
       ...options,
       article_id: id,
@@ -38,10 +54,10 @@ export const article = {
   async deleteArticle(id: number): Promise<string> {
     return request.get('/article/user/delete', {
       params: {
-        article_id: id
-      }
+        article_id: id,
+      },
     });
-  }
+  },
 };
 
 export interface ListResponse<T> {
@@ -58,7 +74,7 @@ export interface IArticle {
   article_id: number;
   writer_id: number;
   category_id: number;
-  tags: { tag_id: number; }[]; // 由于懒得写接口，这个接口是拿之前的，其实不需要数组
+  tags: { tag_id: number }[]; // 由于懒得写接口，这个接口是拿之前的，其实不需要数组
   picture: string;
   writer: IUser;
   title: string;

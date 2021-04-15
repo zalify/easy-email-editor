@@ -8,7 +8,7 @@ import {
 import { classnames } from './classnames';
 
 export function transformToMjml(data: IBlockData, idx?: string): string {
-  if (data.data.hidden) return '';
+  if (data?.data?.hidden) return '';
   const att = {
     ...data.attributes,
   };

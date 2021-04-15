@@ -15,10 +15,11 @@ export interface EditorProps {
   content: IPage;
   focusIdx: string;
   hoverIdx: string;
-
 }
 
-export const EmailEditorProvider = (props: EmailEditorProviderProps<IEmailTemplate>) => {
+export const EmailEditorProvider = (
+  props: EmailEditorProviderProps<IEmailTemplate>
+) => {
   const { data, children } = props;
 
   const initialValues = useMemo(() => {
@@ -28,7 +29,6 @@ export const EmailEditorProvider = (props: EmailEditorProviderProps<IEmailTempla
       content: data.content,
       focusIdx: 'content',
       hoverIdx: '',
-
     };
   }, [data]);
 
@@ -37,19 +37,12 @@ export const EmailEditorProvider = (props: EmailEditorProviderProps<IEmailTempla
   return (
     <Formik<EditorProps>
       initialValues={initialValues}
-      onSubmit={() => { }}
+      onSubmit={() => {}}
+      enableReinitialize
     >
-      {
-        (...rest) => {
-          return (
-            <RecordProvider>
-              {children(...rest)}
-            </RecordProvider>
-          );
-        }
-      }
-
+      {(...rest) => {
+        return <RecordProvider>{children(...rest)}</RecordProvider>;
+      }}
     </Formik>
   );
 };
-
