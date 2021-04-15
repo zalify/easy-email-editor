@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.5.0",
+    "@types/html2canvas": "^0.0.36",
     "@types/lodash": "^4.14.168",
     "@types/react-color": "^3.0.4",
     "@types/uuid": "^8.3.0",
@@ -38,6 +39,7 @@
     "dom-to-image": "^2.6.0",
     "eventemitter3": "^4.0.7",
     "formik": "^2.2.6",
+    "html2canvas": "^1.0.0-rc.7",
     "json-format": "^1.0.1",
     "lodash": "^4.17.20",
     "mjml": "^4.9.0",

@@ -5,6 +5,7 @@ import { history } from '@example/util/history';
 import { IBlockData } from '@/typings';
 import { EditorProps } from '@/components/EmailEditorProvider';
 import { BasicType } from '@/constants';
+import { emailToImage } from '@/utils/emailToImage';
 
 export default createSliceState({
   name: 'template',
@@ -49,12 +50,14 @@ export default createSliceState({
     create: async (
       state,
       payload: {
-        template: EditorProps & { picture: string };
+        template: EditorProps;
         success: (id: number) => void;
       }
     ) => {
+      const picture = await emailToImage(payload.template.content);
       const data = await article.addArticle({
         ...payload.template,
+        picture,
         summary: payload.template.subTitle,
         title: payload.template.subject,
         content: JSON.stringify(payload.template.content),
@@ -66,17 +69,19 @@ export default createSliceState({
       state,
       payload: {
         id: number;
-        template: EditorProps & { picture: string };
+        template: EditorProps;
         success: () => void;
       }
     ) => {
+      const picture = await emailToImage(payload.template.content);
       await article.updateArticle(payload.id, {
         ...payload.template,
+        picture,
         content: JSON.stringify(payload.template.content),
       });
       payload.success();
     },
-    removeById: async (state, payload: { id: number; success: () => void }) => {
+    removeById: async (state, payload: { id: number; success: () => void; }) => {
       await article.deleteArticle(payload.id);
       payload.success();
       message.success('Removed success.');

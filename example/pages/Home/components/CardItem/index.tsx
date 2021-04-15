@@ -1,6 +1,6 @@
 import { Picture } from '@example/components/Picture';
 import { IArticle } from '@example/services/article';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import {
   CopyOutlined,
   EditOutlined,
@@ -15,6 +15,9 @@ import { Link } from 'react-router-dom';
 import template from '@example/store/template';
 import { useDispatch } from 'react-redux';
 import templateList from '@example/store/templateList';
+import dom2Image from 'dom-to-image';
+import mjml from 'mjml-browser';
+import { transformToMjml } from '@/utils/transformToMjml';
 
 interface CardItemProps {
   data: IArticle;
