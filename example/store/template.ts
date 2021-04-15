@@ -48,21 +48,27 @@ export default createSliceState({
     },
     create: async (
       state,
-      payload: { template: EditorProps; success: (id: number) => void }
+      payload: {
+        template: EditorProps & { picture: string };
+        success: (id: number) => void;
+      }
     ) => {
       const data = await article.addArticle({
         ...payload.template,
         summary: payload.template.subTitle,
         title: payload.template.subject,
         content: JSON.stringify(payload.template.content),
-        picture: 'https://assets.maocanhua.cn/FvewK7kTxBH8Zv4Br3sDIP3z7EtP',
       });
       payload.success(data.article_id);
       return { ...data, ...payload.template };
     },
     updateById: async (
       state,
-      payload: { id: number; template: EditorProps; success: () => void }
+      payload: {
+        id: number;
+        template: EditorProps & { picture: string };
+        success: () => void;
+      }
     ) => {
       await article.updateArticle(payload.id, {
         ...payload.template,

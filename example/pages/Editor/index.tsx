@@ -15,6 +15,8 @@ import { EmailEditorLayout } from '@/components/EmailEditorLayout';
 import { EditorProps } from '@/components/EmailEditorProvider';
 import mjml from 'mjml-browser';
 import { transformToMjml } from '@/utils/transformToMjml';
+import dom2Image from 'dom-to-image';
+import services from '@example/services';
 
 export default function Editor() {
   const dispatch = useDispatch();
@@ -37,12 +39,19 @@ export default function Editor() {
   }, [dispatch, id]);
 
   const onSubmit = useCallback(
-    (values: EditorProps) => {
+    async (values: EditorProps) => {
+      const blob = await dom2Image.toBlob(
+        document.querySelector('.node-type-page')
+      );
+      const picture = await services.common.uploadByQiniu(blob);
       if (id) {
         dispatch(
           template.actions.updateById({
             id: +id,
-            template: values,
+            template: {
+              ...values,
+              picture,
+            },
             success() {
               message.success('Updated success!');
             },
@@ -51,7 +60,10 @@ export default function Editor() {
       } else {
         dispatch(
           template.actions.create({
-            template: values,
+            template: {
+              ...values,
+              picture,
+            },
             success(templateId) {
               history.replace(`/editor?id=${templateId}`);
               message.success('Saved success!');

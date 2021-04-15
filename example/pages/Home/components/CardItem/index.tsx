@@ -39,10 +39,8 @@ export function CardItem(props: CardItemProps) {
     <div key={data.article_id} className={styles.templeteItem}>
       <Picture className={styles.previewImg} src={data.picture} />
       <div className={styles.bottom}>
-        <div className={styles.title}>标题：{data.title}</div>
-        <div className={styles.title}>
-          创建时间：{dayjs().format('YYYY-MM-DD')}
-        </div>
+        <div className={styles.title}>Title: {data.title}</div>
+        <div className={styles.title}>Date {dayjs().format('YYYY-MM-DD')}</div>
       </div>
       <div className={styles.mask}>
         <div className={styles.qrcode}>
@@ -55,28 +53,22 @@ export function CardItem(props: CardItemProps) {
           <div className={styles.listItem}>
             <Link to={`/editor?id=${data.article_id}`}>
               <EditOutlined />
-              &nbsp;编辑
+              &nbsp;Edit
             </Link>
           </div>
           <div className={styles.listItem}>
             <CopyOutlined />
-            &nbsp;复制
-          </div>
-          <div className={styles.listItem}>
-            <Link to={`/template?id=${data.article_id}`} target='_blank'>
-              <EyeOutlined />
-              &nbsp;预览
-            </Link>
+            &nbsp;Copy
           </div>
           <div className={styles.listItem}>
             <Popconfirm
-              title='您确定要删除吗?'
+              title='Are you want to delete it?'
               onConfirm={onDelete}
-              okText='确定'
-              cancelText='取消'
+              okText='Ok'
+              cancelText='Cancel'
             >
               <DeleteOutlined />
-              &nbsp;删除
+              &nbsp;Delete
             </Popconfirm>
           </div>
         </div>

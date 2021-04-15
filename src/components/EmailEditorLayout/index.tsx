@@ -1,7 +1,7 @@
 import {
   DesktopOutlined,
   TabletOutlined,
-  EditOutlined
+  EditOutlined,
 } from '@ant-design/icons';
 import { Layout, Tabs } from 'antd';
 import React, { useMemo, useState } from 'react';
@@ -21,7 +21,10 @@ export const EmailEditorLayout = () => {
   const [ref, setRef] = useState<HTMLElement | null>(null);
   const [activeTab, setActiveTab] = useState('editor');
 
-  const containerHeight = useMemo(() => window.innerHeight - (ref?.getBoundingClientRect().top || 0), [ref]);
+  const containerHeight = useMemo(
+    () => window.innerHeight - (ref?.getBoundingClientRect().top || 0),
+    [ref]
+  );
 
   const innerContainerStyles: React.CSSProperties = {
     height: containerHeight - 120,
@@ -30,13 +33,19 @@ export const EmailEditorLayout = () => {
     marginLeft: 'auto',
     marginRight: 'auto',
     textAlign: 'center',
-
   };
 
   return (
-
     <Layout>
-      <div ref={setRef} style={{ display: 'flex', width: '100vw', height: containerHeight, overflow: 'hidden' }}>
+      <div
+        ref={setRef}
+        style={{
+          display: 'flex',
+          width: '100vw',
+          height: containerHeight,
+          overflow: 'hidden',
+        }}
+      >
         <Layout.Sider theme='light' width={302}>
           <div
             id='leftSide'
@@ -51,38 +60,80 @@ export const EmailEditorLayout = () => {
 
         <Layout>
           <div id='centerEditor'>
-
             <Tabs
               activeKey={activeTab}
               tabBarStyle={{ paddingLeft: 20, backgroundColor: '#fff' }}
               onChange={setActiveTab}
               tabBarExtraContent={<ToolsPanel />}
             >
-              <TabPane tab={<Stack spacing="none"><EditOutlined /><TextStyle>Edit</TextStyle></Stack>} key='editor' style={{ backgroundColor: 'transparent' }}>
+              <TabPane
+                tab={
+                  <Stack spacing='none'>
+                    <EditOutlined />
+                    <TextStyle>Edit</TextStyle>
+                  </Stack>
+                }
+                key='editor'
+                style={{
+                  backgroundColor: 'transparent',
+                  paddingLeft: 20,
+                  paddingRight: 20,
+                }}
+              >
                 <root.div
                   id='VisualEditorEditMode'
-
-                  style={{ ...innerContainerStyles, backgroundColor: '#fff' }}
+                  style={{
+                    ...innerContainerStyles,
+                    backgroundColor: '#fff',
+                    overflow: 'auto',
+                  }}
                 >
                   <EmailContent />
                 </root.div>
               </TabPane>
-              <TabPane tab={<Stack spacing="none"><DesktopOutlined /><TextStyle>Preview</TextStyle></Stack>} key='laptopIcon' style={{ backgroundColor: 'transparent' }}>
-                <div style={{ ...innerContainerStyles, backgroundColor: '#fff' }}>
-                  <IframeComponent height="100%" width="100%" style={{ border: 'none', paddingTop: -16 }}>
+              <TabPane
+                tab={
+                  <Stack spacing='none'>
+                    <DesktopOutlined />
+                    <TextStyle>Preview</TextStyle>
+                  </Stack>
+                }
+                key='laptopIcon'
+                style={{ backgroundColor: 'transparent' }}
+              >
+                <div
+                  style={{ ...innerContainerStyles, backgroundColor: '#fff' }}
+                >
+                  <IframeComponent
+                    height='100%'
+                    width='100%'
+                    style={{ border: 'none', paddingTop: -16 }}
+                  >
                     <PreviewEmail />
                   </IframeComponent>
                 </div>
               </TabPane>
-              <TabPane tab={<Stack spacing="none"><TabletOutlined /><TextStyle>Preview</TextStyle></Stack>} key='mobileIcon' style={{ backgroundColor: 'transparent' }}>
-                <div style={{ ...innerContainerStyles, }}>
-                  <IframeComponent height="100%" width={375} style={{ border: 'none', paddingTop: -16 }}>
+              <TabPane
+                tab={
+                  <Stack spacing='none'>
+                    <TabletOutlined />
+                    <TextStyle>Preview</TextStyle>
+                  </Stack>
+                }
+                key='mobileIcon'
+                style={{ backgroundColor: 'transparent' }}
+              >
+                <div style={{ ...innerContainerStyles }}>
+                  <IframeComponent
+                    height='100%'
+                    width={375}
+                    style={{ border: 'none', paddingTop: -16 }}
+                  >
                     <PreviewEmail />
                   </IframeComponent>
                 </div>
               </TabPane>
             </Tabs>
-
           </div>
         </Layout>
 
@@ -99,6 +150,5 @@ export const EmailEditorLayout = () => {
         </Layout.Sider>
       </div>
     </Layout>
-
   );
 };
