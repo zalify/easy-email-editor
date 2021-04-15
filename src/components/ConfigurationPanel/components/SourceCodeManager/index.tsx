@@ -39,7 +39,7 @@ export function SourceCodeManager() {
     (event: React.FocusEvent<HTMLTextAreaElement>) => {
       try {
         const parseValue = MjmlToJson(
-          mjml(event.target.value, { validationLevel: 'strict' }).json
+          mjml(event.target.value, { validationLevel: 'soft' }).json
         );
         setValueByIdx(focusIdx, parseValue);
       } catch (error) {

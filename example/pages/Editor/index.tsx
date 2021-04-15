@@ -67,7 +67,7 @@ export default function Editor() {
     console.log(
       mjml(transformToMjml(values.content), {
         beautify: true,
-        validationLevel: 'strict',
+        validationLevel: 'soft',
       }).html
     );
   };
