@@ -97,13 +97,14 @@ export function useBlock() {
     (idx: string) => {
       setFormikState((formState) => {
         const parentIdx = getParentIdx(idx);
-        const parent = get(formState.values, getParentIdx(idx) || '');
+        const parent = get(formState.values, getParentIdx(idx) || '') as IBlockData | null;
         if (!parent) {
           throw new Error('Invalid block');
         }
         const copyBlock = cloneDeep(get(formState.values, idx));
+        const index = getIndexByIdx(idx);
 
-        parent.children.push(copyBlock);
+        parent.children.splice(index, 0, copyBlock);
         formState.values.focusIdx = `${parentIdx}.children.[${parent.children.length - 1
           }]`;
         return { ...formState };

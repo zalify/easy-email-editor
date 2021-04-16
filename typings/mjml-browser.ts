@@ -8,7 +8,7 @@ declare module 'mjml-browser' {
   }) => {
     json: MjmlBlockItem,
     html: string,
-    error: string[];
+    errors: string[];
   };
   export default transform;
 }

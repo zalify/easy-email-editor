@@ -3,10 +3,10 @@ import React, {
 } from 'react';
 
 import { Tooltip } from 'antd';
-import { ArrowUpOutlined, ArrowDownOutlined, UpSquareOutlined, DownSquareOutlined, CopyOutlined, CloseOutlined, BorderOuterOutlined, RedoOutlined, UndoOutlined } from '@ant-design/icons';
+import { ArrowUpOutlined, ArrowDownOutlined, UpSquareOutlined, DownSquareOutlined, CopyOutlined, CloseOutlined, BorderOuterOutlined, AndroidOutlined } from '@ant-design/icons';
 import { Stack } from '@/components/Stack';
 import { TextStyle } from '@/components/TextStyle';
-import { findBlockByType, getParentIdx, getSiblingIdx } from '@/utils/block';
+import { findBlockByType, getPageIdx, getParentIdx, getSiblingIdx } from '@/utils/block';
 import { useBlock } from '@/hooks/useBlock';
 import { BasicType } from '@/constants';
 
@@ -87,6 +87,13 @@ export const BlockToolbar = () => {
         title: 'Copy',
         method() {
           copyBlock(focusIdx);
+        }
+      },
+      {
+        icon: <AndroidOutlined />,
+        title: 'Page block',
+        method() {
+          setFocusIdx(getPageIdx());
         }
       },
       {
