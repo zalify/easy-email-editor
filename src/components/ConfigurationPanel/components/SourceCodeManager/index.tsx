@@ -6,6 +6,7 @@ import { useBlock } from '@/hooks/useBlock';
 import { transformToMjml } from '@/utils/transformToMjml';
 import mjml from 'mjml-browser';
 import { MjmlToJson } from '@/utils/MjmlToJson';
+import { TextStyle } from '@/components/TextStyle';
 
 export function SourceCodeManager() {
   const { focusIdx, setValueByIdx, values } = useBlock();
@@ -39,19 +40,20 @@ export function SourceCodeManager() {
 
   const onMjmlChange = useCallback(
     (event: React.FocusEvent<HTMLTextAreaElement>) => {
+      if (!isRoot) return;
       const { json, errors } = mjml(event.target.value, { validationLevel: 'soft' });
-      // FIXME:
       if (errors.length > 0) {
-        message.error('Parse error');
-        console.log(errors);
-        // return;
+        message.error(
+          <TextStyle>Unvalid data, please visit <a href="https://mjml.io/try-it-live" target="_blank">Mjml website</a> to update.</TextStyle>
+        );
+        return;
       }
       const parseValue = MjmlToJson(
         json
       );
       setValueByIdx(focusIdx, parseValue);
     },
-    [focusIdx, setValueByIdx]
+    [focusIdx, isRoot, setValueByIdx]
   );
 
   const onChangeMjmlText = useCallback((event: React.FocusEvent<HTMLTextAreaElement>) => {

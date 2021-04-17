@@ -3,7 +3,7 @@ import { SelectField, TextField } from '@/components/core/Form';
 import { Stack } from '@/components/Stack';
 import { useBlock } from '@/hooks/useBlock';
 import { TextStyle } from '@/components/TextStyle';
-import { Color } from './Color';
+import { BackgroundColor } from './BackgroundColor';
 
 const backgroundRepeatOptions = [
   {
@@ -31,7 +31,7 @@ export function Background() {
     return (
       <Stack key={focusIdx} vertical spacing='extraTight'>
         <TextStyle size='large'>Background</TextStyle>
-        <Color />
+        <BackgroundColor />
         <Stack vertical spacing='none'>
           <TextField
             label='Background image'

@@ -3,6 +3,7 @@ import React from 'react';
 
 export interface CollectedBlock {
   label: string;
+  helpText?: string;
   icon?: React.ReactElement;
   data: IBlockData;
   id: string;

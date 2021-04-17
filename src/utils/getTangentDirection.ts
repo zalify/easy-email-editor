@@ -1,11 +1,14 @@
 import React from 'react';
+import { findBlockNode } from './findBlockNode';
 
 const deviation = 5;
 type Direction = 'top' | 'right' | 'bottom' | 'left';
 
 export function getTangentDirection(ev: DragEvent | MouseEvent | React.DragEvent): Direction | '' {
   const target = ev.target as HTMLElement;
-  const { top, height, left, width } = target.getBoundingClientRect();
+  const blockNode = findBlockNode(target);
+  if (!blockNode) return '';
+  const { top, height, left, width } = blockNode.getBoundingClientRect();
   const mouseY = ev.clientY;
   const mouseX = ev.clientX;
 

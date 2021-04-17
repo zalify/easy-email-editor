@@ -17,6 +17,7 @@ import mjml from 'mjml-browser';
 import { transformToMjml } from '@/utils/transformToMjml';
 import extraBlocks from '@example/store/extraBlocks';
 import { CollectedBlock } from '@/components/PropsProvider';
+import { copy } from '@example/util/clipboard';
 
 export default function Editor() {
   const dispatch = useDispatch();
@@ -68,12 +69,15 @@ export default function Editor() {
   );
 
   const onExportHtml = (values: EditorProps) => {
-    console.log(
-      mjml(transformToMjml(values.content), {
-        beautify: true,
-        validationLevel: 'soft',
-      }).html
-    );
+
+    const html = mjml(transformToMjml(values.content), {
+      beautify: true,
+      validationLevel: 'soft',
+    }).html;
+
+    copy(html);
+    message.success('Copied to pasteboard!');
+
   };
 
   const initialValues: EditorProps | null = useMemo(() => {
@@ -96,9 +100,11 @@ export default function Editor() {
 
   const onAddCollection = (payload: CollectedBlock) => {
     dispatch(extraBlocks.actions.add(payload));
+    message.success('Added to collection!');
   };
   const onRemoveCollection = ({ id }: { id: string; }) => {
     dispatch(extraBlocks.actions.remove({ id }));
+    message.success('Removed from collection.');
   };
 
   return (
@@ -113,6 +119,7 @@ export default function Editor() {
           <>
             <PageHeader
               title='Edit'
+              onBack={history.goBack}
               extra={
                 <Stack>
                   <Button onClick={() => onExportHtml(values)}>

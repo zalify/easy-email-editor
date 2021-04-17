@@ -7,6 +7,7 @@ import { EditorProps } from '@/components/EmailEditorProvider';
 import { BasicType } from '@/constants';
 import { emailToImage } from '@/utils/emailToImage';
 import { getPageIdx } from '@/utils/block';
+import { Page } from '@/components/core/blocks/basic/Page';
 
 export default createSliceState({
   name: 'template',
@@ -36,14 +37,7 @@ export default createSliceState({
       return {
         subject: 'Welcome to Easy-email',
         subTitle: 'Nice to meet you!',
-        content: {
-          type: BasicType.PAGE,
-          data: {
-            value: {},
-          },
-          attributes: {},
-          children: [],
-        },
+        content: Page.createInstance({}),
         focusIdx: getPageIdx(),
         hoverIdx: '',
       } as EditorProps;

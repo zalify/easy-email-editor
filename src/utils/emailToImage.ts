@@ -18,7 +18,7 @@ export async function emailToImage(content: IPage) {
     html2canvas(
       container,
       { useCORS: true }
-    ).then(canvas => canvas.toBlob(resolve));
+    ).then(canvas => canvas.toBlob(resolve, 'png', 0.1));
   });
 
   document.body.removeChild(container);

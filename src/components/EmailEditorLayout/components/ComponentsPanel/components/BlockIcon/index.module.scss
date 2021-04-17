@@ -9,6 +9,7 @@
   color: #b3b3b3;
   position: relative;
   border: 1px solid #b3b3b3;
+  text-align: center;
   margin-bottom: 10px;
   flex: 1;
   &:nth-child(3n) {
@@ -20,10 +21,10 @@
     top: 10px;
     right: 10px;
     opacity: 0;
-    transition: all .3s;
+    transition: all 0.3s;
   }
 
-  &:hover .closeBtn{
+  &:hover .closeBtn {
     opacity: 1;
   }
 
@@ -36,5 +37,4 @@
   .largeTitle {
     font-size: 18px;
   }
-
 }

@@ -1,21 +1,15 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { transformToMjml } from '@/utils/transformToMjml';
-import mjml from 'mjml-browser';
-import { useEditorContext } from '@/hooks/useEditorContext';
 import {
   getIndexByIdx,
-  getNodeIdxClassName,
   getNodeIdxFromClassName,
   getNodeTypeFromClassName,
-  getPageIdx,
   getParentIdx,
 } from '@/utils/block';
 import { findBlockNode } from '@/utils/findBlockNode';
 import {
   BlockType,
   BLOCK_HOVER_CLASSNAME,
-  BLOCK_SELECTED_CLASSNAME,
   DRAG_HOVER_CLASSNAME,
   DRAG_TANGENT_CLASSNAME,
 } from '@/constants';
@@ -26,9 +20,11 @@ import { Tooltip } from 'antd';
 import { BlockToolbar } from '../BlockToolbar';
 import { IBlockData } from '@/typings';
 import { getBlockByType } from '@/components/core/blocks';
+import { ShadowStyle } from './components/ShadowStyle';
+import { MjmlDomRender } from './components/MjmlDomRender';
+import { findBlockNodeByIdx } from '@/utils/findBlockNodeByIdx';
 
 export function EmailContent() {
-  const { pageData } = useEditorContext();
   const [ref, setRef] = useState<HTMLElement | null>(null);
   const {
     focusIdx,
@@ -39,8 +35,6 @@ export function EmailContent() {
     addBlock,
     focusBlock,
   } = useBlock();
-
-  const html = mjml(transformToMjml(pageData, getPageIdx())).html;
 
   useEffect(() => {
     if (ref) {
@@ -170,24 +164,10 @@ export function EmailContent() {
     };
   }, [ref]);
 
-  useEffect(() => {
-    if (!ref) return;
-
-    ref.querySelectorAll('.email-block').forEach((child) => {
-      child.classList.remove(BLOCK_SELECTED_CLASSNAME);
-      const idx = getNodeIdxFromClassName(child.classList);
-      if (idx === focusIdx) {
-        child.classList.add(BLOCK_SELECTED_CLASSNAME);
-      }
-    });
-  }, [focusIdx, ref, html]);
-
   const hoverBlock = useMemo(() => {
     if (!ref) return null;
 
-    const blockNode = Array.from(
-      ref.querySelectorAll('.email-block')
-    ).find((child) => child.classList.contains(getNodeIdxClassName(hoverIdx)));
+    const blockNode = findBlockNodeByIdx(hoverIdx);
 
     if (blockNode) {
       const block = getBlockByType(
@@ -202,41 +182,7 @@ export function EmailContent() {
 
   return (
     <>
-      <style>
-        {`
-          .email-block {
-            outline: 1px dashed rgba(170,170,170,0.7);
-            outline-offset: -2px;
-          }
-
-          .block-hover {
-            outline-offset: -1px;
-            outline: 1px solid #3b97e3;
-          }
-
-          .block-selected {
-            outline-offset: -2px;
-            outline: 2px solid #3b97e3 !important;
-          }
-
-          .block-dragover {
-            outline-offset: -2px;
-            outline: 2px solid #D0021B !important;
-          }
-
-          .block-tangent {
-            outline-offset: -2px;
-            outline: 2px solid #F5A623 !important;
-          }
-
-          .node-type-page {
-            min-height: 100%
-          }
-          .node-type-group{
-            min-height: 30px
-          }
-        `}
-      </style>
+      <ShadowStyle />
       <Tooltip
         placement='topRight'
         title={<BlockToolbar />}
@@ -245,10 +191,12 @@ export function EmailContent() {
         style={{ zIndex: 100 }}
       >
         <div
-          style={{ height: '100%' }}
+          style={{ height: '100%', overflowY: 'auto' }}
           ref={setRef}
-          dangerouslySetInnerHTML={{ __html: html }}
-        />
+
+        >
+          <MjmlDomRender />
+        </div>
       </Tooltip>
       <Tooltip
         key={hoverIdx}

@@ -39,19 +39,12 @@ export function CardItem(props: CardItemProps) {
   }, [data, dispatch]);
 
   return (
-    <div key={data.article_id} className={styles.templeteItem}>
-      <Picture className={styles.previewImg} src={data.picture} />
+    <div key={data.article_id} className={styles.templeteItem} style={{ backgroundImage: `url(${data.picture})` }}>
       <div className={styles.bottom}>
         <div className={styles.title}>Title: {data.title}</div>
         <div className={styles.title}>Date {dayjs().format('YYYY-MM-DD')}</div>
       </div>
       <div className={styles.mask}>
-        <div className={styles.qrcode}>
-          <QrCode
-            url={`${location.protocol}//${location.host}/template?id=${data.article_id}`}
-            logo={'https://assets.maocanhua.cn/FuPYsNk512cqHpUPqGCLdJMflZEz'}
-          />
-        </div>
         <div className={styles.listBottom}>
           <div className={styles.listItem}>
             <Link to={`/editor?id=${data.article_id}`}>

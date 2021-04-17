@@ -1,7 +1,6 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Padding } from '@/components/ConfigurationPanel/components/AttributesManager/components/Padding';
 import { Stack } from '@/components/Stack';
-import { TextAreaField, TextField } from '@/components/core/Form';
 import { useBlock } from '@/hooks/useBlock';
 import { Width } from '@/components/ConfigurationPanel/components/AttributesManager/components/Width';
 import { TextDecoration } from '@/components/ConfigurationPanel/components/AttributesManager/components/TextDecoration';
@@ -16,6 +15,8 @@ import { Color } from '@/components/ConfigurationPanel/components/AttributesMana
 import { Align } from '@/components/ConfigurationPanel/components/AttributesManager/components/Align';
 import { RichText } from '@/components/RichText';
 import { IText } from '..';
+import { LineHeight } from '@/components/ConfigurationPanel/components/AttributesManager/components/LineHeight';
+import { LetterSpacing } from '@/components/ConfigurationPanel/components/AttributesManager/components/LetterSpacing';
 
 export function Panel() {
   const { focusIdx, focusBlock, setFocusBlockValue, recordStatus } = useBlock();
@@ -61,20 +62,11 @@ export function Panel() {
       />
       <Color />
       <FontSize />
-      <TextField
-        label='line-height'
-        quickchange
-        name={`${focusIdx}.attributes.line-height`}
-        inline
-      />
+      <LineHeight />
 
       <FontStyle />
       <FontWeight />
-      <TextField
-        label='letter-spacing'
-        name={`${focusIdx}.attributes.letter-spacing`}
-        inline
-      />
+      <LetterSpacing />
       <Height />
       <FontFamily />
       <TextDecoration />

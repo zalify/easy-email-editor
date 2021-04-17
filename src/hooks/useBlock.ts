@@ -6,6 +6,7 @@ import { useCallback, useContext } from 'react';
 import { message } from 'antd';
 import {
   getIndexByIdx,
+  getParentByIdx,
   getParentIdx,
   getValueByIdx,
 } from '@/utils/block';
@@ -65,7 +66,17 @@ export function useBlock() {
               children: [child]
             });
             focusIdx += '.children.[0]';
-          } else if (parentBlock.type === BasicType.PAGE) {
+          } else if (parentBlock.type === BasicType.WRAPPER) {
+            child = createBlockItem(BasicType.SECTION, {
+              children: [
+                createBlockItem(BasicType.COLUMN, {
+                  children: [child]
+                })
+              ]
+            });
+            focusIdx += '.children.[0]';
+          }
+          else if (parentBlock.type === BasicType.PAGE) {
             child = createBlockItem(BasicType.SECTION, {
               children: [
                 createBlockItem(BasicType.COLUMN, {
@@ -75,7 +86,17 @@ export function useBlock() {
             });
             focusIdx += '.children.[0].children.[0]';
           }
+        }
 
+        // Replace
+        if (parent.type === BasicType.COLUMN && child.type === BasicType.COLUMN) {
+          const parentIndex = getIndexByIdx(parentIdx);
+          const upParent = getParentByIdx(formState.values, parentIdx)!;
+          upParent.children.splice(parentIndex, 1, child);
+          set(formState.values, getParentIdx(parentIdx)!, { ...upParent });
+          formState.values.focusIdx = parentIdx;
+
+          return { ...formState };
         }
 
         if (!parentBlock.validChildrenType.includes(child.type)) {

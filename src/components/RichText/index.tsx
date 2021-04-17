@@ -40,46 +40,36 @@ export function RichText(props: RichTextProps) {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [initialValue] = useState(props.content);
   const editorRef = useRef<HTMLDivElement>(null);
-  const [container, setContainer] = useState<HTMLDivElement | null>(null);
-  const [range, setRange] = useState<Range | null | undefined>(null);
+  const contentEditorRef = useRef<HTMLDivElement | null>(null);
+  const [currentRange, setCurrentRangeRange] = useState<Range | null | undefined>(null);
 
   useEffect(() => {
     const onSelectionChange = () => {
+
       const range = document.getSelection()?.getRangeAt(0);
-      if (container?.contains(range?.commonAncestorContainer!)) {
-        setRange(range);
-      } else if (
-        !editorRef.current?.contains(range?.commonAncestorContainer!)
-      ) {
-        // console.log(
-        //   'editorRef.current?.contains(range?.commonAncestorContainer!)',
-        //   editorRef.current?.contains(range?.commonAncestorContainer!),
-        //   range?.commonAncestorContainer!
-        // );
-        // setRange(null);
+      if (contentEditorRef.current?.contains(range?.commonAncestorContainer!)) {
+        setCurrentRangeRange(range);
       }
     };
 
-    const onBlur = () => { };
-
     document.addEventListener('selectionchange', onSelectionChange);
-    document.addEventListener('click', onBlur);
 
     return () => {
       document.removeEventListener('selectionchange', onSelectionChange);
-      document.removeEventListener('click', onBlur);
+
     };
-  }, [container]);
+  }, [currentRange]);
 
   const execCommand = (cmd: string, val?: any) => {
+    const container = contentEditorRef.current;
     if (!container) return;
 
-    if (range) {
+    if (currentRange) {
       let selection = window.getSelection()!;
       const newRange = document.createRange();
       newRange.selectNodeContents(container);
-      newRange.setStart(range.startContainer, range.startOffset);
-      newRange.setEnd(range.endContainer, range.endOffset);
+      newRange.setStart(currentRange.startContainer, currentRange.startOffset);
+      newRange.setEnd(currentRange.endContainer, currentRange.endOffset);
       selection.removeAllRanges();
       selection.addRange(newRange);
 
@@ -99,6 +89,7 @@ export function RichText(props: RichTextProps) {
 
       const html = container.innerHTML;
       props.onChange(html);
+
     }
   };
 
@@ -157,7 +148,7 @@ export function RichText(props: RichTextProps) {
         <div className={styles.editorWrapper} style={{ backgroundColor: containerStyle.backgroundColor }}>
           <div
             contentEditable
-            ref={setContainer}
+            ref={contentEditorRef}
             style={{ ...containerStyle, backgroundColor: undefined, minHeight: 100 }}
             dangerouslySetInnerHTML={{ __html: initialValue }}
             onInput={handleInput}

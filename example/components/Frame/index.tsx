@@ -17,7 +17,7 @@ export default function Frame({ children, title, primaryAction, breadcrumb }: Fr
     <Layout>
       <Header>
         <Stack alignment="center">
-          <h1 style={{ color: 'white' }}>easyH5</h1>
+          <h1 style={{ color: 'white' }}>easy-email</h1>
         </Stack>
 
       </Header>
@@ -29,8 +29,8 @@ export default function Frame({ children, title, primaryAction, breadcrumb }: Fr
             defaultOpenKeys={['sub1']}
             style={{ height: 'calc(100vh - 64px)', borderRight: 0 }}
           >
-            <SubMenu key="sub1" title="数据模板">
-              <Menu.Item key="1">数据模板</Menu.Item>
+            <SubMenu key="sub1" title="Templates">
+              <Menu.Item key="1">Templates</Menu.Item>
             </SubMenu>
           </Menu>
         </Sider>

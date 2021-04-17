@@ -3,7 +3,7 @@ import { EyeOutlined, EyeInvisibleOutlined, RightOutlined, DownOutlined, CopyOut
 import React, { useCallback, useMemo, useState } from 'react';
 import { useEditorContext } from '@/hooks/useEditorContext';
 import { IBlockData } from '@/typings';
-import { findBlockByType, getChildIdx, getPageIdx } from '@/utils/block';
+import { findBlockByType, getChildIdx, getNodeIdxClassName, getPageIdx } from '@/utils/block';
 import { useBlock } from '@/hooks/useBlock';
 import { BasicType, BLOCK_HOVER_CLASSNAME } from '@/constants';
 import { Stack } from '@/components/Stack';
@@ -42,6 +42,11 @@ const BlockLayerItem = ({ blockData, idx, indent }: { blockData: IBlockData, idx
   const onFocus = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
     setFocusIdx(idx);
+    const node = findBlockNodeByIdx(idx);
+    node?.scrollIntoView({
+      block: 'center',
+      behavior: 'smooth',
+    });
   }, [idx, setFocusIdx]);
 
   const onMouseEnter = useCallback((e: React.MouseEvent) => {

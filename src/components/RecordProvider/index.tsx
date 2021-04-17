@@ -29,7 +29,7 @@ export const RecordProvider: React.FC<{}> = (props) => {
   const formikContext = useFormikContext<EditorProps>();
   const { current: initialValues } = useRef<EditorProps>(cloneDeep(formikContext.values));
   const [data, setData] = useState<Array<EditorProps>>([]);
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(-1);
   const [status, setStatus] = useState<RecordStatus>('add');
 
   const value = useMemo(() => {
@@ -61,9 +61,10 @@ export const RecordProvider: React.FC<{}> = (props) => {
     const isChanged = !(currentItem && isEqual(formikContext.values.content, currentItem.content) && formikContext.values.subTitle === currentItem.subTitle && formikContext.values.subTitle === currentItem.subTitle);
 
     if (isChanged) {
-      setIndex(Math.max(Math.min(data.length, MAX_RECORD_SIZE), 0));
       setStatus('add');
-      setData([...data, cloneDeep(formikContext.values)]);
+      const newData = [...data, cloneDeep(formikContext.values)];
+      setData(newData.slice(-MAX_RECORD_SIZE));
+      setIndex(Math.max(Math.min(data.length, MAX_RECORD_SIZE - 1), 0));
     }
   }, [data, formikContext, index]);
 

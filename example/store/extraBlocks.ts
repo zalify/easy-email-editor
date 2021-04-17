@@ -11,7 +11,7 @@ const defaultData = [
   }
 ];
 
-const extraBlocksData = JSON.parse(localStorage.getItem(COLLECTION_KEY) || defaultData.toString());
+const extraBlocksData = JSON.parse(localStorage.getItem(COLLECTION_KEY) || JSON.stringify(defaultData));
 
 export default createSliceState({
   name: 'extraBlocks',

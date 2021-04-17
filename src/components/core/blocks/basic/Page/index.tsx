@@ -5,6 +5,7 @@ import { BasicType } from '@/constants';
 
 export type IPage = IBlockData<{
   'background-color'?: string;
+  width?: string;
 }, {
   breakpoint?: string;
 }>;

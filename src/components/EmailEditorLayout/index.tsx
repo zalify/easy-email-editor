@@ -4,7 +4,7 @@ import {
   EditOutlined,
 } from '@ant-design/icons';
 import { Layout, Tabs } from 'antd';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import root from 'react-shadow';
 import { IframeComponent } from '@/components/IframeComponent';
 import { ConfigurationPanel } from '@/components/ConfigurationPanel';
@@ -15,26 +15,28 @@ import { Stack } from '../Stack';
 import { TextStyle } from '../TextStyle';
 import { ToolsPanel } from './components/ToolsPanel';
 import styles from './index.module.scss';
+import { useEditorContext } from '@/hooks/useEditorContext';
 
 const TabPane = Tabs.TabPane;
 
 export const EmailEditorLayout = () => {
   const [ref, setRef] = useState<HTMLElement | null>(null);
   const [activeTab, setActiveTab] = useState('editor');
+  const [containerHeight, setContainerHeight] = useState(0);
+  const { pageData } = useEditorContext();
 
-  const containerHeight = useMemo(
-    () => window.innerHeight - (ref?.getBoundingClientRect().top || 0),
-    [ref]
-  );
+  useEffect(() => {
+    const getHeight = () => window.innerHeight - (ref?.getBoundingClientRect().top || 0);
+    setContainerHeight(getHeight());
+    window.addEventListener('resize', getHeight);
 
-  const innerContainerStyles: React.CSSProperties = {
-    height: containerHeight - 120,
-    width: 600,
-    marginTop: 20,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    textAlign: 'center',
-  };
+    return () => {
+      window.removeEventListener('resize', getHeight);
+    };
+  }, [ref]);
+
+  const pageMaxWidth = pageData.attributes.width || '600px';
+  const pageMinWidth = pageData.data.value.breakpoint || '480px';
 
   return (
     <Layout>
@@ -43,7 +45,7 @@ export const EmailEditorLayout = () => {
         style={{
           display: 'flex',
           width: '100vw',
-          height: containerHeight,
+
           overflow: 'hidden',
         }}
       >
@@ -52,6 +54,7 @@ export const EmailEditorLayout = () => {
             id='leftSide'
             style={{
               maxHeight: '100%',
+              height: containerHeight
             }}
             className={styles.customScrollBar}
           >
@@ -63,7 +66,7 @@ export const EmailEditorLayout = () => {
           <div id='centerEditor'>
             <Tabs
               activeKey={activeTab}
-              tabBarStyle={{ paddingLeft: 20, backgroundColor: '#fff' }}
+              tabBarStyle={{ paddingLeft: 20, marginBottom: 0, }}
               onChange={setActiveTab}
               tabBarExtraContent={<ToolsPanel />}
             >
@@ -84,9 +87,11 @@ export const EmailEditorLayout = () => {
                 <root.div
                   id='VisualEditorEditMode'
                   style={{
-                    ...innerContainerStyles,
-                    backgroundColor: '#fff',
-                    overflow: 'auto',
+                    width: pageMaxWidth,
+                    height: innerHeight - 160,
+                    padding: 40,
+                    paddingBottom: 0,
+                    margin: 'auto'
                   }}
                 >
                   <EmailContent />
@@ -103,7 +108,13 @@ export const EmailEditorLayout = () => {
                 style={{ backgroundColor: 'transparent' }}
               >
                 <div
-                  style={{ ...innerContainerStyles, backgroundColor: '#fff' }}
+                  style={{
+                    width: pageMaxWidth,
+                    height: innerHeight - 160,
+                    padding: 40,
+                    paddingBottom: 0,
+                    margin: 'auto'
+                  }}
                 >
                   <IframeComponent
                     height='100%'
@@ -124,10 +135,18 @@ export const EmailEditorLayout = () => {
                 key='mobileIcon'
                 style={{ backgroundColor: 'transparent' }}
               >
-                <div style={{ ...innerContainerStyles }}>
+                <div
+                  style={{
+                    width: pageMinWidth,
+                    height: innerHeight - 160,
+                    padding: 40,
+                    paddingBottom: 0,
+                    margin: 'auto'
+                  }}
+                >
                   <IframeComponent
                     height='100%'
-                    width={375}
+                    width='100%'
                     style={{ border: 'none', paddingTop: -16 }}
                   >
                     <PreviewEmail />
@@ -142,7 +161,7 @@ export const EmailEditorLayout = () => {
           <div
             id='rightSide'
             style={{
-              height: '100%',
+              height: containerHeight,
               overflowY: 'scroll',
             }}
             className={styles.customScrollBar}

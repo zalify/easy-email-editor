@@ -12,7 +12,7 @@ export interface ColorPickerProps {
 }
 
 export function ColorPicker(props: ColorPickerProps) {
-  const [color, setColor] = useState('#fff');
+  const [color, setColor] = useState('');
   const { value = '', onChange, children } = props;
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export function ColorPicker(props: ColorPickerProps) {
       content={(
         <SketchPicker
           color={color}
-          onChange={onChangeColor}
+          onChangeComplete={onChangeColor}
         />
       )}
       title={props.label}

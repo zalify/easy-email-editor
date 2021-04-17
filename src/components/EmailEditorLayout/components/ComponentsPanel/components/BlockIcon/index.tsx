@@ -7,11 +7,13 @@ import { Popconfirm, Tag } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import React, { useContext } from 'react';
 import styles from './index.module.scss';
+import { Help } from '@/components/Help';
 
 type BlockIconProps = {
   id?: string;
   icon?: React.ReactElement;
   text: string;
+  helpText?: React.ReactNode;
   type: BlockType;
   payload?: Partial<IBlockData>;
 };
@@ -32,7 +34,17 @@ export function BlockIcon(props: BlockIconProps) {
         className={styles.baseComponent}
       >
         {props.icon}
-        <h3 className={classnames(styles.title, !props.icon && styles.largeTitle)}>{props.text}</h3>
+        <h3 className={classnames(styles.title, !props.icon && styles.largeTitle)}>
+          {props.text}
+          {
+            props.helpText && (
+              <>
+                &nbsp;
+                <Help style={{ fontSize: 12 }} title={props.helpText} />
+              </>
+            )
+          }
+        </h3>
         {removeable && (
           <Popconfirm title={`Are you want to remove "${props.text}"`}
             onConfirm={onConfirm}

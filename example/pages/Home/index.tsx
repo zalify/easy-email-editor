@@ -20,8 +20,8 @@ export default function Home() {
 
   return (
     <Frame
-      title='数据模板'
-      primaryAction={<Button href='/editor'>新建</Button>}
+      title='Templates'
+      primaryAction={<Button href='/editor'>Add</Button>}
     >
       <div style={{ minHeight: 400 }}>
         <Loading loading={loading}>

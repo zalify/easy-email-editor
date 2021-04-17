@@ -15,7 +15,7 @@ import { EditorPropsContext } from '@/components/PropsProvider';
 import { Modal } from 'antd';
 import { Formik } from 'formik';
 import { v4 as uuidv4 } from 'uuid';
-import { TextField } from '@/components/core/Form';
+import { TextAreaField, TextField } from '@/components/core/Form';
 
 type SideBarItem = {
   icon: React.ReactNode;
@@ -54,6 +54,24 @@ export const BlockToolbar = () => {
     }
     return [
       {
+        icon: <UpSquareOutlined />,
+        title: 'Select parent',
+        method() {
+          const parentIdx = getParentIdx(focusIdx);
+          if (parentIdx) {
+            setFocusIdx(parentIdx);
+          }
+
+        }
+      },
+      {
+        icon: <AndroidOutlined />,
+        title: 'Page block',
+        method() {
+          setFocusIdx(getPageIdx());
+        }
+      },
+      {
         icon: <ArrowUpOutlined />,
         title: 'Move up',
         method() {
@@ -65,17 +83,6 @@ export const BlockToolbar = () => {
         title: 'Move down',
         method() {
           moveByIdx(focusIdx, getSiblingIdx(focusIdx, 1));
-        }
-      },
-      {
-        icon: <UpSquareOutlined />,
-        title: 'Select parent',
-        method() {
-          const parentIdx = getParentIdx(focusIdx);
-          if (parentIdx) {
-            setFocusIdx(parentIdx);
-          }
-
         }
       },
       hasChildren && {
@@ -106,13 +113,6 @@ export const BlockToolbar = () => {
         }
       },
       {
-        icon: <AndroidOutlined />,
-        title: 'Page block',
-        method() {
-          setFocusIdx(getPageIdx());
-        }
-      },
-      {
         icon: <CloseOutlined />,
         title: 'Remove',
         method() {
@@ -124,11 +124,12 @@ export const BlockToolbar = () => {
 
   return useMemo(() => {
 
-    const onSubmit = (values: { label: string; }) => {
+    const onSubmit = (values: { label: string; helpText: string; }) => {
       if (!values.label) return;
       const uuid = uuidv4();
       onAddCollection?.({
         label: values.label,
+        helpText: values.helpText,
         data: focusBlock!,
         id: uuid
       });
@@ -148,18 +149,23 @@ export const BlockToolbar = () => {
             );
           })
         }
-        <Formik initialValues={{ label: '' }} onSubmit={onSubmit}>
+        <Formik initialValues={{ label: '', helpText: '' }} onSubmit={onSubmit}>
           {
             ({ handleSubmit }) => (
               <Modal zIndex={2000} visible={modalVisible} title="Add to collection" onOk={() => handleSubmit()} onCancel={() => setModalVisible(false)}>
                 <Stack vertical>
                   <Stack.Item />
-                  <TextField inline label="Title"
+                  <TextField
+                    label="Title"
                     name="label"
                     validate={(val: string) => {
                       if (!val) return 'Title required!';
                       return undefined;
                     }}
+                  />
+                  <TextAreaField
+                    label="Description"
+                    name="helpText"
                   />
                 </Stack>
               </Modal>

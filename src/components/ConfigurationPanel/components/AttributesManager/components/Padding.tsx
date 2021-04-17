@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { TextField } from '@/components/core/Form';
 import { Stack } from '@/components/Stack';
 import { useBlock } from '@/hooks/useBlock';
@@ -10,7 +10,8 @@ export interface PaddingProps {
 }
 export function Padding(props: PaddingProps = {}) {
   const { title = 'Padding', attributeName = 'padding' } = props;
-  const { focusIdx, focusBlock } = useBlock();
+  const { focusIdx, focusBlock, setValueByIdx } = useBlock();
+  const [count, setCount] = useState(0);
 
   const getVal = useCallback(
     (index: number) => {
@@ -32,9 +33,23 @@ export function Padding(props: PaddingProps = {}) {
     [attributeName, focusBlock?.attributes]
   );
 
+  useEffect(() => {
+    if (!focusBlock) return;
+    const paddins: string[] = focusBlock.attributes[attributeName]?.split(' ') || [];
+    if (paddins.length === 2) {
+      paddins[2] = paddins[0];
+      paddins[3] = paddins[1];
+      focusBlock.attributes[attributeName] = paddins.join(' ');
+      focusBlock.attributes = { ...focusBlock.attributes };
+      setValueByIdx(focusIdx, { ...focusBlock });
+      setCount(c => c + 1);
+    }
+
+  }, [attributeName, focusBlock, focusBlock?.attributes, focusIdx, setValueByIdx]);
+
   return useMemo(() => {
     return (
-      <Stack vertical spacing='extraTight'>
+      <Stack key={count} vertical spacing='extraTight'>
         <TextStyle size='large'>{title}</TextStyle>
         <Stack wrap={false}>
           <Stack.Item fill>
