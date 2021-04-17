@@ -15,11 +15,14 @@ import { EmailEditorLayout } from '@/components/EmailEditorLayout';
 import { EditorProps } from '@/components/EmailEditorProvider';
 import mjml from 'mjml-browser';
 import { transformToMjml } from '@/utils/transformToMjml';
+import extraBlocks from '@example/store/extraBlocks';
+import { CollectedBlock } from '@/components/PropsProvider';
 
 export default function Editor() {
   const dispatch = useDispatch();
   const history = useHistory();
   const templateData = useAppSelector('template');
+  const extraBlocksData = useAppSelector('extraBlocks');
   const { id } = useQuery();
   const loading = useLoading(template.loadings.fetchById);
 
@@ -91,9 +94,21 @@ export default function Editor() {
 
   if (!initialValues) return null;
 
+  const onAddCollection = (payload: CollectedBlock) => {
+    dispatch(extraBlocks.actions.add(payload));
+  };
+  const onRemoveCollection = ({ id }: { id: string; }) => {
+    dispatch(extraBlocks.actions.remove({ id }));
+  };
+
   return (
     <div>
-      <EmailEditor data={initialValues}>
+      <EmailEditor
+        data={initialValues}
+        extraBlocks={extraBlocksData}
+        onAddCollection={onAddCollection}
+        onRemoveCollection={onRemoveCollection}
+      >
         {({ values }) => (
           <>
             <PageHeader

@@ -6,6 +6,7 @@ import { IBlockData } from '@/typings';
 import { EditorProps } from '@/components/EmailEditorProvider';
 import { BasicType } from '@/constants';
 import { emailToImage } from '@/utils/emailToImage';
+import { getPageIdx } from '@/utils/block';
 
 export default createSliceState({
   name: 'template',
@@ -21,7 +22,7 @@ export default createSliceState({
         return {
           ...data,
           content,
-          focusIdx: 'content',
+          focusIdx: getPageIdx(),
           hoverIdx: '',
           subject: data.title,
           subTitle: '',
@@ -43,7 +44,7 @@ export default createSliceState({
           attributes: {},
           children: [],
         },
-        focusIdx: 'content',
+        focusIdx: getPageIdx(),
         hoverIdx: '',
       } as EditorProps;
     },

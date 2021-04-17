@@ -1,10 +1,12 @@
 import { IEmailTemplate } from '@/typings';
+import { getPageIdx } from '@/utils/block';
 import { Formik, FormikProps } from 'formik';
 import React, { useMemo } from 'react';
 import { IPage } from '../core/blocks/basic/Page';
+import { PropsProvider, PropsProviderProps } from '../PropsProvider';
 import { RecordProvider } from '../RecordProvider';
 
-export interface EmailEditorProviderProps<T extends IEmailTemplate = any> {
+export interface EmailEditorProviderProps<T extends IEmailTemplate = any> extends PropsProviderProps {
   data: T;
   children: (props: FormikProps<EditorProps>) => React.ReactNode;
 }
@@ -27,7 +29,7 @@ export const EmailEditorProvider = (
       subject: data.subject,
       subTitle: data.subTitle,
       content: data.content,
-      focusIdx: 'content',
+      focusIdx: getPageIdx(),
       hoverIdx: '',
     };
   }, [data]);
@@ -37,11 +39,11 @@ export const EmailEditorProvider = (
   return (
     <Formik<EditorProps>
       initialValues={initialValues}
-      onSubmit={() => {}}
+      onSubmit={() => { }}
       enableReinitialize
     >
       {(...rest) => {
-        return <RecordProvider>{children(...rest)}</RecordProvider>;
+        return <PropsProvider {...props}><RecordProvider>{children(...rest)}</RecordProvider></PropsProvider>;
       }}
     </Formik>
   );

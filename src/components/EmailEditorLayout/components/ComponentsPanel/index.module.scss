@@ -6,10 +6,12 @@
   .collapse {
     background-color: #fff;
     .list {
+      padding: 10px;
       display: flex;
-      align-items: center;
+      justify-content: space-between;
       flex-wrap: wrap;
-      
+      flex: 1;
+
     }
   }
 }

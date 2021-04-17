@@ -1,14 +1,21 @@
 import React, {
-  useMemo
+  useContext,
+  useMemo,
+  useState
 } from 'react';
 
 import { Tooltip } from 'antd';
-import { ArrowUpOutlined, ArrowDownOutlined, UpSquareOutlined, DownSquareOutlined, CopyOutlined, CloseOutlined, BorderOuterOutlined, AndroidOutlined } from '@ant-design/icons';
+import { ArrowUpOutlined, ArrowDownOutlined, UpSquareOutlined, DownSquareOutlined, CopyOutlined, CloseOutlined, BorderOuterOutlined, AndroidOutlined, FolderAddOutlined } from '@ant-design/icons';
 import { Stack } from '@/components/Stack';
 import { TextStyle } from '@/components/TextStyle';
 import { findBlockByType, getPageIdx, getParentIdx, getSiblingIdx } from '@/utils/block';
 import { useBlock } from '@/hooks/useBlock';
 import { BasicType } from '@/constants';
+import { EditorPropsContext } from '@/components/PropsProvider';
+import { Modal } from 'antd';
+import { Formik } from 'formik';
+import { v4 as uuidv4 } from 'uuid';
+import { TextField } from '@/components/core/Form';
 
 type SideBarItem = {
   icon: React.ReactNode;
@@ -19,9 +26,11 @@ type SideBarItem = {
 };
 
 export const BlockToolbar = () => {
-
+  const [modalVisible, setModalVisible] = useState(false);
+  const { onAddCollection } = useContext(EditorPropsContext);
   const { moveByIdx, focusBlock, copyBlock, removeBlock, focusIdx, setFocusIdx } = useBlock();
   const block = focusBlock && findBlockByType(focusBlock.type);
+
   const sidebarList = useMemo(() => {
     if (!focusBlock) return [];
     const hasChildren = focusBlock.children.length > 0;
@@ -90,6 +99,13 @@ export const BlockToolbar = () => {
         }
       },
       {
+        icon: <FolderAddOutlined />,
+        title: 'Add to collection',
+        method() {
+          setModalVisible(true);
+        }
+      },
+      {
         icon: <AndroidOutlined />,
         title: 'Page block',
         method() {
@@ -107,6 +123,18 @@ export const BlockToolbar = () => {
   }, [copyBlock, focusBlock, focusIdx, moveByIdx, removeBlock, setFocusIdx]);
 
   return useMemo(() => {
+
+    const onSubmit = (values: { label: string; }) => {
+      if (!values.label) return;
+      const uuid = uuidv4();
+      onAddCollection?.({
+        label: values.label,
+        data: focusBlock!,
+        id: uuid
+      });
+      setModalVisible(false);
+    };
+
     return (
 
       <Stack>
@@ -120,7 +148,25 @@ export const BlockToolbar = () => {
             );
           })
         }
+        <Formik initialValues={{ label: '' }} onSubmit={onSubmit}>
+          {
+            ({ handleSubmit }) => (
+              <Modal zIndex={2000} visible={modalVisible} title="Add to collection" onOk={() => handleSubmit()} onCancel={() => setModalVisible(false)}>
+                <Stack vertical>
+                  <Stack.Item />
+                  <TextField inline label="Title"
+                    name="label"
+                    validate={(val: string) => {
+                      if (!val) return 'Title required!';
+                      return undefined;
+                    }}
+                  />
+                </Stack>
+              </Modal>
+            )
+          }
+        </Formik>
       </Stack>
     );
-  }, [block?.name, sidebarList]);
+  }, [block?.name, focusBlock, modalVisible, onAddCollection, sidebarList]);
 };

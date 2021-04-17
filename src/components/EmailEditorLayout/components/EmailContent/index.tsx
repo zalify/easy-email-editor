@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { transformToMjml } from '@/utils/transformToMjml';
-import mjml2Html from 'mjml-browser';
+import mjml from 'mjml-browser';
 import { useEditorContext } from '@/hooks/useEditorContext';
 import {
   getIndexByIdx,
@@ -40,7 +40,7 @@ export function EmailContent() {
     focusBlock,
   } = useBlock();
 
-  const html = mjml2Html(transformToMjml(pageData, getPageIdx())).html;
+  const html = mjml(transformToMjml(pageData, getPageIdx())).html;
 
   useEffect(() => {
     if (ref) {

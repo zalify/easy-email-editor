@@ -14,6 +14,7 @@ import { PreviewEmail } from './components/PreviewEmail';
 import { Stack } from '../Stack';
 import { TextStyle } from '../TextStyle';
 import { ToolsPanel } from './components/ToolsPanel';
+import styles from './index.module.scss';
 
 const TabPane = Tabs.TabPane;
 
@@ -46,13 +47,13 @@ export const EmailEditorLayout = () => {
           overflow: 'hidden',
         }}
       >
-        <Layout.Sider theme='light' width={302}>
+        <Layout.Sider theme='light' width={340}>
           <div
             id='leftSide'
             style={{
               maxHeight: '100%',
-              overflow: 'overlay',
             }}
+            className={styles.customScrollBar}
           >
             <ComponentsPanel />
           </div>
@@ -67,12 +68,12 @@ export const EmailEditorLayout = () => {
               tabBarExtraContent={<ToolsPanel />}
             >
               <TabPane
-                tab={
+                tab={(
                   <Stack spacing='none'>
                     <EditOutlined />
                     <TextStyle>Edit</TextStyle>
                   </Stack>
-                }
+                )}
                 key='editor'
                 style={{
                   backgroundColor: 'transparent',
@@ -92,12 +93,12 @@ export const EmailEditorLayout = () => {
                 </root.div>
               </TabPane>
               <TabPane
-                tab={
+                tab={(
                   <Stack spacing='none'>
                     <DesktopOutlined />
                     <TextStyle>Preview</TextStyle>
                   </Stack>
-                }
+                )}
                 key='laptopIcon'
                 style={{ backgroundColor: 'transparent' }}
               >
@@ -114,12 +115,12 @@ export const EmailEditorLayout = () => {
                 </div>
               </TabPane>
               <TabPane
-                tab={
+                tab={(
                   <Stack spacing='none'>
                     <TabletOutlined />
                     <TextStyle>Preview</TextStyle>
                   </Stack>
-                }
+                )}
                 key='mobileIcon'
                 style={{ backgroundColor: 'transparent' }}
               >
@@ -144,6 +145,7 @@ export const EmailEditorLayout = () => {
               height: '100%',
               overflowY: 'scroll',
             }}
+            className={styles.customScrollBar}
           >
             <ConfigurationPanel />
           </div>

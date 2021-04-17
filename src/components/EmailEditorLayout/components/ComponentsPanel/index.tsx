@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styles from './index.module.scss';
-import { Collapse } from 'antd';
+import { Collapse, Empty } from 'antd';
 import {
   PictureOutlined,
   FontSizeOutlined,
@@ -15,13 +15,16 @@ import {
 import { BlockIcon } from './components/BlockIcon';
 import { BasicType } from '@/constants';
 import { ColumnBlockIconPanel } from './components/ColumnBlockIcon';
+import { Stack } from '@/components/Stack';
+import { EditorPropsContext } from '@/components/PropsProvider';
 
 const { Panel } = Collapse;
 
 export const ComponentsPanel = function () {
+  const { extraBlocks = [] } = useContext(EditorPropsContext);
   return (
     <div className={styles.container}>
-      <Collapse className={styles.collapse} defaultActiveKey={['1', '2', '3']}>
+      <Collapse className={styles.collapse} defaultActiveKey={['1', '2', '3', '4', '5']}>
         <Panel header='Layout' key='2'>
           <div style={{ padding: '10px 20px' }}>
             <ColumnBlockIconPanel />
@@ -77,8 +80,48 @@ export const ComponentsPanel = function () {
               icon={<ColumnHeightOutlined />}
             />
           </div>
+          <Stack vertical>
+            <Stack.Item />
+            <Stack.Item />
+            <Stack.Item />
+          </Stack>
         </Panel>
 
+        {
+          extraBlocks.map((item, index) => (
+            <Panel header={item.title} key={`${index + 3}`}>
+              <div className={styles.list}>
+                {
+                  item.blocks.map((block, bIndex) => (
+                    <BlockIcon
+                      id={block.id}
+                      key={bIndex}
+                      text={block.label}
+                      type={block.data.type}
+                      icon={block.icon}
+                      payload={block.data}
+                    />
+                  ))
+                }
+                <Stack.Item fill>
+                  <Stack vertical distribution="center" alignment="center">
+                    <Stack.Item />
+                    {
+                      item.blocks.length === 0 && (
+                        <Empty />
+                      )
+                    }
+                  </Stack>
+                </Stack.Item>
+              </div>
+              <Stack vertical>
+                <Stack.Item />
+                <Stack.Item />
+                <Stack.Item />
+              </Stack>
+            </Panel>
+          ))
+        }
       </Collapse>
     </div>
   );
