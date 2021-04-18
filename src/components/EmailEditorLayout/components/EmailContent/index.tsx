@@ -116,6 +116,8 @@ export function EmailContent() {
       if (!blockNode) return;
 
       const type = ev.dataTransfer?.getData('Text') as BlockType;
+      if (!type) return;
+
       const payload = ev.dataTransfer?.getData('Payload')
         ? JSON.parse(ev.dataTransfer?.getData('Payload'))
         : ({} as IBlockData);
@@ -146,9 +148,15 @@ export function EmailContent() {
       }
     };
 
+    const onDragstart = (ev: DragEvent) => {
+      ev.preventDefault();
+    };
+
+    ref.addEventListener('dragstart', onDragstart);
     ref.addEventListener('drop', onDrop);
     return () => {
       ref.removeEventListener('drop', onDrop);
+      ref.removeEventListener('dragstart', onDragstart);
     };
   }, [addBlock, ref, values]);
 
