@@ -7,17 +7,14 @@ export const createInstance: CreateInstance<IAccordionText> = (payload) => {
   const defaultData: IAccordionText = {
     type: BasicType.ACCORDION_TEXT,
     data: {
-      value: {},
+      value: {
+        content: 'Because emails with a lot of content are most of the time a very bad experience on mobile, mj-accordion comes handy when you want to deliver a lot of information in a concise way'
+      },
     },
     attributes: {
-      'icon-align': 'middle',
-      'icon-height': '32px',
-      'icon-width': '32px',
-
-      'icon-position': 'right',
-      'icon-unwrapped-url': 'https://i.imgur.com/w4uTygT.png',
-      'icon-wrapped-url': 'https://i.imgur.com/bIXv1bk.png',
-      padding: '10px 25px 10px 25px',
+      "font-size": '13px',
+      padding: '16px 16px 16px 16px',
+      'line-height': '1',
     },
     children: [],
   };

@@ -1,53 +1,51 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Padding } from '@/components/ConfigurationPanel/components/AttributesManager/components/Padding';
 import { Stack } from '@/components/Stack';
-import { TextAlign } from '@/components/ConfigurationPanel/components/AttributesManager/components/TextAlign';
-import { Border } from '@/components/ConfigurationPanel/components/AttributesManager/components/Border';
 import { BackgroundColor } from '@/components/ConfigurationPanel/components/AttributesManager/components/BackgroundColor';
 import { Color } from '@/components/ConfigurationPanel/components/AttributesManager/components/Color';
-import { Link } from '@/components/ConfigurationPanel/components/AttributesManager/components/Link';
-import { TextAreaField } from '@/components/core/Form';
+import { RichTextField } from '@/components/core/Form';
 import { useBlock } from '@/hooks/useBlock';
-import { Width } from '@/components/ConfigurationPanel/components/AttributesManager/components/Width';
-import { ContainerBackgroundColor } from '@/components/ConfigurationPanel/components/AttributesManager/components/ContainerBackgroundColor';
-import { Align } from '@/components/ConfigurationPanel/components/AttributesManager/components/Align';
 import { FontSize } from '@/components/ConfigurationPanel/components/AttributesManager/components/FontSize';
-import { FontStyle } from '@/components/ConfigurationPanel/components/AttributesManager/components/FontStyle';
 import { FontWeight } from '@/components/ConfigurationPanel/components/AttributesManager/components/FontWeight';
 import { FontFamily } from '@/components/ConfigurationPanel/components/AttributesManager/components/FontFamliy';
-import { TextDecoration } from '@/components/ConfigurationPanel/components/AttributesManager/components/TextDecoration';
-import { TextTransform } from '@/components/ConfigurationPanel/components/AttributesManager/components/TextTransform';
 import { LineHeight } from '@/components/ConfigurationPanel/components/AttributesManager/components/LineHeight';
-import { LetterSpacing } from '@/components/ConfigurationPanel/components/AttributesManager/components/LetterSpacing';
+import { IAccordionText } from '..';
 
 export function Panel() {
-  const { focusIdx } = useBlock();
+  const { focusIdx, focusBlock, recordStatus } = useBlock();
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+
+    // Rerender RichText while recordStatus !== 'add'
+    if (recordStatus !== 'add' && focusBlock?.data.value.content) {
+      setCount(count => count + 1);
+    }
+  }, [recordStatus, focusBlock?.data.value.content]);
+
+  const containerStyle = useMemo(() => {
+    if (!focusBlock) return {};
+    const attributes = focusBlock.attributes as IAccordionText['attributes'];
+    return {
+      color: attributes.color,
+      fontSize: attributes['font-size'],
+      fontFamily: attributes['font-family'],
+      lineHight: attributes['line-height'],
+      letterSpacing: attributes['letter-spacing'],
+      fontWeight: attributes['font-weight'],
+    } as React.CSSProperties;
+  }, [focusBlock]);
+
   return (
     <Stack vertical>
-      <TextAreaField
-        label='Content'
-        name={`${focusIdx}.data.value.content`}
-        inline
-      />
+      <RichTextField key={count} name={`${focusIdx}.data.value.content`} label="Content" containerStyle={containerStyle} />
       <Color />
       <FontSize />
       <LineHeight />
-
-      <FontStyle />
       <FontWeight />
-      <LetterSpacing />
       <FontFamily />
-      <TextDecoration />
-      <TextTransform />
       <BackgroundColor />
-      <Width />
-      <Align />
-      <Padding title="Inner padding" attributeName="inner-padding" />
       <Padding title="Padding" attributeName="padding" />
-      <Link />
-      <Border />
-      <ContainerBackgroundColor />
-      <TextAlign />
     </Stack>
   );
 }

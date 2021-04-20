@@ -1,23 +1,19 @@
 import { BasicType } from '@/constants';
 import { CreateInstance } from '@/typings';
 import { merge } from 'lodash';
-import { IAccordion } from '.';
+import { IAccordionTitle } from '.';
 
-export const createInstance: CreateInstance<IAccordion> = (payload) => {
-  const defaultData: IAccordion = {
-    type: BasicType.ACCORDION,
+export const createInstance: CreateInstance<IAccordionTitle> = (payload) => {
+  const defaultData: IAccordionTitle = {
+    type: BasicType.ACCORDION_TITLE,
     data: {
-      value: {},
+      value: {
+        content: 'Why use an accordion?'
+      },
     },
     attributes: {
-      'icon-align': 'middle',
-      'icon-height': '32px',
-      'icon-width': '32px',
-
-      'icon-position': 'right',
-      'icon-unwrapped-url': 'https://i.imgur.com/w4uTygT.png',
-      'icon-wrapped-url': 'https://i.imgur.com/bIXv1bk.png',
-      padding: '10px 25px 10px 25px',
+      "font-size": '13px',
+      padding: '16px 16px 16px 16px',
     },
     children: [],
   };

@@ -4,6 +4,10 @@ export function ShadowStyle() {
   return (
     <style>
       {`
+      .mj-accordion-content {
+        display: block !important;
+      }
+
       .email-block {
         outline: 1px dashed rgba(170,170,170,0.7);
         outline-offset: -2px;

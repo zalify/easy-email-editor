@@ -51,6 +51,7 @@ export function SourceCodeManager() {
       const parseValue = MjmlToJson(
         json
       );
+      console.log('json', json);
       setValueByIdx(focusIdx, parseValue);
     },
     [focusIdx, isRoot, setValueByIdx]

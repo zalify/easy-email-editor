@@ -16,8 +16,10 @@ import { ChexkBoxGroup } from './ChexkBoxGroup';
 import { AddItem, AddItemtProps } from './AddItem';
 import { DatePickerProps } from 'antd/lib/date-picker';
 import { Dayjs } from 'dayjs';
+import { RichText, RichTextProps } from '@/components/RichText';
 
 export const TextField = enhancer<InputProps>(Input, (value) => value);
+export const RichTextField = enhancer<RichTextProps>(RichText, (value) => value);
 
 export const TextAreaField = enhancer<TextAreaProps>(AntdInput.TextArea, (e: React.ChangeEvent<HTMLTextAreaElement>) => e.target.value);
 

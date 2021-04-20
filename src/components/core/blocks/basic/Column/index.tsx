@@ -28,5 +28,6 @@ export const Column = {
     BasicType.IMAGE,
     BasicType.BUTTON,
     BasicType.DIVIDER,
+    BasicType.ACCORDION,
   ],
 };

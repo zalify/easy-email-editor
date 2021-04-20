@@ -6,7 +6,7 @@ import { Border } from '@/components/ConfigurationPanel/components/AttributesMan
 import { BackgroundColor } from '@/components/ConfigurationPanel/components/AttributesManager/components/BackgroundColor';
 import { Color } from '@/components/ConfigurationPanel/components/AttributesManager/components/Color';
 import { Link } from '@/components/ConfigurationPanel/components/AttributesManager/components/Link';
-import { TextAreaField } from '@/components/core/Form';
+import { RadioGroupField, SelectField, TextAreaField, TextField } from '@/components/core/Form';
 import { useBlock } from '@/hooks/useBlock';
 import { Width } from '@/components/ConfigurationPanel/components/AttributesManager/components/Width';
 import { ContainerBackgroundColor } from '@/components/ConfigurationPanel/components/AttributesManager/components/ContainerBackgroundColor';
@@ -20,34 +20,83 @@ import { TextTransform } from '@/components/ConfigurationPanel/components/Attrib
 import { LineHeight } from '@/components/ConfigurationPanel/components/AttributesManager/components/LineHeight';
 import { LetterSpacing } from '@/components/ConfigurationPanel/components/AttributesManager/components/LetterSpacing';
 
+const positionOptions = [
+  {
+    value: 'left',
+    label: 'Left',
+  },
+  {
+    value: 'right',
+    label: 'Right',
+  },
+];
+
+const alignOptions = [
+  {
+    value: 'top',
+    label: 'top',
+  },
+  {
+    value: 'middle',
+    label: 'middle',
+  },
+  {
+    value: 'bottom',
+    label: 'bottom',
+  },
+];
+
+
 export function Panel() {
   const { focusIdx } = useBlock();
   return (
     <Stack vertical>
-      <TextAreaField
-        label='Content'
-        name={`${focusIdx}.data.value.content`}
+      <Padding />
+      <BackgroundColor />
+      <FontFamily />
+      <TextField
+        label='border'
+        name={`${focusIdx}.attributes.border`}
+        inline
+        quickchange
+      />
+      <TextField
+        label='Icon width'
+        quickchange
+        name={`${focusIdx}.attributes.icon-width`}
         inline
       />
-      <Color />
-      <FontSize />
-      <LineHeight />
-
-      <FontStyle />
-      <FontWeight />
-      <LetterSpacing />
-      <FontFamily />
-      <TextDecoration />
-      <TextTransform />
-      <BackgroundColor />
-      <Width />
-      <Align />
-      <Padding title="Inner padding" attributeName="inner-padding" />
-      <Padding title="Padding" attributeName="padding" />
-      <Link />
-      <Border />
-      <ContainerBackgroundColor />
-      <TextAlign />
+      <TextField
+        label='Icon height'
+        quickchange
+        name={`${focusIdx}.attributes.icon-height`}
+        inline
+      />
+      <TextField
+        label='Icon unwrapped url'
+        quickchange
+        name={`${focusIdx}.attributes.icon-unwrapped-url`}
+        inline
+      />
+      <TextField
+        label='Icon wrapped url'
+        quickchange
+        name={`${focusIdx}.attributes.icon-wrapped-url`}
+        inline
+      />
+      <RadioGroupField
+        label='Icon position'
+        name={`${focusIdx}.attributes.icon-position`}
+        options={positionOptions}
+        inline
+      />
+      <SelectField
+        style={{ width: 120 }}
+        label='Icon align'
+        name={`${focusIdx}.attributes.icon-align`}
+        options={alignOptions}
+        inline
+      />
     </Stack>
   );
 }

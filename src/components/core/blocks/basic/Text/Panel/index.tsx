@@ -13,13 +13,13 @@ import { ContainerBackgroundColor } from '@/components/ConfigurationPanel/compon
 import { FontSize } from '@/components/ConfigurationPanel/components/AttributesManager/components/FontSize';
 import { Color } from '@/components/ConfigurationPanel/components/AttributesManager/components/Color';
 import { Align } from '@/components/ConfigurationPanel/components/AttributesManager/components/Align';
-import { RichText } from '@/components/RichText';
 import { IText } from '..';
 import { LineHeight } from '@/components/ConfigurationPanel/components/AttributesManager/components/LineHeight';
 import { LetterSpacing } from '@/components/ConfigurationPanel/components/AttributesManager/components/LetterSpacing';
+import { RichTextField } from '@/components/core/Form';
 
 export function Panel() {
-  const { focusIdx, focusBlock, setFocusBlockValue, recordStatus } = useBlock();
+  const { focusIdx, focusBlock, recordStatus } = useBlock();
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -46,20 +46,9 @@ export function Panel() {
     } as React.CSSProperties;
   }, [focusBlock]);
 
-  const onContentChange = (text: string) => {
-    if (!focusBlock) return;
-    focusBlock.data.value.content = text;
-    setFocusBlockValue({ ...focusBlock.data.value });
-  };
-
   return (
     <Stack vertical key={focusIdx}>
-      <RichText
-        key={count}
-        content={focusBlock?.data.value.content}
-        containerStyle={containerStyle}
-        onChange={onContentChange}
-      />
+      <RichTextField key={count} name={`${focusIdx}.data.value.content`} label="Content" containerStyle={containerStyle} />
       <Color />
       <FontSize />
       <LineHeight />

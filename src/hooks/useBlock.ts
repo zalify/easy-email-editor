@@ -58,7 +58,8 @@ export function useBlock() {
           BasicType.DIVIDER,
           BasicType.COLUMN,
           BasicType.GROUP,
-          BasicType.BUTTON
+          BasicType.BUTTON,
+          BasicType.ACCORDION,
         ].includes(block.type)) {
 
           if (parentBlock.type === BasicType.SECTION) {

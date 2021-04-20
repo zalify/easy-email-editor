@@ -30,7 +30,7 @@ import { FontSizeList } from './components/FontSizeList';
 import { Heading } from './components/Heading';
 
 export interface RichTextProps {
-  content: string;
+  value: string;
   containerStyle: React.CSSProperties;
   onChange: (content: string) => any;
 }
@@ -38,7 +38,7 @@ export interface RichTextProps {
 export function RichText(props: RichTextProps) {
   const { containerStyle } = props;
   const [isFullScreen, setIsFullScreen] = useState(false);
-  const [initialValue] = useState(props.content);
+  const [initialValue] = useState(props.value);
   const editorRef = useRef<HTMLDivElement>(null);
   const contentEditorRef = useRef<HTMLDivElement | null>(null);
   const [currentRange, setCurrentRangeRange] = useState<Range | null | undefined>(null);
@@ -123,7 +123,7 @@ export function RichText(props: RichTextProps) {
           >
             <ToolItem icon={<BgColorsOutlined />} title="Background color" />
           </ColorPicker>
-          <Link key={props.content} onChange={(url) => execCommand('createLink', url)} />
+          <Link key={props.value} onChange={(url) => execCommand('createLink', url)} />
           <ToolItem onClick={() => execCommand('unlink')} icon={<StopOutlined />} title="Unlink" />
           <ToolItem onClick={() => execCommand('removeFormat')} icon={<CloseOutlined />} title="Remove format" />
         </Stack>
