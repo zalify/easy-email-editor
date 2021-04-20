@@ -16,9 +16,13 @@ export function MjmlToJson(data: MjmlBlockItem): IPage {
 
       default:
         const tag = item.tagName.replace('mj-', '').toLowerCase();
+
         const block = Object.values(BlocksMap).find(
           (item) => item.type === tag
-        )!;
+        );
+        if (!block) {
+          throw new Error(`${tag} block no found `);
+        }
         const payload: IBlockData<any> = {
           type: block.type,
           attributes: attributes,

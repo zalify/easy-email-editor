@@ -51,51 +51,18 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
           </mj-body>
         </mjml>
         `;
-    case BasicType.WRAPPER:
-      return `
-          <mj-wrapper ${attributeStr}>
-           ${children}
-          </mj-wrapper>
-        `;
-    case BasicType.SECTION:
-      return `<mj-section ${attributeStr}> ${children} </mj-section>`;
     case BasicType.COLUMN:
       return `
-          <mj-column ${attributeStr}>
-           ${children || placeholder}
-          </mj-column>
-        `;
-    case BasicType.GROUP:
+              <mj-column ${attributeStr}>
+               ${children || placeholder}
+              </mj-column>
+            `;
+
+    default:
       return `
-          <mj-group ${attributeStr}>
-           ${children}
-          </mj-group>
-        `;
-    case BasicType.IMAGE:
-      return `
-          <mj-image ${attributeStr}>
-           ${children}
-          </mj-image>
-        `;
-    case BasicType.TEXT:
-      return `
-          <mj-text ${attributeStr}>
-          ${data.data.value?.content}
-          </mj-text>
-        `;
-    case BasicType.BUTTON:
-      return `<mj-button ${attributeStr}> ${data.data.value?.content}</mj-button>`;
-    case BasicType.DIVIDER:
-      return `
-          <mj-divider ${attributeStr} />
-        `;
-    case BasicType.SPACER:
-      return `
-          <mj-spacer ${attributeStr} />
-        `;
-    case BasicType.RAW:
-      return `
-          <mj-raw ${attributeStr}>${data.data.value?.content}</mj-raw>
+          <mj-${data.type} ${attributeStr}>
+           ${children || data.data.value?.content}
+          </mj-${data.type}>
         `;
   }
 }

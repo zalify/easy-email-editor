@@ -6,21 +6,16 @@ import path from 'path';
 export default defineConfig({
   resolve: {
     alias: {
-      'path': path.resolve(__dirname, 'browser-mocks/path'),
-      'fs': path.resolve(__dirname, 'browser-mocks/fs'),
-      'uglify-js': path.resolve(__dirname, 'browser-mocks/uglify-js'),
       '@example': path.resolve('example'),
       '@': path.resolve(__dirname, './src'),
-
     },
   },
   define: {
     // process: {
-
     // },
   },
   build: {
-    target: 'es2015'
+    target: 'es2015',
   },
   optimizeDeps: {
     // include: ['node_modules/insert-css/index.js']
@@ -30,13 +25,9 @@ export default defineConfig({
       localsConvention: 'dashes',
     },
     preprocessorOptions: {
-      scss: {
-
-      }
+      scss: {},
     },
   },
-  server: {
-
-  },
-  plugins: [reactRefresh()]
+  server: {},
+  plugins: [reactRefresh()],
 });

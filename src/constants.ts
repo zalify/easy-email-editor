@@ -13,6 +13,19 @@ export enum BasicType {
   BUTTON = 'button',
   WRAPPER = 'wrapper',
   RAW = 'raw',
+
+  // TODO
+  ACCORDION = 'accordion',
+  ACCORDION_ELEMENT = 'accordion-element',
+  ACCORDION_TITLE = 'accordion-title',
+  ACCORDION_TEXT = 'accordion-text',
+  CAROUSEL = 'carousel',
+  HERO = 'hero',
+  NAVBAR = 'navbar',
+  NAVBAR_LINK = 'navbar-link',
+  SOCIAL = 'social',
+  SOCIAL_ELEMENT = 'social-element',
+  TABLE = 'table',
 }
 
 export const DRAG_HOVER_CLASSNAME = 'block-dragover';
