@@ -8,23 +8,29 @@ export const createInstance: CreateInstance<ICarousel> = (payload) => {
     type: BasicType.CAROUSEL,
     data: {
       value: {
-        content: 'Button',
+        images: [
+          {
+            src:
+              'https://www.mailjet.com/wp-content/uploads/2016/11/ecommerce-guide.jpg',
+            target: '_blank',
+          },
+          {
+            src: 'https://www.mailjet.com/wp-content/uploads/2016/09/3@1x.png',
+            target: '_blank',
+          },
+          {
+            src: 'https://www.mailjet.com/wp-content/uploads/2016/09/1@1x.png',
+            target: '_blank',
+          },
+        ],
       },
     },
     attributes: {
       align: 'center',
-      'background-color': '#414141',
-      color: '#ffffff',
-      'font-size': '13px',
-      'font-weight': 'normal',
-      'border-radius': '3px',
-      padding: '10px 25px 10px 25px',
-      'inner-padding': '10px 25px 10px 25px',
-      'line-height': '120%',
-      target: '_blank',
-      'vertical-align': 'middle',
-      border: 'none',
-      'text-align': 'center',
+      'left-icon': 'https://i.imgur.com/xTh3hln.png',
+      'right-icon': 'https://i.imgur.com/os7o9kz.png',
+      'icon-width': '44px',
+      thumbnails: 'visible',
     },
     children: [],
   };

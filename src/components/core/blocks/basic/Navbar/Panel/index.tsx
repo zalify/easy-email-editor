@@ -1,53 +1,135 @@
 import React from 'react';
 import { Padding } from '@/components/ConfigurationPanel/components/AttributesManager/components/Padding';
 import { Stack } from '@/components/Stack';
-import { TextAlign } from '@/components/ConfigurationPanel/components/AttributesManager/components/TextAlign';
-import { Border } from '@/components/ConfigurationPanel/components/AttributesManager/components/Border';
-import { BackgroundColor } from '@/components/ConfigurationPanel/components/AttributesManager/components/BackgroundColor';
-import { Color } from '@/components/ConfigurationPanel/components/AttributesManager/components/Color';
-import { Link } from '@/components/ConfigurationPanel/components/AttributesManager/components/Link';
-import { TextAreaField } from '@/components/core/Form';
+import {
+  ColorPickerField,
+  EditTabField,
+  RadioGroupField,
+  SelectField,
+  TextField,
+} from '@/components/core/Form';
 import { useBlock } from '@/hooks/useBlock';
-import { Width } from '@/components/ConfigurationPanel/components/AttributesManager/components/Width';
-import { ContainerBackgroundColor } from '@/components/ConfigurationPanel/components/AttributesManager/components/ContainerBackgroundColor';
 import { Align } from '@/components/ConfigurationPanel/components/AttributesManager/components/Align';
-import { FontSize } from '@/components/ConfigurationPanel/components/AttributesManager/components/FontSize';
-import { FontStyle } from '@/components/ConfigurationPanel/components/AttributesManager/components/FontStyle';
-import { FontWeight } from '@/components/ConfigurationPanel/components/AttributesManager/components/FontWeight';
-import { FontFamily } from '@/components/ConfigurationPanel/components/AttributesManager/components/FontFamliy';
-import { TextDecoration } from '@/components/ConfigurationPanel/components/AttributesManager/components/TextDecoration';
-import { TextTransform } from '@/components/ConfigurationPanel/components/AttributesManager/components/TextTransform';
-import { LineHeight } from '@/components/ConfigurationPanel/components/AttributesManager/components/LineHeight';
-import { LetterSpacing } from '@/components/ConfigurationPanel/components/AttributesManager/components/LetterSpacing';
+import { LinkOutlined } from '@ant-design/icons';
+import { INavbar } from '..';
+
+const options = [
+  {
+    value: 'left',
+    label: 'left',
+  },
+  {
+    value: 'center',
+    label: 'center',
+  },
+  {
+    value: 'right',
+    label: 'right',
+  },
+];
 
 export function Panel() {
   const { focusIdx } = useBlock();
   return (
     <Stack vertical>
-      <TextAreaField
-        label='Content'
-        name={`${focusIdx}.data.value.content`}
+      <Align />
+      <RadioGroupField
+        label='IcoAlign'
+        name={`${focusIdx}.attributes.ico-align`}
+        options={options}
         inline
       />
-      <Color />
-      <FontSize />
-      <LineHeight />
+      <ColorPickerField
+        label='Ico color'
+        name={`${focusIdx}.attributes.ico-color`}
+        inline
+        alignment='center'
+      />
+      <TextField
+        label='Ico font size'
+        name={`${focusIdx}.attributes.ico-font-size`}
+        inline
+        quickchange
+      />
+      <TextField
+        label='Ico line height'
+        name={`${focusIdx}.attributes.ico-line-height`}
+        inline
+        quickchange
+      />
+      <Padding
+        title='Ico padding'
+        attributeName={`${focusIdx}.attributes.ico-padding`}
+      />
 
-      <FontStyle />
-      <FontWeight />
-      <LetterSpacing />
-      <FontFamily />
-      <TextDecoration />
-      <TextTransform />
-      <BackgroundColor />
-      <Width />
-      <Align />
-      <Padding title="Inner padding" attributeName="inner-padding" />
-      <Padding title="Padding" attributeName="padding" />
-      <Link />
-      <Border />
-      <ContainerBackgroundColor />
-      <TextAlign />
+      <EditTabField
+        name={`${focusIdx}.data.value.links`}
+        label='Links'
+        renderItem={(item, index) => <NavbarLink item={item} index={index} />}
+        additionItem={{
+          src:
+            'https://www.mailjet.com/wp-content/uploads/2016/11/ecommerce-guide.jpg',
+          target: '_blank',
+          content: 'New link',
+        }}
+      />
+    </Stack>
+  );
+}
+
+function NavbarLink({
+  item,
+  index,
+}: {
+  item: INavbar['data']['value']['links'];
+  index: number;
+}) {
+  const { focusIdx } = useBlock();
+  return (
+    <Stack>
+      <TextField
+        label='Font size'
+        name={`${focusIdx}.data.value.links.[${index}].font-size`}
+        inline
+      />
+      <ColorPickerField
+        label='Color'
+        name={`${focusIdx}.data.value.links.[${index}].color`}
+        inline
+        alignment='center'
+      />
+      <Stack vertical>
+        <Stack.Item fill>
+          <TextField
+            prefix={<LinkOutlined />}
+            label={<span>Href&nbsp;&nbsp;&nbsp;</span>}
+            name={`${focusIdx}.data.value.links.[${index}].href`}
+            inline
+          />
+        </Stack.Item>
+
+        <div style={{ minWidth: 150 }}>
+          <SelectField
+            label='Target'
+            name={`${focusIdx}.data.value.links.[${index}].target`}
+            options={[
+              {
+                value: '',
+                label: '_self',
+              },
+              {
+                value: '_blank',
+                label: '_blank',
+              },
+            ]}
+            inline
+          />
+        </div>
+      </Stack>
+      <Padding
+        title='Padding'
+        attributeName={`${focusIdx}.attributes.padding`}
+      />
     </Stack>
   );
 }

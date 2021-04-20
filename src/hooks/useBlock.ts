@@ -25,7 +25,14 @@ export function useBlock() {
 
   const { focusIdx, hoverIdx } = values;
   const focusBlock = get(values, focusIdx) as IBlockData | null;
-  const { redo, undo, redoable, undoable, reset, status: recordStatus } = useContext(RecordContext);
+  const {
+    redo,
+    undo,
+    redoable,
+    undoable,
+    reset,
+    status: recordStatus,
+  } = useContext(RecordContext);
 
   const addBlock = useCallback(
     (params: {
@@ -51,46 +58,51 @@ export function useBlock() {
         const block = getBlockByType(type);
         const parentBlock = getBlockByType(parent.type);
 
-        if ([
-          BasicType.TEXT,
-          BasicType.IMAGE,
-          BasicType.SPACER,
-          BasicType.DIVIDER,
-          BasicType.COLUMN,
-          BasicType.GROUP,
-          BasicType.BUTTON,
-          BasicType.ACCORDION,
-        ].includes(block.type)) {
-
+        if (
+          [
+            BasicType.TEXT,
+            BasicType.IMAGE,
+            BasicType.SPACER,
+            BasicType.DIVIDER,
+            BasicType.COLUMN,
+            BasicType.GROUP,
+            BasicType.BUTTON,
+            BasicType.ACCORDION,
+            BasicType.CAROUSEL,
+            BasicType.NAVBAR,
+          ].includes(block.type)
+        ) {
           if (parentBlock.type === BasicType.SECTION) {
             child = createBlockItem(BasicType.COLUMN, {
-              children: [child]
+              children: [child],
             });
             focusIdx += '.children.[0]';
           } else if (parentBlock.type === BasicType.WRAPPER) {
             child = createBlockItem(BasicType.SECTION, {
               children: [
                 createBlockItem(BasicType.COLUMN, {
-                  children: [child]
-                })
-              ]
+                  children: [child],
+                }),
+              ],
             });
             focusIdx += '.children.[0]';
-          }
-          else if (parentBlock.type === BasicType.PAGE) {
+          } else if (parentBlock.type === BasicType.PAGE) {
             child = createBlockItem(BasicType.SECTION, {
               children: [
                 createBlockItem(BasicType.COLUMN, {
-                  children: [child]
-                })
-              ]
+                  children: [child],
+                }),
+              ],
             });
             focusIdx += '.children.[0].children.[0]';
           }
         }
 
         // Replace
-        if (parent.type === BasicType.COLUMN && child.type === BasicType.COLUMN) {
+        if (
+          parent.type === BasicType.COLUMN &&
+          child.type === BasicType.COLUMN
+        ) {
           const parentIndex = getIndexByIdx(parentIdx);
           const upParent = getParentByIdx(formState.values, parentIdx)!;
           upParent.children.splice(parentIndex, 1, child);
@@ -101,7 +113,9 @@ export function useBlock() {
         }
 
         if (!parentBlock.validChildrenType.includes(child.type)) {
-          message.warning(`${block.name} can not insert to ${parentBlock.name}`);
+          message.warning(
+            `${block.name} can not insert to ${parentBlock.name}`
+          );
           return formState;
         }
 
@@ -119,7 +133,10 @@ export function useBlock() {
     (idx: string) => {
       setFormikState((formState) => {
         const parentIdx = getParentIdx(idx);
-        const parent = get(formState.values, getParentIdx(idx) || '') as IBlockData | null;
+        const parent = get(
+          formState.values,
+          getParentIdx(idx) || ''
+        ) as IBlockData | null;
         if (!parent) {
           throw new Error('Invalid block');
         }
@@ -127,8 +144,9 @@ export function useBlock() {
         const index = getIndexByIdx(idx);
 
         parent.children.splice(index, 0, copyBlock);
-        formState.values.focusIdx = `${parentIdx}.children.[${parent.children.length - 1
-          }]`;
+        formState.values.focusIdx = `${parentIdx}.children.[${
+          parent.children.length - 1
+        }]`;
         return { ...formState };
       });
     },
@@ -279,6 +297,6 @@ export function useBlock() {
     reset,
     redoable,
     undoable,
-    recordStatus
+    recordStatus,
   };
 }

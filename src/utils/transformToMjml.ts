@@ -1,3 +1,5 @@
+import { ICarousel } from '@/components/core/blocks/basic/Carousel';
+import { INavbar } from '@/components/core/blocks/basic/Navbar';
 import { BasicType } from '@/constants';
 import { IBlockData } from '@/typings';
 import {
@@ -56,6 +58,39 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
               <mj-column ${attributeStr}>
                ${children || placeholder}
               </mj-column>
+            `;
+    case BasicType.CAROUSEL:
+      const carouselImages = (data as ICarousel).data.value.images
+        .map((image, index) => {
+          const imageAttributeStr = Object.keys(image)
+            .map((key) => `${key}="${image[key]}"`)
+            .join(' ');
+          return `
+          <mj-carousel-image ${imageAttributeStr} />
+          `;
+        })
+        .join('\n');
+
+      return `
+        <mj-carousel ${attributeStr}>
+         ${carouselImages}
+        </mj-carousel>
+      `;
+    case BasicType.NAVBAR:
+      const links = (data as INavbar).data.value.links
+        .map((link, index) => {
+          const linkAttributeStr = Object.keys(link)
+            .map((key) => `${key}="${link[key]}"`)
+            .join(' ');
+          return `
+          <mj-navbar-link ${linkAttributeStr}>${link.content}</mj-navbar-link>
+          `;
+        })
+        .join('\n');
+      return `
+              <mj-navbar ${attributeStr}>
+               ${links}
+              </mj-navbar>
             `;
 
     default:

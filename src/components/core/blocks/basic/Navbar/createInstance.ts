@@ -8,23 +8,38 @@ export const createInstance: CreateInstance<INavbar> = (payload) => {
     type: BasicType.NAVBAR,
     data: {
       value: {
-        content: '',
+        links: [
+          {
+            href: '/gettings-started-onboard',
+            content: 'Getting started',
+            color: '#1890ff',
+          },
+          {
+            href: '/try-it-live',
+            content: 'Try it live',
+            color: '#1890ff',
+          },
+          {
+            href: '/templates',
+            content: 'Templates',
+            color: '#1890ff',
+          },
+          {
+            href: '/components',
+            content: 'Components',
+            color: '#1890ff',
+          },
+        ],
       },
     },
     attributes: {
+      hamburger: 'hamburger',
       align: 'center',
-      'background-color': '#414141',
-      color: '#ffffff',
-      'font-size': '13px',
-      'font-weight': 'normal',
-      'border-radius': '3px',
-      padding: '10px 25px 10px 25px',
-      'inner-padding': '10px 25px 10px 25px',
-      'line-height': '120%',
-      target: '_blank',
-      'vertical-align': 'middle',
-      border: 'none',
-      'text-align': 'center',
+      'ico-align': 'center',
+      'ico-color': '#1890ff',
+      'ico-font-size': '30px',
+      'ico-line-height': '30px',
+      'ico-padding': '10px 10px 10px 10px',
     },
     children: [],
   };

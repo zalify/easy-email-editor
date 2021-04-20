@@ -1,53 +1,161 @@
 import React from 'react';
-import { Padding } from '@/components/ConfigurationPanel/components/AttributesManager/components/Padding';
 import { Stack } from '@/components/Stack';
-import { TextAlign } from '@/components/ConfigurationPanel/components/AttributesManager/components/TextAlign';
-import { Border } from '@/components/ConfigurationPanel/components/AttributesManager/components/Border';
-import { BackgroundColor } from '@/components/ConfigurationPanel/components/AttributesManager/components/BackgroundColor';
-import { Color } from '@/components/ConfigurationPanel/components/AttributesManager/components/Color';
-import { Link } from '@/components/ConfigurationPanel/components/AttributesManager/components/Link';
-import { TextAreaField } from '@/components/core/Form';
+import {
+  ColorPickerField,
+  EditTabField,
+  RadioGroupField,
+  SelectField,
+  TextField,
+} from '@/components/core/Form';
+import { LinkOutlined } from '@ant-design/icons';
 import { useBlock } from '@/hooks/useBlock';
-import { Width } from '@/components/ConfigurationPanel/components/AttributesManager/components/Width';
-import { ContainerBackgroundColor } from '@/components/ConfigurationPanel/components/AttributesManager/components/ContainerBackgroundColor';
 import { Align } from '@/components/ConfigurationPanel/components/AttributesManager/components/Align';
-import { FontSize } from '@/components/ConfigurationPanel/components/AttributesManager/components/FontSize';
-import { FontStyle } from '@/components/ConfigurationPanel/components/AttributesManager/components/FontStyle';
-import { FontWeight } from '@/components/ConfigurationPanel/components/AttributesManager/components/FontWeight';
-import { FontFamily } from '@/components/ConfigurationPanel/components/AttributesManager/components/FontFamliy';
-import { TextDecoration } from '@/components/ConfigurationPanel/components/AttributesManager/components/TextDecoration';
-import { TextTransform } from '@/components/ConfigurationPanel/components/AttributesManager/components/TextTransform';
-import { LineHeight } from '@/components/ConfigurationPanel/components/AttributesManager/components/LineHeight';
-import { LetterSpacing } from '@/components/ConfigurationPanel/components/AttributesManager/components/LetterSpacing';
+import { ICarousel } from '..';
+
+const options = [
+  {
+    value: 'hidden',
+    label: 'hidden',
+  },
+  {
+    value: 'visible',
+    label: 'visible',
+  },
+];
 
 export function Panel() {
   const { focusIdx } = useBlock();
   return (
     <Stack vertical>
-      <TextAreaField
-        label='Content'
-        name={`${focusIdx}.data.value.content`}
+      <div
+        style={{
+          borderBottom: '1px solid #ccc',
+          paddingBottom: 10,
+          marginBottom: 20,
+        }}
+      >
+        <EditTabField
+          name={`${focusIdx}.data.value.images`}
+          label='Images'
+          renderItem={(item, index) => (
+            <CarouselImage item={item} index={index} />
+          )}
+          additionItem={{
+            src:
+              'https://www.mailjet.com/wp-content/uploads/2016/11/ecommerce-guide.jpg',
+            target: '_blank',
+          }}
+        />
+      </div>
+      <ColorPickerField
+        label='Border color of the hovered thumbnail'
+        name={`${focusIdx}.attributes.tb-hover-border-color`}
+        inline
+        alignment='center'
+      />
+      <ColorPickerField
+        label='Border color of the selected thumbnail'
+        name={`${focusIdx}.attributes.tb-selected-border-color`}
+        inline
+        alignment='center'
+      />
+      <TextField
+        label='Icon width'
+        name={`${focusIdx}.attributes.icon-width`}
+        inline
+        quickchange
+      />
+      <TextField
+        label='Left icon'
+        name={`${focusIdx}.attributes.left-icon`}
         inline
       />
-      <Color />
-      <FontSize />
-      <LineHeight />
-
-      <FontStyle />
-      <FontWeight />
-      <LetterSpacing />
-      <FontFamily />
-      <TextDecoration />
-      <TextTransform />
-      <BackgroundColor />
-      <Width />
+      <TextField
+        label='Right icon'
+        name={`${focusIdx}.attributes.right-icon`}
+        inline
+      />
+      <TextField
+        label='Border of the thumbnails'
+        name={`${focusIdx}.attributes.tb-border`}
+        inline
+      />
+      <TextField
+        label='Border radius of the thumbnails'
+        name={`${focusIdx}.attributes.tb-border-radius`}
+        inline
+      />
+      <TextField
+        label='Thumbnail width'
+        name={`${focusIdx}.attributes.tb-width`}
+        quickchange
+        inline
+      />
+      <RadioGroupField
+        label='Thumbnails'
+        name={`${focusIdx}.attributes.thumbnails`}
+        options={options}
+        inline
+      />
       <Align />
-      <Padding title="Inner padding" attributeName="inner-padding" />
-      <Padding title="Padding" attributeName="padding" />
-      <Link />
-      <Border />
-      <ContainerBackgroundColor />
-      <TextAlign />
+    </Stack>
+  );
+}
+
+function CarouselImage({
+  item,
+  index,
+}: {
+  item: ICarousel['data']['value']['images'];
+  index: number;
+}) {
+  const { focusIdx } = useBlock();
+  return (
+    <Stack>
+      <TextField
+        label='Image src'
+        name={`${focusIdx}.data.value.images.[${index}].src`}
+        inline
+      />
+      <TextField
+        label='Thumbnails src'
+        name={`${focusIdx}.data.value.images.[${index}].thumbnails-src`}
+        inline
+      />
+      <Stack vertical>
+        <Stack.Item fill>
+          <TextField
+            prefix={<LinkOutlined />}
+            label={<span>Href&nbsp;&nbsp;&nbsp;</span>}
+            name={`${focusIdx}.data.value.images.[${index}].href`}
+            inline
+          />
+        </Stack.Item>
+
+        <div style={{ minWidth: 150 }}>
+          <SelectField
+            label='Target'
+            name={`${focusIdx}.data.value.images.[${index}].target`}
+            options={[
+              {
+                value: '',
+                label: '_self',
+              },
+              {
+                value: '_blank',
+                label: '_blank',
+              },
+            ]}
+            inline
+          />
+        </div>
+      </Stack>
+      <TextField
+        label='Title'
+        helpText='tooltip & accessibility'
+        name={`${focusIdx}.data.value.image.[${index}].title`}
+        inline
+      />
     </Stack>
   );
 }

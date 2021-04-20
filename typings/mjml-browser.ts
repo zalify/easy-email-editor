@@ -1,13 +1,15 @@
-
 declare module 'mjml-browser' {
-  const transform: (vml: string, options?: {
-    beautify?: boolean;
-    minify?: boolean;
-    keepComments?: boolean;
-    validationLevel: 'strict' | 'soft' | 'skip';
-  }) => {
-    json: MjmlBlockItem,
-    html: string,
+  const transform: (
+    vml: string,
+    options?: {
+      beautify?: boolean;
+      minify?: boolean;
+      keepComments?: boolean;
+      validationLevel: 'strict' | 'soft' | 'skip';
+    }
+  ) => {
+    json: MjmlBlockItem;
+    html: string;
     errors: string[];
   };
   export default transform;
@@ -34,23 +36,5 @@ interface IChildrenItem {
   content?: string;
 }
 interface IAttributes {
-  width?: string;
-  'background-color'?: string;
-  padding?: string;
-  height?: string;
-  src?: string;
-  'background-url'?: string;
-  align?: string;
-  'font-size'?: string;
-  'font-weight'?: string;
-  'line-height'?: string;
-  color?: string;
-  'padding-top'?: string;
-  'padding-left'?: string;
-  'padding-right'?: string;
-  'padding-bottom'?: string;
-  'font-family'?: string;
-  href?: string;
-  'border-width'?: string;
-  'border-color'?: string;
+  [key: string]: any;
 }

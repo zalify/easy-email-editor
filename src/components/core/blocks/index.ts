@@ -18,6 +18,7 @@ import { AccordionElement } from './basic/AccordionElement';
 import { AccordionTitle } from './basic/AccordionTitle';
 import { AccordionText } from './basic/AccordionText';
 import { Carousel } from './basic/Carousel';
+import { CarouselImage } from './basic/CarouselImage';
 import { Table } from './basic/Table';
 import { Hero } from './basic/Hero';
 import { Navbar } from './basic/Navbar';
@@ -35,15 +36,16 @@ export const BlocksMap = {
   Divider,
   Wrapper,
   Spacer,
-  // TODO:
   Raw,
   Accordion,
   AccordionElement,
   AccordionTitle,
   AccordionText,
   Carousel,
-  Table,
+  CarouselImage,
   Hero,
+  // TODO:
+  Table,
   Navbar,
   Social,
   SocialElement,
