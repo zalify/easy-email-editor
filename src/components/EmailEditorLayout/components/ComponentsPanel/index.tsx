@@ -158,6 +158,18 @@ export const ComponentsPanel = function () {
               type={BasicType.ACCORDION}
               icon={<ColumnHeightOutlined />}
             />
+            <BlockIcon
+              text='Hero'
+              helpText={(
+                <Stack vertical spacing="none">
+                  <TextStyle>
+                    This block displays a hero image. It behaves like an 'section' with a single 'column'.
+                  </TextStyle>
+                </Stack>
+              )}
+              type={BasicType.HERO}
+              icon={<ColumnHeightOutlined />}
+            />
           </div>
           <Stack vertical>
             <Stack.Item />

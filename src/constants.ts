@@ -13,14 +13,14 @@ export enum BasicType {
   BUTTON = 'button',
   WRAPPER = 'wrapper',
   RAW = 'raw',
-
-  // TODO
   ACCORDION = 'accordion',
   ACCORDION_ELEMENT = 'accordion-element',
   ACCORDION_TITLE = 'accordion-title',
   ACCORDION_TEXT = 'accordion-text',
-  CAROUSEL = 'carousel',
   HERO = 'hero',
+  // TODO
+  CAROUSEL = 'carousel',
+  CAROUSEL_IMAGE = 'carousel-image',
   NAVBAR = 'navbar',
   NAVBAR_LINK = 'navbar-link',
   SOCIAL = 'social',

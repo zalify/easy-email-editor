@@ -21,5 +21,5 @@ export const Wrapper = {
   type: BasicType.WRAPPER,
   Panel,
   createInstance,
-  validChildrenType: [BasicType.SECTION],
+  validChildrenType: [BasicType.SECTION, BasicType.HERO],
 };

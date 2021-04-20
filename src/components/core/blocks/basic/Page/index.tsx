@@ -18,5 +18,6 @@ export const Page: IBlock<IPage> = {
   validChildrenType: [
     BasicType.SECTION,
     BasicType.WRAPPER,
+    BasicType.HERO,
   ],
 };

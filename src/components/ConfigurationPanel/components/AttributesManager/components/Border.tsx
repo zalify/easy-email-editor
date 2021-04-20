@@ -10,13 +10,13 @@ export function Border() {
     return (
       <Stack vertical>
         <TextField
-          label='border'
+          label='Border'
           name={`${focusIdx}.attributes.border`}
           inline
           quickchange
         />
         <TextField
-          label='border-radius'
+          label='Border radius'
           name={`${focusIdx}.attributes.border-radius`}
           inline
           quickchange

@@ -13,7 +13,7 @@ export const createInstance: CreateInstance<INavbar> = (payload) => {
     },
     attributes: {
       align: 'center',
-      'background-color': '	#414141',
+      'background-color': '#414141',
       color: '#ffffff',
       'font-size': '13px',
       'font-weight': 'normal',

@@ -61,7 +61,7 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
     default:
       return `
           <mj-${data.type} ${attributeStr}>
-           ${children || data.data.value?.content}
+           ${children || data.data.value?.content || ''}
           </mj-${data.type}>
         `;
   }
