@@ -1,5 +1,4 @@
 import { BlocksMap } from '@/components/core/blocks';
-import { ICarousel } from '@/components/core/blocks/basic/Carousel';
 import { IPage, Page } from '@/components/core/blocks/basic/Page';
 import { BasicType } from '@/constants';
 import { IBlockData } from '@/typings';
@@ -46,6 +45,15 @@ export function MjmlToJson(data: MjmlBlockItem): IPage {
           payload.children = [];
         } else if (block.type === BasicType.NAVBAR) {
           payload.data.value.links =
+            item.children?.map((child) => {
+              return {
+                ...child.attributes,
+                content: child.content,
+              };
+            }) || [];
+          payload.children = [];
+        } else if (block.type === BasicType.SOCIAL) {
+          payload.data.value.elements =
             item.children?.map((child) => {
               return {
                 ...child.attributes,

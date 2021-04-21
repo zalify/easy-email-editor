@@ -1,5 +1,6 @@
 import { ICarousel } from '@/components/core/blocks/basic/Carousel';
 import { INavbar } from '@/components/core/blocks/basic/Navbar';
+import { ISocial } from '@/components/core/blocks/basic/Social';
 import { BasicType } from '@/constants';
 import { IBlockData } from '@/typings';
 import {
@@ -91,6 +92,22 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
               <mj-navbar ${attributeStr}>
                ${links}
               </mj-navbar>
+            `;
+    case BasicType.SOCIAL:
+      const elements = (data as ISocial).data.value.elements
+        .map((element, index) => {
+          const elementAttributeStr = Object.keys(element)
+            .map((key) => `${key}="${element[key]}"`)
+            .join(' ');
+          return `
+          <mj-social-element ${elementAttributeStr}>${element.content}</mj-social-element>
+          `;
+        })
+        .join('\n');
+      return `
+              <mj-social ${attributeStr}>
+               ${elements}
+              </mj-social>
             `;
 
     default:

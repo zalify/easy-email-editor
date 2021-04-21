@@ -27,26 +27,7 @@ export function Panel() {
   const { focusIdx } = useBlock();
   return (
     <Stack vertical>
-      <div
-        style={{
-          borderBottom: '1px solid #ccc',
-          paddingBottom: 10,
-          marginBottom: 20,
-        }}
-      >
-        <EditTabField
-          name={`${focusIdx}.data.value.images`}
-          label='Images'
-          renderItem={(item, index) => (
-            <CarouselImage item={item} index={index} />
-          )}
-          additionItem={{
-            src:
-              'https://www.mailjet.com/wp-content/uploads/2016/11/ecommerce-guide.jpg',
-            target: '_blank',
-          }}
-        />
-      </div>
+
       <ColorPickerField
         label='Border color of the hovered thumbnail'
         name={`${focusIdx}.attributes.tb-hover-border-color`}
@@ -98,6 +79,27 @@ export function Panel() {
         inline
       />
       <Align />
+
+      <div
+        style={{
+          borderTop: '1px solid #ccc',
+          paddingTop: 10,
+          marginTop: 20,
+        }}
+      >
+        <EditTabField
+          name={`${focusIdx}.data.value.images`}
+          label='Images'
+          renderItem={(item, index) => (
+            <CarouselImage item={item} index={index} />
+          )}
+          additionItem={{
+            src:
+              'https://www.mailjet.com/wp-content/uploads/2016/11/ecommerce-guide.jpg',
+            target: '_blank',
+          }}
+        />
+      </div>
     </Stack>
   );
 }

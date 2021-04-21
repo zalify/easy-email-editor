@@ -1,5 +1,5 @@
 import { BlockType, BasicType } from '../constants';
-import { cloneDeep, get, set } from 'lodash';
+import { cloneDeep, debounce, get, set } from 'lodash';
 import { IBlockData, RecursivePartial } from '../typings';
 import { getBlockByType } from '../components/core/blocks';
 import { useCallback, useContext } from 'react';
@@ -70,6 +70,7 @@ export function useBlock() {
             BasicType.ACCORDION,
             BasicType.CAROUSEL,
             BasicType.NAVBAR,
+            BasicType.SOCIAL,
           ].includes(block.type)
         ) {
           if (parentBlock.type === BasicType.SECTION) {
@@ -144,9 +145,8 @@ export function useBlock() {
         const index = getIndexByIdx(idx);
 
         parent.children.splice(index, 0, copyBlock);
-        formState.values.focusIdx = `${parentIdx}.children.[${
-          parent.children.length - 1
-        }]`;
+        formState.values.focusIdx = `${parentIdx}.children.[${parent.children.length - 1
+          }]`;
         return { ...formState };
       });
     },
@@ -184,9 +184,9 @@ export function useBlock() {
   );
 
   const setValueByIdx = useCallback(
-    <T extends any>(idx: string, newVal: IBlockData<T>) => {
+    debounce(<T extends any>(idx: string, newVal: T) => {
       getFieldHelpers(idx).setValue(newVal);
-    },
+    }),
     [getFieldHelpers]
   );
 
@@ -238,7 +238,7 @@ export function useBlock() {
   );
 
   const setFocusIdx = useCallback(
-    (idx: string) => {
+    debounce((idx: string) => {
       setFormikState((formState) => {
         if (formState.values.focusIdx === idx) {
           return formState;
@@ -246,12 +246,12 @@ export function useBlock() {
         formState.values.focusIdx = idx;
         return { ...formState };
       });
-    },
+    }),
     [setFormikState]
   );
 
   const setHoverIdx = useCallback(
-    (idx: string) => {
+    debounce((idx: string) => {
       setFormikState((formState) => {
         if (formState.values.hoverIdx === idx) {
           return formState;
@@ -259,19 +259,20 @@ export function useBlock() {
         formState.values.hoverIdx = idx;
         return { ...formState };
       });
-    },
+    })
+    ,
     [setFormikState]
   );
 
   const setFocusBlockValue = useCallback(
-    (val) => {
+    debounce((val) => {
       setFormikState((formState) => {
         if (!focusBlock) return formState;
         focusBlock.data.value = val;
         set(formState, focusIdx, focusBlock);
         return { ...formState };
       });
-    },
+    }),
     [focusBlock, focusIdx, setFormikState]
   );
 

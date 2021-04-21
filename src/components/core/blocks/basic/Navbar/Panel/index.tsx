@@ -71,6 +71,8 @@ export function Panel() {
             'https://www.mailjet.com/wp-content/uploads/2016/11/ecommerce-guide.jpg',
           target: '_blank',
           content: 'New link',
+          color: '#1890ff',
+          "font-size": "13px"
         }}
       />
     </Stack>
@@ -114,22 +116,18 @@ function NavbarLink({
             name={`${focusIdx}.data.value.links.[${index}].target`}
             options={[
               {
-                value: '',
-                label: '_self',
-              },
-              {
                 value: '_blank',
                 label: '_blank',
+              },
+              {
+                value: '_self',
+                label: '_self',
               },
             ]}
             inline
           />
         </div>
       </Stack>
-      <Padding
-        title='Padding'
-        attributeName={`${focusIdx}.attributes.padding`}
-      />
     </Stack>
   );
 }

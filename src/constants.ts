@@ -18,13 +18,10 @@ export enum BasicType {
   ACCORDION_TITLE = 'accordion-title',
   ACCORDION_TEXT = 'accordion-text',
   HERO = 'hero',
-  // TODO
   CAROUSEL = 'carousel',
-  CAROUSEL_IMAGE = 'carousel-image',
   NAVBAR = 'navbar',
-  NAVBAR_LINK = 'navbar-link',
   SOCIAL = 'social',
-  SOCIAL_ELEMENT = 'social-element',
+  // TODO
   TABLE = 'table',
 }
 

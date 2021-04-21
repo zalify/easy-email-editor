@@ -119,7 +119,7 @@ export default function Editor() {
           <>
             <PageHeader
               title='Edit'
-              onBack={history.goBack}
+              onBack={() => history.push('/')}
               extra={
                 <Stack>
                   <Button onClick={() => onExportHtml(values)}>

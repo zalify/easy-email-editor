@@ -49,7 +49,7 @@ export const RecordProvider: React.FC<{}> = (props) => {
         formikContext.setValues(data[prevIndex]);
       },
       reset: () => {
-        formikContext.setValues(initialValues);
+        formikContext.resetForm();
       },
       undoable: index > 0,
       redoable: index < data.length - 1,

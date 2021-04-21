@@ -27,7 +27,7 @@ export default function Frame({ children, title, primaryAction, breadcrumb }: Fr
             mode="inline"
             defaultSelectedKeys={['1']}
             defaultOpenKeys={['sub1']}
-            style={{ height: 'calc(100vh - 64px)', borderRight: 0 }}
+            style={{ height: '100%', borderRight: 0 }}
           >
             <SubMenu key="sub1" title="Templates">
               <Menu.Item key="1">Templates</Menu.Item>

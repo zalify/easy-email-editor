@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import styles from './index.module.scss';
-import { Collapse, Empty, Tag } from 'antd';
+import { Button, Collapse, Empty, Tag } from 'antd';
 import {
   PictureOutlined,
   FontSizeOutlined,
@@ -22,7 +22,14 @@ import { TextStyle } from '@/components/TextStyle';
 const { Panel } = Collapse;
 
 export const ComponentsPanel = function () {
+  const [visible, setVisible] = useState(false);
   const { extraBlocks = [] } = useContext(EditorPropsContext);
+
+  const onToggleMore = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setVisible((v) => !v);
+  };
+
   return (
     <div className={styles.container}>
       <Collapse
@@ -34,7 +41,15 @@ export const ComponentsPanel = function () {
             <ColumnBlockIconPanel />
           </div>
         </Panel>
-        <Panel header='Content' key='1'>
+        <Panel
+          header='Content'
+          key='1'
+          extra={
+            <Button ghost type='link' onClick={onToggleMore}>
+              {visible ? ' Show less' : ' Show more'}
+            </Button>
+          }
+        >
           <div className={styles.list}>
             <BlockIcon
               text='Wrapper'
@@ -155,62 +170,79 @@ export const ComponentsPanel = function () {
               type={BasicType.SPACER}
               icon={<ColumnHeightOutlined />}
             />
-            <BlockIcon
-              text='Accordion'
-              helpText={
-                <Stack vertical spacing='none'>
-                  <TextStyle>
-                    Accordion is an interactive component to stack content in
-                    tabs, so the information is collapsed and only the titles
-                    are visible. Readers can interact by clicking on the tabs to
-                    reveal the content, providing a great experience on mobile
-                    devices where space is scarce.
-                  </TextStyle>
-                </Stack>
-              }
-              type={BasicType.ACCORDION}
-              icon={<ColumnHeightOutlined />}
-            />
-            <BlockIcon
-              text='Hero'
-              helpText={
-                <Stack vertical spacing='none'>
-                  <TextStyle>
-                    This block displays a hero image. It behaves like an
-                    'section' with a single 'column'.
-                  </TextStyle>
-                </Stack>
-              }
-              type={BasicType.HERO}
-              icon={<ColumnHeightOutlined />}
-            />
-            <BlockIcon
-              text='Carousel'
-              helpText={
-                <Stack vertical spacing='none'>
-                  <TextStyle>
-                    This block displays a gallery of images or "carousel".
-                    Readers can interact by hovering and clicking on thumbnails
-                    depending on the email client they use.
-                  </TextStyle>
-                </Stack>
-              }
-              type={BasicType.CAROUSEL}
-              icon={<ColumnHeightOutlined />}
-            />
-            <BlockIcon
-              text='Navbar'
-              helpText={
-                <Stack vertical spacing='none'>
-                  <TextStyle>
-                    Displays a menu for navigation with an optional hamburger
-                    mode for mobile devices.
-                  </TextStyle>
-                </Stack>
-              }
-              type={BasicType.NAVBAR}
-              icon={<ColumnHeightOutlined />}
-            />
+            {visible && (
+              <>
+                <BlockIcon
+                  text='Accordion'
+                  helpText={
+                    <Stack vertical spacing='none'>
+                      <TextStyle>
+                        Accordion is an interactive component to stack content
+                        in tabs, so the information is collapsed and only the
+                        titles are visible. Readers can interact by clicking on
+                        the tabs to reveal the content, providing a great
+                        experience on mobile devices where space is scarce.
+                      </TextStyle>
+                    </Stack>
+                  }
+                  type={BasicType.ACCORDION}
+                  icon={<ColumnHeightOutlined />}
+                />
+                <BlockIcon
+                  text='Hero'
+                  helpText={
+                    <Stack vertical spacing='none'>
+                      <TextStyle>
+                        This block displays a hero image. It behaves like an
+                        'section' with a single 'column'.
+                      </TextStyle>
+                    </Stack>
+                  }
+                  type={BasicType.HERO}
+                  icon={<ColumnHeightOutlined />}
+                />
+                <BlockIcon
+                  text='Carousel'
+                  helpText={
+                    <Stack vertical spacing='none'>
+                      <TextStyle>
+                        This block displays a gallery of images or "carousel".
+                        Readers can interact by hovering and clicking on
+                        thumbnails depending on the email client they use.
+                      </TextStyle>
+                    </Stack>
+                  }
+                  type={BasicType.CAROUSEL}
+                  icon={<ColumnHeightOutlined />}
+                />
+                <BlockIcon
+                  text='Navbar'
+                  helpText={
+                    <Stack vertical spacing='none'>
+                      <TextStyle>
+                        Displays a menu for navigation with an optional
+                        hamburger mode for mobile devices.
+                      </TextStyle>
+                    </Stack>
+                  }
+                  type={BasicType.NAVBAR}
+                  icon={<ColumnHeightOutlined />}
+                />
+                <BlockIcon
+                  text='Social'
+                  helpText={
+                    <Stack vertical spacing='none'>
+                      <TextStyle>
+                        Displays calls-to-action for various social networks
+                        with their associated logo.
+                      </TextStyle>
+                    </Stack>
+                  }
+                  type={BasicType.SOCIAL}
+                  icon={<ColumnHeightOutlined />}
+                />
+              </>
+            )}
           </div>
           <Stack vertical>
             <Stack.Item />

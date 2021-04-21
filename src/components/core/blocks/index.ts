@@ -18,13 +18,10 @@ import { AccordionElement } from './basic/AccordionElement';
 import { AccordionTitle } from './basic/AccordionTitle';
 import { AccordionText } from './basic/AccordionText';
 import { Carousel } from './basic/Carousel';
-import { CarouselImage } from './basic/CarouselImage';
 import { Table } from './basic/Table';
 import { Hero } from './basic/Hero';
 import { Navbar } from './basic/Navbar';
 import { Social } from './basic/Social';
-import { SocialElement } from './basic/SocialElement';
-
 export const BlocksMap = {
   Page,
   Section,
@@ -42,13 +39,11 @@ export const BlocksMap = {
   AccordionTitle,
   AccordionText,
   Carousel,
-  CarouselImage,
   Hero,
-  // TODO:
-  Table,
   Navbar,
   Social,
-  SocialElement,
+  // TODO:
+  Table,
 };
 
 export function getBlockByType(type: BlockType): IBlock<any> {
