@@ -21,13 +21,15 @@ export function AttributesManager() {
         </TextStyle>
       )}
     >
-      <Stack vertical>
-        {<block.Panel />}
-        <Stack.Item />
-        <Stack.Item />
-        <Stack.Item />
-        <Stack.Item />
-      </Stack>
+      <Stack.Item fill>
+        <Stack vertical>
+          {<block.Panel />}
+          <Stack.Item />
+          <Stack.Item />
+          <Stack.Item />
+          <Stack.Item />
+        </Stack>
+      </Stack.Item>
     </Card>
   );
 }

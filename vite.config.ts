@@ -28,6 +28,13 @@ export default defineConfig({
       scss: {},
     },
   },
-  server: {},
+  server: {
+    proxy: {
+      '/email': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+      },
+    }
+  },
   plugins: [reactRefresh()],
 });

@@ -10,9 +10,20 @@ export function MjmlToJson(data: MjmlBlockItem): IPage {
     switch (item.tagName) {
       case 'mjml':
         const body = item.children?.find((item) => item.tagName === 'mj-body')!;
+        const head = item.children?.find((item) => item.tagName === 'mj-head')!;
+        const styleText = head.children?.filter(item => item.tagName === 'mj-style').map(item => item.content).join('\n');
+
+        const globalAttributes = head.children?.filter(item => item.tagName === 'mj-attributes').filter(item => item.tagName === 'mj-all');
+        console.log('globalAttributes', globalAttributes);
+
         return Page.createInstance({
           attributes: body.attributes,
           children: body.children?.map(transform),
+          data: {
+            value: {
+              style: styleText
+            }
+          }
         });
 
       default:

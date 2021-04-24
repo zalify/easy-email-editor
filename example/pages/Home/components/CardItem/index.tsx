@@ -5,19 +5,14 @@ import {
   CopyOutlined,
   EditOutlined,
   DeleteOutlined,
-  EyeOutlined,
 } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import styles from './index.module.scss';
-import { QrCode } from '@example/components/qrcode';
 import { Popconfirm } from 'antd';
 import { Link } from 'react-router-dom';
 import template from '@example/store/template';
 import { useDispatch } from 'react-redux';
 import templateList from '@example/store/templateList';
-import dom2Image from 'dom-to-image';
-import mjml from 'mjml-browser';
-import { transformToMjml } from '@/utils/transformToMjml';
 
 interface CardItemProps {
   data: IArticle;
@@ -42,7 +37,7 @@ export function CardItem(props: CardItemProps) {
     <div key={data.article_id} className={styles.templeteItem} style={{ backgroundImage: `url(${data.picture})` }}>
       <div className={styles.bottom}>
         <div className={styles.title}>Title: {data.title}</div>
-        <div className={styles.title}>Date {dayjs().format('YYYY-MM-DD')}</div>
+        <div className={styles.title}>Date {dayjs(data.created_at * 1000).format('YYYY-MM-DD')}</div>
       </div>
       <div className={styles.mask}>
         <div className={styles.listBottom}>

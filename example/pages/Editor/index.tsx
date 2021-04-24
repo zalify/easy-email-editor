@@ -18,14 +18,17 @@ import { transformToMjml } from '@/utils/transformToMjml';
 import extraBlocks from '@example/store/extraBlocks';
 import { CollectedBlock } from '@/components/PropsProvider';
 import { copy } from '@example/util/clipboard';
+import { useEmailModal } from './components/useEmailModal';
 
 export default function Editor() {
   const dispatch = useDispatch();
   const history = useHistory();
   const templateData = useAppSelector('template');
   const extraBlocksData = useAppSelector('extraBlocks');
+  const { openModal, modal } = useEmailModal();
   const { id } = useQuery();
   const loading = useLoading(template.loadings.fetchById);
+
 
   const isSubmitting = useLoading([
     template.loadings.create,
@@ -107,6 +110,7 @@ export default function Editor() {
     message.success('Removed from collection.');
   };
 
+
   return (
     <div>
       <EmailEditor
@@ -125,6 +129,9 @@ export default function Editor() {
                   <Button onClick={() => onExportHtml(values)}>
                     Export html
                   </Button>
+                  <Button onClick={() => openModal(values)}>
+                    Send test email
+                  </Button>
                   <Button
                     loading={isSubmitting}
                     type='primary'
@@ -139,6 +146,7 @@ export default function Editor() {
           </>
         )}
       </EmailEditor>
+      {modal}
     </div>
   );
 }

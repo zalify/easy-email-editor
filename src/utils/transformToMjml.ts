@@ -19,6 +19,7 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
   const isTest = !!idx;
   if (isTest) {
     att['css-class'] = classnames(
+      att['css-class'],
       'email-block',
       getNodeIdxClassName(idx!),
       getNodeTypeClassName(data.type)
@@ -44,10 +45,13 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
       const breakpoint = data.data.value.breakpoint
         ? `<mj-breakpoint width="${data.data.value.breakpoint}" />`
         : '';
+
+      const styleText = data.data.value.style ? `<mj-style>${data.data.value.style}</mj-style>` : '';
       return `
         <mjml>
           <mj-head>
           ${breakpoint}
+          ${styleText}
           </mj-head>
           <mj-body ${attributeStr}>
             ${children}

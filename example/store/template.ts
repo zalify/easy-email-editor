@@ -4,7 +4,6 @@ import { message } from 'antd';
 import { history } from '@example/util/history';
 import { IBlockData } from '@/typings';
 import { EditorProps } from '@/components/EmailEditorProvider';
-import { BasicType } from '@/constants';
 import { emailToImage } from '@/utils/emailToImage';
 import { getPageIdx } from '@/utils/block';
 import { Page } from '@/components/core/blocks/basic/Page';

@@ -12,7 +12,7 @@ export const createInstance: CreateInstance<IPage> = (payload) => {
       },
     },
     attributes: {
-      'background-color': '#FFFFFF',
+      'background-color': '#efeeea',
     },
     children: [],
   };

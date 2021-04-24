@@ -1,6 +1,6 @@
 import { request } from './axios.config';
 import { getCookie } from '../util/utils';
-import { IBlockData } from '../../VisualEditor/typings';
+import { v4 as uuidv4 } from 'uuid';
 const QI_NIUI_KEY = 'qiniuConfig';
 
 type QiniuConfig = { origin: string; token: string; };
@@ -20,19 +20,16 @@ export const common = {
       )}; max-age=540;`; // 设置十分钟有效期
     }
     const { token, origin } = qiniuConfig;
+
     const data = new FormData();
     data.append('file', file);
     data.append('token', token);
+    data.append('key', uuidv4() + '.png');
     const res = await request.post<{ key: string; }>(
-      'http://upload.qiniu.com',
+      'https://upload.qiniu.com',
       data
     );
     return origin + '/' + res.key;
-  },
-  postSketchToJson(file: File | Blob) {
-    const data = new FormData();
-    data.append('file', file);
-    return request.post<IBlockData[][]>('/parse/sketch-json', data);
   },
   uploadByUrl(url: string) {
     return request.get<string>('/upload/user/upload-by-url', {
@@ -56,6 +53,14 @@ export const common = {
         ]
       }
     ]);
+  },
+  sendTestEmail(data: { toEmail: string; subject: string; html: string; text: string; }) {
+    return request.post('/email/user/send', {
+      to_email: data.toEmail,
+      subject: data.subject,
+      text: data.text,
+      html: data.html,
+    });
   }
 };
 

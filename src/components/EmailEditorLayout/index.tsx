@@ -36,7 +36,6 @@ export const EmailEditorLayout = () => {
   }, [ref]);
 
   const pageMaxWidth = pageData.attributes.width || '600px';
-  const pageMinWidth = pageData.data.value.breakpoint || '480px';
 
   return (
     <Layout>
@@ -45,8 +44,8 @@ export const EmailEditorLayout = () => {
         style={{
           display: 'flex',
           width: '100vw',
-
           overflow: 'hidden',
+
         }}
       >
         <Layout.Sider theme='light' width={340}>
@@ -63,10 +62,10 @@ export const EmailEditorLayout = () => {
         </Layout.Sider>
 
         <Layout>
-          <div id='centerEditor'>
+          <div id='centerEditor' style={{ backgroundColor: pageData.attributes['background-color'] }}>
             <Tabs
               activeKey={activeTab}
-              tabBarStyle={{ paddingLeft: 20, marginBottom: 0, }}
+              tabBarStyle={{ paddingLeft: 20, marginBottom: 0, backgroundColor: '#fff' }}
               onChange={setActiveTab}
               tabBarExtraContent={<ToolsPanel />}
             >
@@ -88,9 +87,8 @@ export const EmailEditorLayout = () => {
                   id='VisualEditorEditMode'
                   style={{
                     width: pageMaxWidth,
-                    height: innerHeight - 160,
+                    height: innerHeight - 112,
                     padding: 40,
-                    paddingBottom: 0,
                     margin: 'auto'
                   }}
                 >
@@ -110,9 +108,8 @@ export const EmailEditorLayout = () => {
                 <div
                   style={{
                     width: pageMaxWidth,
-                    height: innerHeight - 160,
+                    height: innerHeight - 112,
                     padding: 40,
-                    paddingBottom: 0,
                     margin: 'auto'
                   }}
                 >
@@ -137,10 +134,9 @@ export const EmailEditorLayout = () => {
               >
                 <div
                   style={{
-                    width: pageMinWidth,
-                    height: innerHeight - 160,
+                    width: pageMaxWidth,
+                    height: innerHeight - 112,
                     padding: 40,
-                    paddingBottom: 0,
                     margin: 'auto'
                   }}
                 >

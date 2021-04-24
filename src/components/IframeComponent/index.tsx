@@ -16,6 +16,10 @@ export const IframeComponent = ({
   const mountNode =
     contentRef?.contentWindow?.document?.body;
 
+  if (mountNode) {
+    mountNode.style.backgroundColor = "transparent";
+  }
+
   return (
     <iframe title={title} {...props} ref={setContentRef}>
       {mountNode && createPortal(<><div dangerouslySetInnerHTML={{ __html: document.head.innerHTML }} />{children}</>, mountNode)}
