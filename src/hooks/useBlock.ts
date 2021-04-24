@@ -134,6 +134,7 @@ export function useBlock() {
     (idx: string) => {
       setFormikState((formState) => {
         const parentIdx = getParentIdx(idx);
+        if (!parentIdx) return formState;
         const parent = get(
           formState.values,
           getParentIdx(idx) || ''
@@ -142,11 +143,11 @@ export function useBlock() {
           throw new Error('Invalid block');
         }
         const copyBlock = cloneDeep(get(formState.values, idx));
-        const index = getIndexByIdx(idx);
+        const index = getIndexByIdx(idx) + 1;
 
         parent.children.splice(index, 0, copyBlock);
-        formState.values.focusIdx = `${parentIdx}.children.[${parent.children.length - 1
-          }]`;
+        set(formState.values, parentIdx, { ...parent });
+        formState.values.focusIdx = `${parentIdx}.children.[${index}]`;
         return { ...formState };
       });
     },

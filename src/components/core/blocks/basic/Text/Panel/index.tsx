@@ -1,21 +1,21 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Padding } from '@/components/ConfigurationPanel/components/AttributesManager/components/Padding';
+import { Padding } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Padding';
 import { Stack } from '@/components/Stack';
 import { useBlock } from '@/hooks/useBlock';
-import { Width } from '@/components/ConfigurationPanel/components/AttributesManager/components/Width';
-import { TextDecoration } from '@/components/ConfigurationPanel/components/AttributesManager/components/TextDecoration';
-import { FontWeight } from '@/components/ConfigurationPanel/components/AttributesManager/components/FontWeight';
-import { FontStyle } from '@/components/ConfigurationPanel/components/AttributesManager/components/FontStyle';
-import { TextTransform } from '@/components/ConfigurationPanel/components/AttributesManager/components/TextTransform';
-import { FontFamily } from '@/components/ConfigurationPanel/components/AttributesManager/components/FontFamliy';
-import { Height } from '@/components/ConfigurationPanel/components/AttributesManager/components/Height';
-import { ContainerBackgroundColor } from '@/components/ConfigurationPanel/components/AttributesManager/components/ContainerBackgroundColor';
-import { FontSize } from '@/components/ConfigurationPanel/components/AttributesManager/components/FontSize';
-import { Color } from '@/components/ConfigurationPanel/components/AttributesManager/components/Color';
-import { Align } from '@/components/ConfigurationPanel/components/AttributesManager/components/Align';
+import { Width } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Width';
+import { TextDecoration } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/TextDecoration';
+import { FontWeight } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/FontWeight';
+import { FontStyle } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/FontStyle';
+import { TextTransform } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/TextTransform';
+import { FontFamily } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/FontFamliy';
+import { Height } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Height';
+import { ContainerBackgroundColor } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/ContainerBackgroundColor';
+import { FontSize } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/FontSize';
+import { Color } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Color';
+import { Align } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Align';
 import { IText } from '..';
-import { LineHeight } from '@/components/ConfigurationPanel/components/AttributesManager/components/LineHeight';
-import { LetterSpacing } from '@/components/ConfigurationPanel/components/AttributesManager/components/LetterSpacing';
+import { LineHeight } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/LineHeight';
+import { LetterSpacing } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/LetterSpacing';
 import { RichTextField } from '@/components/core/Form';
 
 export function Panel() {

@@ -1,16 +1,21 @@
 .blockItem {
-  height: 40px;
-  line-height: 40px;
   list-style-position: inside;
   list-style-type: none;
-  padding-left: 14px;
-  padding-right: 16px;
+  padding: 16px;
   display: flex;
   cursor: pointer;
   &:hover {
     color: #1890ff;
     background-color: #e6f7ff;
+
+.shortcutTool {
+  opacity: 1;
+}
   }
+
+.shortcutTool {
+  opacity: 0;
+}
 }
 
 .blockList {

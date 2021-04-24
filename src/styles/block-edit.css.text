@@ -1,0 +1,16 @@
+.mj-accordion-content {
+  display: block !important;
+}
+
+
+.email-block {
+  outline: 1px dashed rgba(170,170,170,0.7);
+  outline-offset: -2px;
+}
+
+.node-type-page {
+  min-height: 100%;
+}
+.node-type-group{
+  min-height: 30px
+}

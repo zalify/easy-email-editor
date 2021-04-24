@@ -45,7 +45,7 @@ export const ComponentsPanel = function () {
           header='Content'
           key='1'
           extra={
-            <Button ghost type='link' onClick={onToggleMore}>
+            <Button type='link' onClick={onToggleMore}>
               {visible ? ' Show less' : ' Show more'}
             </Button>
           }

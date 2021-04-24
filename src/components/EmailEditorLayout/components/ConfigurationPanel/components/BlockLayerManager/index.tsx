@@ -24,6 +24,7 @@ import styles from './index.module.scss';
 import { classnames } from '@/utils/classnames';
 import { findBlockNodeByIdx } from '@/utils/findBlockNodeByIdx';
 import { useDropBlock } from '@/hooks/useDropBlock';
+import blockInteractiveStyleText from '@/styles/block-interactive.css.text?raw';
 
 export function BlockLayerManager() {
   const { setRef } = useDropBlock();
@@ -32,25 +33,7 @@ export function BlockLayerManager() {
     <div ref={setRef}>
       <BlockLayerItem blockData={pageData} idx={getPageIdx()} />
       <style>
-        {`
-
-          .block-selected {
-            color:#fff;
-            background:  rgba(59,151,127,0.9) !important;
-          }
-
-          .block-dragover {
-            color:#fff;
-            background:  rgba(208,2,27,0.9) !important;
-          }
-
-          .block-tangent {
-            color:#fff;
-            background:  rgba(245,144,35,0.9) !important;
-          }
-
-
-          `}
+        {blockInteractiveStyleText}
       </style>
     </div>
   );
@@ -217,9 +200,12 @@ function ShortcutTool({
 
   if (blockData.type === BasicType.PAGE) return null;
   return (
-    <Stack>
-      <CopyOutlined onClick={enHanceHandler(() => copyBlock(idx))} />
-      <CloseOutlined onClick={enHanceHandler(() => removeBlock(idx))} />
-    </Stack>
+    <div className={styles.shortcutTool}>
+      <Stack>
+        <CopyOutlined onClickCapture={enHanceHandler(() => copyBlock(idx))} />
+        <CloseOutlined onClickCapture={enHanceHandler(() => removeBlock(idx))} />
+      </Stack>
+    </div>
+
   );
 }

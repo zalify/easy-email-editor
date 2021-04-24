@@ -1,12 +1,12 @@
 import React from 'react';
-import { Padding } from '@/components/ConfigurationPanel/components/AttributesManager/components/Padding';
+import { Padding } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Padding';
 import { Stack } from '@/components/Stack';
-import { TextAlign } from '@/components/ConfigurationPanel/components/AttributesManager/components/TextAlign';
+import { TextAlign } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/TextAlign';
 import { ColorPickerField, TextField } from '@/components/core/Form';
 import { useBlock } from '@/hooks/useBlock';
-import { Width } from '@/components/ConfigurationPanel/components/AttributesManager/components/Width';
-import { Height } from '@/components/ConfigurationPanel/components/AttributesManager/components/Height';
-import { Link } from '@/components/ConfigurationPanel/components/AttributesManager/components/Link';
+import { Width } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Width';
+import { Height } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Height';
+import { Link } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Link';
 
 export function Panel() {
   const { focusIdx } = useBlock();

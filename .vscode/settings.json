@@ -40,6 +40,10 @@
   // 在 `editor.wordWrap` 为 `wordWrapColumn`  或 `bounded` 时，控制编辑器的折行列。
   "editor.wordWrapColumn": 120,
   "files.trimTrailingWhitespace": true,
+  "files.associations": {
+    ".css.text": "css",
+    ".css.text?raw": "css",
+  },
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   }

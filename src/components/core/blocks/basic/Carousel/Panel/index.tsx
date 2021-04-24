@@ -9,7 +9,7 @@ import {
 } from '@/components/core/Form';
 import { LinkOutlined } from '@ant-design/icons';
 import { useBlock } from '@/hooks/useBlock';
-import { Align } from '@/components/ConfigurationPanel/components/AttributesManager/components/Align';
+import { Align } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Align';
 import { ICarousel } from '..';
 
 const options = [

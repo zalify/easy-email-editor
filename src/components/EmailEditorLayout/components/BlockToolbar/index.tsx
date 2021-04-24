@@ -66,9 +66,8 @@ export const BlockToolbar = () => {
                   <Tooltip
                     key={index}
                     placement='topLeft'
-                    title={`Select child node ${
-                      findBlockByType(item.type)?.name
-                    }`}
+                    title={`Select child node ${findBlockByType(item.type)?.name
+                      }`}
                   >
                     <BorderOuterOutlined
                       onClick={() =>
@@ -80,7 +79,7 @@ export const BlockToolbar = () => {
               })}
             </Stack>
           ),
-          method() {},
+          method() { },
         },
       ].filter(Boolean) as SideBarItem[];
     }
@@ -112,9 +111,8 @@ export const BlockToolbar = () => {
                 <Tooltip
                   key={index}
                   placement='topLeft'
-                  title={`Select child node ${
-                    findBlockByType(item.type)?.name
-                  }`}
+                  title={`Select child node ${findBlockByType(item.type)?.name
+                    }`}
                 >
                   <BorderOuterOutlined
                     onClick={() =>
@@ -126,7 +124,7 @@ export const BlockToolbar = () => {
             })}
           </Stack>
         ),
-        method() {},
+        method() { },
       },
       {
         icon: <ArrowUpOutlined />,
@@ -167,7 +165,7 @@ export const BlockToolbar = () => {
   }, [copyBlock, focusBlock, focusIdx, moveByIdx, removeBlock, setFocusIdx]);
 
   return useMemo(() => {
-    const onSubmit = (values: { label: string; helpText: string }) => {
+    const onSubmit = (values: { label: string; helpText: string; }) => {
       if (!values.label) return;
       const uuid = uuidv4();
       onAddCollection?.({

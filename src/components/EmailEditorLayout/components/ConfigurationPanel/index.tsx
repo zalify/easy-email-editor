@@ -1,7 +1,7 @@
 
 import { Tabs } from 'antd';
 import React from 'react';
-import { findBlockByType, getValueByIdx } from '../../utils/block';
+import { findBlockByType, getValueByIdx } from '../../../../utils/block';
 import { useBlock } from '@/hooks/useBlock';
 import { BlockLayerManager } from './components/BlockLayerManager';
 import { SourceCodeManager } from './components/SourceCodeManager';

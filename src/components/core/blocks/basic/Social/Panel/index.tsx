@@ -1,5 +1,5 @@
 import React from 'react';
-import { Padding } from '@/components/ConfigurationPanel/components/AttributesManager/components/Padding';
+import { Padding } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Padding';
 import { Stack } from '@/components/Stack';
 import {
   ColorPickerField,
@@ -9,16 +9,16 @@ import {
   TextField,
 } from '@/components/core/Form';
 import { useBlock } from '@/hooks/useBlock';
-import { Align } from '@/components/ConfigurationPanel/components/AttributesManager/components/Align';
+import { Align } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Align';
 import { LinkOutlined } from '@ant-design/icons';
 import { ISocial } from '..';
-import { Color } from '@/components/ConfigurationPanel/components/AttributesManager/components/Color';
-import { ContainerBackgroundColor } from '@/components/ConfigurationPanel/components/AttributesManager/components/ContainerBackgroundColor';
-import { FontFamily } from '@/components/ConfigurationPanel/components/AttributesManager/components/FontFamliy';
-import { FontSize } from '@/components/ConfigurationPanel/components/AttributesManager/components/FontSize';
-import { FontStyle } from '@/components/ConfigurationPanel/components/AttributesManager/components/FontStyle';
-import { FontWeight } from '@/components/ConfigurationPanel/components/AttributesManager/components/FontWeight';
-import { TextDecoration } from '@/components/ConfigurationPanel/components/AttributesManager/components/TextDecoration';
+import { Color } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Color';
+import { ContainerBackgroundColor } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/ContainerBackgroundColor';
+import { FontFamily } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/FontFamliy';
+import { FontSize } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/FontSize';
+import { FontStyle } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/FontStyle';
+import { FontWeight } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/FontWeight';
+import { TextDecoration } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/TextDecoration';
 
 const options = [
   {

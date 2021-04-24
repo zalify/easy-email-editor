@@ -1,11 +1,11 @@
 import React from 'react';
 import { Stack } from '@/components/Stack';
-import { BackgroundColor } from '@/components/ConfigurationPanel/components/AttributesManager/components/BackgroundColor';
+import { BackgroundColor } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/BackgroundColor';
 import { RadioGroupField, TextField } from '@/components/core/Form';
 import { useBlock } from '@/hooks/useBlock';
-import { Width } from '@/components/ConfigurationPanel/components/AttributesManager/components/Width';
-import { Height } from '@/components/ConfigurationPanel/components/AttributesManager/components/Height';
-import { VerticalAlign } from '@/components/ConfigurationPanel/components/AttributesManager/components/VerticalAlign';
+import { Width } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Width';
+import { Height } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Height';
+import { VerticalAlign } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/VerticalAlign';
 
 const options = [
   {
