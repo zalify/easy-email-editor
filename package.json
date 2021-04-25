@@ -43,7 +43,7 @@
     "json-format": "^1.0.1",
     "lodash": "^4.17.20",
     "mjml": "^4.9.0",
-    "mjml-browser": "^4.9.0",
+    "mjml-browser": "^4.9.1",
     "qrcode-generator": "^1.4.4",
     "qs": "6.9.6",
     "react": "^17.0.1",

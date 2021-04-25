@@ -14,12 +14,6 @@ export function Panel() {
       <Stack vertical>
         <TextField label='Subject' name={'subject'} inline />
         <TextField label='SubTitle' name={'subTitle'} inline />
-        <TextAreaField label='Style' name={`${focusIdx}.data.value.style`} inline rows={5} />
-        <ColorPickerField
-          label='Background color'
-          name={`${focusIdx}.attributes.background-color`}
-          inline
-        />
         <TextField label='Width' name={`${focusIdx}.attributes.width`} inline />
         <Stack alignment="center">
           <TextField
@@ -34,6 +28,22 @@ export function Panel() {
           />
 
         </Stack>
+        <TextField
+          label='Font family'
+          quickchange
+          name={`${focusIdx}.data.value.font-family`}
+          inline
+        />
+        <ColorPickerField
+          label='Text color'
+          name={`${focusIdx}.data.value.text-color`}
+          inline
+        />
+        <ColorPickerField
+          label='Background color'
+          name={`${focusIdx}.attributes.background-color`}
+          inline
+        />
       </Stack>
     </Stack.Item>
   );

@@ -1,7 +1,7 @@
 import { Popover } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ColorResult, SketchPicker } from 'react-color';
+import { Picture } from '@/components/Picture';
 
 export interface ColorPickerProps {
   onChange?: (val: string) => void;
@@ -56,18 +56,23 @@ export function ColorPicker(props: ColorPickerProps) {
             position: 'relative',
             cursor: 'pointer',
           }}
-          ><span style={{
-            position: 'relative',
-            display: 'block',
-            border: '1px solid #999',
-            borderRadius: 2,
-            width: '100%',
-            height: '100%',
-            textAlign: 'center',
-            backgroundColor: value
-          }}
-            />
-            <DownOutlined />
+          >
+            {
+              props.value
+                ? <span style={{
+                  position: 'relative',
+                  display: 'block',
+                  border: '1px solid #999',
+                  borderRadius: 2,
+                  width: '100%',
+                  height: '100%',
+                  textAlign: 'center',
+                  backgroundColor: value
+                }}
+                />
+                : <Picture style={{ filter: 'invert(  0.78  )  drop-shadow(0 0px 0 rgb(0 0 0 / 45%))' }} src="https://assets.maocanhua.cn/3e952a6e-2506-470e-b395-3e0d995157c5.png" />
+            }
+
           </div>
         )
       }

@@ -9,6 +9,10 @@ export const createInstance: CreateInstance<IPage> = (payload) => {
     data: {
       value: {
         breakpoint: '480px',
+        'font-family': `lucida Grande,Verdana,Microsoft YaHei`,
+        'text-color': '#000000',
+        headAttributes: '',
+        fonts: []
       },
     },
     attributes: {

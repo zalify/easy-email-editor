@@ -11,17 +11,36 @@ export function MjmlToJson(data: MjmlBlockItem): IPage {
       case 'mjml':
         const body = item.children?.find((item) => item.tagName === 'mj-body')!;
         const head = item.children?.find((item) => item.tagName === 'mj-head')!;
-        const styleText = head.children?.filter(item => item.tagName === 'mj-style').map(item => item.content).join('\n');
 
-        const globalAttributes = head.children?.filter(item => item.tagName === 'mj-attributes').filter(item => item.tagName === 'mj-all');
-        console.log('globalAttributes', globalAttributes);
+        let allFontFamily = '';
+        let allTextColor = '';
+        const mjAllAttributes = head.children?.find(item => item.tagName === 'mj-attributes')?.children?.filter(item => {
+          if (item.tagName === 'mj-all') {
+            if (item.attributes['font-family']) {
+              allFontFamily = item.attributes['font-family'];
+              if (Object.keys(item.attributes).length === 1) return false; // Avoid redundancy
+            }
+          }
+          if (item.tagName === 'mj-text') {
+            if (item.attributes['color']) {
+              allTextColor = item.attributes['color'];
+              if (Object.keys(item.attributes).length === 1) return false;  // Avoid redundancy
+            }
+          }
+          return true;
+        }) || [];
+
+        const headAttributes = mjAllAttributes.map(item => `<${item.tagName} ${Object.keys(item.attributes).map((key) => `${key}="${item.attributes[key]}"`).join(' ')} />`).join('\n');
+        console.log('headAttributes', headAttributes);
 
         return Page.createInstance({
           attributes: body.attributes,
           children: body.children?.map(transform),
           data: {
             value: {
-              style: styleText
+              headAttributes: headAttributes,
+              'font-family': allFontFamily,
+              'text-color': allTextColor
             }
           }
         });

@@ -12,7 +12,6 @@ export const createInstance: CreateInstance<IText> = (payload) => {
       },
     },
     attributes: {
-      color: '#000000',
       'font-size': '13px',
       padding: '10px 25px 10px 25px',
       'line-height': 1,

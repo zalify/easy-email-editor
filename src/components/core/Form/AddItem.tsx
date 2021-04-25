@@ -7,13 +7,13 @@ import { Button } from 'antd';
 import { Stack } from '@/components/Stack';
 import { TextStyle } from '@/components/TextStyle';
 
-export interface AddItemtProps {
+export interface AddFontProps {
   onChange?: (val: string) => void;
   value: Array<{ label: string; value: string; }>;
   name: string;
 }
 
-export function AddItem(props: AddItemtProps) {
+export function AddItem(props: AddFontProps) {
   const { value, name } = props;
 
   return (
@@ -21,74 +21,50 @@ export function AddItem(props: AddItemtProps) {
     <FieldArray
       name={name}
       render={arrayHelpers => {
-        const onDragEnd = (result: DropResult) => {
-          if (!result.destination) {
-            return;
-          }
-
-          if (result.destination.index === result.source.index) {
-            return;
-          }
-
-          arrayHelpers.move(result.source.index, result.destination.index);
-
-        };
         return (
-          <DragDropContext onDragEnd={onDragEnd}>
-            <Droppable droppableId='droppable'>
-              {(provided) => (
-                <div
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                >
-                  <Stack vertical spacing="tight">
-                    <Stack distribution="equalSpacing">
-                      <TextStyle variation="strong" size="large">选项</TextStyle>
-                      <Stack>
-                        <Button size="small" icon={<PlusOutlined />}
-                          onClick={() => arrayHelpers.push({ label: '', value: '' })}
-                        />
-                      </Stack>
-                    </Stack>
+          <div
+          >
+            <Stack vertical spacing="tight">
+              <Stack distribution="equalSpacing">
+                <TextStyle variation="strong" size="large">Fonts</TextStyle>
+                <Stack>
+                  <Button size="small" icon={<PlusOutlined />}
+                    onClick={() => arrayHelpers.push({ label: '', value: '' })}
+                  />
+                </Stack>
+              </Stack>
 
-                    <Stack vertical spacing="extraTight">
-                      {value.map((item, index) => {
-                        return (
+              <Stack vertical spacing="extraTight">
+                {value.map((item, index) => {
+                  return (
 
-                          <Draggable
-                            key={index}
-                            draggableId={index.toString()}
-                            index={index}
-                          >
-                            {(draggableProvided) => (
-                              <div
-                                ref={draggableProvided.innerRef}
-                                {...draggableProvided.draggableProps}
-                                {...draggableProvided.dragHandleProps}
-                              >
-                                <Stack alignment="center" wrap={false}>
-                                  <Stack.Item fill>
-                                    <TextField inline name={`${name}.${index}.label`} label="标签" />
-                                  </Stack.Item>
-                                  <Stack.Item fill>
-                                    <TextField inline name={`${name}.${index}.value`} label="值" />
-                                  </Stack.Item>
-                                  <Button icon={<DeleteOutlined />} onClick={() => arrayHelpers.remove(index)} />
-                                </Stack>
-                              </div>
-                            )}
-                          </Draggable>
+                    <Draggable
+                      key={index}
+                      draggableId={index.toString()}
+                      index={index}
+                    >
+                      {(draggableProvided) => (
+                        <div
+                          ref={draggableProvided.innerRef}
+                          {...draggableProvided.draggableProps}
+                          {...draggableProvided.dragHandleProps}
+                        >
+                          <Stack alignment="center" wrap={false}>
+                            <Stack.Item fill>
+                              <TextField inline name={`${name}.${index}.value`} label="值" />
+                            </Stack.Item>
+                            <Button icon={<DeleteOutlined />} onClick={() => arrayHelpers.remove(index)} />
+                          </Stack>
+                        </div>
+                      )}
+                    </Draggable>
 
-                        );
-                      })}
-                    </Stack>
-                  </Stack>
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-          </DragDropContext>
+                  );
+                })}
+              </Stack>
+            </Stack>
 
+          </div>
         );
       }}
     />

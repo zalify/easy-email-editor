@@ -8,11 +8,10 @@ export type IPage = IBlockData<{
   width?: string;
 }, {
   breakpoint?: string;
-  style?: string;
-  globalAttributes?: {
-    'font-family'?: string;
-    'color'?: string;
-  };
+  'font-family': string;
+  'text-color': string;
+  headAttributes: string;
+  fonts: string[];
 }>;
 
 export const Page: IBlock<IPage> = {

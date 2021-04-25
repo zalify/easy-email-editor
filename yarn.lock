@@ -2321,10 +2321,10 @@ mjml-body@4.9.0:
     lodash "^4.17.15"
     mjml-core "4.9.0"
 
-mjml-browser@^4.9.0:
-  version "4.9.0"
-  resolved "https://registry.npm.taobao.org/mjml-browser/download/mjml-browser-4.9.0.tgz#d2a59dcc2bd333bd687b42359cdb1ef10f89f8c9"
-  integrity sha1-0qWdzCvTM71oe0I1nNse8Q+J+Mk=
+mjml-browser@^4.9.1:
+  version "4.9.1"
+  resolved "https://registry.yarnpkg.com/mjml-browser/-/mjml-browser-4.9.1.tgz#bdb95bc7132d94436cf13bc9b7115e7ad1f7e565"
+  integrity sha512-8U8XQuYwS85SZqdjjrgToId983Rsl1vrk1G6Iq8efcToeiVuO3o8iqUKKYslcwtBu4NBhJJraBm1iJE720Uarg==
 
 mjml-button@4.9.0:
   version "4.9.0"

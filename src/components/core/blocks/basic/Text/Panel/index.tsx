@@ -17,9 +17,11 @@ import { IText } from '..';
 import { LineHeight } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/LineHeight';
 import { LetterSpacing } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/LetterSpacing';
 import { RichTextField } from '@/components/core/Form';
+import { useEditorContext } from '@/hooks/useEditorContext';
 
 export function Panel() {
   const { focusIdx, focusBlock, recordStatus } = useBlock();
+  const { pageData } = useEditorContext();
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -34,7 +36,7 @@ export function Panel() {
     if (!focusBlock) return {};
     const attributes = focusBlock.attributes as IText['attributes'];
     return {
-      color: attributes.color,
+      color: attributes.color || pageData.data.value['text-color'],
       fontSize: attributes['font-size'],
       fontFamily: attributes['font-family'],
       lineHight: attributes['line-height'],

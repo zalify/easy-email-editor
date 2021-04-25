@@ -1,5 +1,6 @@
 import { ICarousel } from '@/components/core/blocks/basic/Carousel';
 import { INavbar } from '@/components/core/blocks/basic/Navbar';
+import { IPage } from '@/components/core/blocks/basic/Page';
 import { ISocial } from '@/components/core/blocks/basic/Social';
 import { BasicType } from '@/constants';
 import { IBlockData } from '@/typings';
@@ -42,16 +43,20 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
 
   switch (data.type) {
     case BasicType.PAGE:
-      const breakpoint = data.data.value.breakpoint
+      const value: IPage['data']['value'] = data.data.value;
+      const breakpoint = value.breakpoint
         ? `<mj-breakpoint width="${data.data.value.breakpoint}" />`
         : '';
 
-      const styleText = data.data.value.style ? `<mj-style>${data.data.value.style}</mj-style>` : '';
       return `
         <mjml>
           <mj-head>
-          ${breakpoint}
-          ${styleText}
+              ${breakpoint}
+            <mj-attributes>
+              ${value.headAttributes}
+              ${value['font-family'] ? `<mj-all font-family="${value['font-family']}" />` : ''}
+              ${value['text-color'] ? `<mj-text color="${value['text-color']}" />` : ''}
+            </mj-attributes>
           </mj-head>
           <mj-body ${attributeStr}>
             ${children}
