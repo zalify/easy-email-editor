@@ -1,9 +1,10 @@
 import React from 'react';
 import { useBlock } from '@/hooks/useBlock';
 import { Stack } from '@/components/Stack';
-import { ColorPickerField, TextAreaField, TextField } from '@/components/core/Form';
+import { ColorPickerField, TextField } from '@/components/core/Form';
 import { Help } from '@/components/Help';
 import { TextStyle } from '@/components/TextStyle';
+import { AddFont } from '@/components/core/Form/AddFont';
 
 export function Panel() {
   const { focusIdx, focusBlock } = useBlock();
@@ -44,6 +45,7 @@ export function Panel() {
           name={`${focusIdx}.attributes.background-color`}
           inline
         />
+        <AddFont />
       </Stack>
     </Stack.Item>
   );

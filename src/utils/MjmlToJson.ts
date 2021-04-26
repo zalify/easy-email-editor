@@ -12,6 +12,7 @@ export function MjmlToJson(data: MjmlBlockItem): IPage {
         const body = item.children?.find((item) => item.tagName === 'mj-body')!;
         const head = item.children?.find((item) => item.tagName === 'mj-head')!;
 
+        const fonts = head.children?.filter(child => child.tagName === 'mj-font').map(child => ({ name: child.attributes.name, href: child.attributes.href })) || [];
         let allFontFamily = '';
         let allTextColor = '';
         const mjAllAttributes = head.children?.find(item => item.tagName === 'mj-attributes')?.children?.filter(item => {
@@ -31,7 +32,6 @@ export function MjmlToJson(data: MjmlBlockItem): IPage {
         }) || [];
 
         const headAttributes = mjAllAttributes.map(item => `<${item.tagName} ${Object.keys(item.attributes).map((key) => `${key}="${item.attributes[key]}"`).join(' ')} />`).join('\n');
-        console.log('headAttributes', headAttributes);
 
         return Page.createInstance({
           attributes: body.attributes,
@@ -40,7 +40,8 @@ export function MjmlToJson(data: MjmlBlockItem): IPage {
             value: {
               headAttributes: headAttributes,
               'font-family': allFontFamily,
-              'text-color': allTextColor
+              'text-color': allTextColor,
+              fonts
             }
           }
         });

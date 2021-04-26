@@ -11,10 +11,11 @@ export interface AddFontProps {
   onChange?: (val: string) => void;
   value: Array<{ label: string; value: string; }>;
   name: string;
+  title: React.ReactNode;
 }
 
 export function AddItem(props: AddFontProps) {
-  const { value, name } = props;
+  const { value, name, title } = props;
 
   return (
 
@@ -26,7 +27,7 @@ export function AddItem(props: AddFontProps) {
           >
             <Stack vertical spacing="tight">
               <Stack distribution="equalSpacing">
-                <TextStyle variation="strong" size="large">Fonts</TextStyle>
+                <TextStyle variation="strong" size="large">{title}</TextStyle>
                 <Stack>
                   <Button size="small" icon={<PlusOutlined />}
                     onClick={() => arrayHelpers.push({ label: '', value: '' })}
@@ -49,6 +50,7 @@ export function AddItem(props: AddFontProps) {
                           {...draggableProvided.draggableProps}
                           {...draggableProvided.dragHandleProps}
                         >
+
                           <Stack alignment="center" wrap={false}>
                             <Stack.Item fill>
                               <TextField inline name={`${name}.${index}.value`} label="值" />

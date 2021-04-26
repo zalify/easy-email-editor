@@ -24,7 +24,7 @@
 .block-selected {
   position:relative;
   outline-offset: -2px;
-  outline: 2px solid #3b97e3 !important;
+  outline: 2px solid rgb(59, 151, 227) !important;
 
 }
 
@@ -32,7 +32,7 @@
   position:relative;
   overflow: hidden;
   outline-offset: -2px;
-  outline: 2px solid #D0021B !important;
+  outline: 2px solid rgb(59, 151, 227) !important;
 }
 
 .block-dragover:after {
@@ -43,7 +43,7 @@
   width: 0;
   height: 0;
   z-index: 1;
-  outline: 10000px solid rgba(208, 2, 26, 0.1);
+  outline: 10000px solid rgba(59, 151, 227,.1);
   outline-offset: -10000px -10000px;
 }
 

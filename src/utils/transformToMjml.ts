@@ -56,6 +56,7 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
               ${value.headAttributes}
               ${value['font-family'] ? `<mj-all font-family="${value['font-family']}" />` : ''}
               ${value['text-color'] ? `<mj-text color="${value['text-color']}" />` : ''}
+              ${value.fonts.filter(Boolean).map(item => `<mj-font name="${item.name}" href="${item.href}" />`)}
             </mj-attributes>
           </mj-head>
           <mj-body ${attributeStr}>
