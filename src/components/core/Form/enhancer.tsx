@@ -1,6 +1,6 @@
 import { TextStyle } from '@/components/TextStyle';
 import { Form } from 'antd';
-import { FastField, Field, FieldProps } from 'formik';
+import { FastField, FieldProps } from 'formik';
 import React, { useMemo } from 'react';
 import { Stack, StackProps } from '../../Stack';
 import styles from './index.module.scss';

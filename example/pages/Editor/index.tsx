@@ -18,6 +18,7 @@ import { CollectedBlock } from '@/components/PropsProvider';
 import { copy } from '@example/util/clipboard';
 import { useEmailModal } from './components/useEmailModal';
 import { WarnAboutUnsavedChanges } from '@example/components/WarnAboutUnsavedChanges';
+import services from '@example/services';
 
 export default function Editor() {
   const dispatch = useDispatch();
@@ -40,6 +41,10 @@ export default function Editor() {
     } else {
       dispatch(template.actions.fetchDefaultTemplate(undefined));
     }
+
+    return () => {
+      dispatch(template.actions.set(null));
+    };
   }, [dispatch, id]);
 
   const onSubmit = useCallback(
@@ -117,6 +122,7 @@ export default function Editor() {
         extraBlocks={extraBlocksData}
         onAddCollection={onAddCollection}
         onRemoveCollection={onRemoveCollection}
+        onUploadImage={services.common.uploadByQiniu}
       >
         {({ values, }) => (
           <>
@@ -141,7 +147,7 @@ export default function Editor() {
                 </Stack>
               }
             />
-            <EmailEditorLayout />
+            <EmailEditorLayout height={`calc(100vh - 72px)`} />
             <WarnAboutUnsavedChanges />
           </>
         )}

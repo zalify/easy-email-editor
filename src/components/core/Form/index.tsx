@@ -2,7 +2,7 @@ import { InputNumber, Input as AntdInput, Switch, DatePicker } from 'antd';
 import { TextAreaProps } from 'antd/lib/input';
 import { InputNumberProps } from 'antd/lib/input-number';
 import { CheckboxGroupProps } from 'antd/lib/checkbox';
-import ImageUploader, { ImageUploaderProps } from './ImageUploader';
+import { ImageUploaderProps, ImageUploader } from './ImageUploader';
 import { UploadField as Uploader, UploadFieldProps } from './UploadField';
 import { ColorPicker, ColorPickerProps } from './ColorPicker';
 import { Select, SelectProps } from './Select';
@@ -13,7 +13,6 @@ import { TreeSelect, TreeSelectProps } from './TreeSelect';
 import { Input, InputProps } from './Input';
 import { SwitchProps } from 'antd/lib/switch';
 import { ChexkBoxGroup } from './ChexkBoxGroup';
-import { AddItem, AddItemtProps } from './AddItem';
 import { EditTab, EditTabProps } from './EditTab';
 import { DatePickerProps } from 'antd/lib/date-picker';
 import { Dayjs } from 'dayjs';
@@ -47,7 +46,7 @@ export const UploadField = enhancer<UploadFieldProps>(
 
 export const ImageUploaderField = enhancer<ImageUploaderProps>(
   ImageUploader,
-  (urls: string[]) => urls
+  (url: string) => url
 );
 
 export const SelectField = enhancer<SelectProps>(Select, (e: string) => e);
@@ -73,6 +72,4 @@ export const CheckboxField = enhancer<CheckboxGroupProps>(
   ChexkBoxGroup,
   (e: any[]) => e
 );
-
-export const AddItemField = enhancer<AddItemtProps>(AddItem, (e: any[]) => e);
 export const EditTabField = enhancer<EditTabProps>(EditTab, (e: any[]) => e);

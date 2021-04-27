@@ -27,7 +27,7 @@ export function EmailContent() {
         style={{ zIndex: 100 }}
       >
         <div
-          style={{ height: '100%', overflowY: 'auto' }}
+          style={{ height: '100%', overflowY: 'scroll' }}
           ref={setContainerRef}
         >
           <MjmlDomRender />

@@ -18,12 +18,14 @@ export interface PropsProviderProps {
   extraBlocks?: BlockGroup[];
   onAddCollection?: (payload: CollectedBlock) => void;
   onRemoveCollection?: (payload: { id: string; }) => void;
+  onUploadImage?: (data: Blob) => Promise<string>;
 }
 
 export const EditorPropsContext = React.createContext<PropsProviderProps>({
   extraBlocks: [],
-  onAddCollection: () => { },
-  onRemoveCollection: () => { },
+  onAddCollection: undefined,
+  onRemoveCollection: undefined,
+  onUploadImage: undefined
 });
 
 export const PropsProvider: React.FC<PropsProviderProps> = (props) => {

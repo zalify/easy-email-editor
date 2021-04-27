@@ -88,18 +88,30 @@ export function useBlock() {
             });
             focusIdx += '.children.[0]';
           } else if (parentBlock.type === BasicType.PAGE) {
-            child = createBlockItem(BasicType.WRAPPER, {
-              children: [
-                createBlockItem(BasicType.SECTION, {
-                  children: [
-                    createBlockItem(BasicType.COLUMN, {
-                      children: [child],
-                    }),
-                  ],
-                })
-              ]
-            });
-            focusIdx += '.children.[0].children.[0].children.[0]';
+            if (block.type === BasicType.DIVIDER) {
+              child = createBlockItem(BasicType.SECTION, {
+                children: [
+                  createBlockItem(BasicType.COLUMN, {
+                    children: [child],
+                  }),
+                ],
+              });
+              focusIdx += '.children.[0].children.[0]';
+            } else {
+              child = createBlockItem(BasicType.WRAPPER, {
+                children: [
+                  createBlockItem(BasicType.SECTION, {
+                    children: [
+                      createBlockItem(BasicType.COLUMN, {
+                        children: [child],
+                      }),
+                    ],
+                  })
+                ]
+              });
+              focusIdx += '.children.[0].children.[0].children.[0]';
+            }
+
           }
         }
 

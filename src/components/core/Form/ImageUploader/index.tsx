@@ -1,85 +1,63 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
-import { message, Modal } from 'antd';
+import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react';
+import { Input, message, Modal } from 'antd';
 import { PlusOutlined, EyeOutlined, DeleteOutlined } from '@ant-design/icons';
 import styles from './index.module.scss';
-import { Uploader, UploadItem } from '@/utils/Uploader';
-import { useFormikContext, withFormik } from 'formik';
-import { uniqueId, isEqual } from 'lodash';
+import { Uploader, UploaderServer } from '@/utils/Uploader';
 import { classnames } from '@/utils/classnames';
-
-const ERROR_ICON = 'https://assets.maocanhua.cn/FvIaPNdMk32QDYBmaVJF1S6Q0MAW';
 const LOADING_ICON = 'https://assets.maocanhua.cn/Fi_vI4vyLhTM-Tp6ivq4dR_ieGHk';
 
+
 export interface ImageUploaderProps {
-  value?: string | string[];
-  limit?: number;
-  onChange?: (url: string | string[]) => void;
-  uploadHandler: (file: File) => Promise<string>;
-  multiple?: boolean;
+  onChange: (val: string) => void;
+  value: string;
+  label: string;
+  uploadHandler?: UploaderServer;
 }
 
-function ImageUploader({
-  limit = 1,
-  onChange,
-  uploadHandler,
-  multiple,
-}: ImageUploaderProps) {
+export function ImageUploader(props: ImageUploaderProps) {
   const [isUploading, setIsUploading] = useState(false);
-  const { values, setFormikState, touched } = useFormikContext<UploadItem[]>();
-
-  const ref = useRef<string[]>([]);
+  const [preview, setPreview] = useState(false);
+  const uploadHandlerRef = useRef<UploaderServer | null | undefined>(props.uploadHandler);
+  const [value, setValue] = useState(props.value);
 
   useEffect(() => {
-    const newVals = values.map((item) => item.url).filter((url) => !!url);
-    if (!isEqual(ref.current, newVals)) {
-      ref.current = newVals;
-      if (touched && onChange) {
-        if (multiple) {
-          onChange(ref.current);
-        } else {
-          onChange(ref.current[0] || '');
-        }
-      }
-    }
-  }, [touched, values, onChange, multiple]);
+    setValue(props.value);
+  }, [props.value]);
 
-  const onUpload = () => {
+  useEffect(() => {
+    props.onChange(value);
+  }, [value]);
+
+  const onUpload = useCallback(() => {
     if (isUploading) {
-      return message.warning('正在上传中，请等待上传完成');
+      return message.warning('Uploading...');
     }
+    if (!uploadHandlerRef.current) return;
 
-    const uploader = new Uploader(uploadHandler, {
-      limit,
+    const uploader = new Uploader(uploadHandlerRef.current, {
+      limit: 1,
       accept: 'image/*',
     });
 
     uploader.on('start', (photos) => {
       setIsUploading(true);
-      setFormikState((formikState) => {
-        formikState.values = [...formikState.values, ...photos];
-        return { ...formikState };
-      });
 
-      uploader.on('progress', (photos) => {
-        setFormikState((formikState) => {
-          formikState.values = formikState.values.map((item) => {
-            const photo = photos.find((p) => p.idx === item.idx);
-            return photo || item;
-          });
-          return { ...formikState };
-        });
-      });
 
-      uploader.on('end', () => {
+      uploader.on('end', (data) => {
+        const url = data[0]?.url;
+        if (url) {
+          setValue(url);
+        }
         setIsUploading(false);
       });
     });
 
     uploader.chooseFile();
-  };
+  }, []);
 
   const onPaste = useCallback(
     async (e: React.ClipboardEvent<HTMLInputElement>) => {
+      if (!uploadHandlerRef.current) return;
       const clipboardData = e.clipboardData!;
 
       for (let i = 0; i < clipboardData.items.length; i++) {
@@ -90,158 +68,78 @@ function ImageUploader({
           if (!blob || blob.size === 0) {
             return;
           }
-          message.loading('正在上传粘贴图片');
-          setIsUploading(true);
-          const pastePicture: UploadItem = {
-            url: '',
-            status: 'pending',
-            idx: `paste-${uniqueId()}`,
-          };
-          setFormikState((formikState) => {
-            formikState.values = [...formikState.values, pastePicture];
-            return { ...formikState };
-          });
-          try {
-            const url = await uploadHandler(blob);
-            setFormikState((formikState) => {
-              formikState.values = formikState.values.map((item) => {
-                if (pastePicture.idx === item.idx) {
-                  return {
-                    ...item,
-                    url,
-                    status: 'done',
-                  };
-                }
-                return item;
-              });
-
-              return { ...formikState };
-            });
-          } catch (error) {
-            setFormikState((formikState) => {
-              formikState.values = formikState.values.map((item) => {
-                if (pastePicture.idx === item.idx) {
-                  return {
-                    ...item,
-                    status: 'error',
-                  };
-                }
-                return item;
-              });
-              return { ...formikState };
-            });
-          }
-          setIsUploading(false);
+          message.loading('Uploading picture...');
+          const picture = await uploadHandlerRef.current(blob);
+          props.onChange(picture);
           message.destroy();
         }
       }
     },
-    [setFormikState, uploadHandler]
+    [props.onChange]
   );
 
-  const onRemove = (index: number) => {
-    setFormikState((formikState) => {
-      formikState.values = values.filter((item, idx) => idx !== index);
-      return { ...formikState };
-    });
+  const onRemove = () => {
+    props.onChange('');
   };
 
-  const showUploader = values.length < limit;
-
-  return (
-    <div onPaste={onPaste} className={styles.wrap}>
-      <div className={styles['container']}>
-        {values.map((item, index) => (
-          <ImageUploaderItem
-            key={index}
-            index={index}
-            value={item}
-            remove={onRemove}
-          />
-        ))}
-        {showUploader && (
-          <div className={styles['upload']} onClick={onUpload}>
-            <PlusOutlined />
-            <div className='ant-upload-text'>Upload</div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-interface ImageUploaderItemProps {
-  index: number;
-  value: UploadItem;
-  remove: (index: number) => void;
-}
-
-function ImageUploaderItem(props: ImageUploaderItemProps) {
-  const { remove, index, value } = props;
-
-  const [preview, setPreview] = useState(false);
-
-  if (value.status === 'pending') {
-    return (
-      <div className={styles['item']}>
-        <div className={classnames(styles['info'])}>
-          <img src={LOADING_ICON} alt='加载中' />
-          <div className={styles['btn-wrap']} />
-        </div>
-      </div>
-    );
-  } else if (value.status === 'error') {
-    return (
-      <div className={classnames(styles['item'], styles.error)}>
-        <div className={classnames(styles['info'])}>
-          <img src={ERROR_ICON} alt='上传失败' />
-          <div className={styles['btn-wrap']}>
-            <a title='移除' onClick={() => remove(index)}>
-              <DeleteOutlined />
-            </a>
+  const content = useMemo(() => {
+    if (isUploading) {
+      return (
+        <div className={styles['item']}>
+          <div className={classnames(styles['info'])}>
+            <img src={LOADING_ICON} alt='Loading...' />
+            <div className={styles['btn-wrap']} />
           </div>
         </div>
-      </div>
-    );
-  } else {
+      );
+    }
+
+    if (!props.value) {
+      return (
+        <div className={styles['upload']} onClick={onUpload}>
+          <PlusOutlined />
+          <div className='ant-upload-text'>Upload</div>
+        </div>
+      );
+    }
+
     return (
       <div className={styles['item']}>
         <div className={classnames(styles['info'])}>
           <img
-            src={value.status === 'done' ? value.url : ERROR_ICON}
-            alt='标题图：'
-          />
+            src={value} />
           <div className={styles['btn-wrap']}>
-            <a title='预览' onClick={() => setPreview(true)}>
+            <a title='Preview' onClick={() => setPreview(true)}>
               <EyeOutlined />
             </a>
-            <a title='移除' onClick={() => remove(index)}>
+            <a title='Remove' onClick={() => onRemove()}>
               <DeleteOutlined />
             </a>
           </div>
         </div>
-
-        <Modal
-          visible={preview}
-          footer={null}
-          onCancel={() => setPreview(false)}
-        >
-          <img alt='预览图' style={{ width: '100%' }} src={value.url} />
-        </Modal>
       </div>
     );
-  }
-}
 
-export default withFormik<ImageUploaderProps, UploadItem[]>({
-  handleSubmit: () => {},
-  enableReinitialize: true,
-  mapPropsToValues: (props) => {
-    const value = props.value
-      ? Array.isArray(props.value)
-        ? props.value.filter((item) => !!item)
-        : [props.value]
-      : [];
-    return value.map((item) => ({ url: item, status: 'done', idx: '' }));
-  },
-})(ImageUploader);
+  }, [isUploading, props.value, value]);
+
+
+  if (!props.uploadHandler) {
+    return <Input value={value} onChange={(e) => setValue(e.target.value)} />;
+  }
+
+  return (
+    <div className={styles.wrap}>
+      <div className={styles['container']}>
+        {content}
+        <Input onPaste={onPaste} value={value} onChange={(e) => setValue(e.target.value)} />
+      </div>
+      <Modal
+        visible={preview}
+        footer={null}
+        onCancel={() => setPreview(false)}
+      >
+        <img alt='Preview' style={{ width: '100%' }} src={value} />
+      </Modal>
+    </div>
+  );
+}

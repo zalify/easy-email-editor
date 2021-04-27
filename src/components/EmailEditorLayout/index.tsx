@@ -4,7 +4,7 @@ import {
   EditOutlined,
 } from '@ant-design/icons';
 import { Layout, Tabs } from 'antd';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import root from 'react-shadow';
 import { IframeComponent } from '@/components/IframeComponent';
 import { ConfigurationPanel } from '@/components/EmailEditorLayout/components/ConfigurationPanel';
@@ -14,26 +14,20 @@ import { PreviewEmail } from './components/PreviewEmail';
 import { Stack } from '../Stack';
 import { TextStyle } from '../TextStyle';
 import { ToolsPanel } from './components/ToolsPanel';
+import './index.scss';
 import styles from './index.module.scss';
 import { useEditorContext } from '@/hooks/useEditorContext';
 
 const TabPane = Tabs.TabPane;
 
-export const EmailEditorLayout = () => {
-  const [ref, setRef] = useState<HTMLElement | null>(null);
+export interface EmailEditorLayoutProps {
+  height: string | number;
+}
+export const EmailEditorLayout = (props: EmailEditorLayoutProps) => {
+  const { height: containerHeight } = props;
   const [activeTab, setActiveTab] = useState('editor');
-  const [containerHeight, setContainerHeight] = useState(0);
   const { pageData } = useEditorContext();
 
-  useEffect(() => {
-    const getHeight = () => window.innerHeight - (ref?.getBoundingClientRect().top || 0);
-    setContainerHeight(getHeight());
-    window.addEventListener('resize', getHeight);
-
-    return () => {
-      window.removeEventListener('resize', getHeight);
-    };
-  }, [ref]);
 
   const pageMaxWidth = pageData.attributes.width || '600px';
   const pageMinWidth = pageData.data.value.breakpoint || '480px';
@@ -41,7 +35,6 @@ export const EmailEditorLayout = () => {
   return (
     <Layout>
       <div
-        ref={setRef}
         style={{
           display: 'flex',
           width: '100vw',
@@ -63,7 +56,7 @@ export const EmailEditorLayout = () => {
         </Layout.Sider>
 
         <Layout>
-          <div id='centerEditor' style={{ backgroundColor: pageData.attributes['background-color'] }}>
+          <div id='centerEditor' style={{ backgroundColor: pageData.attributes['background-color'], height: containerHeight }}>
             <Tabs
               activeKey={activeTab}
               tabBarStyle={{ paddingLeft: 20, marginBottom: 0, backgroundColor: '#fff' }}
@@ -82,15 +75,16 @@ export const EmailEditorLayout = () => {
                   backgroundColor: 'transparent',
                   paddingLeft: 20,
                   paddingRight: 20,
+                  height: '100%'
                 }}
               >
                 <root.div
                   id='VisualEditorEditMode'
                   style={{
                     width: pageMaxWidth,
-                    height: innerHeight - 112,
-                    padding: 40,
-                    margin: 'auto'
+                    padding: '40px 0px',
+                    margin: 'auto',
+                    height: '100%'
                   }}
                 >
                   <EmailContent />
@@ -109,9 +103,9 @@ export const EmailEditorLayout = () => {
                 <div
                   style={{
                     width: pageMaxWidth,
-                    height: innerHeight - 112,
                     padding: 40,
-                    margin: 'auto'
+                    margin: 'auto',
+                    height: '100%'
                   }}
                 >
                   <IframeComponent
@@ -136,9 +130,9 @@ export const EmailEditorLayout = () => {
                 <div
                   style={{
                     width: pageMinWidth,
-                    height: innerHeight - 112,
                     padding: 40,
-                    margin: 'auto'
+                    margin: 'auto',
+                    height: '100%'
                   }}
                 >
                   <IframeComponent
@@ -158,6 +152,7 @@ export const EmailEditorLayout = () => {
           <div
             id='rightSide'
             style={{
+              maxHeight: '100%',
               height: containerHeight,
               overflowY: 'scroll',
             }}

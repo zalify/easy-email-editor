@@ -5,10 +5,14 @@ import { ContainerBackgroundColor } from '@/components/EmailEditorLayout/compone
 import { BorderWidth } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/BorderWidth';
 import { BorderStyle } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/BorderStyle';
 import { BorderColor } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/BorderColor';
+import { Width } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Width';
+import { Align } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Align';
 
 export function Panel() {
   return (
     <Stack>
+      <Width />
+      <Align />
       <BorderWidth />
       <BorderStyle />
       <BorderColor />

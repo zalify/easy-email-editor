@@ -8,6 +8,7 @@ import { Button } from 'antd';
 import { CardItem } from './components/CardItem';
 import { Stack } from '@example/components/Stack';
 import { Loading } from '@example/components/loading';
+import { history } from '@example/util/history';
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -21,10 +22,10 @@ export default function Home() {
   return (
     <Frame
       title='Templates'
-      primaryAction={<Button href='/editor'>Add</Button>}
+      primaryAction={<Button onClick={() => history.push('/editor')}>Add</Button>}
     >
       <div style={{ minHeight: 400 }}>
-        <Loading loading={loading}>
+        <Loading loading={loading && !list.length}>
           <Stack>
             {list.map((item) => (
               <CardItem data={item} key={item.article_id} />

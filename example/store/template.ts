@@ -12,7 +12,9 @@ export default createSliceState({
   name: 'template',
   initialState: null as EditorProps | null,
   reducers: {
-    set: (state, action) => state,
+    set: (state, action) => {
+      return action.payload;
+    },
   },
   effects: {
     fetchById: async (state, id: number) => {

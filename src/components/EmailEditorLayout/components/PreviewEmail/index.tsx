@@ -11,6 +11,18 @@ export function PreviewEmail() {
   const html = mjml2Html(transformToMjml(pageData)).html;
 
   return (
-    <div style={{ height: '100%' }} dangerouslySetInnerHTML={{ __html: html }} />
+    <>
+      <style>
+        {
+          `
+            body::-webkit-scrollbar {
+              width: 0px;
+              background-color: transparent;
+            }
+         `
+        }
+      </style>
+      <div dangerouslySetInnerHTML={{ __html: html }} />
+    </>
   );
 }
