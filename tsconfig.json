@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
     // "types": [
     //   "vite/client",
     //   "node"
@@ -19,15 +23,24 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
     "noEmit": true,
     "jsx": "react",
     "baseUrl": ".",
     "paths": {
-      "@example": ["example"],
-      "@example/*": ["example/*"],
-      "@/*": ["src/*"]
+      "@example": [
+        "example"
+      ],
+      "@example/*": [
+        "example/*"
+      ],
+      "@/*": [
+        "src/*"
+      ]
     }
   },
-  "include": ["./src", "./example", "./typings"]
+  "include": [
+    "./src",
+    "./example",
+    "./typings"
+  ]
 }

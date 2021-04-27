@@ -36,6 +36,7 @@ export const EmailEditorLayout = () => {
   }, [ref]);
 
   const pageMaxWidth = pageData.attributes.width || '600px';
+  const pageMinWidth = pageData.data.value.breakpoint || '480px';
 
   return (
     <Layout>
@@ -134,7 +135,7 @@ export const EmailEditorLayout = () => {
               >
                 <div
                   style={{
-                    width: pageMaxWidth,
+                    width: pageMinWidth,
                     height: innerHeight - 112,
                     padding: 40,
                     margin: 'auto'

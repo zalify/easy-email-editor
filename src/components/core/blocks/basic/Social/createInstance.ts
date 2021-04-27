@@ -19,7 +19,7 @@ export const createInstance: CreateInstance<ISocial> = (payload) => {
             'vertical-align': 'middle',
             'text-decoration': 'none',
             color: '#333333',
-            src: 'https://assets.maocanhua.cn/Fu0stwAh34fpLPJKvAfUUht_zMr7',
+            src: 'https://assets.maocanhua.cn/93013b18-062d-48d7-ae00-4a5f0a9ac988.png',
             content: 'Facebook',
           },
           {
@@ -32,7 +32,7 @@ export const createInstance: CreateInstance<ISocial> = (payload) => {
             'vertical-align': 'middle',
             'text-decoration': 'none',
             color: '#333333',
-            src: 'https://assets.maocanhua.cn/FtBnhQQju_LU3-OtYq9_Ueu-G0lb',
+            src: 'https://assets.maocanhua.cn/a81ddd4b-3a12-47be-91f3-28d71eced397.png',
             content: 'Google',
           },
           {
@@ -45,7 +45,7 @@ export const createInstance: CreateInstance<ISocial> = (payload) => {
             'vertical-align': 'middle',
             'text-decoration': 'none',
             color: '#333333',
-            src: 'https://assets.maocanhua.cn/FgE5Mq0WpWZP9uXd4BTgyjo0nFNx',
+            src: 'https://assets.maocanhua.cn/0a411326-17c5-4814-ad3a-6927266f097e.png',
             content: 'Twitter',
           },
         ],

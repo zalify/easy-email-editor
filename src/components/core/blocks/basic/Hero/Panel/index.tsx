@@ -35,6 +35,7 @@ export function Panel() {
         label='Background url'
         name={`${focusIdx}.attributes.background-url`}
         inline
+        helpText="The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally."
       />
       <TextField
         label='Background width'

@@ -9,16 +9,15 @@ import { useQuery } from '@example/hooks/useQuery';
 import { useHistory } from 'react-router-dom';
 import { cloneDeep } from 'lodash';
 import { Loading } from '@example/components/loading';
-import { EmailEditor } from '@/index';
+import { EmailEditor, EmailEditorLayout, EditorProps } from '@/index';
 import { Stack } from '@/components/Stack';
-import { EmailEditorLayout } from '@/components/EmailEditorLayout';
-import { EditorProps } from '@/components/EmailEditorProvider';
 import mjml from 'mjml-browser';
 import { transformToMjml } from '@/utils/transformToMjml';
 import extraBlocks from '@example/store/extraBlocks';
 import { CollectedBlock } from '@/components/PropsProvider';
 import { copy } from '@example/util/clipboard';
 import { useEmailModal } from './components/useEmailModal';
+import { WarnAboutUnsavedChanges } from '@example/components/WarnAboutUnsavedChanges';
 
 export default function Editor() {
   const dispatch = useDispatch();
@@ -119,7 +118,7 @@ export default function Editor() {
         onAddCollection={onAddCollection}
         onRemoveCollection={onRemoveCollection}
       >
-        {({ values }) => (
+        {({ values, }) => (
           <>
             <PageHeader
               title='Edit'
@@ -143,6 +142,7 @@ export default function Editor() {
               }
             />
             <EmailEditorLayout />
+            <WarnAboutUnsavedChanges />
           </>
         )}
       </EmailEditor>

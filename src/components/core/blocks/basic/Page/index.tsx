@@ -11,7 +11,7 @@ export type IPage = IBlockData<{
   'font-family': string;
   'text-color': string;
   headAttributes: string;
-  fonts: { name: string; href: string; }[];
+  fonts?: { name: string; href: string; }[];
 }>;
 
 export const Page: IBlock<IPage> = {

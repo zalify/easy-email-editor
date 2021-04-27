@@ -88,14 +88,18 @@ export function useBlock() {
             });
             focusIdx += '.children.[0]';
           } else if (parentBlock.type === BasicType.PAGE) {
-            child = createBlockItem(BasicType.SECTION, {
+            child = createBlockItem(BasicType.WRAPPER, {
               children: [
-                createBlockItem(BasicType.COLUMN, {
-                  children: [child],
-                }),
-              ],
+                createBlockItem(BasicType.SECTION, {
+                  children: [
+                    createBlockItem(BasicType.COLUMN, {
+                      children: [child],
+                    }),
+                  ],
+                })
+              ]
             });
-            focusIdx += '.children.[0].children.[0]';
+            focusIdx += '.children.[0].children.[0].children.[0]';
           }
         }
 

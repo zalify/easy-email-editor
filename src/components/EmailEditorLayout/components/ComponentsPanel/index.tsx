@@ -83,7 +83,7 @@ export const ComponentsPanel = function () {
                 <Stack vertical spacing='none'>
                   <TextStyle>
                     Group allows you to prevent columns from stacking on mobile.
-                    To do so, wrap the columns inside a mj-group tag, so they'll
+                    To do so, wrap the columns inside a group block, so they'll
                     stay side by side on mobile.
                   </TextStyle>
                 </Stack>

@@ -7,12 +7,22 @@ import { useBlock } from '@/hooks/useBlock';
 import { Width } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Width';
 import { Height } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Height';
 import { Link } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Link';
+import * as Yup from 'yup';
+
+const isValidPicture = async (v: string) => {
+  try {
+    await Yup.string().url().validate(v);
+    return undefined;
+  } catch (error) {
+    return 'The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally';
+  }
+};
 
 export function Panel() {
   const { focusIdx } = useBlock();
 
   return (
-    <Stack>
+    <Stack vertical>
       <ColorPickerField
         label='color'
         name={`${focusIdx}.attributes.color`}
@@ -21,8 +31,8 @@ export function Panel() {
       />
       <TextField
         label='src'
-        quickchange
         name={`${focusIdx}.attributes.src`}
+        helpText="The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally."
         inline
       />
       <Width />

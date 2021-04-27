@@ -42,7 +42,7 @@ export function AddFont() {
               </Stack>
 
               <Stack vertical spacing="extraTight">
-                {value.fonts.map((item, index) => {
+                {value.fonts?.map((item, index) => {
                   return (
 
                     <div key={index}>

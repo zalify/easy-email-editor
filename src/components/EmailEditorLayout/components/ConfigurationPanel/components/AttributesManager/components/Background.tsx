@@ -37,6 +37,7 @@ export function Background() {
             label='Background image'
             inline
             name={`${focusIdx}.attributes.background-url`}
+            helpText="The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally."
           />
           <TextField
             label='Background size'

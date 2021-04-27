@@ -9,7 +9,7 @@ export function AttributesManager() {
   const { focusIdx, values } = useBlock();
   const value = getValueByIdx(values, focusIdx);
 
-  const block = value && findBlockByType(value.type);
+  const block = value && findBlockByType(value.type) as any;
 
   if (!block || !value) return null;
   return (
@@ -23,7 +23,7 @@ export function AttributesManager() {
     >
       <Stack.Item fill>
         <Stack vertical>
-          {<block.Panel />}
+          <Stack.Item fill> {<block.Panel />}</Stack.Item>
           <Stack.Item />
           <Stack.Item />
           <Stack.Item />
