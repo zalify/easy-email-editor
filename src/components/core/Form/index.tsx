@@ -1,5 +1,5 @@
 import { InputNumber, Input as AntdInput, Switch, DatePicker } from 'antd';
-import { TextAreaProps } from 'antd/lib/input';
+import { SearchProps, TextAreaProps } from 'antd/lib/input';
 import { InputNumberProps } from 'antd/lib/input-number';
 import { CheckboxGroupProps } from 'antd/lib/checkbox';
 import { ImageUploaderProps, ImageUploader } from './ImageUploader';
@@ -19,6 +19,10 @@ import { Dayjs } from 'dayjs';
 import { RichText, RichTextProps } from '@/components/RichText';
 
 export const TextField = enhancer<InputProps>(Input, (value) => value);
+export const SearchField = enhancer<SearchProps>(
+  AntdInput.Search,
+  (e: React.ChangeEvent<HTMLTextAreaElement>) => e.target.value
+);
 export const RichTextField = enhancer<RichTextProps>(
   RichText,
   (value) => value

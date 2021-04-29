@@ -42,7 +42,7 @@
   "files.trimTrailingWhitespace": true,
   "files.associations": {
     ".css.text": "css",
-    ".css.text?raw": "css",
+    ".css.text?raw": "css"
   },
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true

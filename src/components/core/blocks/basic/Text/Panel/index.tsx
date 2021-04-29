@@ -25,16 +25,14 @@ export function Panel() {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-
     // Rerender RichText while recordStatus !== 'add'
     if (recordStatus !== 'add' && focusBlock?.data.value.content) {
-      setCount(count => count + 1);
+      setCount((count) => count + 1);
     }
   }, [recordStatus, focusBlock?.data.value.content]);
 
   const containerStyle = useMemo(() => {
-    if (!focusBlock) return {};
-    const attributes = focusBlock.attributes as IText['attributes'];
+    const attributes = (focusBlock?.attributes as IText['attributes']) || {};
     return {
       color: attributes.color || pageData.data.value['text-color'],
       fontSize: attributes['font-size'],
@@ -44,14 +42,20 @@ export function Panel() {
       textDecoration: attributes['text-transform'],
       fontStyle: attributes['font-style'],
       fontWeight: attributes['font-weight'],
-      backgroundColor: attributes['container-background-color']
+      backgroundColor: attributes['container-background-color'],
     } as React.CSSProperties;
-  }, [focusBlock]);
+  }, [focusBlock?.attributes, pageData.data.value]);
 
   return (
     <Stack vertical key={focusIdx}>
-      <RichTextField key={count} name={`${focusIdx}.data.value.content`} label="Content" containerStyle={containerStyle} />
+      <RichTextField
+        key={count}
+        name={`${focusIdx}.data.value.content`}
+        label='Content'
+        containerStyle={containerStyle}
+      />
       <Color />
+      <ContainerBackgroundColor />
       <FontSize />
       <LineHeight />
 
@@ -63,7 +67,6 @@ export function Panel() {
       <TextDecoration />
       <TextTransform />
       <Align />
-      <ContainerBackgroundColor />
       <Width />
       <Padding />
     </Stack>
