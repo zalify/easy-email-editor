@@ -12,6 +12,9 @@ import { Button } from 'antd';
 
 import React, { useState } from 'react';
 
+const Section = BlocksMap.findBlockByType(BasicType.SECTION);
+const Column = BlocksMap.findBlockByType(BasicType.COLUMN);
+
 export function ColumnBlockIconPanel() {
   return (
     <Stack vertical spacing='tight'>
@@ -28,8 +31,8 @@ export function ColumnBlockIconPanel() {
 function OneColumn() {
   const payload: Partial<ILayout> = {
     children: [
-      BlocksMap.Section.createInstance({
-        children: [BlocksMap.Column.createInstance()],
+      Section.createInstance({
+        children: [Column.createInstance()],
       }),
     ],
   };
@@ -76,14 +79,14 @@ function TwoColumns() {
   const options = scales.map((scale) => ({
     payload: {
       children: [
-        BlocksMap.Section.createInstance({
+        Section.createInstance({
           children: [
-            BlocksMap.Column.createInstance({
+            Column.createInstance({
               attributes: {
                 width: scale.scale[0] ? +scale.scale[0] + '%' : undefined,
               },
             }),
-            BlocksMap.Column.createInstance({
+            Column.createInstance({
               attributes: {
                 width: scale.scale[1] ? +scale.scale[1] + '%' : undefined,
               },
@@ -156,19 +159,19 @@ function ThreeColumns() {
     avatar: scale.avatar,
     payload: {
       children: [
-        BlocksMap.Section.createInstance({
+        Section.createInstance({
           children: [
-            BlocksMap.Column.createInstance({
+            Column.createInstance({
               attributes: {
                 width: scale.scale[0] ? +scale.scale[0] + '%' : undefined,
               },
             }),
-            BlocksMap.Column.createInstance({
+            Column.createInstance({
               attributes: {
                 width: scale.scale[1] ? +scale.scale[1] + '%' : undefined,
               },
             }),
-            BlocksMap.Column.createInstance({
+            Column.createInstance({
               attributes: {
                 width: scale.scale[2] ? +scale.scale[2] + '%' : undefined,
               },
@@ -216,12 +219,12 @@ function ThreeColumns() {
 function FourColumn() {
   const payload: Partial<ILayout> = {
     children: [
-      BlocksMap.Section.createInstance({
+      Section.createInstance({
         children: [
-          BlocksMap.Column.createInstance(),
-          BlocksMap.Column.createInstance(),
-          BlocksMap.Column.createInstance(),
-          BlocksMap.Column.createInstance(),
+          Column.createInstance(),
+          Column.createInstance(),
+          Column.createInstance(),
+          Column.createInstance(),
         ],
       }),
     ],
@@ -240,7 +243,7 @@ function FourColumn() {
 }
 
 export function ColumnBlockIcon(
-  props: Omit<BlockAvatorWrapperProps, 'type'> & { avatar: string }
+  props: Omit<BlockAvatorWrapperProps, 'type'> & { avatar: string; }
 ) {
   return (
     <BlockAvatorWrapper type={BasicType.WRAPPER} {...props}>

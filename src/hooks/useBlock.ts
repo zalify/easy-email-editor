@@ -1,10 +1,10 @@
 import { BlockType, BasicType } from '../constants';
 import { cloneDeep, debounce, get, set } from 'lodash';
 import { IBlockData, RecursivePartial } from '../typings';
-import { getBlockByType } from '../components/core/blocks';
 import { useCallback, useContext } from 'react';
 import { message } from 'antd';
 import {
+  findBlockByType,
   getIndexByIdx,
   getParentByIdx,
   getParentIdx,
@@ -40,6 +40,7 @@ export function useBlock() {
       parentIdx: string;
       positionIndex?: number;
       payload?: RecursivePartial<IBlockData>;
+      canReplace?: boolean;
     }) => {
       let { type, parentIdx, positionIndex, payload } = params;
 
@@ -55,8 +56,8 @@ export function useBlock() {
           positionIndex = parent.children.length;
         }
         let focusIdx = `${parentIdx}.children.[${positionIndex}]`;
-        const block = getBlockByType(type);
-        const parentBlock = getBlockByType(parent.type);
+        const block = findBlockByType(type);
+        const parentBlock = findBlockByType(parent.type);
 
         if (
           [
@@ -117,8 +118,7 @@ export function useBlock() {
 
         // Replace
         if (
-          parent.type === BasicType.COLUMN &&
-          child.type === BasicType.COLUMN
+          parent.type === child.type && params.canReplace
         ) {
           const parentIndex = getIndexByIdx(parentIdx);
           const upParent = getParentByIdx(formState.values, parentIdx)!;
@@ -145,6 +145,10 @@ export function useBlock() {
     },
     [setFormikState]
   );
+
+  const replaceBlock = useCallback(() => {
+
+  }, []);
 
   const copyBlock = useCallback(
     (idx: string) => {

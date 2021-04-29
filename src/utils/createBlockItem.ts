@@ -1,14 +1,12 @@
-import { BlocksMap } from '@/components/core/blocks';
 import { BlockType } from '@/constants';
 import { IBlockData, RecursivePartial } from '@/typings';
+import { findBlockByType } from './block';
 
 export function createBlockItem<T extends IBlockData>(
   type: BlockType,
   payload?: RecursivePartial<T>
 ): IBlockData {
-  const component = Object.values(BlocksMap).find((item) => {
-    return item.type === type;
-  });
+  const component = findBlockByType(type);
   if (component) {
     return component.createInstance(payload as any);
   }

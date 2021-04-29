@@ -1,7 +1,7 @@
-import { BlocksMap } from '@/components/core/blocks';
 import { IPage, Page } from '@/components/core/blocks/basic/Page';
 import { BasicType } from '@/constants';
 import { IBlockData } from '@/typings';
+import { findBlockByType } from './block';
 
 export function MjmlToJson(data: MjmlBlockItem): IPage {
   const transform = (item: IChildrenItem): IBlockData => {
@@ -49,9 +49,7 @@ export function MjmlToJson(data: MjmlBlockItem): IPage {
       default:
         const tag = item.tagName.replace('mj-', '').toLowerCase();
 
-        const block = Object.values(BlocksMap).find(
-          (item) => item.type === tag
-        );
+        const block = findBlockByType(tag as any);
         if (!block) {
           throw new Error(`${tag} block no found `);
         }

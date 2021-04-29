@@ -1,5 +1,5 @@
 import { IPage } from '@/components/core/blocks/basic/Page';
-import { IBlockData } from '@/typings';
+import { IBlock, IBlockData } from '@/typings';
 import { get } from 'lodash';
 import { BlocksMap } from '../components/core/blocks';
 import { BlockType } from '../constants';
@@ -28,10 +28,8 @@ export function getNodeTypeFromClassName(classList: DOMTokenList) {
   return Array.from(classList).find(item => item.includes('node-type-'))?.replace('node-type-', '');
 }
 
-export function findBlockByType(type: BlockType) {
-  return Object.values(BlocksMap).find((child) => {
-    return child?.type === type;
-  });
+export function findBlockByType(type: BlockType): IBlock {
+  return BlocksMap.findBlockByType(type);
 }
 
 export const getIndexByIdx = (idx: string) => {

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import {
+  findBlockByType,
   getIndexByIdx,
   getNodeIdxFromClassName,
   getNodeTypeFromClassName,
@@ -17,12 +18,12 @@ import { useBlock } from '@/hooks/useBlock';
 import { getTangentDirection } from '@/utils/getTangentDirection';
 import { get } from 'lodash';
 import { IBlockData } from '@/typings';
-import { getBlockByType } from '@/components/core/blocks';
 import { findBlockNodeByIdx } from '@/utils/findBlockNodeByIdx';
+import { copy } from '@/utils/clipboard';
 
 export function useDropBlock() {
   const [ref, setRef] = useState<HTMLElement | null>(null);
-  const { values, setFocusIdx, hoverIdx, addBlock } = useBlock();
+  const { values, setFocusIdx, hoverIdx, addBlock, focusIdx, focusBlock } = useBlock();
 
   useEffect(() => {
     if (ref) {
@@ -150,17 +151,53 @@ export function useDropBlock() {
     }
   }, [ref]);
 
+
+  useEffect(() => {
+    if (ref) {
+      const onCopy = (ev: ClipboardEvent) => {
+        ev.preventDefault();
+        const range = document.getSelection()?.getRangeAt(0);
+        if (!range || (range.startOffset === 0 && range.startOffset === range.endOffset))
+          copy(JSON.stringify({
+            copyBlock: focusBlock
+          }));
+      };
+      const onPaste = (ev: ClipboardEvent) => {
+        ev.preventDefault();
+        var text = ev.clipboardData?.getData('text/plain') || '';
+        try {
+          const block: IBlockData = JSON.parse(text).copyBlock;
+          addBlock({
+            type: block.type,
+            parentIdx: focusIdx,
+            payload: block,
+            canReplace: true
+          });
+        } catch (error) {
+
+        }
+      };
+
+      ref.addEventListener('copy', onCopy);
+      ref.addEventListener('paste', onPaste);
+      return () => {
+        ref.removeEventListener('copy', onCopy);
+        ref.removeEventListener('paste', onPaste);
+      };
+    }
+  }, [ref, focusIdx]);
+
   const hoverBlock = useMemo(() => {
     if (!ref) return null;
 
     const blockNode = findBlockNodeByIdx(hoverIdx);
 
     if (blockNode) {
-      const block = getBlockByType(
+      const block = findBlockByType(
         getNodeTypeFromClassName(blockNode.classList) as BlockType
       );
       const { left, top } = blockNode.getBoundingClientRect();
-      return { left, top, name: block.name };
+      return { left, top, name: block?.name };
     }
 
     return null;

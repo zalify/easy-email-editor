@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 
 import {
+  findBlockByType,
   getNodeIdxFromClassName,
   getNodeTypeFromClassName,
   getParentIdx,
@@ -14,7 +15,6 @@ import {
 } from '@/constants';
 import { useBlock } from '@/hooks/useBlock';
 import { getTangentDirection } from '@/utils/getTangentDirection';
-import { getBlockByType } from '@/components/core/blocks';
 import { findBlockNodeByIdx } from '@/utils/findBlockNodeByIdx';
 import { Tooltip } from 'antd';
 
@@ -91,11 +91,11 @@ export function HoverTooltip({
     const blockNode = findBlockNodeByIdx(hoverIdx);
 
     if (blockNode) {
-      const block = getBlockByType(
+      const block = findBlockByType(
         getNodeTypeFromClassName(blockNode.classList) as BlockType
       );
       const { left, top } = blockNode.getBoundingClientRect();
-      return { left, top, name: block.name };
+      return { left, top, name: block?.name };
     }
 
     return null;

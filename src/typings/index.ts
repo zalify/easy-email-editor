@@ -5,18 +5,19 @@ export interface IBlock<T extends IBlockData = any> {
   name: string;
   type: BlockType;
   Panel: () => React.ReactNode;
-  createInstance: (payload: RecursivePartial<T>) => T;
+  createInstance: (payload?: RecursivePartial<T>) => T;
   validChildrenType: BlockType[];
 }
 
 export interface IBlockData<
-  K extends { [key: string]: any } = any,
+  K extends { [key: string]: any; } = any,
   T extends any = any
-> {
+  > {
   type: BlockType;
   data: {
     value: T;
     hidden?: boolean;
+    shadow?: boolean; // Child nodes cannot be selected
   };
   attributes: K;
   children: IBlockData[];

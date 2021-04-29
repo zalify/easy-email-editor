@@ -1,6 +1,3 @@
-import { BlockType } from '@/constants';
-import { IBlock } from '@/typings';
-
 import { Page } from './basic/Page';
 import { Section } from './basic/Section';
 import { Column } from './basic/Column';
@@ -22,30 +19,45 @@ import { Table } from './basic/Table';
 import { Hero } from './basic/Hero';
 import { Navbar } from './basic/Navbar';
 import { Social } from './basic/Social';
-export const BlocksMap = {
-  Page,
-  Section,
-  Column,
-  Text,
-  Image,
-  Group,
-  Button,
-  Divider,
-  Wrapper,
-  Spacer,
-  Raw,
-  Accordion,
-  AccordionElement,
-  AccordionTitle,
-  AccordionText,
-  Carousel,
-  Hero,
-  Navbar,
-  Social,
-  // TODO:
-  Table,
-};
+import { IBlock } from '@/typings';
+import { BlockType } from '@/constants';
 
-export function getBlockByType(type: BlockType): IBlock<any> {
-  return Object.values(BlocksMap).find((item) => item.type === type)!;
+export class BlocksMap {
+  private static blocks: IBlock[] = [
+    Page,
+    Section,
+    Column,
+    Text,
+    Image,
+    Group,
+    Button,
+    Divider,
+    Wrapper,
+    Spacer,
+    Raw,
+    Accordion,
+    AccordionElement,
+    AccordionTitle,
+    AccordionText,
+    Carousel,
+    Hero,
+    Navbar,
+    Social,
+    // TODO:
+    Table,
+  ];
+
+  static registerBlock(block: IBlock) {
+    this.blocks.push(block);
+  }
+
+  static findBlockByType(type: BlockType): IBlock {
+    return this.blocks.find((child) => {
+      return child?.type === type;
+    }) as any;
+  }
+
+  static getBlocks() {
+    return this.blocks;
+  }
 }
