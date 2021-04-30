@@ -15,27 +15,27 @@ export function WarnAboutUnsavedChanges() {
   };
 
   useEffect(() => {
-    ConfirmBeforeLeavePage.register(callback => {
+    ConfirmBeforeLeavePage.register((callback) => {
       if (dirty) {
         callbackRef.current = callback;
         openConfirmModal();
       }
     });
 
-    const onCheckUnsave = (event: Event) => {
+    const onCheckUnsaved = (event: Event) => {
       if (dirty) {
         event.preventDefault();
         (event.returnValue as any) = 'Changes that you made may not be saved.';
       }
     };
 
-    window.addEventListener('beforeunload', onCheckUnsave);
+    window.addEventListener('beforeunload', onCheckUnsaved);
 
     return () => {
       ConfirmBeforeLeavePage.unregister();
-      window.removeEventListener('beforeunload', onCheckUnsave);
+      window.removeEventListener('beforeunload', onCheckUnsaved);
     };
-  }, [history, openConfirmModal, dirty]);
+  }, [openConfirmModal, dirty]);
 
   const onCancel = useCallback(() => {
     callbackRef.current?.(false);
@@ -49,16 +49,16 @@ export function WarnAboutUnsavedChanges() {
   return (
     <>
       <Modal
-        title="Discard changes?"
+        title='Discard changes?'
         visible={visible}
         onCancel={onCancel}
         onOk={onOk}
-        okText="Discard"
+        okText='Discard'
         zIndex={10000}
       >
         <p>Are you sure you want to discard all unsaved changes?</p>
       </Modal>
-      <Prompt when={dirty} message="" />
+      <Prompt when={dirty} message='' />
     </>
   );
 }

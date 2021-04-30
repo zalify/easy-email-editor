@@ -107,26 +107,24 @@ export function useBlock() {
                         children: [child],
                       }),
                     ],
-                  })
-                ]
+                  }),
+                ],
               });
               focusIdx += '.children.[0].children.[0].children.[0]';
             }
-
           }
         }
 
         // Replace
-        if (
-          parent.type === child.type && params.canReplace
-        ) {
+        if (params.canReplace) {
           const parentIndex = getIndexByIdx(parentIdx);
-          const upParent = getParentByIdx(formState.values, parentIdx)!;
-          upParent.children.splice(parentIndex, 1, child);
-          set(formState.values, getParentIdx(parentIdx)!, { ...upParent });
-          formState.values.focusIdx = parentIdx;
-
-          return { ...formState };
+          const upParent = getParentByIdx(formState.values, parentIdx);
+          if (upParent) {
+            upParent.children.splice(parentIndex, 1, child);
+            set(formState.values, getParentIdx(parentIdx)!, { ...upParent });
+            formState.values.focusIdx = parentIdx;
+            return { ...formState };
+          }
         }
 
         if (!parentBlock.validChildrenType.includes(child.type)) {
@@ -146,9 +144,7 @@ export function useBlock() {
     [setFormikState]
   );
 
-  const replaceBlock = useCallback(() => {
-
-  }, []);
+  const replaceBlock = useCallback(() => {}, []);
 
   const copyBlock = useCallback(
     (idx: string) => {
@@ -280,8 +276,7 @@ export function useBlock() {
         formState.values.hoverIdx = idx;
         return { ...formState };
       });
-    })
-    ,
+    }),
     [setFormikState]
   );
 

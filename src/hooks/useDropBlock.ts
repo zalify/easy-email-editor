@@ -19,11 +19,20 @@ import { getTangentDirection } from '@/utils/getTangentDirection';
 import { get } from 'lodash';
 import { IBlockData } from '@/typings';
 import { findBlockNodeByIdx } from '@/utils/findBlockNodeByIdx';
-import { copy } from '@/utils/clipboard';
+import copy from 'copy-to-clipboard';
+import { message } from 'antd';
 
 export function useDropBlock() {
   const [ref, setRef] = useState<HTMLElement | null>(null);
-  const { values, setFocusIdx, hoverIdx, addBlock, focusIdx, focusBlock } = useBlock();
+  const {
+    values,
+    setFocusIdx,
+    hoverIdx,
+    addBlock,
+    removeBlock,
+    focusIdx,
+    focusBlock,
+  } = useBlock();
 
   useEffect(() => {
     if (ref) {
@@ -97,7 +106,6 @@ export function useDropBlock() {
     };
   }, [addBlock, ref, values]);
 
-
   useEffect(() => {
     if (ref) {
       const onMouseover = (ev: MouseEvent) => {
@@ -124,10 +132,8 @@ export function useDropBlock() {
           if (
             ['top', 'bottom', 'right', 'left'].includes(getTangentDirection(ev))
           ) {
-
             blockNode.classList.add(DRAG_TANGENT_CLASSNAME);
           } else {
-
             blockNode.classList.add(DRAG_HOVER_CLASSNAME);
           }
         }
@@ -151,41 +157,76 @@ export function useDropBlock() {
     }
   }, [ref]);
 
-
   useEffect(() => {
     if (ref) {
       const onCopy = (ev: ClipboardEvent) => {
         ev.preventDefault();
         const range = document.getSelection()?.getRangeAt(0);
-        if (!range || (range.startOffset === 0 && range.startOffset === range.endOffset))
-          copy(JSON.stringify({
-            copyBlock: focusBlock
-          }));
+        if (
+          !range ||
+          (range.startOffset === 0 && range.startOffset === range.endOffset)
+        ) {
+          const block = findBlockByType(focusBlock!.type);
+          console.log(
+            JSON.stringify({
+              copyBlock: focusBlock,
+            })
+          );
+          copy(
+            JSON.stringify({
+              copyBlock: focusBlock,
+            })
+          );
+          message.info(`${block?.name} block copied`);
+        }
       };
+      const onCut = (ev: ClipboardEvent) => {
+        ev.preventDefault();
+        try {
+          const range = document.getSelection()?.getRangeAt(0);
+          if (
+            !range ||
+            (range.startOffset === 0 && range.startOffset === range.endOffset)
+          ) {
+            copy(
+              JSON.stringify({
+                copyBlock: focusBlock,
+              })
+            );
+            removeBlock(focusIdx);
+          }
+        } catch (error) {
+          console.log('error', error);
+        }
+      };
+
       const onPaste = (ev: ClipboardEvent) => {
         ev.preventDefault();
         var text = ev.clipboardData?.getData('text/plain') || '';
         try {
-          const block: IBlockData = JSON.parse(text).copyBlock;
+          const blockData: IBlockData = JSON.parse(text).copyBlock;
+
           addBlock({
-            type: block.type,
+            type: blockData.type,
             parentIdx: focusIdx,
-            payload: block,
-            canReplace: true
+            payload: blockData,
+            canReplace: true,
           });
         } catch (error) {
-
+          console.log('paste error', error, text);
         }
       };
 
-      ref.addEventListener('copy', onCopy);
-      ref.addEventListener('paste', onPaste);
+      document.body.addEventListener('copy', onCopy);
+      document.body.addEventListener('cut', onCut);
+      document.body.addEventListener('paste', onPaste);
       return () => {
-        ref.removeEventListener('copy', onCopy);
-        ref.removeEventListener('paste', onPaste);
+        document.body.removeEventListener('copy', onCopy);
+        document.body.removeEventListener('cut', onCut);
+        document.body.removeEventListener('paste', onPaste);
       };
     }
-  }, [ref, focusIdx]);
+  }, [ref, focusIdx, focusBlock, addBlock, removeBlock]);
 
   const hoverBlock = useMemo(() => {
     if (!ref) return null;

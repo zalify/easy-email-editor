@@ -1,6 +1,6 @@
 import { useFormikContext } from 'formik';
 import { cloneDeep, isEqual } from 'lodash';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { EditorProps } from '../EmailEditorProvider';
 
 const MAX_RECORD_SIZE = 100;
@@ -18,16 +18,15 @@ export const RecordContext = React.createContext<{
 }>({
   status: 'add',
   records: [],
-  redo: () => { },
-  undo: () => { },
-  reset: () => { },
+  redo: () => {},
+  undo: () => {},
+  reset: () => {},
   redoable: false,
-  undoable: false
+  undoable: false,
 });
 
 export const RecordProvider: React.FC<{}> = (props) => {
   const formikContext = useFormikContext<EditorProps>();
-  const { current: initialValues } = useRef<EditorProps>(cloneDeep(formikContext.values));
   const [data, setData] = useState<Array<EditorProps>>([]);
   const [index, setIndex] = useState(-1);
   const [status, setStatus] = useState<RecordStatus>('add');
@@ -54,11 +53,16 @@ export const RecordProvider: React.FC<{}> = (props) => {
       undoable: index > 0,
       redoable: index < data.length - 1,
     };
-  }, [data, formikContext, index, initialValues, status]);
+  }, [data, formikContext, index, status]);
 
   useEffect(() => {
     const currentItem = data[index];
-    const isChanged = !(currentItem && isEqual(formikContext.values.content, currentItem.content) && formikContext.values.subTitle === currentItem.subTitle && formikContext.values.subTitle === currentItem.subTitle);
+    const isChanged = !(
+      currentItem &&
+      isEqual(formikContext.values.content, currentItem.content) &&
+      formikContext.values.subTitle === currentItem.subTitle &&
+      formikContext.values.subTitle === currentItem.subTitle
+    );
 
     if (isChanged) {
       setStatus('add');
