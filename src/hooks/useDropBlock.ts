@@ -29,6 +29,7 @@ export function useDropBlock() {
     setFocusIdx,
     hoverIdx,
     addBlock,
+    moveBlock,
     removeBlock,
     focusIdx,
     focusBlock,
@@ -41,6 +42,11 @@ export function useDropBlock() {
         if (blockNode) {
           const idx = getNodeIdxFromClassName(blockNode.classList)!;
           setFocusIdx(idx);
+          const listItemNode = document.querySelector(`[data-idx="${idx}"]`);
+          listItemNode?.scrollIntoView({
+            block: 'center',
+            behavior: 'smooth',
+          });
         }
       };
 
@@ -55,6 +61,7 @@ export function useDropBlock() {
     if (!ref) return;
 
     const onDrop = (ev: DragEvent) => {
+
       const target = ev.target as HTMLElement;
       const blockNode = findBlockNode(target);
       blockNode?.classList.remove(DRAG_HOVER_CLASSNAME);
@@ -62,8 +69,8 @@ export function useDropBlock() {
       if (!blockNode) return;
 
       const type = ev.dataTransfer?.getData('Text') as BlockType;
+      const action = ev.dataTransfer?.getData('Action');
       if (!type) return;
-
       const payload = ev.dataTransfer?.getData('Payload')
         ? JSON.parse(ev.dataTransfer?.getData('Payload'))
         : ({} as IBlockData);
@@ -89,13 +96,21 @@ export function useDropBlock() {
           blockData.parentIdx = getParentIdx(parentIdx)!;
           blockData.positionIndex = +getIndexByIdx(parentIdx) + 1;
         }
+        if (action === 'move') {
+          moveBlock({
+            sourceIdx: blockData.payload,
+            destinationIdx: blockData.parentIdx,
+            positionIndex: blockData.positionIndex!
+          });
+        } else {
+          addBlock(blockData);
+        }
 
-        addBlock(blockData);
       }
     };
 
     const onDragstart = (ev: DragEvent) => {
-      ev.preventDefault();
+      // ev.preventDefault();
     };
 
     ref.addEventListener('dragstart', onDragstart);
@@ -104,7 +119,7 @@ export function useDropBlock() {
       ref.removeEventListener('drop', onDrop);
       ref.removeEventListener('dragstart', onDragstart);
     };
-  }, [addBlock, ref, values]);
+  }, [addBlock, moveBlock, ref, values]);
 
   useEffect(() => {
     if (ref) {
@@ -167,11 +182,6 @@ export function useDropBlock() {
           (range.startOffset === 0 && range.startOffset === range.endOffset)
         ) {
           const block = findBlockByType(focusBlock!.type);
-          console.log(
-            JSON.stringify({
-              copyBlock: focusBlock,
-            })
-          );
           copy(
             JSON.stringify({
               copyBlock: focusBlock,
@@ -193,6 +203,8 @@ export function useDropBlock() {
                 copyBlock: focusBlock,
               })
             );
+            const block = findBlockByType(focusBlock!.type);
+            message.info(`${block?.name} block copied`);
             removeBlock(focusIdx);
           }
         } catch (error) {
@@ -217,13 +229,13 @@ export function useDropBlock() {
         }
       };
 
-      document.body.addEventListener('copy', onCopy);
-      document.body.addEventListener('cut', onCut);
-      document.body.addEventListener('paste', onPaste);
+      ref.addEventListener('copy', onCopy);
+      ref.addEventListener('cut', onCut);
+      ref.addEventListener('paste', onPaste);
       return () => {
-        document.body.removeEventListener('copy', onCopy);
-        document.body.removeEventListener('cut', onCut);
-        document.body.removeEventListener('paste', onPaste);
+        ref.removeEventListener('copy', onCopy);
+        ref.removeEventListener('cut', onCut);
+        ref.removeEventListener('paste', onPaste);
       };
     }
   }, [ref, focusIdx, focusBlock, addBlock, removeBlock]);

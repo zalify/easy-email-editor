@@ -17,14 +17,14 @@ import {
   getPageIdx,
 } from '@/utils/block';
 import { useBlock } from '@/hooks/useBlock';
-import { BasicType, BLOCK_HOVER_CLASSNAME } from '@/constants';
+import { BasicType } from '@/constants';
 import { Stack } from '@/components/Stack';
 import { TextStyle } from '@/components/TextStyle';
 import styles from './index.module.scss';
 import { classnames } from '@/utils/classnames';
-import { findBlockNodeByIdx } from '@/utils/findBlockNodeByIdx';
 import { useDropBlock } from '@/hooks/useDropBlock';
 import blockInteractiveStyleText from '@/styles/block-interactive.css.text?raw';
+import { BlockAvatorWrapper } from '@/components/core/wrapper/BlockAvatorWrapper';
 
 export function BlockLayerManager() {
   const { setRef } = useDropBlock();
@@ -48,7 +48,7 @@ const BlockLayerItem = ({
   idx: string;
   indent?: React.ReactNode;
 }) => {
-  const { setFocusIdx, focusIdx } = useBlock();
+  const { focusIdx } = useBlock();
   const [visible, setVisible] = useState(true);
   const title = findBlockByType(blockData.type)?.name;
   const noChild = blockData.children.length === 0;
@@ -71,69 +71,35 @@ const BlockLayerItem = ({
     return <RightOutlined onClick={onToggle} />;
   }, [noChild, onToggle, visible]);
 
-  const onFocus = useCallback(
-    (e: React.MouseEvent) => {
-      e.stopPropagation();
-      setFocusIdx(idx);
-      const node = findBlockNodeByIdx(idx);
-      node?.scrollIntoView({
-        block: 'center',
-        behavior: 'smooth',
-      });
-    },
-    [idx, setFocusIdx]
-  );
-
-  const onMouseEnter = useCallback(
-    (e: React.MouseEvent) => {
-      e.stopPropagation();
-      const blockNode = findBlockNodeByIdx(idx);
-      if (blockNode) {
-        blockNode.classList.add(BLOCK_HOVER_CLASSNAME);
-      }
-    },
-    [idx]
-  );
-
-  const onMouseLeave = useCallback(
-    (e: React.MouseEvent) => {
-      e.stopPropagation();
-      const blockNode = findBlockNodeByIdx(idx);
-      if (blockNode) {
-        blockNode.classList.remove(BLOCK_HOVER_CLASSNAME);
-      }
-    },
-    [idx]
-  );
-
   const listItem = (
-    <li
-      key={idx}
-      className={classnames(
-        styles.blockItem,
-        focusIdx === idx && styles.blockItemSelected,
-        'email-block',
-        getNodeIdxClassName(idx!),
-        getNodeTypeClassName(blockData.type)
-      )}
-      onClick={onFocus}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-    >
-      <Stack.Item fill>
-        <Stack distribution='equalSpacing'>
-          <Stack spacing='tight'>
-            {indent}
-            <EyeIcon idx={idx} blockData={blockData} />
-            <TextStyle>{title}</TextStyle>
+    <BlockAvatorWrapper key={idx} type={blockData.type} payload={idx} action="move">
+      <li
+
+        className={classnames(
+          styles.blockItem,
+          focusIdx === idx && styles.blockItemSelected,
+          'email-block',
+          getNodeIdxClassName(idx!),
+          getNodeTypeClassName(blockData.type)
+        )}
+        data-idx={idx}
+      >
+
+        <Stack.Item fill>
+          <Stack distribution='equalSpacing'>
+            <Stack spacing='tight'>
+              {indent}
+              <EyeIcon idx={idx} blockData={blockData} />
+              <TextStyle>{title}</TextStyle>
+            </Stack>
+            <Stack>
+              <ShortcutTool idx={idx} blockData={blockData} />
+              {subIcon}
+            </Stack>
           </Stack>
-          <Stack>
-            <ShortcutTool idx={idx} blockData={blockData} />
-            {subIcon}
-          </Stack>
-        </Stack>
-      </Stack.Item>
-    </li>
+        </Stack.Item>
+      </li>
+    </BlockAvatorWrapper>
   );
 
   if (noChild) return listItem;
@@ -145,12 +111,12 @@ const BlockLayerItem = ({
           {blockData.children.map((item, index) => (
             <BlockLayerItem
               key={index}
-              indent={
+              indent={(
                 <Stack spacing='none'>
                   {indent}
                   <div style={{ width: 16, height: '100%' }} />
                 </Stack>
-              }
+              )}
               blockData={item}
               idx={getChildIdx(idx, index)}
             />

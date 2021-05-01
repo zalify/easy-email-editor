@@ -255,6 +255,8 @@ export function RichText(props: RichTextProps) {
               ...containerStyle,
               backgroundColor: undefined,
               minHeight: 100,
+              maxHeight: 200,
+              overflow: 'auto'
             }}
             dangerouslySetInnerHTML={{ __html: initialValue }}
             onInput={handleInput}

@@ -1,22 +1,22 @@
 import React, {
   useCallback,
 } from 'react';
-import { IBlockData, RecursivePartial } from '@/typings';
 import { BlockType } from '@/constants';
 
-export type BlockAvatorWrapperProps = { type: BlockType; payload?: RecursivePartial<IBlockData>; };
+export type BlockAvatorWrapperProps = { type: BlockType; payload?: any; action?: 'add' | 'move'; };
 
 export const BlockAvatorWrapper: React.FC<BlockAvatorWrapperProps> = (props) => {
 
-  const { type, children, payload } = props;
+  const { type, children, payload, action = 'add' } = props;
 
   const onDragStart = useCallback((ev: React.DragEvent) => {
     ev.dataTransfer.setData('Text', type);
+    ev.dataTransfer.setData('Action', action);
     if (payload) {
       ev.dataTransfer.setData('Payload', JSON.stringify(payload));
     }
 
-  }, [payload, type]);
+  }, [action, payload, type]);
 
   return (
     <div onDragStart={onDragStart} draggable>

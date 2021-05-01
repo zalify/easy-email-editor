@@ -11,6 +11,13 @@
   min-height: 100%;
   padding-bottom: 100px;
 }
+.node-type-page * {
+  user-select: none;
+}
 .node-type-group{
   min-height: 30px
+}
+:not(.email-block) {
+  -webkit-user-drag: none;
+	cursor: default;
 }

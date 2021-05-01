@@ -39,7 +39,7 @@ export function useBlock() {
       type: BlockType;
       parentIdx: string;
       positionIndex?: number;
-      payload?: RecursivePartial<IBlockData>;
+      payload?: any;
       canReplace?: boolean;
     }) => {
       let { type, parentIdx, positionIndex, payload } = params;
@@ -121,6 +121,7 @@ export function useBlock() {
           const upParent = getParentByIdx(formState.values, parentIdx);
           if (upParent) {
             upParent.children.splice(parentIndex, 1, child);
+
             set(formState.values, getParentIdx(parentIdx)!, { ...upParent });
             formState.values.focusIdx = parentIdx;
             return { ...formState };
@@ -144,7 +145,39 @@ export function useBlock() {
     [setFormikState]
   );
 
-  const replaceBlock = useCallback(() => {}, []);
+  const moveBlock = useCallback((params: {
+    sourceIdx: string;
+    destinationIdx: string;
+    positionIndex: number;
+  }) => {
+    let { sourceIdx, destinationIdx, positionIndex } = params;
+
+    setFormikState((formState) => {
+
+      const source = getValueByIdx(formState.values, sourceIdx)!;
+      const sourceParentIdx = getParentIdx(sourceIdx);
+      if (!sourceParentIdx) return formState;
+      const sourceParent = getValueByIdx(formState.values, sourceParentIdx)!;
+      const destinationParent = getValueByIdx(formState.values, destinationIdx)!;
+
+      const parentBlock = findBlockByType(destinationParent.type);
+      if (!parentBlock.validChildrenType.includes(source.type)) {
+        const sourceBlock = findBlockByType(source.type);
+        message.warning(
+          `${sourceBlock.name} can not insert to ${parentBlock.name}`
+        );
+        return formState;
+      }
+
+      sourceParent.children = sourceParent.children.filter(item => item !== source);
+      destinationParent.children.splice(positionIndex, 0, source);
+
+      set(formState.values, sourceParentIdx, { ...sourceParent });
+      set(formState.values, destinationIdx, { ...destinationParent });
+      formState.values.focusIdx = destinationIdx + `.children.[${positionIndex}]`;
+      return { ...formState };
+    });
+  }, [setFormikState]);
 
   const copyBlock = useCallback(
     (idx: string) => {
@@ -301,6 +334,7 @@ export function useBlock() {
     setValueByIdx,
     setHoverIdx,
     addBlock,
+    moveBlock,
     copyBlock,
     removeBlock,
     setFocusIdx,
