@@ -151,7 +151,6 @@ export function useBlock() {
     positionIndex: number;
   }) => {
     let { sourceIdx, destinationIdx, positionIndex } = params;
-
     setFormikState((formState) => {
 
       const source = getValueByIdx(formState.values, sourceIdx)!;
@@ -169,11 +168,20 @@ export function useBlock() {
         return formState;
       }
 
-      sourceParent.children = sourceParent.children.filter(item => item !== source);
-      destinationParent.children.splice(positionIndex, 0, source);
+      if (sourceParent === destinationParent) {
+        const sourceIndex = getIndexByIdx(sourceIdx);
+        if (sourceIndex < positionIndex) {
+          positionIndex -= 1;
+        }
+        const [removed] = sourceParent.children.splice(sourceIndex, 1);
+        destinationParent.children.splice(positionIndex, 0, removed);
+      } else {
+        sourceParent.children = sourceParent.children.filter(item => item !== source);
+        destinationParent.children.splice(positionIndex, 0, source);
+        set(formState.values, sourceParentIdx, { ...sourceParent });
+        set(formState.values, destinationIdx, { ...destinationParent });
+      }
 
-      set(formState.values, sourceParentIdx, { ...sourceParent });
-      set(formState.values, destinationIdx, { ...destinationParent });
       formState.values.focusIdx = destinationIdx + `.children.[${positionIndex}]`;
       return { ...formState };
     });

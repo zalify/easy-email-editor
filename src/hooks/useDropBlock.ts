@@ -42,11 +42,20 @@ export function useDropBlock() {
         if (blockNode) {
           const idx = getNodeIdxFromClassName(blockNode.classList)!;
           setFocusIdx(idx);
-          const listItemNode = document.querySelector(`[data-idx="${idx}"]`);
-          listItemNode?.scrollIntoView({
-            block: 'center',
-            behavior: 'smooth',
-          });
+          const editBlock = findBlockNodeByIdx(idx);
+          if (editBlock === blockNode) {
+            const listItemNode = document.querySelector(`[data-idx="${idx}"]`);
+            listItemNode?.scrollIntoView({
+              block: 'center',
+              behavior: 'smooth',
+            });
+          } else {
+            editBlock?.scrollIntoView({
+              block: 'center',
+              behavior: 'smooth',
+            });
+          }
+
         }
       };
 
@@ -89,20 +98,27 @@ export function useDropBlock() {
           parentIdx,
         };
 
-        if (direction === 'top' || direction === 'left') {
-          blockData.parentIdx = getParentIdx(parentIdx)!;
-          blockData.positionIndex = +getIndexByIdx(parentIdx);
-        } else if (direction === 'bottom' || direction === 'right') {
-          blockData.parentIdx = getParentIdx(parentIdx)!;
-          blockData.positionIndex = +getIndexByIdx(parentIdx) + 1;
-        }
         if (action === 'move') {
+          if (direction === 'top' || direction === 'left') {
+            blockData.parentIdx = getParentIdx(parentIdx)!;
+            blockData.positionIndex = +getIndexByIdx(parentIdx);
+          } else if (direction === 'bottom' || direction === 'right') {
+            blockData.parentIdx = getParentIdx(parentIdx)!;
+            blockData.positionIndex = +getIndexByIdx(parentIdx) + 1;
+          }
           moveBlock({
             sourceIdx: blockData.payload,
             destinationIdx: blockData.parentIdx,
             positionIndex: blockData.positionIndex!
           });
         } else {
+          if (direction === 'top' || direction === 'left') {
+            blockData.parentIdx = getParentIdx(parentIdx)!;
+            blockData.positionIndex = +getIndexByIdx(parentIdx);
+          } else if (direction === 'bottom' || direction === 'right') {
+            blockData.parentIdx = getParentIdx(parentIdx)!;
+            blockData.positionIndex = +getIndexByIdx(parentIdx) + 1;
+          }
           addBlock(blockData);
         }
 

@@ -21,7 +21,6 @@ export type IText = IBlockData<
     padding?: string;
   },
   {
-    title?: string;
     content: string;
   }
 >;

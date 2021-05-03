@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 import { Padding } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Padding';
 import { Stack } from '@/components/Stack';
-import { TextAlign } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/TextAlign';
 import { ColorPickerField, ImageUploaderField, TextField } from '@/components/core/Form';
 import { useBlock } from '@/hooks/useBlock';
 import { Width } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Width';
 import { Height } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Height';
 import { Link } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Link';
 import { EditorPropsContext } from '@/components/PropsProvider';
+import { Align } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Align';
 
 export function Panel() {
   const { focusIdx } = useBlock();
@@ -26,13 +26,14 @@ export function Panel() {
         name={`${focusIdx}.attributes.src`}
         helpText="The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally."
         uploadHandler={onUploadImage}
-        inline />
+        inline
+      />
       <Width />
       <Height />
 
       <Link />
       <TextField label='border' name={`${focusIdx}.attributes.border`} inline />
-      <TextAlign />
+      <Align />
       <ColorPickerField
         label='container-background-color'
         name={`${focusIdx}.attributes.container-background-color`}
