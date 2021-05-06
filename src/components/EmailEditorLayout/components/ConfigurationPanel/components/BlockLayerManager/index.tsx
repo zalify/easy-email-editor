@@ -4,7 +4,7 @@ import {
   RightOutlined,
   DownOutlined,
   CopyOutlined,
-  CloseOutlined
+  CloseOutlined,
 } from '@ant-design/icons';
 import React, { useCallback, useMemo, useState } from 'react';
 import { useEditorContext } from '@/hooks/useEditorContext';
@@ -24,7 +24,7 @@ import styles from './index.module.scss';
 import { classnames } from '@/utils/classnames';
 import { useDropBlock } from '@/hooks/useDropBlock';
 import blockInteractiveStyleText from '@/styles/block-interactive.css.text?raw';
-import { BlockAvatorWrapper } from '@/components/core/wrapper/BlockAvatorWrapper';
+import { BlockAvatarWrapper } from '@/components/core/wrapper/BlockAvatarWrapper';
 
 export function BlockLayerManager() {
   const { setRef } = useDropBlock();
@@ -32,9 +32,7 @@ export function BlockLayerManager() {
   return (
     <div ref={setRef}>
       <BlockLayerItem blockData={pageData} idx={getPageIdx()} />
-      <style>
-        {blockInteractiveStyleText}
-      </style>
+      <style>{blockInteractiveStyleText}</style>
     </div>
   );
 }
@@ -72,9 +70,13 @@ const BlockLayerItem = ({
   }, [noChild, onToggle, visible]);
 
   const listItem = (
-    <BlockAvatorWrapper key={idx} type={blockData.type} payload={idx} action="move">
+    <BlockAvatarWrapper
+      key={idx}
+      type={blockData.type}
+      payload={idx}
+      action='move'
+    >
       <li
-
         className={classnames(
           styles.blockItem,
           focusIdx === idx && styles.blockItemSelected,
@@ -84,7 +86,6 @@ const BlockLayerItem = ({
         )}
         data-idx={idx}
       >
-
         <Stack.Item fill>
           <Stack distribution='equalSpacing'>
             <Stack spacing='tight'>
@@ -99,7 +100,7 @@ const BlockLayerItem = ({
           </Stack>
         </Stack.Item>
       </li>
-    </BlockAvatorWrapper>
+    </BlockAvatarWrapper>
   );
 
   if (noChild) return listItem;
@@ -111,12 +112,12 @@ const BlockLayerItem = ({
           {blockData.children.map((item, index) => (
             <BlockLayerItem
               key={index}
-              indent={(
+              indent={
                 <Stack spacing='none'>
                   {indent}
                   <div style={{ width: 16, height: '100%' }} />
                 </Stack>
-              )}
+              }
               blockData={item}
               idx={getChildIdx(idx, index)}
             />
@@ -127,7 +128,7 @@ const BlockLayerItem = ({
   );
 };
 
-function EyeIcon({ idx, blockData }: { idx: string; blockData: IBlockData; }) {
+function EyeIcon({ idx, blockData }: { idx: string; blockData: IBlockData }) {
   const { setValueByIdx } = useBlock();
 
   const onToggleVisible = useCallback(
@@ -169,9 +170,10 @@ function ShortcutTool({
     <div className={styles.shortcutTool}>
       <Stack>
         <CopyOutlined onClickCapture={enHanceHandler(() => copyBlock(idx))} />
-        <CloseOutlined onClickCapture={enHanceHandler(() => removeBlock(idx))} />
+        <CloseOutlined
+          onClickCapture={enHanceHandler(() => removeBlock(idx))}
+        />
       </Stack>
     </div>
-
   );
 }

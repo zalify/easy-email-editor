@@ -1,4 +1,4 @@
-import { BlockAvatorWrapper } from '@/components/core/wrapper/BlockAvatorWrapper';
+import { BlockAvatarWrapper } from '@/components/core/wrapper/BlockAvatarWrapper';
 import { EditorPropsContext } from '@/components/PropsProvider';
 import { BlockType } from '@/constants';
 import { IBlockData } from '@/typings';
@@ -28,34 +28,33 @@ export function BlockIcon(props: BlockIconProps) {
   };
 
   return (
-
-    <BlockAvatorWrapper type={props.type} payload={props.payload}>
-      <div
-        className={styles.baseComponent}
-      >
+    <BlockAvatarWrapper type={props.type} payload={props.payload}>
+      <div className={styles.baseComponent}>
         {props.icon}
-        <h3 className={classnames(styles.title, !props.icon && styles.largeTitle)}>
+        <h3
+          className={classnames(styles.title, !props.icon && styles.largeTitle)}
+        >
           {props.text}
-          {
-            props.helpText && (
-              <>
-                &nbsp;
-                <Help style={{ fontSize: 12 }} title={props.helpText} />
-              </>
-            )
-          }
+          {props.helpText && (
+            <>
+              &nbsp;
+              <Help style={{ fontSize: 12 }} title={props.helpText} />
+            </>
+          )}
         </h3>
         {removeable && (
-          <Popconfirm title={`Are you want to remove "${props.text}"`}
+          <Popconfirm
+            title={`Are you want to remove "${props.text}"`}
             onConfirm={onConfirm}
-            okText="Yes"
-            cancelText="No"
+            okText='Yes'
+            cancelText='No'
           >
-            <div className={styles.closeBtn}><CloseOutlined style={{ color: '#333' }} /></div>
+            <div className={styles.closeBtn}>
+              <CloseOutlined style={{ color: '#333' }} />
+            </div>
           </Popconfirm>
         )}
       </div>
-    </BlockAvatorWrapper>
-
+    </BlockAvatarWrapper>
   );
 }

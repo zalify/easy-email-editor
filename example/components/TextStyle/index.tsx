@@ -1,4 +1,4 @@
-import { classnames } from '@/utils/classnames';
+import { classnames } from '@example/util/classnames';
 import React from 'react';
 import styles from './TextStyle.module.scss';
 

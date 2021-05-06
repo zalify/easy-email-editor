@@ -6,16 +6,16 @@
       "DOM.Iterable",
       "ESNext"
     ],
-    // "types": [
-    //   "vite/client",
-    //   "node"
-    // ],
+    "types": [
+      "vite/client",
+      "node"
+    ],
     "allowJs": true,
     "skipLibCheck": false,
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "strictNullChecks": true,
     "alwaysStrict": true,
     "forceConsistentCasingInFileNames": true,
@@ -23,19 +23,25 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
-    "noEmit": true,
+    "declaration": true,
     "jsx": "react",
     "baseUrl": ".",
     "paths": {
+      "easy-email-editor": [
+        "src/index"
+      ],
       "@example": [
         "example"
       ],
       "@example/*": [
         "example/*"
       ],
+      "@": [
+        "src"
+      ],
       "@/*": [
         "src/*"
-      ]
+      ],
     }
   },
   "include": [

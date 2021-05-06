@@ -1,11 +1,11 @@
-import { TextStyle } from '@/components/TextStyle';
+import { TextStyle } from '@example/components/TextStyle';
 import { Form } from 'antd';
 import { FastField, FieldProps } from 'formik';
 import React, { useMemo } from 'react';
-import { Stack, StackProps } from '../../Stack';
+import { Stack, StackProps } from '@example/components/Stack';
 import styles from './index.module.scss';
 
-export interface EnhancerProps extends Partial<FieldProps> {
+interface Props extends Partial<FieldProps> {
   name: string;
   label: React.ReactNode;
   lableHidden?: boolean;
@@ -21,7 +21,7 @@ export interface EnhancerProps extends Partial<FieldProps> {
 
 let primaryId = 0;
 export default function enhancer<P>(Component: any, changeAdapter: (e: any) => any,) {
-  return (props: EnhancerProps & Omit<P, 'value' | 'onChange'>) => {
+  return (props: Props & Omit<P, 'value' | 'onChange'>) => {
 
     const { name,
       onChangeAdapter,

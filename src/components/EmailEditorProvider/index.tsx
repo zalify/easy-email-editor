@@ -40,7 +40,7 @@ export const EmailEditorProvider = (
   return (
     <Formik<EditorProps>
       initialValues={initialValues}
-      onSubmit={() => {}}
+      onSubmit={() => { }}
       enableReinitialize
     >
       {(...rest) => {

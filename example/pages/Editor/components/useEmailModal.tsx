@@ -1,17 +1,16 @@
-import { EditorProps } from '@/components/EmailEditorProvider';
+import { EditorProps, transformToMjml } from 'easy-email-editor';
 import { message, Modal } from 'antd';
 import React, { useMemo, useState } from 'react';
 import mjml from 'mjml-browser';
-import { transformToMjml } from '@/utils/transformToMjml';
 import { useDispatch } from 'react-redux';
 import email from '@example/store/email';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import { TextField } from '@/components/core/Form';
+import { TextField } from '@example/components/Form';
 import { useLoading } from '@example/hooks/useLoading';
 
 const schema = Yup.object().shape({
-  toEmail: Yup.string().email('Unvalid email').required("Email required")
+  toEmail: Yup.string().email('Unvalid email').required('Email required')
 });
 
 export function useEmailModal() {
@@ -56,7 +55,7 @@ export function useEmailModal() {
 
   const modal = useMemo(() => {
     return (
-      <Formik validationSchema={schema} initialValues={{ toEmail: '' }} onSubmit={onSendEmail} >
+      <Formik validationSchema={schema} initialValues={{ toEmail: '' }} onSubmit={onSendEmail}>
         {
           ({ handleSubmit }) => (
             <Modal zIndex={9999}
@@ -65,7 +64,8 @@ export function useEmailModal() {
               visible={visible}
               confirmLoading={emailSendLoading}
               onOk={() => handleSubmit()}
-              onCancel={closeModal}>
+              onCancel={closeModal}
+            >
 
               <TextField autoFocus name="toEmail" label="To email" />
 
@@ -74,7 +74,7 @@ export function useEmailModal() {
         }
       </Formik>
     );
-  }, [visible, closeModal, emailSendLoading]);
+  }, [onSendEmail, visible, emailSendLoading]);
 
   return {
     modal,

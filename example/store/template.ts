@@ -3,14 +3,12 @@ import createSliceState from './common/createSliceState';
 import { message } from 'antd';
 import { history } from '@example/util/history';
 import { IBlockData } from '@/typings';
-import { EditorProps } from '@/components/EmailEditorProvider';
-import { emailToImage } from '@/utils/emailToImage';
-import { getPageIdx } from '@/utils/block';
-import { Page } from '@/components/core/blocks/basic/Page';
+import { emailToImage } from '@example/util/emailToImage';
+import { BlocksMap, IEmailTemplate, BasicType, } from 'easy-email-editor';
 
 export default createSliceState({
   name: 'template',
-  initialState: null as EditorProps | null,
+  initialState: null as Omit<IEmailTemplate, 'hoverIdx' | 'focusIdx'> | null,
   reducers: {
     set: (state, action) => {
       return action.payload;
@@ -24,8 +22,6 @@ export default createSliceState({
         return {
           ...data,
           content,
-          focusIdx: getPageIdx(),
-          hoverIdx: '',
           subject: data.title,
           subTitle: '',
         };
@@ -38,15 +34,13 @@ export default createSliceState({
       return {
         subject: 'Welcome to Easy-email',
         subTitle: 'Nice to meet you!',
-        content: Page.createInstance({}),
-        focusIdx: getPageIdx(),
-        hoverIdx: '',
-      } as EditorProps;
+        content: BlocksMap.findBlockByType(BasicType.PAGE).createInstance({}),
+      } as IEmailTemplate;
     },
     create: async (
       state,
       payload: {
-        template: EditorProps;
+        template: IEmailTemplate;
         success: (id: number) => void;
       }
     ) => {
@@ -65,7 +59,7 @@ export default createSliceState({
       state,
       payload: {
         id: number;
-        template: EditorProps;
+        template: IEmailTemplate;
         success: () => void;
       }
     ) => {

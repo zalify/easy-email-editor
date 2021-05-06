@@ -6,7 +6,6 @@ import { Uploader, UploaderServer } from '@/utils/Uploader';
 import { classnames } from '@/utils/classnames';
 const LOADING_ICON = 'https://assets.maocanhua.cn/Fi_vI4vyLhTM-Tp6ivq4dR_ieGHk';
 
-
 export interface ImageUploaderProps {
   onChange: (val: string) => void;
   value: string;
@@ -26,6 +25,7 @@ export function ImageUploader(props: ImageUploaderProps) {
 
   useEffect(() => {
     props.onChange(value);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
   const onUpload = useCallback(() => {
@@ -42,7 +42,6 @@ export function ImageUploader(props: ImageUploaderProps) {
     uploader.on('start', (photos) => {
       setIsUploading(true);
 
-
       uploader.on('end', (data) => {
         const url = data[0]?.url;
         if (url) {
@@ -53,7 +52,7 @@ export function ImageUploader(props: ImageUploaderProps) {
     });
 
     uploader.chooseFile();
-  }, []);
+  }, [isUploading]);
 
   const onPaste = useCallback(
     async (e: React.ClipboardEvent<HTMLInputElement>) => {
@@ -75,12 +74,12 @@ export function ImageUploader(props: ImageUploaderProps) {
         }
       }
     },
-    [props.onChange]
+    [props]
   );
 
-  const onRemove = () => {
+  const onRemove = useCallback(() => {
     props.onChange('');
-  };
+  }, [props]);
 
   const content = useMemo(() => {
     if (isUploading) {
@@ -107,7 +106,8 @@ export function ImageUploader(props: ImageUploaderProps) {
       <div className={styles['item']}>
         <div className={classnames(styles['info'])}>
           <img
-            src={value} />
+            src={value}
+          />
           <div className={styles['btn-wrap']}>
             <a title='Preview' onClick={() => setPreview(true)}>
               <EyeOutlined />
@@ -120,8 +120,7 @@ export function ImageUploader(props: ImageUploaderProps) {
       </div>
     );
 
-  }, [isUploading, props.value, value]);
-
+  }, [isUploading, onRemove, onUpload, props.value, value]);
 
   if (!props.uploadHandler) {
     return <Input value={value} onChange={(e) => setValue(e.target.value)} />;

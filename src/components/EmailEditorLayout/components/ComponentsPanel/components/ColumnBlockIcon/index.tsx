@@ -1,9 +1,9 @@
 import { BlocksMap } from '@/components/core/blocks';
 import { ILayout } from '@/components/core/blocks/custom/Layout';
 import {
-  BlockAvatorWrapper,
-  BlockAvatorWrapperProps,
-} from '@/components/core/wrapper/BlockAvatorWrapper';
+  BlockAvatarWrapper,
+  BlockAvatarWrapperProps,
+} from '@/components/core/wrapper/BlockAvatarWrapper';
 import { Picture } from '@/components/Picture';
 import { Stack } from '@/components/Stack';
 import { TextStyle } from '@/components/TextStyle';
@@ -243,11 +243,11 @@ function FourColumn() {
 }
 
 export function ColumnBlockIcon(
-  props: Omit<BlockAvatorWrapperProps, 'type'> & { avatar: string; }
+  props: Omit<BlockAvatarWrapperProps, 'type'> & { avatar: string }
 ) {
   return (
-    <BlockAvatorWrapper type={BasicType.WRAPPER} {...props}>
+    <BlockAvatarWrapper type={BasicType.WRAPPER} {...props}>
       <Picture style={{ height: 40 }} src={props.avatar} />
-    </BlockAvatorWrapper>
+    </BlockAvatarWrapper>
   );
 }

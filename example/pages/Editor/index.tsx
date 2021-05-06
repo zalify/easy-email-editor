@@ -9,16 +9,22 @@ import { useQuery } from '@example/hooks/useQuery';
 import { useHistory } from 'react-router-dom';
 import { cloneDeep } from 'lodash';
 import { Loading } from '@example/components/loading';
-import { EmailEditor, EmailEditorLayout, EditorProps } from '@/index';
-import { Stack } from '@/components/Stack';
 import mjml from 'mjml-browser';
-import { transformToMjml } from '@/utils/transformToMjml';
 import extraBlocks from '@example/store/extraBlocks';
 import { CollectedBlock } from '@/components/PropsProvider';
 import { copy } from '@example/util/clipboard';
 import { useEmailModal } from './components/useEmailModal';
 import { WarnAboutUnsavedChanges } from '@example/components/WarnAboutUnsavedChanges';
 import services from '@example/services';
+
+import {
+  EmailEditor,
+  EmailEditorLayout,
+  EditorProps,
+  transformToMjml,
+} from 'easy-email-editor';
+import 'easy-email-editor/lib/style.css';
+import { Stack } from '@example/components/Stack';
 
 export default function Editor() {
   const dispatch = useDispatch();
@@ -28,7 +34,6 @@ export default function Editor() {
   const { openModal, modal } = useEmailModal();
   const { id } = useQuery();
   const loading = useLoading(template.loadings.fetchById);
-
 
   const isSubmitting = useLoading([
     template.loadings.create,
@@ -49,7 +54,6 @@ export default function Editor() {
 
   const onSubmit = useCallback(
     async (values: EditorProps) => {
-
       if (id) {
         dispatch(
           template.actions.updateById({
@@ -76,7 +80,6 @@ export default function Editor() {
   );
 
   const onExportHtml = (values: EditorProps) => {
-
     const html = mjml(transformToMjml(values.content), {
       beautify: true,
       validationLevel: 'soft',
@@ -84,7 +87,6 @@ export default function Editor() {
 
     copy(html);
     message.success('Copied to pasteboard!');
-
   };
 
   const initialValues: EditorProps | null = useMemo(() => {
@@ -114,7 +116,6 @@ export default function Editor() {
     message.success('Removed from collection.');
   };
 
-
   return (
     <div>
       <EmailEditor
@@ -124,33 +125,35 @@ export default function Editor() {
         onRemoveCollection={onRemoveCollection}
         onUploadImage={services.common.uploadByQiniu}
       >
-        {({ values, }) => (
-          <>
-            <PageHeader
-              title='Edit'
-              onBack={() => history.push('/')}
-              extra={
-                <Stack>
-                  <Button onClick={() => onExportHtml(values)}>
-                    Export html
-                  </Button>
-                  <Button onClick={() => openModal(values)}>
-                    Send test email
-                  </Button>
-                  <Button
-                    loading={isSubmitting}
-                    type='primary'
-                    onClick={() => onSubmit(values)}
-                  >
-                    Save
-                  </Button>
-                </Stack>
-              }
-            />
-            <EmailEditorLayout height={`calc(100vh - 72px)`} />
-            <WarnAboutUnsavedChanges />
-          </>
-        )}
+        {({ values }) => {
+          return (
+            <>
+              <PageHeader
+                title='Edit'
+                onBack={() => history.push('/')}
+                extra={
+                  <Stack>
+                    <Button onClick={() => onExportHtml(values)}>
+                      Export html
+                    </Button>
+                    <Button onClick={() => openModal(values)}>
+                      Send test email
+                    </Button>
+                    <Button
+                      loading={isSubmitting}
+                      type='primary'
+                      onClick={() => onSubmit(values)}
+                    >
+                      Save
+                    </Button>
+                  </Stack>
+                }
+              />
+              <EmailEditorLayout height={'calc(100vh - 72px)'} />
+              <WarnAboutUnsavedChanges />
+            </>
+          );
+        }}
       </EmailEditor>
       {modal}
     </div>

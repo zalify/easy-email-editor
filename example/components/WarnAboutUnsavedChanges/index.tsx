@@ -10,9 +10,9 @@ export function WarnAboutUnsavedChanges() {
   const [visible, setVisible] = useState(false);
   const dirty = getIsFormTouched(formik.touched as any);
 
-  const openConfirmModal = () => {
+  const openConfirmModal = useCallback(() => {
     setVisible(true);
-  };
+  }, []);
 
   useEffect(() => {
     ConfirmBeforeLeavePage.register((callback) => {

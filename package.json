@@ -1,9 +1,25 @@
 {
+  "name": "easy-email-editor",
   "license": "MIT",
+  "description": "Email editor",
+  "version": "0.2.6",
+  "author": "m-Ryan",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:m-Ryan/easy-email.git"
+  },
+  "keywords": [
+    "email editor"
+  ],
+  "files": [
+    "lib"
+  ],
+  "main": "./lib/index.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "lib": "vite build --config vite.lib.config.ts",
+    "preview": "npm run lib && vite --config vite.preview.config.ts"
   },
   "devDependencies": {
     "@types/node": "^14.14.22",
@@ -22,6 +38,7 @@
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "postcss-loader": "^4.2.0",
+    "rollup-plugin-analyzer": "^4.0.0",
     "sass": "^1.32.5",
     "sass-loader": "^10.1.1",
     "style-loader": "^2.0.0",
@@ -55,6 +72,8 @@
     "react-router-dom": "^5.2.0",
     "react-shadow": "^19.0.2",
     "react-use-localstorage": "^3.5.3",
+    "recursive-diff": "^1.0.8",
+    "rollup-plugin-typescript2": "^0.30.0",
     "util": "^0.12.3",
     "uuid": "^8.3.2",
     "vite": "^2.1.3",

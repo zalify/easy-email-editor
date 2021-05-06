@@ -4,3 +4,4 @@ dist
 *.local
 .history
 yarn-error.log
+lib
