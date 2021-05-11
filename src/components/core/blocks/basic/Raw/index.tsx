@@ -5,7 +5,7 @@ import { BasicType } from '@/constants';
 
 export type IRaw = IBlockData<{}>;
 
-export const Raw: IBlock = {
+export const Raw: IBlock<IRaw> = {
   name: 'Raw',
   type: BasicType.RAW,
   Panel,

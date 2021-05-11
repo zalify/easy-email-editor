@@ -5,7 +5,7 @@ import { BasicType } from '@/constants';
 
 export type ITable = IBlockData<{}, { content: string }>;
 
-export const Table: IBlock = {
+export const Table: IBlock<ITable> = {
   name: 'Table',
   type: BasicType.TABLE,
   Panel,

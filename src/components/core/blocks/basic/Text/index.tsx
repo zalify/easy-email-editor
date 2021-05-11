@@ -25,7 +25,7 @@ export type IText = IBlockData<
   }
 >;
 
-export const Text: IBlock = {
+export const Text: IBlock<IText> = {
   name: 'Text',
   type: BasicType.TEXT,
   Panel,

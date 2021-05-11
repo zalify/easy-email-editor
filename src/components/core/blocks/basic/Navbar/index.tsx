@@ -31,7 +31,7 @@ export type INavbar = IBlockData<
   }
 >;
 
-export const Navbar: IBlock = {
+export const Navbar: IBlock<INavbar> = {
   name: 'Navbar',
   type: BasicType.NAVBAR,
   Panel,

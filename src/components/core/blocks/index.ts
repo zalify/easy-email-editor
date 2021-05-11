@@ -22,42 +22,70 @@ import { Social } from './basic/Social';
 import { IBlock } from '@/typings';
 import { BlockType } from '@/constants';
 
-export class BlocksMap {
-  private static blocks: IBlock[] = [
-    Page,
-    Section,
-    Column,
-    Text,
-    Image,
-    Group,
-    Button,
-    Divider,
-    Wrapper,
-    Spacer,
-    Raw,
-    Accordion,
-    AccordionElement,
-    AccordionTitle,
-    AccordionText,
-    Carousel,
-    Hero,
-    Navbar,
-    Social,
-    // TODO:
-    Table,
-  ];
+const basicBlocks = {
+  Page,
+  Section,
+  Column,
+  Text,
+  Image,
+  Group,
+  Button,
+  Divider,
+  Wrapper,
+  Spacer,
+  Raw,
+  Accordion,
+  AccordionElement,
+  AccordionTitle,
+  AccordionText,
+  Carousel,
+  Hero,
+  Navbar,
+  Social,
+  // TODO:
+  Table,
+};
 
-  static registerBlock(block: IBlock) {
-    this.blocks.push(block);
+export class BlocksMap {
+  static basicBlocksMap = basicBlocks;
+  static externalBlocksMap: { [key: string]: IBlock } = {};
+
+  static get getBlocks() {
+    return [
+      ...Object.values(this.basicBlocksMap),
+      ...Object.values(this.externalBlocksMap),
+    ];
+  }
+
+  static registerBlocks(blocksMap: { [key: string]: IBlock }) {
+    Object.assign(this.externalBlocksMap, blocksMap);
   }
 
   static findBlockByType(type: BlockType): IBlock {
-    return this.blocks.find((child) => {
+    return this.getBlocks.find((child) => {
       return child?.type === type;
     }) as any;
   }
 
-  static getBlocks() {
-    return this.blocks;
+  static findBlocksByType(types: Array<BlockType>): IBlock[] {
+    return types.map((item) => {
+      const block = this.getBlocks.find((child) => {
+        return child.type === item;
+      });
+      if (!block) {
+        throw new Error(`Cannot find ${item}`);
+      }
+      return block;
+    });
+  }
+
+  static getBlock<
+    E extends { [key: string]: IBlock },
+    B extends typeof BlocksMap.basicBlocksMap,
+    A extends B & E,
+    T extends keyof A
+  >(name: T): A[T] {
+    const key: any = name;
+    return this.basicBlocksMap[key] || this.externalBlocksMap[key];
   }
 }

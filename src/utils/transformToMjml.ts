@@ -1,9 +1,11 @@
+import { BlocksMap } from '@/components/core/blocks';
 import { ICarousel } from '@/components/core/blocks/basic/Carousel';
 import { INavbar } from '@/components/core/blocks/basic/Navbar';
 import { IPage } from '@/components/core/blocks/basic/Page';
 import { ISocial } from '@/components/core/blocks/basic/Social';
 import { BasicType } from '@/constants';
 import { IBlockData } from '@/typings';
+import { merge } from 'lodash';
 import {
   getChildIdx,
   getNodeIdxClassName,
@@ -13,6 +15,7 @@ import { classnames } from './classnames';
 
 export function transformToMjml(data: IBlockData, idx?: string): string {
   if (data?.data?.hidden) return '';
+
   const att = {
     ...data.attributes,
   };
@@ -29,6 +32,24 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
   const attributeStr = Object.keys(att)
     .map((key) => `${key}="${att[key]}"`)
     .join(' ');
+
+  const block = BlocksMap.findBlockByType(data.type);
+
+  if (block.transform) {
+    const transformData = block.transform(data, idx);
+    att['css-class'] = classnames(
+      att['css-class'],
+      transformData['css-class'],
+    );
+    return transformToMjml({
+      ...transformData,
+      attributes: {
+        ...transformData.attributes,
+        'css-class': att['css-class']
+      }
+    });
+  }
+
   const children = data.children
     .map((child, index) =>
       transformToMjml(child, idx ? getChildIdx(idx, index) : undefined)

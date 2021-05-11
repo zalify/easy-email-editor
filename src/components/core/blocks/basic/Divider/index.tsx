@@ -1,6 +1,6 @@
 import { Panel } from './Panel';
 import { createInstance } from './createInstance';
-import { IBlockData } from '@/typings';
+import { IBlock, IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
 export type IDivider = IBlockData<
   {
@@ -15,7 +15,7 @@ export type IDivider = IBlockData<
   {}
 >;
 
-export const Divider = {
+export const Divider: IBlock<IDivider> = {
   name: 'Divider',
   type: BasicType.DIVIDER,
   Panel,

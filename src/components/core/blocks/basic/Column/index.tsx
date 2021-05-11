@@ -19,7 +19,7 @@ export type IColumn = IBlockData<
   {}
 >;
 
-export const Column: IBlock = {
+export const Column: IBlock<IColumn> = {
   name: 'Column',
   type: BasicType.COLUMN,
   Panel,

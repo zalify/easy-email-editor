@@ -9,7 +9,7 @@ export type ISpacer = IBlockData<{
   padding?: string;
 }>;
 
-export const Spacer: IBlock = {
+export const Spacer: IBlock<ISpacer> = {
   name: 'Spacer',
   type: BasicType.SPACER,
   Panel,

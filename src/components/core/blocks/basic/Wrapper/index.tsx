@@ -16,7 +16,7 @@ export type IWrapper = IBlockData<
   {}
 >;
 
-export const Wrapper: IBlock = {
+export const Wrapper: IBlock<IWrapper> = {
   name: 'Wrapper',
   type: BasicType.WRAPPER,
   Panel,

@@ -13,7 +13,7 @@ export const createInstance: CreateInstance<IWrapper> = (payload) => {
       border: 'none',
       direction: 'ltr',
       'text-align': 'center',
-      "background-color": '#ffffff',
+      'background-color': '#ffffff',
     },
     children: [],
   };

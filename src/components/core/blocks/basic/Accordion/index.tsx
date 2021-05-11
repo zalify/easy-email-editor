@@ -21,7 +21,7 @@ export type IAccordion = IBlockData<
   {}
 >;
 
-export const Accordion: IBlock = {
+export const Accordion: IBlock<IAccordion> = {
   name: 'Accordion',
   type: BasicType.ACCORDION,
   Panel,

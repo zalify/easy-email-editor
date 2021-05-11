@@ -30,7 +30,7 @@ export type ICarousel = IBlockData<
   }
 >;
 
-export const Carousel: IBlock = {
+export const Carousel: IBlock<ICarousel> = {
   name: 'Carousel',
   type: BasicType.CAROUSEL,
   Panel,

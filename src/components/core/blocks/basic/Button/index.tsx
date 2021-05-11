@@ -33,7 +33,7 @@ export type IButton = IBlockData<
   { content: string }
 >;
 
-export const Button: IBlock = {
+export const Button: IBlock<IButton> = {
   name: 'Button',
   type: BasicType.BUTTON,
   Panel,

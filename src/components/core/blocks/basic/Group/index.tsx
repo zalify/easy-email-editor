@@ -1,6 +1,6 @@
 import { Panel } from './Panel';
 import { createInstance } from './createInstance';
-import { IBlockData } from '@/typings';
+import { IBlock, IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
 
 export type IGroup = IBlockData<{
@@ -10,7 +10,7 @@ export type IGroup = IBlockData<{
   direction?: 'ltr' | 'rtl';
 }>;
 
-export const Group = {
+export const Group: IBlock<IGroup> = {
   name: 'Group',
   type: BasicType.GROUP,
   Panel,

@@ -1,6 +1,6 @@
 import { Panel } from './Panel';
 import { createInstance } from './createInstance';
-import { IBlockData } from '@/typings';
+import { IBlock, IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
 import { CSSProperties } from 'react';
 
@@ -20,7 +20,7 @@ export type IImage = IBlockData<{
   padding?: string;
 }>;
 
-export const Image = {
+export const Image: IBlock<IImage> = {
   name: 'Image',
   type: BasicType.IMAGE,
   Panel,

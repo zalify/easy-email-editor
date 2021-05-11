@@ -19,7 +19,7 @@ export type IHero = IBlockData<
   {}
 >;
 
-export const Hero: IBlock = {
+export const Hero: IBlock<IHero> = {
   name: 'Hero',
   type: BasicType.HERO,
   Panel,

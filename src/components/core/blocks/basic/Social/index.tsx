@@ -52,7 +52,7 @@ export type ISocial = IBlockData<
   }
 >;
 
-export const Social: IBlock = {
+export const Social: IBlock<ISocial> = {
   name: 'Social',
   type: BasicType.SOCIAL,
   Panel,

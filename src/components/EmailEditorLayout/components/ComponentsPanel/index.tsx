@@ -44,11 +44,11 @@ export const ComponentsPanel = function () {
         <Panel
           header='Content'
           key='1'
-          extra={
+          extra={(
             <Button type='link' onClick={onToggleMore}>
               {visible ? ' Show less' : ' Show more'}
             </Button>
-          }
+          )}
         >
           <div className={styles.list}>
             <BlockIcon
@@ -61,7 +61,7 @@ export const ComponentsPanel = function () {
             />
             <BlockIcon
               text='Section'
-              helpText={
+              helpText={(
                 <Stack vertical spacing='none'>
                   <TextStyle>
                     Sections are intended to be used as rows within your email.
@@ -72,14 +72,14 @@ export const ComponentsPanel = function () {
                     sections; all content must be in a column.
                   </TextStyle>
                 </Stack>
-              }
+              )}
               type={BasicType.SECTION}
               icon={<PicCenterOutlined />}
             />
 
             <BlockIcon
               text='Group'
-              helpText={
+              helpText={(
                 <Stack vertical spacing='none'>
                   <TextStyle>
                     Group allows you to prevent columns from stacking on mobile.
@@ -87,13 +87,13 @@ export const ComponentsPanel = function () {
                     stay side by side on mobile.
                   </TextStyle>
                 </Stack>
-              }
+              )}
               type={BasicType.GROUP}
               icon={<TableOutlined />}
             />
             <BlockIcon
               text='Column'
-              helpText={
+              helpText={(
                 <Stack vertical spacing='none'>
                   <TextStyle>
                     Columns enable you to horizontally organize the content
@@ -107,13 +107,13 @@ export const ComponentsPanel = function () {
                     a mobile view.
                   </TextStyle>
                 </Stack>
-              }
+              )}
               type={BasicType.COLUMN}
               icon={<DatabaseOutlined />}
             />
             <BlockIcon
               text='Image'
-              helpText={
+              helpText={(
                 <Stack vertical spacing='none'>
                   <TextStyle>
                     Displays a responsive image in your email. It is similar to
@@ -121,52 +121,52 @@ export const ComponentsPanel = function () {
                     provided, the image will use the parent column width.
                   </TextStyle>
                 </Stack>
-              }
+              )}
               type={BasicType.IMAGE}
               icon={<PictureOutlined />}
             />
             <BlockIcon
               text='Text'
-              helpText={
+              helpText={(
                 <Stack vertical spacing='none'>
                   <TextStyle>
                     This block allows you to display text in your email.
                   </TextStyle>
                 </Stack>
-              }
+              )}
               type={BasicType.TEXT}
               icon={<FontSizeOutlined />}
             />
             <BlockIcon
               text='Button'
-              helpText={
+              helpText={(
                 <Stack vertical spacing='none'>
                   <TextStyle>Displays a customizable button.</TextStyle>
                 </Stack>
-              }
+              )}
               type={BasicType.BUTTON}
               icon={<YoutubeOutlined />}
             />
             <BlockIcon
               text='Divider'
-              helpText={
+              helpText={(
                 <Stack vertical spacing='none'>
                   <TextStyle>
                     Displays a horizontal divider that can be customized like a
                     HTML border.
                   </TextStyle>
                 </Stack>
-              }
+              )}
               type={BasicType.DIVIDER}
               icon={<MinusOutlined />}
             />
             <BlockIcon
               text='Spacer'
-              helpText={
+              helpText={(
                 <Stack vertical spacing='none'>
                   <TextStyle>Displays a blank space.</TextStyle>
                 </Stack>
-              }
+              )}
               type={BasicType.SPACER}
               icon={<ColumnHeightOutlined />}
             />
@@ -174,7 +174,7 @@ export const ComponentsPanel = function () {
               <>
                 <BlockIcon
                   text='Accordion'
-                  helpText={
+                  helpText={(
                     <Stack vertical spacing='none'>
                       <TextStyle>
                         Accordion is an interactive component to stack content
@@ -184,26 +184,26 @@ export const ComponentsPanel = function () {
                         experience on mobile devices where space is scarce.
                       </TextStyle>
                     </Stack>
-                  }
+                  )}
                   type={BasicType.ACCORDION}
                   icon={<ColumnHeightOutlined />}
                 />
                 <BlockIcon
                   text='Hero'
-                  helpText={
+                  helpText={(
                     <Stack vertical spacing='none'>
                       <TextStyle>
                         This block displays a hero image. It behaves like an
                         'section' with a single 'column'.
                       </TextStyle>
                     </Stack>
-                  }
+                  )}
                   type={BasicType.HERO}
                   icon={<ColumnHeightOutlined />}
                 />
                 <BlockIcon
                   text='Carousel'
-                  helpText={
+                  helpText={(
                     <Stack vertical spacing='none'>
                       <TextStyle>
                         This block displays a gallery of images or "carousel".
@@ -211,33 +211,33 @@ export const ComponentsPanel = function () {
                         thumbnails depending on the email client they use.
                       </TextStyle>
                     </Stack>
-                  }
+                  )}
                   type={BasicType.CAROUSEL}
                   icon={<ColumnHeightOutlined />}
                 />
                 <BlockIcon
                   text='Navbar'
-                  helpText={
+                  helpText={(
                     <Stack vertical spacing='none'>
                       <TextStyle>
                         Displays a menu for navigation with an optional
                         hamburger mode for mobile devices.
                       </TextStyle>
                     </Stack>
-                  }
+                  )}
                   type={BasicType.NAVBAR}
                   icon={<ColumnHeightOutlined />}
                 />
                 <BlockIcon
                   text='Social'
-                  helpText={
+                  helpText={(
                     <Stack vertical spacing='none'>
                       <TextStyle>
                         Displays calls-to-action for various social networks
                         with their associated logo.
                       </TextStyle>
                     </Stack>
-                  }
+                  )}
                   type={BasicType.SOCIAL}
                   icon={<ColumnHeightOutlined />}
                 />
@@ -256,13 +256,14 @@ export const ComponentsPanel = function () {
             <div className={styles.list}>
               {item.blocks.map((block, bIndex) => (
                 <BlockIcon
-                  id={block.id}
+                  {
+                  ...block
+                  }
                   key={bIndex}
                   text={block.label}
-                  helpText={block.helpText}
                   type={block.data.type}
-                  icon={block.icon}
                   payload={block.data}
+
                 />
               ))}
               <Stack.Item fill>
