@@ -5,19 +5,19 @@ import { BasicType } from '@/constants';
 import { CSSProperties } from 'react';
 
 export type IImage = IBlockData<{
-  'alt'?: string;
-  'src'?: string;
-  'title'?: string;
-  'href'?: string;
-  'target'?: string;
-  'border'?: string;
-  'height'?: string;
+  alt?: string;
+  src?: string;
+  title?: string;
+  href?: string;
+  target?: string;
+  border?: string;
+  height?: string;
   'text-decoration'?: string;
   'text-transform'?: CSSProperties['textTransform'];
-  'align'?: CSSProperties['textAlign'];
+  align?: CSSProperties['textAlign'];
   'container-background-color'?: string;
-  'width'?: string;
-  'padding'?: string;
+  width?: string;
+  padding?: string;
 }>;
 
 export const Image = {
@@ -25,5 +25,5 @@ export const Image = {
   type: BasicType.IMAGE,
   Panel,
   createInstance,
-  validChildrenType: [],
+  validParentType: [BasicType.COLUMN],
 };

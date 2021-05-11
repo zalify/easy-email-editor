@@ -1,6 +1,6 @@
 import { Panel } from './Panel';
 import { createInstance } from './createInstance';
-import { IBlockData } from '@/typings';
+import { IBlock, IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
 export type ICarousel = IBlockData<
   {
@@ -30,10 +30,10 @@ export type ICarousel = IBlockData<
   }
 >;
 
-export const Carousel = {
+export const Carousel: IBlock = {
   name: 'Carousel',
   type: BasicType.CAROUSEL,
   Panel,
   createInstance,
-  validChildrenType: [],
+  validParentType: [BasicType.COLUMN],
 };

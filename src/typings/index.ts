@@ -6,13 +6,13 @@ export interface IBlock<T extends IBlockData = any> {
   type: BlockType;
   Panel: () => React.ReactNode;
   createInstance: (payload?: RecursivePartial<T>) => T;
-  validChildrenType: BlockType[];
+  validParentType: BlockType[];
 }
 
 export interface IBlockData<
-  K extends { [key: string]: any; } = any,
+  K extends { [key: string]: any } = any,
   T extends any = any
-  > {
+> {
   type: BlockType;
   data: {
     value: T;

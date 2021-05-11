@@ -1,6 +1,6 @@
 import { Panel } from './Panel';
 import { createInstance } from './createInstance';
-import { IBlockData } from '@/typings';
+import { IBlock, IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
 export type INavbar = IBlockData<
   {
@@ -31,10 +31,10 @@ export type INavbar = IBlockData<
   }
 >;
 
-export const Navbar = {
+export const Navbar: IBlock = {
   name: 'Navbar',
   type: BasicType.NAVBAR,
   Panel,
   createInstance,
-  validChildrenType: [],
+  validParentType: [BasicType.COLUMN],
 };

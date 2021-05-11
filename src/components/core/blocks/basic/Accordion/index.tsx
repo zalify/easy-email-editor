@@ -1,6 +1,6 @@
 import { Panel } from './Panel';
 import { createInstance } from './createInstance';
-import { IBlockData } from '@/typings';
+import { IBlock, IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
 export type IAccordion = IBlockData<
   {
@@ -21,10 +21,10 @@ export type IAccordion = IBlockData<
   {}
 >;
 
-export const Accordion = {
+export const Accordion: IBlock = {
   name: 'Accordion',
   type: BasicType.ACCORDION,
   Panel,
   createInstance,
-  validChildrenType: [],
+  validParentType: [BasicType.COLUMN],
 };

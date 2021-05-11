@@ -1,14 +1,14 @@
 import { Panel } from './Panel';
 import { createInstance } from './createInstance';
-import { IBlockData } from '@/typings';
+import { IBlock, IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
 export type IAccordionText = IBlockData<
   {
-    'color'?: string;
+    color?: string;
     'background-color'?: string;
     'font-size'?: string;
     'font-family'?: string;
-    'padding'?: string;
+    padding?: string;
     'font-weight'?: string;
     'line-height'?: string;
     'letter-spacing'?: string;
@@ -16,10 +16,10 @@ export type IAccordionText = IBlockData<
   {}
 >;
 
-export const AccordionText = {
+export const AccordionText: IBlock = {
   name: 'Accordion text',
   type: BasicType.ACCORDION_TEXT,
   Panel,
   createInstance,
-  validChildrenType: [],
+  validParentType: [BasicType.ACCORDION],
 };

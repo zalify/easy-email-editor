@@ -1,6 +1,6 @@
 import { Panel } from './Panel';
 import { createInstance } from './createInstance';
-import { IBlockData } from '@/typings';
+import { IBlock, IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
 import { CSSProperties } from 'react';
 export type IText = IBlockData<
@@ -25,10 +25,10 @@ export type IText = IBlockData<
   }
 >;
 
-export const Text = {
+export const Text: IBlock = {
   name: 'Text',
   type: BasicType.TEXT,
   Panel,
   createInstance,
-  validChildrenType: [],
+  validParentType: [BasicType.COLUMN, BasicType.HERO],
 };

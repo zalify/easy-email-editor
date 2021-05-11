@@ -10,7 +10,7 @@ export type IDivider = IBlockData<
     'container-background-color'?: string;
     width?: string;
     align?: 'left' | 'center' | 'right';
-    'padding'?: string;
+    padding?: string;
   },
   {}
 >;
@@ -20,5 +20,5 @@ export const Divider = {
   type: BasicType.DIVIDER,
   Panel,
   createInstance,
-  validChildrenType: [],
+  validParentType: [BasicType.COLUMN],
 };

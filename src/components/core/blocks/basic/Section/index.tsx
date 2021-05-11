@@ -28,5 +28,5 @@ export const Section = {
   type: BasicType.SECTION,
   Panel,
   createInstance,
-  validChildrenType: [BasicType.SECTION, BasicType.COLUMN, BasicType.GROUP],
+  validParentType: [BasicType.PAGE, BasicType.WRAPPER],
 };

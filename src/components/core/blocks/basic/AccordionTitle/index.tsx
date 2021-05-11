@@ -1,22 +1,22 @@
 import { Panel } from './Panel';
 import { createInstance } from './createInstance';
-import { IBlockData } from '@/typings';
+import { IBlock, IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
 export type IAccordionTitle = IBlockData<
   {
-    'color'?: string;
+    color?: string;
     'background-color'?: string;
     'font-size'?: string;
     'font-family'?: string;
-    'padding'?: string;
+    padding?: string;
   },
   {}
 >;
 
-export const AccordionTitle = {
+export const AccordionTitle: IBlock = {
   name: 'Accordion title',
   type: BasicType.ACCORDION_TITLE,
   Panel,
   createInstance,
-  validChildrenType: [],
+  validParentType: [BasicType.ACCORDION],
 };

@@ -15,13 +15,8 @@ import { useEditorContext } from './useEditorContext';
 import { RecordContext } from '@/components/RecordProvider';
 
 export function useBlock() {
-  const {
-    values,
-    setValues,
-    getFieldHelpers,
-    setFormikState,
-    handleChange,
-  } = useEditorContext();
+  const { values, setValues, getFieldHelpers, setFormikState, handleChange } =
+    useEditorContext();
 
   const { focusIdx, hoverIdx } = values;
   const focusBlock = get(values, focusIdx) as IBlockData | null;
@@ -128,9 +123,11 @@ export function useBlock() {
           }
         }
 
-        if (!parentBlock.validChildrenType.includes(child.type)) {
+        if (!block.validParentType.includes(parent.type)) {
           message.warning(
-            `${block.name} can not insert to ${parentBlock.name}`
+            `${block.name} cannot be used inside ${
+              parentBlock.name
+            }, only inside: ${block.validParentType.join(', ')}`
           );
           return formState;
         }
@@ -145,47 +142,57 @@ export function useBlock() {
     [setFormikState]
   );
 
-  const moveBlock = useCallback((params: {
-    sourceIdx: string;
-    destinationIdx: string;
-    positionIndex: number;
-  }) => {
-    let { sourceIdx, destinationIdx, positionIndex } = params;
-    setFormikState((formState) => {
+  const moveBlock = useCallback(
+    (params: {
+      sourceIdx: string;
+      destinationIdx: string;
+      positionIndex: number;
+    }) => {
+      let { sourceIdx, destinationIdx, positionIndex } = params;
+      setFormikState((formState) => {
+        const source = getValueByIdx(formState.values, sourceIdx)!;
+        const sourceParentIdx = getParentIdx(sourceIdx);
+        if (!sourceParentIdx) return formState;
+        const sourceParent = getValueByIdx(formState.values, sourceParentIdx)!;
+        const destinationParent = getValueByIdx(
+          formState.values,
+          destinationIdx
+        )!;
 
-      const source = getValueByIdx(formState.values, sourceIdx)!;
-      const sourceParentIdx = getParentIdx(sourceIdx);
-      if (!sourceParentIdx) return formState;
-      const sourceParent = getValueByIdx(formState.values, sourceParentIdx)!;
-      const destinationParent = getValueByIdx(formState.values, destinationIdx)!;
-
-      const parentBlock = findBlockByType(destinationParent.type);
-      if (!parentBlock.validChildrenType.includes(source.type)) {
         const sourceBlock = findBlockByType(source.type);
-        message.warning(
-          `${sourceBlock.name} can not insert to ${parentBlock.name}`
-        );
-        return formState;
-      }
-
-      if (sourceParent === destinationParent) {
-        const sourceIndex = getIndexByIdx(sourceIdx);
-        if (sourceIndex < positionIndex) {
-          positionIndex -= 1;
+        if (!sourceBlock.validParentType.includes(destinationParent.type)) {
+          const parentBlock = findBlockByType(destinationParent.type);
+          message.warning(
+            `${sourceBlock.name} cannot be used inside ${
+              parentBlock.name
+            }, only inside: ${sourceBlock.validParentType.join(', ')}`
+          );
+          return formState;
         }
-        const [removed] = sourceParent.children.splice(sourceIndex, 1);
-        destinationParent.children.splice(positionIndex, 0, removed);
-      } else {
-        sourceParent.children = sourceParent.children.filter(item => item !== source);
-        destinationParent.children.splice(positionIndex, 0, source);
-        set(formState.values, sourceParentIdx, { ...sourceParent });
-        set(formState.values, destinationIdx, { ...destinationParent });
-      }
 
-      formState.values.focusIdx = destinationIdx + `.children.[${positionIndex}]`;
-      return { ...formState };
-    });
-  }, [setFormikState]);
+        if (sourceParent === destinationParent) {
+          const sourceIndex = getIndexByIdx(sourceIdx);
+          if (sourceIndex < positionIndex) {
+            positionIndex -= 1;
+          }
+          const [removed] = sourceParent.children.splice(sourceIndex, 1);
+          destinationParent.children.splice(positionIndex, 0, removed);
+        } else {
+          sourceParent.children = sourceParent.children.filter(
+            (item) => item !== source
+          );
+          destinationParent.children.splice(positionIndex, 0, source);
+          set(formState.values, sourceParentIdx, { ...sourceParent });
+          set(formState.values, destinationIdx, { ...destinationParent });
+        }
+
+        formState.values.focusIdx =
+          destinationIdx + `.children.[${positionIndex}]`;
+        return { ...formState };
+      });
+    },
+    [setFormikState]
+  );
 
   const copyBlock = useCallback(
     (idx: string) => {
