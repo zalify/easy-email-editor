@@ -25,7 +25,7 @@ export type IProductRecommendation = IBlockData<
   }
 >;
 
-const transform = (data: IProductRecommendation, idx?: string) => {
+const transform = (data: IProductRecommendation) => {
   const { title, productList, buttonText } = data.data.value;
   const attributes = data.attributes;
 

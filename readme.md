@@ -11,7 +11,7 @@ Overview |
 
 ## Live Demo
 
-Check out the live demo here: <a href="http://easy-email-m-ryan.vercel.app/editor?id=456" target="_blank" alt="http://easy-email-m-ryan.vercel.app/editor?id=456">http://easy-email-m-ryan.vercel.app/editor?id=456</a>
+Check out the live demo here: <a href="http://easy-email-m-ryan.vercel.app" target="_blank" alt="http://easy-email-m-ryan.vercel.app">http://easy-email-m-ryan.vercel.app</a>
 
 
 ## Getting started
@@ -32,14 +32,14 @@ $ yarn add easy-email-editor antd formik mjml-browser
 
 ```js
 import React from 'react';
-import { BasicType, BlocksMap, EmailEditor, EmailEditorLayout } from 'easy-email-editor';
+import { BlocksMap, EmailEditor, EmailEditorLayout } from 'easy-email-editor';
 import 'easy-email-editor/lib/style.css';
 import 'antd/dist/antd.css';
 
 const initialValues = {
   subject: 'Welcome to Easy-email',
   subTitle: 'Nice to meet you!',
-  content: BlocksMap.findBlockByType(BasicType.PAGE).createInstance({}),
+  content:BlocksMap.getBlock('Page').createInstance({}),
 };
 
 export function App() {
@@ -56,13 +56,26 @@ export function App() {
 
 ```
 
+### Development
+
+```sh
+$ git clone git@github.com:m-Ryan/easy-email.git
+$ cd easy-email
+$ yarn install
+
+```
+
+### Start the dev server
+```sh
+$ yarn dev
+
+```
+
+You could customize your own blocks and inject data before sending emails. For more details, please see  <a href="https://github.com/m-Ryan/easy-email/tree/master/example/pages/Editor/components/CustomBlocks" target="_blank" alt="https://github.com/m-Ryan/easy-email/tree/master/example/pages/Editor/components/CustomBlocks">https://github.com/m-Ryan/easy-email/tree/master/example/pages/Editor/components/CustomBlocks</a>
+<img src="https://assets.maocanhua.cn/e56ac8d8-575a-458b-a4c4-ac9e50b62799-image.png" alt="Overview" width="100%" style="text-align:center">
+
 ### Examples
 Please see <a href="https://github.com/m-Ryan/easy-email/blob/master/example/pages/Editor/index.tsx" target="_blank" alt="https://github.com/m-Ryan/easy-email/blob/master/example/pages/Editor/index.tsx">https://github.com/m-Ryan/easy-email/blob/master/example/pages/Editor/index.tsx</a>
 
 ### APIs
-See here: <a href="https://github.com/m-Ryan/easy-email/blob/master/src/index.tsx" target="_blank" alt="https://github.com/m-Ryan/easy-email/blob/master/src/index.tsx">https://github.com/m-Ryan/easy-email/blob/master/src/index.tsx</a>
-
-### Todo
-
-- Custom block that Help you add your own content blocks to the editor.
-
+See here: <a href="https://github.com/m-Ryan/easy-email/tree/master/example/pages/Editor/components/CustomBlocks" target="_blank" alt="https://github.com/m-Ryan/easy-email/blob/master/src/index.tsx">https://github.com/m-Ryan/easy-email/blob/master/src/index.tsx</a>
