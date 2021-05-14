@@ -34,7 +34,7 @@ export default createSliceState({
       return {
         subject: 'Welcome to Easy-email',
         subTitle: 'Nice to meet you!',
-        content: BlocksMap.findBlockByType(BasicType.PAGE).createInstance({}),
+        content: BlocksMap.getBlock('Page').createInstance({}),
       } as IEmailTemplate;
     },
     create: async (
