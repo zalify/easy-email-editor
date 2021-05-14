@@ -100,23 +100,6 @@ export type FilterType<T, K> = {
   [P in keyof T]: T[P] extends K ? P : never;
 }[keyof T];
 
-export function easeInOutCubic(pos: number) {
-  if ((pos /= 0.5) < 1) return 0.5 * Math.pow(pos, 3);
-  return 0.5 * (Math.pow(pos - 2, 3) + 2);
-}
-
-export function getStyleBgImg(url: string) {
-  if (url === 'none') return '';
-  return url
-    .replace(/(.*)(http(.*))\)/, '$2')
-    .replace('"', '')
-    .replace("'", '');
-}
-
-export function setStyleBgImg(url: string) {
-  return `url(${url})`;
-}
-
 export async function createQrcode(url: string, logo?: string) {
   try {
     const canvasWidth = 500;

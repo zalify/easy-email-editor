@@ -1,6 +1,6 @@
 import { Panel } from './Panel';
 import { createInstance } from './createInstance';
-import { IBlockData } from '@/typings';
+import { IBlock, IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
 import { CSSProperties } from 'react';
 export type ISection = IBlockData<
@@ -23,10 +23,10 @@ export type ISection = IBlockData<
   {}
 >;
 
-export const Section = {
+export const Section: IBlock<ISection> = {
   name: 'Section',
   type: BasicType.SECTION,
   Panel,
   createInstance,
-  validChildrenType: [BasicType.SECTION, BasicType.COLUMN, BasicType.GROUP],
+  validParentType: [BasicType.PAGE, BasicType.WRAPPER],
 };

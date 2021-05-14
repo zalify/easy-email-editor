@@ -19,9 +19,6 @@ import { getTangentDirection } from '@/utils/getTangentDirection';
 import { get } from 'lodash';
 import { IBlockData } from '@/typings';
 import { findBlockNodeByIdx } from '@/utils/findBlockNodeByIdx';
-import copy from 'copy-to-clipboard';
-import { message } from 'antd';
-
 export function useDropBlock() {
   const [ref, setRef] = useState<HTMLElement | null>(null);
   const {
@@ -187,74 +184,6 @@ export function useDropBlock() {
       };
     }
   }, [ref]);
-
-  useEffect(() => {
-    if (ref) {
-      const onCopy = (ev: ClipboardEvent) => {
-        ev.preventDefault();
-        const range = document.getSelection()?.getRangeAt(0);
-        if (
-          !range ||
-          (range.startOffset === 0 && range.startOffset === range.endOffset)
-        ) {
-          const block = findBlockByType(focusBlock!.type);
-          copy(
-            JSON.stringify({
-              copyBlock: focusBlock,
-            })
-          );
-          message.info(`${block?.name} block copied`);
-        }
-      };
-      const onCut = (ev: ClipboardEvent) => {
-        ev.preventDefault();
-        try {
-          const range = document.getSelection()?.getRangeAt(0);
-          if (
-            !range ||
-            (range.startOffset === 0 && range.startOffset === range.endOffset)
-          ) {
-            copy(
-              JSON.stringify({
-                copyBlock: focusBlock,
-              })
-            );
-            const block = findBlockByType(focusBlock!.type);
-            message.info(`${block?.name} block copied`);
-            removeBlock(focusIdx);
-          }
-        } catch (error) {
-          console.log('error', error);
-        }
-      };
-
-      const onPaste = (ev: ClipboardEvent) => {
-        ev.preventDefault();
-        var text = ev.clipboardData?.getData('text/plain') || '';
-        try {
-          const blockData: IBlockData = JSON.parse(text).copyBlock;
-
-          addBlock({
-            type: blockData.type,
-            parentIdx: focusIdx,
-            payload: blockData,
-            canReplace: true,
-          });
-        } catch (error) {
-          console.log('paste error', error, text);
-        }
-      };
-
-      ref.addEventListener('copy', onCopy);
-      ref.addEventListener('cut', onCut);
-      ref.addEventListener('paste', onPaste);
-      return () => {
-        ref.removeEventListener('copy', onCopy);
-        ref.removeEventListener('cut', onCut);
-        ref.removeEventListener('paste', onPaste);
-      };
-    }
-  }, [ref, focusIdx, focusBlock, addBlock, removeBlock]);
 
   const hoverBlock = useMemo(() => {
     if (!ref) return null;

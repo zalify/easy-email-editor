@@ -4,9 +4,10 @@ import React from 'react';
 export interface CollectedBlock {
   label: string;
   helpText?: string;
+  thumbnail?: string;
   icon?: React.ReactElement;
   data: IBlockData;
-  id: string;
+  id?: string;
 }
 
 export interface BlockGroup {

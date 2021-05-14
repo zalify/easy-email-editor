@@ -1,6 +1,6 @@
 import { Panel } from './Panel';
 import { createInstance } from './createInstance';
-import { IBlockData } from '@/typings';
+import { IBlock, IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
 export type IHero = IBlockData<
   {
@@ -12,19 +12,17 @@ export type IHero = IBlockData<
     'vertical-align'?: string;
     'border-radius'?: string;
     width?: string;
-    'height'?: string;
+    height?: string;
     mode: 'fluid-height' | 'fixed-height';
     padding?: string;
-
   },
   {}
 >;
 
-export const Hero = {
+export const Hero: IBlock<IHero> = {
   name: 'Hero',
   type: BasicType.HERO,
   Panel,
   createInstance,
-  validChildrenType: [],
+  validParentType: [BasicType.PAGE],
 };
-

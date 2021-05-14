@@ -10,12 +10,12 @@ export function MjmlToJson(data: MjmlBlockItem): IPage {
     switch (item.tagName) {
       case 'mjml':
         const body = item.children?.find((item) => item.tagName === 'mj-body')!;
-        const head = item.children?.find((item) => item.tagName === 'mj-head')!;
+        const head = item.children?.find((item) => item.tagName === 'mj-head');
 
-        const fonts = head.children?.filter(child => child.tagName === 'mj-font').map(child => ({ name: child.attributes.name, href: child.attributes.href })) || [];
+        const fonts = head?.children?.filter(child => child.tagName === 'mj-font').map(child => ({ name: child.attributes.name, href: child.attributes.href })) || [];
         let allFontFamily = '';
         let allTextColor = '';
-        const mjAllAttributes = head.children?.find(item => item.tagName === 'mj-attributes')?.children?.filter(item => {
+        const mjAllAttributes = head?.children?.find(item => item.tagName === 'mj-attributes')?.children?.filter(item => {
           if (item.tagName === 'mj-all') {
             if (item.attributes['font-family']) {
               allFontFamily = item.attributes['font-family'];

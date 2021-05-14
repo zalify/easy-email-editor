@@ -20,11 +20,12 @@ import services from '@example/services';
 import {
   EmailEditor,
   EmailEditorLayout,
-  EditorProps,
+  IEmailTemplate,
   transformToMjml,
 } from 'easy-email-editor';
 import 'easy-email-editor/lib/style.css';
 import { Stack } from '@example/components/Stack';
+import { customBlocks } from './components/CustomBlocks';
 
 export default function Editor() {
   const dispatch = useDispatch();
@@ -53,7 +54,7 @@ export default function Editor() {
   }, [dispatch, id]);
 
   const onSubmit = useCallback(
-    async (values: EditorProps) => {
+    async (values: IEmailTemplate) => {
       if (id) {
         dispatch(
           template.actions.updateById({
@@ -79,7 +80,7 @@ export default function Editor() {
     [dispatch, history, id]
   );
 
-  const onExportHtml = (values: EditorProps) => {
+  const onExportHtml = (values: IEmailTemplate) => {
     const html = mjml(transformToMjml(values.content), {
       beautify: true,
       validationLevel: 'soft',
@@ -89,13 +90,20 @@ export default function Editor() {
     message.success('Copied to pasteboard!');
   };
 
-  const initialValues: EditorProps | null = useMemo(() => {
+  const initialValues: IEmailTemplate | null = useMemo(() => {
     if (!templateData) return null;
     return {
       ...templateData,
       content: cloneDeep(templateData.content), // because redux object is not extensible
     };
   }, [templateData]);
+
+  const extraBlocksList = useMemo(() => {
+    return [
+      customBlocks,
+      ...extraBlocksData
+    ];
+  }, [extraBlocksData]);
 
   if (!templateData && loading) {
     return (
@@ -120,7 +128,7 @@ export default function Editor() {
     <div>
       <EmailEditor
         data={initialValues}
-        extraBlocks={extraBlocksData}
+        extraBlocks={extraBlocksList}
         onAddCollection={onAddCollection}
         onRemoveCollection={onRemoveCollection}
         onUploadImage={services.common.uploadByQiniu}

@@ -1,6 +1,6 @@
 import { BlockType, BasicType } from '../constants';
 import { cloneDeep, debounce, get, set } from 'lodash';
-import { IBlockData, RecursivePartial } from '../typings';
+import { IBlockData } from '../typings';
 import { useCallback, useContext } from 'react';
 import { message } from 'antd';
 import {
@@ -15,13 +15,8 @@ import { useEditorContext } from './useEditorContext';
 import { RecordContext } from '@/components/RecordProvider';
 
 export function useBlock() {
-  const {
-    values,
-    setValues,
-    getFieldHelpers,
-    setFormikState,
-    handleChange,
-  } = useEditorContext();
+  const { values, setValues, getFieldHelpers, setFormikState, handleChange } =
+    useEditorContext();
 
   const { focusIdx, hoverIdx } = values;
   const focusBlock = get(values, focusIdx) as IBlockData | null;
@@ -47,7 +42,8 @@ export function useBlock() {
       setFormikState((formState) => {
         let parent = get(formState.values, parentIdx) as IBlockData | null;
         if (!parent) {
-          throw new Error('Invalid block');
+          message.warning('Invalid block');
+          return formState;
         }
 
         let child = createBlockItem(type, payload);
@@ -59,14 +55,29 @@ export function useBlock() {
         const block = findBlockByType(type);
         const parentBlock = findBlockByType(parent.type);
 
-        if (
+        if ([BasicType.COLUMN, BasicType.GROUP].includes(block.type)) {
+          if (parentBlock.type === BasicType.PAGE) {
+            child = createBlockItem(BasicType.WRAPPER, {
+              children: [
+                createBlockItem(BasicType.SECTION, {
+                  children: [child],
+                }),
+              ],
+            });
+            focusIdx += '.children.[0].children.[0]';
+          } else if (parentBlock.type === BasicType.WRAPPER) {
+            child = createBlockItem(BasicType.SECTION, {
+              children: [child],
+            });
+            focusIdx += '.children.[0]';
+          }
+        } else if (
           [
             BasicType.TEXT,
             BasicType.IMAGE,
             BasicType.SPACER,
             BasicType.DIVIDER,
-            BasicType.COLUMN,
-            BasicType.GROUP,
+
             BasicType.BUTTON,
             BasicType.ACCORDION,
             BasicType.CAROUSEL,
@@ -74,7 +85,10 @@ export function useBlock() {
             BasicType.SOCIAL,
           ].includes(block.type)
         ) {
-          if (parentBlock.type === BasicType.SECTION) {
+          if (
+            parentBlock.type === BasicType.SECTION ||
+            parentBlock.type === BasicType.GROUP
+          ) {
             child = createBlockItem(BasicType.COLUMN, {
               children: [child],
             });
@@ -128,9 +142,11 @@ export function useBlock() {
           }
         }
 
-        if (!parentBlock.validChildrenType.includes(child.type)) {
+        const fixedBlock = findBlockByType(child.type);
+        if (!fixedBlock.validParentType.includes(parent.type)) {
           message.warning(
-            `${block.name} can not insert to ${parentBlock.name}`
+            `${block.type} cannot be used inside ${parentBlock.type
+            }, only inside: ${block.validParentType.join(', ')}`
           );
           return formState;
         }
@@ -145,47 +161,56 @@ export function useBlock() {
     [setFormikState]
   );
 
-  const moveBlock = useCallback((params: {
-    sourceIdx: string;
-    destinationIdx: string;
-    positionIndex: number;
-  }) => {
-    let { sourceIdx, destinationIdx, positionIndex } = params;
-    setFormikState((formState) => {
+  const moveBlock = useCallback(
+    (params: {
+      sourceIdx: string;
+      destinationIdx: string;
+      positionIndex: number;
+    }) => {
+      let { sourceIdx, destinationIdx, positionIndex } = params;
+      setFormikState((formState) => {
+        const source = getValueByIdx(formState.values, sourceIdx)!;
+        const sourceParentIdx = getParentIdx(sourceIdx);
+        if (!sourceParentIdx) return formState;
+        const sourceParent = getValueByIdx(formState.values, sourceParentIdx)!;
+        const destinationParent = getValueByIdx(
+          formState.values,
+          destinationIdx
+        )!;
 
-      const source = getValueByIdx(formState.values, sourceIdx)!;
-      const sourceParentIdx = getParentIdx(sourceIdx);
-      if (!sourceParentIdx) return formState;
-      const sourceParent = getValueByIdx(formState.values, sourceParentIdx)!;
-      const destinationParent = getValueByIdx(formState.values, destinationIdx)!;
-
-      const parentBlock = findBlockByType(destinationParent.type);
-      if (!parentBlock.validChildrenType.includes(source.type)) {
         const sourceBlock = findBlockByType(source.type);
-        message.warning(
-          `${sourceBlock.name} can not insert to ${parentBlock.name}`
-        );
-        return formState;
-      }
-
-      if (sourceParent === destinationParent) {
-        const sourceIndex = getIndexByIdx(sourceIdx);
-        if (sourceIndex < positionIndex) {
-          positionIndex -= 1;
+        if (!sourceBlock.validParentType.includes(destinationParent.type)) {
+          const parentBlock = findBlockByType(destinationParent.type);
+          message.warning(
+            `${sourceBlock.name} cannot be used inside ${parentBlock.name
+            }, only inside: ${sourceBlock.validParentType.join(', ')}`
+          );
+          return formState;
         }
-        const [removed] = sourceParent.children.splice(sourceIndex, 1);
-        destinationParent.children.splice(positionIndex, 0, removed);
-      } else {
-        sourceParent.children = sourceParent.children.filter(item => item !== source);
-        destinationParent.children.splice(positionIndex, 0, source);
-        set(formState.values, sourceParentIdx, { ...sourceParent });
-        set(formState.values, destinationIdx, { ...destinationParent });
-      }
 
-      formState.values.focusIdx = destinationIdx + `.children.[${positionIndex}]`;
-      return { ...formState };
-    });
-  }, [setFormikState]);
+        if (sourceParent === destinationParent) {
+          const sourceIndex = getIndexByIdx(sourceIdx);
+          if (sourceIndex < positionIndex) {
+            positionIndex -= 1;
+          }
+          const [removed] = sourceParent.children.splice(sourceIndex, 1);
+          destinationParent.children.splice(positionIndex, 0, removed);
+        } else {
+          sourceParent.children = sourceParent.children.filter(
+            (item) => item !== source
+          );
+          destinationParent.children.splice(positionIndex, 0, source);
+          set(formState.values, sourceParentIdx, { ...sourceParent });
+          set(formState.values, destinationIdx, { ...destinationParent });
+        }
+
+        formState.values.focusIdx =
+          destinationIdx + `.children.[${positionIndex}]`;
+        return { ...formState };
+      });
+    },
+    [setFormikState]
+  );
 
   const copyBlock = useCallback(
     (idx: string) => {
@@ -197,7 +222,8 @@ export function useBlock() {
           getParentIdx(idx) || ''
         ) as IBlockData | null;
         if (!parent) {
-          throw new Error('Invalid block');
+          message.warning('Invalid block');
+          return formState;
         }
         const copyBlock = cloneDeep(get(formState.values, idx));
         const index = getIndexByIdx(idx) + 1;
@@ -216,7 +242,8 @@ export function useBlock() {
       setFormikState((formState) => {
         const block = getValueByIdx(values, idx);
         if (!block) {
-          throw new Error('Invalid block');
+          message.warning('Invalid block');
+          return formState;
         }
         const parentIdx = getParentIdx(idx);
         const parent = get(
@@ -229,7 +256,8 @@ export function useBlock() {
             message.warning('Page node can not remove');
             return formState;
           }
-          throw new Error('Invalid block');
+          message.warning('Invalid block');
+          return formState;
         }
 
         parent.children.splice(blockIndex, 1);

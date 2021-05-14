@@ -1,12 +1,13 @@
 import { IPage } from '@/components/core/blocks/basic/Page';
 import { BlockType } from '@/constants';
 
-export interface IBlock<T extends IBlockData = any> {
+export interface IBlock<T extends IBlockData = IBlockData> {
   name: string;
-  type: BlockType;
+  type: BlockType | string;
   Panel: () => React.ReactNode;
   createInstance: (payload?: RecursivePartial<T>) => T;
-  validChildrenType: BlockType[];
+  validParentType: BlockType[];
+  transform?: (data: IBlockData, idx?: string) => IBlockData;
 }
 
 export interface IBlockData<
@@ -34,5 +35,8 @@ export interface CreateInstance<T extends any = any> {
 }
 
 export type RecursivePartial<T> = {
-  [P in keyof T]?: Partial<T[P]>;
+  [P in keyof T]?:
+  T[P] extends (infer U)[] ? RecursivePartial<U>[] :
+  T[P] extends object ? RecursivePartial<T[P]> :
+  T[P];
 };

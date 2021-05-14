@@ -28,9 +28,8 @@ export const EmailEditorLayout = (props: EmailEditorLayoutProps) => {
   const [activeTab, setActiveTab] = useState('editor');
   const { pageData } = useEditorContext();
 
-
   const pageMaxWidth = pageData.attributes.width || '600px';
-  const pageMinWidth = pageData.data.value.breakpoint || '480px';
+  const pageMinWidth = pageData.data.value.breakpoint || '375px';
 
   return (
     <Layout>
@@ -138,7 +137,8 @@ export const EmailEditorLayout = (props: EmailEditorLayoutProps) => {
                   <IframeComponent
                     height='100%'
                     width='100%'
-                    style={{ border: 'none', paddingTop: -16 }}
+                    style={{ paddingTop: -16 }}
+                    className={styles.app}
                   >
                     <PreviewEmail />
                   </IframeComponent>

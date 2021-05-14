@@ -1,6 +1,6 @@
 import { Panel } from './Panel';
 import { createInstance } from './createInstance';
-import { IBlockData } from '@/typings';
+import { IBlock, IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
 import { CSSProperties } from 'react';
 export type IWrapper = IBlockData<
@@ -16,10 +16,10 @@ export type IWrapper = IBlockData<
   {}
 >;
 
-export const Wrapper = {
+export const Wrapper: IBlock<IWrapper> = {
   name: 'Wrapper',
   type: BasicType.WRAPPER,
   Panel,
   createInstance,
-  validChildrenType: [BasicType.SECTION, BasicType.HERO],
+  validParentType: [BasicType.PAGE],
 };
