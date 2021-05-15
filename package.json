@@ -2,7 +2,7 @@
   "name": "easy-email-editor",
   "license": "MIT",
   "description": "Email editor",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": "m-Ryan",
   "repository": {
     "type": "git",
@@ -18,7 +18,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lib": "vite build --config vite.lib.config.ts",
+    "lib": "rimraf lib && vite build --config vite.lib.config.ts",
     "preview": "npm run lib && vite --config vite.preview.config.ts"
   },
   "devDependencies": {
@@ -38,6 +38,7 @@
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "postcss-loader": "^4.2.0",
+    "rimraf": "^3.0.2",
     "rollup-plugin-analyzer": "^4.0.0",
     "sass": "^1.32.5",
     "sass-loader": "^10.1.1",

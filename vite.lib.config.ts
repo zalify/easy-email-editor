@@ -22,7 +22,7 @@ export default defineConfig({
 
   },
   build: {
-    minify: false,
+    minify: true,
     manifest: true,
     sourcemap: true,
     target: 'es2015',

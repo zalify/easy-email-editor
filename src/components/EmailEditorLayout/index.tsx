@@ -29,7 +29,7 @@ export const EmailEditorLayout = (props: EmailEditorLayoutProps) => {
   const { pageData } = useEditorContext();
 
   const pageMaxWidth = pageData.attributes.width || '600px';
-  const pageMinWidth = pageData.data.value.breakpoint || '375px';
+  const pageMinWidth = '375px';
 
   return (
     <Layout>
