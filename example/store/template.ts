@@ -4,8 +4,9 @@ import { message } from 'antd';
 import { history } from '@example/util/history';
 import { IBlockData } from '@/typings';
 import { emailToImage } from '@example/util/emailToImage';
-import { BlocksMap, IEmailTemplate, BasicType, } from 'easy-email-editor';
+import { BlocksMap, IEmailTemplate, } from 'easy-email-editor';
 
+const defaultTemplateIds = [468, 462, 460, 459, 458, 456, 454, 453, 452];
 export default createSliceState({
   name: 'template',
   initialState: null as Omit<IEmailTemplate, 'hoverIdx' | 'focusIdx'> | null,
@@ -60,16 +61,29 @@ export default createSliceState({
       payload: {
         id: number;
         template: IEmailTemplate;
-        success: () => void;
+        success: (templateId: number) => void;
       }
     ) => {
       const picture = await emailToImage(payload.template.content);
-      await article.updateArticle(payload.id, {
-        ...payload.template,
-        picture,
-        content: JSON.stringify(payload.template.content),
-      });
-      payload.success();
+      if (defaultTemplateIds.includes(payload.id)) {
+        const data = await article.addArticle({
+          ...payload.template,
+          picture,
+          summary: payload.template.subTitle || payload.template.subject,
+          title: payload.template.subject,
+          content: JSON.stringify(payload.template.content),
+        });
+        payload.success(data.article_id);
+        return { ...data, ...payload.template };
+      } else {
+        await article.updateArticle(payload.id, {
+          ...payload.template,
+          picture,
+          content: JSON.stringify(payload.template.content),
+        });
+        payload.success(payload.id);
+      }
+
     },
     removeById: async (state, payload: { id: number; success: () => void; }) => {
       await article.deleteArticle(payload.id);

@@ -5,7 +5,6 @@ import { IPage } from '@/components/core/blocks/basic/Page';
 import { ISocial } from '@/components/core/blocks/basic/Social';
 import { BasicType } from '@/constants';
 import { IBlockData } from '@/typings';
-import { merge } from 'lodash';
 import {
   getChildIdx,
   getNodeIdxClassName,

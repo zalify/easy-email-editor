@@ -60,8 +60,9 @@ export default function Editor() {
           template.actions.updateById({
             id: +id,
             template: values,
-            success() {
+            success(templateId) {
               message.success('Updated success!');
+              history.replace(`/editor?id=${templateId}`);
             },
           })
         );

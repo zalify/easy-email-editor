@@ -51,7 +51,7 @@ export function CardItem(props: CardItemProps) {
             <CopyOutlined />
             &nbsp;Copy
           </div>
-          <div className={styles.listItem}>
+          {/* <div className={styles.listItem}>
             <Popconfirm
               title='Are you want to delete it?'
               onConfirm={onDelete}
@@ -61,7 +61,7 @@ export function CardItem(props: CardItemProps) {
               <DeleteOutlined />
               &nbsp;Delete
             </Popconfirm>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

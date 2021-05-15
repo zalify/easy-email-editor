@@ -3,16 +3,30 @@ import { Padding } from '@/components/EmailEditorLayout/components/Configuration
 import { Background } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Background';
 import { Stack } from '@/components/Stack';
 import { TextAlign } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/TextAlign';
-import { Border } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Border';
+import { TextField } from '@/components/core/Form';
+import { useBlock } from '@/hooks/useBlock';
 
 export function Panel() {
-
+  const { focusIdx } = useBlock();
   return (
     <Stack>
       <Padding />
       <Background />
       <TextAlign />
-      <Border />
+      <Stack vertical>
+        <TextField
+          label='Border'
+          name={`${focusIdx}.attributes.border`}
+          inline
+          quickchange
+        />
+        <TextField
+          label='Background border radius'
+          name={`${focusIdx}.attributes.border-radius`}
+          inline
+          quickchange
+        />
+      </Stack>
     </Stack>
   );
 
