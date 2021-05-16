@@ -20,6 +20,12 @@ export interface PropsProviderProps {
   onAddCollection?: (payload: CollectedBlock) => void;
   onRemoveCollection?: (payload: { id: string; }) => void;
   onUploadImage?: (data: Blob) => Promise<string>;
+  interactiveStyle?: {
+    hoverColor?: string;
+    selectedColor?: string;
+    dragoverColor?: string;
+    tangentColor?: string;
+  };
 }
 
 export const EditorPropsContext = React.createContext<PropsProviderProps>({

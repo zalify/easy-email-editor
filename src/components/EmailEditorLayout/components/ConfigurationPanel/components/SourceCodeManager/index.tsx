@@ -42,6 +42,7 @@ export function SourceCodeManager() {
     (event: React.FocusEvent<HTMLTextAreaElement>) => {
       if (!isRoot) return;
       const { json, errors } = mjml(event.target.value, { validationLevel: 'soft' });
+      console.log(errors);
       if (errors.length > 0) {
         message.error(
           <TextStyle>Unvalid data, please visit <a href="https://mjml.io/try-it-live" target="_blank">Mjml website</a> to update.</TextStyle>

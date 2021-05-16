@@ -133,6 +133,14 @@ export default function Editor() {
         onAddCollection={onAddCollection}
         onRemoveCollection={onRemoveCollection}
         onUploadImage={services.common.uploadByQiniu}
+        interactiveStyle={
+          {
+            hoverColor: '#3b97e3',
+            selectedColor: '#69c0ff',
+            dragoverColor: '#13c2c2',
+            tangentColor: '#ffec3d'
+          }
+        }
       >
         {({ values }) => {
           return (
@@ -164,7 +172,7 @@ export default function Editor() {
           );
         }}
       </EmailEditor>
-      {modal}
+      { modal}
     </div>
   );
 }

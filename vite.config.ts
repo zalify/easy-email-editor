@@ -24,7 +24,11 @@ export default defineConfig({
     },
     preprocessorOptions: {
       scss: {},
+      less: {
+        javascriptEnabled: true,
+      }
     },
+
   },
   server: {
     proxy: {

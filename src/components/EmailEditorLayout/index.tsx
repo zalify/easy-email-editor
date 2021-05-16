@@ -102,7 +102,7 @@ export const EmailEditorLayout = (props: EmailEditorLayoutProps) => {
                 <div
                   style={{
                     width: pageMaxWidth,
-                    padding: 40,
+                    padding: '40px 0px',
                     margin: 'auto',
                     height: '100%'
                   }}

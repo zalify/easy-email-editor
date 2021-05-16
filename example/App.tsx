@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import Page from '@example/components/Page';
 import Home from '@example/pages/Home';
 import store from '@example/store';
-import 'antd/dist/antd.css';
+import './theme.less';
 import '@example/styles/common.scss';
 import Editor from '@example/pages/Editor';
 import { history } from './util/history';

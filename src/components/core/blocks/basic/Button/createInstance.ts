@@ -25,6 +25,7 @@ export const createInstance: CreateInstance<IButton> = (payload) => {
       'vertical-align': 'middle',
       border: 'none',
       'text-align': 'center',
+      'href': '#'
     },
     children: [],
   };

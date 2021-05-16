@@ -31,6 +31,7 @@ export function Panel() {
       />
       <Color />
       <FontSize />
+      <Link />
       <LineHeight />
 
       <FontStyle />
@@ -44,7 +45,6 @@ export function Panel() {
       <Align />
       <Padding title="Inner padding" attributeName="inner-padding" />
       <Padding title="Padding" attributeName="padding" />
-      <Link />
       <Border />
       <ContainerBackgroundColor />
       <TextAlign />

@@ -23,8 +23,9 @@ import { TextStyle } from '@/components/TextStyle';
 import styles from './index.module.scss';
 import { classnames } from '@/utils/classnames';
 import { useDropBlock } from '@/hooks/useDropBlock';
-import blockInteractiveStyleText from '@/styles/block-interactive.css.text?raw';
+
 import { BlockAvatarWrapper } from '@/components/core/wrapper/BlockAvatarWrapper';
+import { BlockInteractiveStyle } from '../../../BlockInteractiveStyle';
 
 export function BlockLayerManager() {
   const { setRef } = useDropBlock();
@@ -32,7 +33,7 @@ export function BlockLayerManager() {
   return (
     <div ref={setRef}>
       <BlockLayerItem blockData={pageData} idx={getPageIdx()} />
-      <style>{blockInteractiveStyleText}</style>
+      <BlockInteractiveStyle />
     </div>
   );
 }
@@ -112,12 +113,12 @@ const BlockLayerItem = ({
           {blockData.children.map((item, index) => (
             <BlockLayerItem
               key={index}
-              indent={
+              indent={(
                 <Stack spacing='none'>
                   {indent}
                   <div style={{ width: 16, height: '100%' }} />
                 </Stack>
-              }
+              )}
               blockData={item}
               idx={getChildIdx(idx, index)}
             />
@@ -128,7 +129,7 @@ const BlockLayerItem = ({
   );
 };
 
-function EyeIcon({ idx, blockData }: { idx: string; blockData: IBlockData }) {
+function EyeIcon({ idx, blockData }: { idx: string; blockData: IBlockData; }) {
   const { setValueByIdx } = useBlock();
 
   const onToggleVisible = useCallback(
