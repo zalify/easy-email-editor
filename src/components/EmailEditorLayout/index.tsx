@@ -86,7 +86,7 @@ export const EmailEditorLayout = (props: EmailEditorLayoutProps) => {
                     height: '100%'
                   }}
                 >
-                  <EmailContent />
+                  <EmailContent isActive={activeTab === 'editor'} />
                 </root.div>
               </TabPane>
               <TabPane

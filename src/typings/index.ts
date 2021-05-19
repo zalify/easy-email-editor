@@ -3,7 +3,7 @@ import { BlockType } from '@/constants';
 
 export interface IBlock<T extends IBlockData = IBlockData> {
   name: string;
-  type: BlockType | string;
+  type: BlockType;
   Panel: () => React.ReactNode;
   createInstance: (payload?: RecursivePartial<T>) => T;
   validParentType: BlockType[];
@@ -14,7 +14,7 @@ export interface IBlockData<
   K extends { [key: string]: any; } = any,
   T extends any = any
   > {
-  type: BlockType;
+  type: string;
   data: {
     value: T;
     hidden?: boolean;

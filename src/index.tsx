@@ -1,5 +1,4 @@
 export { EmailEditorProvider as EmailEditor } from './components/EmailEditorProvider';
-export type { IEmailTemplate } from './typings';
 export type { BlockGroup } from './components/PropsProvider';
 export { EmailEditorLayout } from './components/EmailEditorLayout';
 export { useBlock } from './hooks/useBlock';
@@ -9,7 +8,8 @@ export { transformToMjml } from './utils/transformToMjml';
 export { MjmlToJson } from './utils/MjmlToJson';
 export { BlocksMap } from './components/core/blocks/index';
 export { BlockAvatarWrapper } from './components/core/wrapper/BlockAvatarWrapper';
-export { BasicType } from './constants';
+export * from './constants';
 export * from './components/core/Form';
 export * from './utils/block';
+export * from './typings';
 export * from './components/EmailEditorLayout/components/ConfigurationPanel';

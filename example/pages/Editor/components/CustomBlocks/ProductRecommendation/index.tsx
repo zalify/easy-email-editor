@@ -1,9 +1,7 @@
 import { Panel } from './Panel';
 import { createInstance } from './createInstance';
-import { IBlock, IBlockData } from '@/typings';
-import { BasicType } from '@/constants';
+import { IBlock, IBlockData, BasicType, BlocksMap } from 'easy-email-editor';
 import { CustomBlocksType } from '../constants';
-import { BlocksMap } from 'easy-email-editor';
 export type IProductRecommendation = IBlockData<
   {
     'background-color': string;

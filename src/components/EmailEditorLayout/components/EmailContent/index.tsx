@@ -7,7 +7,7 @@ import { MjmlDomRender } from './components/MjmlDomRender';
 import { useDropBlock } from '@/hooks/useDropBlock';
 import { HoverTooltip } from './components/HoverTooltip';
 
-export function EmailContent() {
+export function EmailContent({ isActive }: { isActive: boolean; }) {
   const [containerRef, setContainerRef] = useState<HTMLDivElement | null>(null);
   const { focusBlock } = useBlock();
   const { setRef } = useDropBlock();
@@ -22,7 +22,7 @@ export function EmailContent() {
       <Tooltip
         placement='topRight'
         title={<BlockToolbar />}
-        visible={!!focusBlock}
+        visible={!!focusBlock && isActive}
         overlayStyle={{ maxWidth: 400, zIndex: 100 }}
       >
         <div
@@ -32,7 +32,7 @@ export function EmailContent() {
           <MjmlDomRender />
         </div>
       </Tooltip>
-      <HoverTooltip container={containerRef} />
+      {isActive && <HoverTooltip />}
     </>
   );
 }

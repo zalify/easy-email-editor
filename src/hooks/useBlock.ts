@@ -143,7 +143,7 @@ export function useBlock() {
         }
 
         const fixedBlock = findBlockByType(child.type);
-        if (!fixedBlock.validParentType.includes(parent.type)) {
+        if (!fixedBlock.validParentType.includes(parent.type as BasicType)) {
           message.warning(
             `${block.type} cannot be used inside ${parentBlock.type
             }, only inside: ${block.validParentType.join(', ')}`
@@ -168,6 +168,7 @@ export function useBlock() {
       positionIndex: number;
     }) => {
       let { sourceIdx, destinationIdx, positionIndex } = params;
+      if (sourceIdx === destinationIdx) return null;
       setFormikState((formState) => {
         const source = getValueByIdx(formState.values, sourceIdx)!;
         const sourceParentIdx = getParentIdx(sourceIdx);
@@ -179,7 +180,7 @@ export function useBlock() {
         )!;
 
         const sourceBlock = findBlockByType(source.type);
-        if (!sourceBlock.validParentType.includes(destinationParent.type)) {
+        if (!sourceBlock.validParentType.includes(destinationParent.type as BasicType)) {
           const parentBlock = findBlockByType(destinationParent.type);
           message.warning(
             `${sourceBlock.name} cannot be used inside ${parentBlock.name
@@ -269,6 +270,7 @@ export function useBlock() {
     [setFormikState, values]
   );
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const setValueByIdx = useCallback(
     debounce(<T extends any>(idx: string, newVal: T) => {
       getFieldHelpers(idx).setValue(newVal);
@@ -323,6 +325,7 @@ export function useBlock() {
     [values]
   );
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const setFocusIdx = useCallback(
     debounce((idx: string) => {
       setFormikState((formState) => {
@@ -336,6 +339,7 @@ export function useBlock() {
     [setFormikState]
   );
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const setHoverIdx = useCallback(
     debounce((idx: string) => {
       setFormikState((formState) => {
@@ -349,6 +353,7 @@ export function useBlock() {
     [setFormikState]
   );
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const setFocusBlockValue = useCallback(
     debounce((val) => {
       setFormikState((formState) => {

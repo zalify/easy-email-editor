@@ -6,7 +6,7 @@ import {
   CopyOutlined,
   CloseOutlined,
 } from '@ant-design/icons';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useEditorContext } from '@/hooks/useEditorContext';
 import { IBlockData } from '@/typings';
 import {
@@ -48,9 +48,17 @@ const BlockLayerItem = ({
   indent?: React.ReactNode;
 }) => {
   const { focusIdx } = useBlock();
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   const title = findBlockByType(blockData.type)?.name;
   const noChild = blockData.children.length === 0;
+
+  useEffect(() => {
+    if (focusIdx.startsWith(idx)) {
+      setVisible(true);
+    } else {
+      setVisible(false);
+    }
+  }, [focusIdx, idx]);
 
   const onToggle = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
@@ -65,9 +73,9 @@ const BlockLayerItem = ({
         </div>
       );
     if (visible) {
-      return <DownOutlined onClick={onToggle} />;
+      return <DownOutlined onClickCapture={onToggle} />;
     }
-    return <RightOutlined onClick={onToggle} />;
+    return <RightOutlined onClickCapture={onToggle} />;
   }, [noChild, onToggle, visible]);
 
   const listItem = (

@@ -1,10 +1,8 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
-  findBlockByType,
   getIndexByIdx,
   getNodeIdxFromClassName,
-  getNodeTypeFromClassName,
   getParentIdx,
 } from '@/utils/block';
 import { findBlockNode } from '@/utils/findBlockNode';
@@ -24,7 +22,7 @@ export function useDropBlock() {
   const {
     values,
     setFocusIdx,
-    hoverIdx,
+    setHoverIdx,
     addBlock,
     moveBlock,
   } = useBlock();
@@ -138,6 +136,8 @@ export function useDropBlock() {
         const blockNode = findBlockNode(ev.target as HTMLElement);
 
         if (blockNode) {
+          const idx = getNodeIdxFromClassName(blockNode.classList)!;
+          setHoverIdx(idx);
           blockNode.classList.add(BLOCK_HOVER_CLASSNAME);
         }
       };
@@ -153,13 +153,20 @@ export function useDropBlock() {
         if (blockNode) {
           ev.preventDefault();
 
-          blockNode.classList.remove(DRAG_HOVER_CLASSNAME);
-          blockNode.classList.remove(DRAG_TANGENT_CLASSNAME);
           if (
             ['top', 'bottom', 'right', 'left'].includes(getTangentDirection(ev))
           ) {
+            const idx = getParentIdx(
+              getNodeIdxFromClassName(blockNode.classList)!
+            )!;
+            setHoverIdx(idx);
+            blockNode.classList.remove(DRAG_HOVER_CLASSNAME);
             blockNode.classList.add(DRAG_TANGENT_CLASSNAME);
+
           } else {
+            blockNode.classList.remove(DRAG_TANGENT_CLASSNAME);
+            const idx = getNodeIdxFromClassName(blockNode.classList)!;
+            setHoverIdx(idx);
             blockNode.classList.add(DRAG_HOVER_CLASSNAME);
           }
         }
@@ -181,26 +188,9 @@ export function useDropBlock() {
         ref.removeEventListener('dragleave', onDragLeave);
       };
     }
-  }, [ref]);
-
-  const hoverBlock = useMemo(() => {
-    if (!ref) return null;
-
-    const blockNode = findBlockNodeByIdx(hoverIdx);
-
-    if (blockNode) {
-      const block = findBlockByType(
-        getNodeTypeFromClassName(blockNode.classList) as BlockType
-      );
-      const { left, top } = blockNode.getBoundingClientRect();
-      return { left, top, name: block?.name };
-    }
-
-    return null;
-  }, [hoverIdx, ref]);
+  }, [ref, setHoverIdx]);
 
   return {
-    hoverBlock,
     setRef,
   };
 }

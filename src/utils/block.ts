@@ -2,7 +2,6 @@ import { IPage } from '@/components/core/blocks/basic/Page';
 import { IBlock, IBlockData } from '@/typings';
 import { get } from 'lodash';
 import { BlocksMap } from '../components/core/blocks';
-import { BlockType } from '../constants';
 
 export function getPageIdx() {
   return 'content';
@@ -28,7 +27,7 @@ export function getNodeTypeFromClassName(classList: DOMTokenList) {
   return Array.from(classList).find(item => item.includes('node-type-'))?.replace('node-type-', '');
 }
 
-export function findBlockByType(type: BlockType): IBlock {
+export function findBlockByType(type: string): IBlock {
   return BlocksMap.findBlockByType(type);
 }
 
@@ -40,17 +39,17 @@ export const getParentIdx = (idx: string) => {
   return idx.match(/(.*)\.children\.\[\d+\]$/)?.[1];
 };
 
-export const getValueByIdx = <T extends any>(
+export const getValueByIdx = <T extends IBlockData>(
   values: { content: IPage; },
   idx: string
-): IBlockData<T> | null => {
+): T | null => {
   return get(values, idx);
 };
 
-export const getParentByIdx = <T extends any>(
+export const getParentByIdx = <T extends IBlockData>(
   values: { content: IPage; },
   idx: string
-): IBlockData<T> | null => {
+): T | null => {
   return get(values, getParentIdx(idx) || '');
 };
 

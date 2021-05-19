@@ -1,4 +1,4 @@
-import { CreateInstance } from '@/typings';
+import { CreateInstance } from 'easy-email-editor';
 import { merge } from 'lodash';
 import { IProductRecommendation } from '.';
 import { CustomBlocksType } from '../constants';

@@ -1,4 +1,4 @@
-export type BlockType = BasicType | string;
+export type BlockType = BasicType;
 
 // 基础组件
 export enum BasicType {
