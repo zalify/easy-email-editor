@@ -2,9 +2,9 @@ import { article } from '@example/services/article';
 import createSliceState from './common/createSliceState';
 import { message } from 'antd';
 import { history } from '@example/util/history';
-import { IBlockData } from '@/typings';
+import { IBlockData } from 'easy-email-editor';
 import { emailToImage } from '@example/util/emailToImage';
-import { BlocksMap, IEmailTemplate, } from 'easy-email-editor';
+import { BlocksMap, IEmailTemplate } from 'easy-email-editor';
 
 const defaultTemplateIds = [468, 462, 460, 459, 458, 456, 454, 453, 452];
 export default createSliceState({
@@ -83,9 +83,8 @@ export default createSliceState({
         });
         payload.success(payload.id);
       }
-
     },
-    removeById: async (state, payload: { id: number; success: () => void; }) => {
+    removeById: async (state, payload: { id: number; success: () => void }) => {
       await article.deleteArticle(payload.id);
       payload.success();
       message.success('Removed success.');

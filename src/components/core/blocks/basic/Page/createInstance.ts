@@ -2,6 +2,7 @@ import { BasicType } from '@/constants';
 import { CreateInstance } from '@/typings';
 import { merge } from 'lodash';
 import { IPage } from '.';
+import { Wrapper } from '../Wrapper';
 
 export const createInstance: CreateInstance<IPage> = (payload) => {
   const defaultData: IPage = {
@@ -9,16 +10,16 @@ export const createInstance: CreateInstance<IPage> = (payload) => {
     data: {
       value: {
         breakpoint: '480px',
-        'font-family': `lucida Grande,Verdana,Microsoft YaHei`,
+        'font-family': 'lucida Grande,Verdana,Microsoft YaHei',
         'text-color': '#000000',
         headAttributes: '',
-        fonts: []
+        fonts: [],
       },
     },
     attributes: {
       'background-color': '#efeeea',
     },
-    children: [],
+    children: [Wrapper.createInstance()],
   };
   return merge(defaultData, payload);
 };

@@ -9,7 +9,7 @@ import { Formik } from 'formik';
 import { TextField } from '@example/components/Form';
 import { useLoading } from '@example/hooks/useLoading';
 import { useCallback } from 'react';
-import { IBlockData } from '@/typings';
+import { IBlockData } from 'easy-email-editor';
 import { cloneDeep, merge } from 'lodash';
 import { CustomBlocksType } from './CustomBlocks/constants';
 

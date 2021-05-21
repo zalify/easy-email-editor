@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Padding } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Padding';
 import { Stack } from '@/components/Stack';
 import { useBlock } from '@/hooks/useBlock';
-import { Width } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Width';
 import { TextDecoration } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/TextDecoration';
 import { FontWeight } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/FontWeight';
 import { FontStyle } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/FontStyle';
@@ -67,7 +66,6 @@ export function Panel() {
       <TextDecoration />
       <TextTransform />
       <Align />
-      <Width />
       <Padding />
     </Stack>
   );

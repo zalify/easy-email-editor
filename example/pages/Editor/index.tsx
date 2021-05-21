@@ -11,7 +11,7 @@ import { cloneDeep } from 'lodash';
 import { Loading } from '@example/components/loading';
 import mjml from 'mjml-browser';
 import extraBlocks from '@example/store/extraBlocks';
-import { CollectedBlock } from '@/components/PropsProvider';
+import { CollectedBlock } from 'easy-email-editor';
 import { copy } from '@example/util/clipboard';
 import { useEmailModal } from './components/useEmailModal';
 import { WarnAboutUnsavedChanges } from '@example/components/WarnAboutUnsavedChanges';
@@ -100,10 +100,7 @@ export default function Editor() {
   }, [templateData]);
 
   const extraBlocksList = useMemo(() => {
-    return [
-      customBlocks,
-      ...extraBlocksData
-    ];
+    return [customBlocks, ...extraBlocksData];
   }, [extraBlocksData]);
 
   if (!templateData && loading) {
@@ -120,7 +117,7 @@ export default function Editor() {
     dispatch(extraBlocks.actions.add(payload));
     message.success('Added to collection!');
   };
-  const onRemoveCollection = ({ id }: { id: string; }) => {
+  const onRemoveCollection = ({ id }: { id: string }) => {
     dispatch(extraBlocks.actions.remove({ id }));
     message.success('Removed from collection.');
   };
@@ -133,14 +130,12 @@ export default function Editor() {
         onAddCollection={onAddCollection}
         onRemoveCollection={onRemoveCollection}
         onUploadImage={services.common.uploadByQiniu}
-        interactiveStyle={
-          {
-            hoverColor: '#3b97e3',
-            selectedColor: '#69c0ff',
-            dragoverColor: '#13c2c2',
-            tangentColor: '#ffec3d'
-          }
-        }
+        interactiveStyle={{
+          hoverColor: '#3b97e3',
+          selectedColor: '#69c0ff',
+          dragoverColor: '#13c2c2',
+          tangentColor: '#ffec3d',
+        }}
       >
         {({ values }) => {
           return (
@@ -172,7 +167,7 @@ export default function Editor() {
           );
         }}
       </EmailEditor>
-      { modal}
+      {modal}
     </div>
   );
 }

@@ -29,6 +29,7 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
     );
   }
   const attributeStr = Object.keys(att)
+    .filter((key) => att[key] !== '') // filter att=""
     .map((key) => `${key}="${att[key]}"`)
     .join(' ');
 
@@ -36,16 +37,13 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
 
   if (block.transform) {
     const transformData = block.transform(data, idx);
-    att['css-class'] = classnames(
-      att['css-class'],
-      transformData['css-class'],
-    );
+    att['css-class'] = classnames(att['css-class'], transformData['css-class']);
     return transformToMjml({
       ...transformData,
       attributes: {
         ...transformData.attributes,
-        'css-class': att['css-class']
-      }
+        'css-class': att['css-class'],
+      },
     });
   }
 
@@ -57,7 +55,7 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
 
   const placeholder = isTest
     ? `
-        <mj-image width="150px" src="https://assets.maocanhua.cn/Fn56mk7TdHP6qJOf1xTLzDx_Y3iW" />
+        <mj-image padding="0px" width="150px" src="https://assets.maocanhua.cn/7a923872-35ac-461c-acdc-d20d30dd57f1-image.png" />
       `
     : '';
 
@@ -74,9 +72,22 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
               ${breakpoint}
             <mj-attributes>
               ${value.headAttributes}
-              ${value['font-family'] ? `<mj-all font-family="${value['font-family']}" />` : ''}
-              ${value['text-color'] ? `<mj-text color="${value['text-color']}" />` : ''}
-              ${value.fonts?.filter(Boolean).map(item => `<mj-font name="${item.name}" href="${item.href}" />`)}
+              ${
+                value['font-family']
+                  ? `<mj-all font-family="${value['font-family']}" />`
+                  : ''
+              }
+              ${
+                value['text-color']
+                  ? `<mj-text color="${value['text-color']}" />`
+                  : ''
+              }
+              ${value.fonts
+                ?.filter(Boolean)
+                .map(
+                  (item) =>
+                    `<mj-font name="${item.name}" href="${item.href}" />`
+                )}
             </mj-attributes>
           </mj-head>
           <mj-body ${attributeStr}>
@@ -89,6 +100,21 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
               <mj-column ${attributeStr}>
                ${children || placeholder}
               </mj-column>
+            `;
+    case BasicType.SECTION:
+      return `
+              <mj-section ${attributeStr}>
+               ${children || `<mj-column>${placeholder}</mj-column>`}
+              </mj-section>
+            `;
+    case BasicType.WRAPPER:
+      return `
+              <mj-wrapper ${attributeStr}>
+               ${
+                 children ||
+                 `<mj-section><mj-column>${placeholder}</mj-column></mj-section>`
+               }
+              </mj-wrapper>
             `;
     case BasicType.CAROUSEL:
       const carouselImages = (data as ICarousel).data.value.images

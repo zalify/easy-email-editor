@@ -30,11 +30,7 @@ export function ColumnBlockIconPanel() {
 
 function OneColumn() {
   const payload: Partial<ILayout> = {
-    children: [
-      Section.createInstance({
-        children: [Column.createInstance()],
-      }),
-    ],
+    children: [Column.createInstance()],
   };
 
   return (
@@ -79,19 +75,15 @@ function TwoColumns() {
   const options = scales.map((scale) => ({
     payload: {
       children: [
-        Section.createInstance({
-          children: [
-            Column.createInstance({
-              attributes: {
-                width: scale.scale[0] ? +scale.scale[0] + '%' : undefined,
-              },
-            }),
-            Column.createInstance({
-              attributes: {
-                width: scale.scale[1] ? +scale.scale[1] + '%' : undefined,
-              },
-            }),
-          ],
+        Column.createInstance({
+          attributes: {
+            width: scale.scale[0] ? +scale.scale[0] + '%' : undefined,
+          },
+        }),
+        Column.createInstance({
+          attributes: {
+            width: scale.scale[1] ? +scale.scale[1] + '%' : undefined,
+          },
         }),
       ],
     },
@@ -159,24 +151,20 @@ function ThreeColumns() {
     avatar: scale.avatar,
     payload: {
       children: [
-        Section.createInstance({
-          children: [
-            Column.createInstance({
-              attributes: {
-                width: scale.scale[0] ? +scale.scale[0] + '%' : undefined,
-              },
-            }),
-            Column.createInstance({
-              attributes: {
-                width: scale.scale[1] ? +scale.scale[1] + '%' : undefined,
-              },
-            }),
-            Column.createInstance({
-              attributes: {
-                width: scale.scale[2] ? +scale.scale[2] + '%' : undefined,
-              },
-            }),
-          ],
+        Column.createInstance({
+          attributes: {
+            width: scale.scale[0] ? +scale.scale[0] + '%' : undefined,
+          },
+        }),
+        Column.createInstance({
+          attributes: {
+            width: scale.scale[1] ? +scale.scale[1] + '%' : undefined,
+          },
+        }),
+        Column.createInstance({
+          attributes: {
+            width: scale.scale[2] ? +scale.scale[2] + '%' : undefined,
+          },
         }),
       ],
     },
@@ -219,14 +207,10 @@ function ThreeColumns() {
 function FourColumn() {
   const payload: Partial<ILayout> = {
     children: [
-      Section.createInstance({
-        children: [
-          Column.createInstance(),
-          Column.createInstance(),
-          Column.createInstance(),
-          Column.createInstance(),
-        ],
-      }),
+      Column.createInstance(),
+      Column.createInstance(),
+      Column.createInstance(),
+      Column.createInstance(),
     ],
   };
   return (
@@ -246,7 +230,7 @@ export function ColumnBlockIcon(
   props: Omit<BlockAvatarWrapperProps, 'type'> & { avatar: string }
 ) {
   return (
-    <BlockAvatarWrapper type={BasicType.WRAPPER} {...props}>
+    <BlockAvatarWrapper type={BasicType.SECTION} {...props}>
       <Picture style={{ height: 40 }} src={props.avatar} />
     </BlockAvatarWrapper>
   );

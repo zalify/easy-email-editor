@@ -1,9 +1,14 @@
-import React, { useMemo } from 'react';
-import { SelectField, TextField } from '@/components/core/Form';
+import React, { useContext, useMemo } from 'react';
+import {
+  ImageUploaderField,
+  SelectField,
+  TextField,
+} from '@/components/core/Form';
 import { Stack } from '@/components/Stack';
 import { useBlock } from '@/hooks/useBlock';
 import { TextStyle } from '@/components/TextStyle';
 import { BackgroundColor } from './BackgroundColor';
+import { EditorPropsContext } from '@/components/PropsProvider';
 
 const backgroundRepeatOptions = [
   {
@@ -26,18 +31,18 @@ const backgroundRepeatOptions = [
 
 export function Background() {
   const { focusIdx } = useBlock();
-
+  const { onUploadImage } = useContext(EditorPropsContext);
   return useMemo(() => {
     return (
       <Stack key={focusIdx} vertical spacing='extraTight'>
         <TextStyle size='large'>Background</TextStyle>
         <BackgroundColor />
         <Stack vertical spacing='none'>
-          <TextField
+          <ImageUploaderField
             label='Background image'
-            inline
             name={`${focusIdx}.attributes.background-url`}
-            helpText="The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally."
+            helpText='The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.'
+            uploadHandler={onUploadImage}
           />
           <TextField
             label='Background size'
@@ -53,5 +58,5 @@ export function Background() {
         />
       </Stack>
     );
-  }, [focusIdx]);
+  }, [focusIdx, onUploadImage]);
 }
