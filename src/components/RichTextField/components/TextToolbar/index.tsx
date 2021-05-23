@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   BoldOutlined,
   ItalicOutlined,
@@ -8,8 +8,6 @@ import {
   FontColorsOutlined,
   BgColorsOutlined,
   StopOutlined,
-  FullscreenOutlined,
-  FullscreenExitOutlined,
   OrderedListOutlined,
   UnorderedListOutlined,
   MinusOutlined,
@@ -19,44 +17,53 @@ import {
   CloseOutlined,
 } from '@ant-design/icons';
 import { v4 as uuidv4 } from 'uuid';
-import { Stack } from '../Stack';
-import { Button, Drawer, Tooltip } from 'antd';
-import styles from './index.module.scss';
-import { ColorPicker } from '../core/Form/ColorPicker';
-import { TextStyle } from '../TextStyle';
-import { ToolItem } from './components/ToolItem';
-import { Link, LinkParams } from './components/Link';
-import { FontSizeList } from './components/FontSizeList';
-import { Heading } from './components/Heading';
+import { Stack } from '../../../Stack';
+import { Button, Tooltip } from 'antd';
+import { ColorPicker } from '../../../core/Form/ColorPicker';
+import { TextStyle } from '../../../TextStyle';
+import { ToolItem } from '../../components/ToolItem';
+import { Link, LinkParams } from '../../components/Link';
+import { FontSizeList } from '../../components/FontSizeList';
+import { Heading } from '../../components/Heading';
+import { getShadowRoot } from '@/utils/findBlockNodeByIdx';
 
-export interface RichTextProps {
-  value: string;
-  containerStyle: React.CSSProperties;
+export interface TextToolbarProps {
   onChange: (content: string) => any;
+  container: HTMLElement | null;
 }
 
-export function RichText(props: RichTextProps) {
-  const { containerStyle } = props;
-  const [isFullScreen, setIsFullScreen] = useState(false);
-  const [initialValue, setInitialValue] = useState(props.value);
-  const editorRef = useRef<HTMLDivElement>(null);
-  const contentEditorRef = useRef<HTMLDivElement | null>(null);
+const getSelection = () => getShadowRoot().getSelection();
+
+const restoreRange = (range: Range) => {
+
+  let selection = getSelection()!;
+  selection.removeAllRanges();
+  const newRange = document.createRange();
+  newRange.setStart(range.startContainer, range.startOffset);
+  newRange.setEnd(range.endContainer, range.endOffset);
+
+  selection.addRange(newRange);
+};
+
+export function TextToolbar(props: TextToolbarProps) {
+
+  const { container } = props;
   const [currentRange, setCurrentRangeRange] = useState<
     Range | null | undefined
   >(null);
 
-  const toggleFullScreen = useCallback(() => {
-    if (!contentEditorRef.current) return;
-    setInitialValue(contentEditorRef.current.innerHTML || '');
-    setIsFullScreen((v) => !v);
-    contentEditorRef.current.focus();
-  }, []);
-
   useEffect(() => {
     const onSelectionChange = () => {
-      const range = document.getSelection()?.getRangeAt(0);
-      if (contentEditorRef.current?.contains(range?.commonAncestorContainer!)) {
-        setCurrentRangeRange(range);
+      try {
+        const range = getSelection()?.getRangeAt(0);
+        if (container?.contains(range?.commonAncestorContainer!)) {
+          if (range) {
+            setCurrentRangeRange(range);
+          }
+
+        }
+      } catch (error) {
+
       }
     };
 
@@ -65,30 +72,13 @@ export function RichText(props: RichTextProps) {
     return () => {
       document.removeEventListener('selectionchange', onSelectionChange);
     };
-  }, [currentRange]);
-
-  useEffect(() => {
-    if (!contentEditorRef.current) return;
-    contentEditorRef.current.addEventListener('paste', function (e) {
-      e.preventDefault();
-      var text = e.clipboardData?.getData('text/plain') || '';
-      document.execCommand('insertHTML', false, text);
-    });
-  }, [contentEditorRef]);
-
+  }, [container, currentRange]);
 
   const execCommand = (cmd: string, val?: any) => {
-    const container = contentEditorRef.current;
     if (!container) return;
 
     if (currentRange) {
-      let selection = window.getSelection()!;
-      const newRange = document.createRange();
-      newRange.selectNodeContents(container);
-      newRange.setStart(currentRange.startContainer, currentRange.startOffset);
-      newRange.setEnd(currentRange.endContainer, currentRange.endOffset);
-      selection.removeAllRanges();
-      selection.addRange(newRange);
+      restoreRange(currentRange);
 
       if (cmd === 'createLink') {
         const linkData = val as LinkParams;
@@ -109,8 +99,10 @@ export function RichText(props: RichTextProps) {
         }
         link.style.textDecoration = linkData.underline ? 'underline' : 'none';
         link.setAttribute('href', linkData.link);
+
       } else {
         document.execCommand(cmd, false, val);
+
       }
 
       const html = container.innerHTML;
@@ -118,14 +110,10 @@ export function RichText(props: RichTextProps) {
     }
   };
 
-  const handleInput = (event: any) => {
-    if (props.onChange) {
-      props.onChange(event.target.innerHTML);
-    }
-  };
+  const getMountNode = () => document.getElementById('TextToolbar')!;
 
-  const content = (
-    <div className={styles.contaner} ref={editorRef}>
+  return (
+    <div id="TextToolbar">
       <Stack vertical spacing='tight'>
         <Stack spacing='extraTight'>
           <Tooltip
@@ -133,6 +121,7 @@ export function RichText(props: RichTextProps) {
             title={
               <FontSizeList onChange={(val) => execCommand('fontSize', val)} />
             }
+            getPopupContainer={getMountNode}
           >
             <Button size='small' icon={<FontSizeOutlined />} />
           </Tooltip>
@@ -141,6 +130,7 @@ export function RichText(props: RichTextProps) {
             title={
               <Heading onChange={(val) => execCommand('formatBlock', val)} />
             }
+            getPopupContainer={getMountNode}
           >
             <Button
               size='small'
@@ -160,19 +150,21 @@ export function RichText(props: RichTextProps) {
           <ColorPicker
             label=''
             onChange={(color) => execCommand('foreColor', color)}
+            getPopupContainer={getMountNode}
           >
             <ToolItem icon={<FontColorsOutlined />} title='Text color' />
           </ColorPicker>
           <ColorPicker
             label=''
             onChange={(color) => execCommand('hiliteColor', color)}
+            getPopupContainer={getMountNode}
           >
             <ToolItem icon={<BgColorsOutlined />} title='Background color' />
           </ColorPicker>
           <Link
-            key={props.value}
             currentRange={currentRange}
             onChange={(values) => execCommand('createLink', values)}
+            getPopupContainer={getMountNode}
           />
           <ToolItem
             onClick={() => execCommand('unlink')}
@@ -228,57 +220,8 @@ export function RichText(props: RichTextProps) {
             icon={<MinusOutlined />}
             title='Line'
           />
-          {isFullScreen ? (
-            <Button
-              size='small'
-              onClick={toggleFullScreen}
-              icon={<FullscreenExitOutlined />}
-              title='Exit fullscreen'
-            />
-          ) : (
-            <Button
-              size='small'
-              onClick={toggleFullScreen}
-              icon={<FullscreenOutlined />}
-              title='Fullscreen'
-            />
-          )}
         </Stack>
-        <div
-          className={styles.editorWrapper}
-          style={{ backgroundColor: containerStyle.backgroundColor }}
-        >
-          <div
-            contentEditable
-            ref={contentEditorRef}
-            style={{
-              ...containerStyle,
-              backgroundColor: undefined,
-              minHeight: 100,
-              maxHeight: 200,
-              overflow: 'auto'
-            }}
-            dangerouslySetInnerHTML={{ __html: initialValue }}
-            onInput={handleInput}
-          />
-        </div>
       </Stack>
-    </div>
-  );
-
-  return (
-    <div key={String(isFullScreen)}>
-      {content}
-      <Drawer
-        width='100vh'
-        title='Basic Drawer'
-        placement='right'
-        closable={false}
-        visible={isFullScreen}
-        onClose={toggleFullScreen}
-      >
-        {content}
-      </Drawer>
     </div>
   );
 }

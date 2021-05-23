@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-wrap-multilines */
-import { Button, Tooltip } from 'antd';
-import React, { useCallback, useEffect, useMemo } from 'react';
+import { Button, PopoverProps, Tooltip } from 'antd';
+import React, { useCallback, useMemo } from 'react';
 import { LinkOutlined } from '@ant-design/icons';
 import { Formik } from 'formik';
 import { Stack } from '@/components/Stack';
@@ -17,10 +17,13 @@ export interface LinkParams {
   underline: boolean;
   linkNode: HTMLAnchorElement | null;
 }
-export function Link(props: {
+
+export interface LinkProps extends PopoverProps {
   currentRange: Range | null | undefined;
   onChange: (val: LinkParams) => void;
-}) {
+}
+
+export function Link(props: LinkProps) {
   const initialValues = useMemo((): LinkParams => {
     let link = '';
     let blank = true;
@@ -36,13 +39,13 @@ export function Link(props: {
           ? props.currentRange.startContainer
           : props.currentRange.startContainer.nodeType === 3 &&
             props.currentRange.startContainer.parentNode instanceof
-              HTMLAnchorElement &&
+            HTMLAnchorElement &&
             Number(
               props.currentRange.startContainer.parentNode.textContent?.length
             ) ===
-              props.currentRange.endOffset - props.currentRange.startOffset
-          ? props.currentRange.startContainer.parentNode
-          : null;
+            props.currentRange.endOffset - props.currentRange.startOffset
+            ? props.currentRange.startContainer.parentNode
+            : null;
       if (linkNode) {
         link = linkNode.href;
         blank = linkNode.getAttribute('target') === '_blank';
@@ -74,6 +77,7 @@ export function Link(props: {
       {({ handleSubmit }) => {
         return (
           <Tooltip
+            {...props}
             trigger='click'
             color='#fff'
             placement='topLeft'

@@ -1,9 +1,9 @@
-import { Popover } from 'antd';
+import { Popover, PopoverProps } from 'antd';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ColorResult, SketchPicker } from 'react-color';
 import { Picture } from '@/components/Picture';
 
-export interface ColorPickerProps {
+export interface ColorPickerProps extends PopoverProps {
   onChange?: (val: string) => void;
   value?: string;
   label: string;
@@ -35,12 +35,14 @@ export function ColorPicker(props: ColorPickerProps) {
 
   return (
     <Popover
+      {...props}
       content={(
         <SketchPicker
           color={color}
           onChangeComplete={onChangeColor}
         />
       )}
+      placement="topRight"
       title={props.label}
       trigger='click'
     >{
@@ -59,17 +61,19 @@ export function ColorPicker(props: ColorPickerProps) {
           >
             {
               props.value
-                ? <span style={{
-                  position: 'relative',
-                  display: 'block',
-                  border: '1px solid #999',
-                  borderRadius: 2,
-                  width: '100%',
-                  height: '100%',
-                  textAlign: 'center',
-                  backgroundColor: value
-                }}
-                />
+                ? (
+                  <span style={{
+                    position: 'relative',
+                    display: 'block',
+                    border: '1px solid #999',
+                    borderRadius: 2,
+                    width: '100%',
+                    height: '100%',
+                    textAlign: 'center',
+                    backgroundColor: value
+                  }}
+                  />
+                )
                 : <Picture style={{ filter: 'invert(  0.78  )  drop-shadow(0 0px 0 rgb(0 0 0 / 45%))' }} src="https://assets.maocanhua.cn/3e952a6e-2506-470e-b395-3e0d995157c5.png" />
             }
 

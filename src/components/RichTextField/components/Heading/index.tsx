@@ -9,7 +9,7 @@ export function Heading(props: { onChange: (val: string) => void; }) {
     },
     {
       value: 'H2',
-      label: 'H3',
+      label: 'H2',
     },
     {
       value: 'H3',

@@ -1,6 +1,6 @@
 import { Collapse, Input, message } from 'antd';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { getPageIdx, getValueByIdx } from '@/utils/block';
+import { getPageIdx } from '@/utils/block';
 import jsonFormat from 'json-format';
 import { useBlock } from '@/hooks/useBlock';
 import { transformToMjml } from '@/utils/transformToMjml';
@@ -9,21 +9,21 @@ import { MjmlToJson } from '@/utils/MjmlToJson';
 import { TextStyle } from '@/components/TextStyle';
 
 export function SourceCodeManager() {
-  const { focusIdx, setValueByIdx, values } = useBlock();
-  const value = getValueByIdx(values, focusIdx);
+  const { focusIdx, setValueByIdx, focusBlock } = useBlock();
+
   const isRoot = focusIdx === getPageIdx();
   const [mjmlText, setMjmlText] = useState('');
 
   const code = useMemo(() => {
-    if (!value) return '';
+    if (!focusBlock) return '';
     return (
-      jsonFormat(value, {
+      jsonFormat(focusBlock, {
         type: 'space',
         size: 2,
       }) || ''
     );
     return '';
-  }, [value]);
+  }, [focusBlock]);
 
   const onChaneCode = useCallback(
     (event: React.FocusEvent<HTMLTextAreaElement>) => {
@@ -66,10 +66,10 @@ export function SourceCodeManager() {
   }, [isRoot]);
 
   useEffect(() => {
-    value && setMjmlText(transformToMjml(value));
-  }, [value]);
+    focusBlock && setMjmlText(transformToMjml(focusBlock));
+  }, [focusBlock]);
 
-  if (!value) return null;
+  if (!focusBlock) return null;
 
   return (
     <Collapse>

@@ -6,7 +6,6 @@ import { Border } from '@/components/EmailEditorLayout/components/ConfigurationP
 import { BackgroundColor } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/BackgroundColor';
 import { Color } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Color';
 import { Link } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Link';
-import { TextAreaField } from '@/components/core/Form';
 import { useBlock } from '@/hooks/useBlock';
 import { Width } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Width';
 import { ContainerBackgroundColor } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/ContainerBackgroundColor';
@@ -19,16 +18,14 @@ import { TextDecoration } from '@/components/EmailEditorLayout/components/Config
 import { TextTransform } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/TextTransform';
 import { LineHeight } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/LineHeight';
 import { LetterSpacing } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/LetterSpacing';
+import { InlineTextField } from '@/components/InlineTextField';
 
 export function Panel() {
   const { focusIdx } = useBlock();
+
   return (
     <Stack vertical>
-      <TextAreaField
-        label='Content'
-        name={`${focusIdx}.data.value.content`}
-        inline
-      />
+      <InlineTextField idx={focusIdx} name={`${focusIdx}.data.value.content`} label="" lableHidden />
       <Color />
       <FontSize />
       <Link />

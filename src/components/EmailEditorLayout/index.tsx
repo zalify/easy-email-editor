@@ -74,16 +74,17 @@ export const EmailEditorLayout = (props: EmailEditorLayoutProps) => {
                   backgroundColor: 'transparent',
                   paddingLeft: 20,
                   paddingRight: 20,
-                  height: '100%'
+                  height: '100%',
                 }}
               >
                 <root.div
                   id='VisualEditorEditMode'
                   style={{
-                    width: pageMaxWidth,
+                    width: `calc(${pageMaxWidth} + 17px)`,
                     padding: '40px 0px',
                     margin: 'auto',
-                    height: '100%'
+                    height: '100%',
+
                   }}
                 >
                   <EmailContent isActive={activeTab === 'editor'} />
@@ -140,6 +141,16 @@ export const EmailEditorLayout = (props: EmailEditorLayoutProps) => {
                     style={{ paddingTop: -16 }}
                     className={styles.app}
                   >
+                    <style>
+                      {
+                        `
+                        body::-webkit-scrollbar {
+                          width: 0px;
+                          background-color: transparent;
+                        }
+                      `
+                      }
+                    </style>
                     <PreviewEmail />
                   </IframeComponent>
                 </div>

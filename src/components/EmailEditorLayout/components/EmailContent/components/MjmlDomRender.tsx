@@ -8,11 +8,13 @@ import { cloneDeep, isEqual } from 'lodash';
 import { IPage } from '@/components/core/blocks/basic/Page';
 import { BLOCK_SELECTED_CLASSNAME } from '@/constants';
 import { findBlockNode } from '@/utils/findBlockNode';
+import { getEditNode } from '@/utils/getEditNode';
 
 export function MjmlDomRender() {
   const formikContext = useFormikContext<EditorProps>();
   const [pageData, setPageData] = useState<IPage | null>(null);
   const [ref, setRef] = useState<HTMLDivElement | null>(null);
+  const { focusIdx, } = formikContext.values;
 
   useEffect(() => {
     if (!isEqual(formikContext.values.content, pageData)) {
@@ -30,17 +32,14 @@ export function MjmlDomRender() {
     ref.querySelectorAll('.email-block').forEach((child) => {
       child.classList.remove(BLOCK_SELECTED_CLASSNAME);
       const idx = getNodeIdxFromClassName(child.classList);
-      if (idx === formikContext.values.focusIdx) {
+      if (idx === focusIdx) {
         child.classList.add(BLOCK_SELECTED_CLASSNAME);
       }
     });
-  }, [formikContext.values.focusIdx, html, ref]);
+  }, [focusIdx, html, ref]);
 
   useEffect(() => {
     if (!ref) return;
-    ref.querySelectorAll('.email-block').forEach((child) => {
-      child.setAttribute('draggable', 'true');
-    });
 
     const onDragstart = (ev: DragEvent) => {
       const node = findBlockNode(ev.target as HTMLDivElement);
@@ -61,7 +60,17 @@ export function MjmlDomRender() {
     ref.addEventListener('dragstart', onDragstart);
   }, [ref, html, formikContext.values]);
 
-  return useMemo(() => (
-    <div ref={setRef} dangerouslySetInnerHTML={{ __html: html }} style={{ height: '100%' }} />
-  ), [html]);
+  useEffect(() => {
+    if (!ref) return;
+    ref.querySelectorAll('.email-block').forEach((child) => {
+      const editNode = getEditNode(child as HTMLElement);
+      if (editNode) {
+        editNode.contentEditable = 'true';
+      }
+    });
+  }, [ref, html]);
+
+  return useMemo(() => {
+    return <div ref={setRef} dangerouslySetInnerHTML={{ __html: html }} style={{ height: '100%' }} />;
+  }, [html]);
 }

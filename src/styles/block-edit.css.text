@@ -21,3 +21,8 @@
   -webkit-user-drag: none;
 	cursor: default;
 }
+
+.email-block [contentEditable="true"] {
+  outline: none;
+  cursor: text;
+}

@@ -16,16 +16,11 @@ import { ChexkBoxGroup } from './ChexkBoxGroup';
 import { EditTab, EditTabProps } from './EditTab';
 import { DatePickerProps } from 'antd/lib/date-picker';
 import { Dayjs } from 'dayjs';
-import { RichText, RichTextProps } from '@/components/RichText';
 
 export const TextField = enhancer<InputProps>(Input, (value) => value);
 export const SearchField = enhancer<SearchProps>(
   AntdInput.Search,
   (e: React.ChangeEvent<HTMLTextAreaElement>) => e.target.value
-);
-export const RichTextField = enhancer<RichTextProps>(
-  RichText,
-  (value) => value
 );
 
 export const TextAreaField = enhancer<TextAreaProps>(
