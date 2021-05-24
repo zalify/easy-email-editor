@@ -22,10 +22,12 @@ import {
   EmailEditorLayout,
   IEmailTemplate,
   transformToMjml,
+  EditorProps,
 } from 'easy-email-editor';
 import 'easy-email-editor/lib/style.css';
 import { Stack } from '@example/components/Stack';
 import { customBlocks } from './components/CustomBlocks';
+import { FormikHelpers } from 'formik';
 
 export default function Editor() {
   const dispatch = useDispatch();
@@ -54,7 +56,7 @@ export default function Editor() {
   }, [dispatch, id]);
 
   const onSubmit = useCallback(
-    async (values: IEmailTemplate) => {
+    async (values: IEmailTemplate, helper: FormikHelpers<EditorProps>) => {
       if (id) {
         dispatch(
           template.actions.updateById({
@@ -62,7 +64,10 @@ export default function Editor() {
             template: values,
             success(templateId) {
               message.success('Updated success!');
-              history.replace(`/editor?id=${templateId}`);
+              helper.setTouched({});
+              setTimeout(() => {
+                history.replace(`/editor?id=${templateId}`);
+              }, 0);
             },
           })
         );
@@ -71,8 +76,11 @@ export default function Editor() {
           template.actions.create({
             template: values,
             success(templateId) {
-              history.replace(`/editor?id=${templateId}`);
               message.success('Saved success!');
+              helper.setTouched({});
+              setTimeout(() => {
+                history.replace(`/editor?id=${templateId}`);
+              }, 0);
             },
           })
         );
@@ -125,6 +133,7 @@ export default function Editor() {
   return (
     <div>
       <EmailEditor
+        key={id}
         data={initialValues}
         extraBlocks={extraBlocksList}
         onAddCollection={onAddCollection}
@@ -136,8 +145,9 @@ export default function Editor() {
           dragoverColor: '#13c2c2',
           tangentColor: '#ffec3d',
         }}
+        onSubmit={onSubmit}
       >
-        {({ values }) => {
+        {({ values, handleSubmit }) => {
           return (
             <>
               <PageHeader
@@ -154,7 +164,7 @@ export default function Editor() {
                     <Button
                       loading={isSubmitting}
                       type='primary'
-                      onClick={() => onSubmit(values)}
+                      onClick={() => handleSubmit()}
                     >
                       Save
                     </Button>
