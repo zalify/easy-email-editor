@@ -1,6 +1,6 @@
 import React from 'react';
 import { Padding } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Padding';
-import { Stack } from '@/components/Stack';
+import { Stack } from '@/components/UI/Stack';
 import { TextDecoration } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/TextDecoration';
 import { FontWeight } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/FontWeight';
 import { FontStyle } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/FontStyle';
@@ -14,10 +14,11 @@ import { Align } from '@/components/EmailEditorLayout/components/ConfigurationPa
 import { LineHeight } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/LineHeight';
 import { LetterSpacing } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/LetterSpacing';
 import { useBlock } from '@/hooks/useBlock';
-import { RichTextField } from '@/components/RichTextField';
+import { RichTextField } from '@/components/core/Form';
 
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 export function Panel() {
-  const { focusIdx } = useBlock();
+  const { focusIdx } = useFocusIdx();
 
   return (
     <Stack vertical>

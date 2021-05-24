@@ -17,15 +17,18 @@ import { getTangentDirection } from '@/utils/getTangentDirection';
 import { get } from 'lodash';
 import { IBlockData } from '@/typings';
 import { findBlockNodeByIdx } from '@/utils/findBlockNodeByIdx';
+import { useFocusIdx } from './useFocusIdx';
+import { useHoverIdx } from './useHoverIdx';
 export function useDropBlock() {
   const [ref, setRef] = useState<HTMLElement | null>(null);
   const {
     values,
-    setFocusIdx,
-    setHoverIdx,
     addBlock,
     moveBlock,
   } = useBlock();
+
+  const { setFocusIdx } = useFocusIdx();
+  const { setHoverIdx } = useHoverIdx();
 
   useEffect(() => {
     if (ref) {

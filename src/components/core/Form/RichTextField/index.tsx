@@ -4,8 +4,9 @@ import React, { useCallback, useMemo } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { EnhancerProps } from '../core/Form/enhancer';
-import { InlineTextField, InlineTextProps } from '../InlineTextField';
+import { EnhancerProps } from '../enhancer';
+import { InlineTextField } from '../index';
+import { InlineTextProps } from '../InlineTextField';
 import { TextToolbar } from './components/TextToolbar';
 
 export function RichTextField(
@@ -30,7 +31,7 @@ export function RichTextField(
     };
   }, [container]);
 
-  const onChange = useCallback(() => {}, []);
+  const onChange = useCallback(() => { }, []);
 
   const editorContainer = container && getEditNode(container);
 
@@ -52,7 +53,7 @@ export function RichTextField(
       );
 
       if (editorContainer.contains(target)) return;
-      if (richTextEditorToolbar?.contains(target as HTMLElement)) return;
+      if (richTextEditorToolbar?.contains(target )) return;
       setIsFocus(false);
     };
     const root = getShadowRoot();

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useBlock } from '@/hooks/useBlock';
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { SelectField } from '@/components/core/Form';
 
 const options = [
@@ -30,7 +30,7 @@ const options = [
 ];
 
 export function TextDecoration() {
-  const { focusIdx } = useBlock();
+  const { focusIdx } = useFocusIdx();
 
   return useMemo(() => {
     return (

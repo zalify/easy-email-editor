@@ -6,11 +6,12 @@ import { useBlock } from '@/hooks/useBlock';
 import { transformToMjml } from '@/utils/transformToMjml';
 import mjml from 'mjml-browser';
 import { MjmlToJson } from '@/utils/MjmlToJson';
-import { TextStyle } from '@/components/TextStyle';
+import { TextStyle } from '@/components/UI/TextStyle';
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 
 export function SourceCodeManager() {
-  const { focusIdx, setValueByIdx, focusBlock } = useBlock();
-
+  const { setValueByIdx, focusBlock } = useBlock();
+  const { focusIdx } = useFocusIdx();
   const isRoot = focusIdx === getPageIdx();
   const [mjmlText, setMjmlText] = useState('');
 

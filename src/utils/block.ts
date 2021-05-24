@@ -32,11 +32,11 @@ export function findBlockByType(type: string): IBlock {
 }
 
 export const getIndexByIdx = (idx: string) => {
-  return Number(idx?.match(/\.\[(\d+)\]$/)?.[1]) || 0;
+  return Number((/\.\[(\d+)\]$/.exec(idx))?.[1]) || 0;
 };
 
 export const getParentIdx = (idx: string) => {
-  return idx.match(/(.*)\.children\.\[\d+\]$/)?.[1];
+  return (/(.*)\.children\.\[\d+\]$/.exec(idx))?.[1];
 };
 
 export const getValueByIdx = <T extends IBlockData>(

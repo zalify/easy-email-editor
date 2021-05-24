@@ -1,6 +1,6 @@
 import React from 'react';
 import { Padding } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Padding';
-import { Stack } from '@/components/Stack';
+import { Stack } from '@/components/UI/Stack';
 import { BackgroundColor } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/BackgroundColor';
 import {
   RadioGroupField,
@@ -36,8 +36,9 @@ const alignOptions = [
   },
 ];
 
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 export function Panel() {
-  const { focusIdx } = useBlock();
+  const { focusIdx } = useFocusIdx();
   return (
     <Stack vertical>
       <Padding />

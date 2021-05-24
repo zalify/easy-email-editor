@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stack } from '@/components/Stack';
+import { Stack } from '@/components/UI/Stack';
 import { BackgroundColor } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/BackgroundColor';
 import { RadioGroupField, TextField } from '@/components/core/Form';
 import { useBlock } from '@/hooks/useBlock';
@@ -17,8 +17,9 @@ const options = [
     label: 'Fixed height',
   },
 ];
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 export function Panel() {
-  const { focusIdx } = useBlock();
+  const { focusIdx } = useFocusIdx();
   return (
     <Stack vertical>
       <TextField

@@ -18,14 +18,15 @@ import {
 } from '@/utils/block';
 import { useBlock } from '@/hooks/useBlock';
 import { BasicType } from '@/constants';
-import { Stack } from '@/components/Stack';
-import { TextStyle } from '@/components/TextStyle';
+import { Stack } from '@/components/UI/Stack';
+import { TextStyle } from '@/components/UI/TextStyle';
 import styles from './index.module.scss';
 import { classnames } from '@/utils/classnames';
 import { useDropBlock } from '@/hooks/useDropBlock';
 
 import { BlockAvatarWrapper } from '@/components/core/wrapper/BlockAvatarWrapper';
 import { BlockInteractiveStyle } from '../../../BlockInteractiveStyle';
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 
 export function BlockLayerManager() {
   const { setRef } = useDropBlock();
@@ -47,7 +48,7 @@ const BlockLayerItem = ({
   idx: string;
   indent?: React.ReactNode;
 }) => {
-  const { focusIdx } = useBlock();
+  const { focusIdx } = useFocusIdx();
   const [visible, setVisible] = useState(false);
   const title = findBlockByType(blockData.type)?.name;
   const noChild = blockData.children.length === 0;
@@ -90,7 +91,7 @@ const BlockLayerItem = ({
           styles.blockItem,
           focusIdx === idx && styles.blockItemSelected,
           'email-block',
-          getNodeIdxClassName(idx!),
+          getNodeIdxClassName(idx),
           getNodeTypeClassName(blockData.type)
         )}
         data-idx={idx}

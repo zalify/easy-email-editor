@@ -7,13 +7,14 @@ import {
 import {
   BlockType,
 } from '@/constants';
-import { useBlock } from '@/hooks/useBlock';
 import { findBlockNodeByIdx } from '@/utils/findBlockNodeByIdx';
 import { Tooltip } from 'antd';
+import { useFocusIdx } from '@/hooks/useFocusIdx';
+import { useHoverIdx } from '@/hooks/useHoverIdx';
 
 export function HoverTooltip() {
-  const { focusIdx, hoverIdx, } = useBlock();
-
+  const { focusIdx } = useFocusIdx();
+  const { hoverIdx } = useHoverIdx();
   const hoverBlock = useMemo(() => {
 
     const blockNode = findBlockNodeByIdx(hoverIdx);

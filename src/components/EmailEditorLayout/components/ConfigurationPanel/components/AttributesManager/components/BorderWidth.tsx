@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
-import { useBlock } from '@/hooks/useBlock';
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { TextField } from '@/components/core/Form';
 
 export function BorderWidth() {
-  const { focusIdx } = useBlock();
+  const { focusIdx } = useFocusIdx();
 
   return useMemo(() => {
     return (

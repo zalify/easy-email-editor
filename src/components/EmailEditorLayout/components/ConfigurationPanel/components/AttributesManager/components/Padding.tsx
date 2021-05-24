@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { TextField } from '@/components/core/Form';
-import { Stack } from '@/components/Stack';
+import { Stack } from '@/components/UI/Stack';
 import { useBlock } from '@/hooks/useBlock';
-import { TextStyle } from '@/components/TextStyle';
+import { TextStyle } from '@/components/UI/TextStyle';
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 
 export interface PaddingProps {
   title?: string;
@@ -10,12 +11,14 @@ export interface PaddingProps {
 }
 export function Padding(props: PaddingProps = {}) {
   const { title = 'Padding', attributeName = 'padding' } = props;
-  const { focusIdx, focusBlock, setValueByIdx } = useBlock();
+  const { focusBlock, setValueByIdx } = useBlock();
+  const { focusIdx } = useFocusIdx();
   const [count, setCount] = useState(0);
 
   const getVal = useCallback(
     (index: number) => {
       return () => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         return focusBlock?.attributes[attributeName]?.split(' ')[index];
       };
     },
@@ -25,7 +28,8 @@ export function Padding(props: PaddingProps = {}) {
   const setVal = useCallback(
     (index: number) => {
       return (newVal: string) => {
-        const vals = focusBlock?.attributes[attributeName]?.split(' ') || [];
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+        const vals: string[] = focusBlock?.attributes[attributeName]?.split(' ') || [];
         vals[index] = newVal || '0px';
         return vals.join(' ');
       };
@@ -35,6 +39,7 @@ export function Padding(props: PaddingProps = {}) {
 
   useEffect(() => {
     if (!focusBlock) return;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     const paddins: string[] = focusBlock.attributes[attributeName]?.split(' ') || [];
     if (paddins.length === 2) {
       paddins[2] = paddins[0];
@@ -98,5 +103,5 @@ export function Padding(props: PaddingProps = {}) {
         </Stack>
       </Stack>
     );
-  }, [attributeName, focusIdx, getVal, setVal, title]);
+  }, [attributeName, count, focusIdx, getVal, setVal, title]);
 }

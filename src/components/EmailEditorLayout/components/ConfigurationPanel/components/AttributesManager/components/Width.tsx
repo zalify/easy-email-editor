@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react';
 import { TextField } from '@/components/core/Form';
-import { Stack } from '@/components/Stack';
-import { useBlock } from '@/hooks/useBlock';
+import { Stack } from '@/components/UI/Stack';
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 
 export function Width() {
-  const { focusIdx } = useBlock();
+  const { focusIdx } = useFocusIdx();
 
   return useMemo(() => {
     return (

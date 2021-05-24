@@ -15,9 +15,9 @@ import {
 import { BlockIcon } from './components/BlockIcon';
 import { BasicType } from '@/constants';
 import { ColumnBlockIconPanel } from './components/ColumnBlockIcon';
-import { Stack } from '@/components/Stack';
+import { Stack } from '@/components/UI/Stack';
 import { EditorPropsContext } from '@/components/PropsProvider';
-import { TextStyle } from '@/components/TextStyle';
+import { TextStyle } from '@/components/UI/TextStyle';
 
 const { Panel } = Collapse;
 

@@ -56,18 +56,15 @@ export default function Editor() {
   }, [dispatch, id]);
 
   const onSubmit = useCallback(
-    async (values: IEmailTemplate, helper: FormikHelpers<EditorProps>) => {
+    async (values: IEmailTemplate, helper: FormikHelpers<IEmailTemplate>) => {
       if (id) {
         dispatch(
           template.actions.updateById({
             id: +id,
             template: values,
-            success(templateId) {
+            success() {
               message.success('Updated success!');
-              helper.setTouched({});
-              setTimeout(() => {
-                history.replace(`/editor?id=${templateId}`);
-              }, 0);
+              helper.resetForm({ touched: {} });
             },
           })
         );
@@ -75,12 +72,10 @@ export default function Editor() {
         dispatch(
           template.actions.create({
             template: values,
-            success(templateId) {
+            success(id, newTemplate) {
               message.success('Saved success!');
-              helper.setTouched({});
-              setTimeout(() => {
-                history.replace(`/editor?id=${templateId}`);
-              }, 0);
+              helper.resetForm({ values: newTemplate });
+              history.replace(`/editor?id=${id}`);
             },
           })
         );
@@ -125,7 +120,7 @@ export default function Editor() {
     dispatch(extraBlocks.actions.add(payload));
     message.success('Added to collection!');
   };
-  const onRemoveCollection = ({ id }: { id: string }) => {
+  const onRemoveCollection = ({ id }: { id: string; }) => {
     dispatch(extraBlocks.actions.remove({ id }));
     message.success('Removed from collection.');
   };

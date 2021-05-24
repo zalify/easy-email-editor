@@ -1,4 +1,4 @@
-import { Stack } from '@/components/Stack';
+import { Stack } from '@/components/UI/Stack';
 import React from 'react';
 import { RedoOutlined, UndoOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Button, Switch, Tooltip } from 'antd';

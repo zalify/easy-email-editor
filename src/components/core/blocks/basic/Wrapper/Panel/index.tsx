@@ -1,13 +1,14 @@
 import React from 'react';
 import { Padding } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Padding';
 import { Background } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Background';
-import { Stack } from '@/components/Stack';
+import { Stack } from '@/components/UI/Stack';
 import { TextAlign } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/TextAlign';
 import { TextField } from '@/components/core/Form';
 import { useBlock } from '@/hooks/useBlock';
 
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 export function Panel() {
-  const { focusIdx } = useBlock();
+  const { focusIdx } = useFocusIdx();
   return (
     <Stack>
       <Padding />

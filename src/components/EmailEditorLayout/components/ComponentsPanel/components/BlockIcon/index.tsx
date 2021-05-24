@@ -7,10 +7,10 @@ import { Popconfirm, Tag, Tooltip } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import React, { useContext } from 'react';
 import styles from './index.module.scss';
-import { Help } from '@/components/Help';
-import { Picture } from '@/components/Picture';
-import { Stack } from '@/components/Stack';
-import { TextStyle } from '@/components/TextStyle';
+import { Help } from '@/components/UI/Help';
+import { Picture } from '@/components/UI/Picture';
+import { Stack } from '@/components/UI/Stack';
+import { TextStyle } from '@/components/UI/TextStyle';
 
 type BlockIconProps = {
   id?: string;

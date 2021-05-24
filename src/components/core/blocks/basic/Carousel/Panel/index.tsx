@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stack } from '@/components/Stack';
+import { Stack } from '@/components/UI/Stack';
 import {
   ColorPickerField,
   EditTabField,
@@ -23,8 +23,9 @@ const options = [
   },
 ];
 
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 export function Panel() {
-  const { focusIdx } = useBlock();
+  const { focusIdx } = useFocusIdx();
   return (
     <Stack vertical>
 
@@ -111,7 +112,7 @@ function CarouselImage({
   item: ICarousel['data']['value']['images'];
   index: number;
 }) {
-  const { focusIdx } = useBlock();
+  const { focusIdx } = useFocusIdx();
   return (
     <Stack>
       <TextField

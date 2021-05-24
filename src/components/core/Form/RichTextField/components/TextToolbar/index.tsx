@@ -17,15 +17,15 @@ import {
   CloseOutlined,
 } from '@ant-design/icons';
 import { v4 as uuidv4 } from 'uuid';
-import { Stack } from '../../../Stack';
 import { Button, Tooltip } from 'antd';
-import { ColorPicker } from '../../../core/Form/ColorPicker';
-import { TextStyle } from '../../../TextStyle';
 import { ToolItem } from '../../components/ToolItem';
 import { Link, LinkParams } from '../../components/Link';
 import { FontSizeList } from '../../components/FontSizeList';
 import { Heading } from '../../components/Heading';
 import { getShadowRoot } from '@/utils/findBlockNodeByIdx';
+import { Stack } from '@/components/UI/Stack';
+import { TextStyle } from '@/components/UI/TextStyle';
+import { ColorPicker } from '../../../ColorPicker';
 
 export interface TextToolbarProps {
   onChange: (content: string) => any;
@@ -36,7 +36,7 @@ const getSelection = () => getShadowRoot().getSelection();
 
 const restoreRange = (range: Range) => {
 
-  let selection = getSelection()!;
+  const selection = getSelection()!;
   selection.removeAllRanges();
   const newRange = document.createRange();
   newRange.setStart(range.startContainer, range.startOffset);

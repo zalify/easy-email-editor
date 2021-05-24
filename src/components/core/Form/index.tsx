@@ -16,6 +16,8 @@ import { ChexkBoxGroup } from './ChexkBoxGroup';
 import { EditTab, EditTabProps } from './EditTab';
 import { DatePickerProps } from 'antd/lib/date-picker';
 import { Dayjs } from 'dayjs';
+import { InlineText, InlineTextProps } from './InlineTextField';
+export { RichTextField } from './RichTextField';
 
 export const TextField = enhancer<InputProps>(Input, (value) => value);
 export const SearchField = enhancer<SearchProps>(
@@ -71,4 +73,7 @@ export const CheckboxField = enhancer<CheckboxGroupProps>(
   ChexkBoxGroup,
   (e: any[]) => e
 );
+
 export const EditTabField = enhancer<EditTabProps>(EditTab, (e: any[]) => e);
+
+export const InlineTextField = enhancer<InlineTextProps>(InlineText, (value) => value);

@@ -3,7 +3,7 @@ import { Button, PopoverProps, Tooltip } from 'antd';
 import React, { useCallback, useMemo } from 'react';
 import { LinkOutlined } from '@ant-design/icons';
 import { Formik } from 'formik';
-import { Stack } from '@/components/Stack';
+import { Stack } from '@/components/UI/Stack';
 import { SearchField, SwitchField } from '@/components/core/Form';
 
 import * as Yup from 'yup';
@@ -28,7 +28,7 @@ export function Link(props: LinkProps) {
     let link = '';
     let blank = true;
     let underline = false;
-    let linkNode = null;
+    let linkNode: HTMLAnchorElement | null = null;
 
     if (
       props.currentRange &&

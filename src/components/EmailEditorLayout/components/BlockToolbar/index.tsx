@@ -12,8 +12,8 @@ import {
   AndroidOutlined,
   FolderAddOutlined,
 } from '@ant-design/icons';
-import { Stack } from '@/components/Stack';
-import { TextStyle } from '@/components/TextStyle';
+import { Stack } from '@/components/UI/Stack';
+import { TextStyle } from '@/components/UI/TextStyle';
 import {
   findBlockByType,
   getPageIdx,
@@ -27,6 +27,7 @@ import { Modal } from 'antd';
 import { Formik } from 'formik';
 import { v4 as uuidv4 } from 'uuid';
 import { TextAreaField, TextField } from '@/components/core/Form';
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 
 type SideBarItem = {
   icon: React.ReactNode;
@@ -44,9 +45,8 @@ export const BlockToolbar = () => {
     focusBlock,
     copyBlock,
     removeBlock,
-    focusIdx,
-    setFocusIdx,
   } = useBlock();
+  const { focusIdx, setFocusIdx } = useFocusIdx();
   const block = focusBlock && findBlockByType(focusBlock.type);
 
   const sidebarList = useMemo(() => {
@@ -101,10 +101,10 @@ export const BlockToolbar = () => {
           }
         },
       },
-      hasChildren && {
+      {
         icon: <DownSquareOutlined />,
         title: 'Select child',
-        toolTip: (
+        toolTip: hasChildren && (
           <Stack>
             {focusBlock.children.map((item, index) => {
               return (

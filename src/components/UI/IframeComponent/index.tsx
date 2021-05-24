@@ -17,7 +17,7 @@ export const IframeComponent = ({
     contentRef?.contentWindow?.document?.body;
 
   if (mountNode) {
-    mountNode.style.backgroundColor = "transparent";
+    mountNode.style.backgroundColor = 'transparent';
   }
 
   return (

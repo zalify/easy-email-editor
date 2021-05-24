@@ -18,9 +18,9 @@ export const RecordContext = React.createContext<{
 }>({
   status: 'add',
   records: [],
-  redo: () => {},
-  undo: () => {},
-  reset: () => {},
+  redo: () => { },
+  undo: () => { },
+  reset: () => { },
   redoable: false,
   undoable: false,
 });
@@ -30,6 +30,11 @@ export const RecordProvider: React.FC<{}> = (props) => {
   const [data, setData] = useState<Array<EditorProps>>([]);
   const [index, setIndex] = useState(-1);
   const [status, setStatus] = useState<RecordStatus>('add');
+  const [initialValues, setInitialValues] = useState<EditorProps>(cloneDeep(formikContext.initialValues));
+
+  useEffect(() => {
+    setInitialValues(cloneDeep(formikContext.initialValues));
+  }, [formikContext.initialValues]);
 
   const value = useMemo(() => {
     return {
@@ -48,12 +53,12 @@ export const RecordProvider: React.FC<{}> = (props) => {
         formikContext.setValues(data[prevIndex]);
       },
       reset: () => {
-        formikContext.resetForm();
+        formikContext.resetForm({ values: initialValues });
       },
       undoable: index > 0,
       redoable: index < data.length - 1,
     };
-  }, [data, formikContext, index, status]);
+  }, [data, formikContext, index, initialValues, status]);
 
   useEffect(() => {
     const currentItem = data[index];

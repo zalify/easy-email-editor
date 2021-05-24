@@ -1,6 +1,6 @@
 import React from 'react';
 import { Padding } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Padding';
-import { Stack } from '@/components/Stack';
+import { Stack } from '@/components/UI/Stack';
 import { TextAlign } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/TextAlign';
 import { ColorPickerField, TextField } from '@/components/core/Form';
 import { useBlock } from '@/hooks/useBlock';
@@ -8,8 +8,9 @@ import { Width } from '@/components/EmailEditorLayout/components/ConfigurationPa
 import { Height } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Height';
 import { Link } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Link';
 
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 export function Panel() {
-  const { focusIdx } = useBlock();
+  const { focusIdx } = useFocusIdx();
 
   return (
     <Stack>

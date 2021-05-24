@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
-import { useBlock } from '@/hooks/useBlock';
 import { ColorPickerField } from '@/components/core/Form';
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 
 export function BorderColor() {
-  const { focusIdx } = useBlock();
+  const { focusIdx } = useFocusIdx();
 
   return useMemo(() => {
     return (

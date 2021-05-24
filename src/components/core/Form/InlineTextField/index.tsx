@@ -1,11 +1,10 @@
-import React, { useEffect, useMemo } from 'react';
-import { findBlockNodeByIdx, getEditorRoot, getShadowRoot } from '@/utils/findBlockNodeByIdx';
+import React, { useEffect } from 'react';
+import { findBlockNodeByIdx } from '@/utils/findBlockNodeByIdx';
 import { getEditContent, getEditNode } from '@/utils/getEditNode';
-import enhancer from '../core/Form/enhancer';
 
-export interface InlineTextProps { idx: string; children?: React.ReactNode; onChange: (content: string) => void; };
+export interface InlineTextProps { idx: string; children?: React.ReactNode; onChange: (content: string) => void; }
 
-function InlineText({ idx, onChange, children }: InlineTextProps) {
+export function InlineText({ idx, onChange, children }: InlineTextProps) {
   const textContainer = findBlockNodeByIdx(idx);
 
   useEffect(() => {
@@ -22,7 +21,7 @@ function InlineText({ idx, onChange, children }: InlineTextProps) {
 
       const onPaste = (e: ClipboardEvent) => {
         e.preventDefault();
-        var text = e.clipboardData?.getData('text/plain') || '';
+        const text = e.clipboardData?.getData('text/plain') || '';
         document.execCommand('insertHTML', false, text);
       };
 
@@ -32,12 +31,12 @@ function InlineText({ idx, onChange, children }: InlineTextProps) {
 
         onChange(getEditContent(textContainer));
       };
-      container.addEventListener('paste', onPaste);
+      container.addEventListener('paste', onPaste as any);
       container.addEventListener('blur', onBlur);
       document.addEventListener('mousedown', onClick);
 
       return () => {
-        container.removeEventListener('paste', onPaste);
+        container.removeEventListener('paste', onPaste as any);
         container.removeEventListener('blur', onBlur);
         document.removeEventListener('mousedown', onClick);
       };
@@ -48,4 +47,3 @@ function InlineText({ idx, onChange, children }: InlineTextProps) {
   return <>{children}</>;
 }
 
-export const InlineTextField = enhancer<InlineTextProps>(InlineText, (value) => value);

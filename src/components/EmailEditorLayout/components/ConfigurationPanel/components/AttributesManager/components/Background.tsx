@@ -4,11 +4,11 @@ import {
   SelectField,
   TextField,
 } from '@/components/core/Form';
-import { Stack } from '@/components/Stack';
-import { useBlock } from '@/hooks/useBlock';
-import { TextStyle } from '@/components/TextStyle';
+import { Stack } from '@/components/UI/Stack';
+import { TextStyle } from '@/components/UI/TextStyle';
 import { BackgroundColor } from './BackgroundColor';
 import { EditorPropsContext } from '@/components/PropsProvider';
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 
 const backgroundRepeatOptions = [
   {
@@ -30,7 +30,7 @@ const backgroundRepeatOptions = [
 ];
 
 export function Background() {
-  const { focusIdx } = useBlock();
+  const { focusIdx } = useFocusIdx();
   const { onUploadImage } = useContext(EditorPropsContext);
   return useMemo(() => {
     return (

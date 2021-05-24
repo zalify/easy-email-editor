@@ -2,19 +2,20 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { transformToMjml } from '@/utils/transformToMjml';
 import mjml from 'mjml-browser';
 import { useFormikContext } from 'formik';
-import { EditorProps } from '@/components/EmailEditorProvider';
 import { getNodeIdxFromClassName, getPageIdx, getValueByIdx } from '@/utils/block';
 import { cloneDeep, isEqual } from 'lodash';
 import { IPage } from '@/components/core/blocks/basic/Page';
 import { BLOCK_SELECTED_CLASSNAME } from '@/constants';
 import { findBlockNode } from '@/utils/findBlockNode';
 import { getEditNode } from '@/utils/getEditNode';
+import { IEmailTemplate } from '@/typings';
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 
 export function MjmlDomRender() {
-  const formikContext = useFormikContext<EditorProps>();
+  const formikContext = useFormikContext<IEmailTemplate>();
   const [pageData, setPageData] = useState<IPage | null>(null);
   const [ref, setRef] = useState<HTMLDivElement | null>(null);
-  const { focusIdx, } = formikContext.values;
+  const { focusIdx, } = useFocusIdx();
 
   useEffect(() => {
     if (!isEqual(formikContext.values.content, pageData)) {

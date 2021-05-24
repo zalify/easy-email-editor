@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
-import { Stack } from '@/components/Stack';
-import { useBlock } from '@/hooks/useBlock';
+import { Stack } from '@/components/UI/Stack';
 import { RadioGroupField } from '@/components/core/Form';
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 
 const options = [
   {
@@ -19,7 +19,7 @@ const options = [
 ];
 
 export function Align() {
-  const { focusIdx } = useBlock();
+  const { focusIdx } = useFocusIdx();
 
   return useMemo(() => {
     return (

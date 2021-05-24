@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
-import { Stack } from '@/components/Stack';
-import { useBlock } from '@/hooks/useBlock';
+import { Stack } from '@/components/UI/Stack';
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { SelectField } from '@/components/core/Form';
 
 const options = [
@@ -23,7 +23,7 @@ export function VerticalAlign({
 }: {
   attributeName?: string;
 }) {
-  const { focusIdx } = useBlock();
+  const { focusIdx } = useFocusIdx();
 
   return useMemo(() => {
     return (

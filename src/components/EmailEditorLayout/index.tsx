@@ -6,13 +6,13 @@ import {
 import { Layout, Tabs } from 'antd';
 import React, { useState } from 'react';
 import root from 'react-shadow';
-import { IframeComponent } from '@/components/IframeComponent';
+import { IframeComponent } from '@/components/UI/IframeComponent';
 import { ConfigurationPanel } from '@/components/EmailEditorLayout/components/ConfigurationPanel';
 import { ComponentsPanel } from './components/ComponentsPanel';
 import { EmailContent } from './components/EmailContent';
 import { PreviewEmail } from './components/PreviewEmail';
-import { Stack } from '../Stack';
-import { TextStyle } from '../TextStyle';
+import { Stack } from '../UI/Stack';
+import { TextStyle } from '../UI/TextStyle';
 import { ToolsPanel } from './components/ToolsPanel';
 import './index.scss';
 import styles from './index.module.scss';

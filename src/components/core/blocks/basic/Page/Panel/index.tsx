@@ -1,13 +1,15 @@
 import React from 'react';
 import { useBlock } from '@/hooks/useBlock';
-import { Stack } from '@/components/Stack';
+import { Stack } from '@/components/UI/Stack';
 import { ColorPickerField, TextField } from '@/components/core/Form';
-import { Help } from '@/components/Help';
-import { TextStyle } from '@/components/TextStyle';
+import { Help } from '@/components/UI/Help';
+import { TextStyle } from '@/components/UI/TextStyle';
 import { AddFont } from '@/components/core/Form/AddFont';
 
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 export function Panel() {
-  const { focusIdx, focusBlock } = useBlock();
+  const { focusBlock } = useBlock();
+  const { focusIdx } = useFocusIdx();
 
   if (!focusBlock) return null;
   return (

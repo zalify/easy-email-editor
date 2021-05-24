@@ -4,9 +4,9 @@ import {
   BlockAvatarWrapper,
   BlockAvatarWrapperProps,
 } from '@/components/core/wrapper/BlockAvatarWrapper';
-import { Picture } from '@/components/Picture';
-import { Stack } from '@/components/Stack';
-import { TextStyle } from '@/components/TextStyle';
+import { Picture } from '@/components/UI/Picture';
+import { Stack } from '@/components/UI/Stack';
+import { TextStyle } from '@/components/UI/TextStyle';
 import { BasicType } from '@/constants';
 import { Button } from 'antd';
 
@@ -227,7 +227,7 @@ function FourColumn() {
 }
 
 export function ColumnBlockIcon(
-  props: Omit<BlockAvatarWrapperProps, 'type'> & { avatar: string }
+  props: Omit<BlockAvatarWrapperProps, 'type'> & { avatar: string; }
 ) {
   return (
     <BlockAvatarWrapper type={BasicType.SECTION} {...props}>

@@ -6,9 +6,11 @@ import { useBlock } from '@/hooks/useBlock';
 import { BlockLayerManager } from './components/BlockLayerManager';
 import { SourceCodeManager } from './components/SourceCodeManager';
 import { AttributesManager } from './components/AttributesManager';
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 
 export function ConfigurationPanel() {
-  const { focusIdx, values } = useBlock();
+  const { values } = useBlock();
+  const { focusIdx } = useFocusIdx();
   const value = getValueByIdx(values, focusIdx);
 
   const block = value && findBlockByType(value.type);

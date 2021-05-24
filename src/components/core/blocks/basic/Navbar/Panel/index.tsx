@@ -1,6 +1,6 @@
 import React from 'react';
 import { Padding } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Padding';
-import { Stack } from '@/components/Stack';
+import { Stack } from '@/components/UI/Stack';
 import {
   ColorPickerField,
   EditTabField,
@@ -28,8 +28,9 @@ const options = [
   },
 ];
 
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 export function Panel() {
-  const { focusIdx } = useBlock();
+  const { focusIdx } = useFocusIdx();
   return (
     <Stack vertical>
       <Align />
@@ -72,7 +73,7 @@ export function Panel() {
           target: '_blank',
           content: 'New link',
           color: '#1890ff',
-          "font-size": "13px"
+          'font-size': '13px'
         }}
       />
     </Stack>
@@ -86,7 +87,7 @@ function NavbarLink({
   item: INavbar['data']['value']['links'];
   index: number;
 }) {
-  const { focusIdx } = useBlock();
+  const { focusIdx } = useFocusIdx();
   return (
     <Stack>
       <TextField

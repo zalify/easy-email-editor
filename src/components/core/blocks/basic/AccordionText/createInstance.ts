@@ -12,7 +12,7 @@ export const createInstance: CreateInstance<IAccordionText> = (payload) => {
       },
     },
     attributes: {
-      "font-size": '13px',
+      'font-size': '13px',
       padding: '16px 16px 16px 16px',
       'line-height': '1',
     },

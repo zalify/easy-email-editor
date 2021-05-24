@@ -1,11 +1,11 @@
 import React, { useMemo } from 'react';
-import { useBlock } from '@/hooks/useBlock';
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { LinkOutlined } from '@ant-design/icons';
 import { SelectField, TextField } from '@/components/core/Form';
-import { Stack } from '@/components/Stack';
+import { Stack } from '@/components/UI/Stack';
 
 export function Link() {
-  const { focusIdx } = useBlock();
+  const { focusIdx } = useFocusIdx();
 
   return useMemo(() => {
     return (

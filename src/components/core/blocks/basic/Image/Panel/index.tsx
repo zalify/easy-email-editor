@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Padding } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Padding';
-import { Stack } from '@/components/Stack';
+import { Stack } from '@/components/UI/Stack';
 import { ColorPickerField, ImageUploaderField, TextField } from '@/components/core/Form';
 import { useBlock } from '@/hooks/useBlock';
 import { Width } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Width';
@@ -9,8 +9,9 @@ import { Link } from '@/components/EmailEditorLayout/components/ConfigurationPan
 import { EditorPropsContext } from '@/components/PropsProvider';
 import { Align } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Align';
 
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 export function Panel() {
-  const { focusIdx } = useBlock();
+  const { focusIdx } = useFocusIdx();
   const { onUploadImage } = useContext(EditorPropsContext);
 
   return (
