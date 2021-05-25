@@ -8,7 +8,6 @@ import {
   SelectField,
   TextField,
 } from '@/components/core/Form';
-import { useBlock } from '@/hooks/useBlock';
 import { Align } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Align';
 import { LinkOutlined } from '@ant-design/icons';
 import { ISocial } from '..';

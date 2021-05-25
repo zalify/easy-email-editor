@@ -1,4 +1,4 @@
-import { findBlockNodeByIdx, getShadowRoot } from '@/utils/findBlockNodeByIdx';
+import { findBlockNodeByIdx, getEditorRoot } from '@/utils/findBlockNodeByIdx';
 import { getEditNode } from '@/utils/getEditNode';
 import React, { useCallback, useMemo } from 'react';
 import { useState } from 'react';
@@ -31,7 +31,7 @@ export function RichTextField(
     };
   }, [container]);
 
-  const onChange = useCallback(() => { }, []);
+  const onChange = useCallback(() => {}, []);
 
   const editorContainer = container && getEditNode(container);
 
@@ -46,23 +46,21 @@ export function RichTextField(
       setIsFocus(true);
     };
     const onBlur = (ev: Event) => {
-      ev.stopPropagation();
       const target = ev.target as HTMLElement;
       const richTextEditorToolbar = document.querySelector(
         '#RichTextEditorToolbar'
       );
 
-      if (editorContainer.contains(target)) return;
-      if (richTextEditorToolbar?.contains(target )) return;
+      if (getEditorRoot()?.contains(target)) return;
+      if (richTextEditorToolbar?.contains(target)) return;
+
       setIsFocus(false);
     };
-    const root = getShadowRoot();
-    root.addEventListener('click', onBlur);
-    document.addEventListener('click', onBlur);
+
+    window.addEventListener('click', onBlur, true);
     editorContainer.addEventListener('focus', onFocus);
     return () => {
-      root.removeEventListener('click', onBlur);
-      document.removeEventListener('click', onBlur);
+      window.removeEventListener('click', onBlur, true);
       editorContainer.removeEventListener('focus', onFocus);
     };
   }, [editorContainer]);

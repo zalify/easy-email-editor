@@ -4,7 +4,6 @@ import { Background } from '@/components/EmailEditorLayout/components/Configurat
 import { Stack } from '@/components/UI/Stack';
 import { TextAlign } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/TextAlign';
 import { TextField } from '@/components/core/Form';
-import { useBlock } from '@/hooks/useBlock';
 
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 export function Panel() {
@@ -30,5 +29,4 @@ export function Panel() {
       </Stack>
     </Stack>
   );
-
 }

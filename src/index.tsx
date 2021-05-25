@@ -1,6 +1,5 @@
 export { EmailEditorProvider as EmailEditor } from './components/EmailEditorProvider';
 export type { BlockGroup, CollectedBlock } from './components/PropsProvider';
-export type { EditorProps } from './components/EmailEditorProvider';
 export { EmailEditorLayout } from './components/EmailEditorLayout';
 export { useBlock } from './hooks/useBlock';
 export { useDropBlock } from './hooks/useDropBlock';

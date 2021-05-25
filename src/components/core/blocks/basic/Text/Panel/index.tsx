@@ -13,7 +13,6 @@ import { Color } from '@/components/EmailEditorLayout/components/ConfigurationPa
 import { Align } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Align';
 import { LineHeight } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/LineHeight';
 import { LetterSpacing } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/LetterSpacing';
-import { useBlock } from '@/hooks/useBlock';
 import { RichTextField } from '@/components/core/Form';
 
 import { useFocusIdx } from '@/hooks/useFocusIdx';
@@ -22,7 +21,12 @@ export function Panel() {
 
   return (
     <Stack vertical>
-      <RichTextField idx={focusIdx} name={`${focusIdx}.data.value.content`} label="" lableHidden />
+      <RichTextField
+        idx={focusIdx}
+        name={`${focusIdx}.data.value.content`}
+        label=''
+        lableHidden
+      />
       <Color />
       <ContainerBackgroundColor />
       <FontSize />

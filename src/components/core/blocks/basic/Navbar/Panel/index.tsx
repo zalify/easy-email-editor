@@ -8,10 +8,10 @@ import {
   SelectField,
   TextField,
 } from '@/components/core/Form';
-import { useBlock } from '@/hooks/useBlock';
 import { Align } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Align';
 import { LinkOutlined } from '@ant-design/icons';
 import { INavbar } from '..';
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 
 const options = [
   {
@@ -28,7 +28,6 @@ const options = [
   },
 ];
 
-import { useFocusIdx } from '@/hooks/useFocusIdx';
 export function Panel() {
   const { focusIdx } = useFocusIdx();
   return (
@@ -68,12 +67,11 @@ export function Panel() {
         label='Links'
         renderItem={(item, index) => <NavbarLink item={item} index={index} />}
         additionItem={{
-          src:
-            'https://www.mailjet.com/wp-content/uploads/2016/11/ecommerce-guide.jpg',
+          src: 'https://www.mailjet.com/wp-content/uploads/2016/11/ecommerce-guide.jpg',
           target: '_blank',
           content: 'New link',
           color: '#1890ff',
-          'font-size': '13px'
+          'font-size': '13px',
         }}
       />
     </Stack>

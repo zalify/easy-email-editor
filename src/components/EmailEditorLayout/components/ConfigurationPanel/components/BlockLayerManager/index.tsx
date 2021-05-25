@@ -31,12 +31,14 @@ import { useFocusIdx } from '@/hooks/useFocusIdx';
 export function BlockLayerManager() {
   const { setRef } = useDropBlock();
   const { pageData } = useEditorContext();
-  return (
-    <div ref={setRef}>
-      <BlockLayerItem blockData={pageData} idx={getPageIdx()} />
-      <BlockInteractiveStyle />
-    </div>
-  );
+  return useMemo(() => {
+    return (
+      <div ref={setRef}>
+        <BlockLayerItem blockData={pageData} idx={getPageIdx()} />
+        <BlockInteractiveStyle />
+      </div>
+    );
+  }, [pageData, setRef]);
 }
 
 const BlockLayerItem = ({
@@ -48,6 +50,7 @@ const BlockLayerItem = ({
   idx: string;
   indent?: React.ReactNode;
 }) => {
+  console.log('BlockLayerItem render');
   const { focusIdx } = useFocusIdx();
   const [visible, setVisible] = useState(false);
   const title = findBlockByType(blockData.type)?.name;
@@ -122,12 +125,12 @@ const BlockLayerItem = ({
           {blockData.children.map((item, index) => (
             <BlockLayerItem
               key={index}
-              indent={(
+              indent={
                 <Stack spacing='none'>
                   {indent}
                   <div style={{ width: 16, height: '100%' }} />
                 </Stack>
-              )}
+              }
               blockData={item}
               idx={getChildIdx(idx, index)}
             />
@@ -138,7 +141,7 @@ const BlockLayerItem = ({
   );
 };
 
-function EyeIcon({ idx, blockData }: { idx: string; blockData: IBlockData; }) {
+function EyeIcon({ idx, blockData }: { idx: string; blockData: IBlockData }) {
   const { setValueByIdx } = useBlock();
 
   const onToggleVisible = useCallback(

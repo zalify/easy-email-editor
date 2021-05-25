@@ -6,7 +6,6 @@ import { Border } from '@/components/EmailEditorLayout/components/ConfigurationP
 import { BackgroundColor } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/BackgroundColor';
 import { Color } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Color';
 import { Link } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Link';
-import { useBlock } from '@/hooks/useBlock';
 import { Width } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Width';
 import { ContainerBackgroundColor } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/ContainerBackgroundColor';
 import { Align } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Align';
@@ -26,7 +25,12 @@ export function Panel() {
 
   return (
     <Stack vertical>
-      <InlineTextField idx={focusIdx} name={`${focusIdx}.data.value.content`} label="" lableHidden />
+      <InlineTextField
+        idx={focusIdx}
+        name={`${focusIdx}.data.value.content`}
+        label=''
+        lableHidden
+      />
       <Color />
       <FontSize />
       <Link />
@@ -41,8 +45,8 @@ export function Panel() {
       <BackgroundColor />
       <Width />
       <Align />
-      <Padding title="Inner padding" attributeName="inner-padding" />
-      <Padding title="Padding" attributeName="padding" />
+      <Padding title='Inner padding' attributeName='inner-padding' />
+      <Padding title='Padding' attributeName='padding' />
       <Border />
       <ContainerBackgroundColor />
       <TextAlign />

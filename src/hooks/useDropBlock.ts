@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import {
   getIndexByIdx,
@@ -19,13 +19,10 @@ import { IBlockData } from '@/typings';
 import { findBlockNodeByIdx } from '@/utils/findBlockNodeByIdx';
 import { useFocusIdx } from './useFocusIdx';
 import { useHoverIdx } from './useHoverIdx';
+
 export function useDropBlock() {
   const [ref, setRef] = useState<HTMLElement | null>(null);
-  const {
-    values,
-    addBlock,
-    moveBlock,
-  } = useBlock();
+  const { values, addBlock, moveBlock } = useBlock();
 
   const { setFocusIdx } = useFocusIdx();
   const { setHoverIdx } = useHoverIdx();
@@ -51,7 +48,6 @@ export function useDropBlock() {
               behavior: 'smooth',
             });
           }
-
         }
       };
 
@@ -66,7 +62,6 @@ export function useDropBlock() {
     if (!ref) return;
 
     const onDrop = (ev: DragEvent) => {
-
       const target = ev.target as HTMLElement;
       const blockNode = findBlockNode(target);
       blockNode?.classList.remove(DRAG_HOVER_CLASSNAME);
@@ -105,7 +100,7 @@ export function useDropBlock() {
           moveBlock({
             sourceIdx: blockData.payload,
             destinationIdx: blockData.parentIdx,
-            positionIndex: blockData.positionIndex!
+            positionIndex: blockData.positionIndex!,
           });
         } else {
           if (direction === 'top' || direction === 'left') {
@@ -117,7 +112,6 @@ export function useDropBlock() {
           }
           addBlock(blockData);
         }
-
       }
     };
 
@@ -141,13 +135,12 @@ export function useDropBlock() {
         if (blockNode) {
           const idx = getNodeIdxFromClassName(blockNode.classList)!;
           setHoverIdx(idx);
-          blockNode.classList.add(BLOCK_HOVER_CLASSNAME);
         }
       };
       const onMouseOut = (ev: MouseEvent) => {
         const blockNode = findBlockNode(ev.target as HTMLElement);
         if (blockNode) {
-          blockNode.classList.remove(BLOCK_HOVER_CLASSNAME);
+          setHoverIdx('');
         }
       };
 
@@ -165,12 +158,10 @@ export function useDropBlock() {
             setHoverIdx(idx);
             blockNode.classList.remove(DRAG_HOVER_CLASSNAME);
             blockNode.classList.add(DRAG_TANGENT_CLASSNAME);
-
           } else {
             blockNode.classList.remove(DRAG_TANGENT_CLASSNAME);
             const idx = getNodeIdxFromClassName(blockNode.classList)!;
             setHoverIdx(idx);
-            blockNode.classList.add(DRAG_HOVER_CLASSNAME);
           }
         }
       };
@@ -193,7 +184,10 @@ export function useDropBlock() {
     }
   }, [ref, setHoverIdx]);
 
-  return {
-    setRef,
-  };
+  return useMemo(
+    () => ({
+      setRef,
+    }),
+    [setRef]
+  );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 export interface HoverIdxState {
   hoverIdx: string;
@@ -9,19 +9,21 @@ export const HoverIdxContext = React.createContext<{
   setHoverIdx: React.Dispatch<React.SetStateAction<string>>;
 }>({
   hoverIdx: '',
-  setHoverIdx: () => { }
+  setHoverIdx: () => {},
 });
 
 export const HoverIdxProvider: React.FC<{}> = (props) => {
   const [hoverIdx, setHoverIdx] = useState('');
 
+  const children = useMemo(() => props.children, [props.children]);
   return (
-    <HoverIdxContext.Provider value={{
-      hoverIdx,
-      setHoverIdx
-    }}
+    <HoverIdxContext.Provider
+      value={{
+        hoverIdx,
+        setHoverIdx,
+      }}
     >
-      { props.children}
+      {children}
     </HoverIdxContext.Provider>
   );
 };

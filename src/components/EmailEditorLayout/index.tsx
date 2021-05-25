@@ -30,7 +30,7 @@ export const EmailEditorLayout = (props: EmailEditorLayoutProps) => {
 
   const pageMaxWidth = pageData.attributes.width || '600px';
   const pageMinWidth = '375px';
-
+  console.log('EmailEditorLayout render');
   return (
     <Layout>
       <div
@@ -38,7 +38,6 @@ export const EmailEditorLayout = (props: EmailEditorLayoutProps) => {
           display: 'flex',
           width: '100vw',
           overflow: 'hidden',
-
         }}
       >
         <Layout.Sider theme='light' width={340}>
@@ -46,7 +45,7 @@ export const EmailEditorLayout = (props: EmailEditorLayoutProps) => {
             id='leftSide'
             style={{
               maxHeight: '100%',
-              height: containerHeight
+              height: containerHeight,
             }}
             className={styles.customScrollBar}
           >
@@ -55,20 +54,30 @@ export const EmailEditorLayout = (props: EmailEditorLayoutProps) => {
         </Layout.Sider>
 
         <Layout>
-          <div id='centerEditor' style={{ backgroundColor: pageData.attributes['background-color'], height: containerHeight }}>
+          <div
+            id='centerEditor'
+            style={{
+              backgroundColor: pageData.attributes['background-color'],
+              height: containerHeight,
+            }}
+          >
             <Tabs
               activeKey={activeTab}
-              tabBarStyle={{ paddingLeft: 20, marginBottom: 0, backgroundColor: '#fff' }}
+              tabBarStyle={{
+                paddingLeft: 20,
+                marginBottom: 0,
+                backgroundColor: '#fff',
+              }}
               onChange={setActiveTab}
               tabBarExtraContent={<ToolsPanel />}
             >
               <TabPane
-                tab={(
+                tab={
                   <Stack spacing='none'>
                     <EditOutlined />
                     <TextStyle>Edit</TextStyle>
                   </Stack>
-                )}
+                }
                 key='editor'
                 style={{
                   backgroundColor: 'transparent',
@@ -84,19 +93,18 @@ export const EmailEditorLayout = (props: EmailEditorLayoutProps) => {
                     padding: '40px 0px',
                     margin: 'auto',
                     height: '100%',
-
                   }}
                 >
                   <EmailContent isActive={activeTab === 'editor'} />
                 </root.div>
               </TabPane>
               <TabPane
-                tab={(
+                tab={
                   <Stack spacing='none'>
                     <DesktopOutlined />
                     <TextStyle>Preview</TextStyle>
                   </Stack>
-                )}
+                }
                 key='laptopIcon'
                 style={{ backgroundColor: 'transparent' }}
               >
@@ -105,7 +113,7 @@ export const EmailEditorLayout = (props: EmailEditorLayoutProps) => {
                     width: pageMaxWidth,
                     padding: '40px 0px',
                     margin: 'auto',
-                    height: '100%'
+                    height: '100%',
                   }}
                 >
                   <IframeComponent
@@ -118,12 +126,12 @@ export const EmailEditorLayout = (props: EmailEditorLayoutProps) => {
                 </div>
               </TabPane>
               <TabPane
-                tab={(
+                tab={
                   <Stack spacing='none'>
                     <TabletOutlined />
                     <TextStyle>Preview</TextStyle>
                   </Stack>
-                )}
+                }
                 key='mobileIcon'
                 style={{ backgroundColor: 'transparent' }}
               >
@@ -132,7 +140,7 @@ export const EmailEditorLayout = (props: EmailEditorLayoutProps) => {
                     width: pageMinWidth,
                     padding: 40,
                     margin: 'auto',
-                    height: '100%'
+                    height: '100%',
                   }}
                 >
                   <IframeComponent
@@ -142,14 +150,12 @@ export const EmailEditorLayout = (props: EmailEditorLayoutProps) => {
                     className={styles.app}
                   >
                     <style>
-                      {
-                        `
+                      {`
                         body::-webkit-scrollbar {
                           width: 0px;
                           background-color: transparent;
                         }
-                      `
-                      }
+                      `}
                     </style>
                     <PreviewEmail />
                   </IframeComponent>

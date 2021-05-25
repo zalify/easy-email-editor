@@ -7,7 +7,6 @@ import {
   SelectField,
   TextField,
 } from '@/components/core/Form';
-import { useBlock } from '@/hooks/useBlock';
 import { FontFamily } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/FontFamliy';
 
 const positionOptions = [
