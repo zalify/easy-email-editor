@@ -1,9 +1,10 @@
-import { FocusIdxContext } from '@/components/FocusIdxProvider';
+import { BlocksContext } from '@/components/Provider/BlocksProvider';
 import { useContext } from 'react';
 
 export function useFocusIdx() {
-  const { focusIdx, setFocusIdx } = useContext(FocusIdxContext);
+  const { focusIdx, setFocusIdx } = useContext(BlocksContext);
   return {
-    focusIdx, setFocusIdx
+    focusIdx,
+    setFocusIdx,
   };
 }

@@ -8,7 +8,7 @@ import {
   TextField,
 } from '@/components/core/Form';
 import { LinkOutlined } from '@ant-design/icons';
-import { Align } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Align';
+import { Align } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Align';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { ICarousel } from '..';
 

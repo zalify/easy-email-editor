@@ -160,6 +160,7 @@ export function useDropBlock() {
             blockNode.classList.add(DRAG_TANGENT_CLASSNAME);
           } else {
             blockNode.classList.remove(DRAG_TANGENT_CLASSNAME);
+            blockNode.classList.add(DRAG_HOVER_CLASSNAME);
             const idx = getNodeIdxFromClassName(blockNode.classList)!;
             setHoverIdx(idx);
           }

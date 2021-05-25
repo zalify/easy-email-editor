@@ -1,6 +1,9 @@
-export { EmailEditorProvider as EmailEditor } from './components/EmailEditorProvider';
-export type { BlockGroup, CollectedBlock } from './components/PropsProvider';
-export { EmailEditorLayout } from './components/EmailEditorLayout';
+export { EmailEditorProvider } from './components/Provider/EmailEditorProvider';
+export type {
+  BlockGroup,
+  CollectedBlock,
+} from './components/Provider/PropsProvider';
+export { EmailEditor } from './components/EmailEditor';
 export { useBlock } from './hooks/useBlock';
 export { useDropBlock } from './hooks/useDropBlock';
 export { useEditorContext } from './hooks/useEditorContext';
@@ -12,4 +15,4 @@ export * from './constants';
 export * from './components/core/Form';
 export * from './utils/block';
 export * from './typings';
-export * from './components/EmailEditorLayout/components/ConfigurationPanel';
+export * from './components/EmailEditor/components/ConfigurationPanel';

@@ -19,7 +19,7 @@ import services from '@example/services';
 
 import {
   EmailEditor,
-  EmailEditorLayout,
+  EmailEditorProvider,
   IEmailTemplate,
   transformToMjml,
 } from 'easy-email-editor';
@@ -119,14 +119,14 @@ export default function Editor() {
     dispatch(extraBlocks.actions.add(payload));
     message.success('Added to collection!');
   };
-  const onRemoveCollection = ({ id }: { id: string }) => {
+  const onRemoveCollection = ({ id }: { id: string; }) => {
     dispatch(extraBlocks.actions.remove({ id }));
     message.success('Removed from collection.');
   };
 
   return (
     <div>
-      <EmailEditor
+      <EmailEditorProvider
         key={id}
         data={initialValues}
         extraBlocks={extraBlocksList}
@@ -137,7 +137,7 @@ export default function Editor() {
           hoverColor: '#3b97e3',
           selectedColor: '#69c0ff',
           dragoverColor: '#13c2c2',
-          tangentColor: '#ffec3d',
+          tangentColor: '#faad14',
         }}
         onSubmit={onSubmit}
       >
@@ -165,12 +165,12 @@ export default function Editor() {
                   </Stack>
                 }
               />
-              <EmailEditorLayout height={'calc(100vh - 72px)'} />
+              <EmailEditor height={'calc(100vh - 72px)'} />
               <WarnAboutUnsavedChanges />
             </>
           );
         }}
-      </EmailEditor>
+      </EmailEditorProvider>
       {modal}
     </div>
   );

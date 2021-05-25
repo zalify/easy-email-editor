@@ -1,5 +1,5 @@
 import React from 'react';
-import { Padding } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Padding';
+import { Padding } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Padding';
 import { Stack } from '@/components/UI/Stack';
 import {
   ColorPickerField,
@@ -8,7 +8,7 @@ import {
   SelectField,
   TextField,
 } from '@/components/core/Form';
-import { Align } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Align';
+import { Align } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Align';
 import { LinkOutlined } from '@ant-design/icons';
 import { INavbar } from '..';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
