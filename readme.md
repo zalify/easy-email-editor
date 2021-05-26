@@ -5,7 +5,7 @@ Easy email is developed based on the [MJML](https://mjml.io/) and has very good 
 
 Overview |
 :---: |
-<img src="https://assets.maocanhua.cn/b409e1b7-b9a9-43ac-a2fd-e27c285dd844-image.png" alt="Overview" width="100%" style="text-align:center">
+<img src="https://assets.maocanhua.cn/0e50aa7b-9b17-42b4-8bf9-cd310c74f3be-image.png" alt="Overview" width="100%" style="text-align:center">
 <img src="https://assets.maocanhua.cn/97c776e9-6c67-4452-b048-3f2d6e468424-image.png" alt="Overview" width="100%" style="text-align:center">
 
 
@@ -32,7 +32,7 @@ $ yarn add easy-email-editor antd formik mjml-browser
 
 ```js
 import React from 'react';
-import { BlocksMap, EmailEditor, EmailEditorLayout } from 'easy-email-editor';
+import { BlocksMap, EmailEditor, EmailEditorProvider } from 'easy-email-editor';
 import 'easy-email-editor/lib/style.css';
 import 'antd/dist/antd.css';
 
@@ -44,13 +44,13 @@ const initialValues = {
 
 export function App() {
   return (
-    <EmailEditor data={initialValues}>
+    <EmailEditorProvider data={initialValues}>
       {({ values }) => {
         return (
-          <EmailEditorLayout height={'calc(100vh - 72px)'} />
+          <EmailEditor height={'calc(100vh - 72px)'} />
         );
       }}
-    </EmailEditor>
+    </EmailEditorProvider>
   );
 }
 

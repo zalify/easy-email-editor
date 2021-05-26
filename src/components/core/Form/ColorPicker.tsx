@@ -1,7 +1,7 @@
 import { Popover, PopoverProps } from 'antd';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ColorResult, SketchPicker } from 'react-color';
-import { Picture } from '@/components/Picture';
+import { Picture } from '@/components/UI/Picture';
 
 export interface ColorPickerProps extends PopoverProps {
   onChange?: (val: string) => void;

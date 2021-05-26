@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stack } from '@/components/Stack';
+import { Stack } from '@/components/UI/Stack';
 import {
   ColorPickerField,
   EditTabField,
@@ -8,8 +8,8 @@ import {
   TextField,
 } from '@/components/core/Form';
 import { LinkOutlined } from '@ant-design/icons';
-import { useBlock } from '@/hooks/useBlock';
-import { Align } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Align';
+import { Align } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Align';
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { ICarousel } from '..';
 
 const options = [
@@ -24,10 +24,9 @@ const options = [
 ];
 
 export function Panel() {
-  const { focusIdx } = useBlock();
+  const { focusIdx } = useFocusIdx();
   return (
     <Stack vertical>
-
       <ColorPickerField
         label='Border color of the hovered thumbnail'
         name={`${focusIdx}.attributes.tb-hover-border-color`}
@@ -94,8 +93,7 @@ export function Panel() {
             <CarouselImage item={item} index={index} />
           )}
           additionItem={{
-            src:
-              'https://www.mailjet.com/wp-content/uploads/2016/11/ecommerce-guide.jpg',
+            src: 'https://www.mailjet.com/wp-content/uploads/2016/11/ecommerce-guide.jpg',
             target: '_blank',
           }}
         />
@@ -111,7 +109,7 @@ function CarouselImage({
   item: ICarousel['data']['value']['images'];
   index: number;
 }) {
-  const { focusIdx } = useBlock();
+  const { focusIdx } = useFocusIdx();
   return (
     <Stack>
       <TextField

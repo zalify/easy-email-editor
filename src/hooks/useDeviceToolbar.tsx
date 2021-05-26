@@ -1,8 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import {
-  DesktopOutlined,
-  TabletOutlined,
-} from '@ant-design/icons';
+import { DesktopOutlined, TabletOutlined } from '@ant-design/icons';
 import { Button, Tooltip } from 'antd';
 
 export const platformList = [
@@ -31,26 +28,23 @@ export function useDeviceToolbar() {
     }
   }, [selectedPlatform]);
 
-  const renderPlatform = useCallback((item: {
-    value: string;
-    label: string;
-    icon: JSX.Element;
-  }) => {
-    return (
-      <Tooltip title={item.label} key={item.value}>
-        <Button
-          type={
-            selectedPlatform === item.value ? 'primary' : undefined
-          }
-          ghost={selectedPlatform === item.value}
-          size='small'
-          onClick={() => setSelectedPlatform(item.value)}
-        >
-          {<DesktopOutlined />}
-        </Button>
-      </Tooltip>
-    );
-  }, [selectedPlatform]);
+  const renderPlatform = useCallback(
+    (item: { value: string; label: string; icon: JSX.Element }) => {
+      return (
+        <Tooltip title={item.label} key={item.value}>
+          <Button
+            type={selectedPlatform === item.value ? 'primary' : undefined}
+            ghost={selectedPlatform === item.value}
+            size='small'
+            onClick={() => setSelectedPlatform(item.value)}
+          >
+            {<DesktopOutlined />}
+          </Button>
+        </Tooltip>
+      );
+    },
+    [selectedPlatform]
+  );
 
   return {
     laptopIcon: renderPlatform(platformList[0]),

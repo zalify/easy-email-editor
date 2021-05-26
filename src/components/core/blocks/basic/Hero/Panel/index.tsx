@@ -1,11 +1,11 @@
 import React from 'react';
-import { Stack } from '@/components/Stack';
-import { BackgroundColor } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/BackgroundColor';
+import { Stack } from '@/components/UI/Stack';
+import { BackgroundColor } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/BackgroundColor';
 import { RadioGroupField, TextField } from '@/components/core/Form';
-import { useBlock } from '@/hooks/useBlock';
-import { Width } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Width';
-import { Height } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Height';
-import { VerticalAlign } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/VerticalAlign';
+import { Width } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Width';
+import { Height } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Height';
+import { VerticalAlign } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/VerticalAlign';
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 
 const options = [
   {
@@ -17,8 +17,9 @@ const options = [
     label: 'Fixed height',
   },
 ];
+
 export function Panel() {
-  const { focusIdx } = useBlock();
+  const { focusIdx } = useFocusIdx();
   return (
     <Stack vertical>
       <TextField
@@ -35,7 +36,7 @@ export function Panel() {
         label='Background url'
         name={`${focusIdx}.attributes.background-url`}
         inline
-        helpText="The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally."
+        helpText='The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.'
       />
       <TextField
         label='Background width'

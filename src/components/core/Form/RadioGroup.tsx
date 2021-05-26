@@ -3,7 +3,7 @@ import { Radio } from 'antd';
 import { RadioChangeEvent, RadioGroupProps as AntdRadioGroupProps } from 'antd/lib/radio';
 import { merge } from 'lodash';
 import React from 'react';
-import { Stack } from '../../Stack';
+import { Stack } from '../../UI/Stack';
 
 export interface RadioGroupProps extends AntdRadioGroupProps {
   options: Array<{ value: string; label: React.ReactNode; }>;

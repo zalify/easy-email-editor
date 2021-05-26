@@ -58,7 +58,7 @@ export function ImageUploader(props: ImageUploaderProps) {
   const onPaste = useCallback(
     async (e: React.ClipboardEvent<HTMLInputElement>) => {
       if (!uploadHandlerRef.current) return;
-      const clipboardData = e.clipboardData!;
+      const clipboardData = e.clipboardData;
 
       for (let i = 0; i < clipboardData.items.length; i++) {
         const item = clipboardData.items[i];

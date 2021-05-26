@@ -12,14 +12,17 @@ import {
 } from '@/utils/block';
 import { createBlockItem } from '@/utils/createBlockItem';
 import { useEditorContext } from './useEditorContext';
-import { RecordContext } from '@/components/RecordProvider';
+import { RecordContext } from '@/components/Provider/RecordProvider';
+import { useFocusIdx } from './useFocusIdx';
 
 export function useBlock() {
   const { values, setValues, getFieldHelpers, setFormikState, handleChange } =
     useEditorContext();
 
-  const { focusIdx, hoverIdx } = values;
+  const { focusIdx, setFocusIdx } = useFocusIdx();
+
   const focusBlock = get(values, focusIdx) as IBlockData | null;
+
   const {
     redo,
     undo,
@@ -38,9 +41,9 @@ export function useBlock() {
       canReplace?: boolean;
     }) => {
       let { type, parentIdx, positionIndex, payload } = params;
-
+      let nextFocusIdx = focusIdx;
       setFormikState((formState) => {
-        let parent = get(formState.values, parentIdx) as IBlockData | null;
+        const parent = get(formState.values, parentIdx) as IBlockData | null;
         if (!parent) {
           message.warning('Invalid block');
           return formState;
@@ -51,7 +54,7 @@ export function useBlock() {
         if (typeof positionIndex === 'undefined') {
           positionIndex = parent.children.length;
         }
-        let focusIdx = `${parentIdx}.children.[${positionIndex}]`;
+        nextFocusIdx = `${parentIdx}.children.[${positionIndex}]`;
         const block = findBlockByType(type);
         const parentBlock = findBlockByType(parent.type);
 
@@ -64,12 +67,12 @@ export function useBlock() {
                 }),
               ],
             });
-            focusIdx += '.children.[0].children.[0]';
+            nextFocusIdx += '.children.[0].children.[0]';
           } else if (parentBlock.type === BasicType.WRAPPER) {
             child = createBlockItem(BasicType.SECTION, {
               children: [child],
             });
-            focusIdx += '.children.[0]';
+            nextFocusIdx += '.children.[0]';
           }
         } else if (
           [
@@ -92,7 +95,7 @@ export function useBlock() {
             child = createBlockItem(BasicType.COLUMN, {
               children: [child],
             });
-            focusIdx += '.children.[0]';
+            nextFocusIdx += '.children.[0]';
           } else if (parentBlock.type === BasicType.WRAPPER) {
             child = createBlockItem(BasicType.SECTION, {
               children: [
@@ -101,7 +104,7 @@ export function useBlock() {
                 }),
               ],
             });
-            focusIdx += '.children.[0]';
+            nextFocusIdx += '.children.[0]';
           } else if (parentBlock.type === BasicType.PAGE) {
             if (block.type === BasicType.DIVIDER) {
               child = createBlockItem(BasicType.SECTION, {
@@ -111,7 +114,7 @@ export function useBlock() {
                   }),
                 ],
               });
-              focusIdx += '.children.[0].children.[0]';
+              nextFocusIdx += '.children.[0].children.[0]';
             } else {
               child = createBlockItem(BasicType.SECTION, {
                 children: [
@@ -121,7 +124,7 @@ export function useBlock() {
                 ],
               });
 
-              focusIdx += '.children.[0].children.[0]';
+              nextFocusIdx += '.children.[0].children.[0]';
             }
           }
         }
@@ -134,7 +137,7 @@ export function useBlock() {
             upParent.children.splice(parentIndex, 1, child);
 
             set(formState.values, getParentIdx(parentIdx)!, { ...upParent });
-            formState.values.focusIdx = parentIdx;
+
             return { ...formState };
           }
         }
@@ -149,14 +152,14 @@ export function useBlock() {
           return formState;
         }
 
-        parent.children.splice(positionIndex!, 0, child);
+        parent.children.splice(positionIndex, 0, child);
         set(formState.values, parentIdx, { ...parent });
-        formState.values.focusIdx = focusIdx;
 
         return { ...formState };
       });
+      setFocusIdx(nextFocusIdx);
     },
-    [setFormikState]
+    [focusIdx, setFocusIdx, setFormikState]
   );
 
   const moveBlock = useCallback(
@@ -167,6 +170,7 @@ export function useBlock() {
     }) => {
       let { sourceIdx, destinationIdx, positionIndex } = params;
       if (sourceIdx === destinationIdx) return null;
+      let nextFocusIdx = focusIdx;
       setFormikState((formState) => {
         const source = getValueByIdx(formState.values, sourceIdx)!;
         const sourceParentIdx = getParentIdx(sourceIdx);
@@ -208,16 +212,17 @@ export function useBlock() {
           set(formState.values, destinationIdx, { ...destinationParent });
         }
 
-        formState.values.focusIdx =
-          destinationIdx + `.children.[${positionIndex}]`;
+        nextFocusIdx = destinationIdx + `.children.[${positionIndex}]`;
         return { ...formState };
       });
+      setFocusIdx(nextFocusIdx);
     },
-    [setFormikState]
+    [focusIdx, setFocusIdx, setFormikState]
   );
 
   const copyBlock = useCallback(
     (idx: string) => {
+      let nextFocusIdx = focusIdx;
       setFormikState((formState) => {
         const parentIdx = getParentIdx(idx);
         if (!parentIdx) return formState;
@@ -234,15 +239,17 @@ export function useBlock() {
 
         parent.children.splice(index, 0, copyBlock);
         set(formState.values, parentIdx, { ...parent });
-        formState.values.focusIdx = `${parentIdx}.children.[${index}]`;
+        nextFocusIdx = `${parentIdx}.children.[${index}]`;
         return { ...formState };
       });
+      setFocusIdx(nextFocusIdx);
     },
-    [setFormikState]
+    [focusIdx, setFocusIdx, setFormikState]
   );
 
   const removeBlock = useCallback(
     (idx: string) => {
+      let nextFocusIdx = focusIdx;
       setFormikState((formState) => {
         const block = getValueByIdx(values, idx);
         if (!block) {
@@ -266,11 +273,12 @@ export function useBlock() {
 
         parent.children.splice(blockIndex, 1);
         set(values, parentIdx, { ...parent });
-        values.focusIdx = parentIdx;
+        nextFocusIdx = parentIdx;
         return { ...formState };
       });
+      setFocusIdx(nextFocusIdx);
     },
-    [setFormikState, values]
+    [focusIdx, setFocusIdx, setFormikState, values]
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -283,6 +291,7 @@ export function useBlock() {
 
   const moveByIdx = useCallback(
     (sourceIdx: string, destinationIdx: string) => {
+      let nextFocusIdx = focusIdx;
       setFormikState((formState) => {
         const sourceIndex = getIndexByIdx(sourceIdx);
         const destinationIndex = getIndexByIdx(destinationIdx);
@@ -314,11 +323,12 @@ export function useBlock() {
 
         set(formState.values, sourceParentIdx, sourceParent);
         set(formState.values, destinationParentIdx, destinationParent);
-        set(formState.values, 'focusIdx', destinationIdx);
+        nextFocusIdx = destinationIdx;
         return { ...formState };
       });
+      setFocusIdx(nextFocusIdx);
     },
-    [setFormikState]
+    [focusIdx, setFocusIdx, setFormikState]
   );
 
   const isExistBlock = useCallback(
@@ -326,34 +336,6 @@ export function useBlock() {
       return Boolean(get(values, idx));
     },
     [values]
-  );
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const setFocusIdx = useCallback(
-    debounce((idx: string) => {
-      setFormikState((formState) => {
-        if (formState.values.focusIdx === idx) {
-          return formState;
-        }
-        formState.values.focusIdx = idx;
-        return { ...formState };
-      });
-    }),
-    [setFormikState]
-  );
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const setHoverIdx = useCallback(
-    debounce((idx: string) => {
-      setFormikState((formState) => {
-        if (formState.values.hoverIdx === idx) {
-          return formState;
-        }
-        formState.values.hoverIdx = idx;
-        return { ...formState };
-      });
-    }),
-    [setFormikState]
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -371,17 +353,13 @@ export function useBlock() {
 
   return {
     values,
-    focusIdx,
     focusBlock,
-    hoverIdx,
     setFocusBlockValue,
     setValueByIdx,
-    setHoverIdx,
     addBlock,
     moveBlock,
     copyBlock,
     removeBlock,
-    setFocusIdx,
     moveByIdx,
     isExistBlock,
     setFormikState,

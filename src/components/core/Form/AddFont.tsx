@@ -3,12 +3,13 @@ import React from 'react';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import { TextField } from '.';
 import { Button } from 'antd';
-import { Stack } from '@/components/Stack';
-import { TextStyle } from '@/components/TextStyle';
+import { Stack } from '@/components/UI/Stack';
+import { TextStyle } from '@/components/UI/TextStyle';
 import { useBlock } from '@/hooks/useBlock';
 import { IPage } from '../blocks/basic/Page';
-import { Help } from '@/components/Help';
+import { Help } from '@/components/UI/Help';
 import * as Yup from 'yup';
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 
 const isUrl = async (v: string) => {
   try {
@@ -21,7 +22,8 @@ const isUrl = async (v: string) => {
 
 export function AddFont() {
 
-  const { focusIdx, focusBlock } = useBlock();
+  const { focusBlock } = useBlock();
+  const { focusIdx } = useFocusIdx();
   const value: IPage['data']['value'] = focusBlock?.data.value;
   return (
 

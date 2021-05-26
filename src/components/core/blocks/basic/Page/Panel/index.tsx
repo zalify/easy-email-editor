@@ -1,33 +1,32 @@
 import React from 'react';
-import { useBlock } from '@/hooks/useBlock';
-import { Stack } from '@/components/Stack';
+import { Stack } from '@/components/UI/Stack';
 import { ColorPickerField, TextField } from '@/components/core/Form';
-import { Help } from '@/components/Help';
-import { TextStyle } from '@/components/TextStyle';
+import { Help } from '@/components/UI/Help';
+import { TextStyle } from '@/components/UI/TextStyle';
 import { AddFont } from '@/components/core/Form/AddFont';
 
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 export function Panel() {
-  const { focusIdx, focusBlock } = useBlock();
+  const { focusIdx } = useFocusIdx();
 
-  if (!focusBlock) return null;
+  if (!focusIdx) return null;
   return (
     <Stack.Item fill>
       <Stack vertical>
         <TextField label='Subject' name={'subject'} inline />
         <TextField label='SubTitle' name={'subTitle'} inline />
         <TextField label='Width' name={`${focusIdx}.attributes.width`} inline />
-        <Stack alignment="center">
+        <Stack alignment='center'>
           <TextField
-            label={(
-              <Stack spacing="extraTight">
+            label={
+              <Stack spacing='extraTight'>
                 <TextStyle>Breakpoint</TextStyle>
-                <Help title="Allows you to control on which breakpoint the layout should go desktop/mobile." />
+                <Help title='Allows you to control on which breakpoint the layout should go desktop/mobile.' />
               </Stack>
-            )}
+            }
             name={`${focusIdx}.data.value.breakpoint`}
             inline
           />
-
         </Stack>
         <TextField
           label='Font family'

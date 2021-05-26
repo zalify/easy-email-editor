@@ -19,10 +19,9 @@ import services from '@example/services';
 
 import {
   EmailEditor,
-  EmailEditorLayout,
+  EmailEditorProvider,
   IEmailTemplate,
   transformToMjml,
-  EditorProps,
 } from 'easy-email-editor';
 import 'easy-email-editor/lib/style.css';
 import { Stack } from '@example/components/Stack';
@@ -56,18 +55,15 @@ export default function Editor() {
   }, [dispatch, id]);
 
   const onSubmit = useCallback(
-    async (values: IEmailTemplate, helper: FormikHelpers<EditorProps>) => {
+    async (values: IEmailTemplate, helper: FormikHelpers<IEmailTemplate>) => {
       if (id) {
         dispatch(
           template.actions.updateById({
             id: +id,
             template: values,
-            success(templateId) {
+            success() {
               message.success('Updated success!');
-              helper.setTouched({});
-              setTimeout(() => {
-                history.replace(`/editor?id=${templateId}`);
-              }, 0);
+              helper.resetForm({ touched: {} });
             },
           })
         );
@@ -75,12 +71,10 @@ export default function Editor() {
         dispatch(
           template.actions.create({
             template: values,
-            success(templateId) {
+            success(id, newTemplate) {
               message.success('Saved success!');
-              helper.setTouched({});
-              setTimeout(() => {
-                history.replace(`/editor?id=${templateId}`);
-              }, 0);
+              helper.resetForm({ values: newTemplate });
+              history.replace(`/editor?id=${id}`);
             },
           })
         );
@@ -125,14 +119,14 @@ export default function Editor() {
     dispatch(extraBlocks.actions.add(payload));
     message.success('Added to collection!');
   };
-  const onRemoveCollection = ({ id }: { id: string }) => {
+  const onRemoveCollection = ({ id }: { id: string; }) => {
     dispatch(extraBlocks.actions.remove({ id }));
     message.success('Removed from collection.');
   };
 
   return (
     <div>
-      <EmailEditor
+      <EmailEditorProvider
         key={id}
         data={initialValues}
         extraBlocks={extraBlocksList}
@@ -143,7 +137,7 @@ export default function Editor() {
           hoverColor: '#3b97e3',
           selectedColor: '#69c0ff',
           dragoverColor: '#13c2c2',
-          tangentColor: '#ffec3d',
+          tangentColor: '#faad14',
         }}
         onSubmit={onSubmit}
       >
@@ -171,12 +165,12 @@ export default function Editor() {
                   </Stack>
                 }
               />
-              <EmailEditorLayout height={'calc(100vh - 72px)'} />
+              <EmailEditor height={'calc(100vh - 72px)'} />
               <WarnAboutUnsavedChanges />
             </>
           );
         }}
-      </EmailEditor>
+      </EmailEditorProvider>
       {modal}
     </div>
   );

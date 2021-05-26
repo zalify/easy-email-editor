@@ -1,6 +1,6 @@
 import React from 'react';
-import { Padding } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Padding';
-import { Stack } from '@/components/Stack';
+import { Padding } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Padding';
+import { Stack } from '@/components/UI/Stack';
 import {
   ColorPickerField,
   EditTabField,
@@ -8,10 +8,10 @@ import {
   SelectField,
   TextField,
 } from '@/components/core/Form';
-import { useBlock } from '@/hooks/useBlock';
-import { Align } from '@/components/EmailEditorLayout/components/ConfigurationPanel/components/AttributesManager/components/Align';
+import { Align } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Align';
 import { LinkOutlined } from '@ant-design/icons';
 import { INavbar } from '..';
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 
 const options = [
   {
@@ -29,7 +29,7 @@ const options = [
 ];
 
 export function Panel() {
-  const { focusIdx } = useBlock();
+  const { focusIdx } = useFocusIdx();
   return (
     <Stack vertical>
       <Align />
@@ -67,12 +67,11 @@ export function Panel() {
         label='Links'
         renderItem={(item, index) => <NavbarLink item={item} index={index} />}
         additionItem={{
-          src:
-            'https://www.mailjet.com/wp-content/uploads/2016/11/ecommerce-guide.jpg',
+          src: 'https://www.mailjet.com/wp-content/uploads/2016/11/ecommerce-guide.jpg',
           target: '_blank',
           content: 'New link',
           color: '#1890ff',
-          "font-size": "13px"
+          'font-size': '13px',
         }}
       />
     </Stack>
@@ -86,7 +85,7 @@ function NavbarLink({
   item: INavbar['data']['value']['links'];
   index: number;
 }) {
-  const { focusIdx } = useBlock();
+  const { focusIdx } = useFocusIdx();
   return (
     <Stack>
       <TextField

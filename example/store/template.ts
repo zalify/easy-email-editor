@@ -1,4 +1,4 @@
-import { article } from '@example/services/article';
+import { article, IArticle } from '@example/services/article';
 import createSliceState from './common/createSliceState';
 import { message } from 'antd';
 import { history } from '@example/util/history';
@@ -7,9 +7,20 @@ import { emailToImage } from '@example/util/emailToImage';
 import { BlocksMap, IEmailTemplate } from 'easy-email-editor';
 
 const defaultTemplateIds = [468, 462, 460, 459, 458, 456, 454, 453, 452];
+
+export function getAdaptor(data: IArticle): IEmailTemplate {
+  const content = JSON.parse(data.content.content) as IBlockData;
+  return {
+    ...data,
+    content,
+    subject: data.title,
+    subTitle: '',
+  };
+}
+
 export default createSliceState({
   name: 'template',
-  initialState: null as Omit<IEmailTemplate, 'hoverIdx' | 'focusIdx'> | null,
+  initialState: null as IEmailTemplate | null,
   reducers: {
     set: (state, action) => {
       return action.payload;
@@ -19,13 +30,7 @@ export default createSliceState({
     fetchById: async (state, id: number) => {
       try {
         const data = await article.getArticle(id);
-        const content = JSON.parse(data.content.content) as IBlockData;
-        return {
-          ...data,
-          content,
-          subject: data.title,
-          subTitle: '',
-        };
+        return getAdaptor(data);
       } catch (error) {
         history.replace('/');
         throw error;
@@ -42,7 +47,7 @@ export default createSliceState({
       state,
       payload: {
         template: IEmailTemplate;
-        success: (id: number) => void;
+        success: (id: number, data: IEmailTemplate) => void;
       }
     ) => {
       const picture = await emailToImage(payload.template.content);
@@ -53,7 +58,7 @@ export default createSliceState({
         title: payload.template.subject,
         content: JSON.stringify(payload.template.content),
       });
-      payload.success(data.article_id);
+      payload.success(data.article_id, getAdaptor(data));
       return { ...data, ...payload.template };
     },
     updateById: async (
@@ -84,7 +89,7 @@ export default createSliceState({
         payload.success(payload.id);
       }
     },
-    removeById: async (state, payload: { id: number; success: () => void }) => {
+    removeById: async (state, payload: { id: number; success: () => void; }) => {
       await article.deleteArticle(payload.id);
       payload.success();
       message.success('Removed success.');

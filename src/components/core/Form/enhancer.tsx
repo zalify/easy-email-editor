@@ -1,8 +1,8 @@
-import { TextStyle } from '@/components/TextStyle';
+import { TextStyle } from '@/components/UI/TextStyle';
 import { Form } from 'antd';
 import { Field, FieldProps, useField } from 'formik';
 import React, { useCallback, useMemo } from 'react';
-import { Stack, StackProps } from '../../Stack';
+import { Stack, StackProps } from '../../UI/Stack';
 import styles from './index.module.scss';
 
 export interface EnhancerProps extends Partial<FieldProps> {

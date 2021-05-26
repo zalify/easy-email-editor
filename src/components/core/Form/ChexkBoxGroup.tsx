@@ -3,7 +3,7 @@ import { CheckboxGroupProps as AntdCheckboxGroupProps } from 'antd/lib/checkbox'
 import { CheckboxValueType } from 'antd/lib/checkbox/Group';
 import { merge } from 'lodash';
 import React from 'react';
-import { Stack } from '../../Stack';
+import { Stack } from '../../UI/Stack';
 
 export interface CheckboxGroupProps extends AntdCheckboxGroupProps {
   options: Array<{ value: string; label: React.ReactNode; }>;
