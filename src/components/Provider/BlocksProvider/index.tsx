@@ -22,10 +22,6 @@ export const BlocksProvider: React.FC<{}> = (props) => {
   const [dragEnabled, setDragEnabled] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
 
-  const children = useMemo(() => {
-    return props.children;
-  }, [props.children]);
-
   return (
     <BlocksContext.Provider
       value={{
@@ -37,7 +33,7 @@ export const BlocksProvider: React.FC<{}> = (props) => {
         setCollapsed
       }}
     >
-      {children}
+      {props.children}
     </BlocksContext.Provider>
   );
 };

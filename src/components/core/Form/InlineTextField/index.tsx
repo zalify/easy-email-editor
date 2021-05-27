@@ -5,9 +5,9 @@ import { getEditContent, getEditNode } from '@/utils/getEditNode';
 export interface InlineTextProps { idx: string; children?: React.ReactNode; onChange: (content: string) => void; }
 
 export function InlineText({ idx, onChange, children }: InlineTextProps) {
-  const textContainer = findBlockNodeByIdx(idx);
 
   useEffect(() => {
+    const textContainer = findBlockNodeByIdx(idx);
     if (!textContainer) return;
 
     const container = getEditNode(textContainer);
@@ -31,18 +31,18 @@ export function InlineText({ idx, onChange, children }: InlineTextProps) {
 
         onChange(getEditContent(textContainer));
       };
-      container.addEventListener('paste', onPaste as any);
+      container.addEventListener('paste', onPaste as any, true);
       container.addEventListener('blur', onBlur);
       document.addEventListener('mousedown', onClick);
 
       return () => {
-        container.removeEventListener('paste', onPaste as any);
+        container.removeEventListener('paste', onPaste as any, true);
         container.removeEventListener('blur', onBlur);
         document.removeEventListener('mousedown', onClick);
       };
     }
 
-  }, [onChange, textContainer]);
+  }, [onChange, idx]);
 
   return <>{children}</>;
 }
