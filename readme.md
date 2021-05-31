@@ -5,13 +5,13 @@ Easy email is developed based on the [MJML](https://mjml.io/) and has very good 
 
 Overview |
 :---: |
-<div style="margin-top:20px;">
+<div style="margin-top:20px;display:flex">
 <img src="https://assets.maocanhua.cn/b409e1b7-b9a9-43ac-a2fd-e27c285dd844-image.png" alt="Overview"  style="text-align:center;width:40%;vertical-align:top">
 
 <img src="https://assets.maocanhua.cn/6ee62f4a-62a3-4b50-9f4b-13dc68270478-image.png" alt="Overview"   style="text-align:center;width:40%;vertical-align:top">
 
 </div>
-<div style="margin-top:20px;margin-bottom:20px;">
+<div style="margin-top:20px;margin-bottom:20px;display:flex;">
 <img src="https://assets.maocanhua.cn/0e50aa7b-9b17-42b4-8bf9-cd310c74f3be-image.png" alt="Overview"   style="text-align:center;width:40%;vertical-align:top">
 <img src="https://assets.maocanhua.cn/97c776e9-6c67-4452-b048-3f2d6e468424-image.png" alt="Overview"   style="text-align:center;width:40%;vertical-align:top">
 </div>

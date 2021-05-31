@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [
     {
       ...typescript2({
-        // check: false,
+        check: false,
         tsconfig: 'tsconfig.lib.json',
       }),
       apply: 'build',
