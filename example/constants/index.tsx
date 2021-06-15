@@ -7,6 +7,10 @@ export const NORMAL_WIDTH = 375;
 export const BASE_NAME = 'h5';
 export const ASSET_DOMAIN = 'https://assets.maocanhua.cn';
 export const APP_EDITOR_CONTAINER_ID = 'app-editor-container';
-export const USER_PHONE = '13800138000';
-export const USER_PWD = '123456';
-export const CATEGORY_ID = 90;
+export const USER_PHONE = '12252691060';
+export const USER_PWD = '12252691060';
+export const USER_ID = 107;
+export const CATEGORY_ID = 96;
+
+export const PROVIDE_USER_ID = 77;
+export const PROVIDE_CATEGORY_ID = 90;

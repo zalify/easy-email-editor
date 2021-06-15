@@ -42,7 +42,7 @@ export function CardItem(props: CardItemProps) {
       <div className={styles.mask}>
         <div className={styles.listBottom}>
           <div className={styles.listItem}>
-            <Link to={`/editor?id=${data.article_id}`}>
+            <Link to={`/editor?id=${data.article_id}&userId=${data.user_id}`}>
               <EditOutlined />
               &nbsp;Edit
             </Link>

@@ -1,25 +1,32 @@
 import { request } from './axios.config';
-import { IUser } from './user';
 import { CATEGORY_ID } from '@example/constants';
 
 export const article = {
-  async getArticle(id: number | string): Promise<IArticle> {
-    return request.get<IArticle>('/article/user/detail', {
+  async getArticle(id: number | string, userId: number): Promise<IArticle> {
+    return request.get<IArticle>('/article/visitor/detail', {
       params: {
         article_id: id,
+        user_id: userId
       },
     });
   },
-  async getArticleList(
+  async getArticleList({
+    size,
+    page,
+    userId,
+    categoryId
+  }: {
     page: number,
     size: number,
-    categoryId: number = CATEGORY_ID
-  ): Promise<ListResponse<IArticle>> {
-    return request.get<ListResponse<IArticle>>('/article/user/list', {
+    categoryId: number,
+    userId: number;
+  }): Promise<ListResponse<IArticle>> {
+    return request.get<ListResponse<IArticle>>('/article/visitor/list', {
       params: {
         page,
         size,
         category_id: categoryId,
+        user_id: userId
       },
     });
   },
@@ -72,11 +79,10 @@ interface content {
 
 export interface IArticle {
   article_id: number;
-  writer_id: number;
+  user_id: number;
   category_id: number;
-  tags: { tag_id: number }[]; // 由于懒得写接口，这个接口是拿之前的，其实不需要数组
+  tags: { tag_id: number; }[]; // 由于懒得写接口，这个接口是拿之前的，其实不需要数组
   picture: string;
-  writer: IUser;
   title: string;
   summary: string;
   secret: number;

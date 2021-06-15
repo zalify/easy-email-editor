@@ -27,9 +27,12 @@ export default createSliceState({
     },
   },
   effects: {
-    fetchById: async (state, id: number) => {
+    fetchById: async (state, { id, userId }: {
+      id: number,
+      userId: number;
+    }) => {
       try {
-        const data = await article.getArticle(id);
+        const data = await article.getArticle(id, userId);
         return getAdaptor(data);
       } catch (error) {
         history.replace('/');
@@ -69,30 +72,46 @@ export default createSliceState({
         success: (templateId: number) => void;
       }
     ) => {
-      const picture = await emailToImage(payload.template.content);
-      if (defaultTemplateIds.includes(payload.id)) {
-        const data = await article.addArticle({
-          ...payload.template,
-          picture,
-          summary: payload.template.subTitle || payload.template.subject,
-          title: payload.template.subject,
-          content: JSON.stringify(payload.template.content),
-        });
-        payload.success(data.article_id);
-        return { ...data, ...payload.template };
-      } else {
-        await article.updateArticle(payload.id, {
-          ...payload.template,
-          picture,
-          content: JSON.stringify(payload.template.content),
-        });
-        payload.success(payload.id);
+      try {
+        const picture = await emailToImage(payload.template.content);
+        if (defaultTemplateIds.includes(payload.id)) {
+          const data = await article.addArticle({
+            ...payload.template,
+            picture,
+            summary: payload.template.subTitle || payload.template.subject,
+            title: payload.template.subject,
+            content: JSON.stringify(payload.template.content),
+          });
+          payload.success(data.article_id);
+          return { ...data, ...payload.template };
+        } else {
+          await article.updateArticle(payload.id, {
+            ...payload.template,
+            picture,
+            content: JSON.stringify(payload.template.content),
+          });
+          payload.success(payload.id);
+        }
+      } catch (error) {
+        if (error?.response?.status === 404) {
+          throw {
+            message: 'Cannot change the default template'
+          };
+        }
       }
     },
     removeById: async (state, payload: { id: number; success: () => void; }) => {
-      await article.deleteArticle(payload.id);
-      payload.success();
-      message.success('Removed success.');
+      try {
+        await article.deleteArticle(payload.id);
+        payload.success();
+        message.success('Removed success.');
+      } catch (error) {
+        if (error?.response?.status === 404) {
+          throw {
+            message: 'Cannot delete the default template'
+          };
+        }
+      }
     },
   },
 });

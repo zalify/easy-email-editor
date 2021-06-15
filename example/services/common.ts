@@ -24,7 +24,7 @@ export const common = {
     const data = new FormData();
     data.append('file', file);
     data.append('token', token);
-    data.append('key', uuidv4() + `-${(file as any).name}`);
+    data.append('key', uuidv4() + `-${(file as any)?.name || ''}`);
     const res = await request.post<{ key: string; }>(
       'https://upload.qiniu.com',
       data

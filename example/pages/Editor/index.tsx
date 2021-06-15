@@ -27,6 +27,7 @@ import 'easy-email-editor/lib/style.css';
 import { Stack } from '@example/components/Stack';
 import { customBlocks } from './components/CustomBlocks';
 import { FormikHelpers } from 'formik';
+import { USER_ID } from '@example/constants';
 
 export default function Editor() {
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ export default function Editor() {
   const templateData = useAppSelector('template');
   const extraBlocksData = useAppSelector('extraBlocks');
   const { openModal, modal } = useEmailModal();
-  const { id } = useQuery();
+  const { id, userId = USER_ID } = useQuery();
   const loading = useLoading(template.loadings.fetchById);
 
   const isSubmitting = useLoading([
@@ -44,7 +45,7 @@ export default function Editor() {
 
   useEffect(() => {
     if (id) {
-      dispatch(template.actions.fetchById(+id));
+      dispatch(template.actions.fetchById({ id: +id, userId: +userId }));
     } else {
       dispatch(template.actions.fetchDefaultTemplate(undefined));
     }
@@ -52,7 +53,7 @@ export default function Editor() {
     return () => {
       dispatch(template.actions.set(null));
     };
-  }, [dispatch, id]);
+  }, [dispatch, id, userId]);
 
   const onSubmit = useCallback(
     async (values: IEmailTemplate, helper: FormikHelpers<IEmailTemplate>) => {
