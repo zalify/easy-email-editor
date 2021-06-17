@@ -1,6 +1,7 @@
 import React from 'react';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { Stack } from '../Stack';
+import { pushEvent } from '@example/util/pushEvent';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -21,11 +22,11 @@ export default function Frame({ children, title, primaryAction, breadcrumb }: Fr
 
           <div style={{ marginTop: 10 }}>
             <Stack>
-              <a className="github-button" href="https://github.com/m-Ryan/easy-email" data-size="large" data-icon="octicon-star" data-show-count="true" aria-label="Star m-Ryan/easy-email on GitHub">Star</a>
+              <a className="github-button" href="https://github.com/m-Ryan/easy-email" data-size="large" data-icon="octicon-star" data-show-count="true" aria-label="Star m-Ryan/easy-email on GitHub" onClick={() => pushEvent({ name: 'Star' })} style={{ opacity: 0 }}>Star</a>
 
-              <a className="github-button" href="https://github.com/m-Ryan/easy-email/fork" data-size="large" data-show-count="true" aria-label="Fork m-Ryan/easy-email on GitHub">Fork</a>
+              <a className="github-button" href="https://github.com/m-Ryan/easy-email/fork" data-size="large" data-show-count="true" aria-label="Fork m-Ryan/easy-email on GitHub" onClick={() => pushEvent({ name: 'Fork' })} style={{ opacity: 0 }}>Fork</a>
 
-              <a className="github-button" href="https://github.com/m-Ryan/easy-email/issues" data-size="large" data-show-count="true" aria-label="Issue m-Ryan/easy-email on GitHub">Issue</a>
+              <a className="github-button" href="https://github.com/m-Ryan/easy-email/issues" data-size="large" data-show-count="true" aria-label="Issue m-Ryan/easy-email on GitHub" onClick={() => pushEvent({ name: 'Issue' })} style={{ opacity: 0 }}>Issue</a>
             </Stack>
           </div>
         </Stack>

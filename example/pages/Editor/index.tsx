@@ -29,6 +29,7 @@ import { Stack } from '@example/components/Stack';
 import { customBlocks } from './components/CustomBlocks';
 import { FormikHelpers } from 'formik';
 import { USER_ID } from '@example/constants';
+import { pushEvent } from '@example/util/pushEvent';
 
 export default function Editor() {
   const dispatch = useDispatch();
@@ -58,6 +59,7 @@ export default function Editor() {
 
   const onSubmit = useCallback(
     async (values: IEmailTemplate, helper: FormikHelpers<IEmailTemplate>) => {
+      pushEvent({ name: 'Save' });
       if (id) {
         dispatch(
           template.actions.updateById({
@@ -86,6 +88,7 @@ export default function Editor() {
   );
 
   const onExportHtml = (values: IEmailTemplate) => {
+    pushEvent({ name: 'ExportHtml' });
     const html = mjml(transformToMjml(values.content), {
       beautify: true,
       validationLevel: 'soft',
@@ -169,6 +172,7 @@ export default function Editor() {
                         color: '#000',
                         fontSize: 28
                       }}
+                      onClick={() => pushEvent({ name: 'Github' })}
                     >
                       <GithubOutlined />
                     </a>

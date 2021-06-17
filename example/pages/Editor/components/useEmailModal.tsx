@@ -12,6 +12,7 @@ import { useCallback } from 'react';
 import { IBlockData } from 'easy-email-editor';
 import { cloneDeep, merge } from 'lodash';
 import { CustomBlocksType } from './CustomBlocks/constants';
+import { pushEvent } from '@example/util/pushEvent';
 
 const schema = Yup.object().shape({
   toEmail: Yup.string().email('Unvalid email').required('Email required'),
@@ -24,9 +25,9 @@ export function useEmailModal() {
   const emailSendLoading = useLoading(email.loadings.send);
 
   const onSendEmail = useCallback(
-    async (values: { toEmail: string }) => {
+    async (values: { toEmail: string; }) => {
       if (!emailData) return null;
-
+      pushEvent({ name: 'SendTestEmail' });
       const html = mjml(transformToMjml(injectData(emailData.content)), {
         beautify: false,
         minify: true,

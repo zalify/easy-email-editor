@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom';
 import template from '@example/store/template';
 import { useDispatch } from 'react-redux';
 import templateList from '@example/store/templateList';
+import { pushEvent } from '@example/util/pushEvent';
 
 interface CardItemProps {
   data: IArticle;
@@ -42,7 +43,9 @@ export function CardItem(props: CardItemProps) {
       <div className={styles.mask}>
         <div className={styles.listBottom}>
           <div className={styles.listItem}>
-            <Link to={`/editor?id=${data.article_id}&userId=${data.user_id}`}>
+            <Link to={`/editor?id=${data.article_id}&userId=${data.user_id}`}
+              onClick={() => pushEvent({ name: 'Edit', label: data.article_id.toString() })}
+            >
               <EditOutlined />
               &nbsp;Edit
             </Link>
