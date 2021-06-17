@@ -15,9 +15,19 @@ interface FrameProps {
 export default function Frame({ children, title, primaryAction, breadcrumb }: FrameProps) {
   return (
     <Layout>
-      <Header>
-        <Stack alignment="center">
-          <h1 style={{ color: 'white' }}>easy-email</h1>
+      <Header style={{ padding: '0 20px' }}>
+        <Stack distribution="equalSpacing">
+          <h1 style={{ color: 'white' }}>Easy-email</h1>
+
+          <div style={{ marginTop: 10 }}>
+            <Stack>
+              <a className="github-button" href="https://github.com/m-Ryan/easy-email" data-size="large" data-icon="octicon-star" data-show-count="true" aria-label="Star m-Ryan/easy-email on GitHub">Star</a>
+
+              <a className="github-button" href="https://github.com/m-Ryan/easy-email/fork" data-size="large" data-show-count="true" aria-label="Fork m-Ryan/easy-email on GitHub">Fork</a>
+
+              <a className="github-button" href="https://github.com/m-Ryan/easy-email/issues" data-size="large" data-show-count="true" aria-label="Issue m-Ryan/easy-email on GitHub">Issue</a>
+            </Stack>
+          </div>
         </Stack>
 
       </Header>

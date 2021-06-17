@@ -16,6 +16,7 @@ import { copy } from '@example/util/clipboard';
 import { useEmailModal } from './components/useEmailModal';
 import { WarnAboutUnsavedChanges } from '@example/components/WarnAboutUnsavedChanges';
 import services from '@example/services';
+import { GithubOutlined } from '@ant-design/icons';
 
 import {
   EmailEditor,
@@ -149,7 +150,7 @@ export default function Editor() {
                 title='Edit'
                 onBack={() => history.push('/')}
                 extra={
-                  <Stack>
+                  <Stack alignment="center">
                     <Button onClick={() => onExportHtml(values)}>
                       Export html
                     </Button>
@@ -163,10 +164,18 @@ export default function Editor() {
                     >
                       Save
                     </Button>
+                    <a target="_blank" href="https://github.com/m-Ryan/easy-email"
+                      style={{
+                        color: '#000',
+                        fontSize: 28
+                      }}
+                    >
+                      <GithubOutlined />
+                    </a>
                   </Stack>
                 }
               />
-              <EmailEditor height={'calc(100vh - 72px)'} />
+              <EmailEditor height={'calc(100vh - 85px)'} />
               <WarnAboutUnsavedChanges />
             </>
           );
