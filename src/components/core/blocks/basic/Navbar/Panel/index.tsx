@@ -89,6 +89,11 @@ function NavbarLink({
   return (
     <Stack>
       <TextField
+        label='Content'
+        name={`${focusIdx}.data.value.links.[${index}].content`}
+        inline
+      />
+      <TextField
         label='Font size'
         name={`${focusIdx}.data.value.links.[${index}].font-size`}
         inline

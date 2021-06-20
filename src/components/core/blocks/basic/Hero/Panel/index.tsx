@@ -6,6 +6,7 @@ import { Width } from '@/components/EmailEditor/components/ConfigurationPanel/co
 import { Height } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Height';
 import { VerticalAlign } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/VerticalAlign';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
+import { Padding } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Padding';
 
 const options = [
   {
@@ -22,6 +23,7 @@ export function Panel() {
   const { focusIdx } = useFocusIdx();
   return (
     <Stack vertical>
+      <Padding />
       <TextField
         label='Background height'
         name={`${focusIdx}.attributes.background-height`}

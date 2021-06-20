@@ -42,18 +42,7 @@ export function CardItem(props: CardItemProps) {
       </div>
       <div className={styles.mask}>
         <div className={styles.listBottom}>
-          <div className={styles.listItem}>
-            <Link to={`/editor?id=${data.article_id}&userId=${data.user_id}`}
-              onClick={() => pushEvent({ name: 'Edit', label: data.article_id.toString() })}
-            >
-              <EditOutlined />
-              &nbsp;Edit
-            </Link>
-          </div>
-          <div className={styles.listItem}>
-            <CopyOutlined />
-            &nbsp;Copy
-          </div>
+
           <div className={styles.listItem}>
             <Popconfirm
               title='Are you want to delete it?'
@@ -64,6 +53,14 @@ export function CardItem(props: CardItemProps) {
               <DeleteOutlined />
               &nbsp;Delete
             </Popconfirm>
+          </div>
+          <div className={styles.listItem}>
+            <Link to={`/editor?id=${data.article_id}&userId=${data.user_id}`}
+              onClick={() => pushEvent({ name: 'Edit', label: data.article_id.toString() })}
+            >
+              <EditOutlined />
+              &nbsp;Edit
+            </Link>
           </div>
         </div>
       </div>

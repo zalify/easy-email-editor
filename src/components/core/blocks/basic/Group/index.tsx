@@ -15,5 +15,5 @@ export const Group: IBlock<IGroup> = {
   type: BasicType.GROUP,
   Panel,
   createInstance,
-  validParentType: [BasicType.PAGE],
+  validParentType: [BasicType.SECTION],
 };

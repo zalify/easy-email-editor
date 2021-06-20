@@ -72,22 +72,20 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
               ${breakpoint}
             <mj-attributes>
               ${value.headAttributes}
-              ${
-                value['font-family']
-                  ? `<mj-all font-family="${value['font-family']}" />`
-                  : ''
-              }
-              ${
-                value['text-color']
-                  ? `<mj-text color="${value['text-color']}" />`
-                  : ''
-              }
+              ${value['font-family']
+          ? `<mj-all font-family="${value['font-family']}" />`
+          : ''
+        }
+              ${value['text-color']
+          ? `<mj-text color="${value['text-color']}" />`
+          : ''
+        }
               ${value.fonts
-                ?.filter(Boolean)
-                .map(
-                  (item) =>
-                    `<mj-font name="${item.name}" href="${item.href}" />`
-                )}
+          ?.filter(Boolean)
+          .map(
+            (item) =>
+              `<mj-font name="${item.name}" href="${item.href}" />`
+          )}
             </mj-attributes>
           </mj-head>
           <mj-body ${attributeStr}>
@@ -110,16 +108,16 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
     case BasicType.WRAPPER:
       return `
               <mj-wrapper ${attributeStr}>
-               ${
-                 children ||
-                 `<mj-section><mj-column>${placeholder}</mj-column></mj-section>`
-               }
+               ${children ||
+        `<mj-section><mj-column>${placeholder}</mj-column></mj-section>`
+        }
               </mj-wrapper>
             `;
     case BasicType.CAROUSEL:
       const carouselImages = (data as ICarousel).data.value.images
         .map((image, index) => {
           const imageAttributeStr = Object.keys(image)
+            .filter((key) => key !== 'content' && att[key] !== '') // filter att=""
             .map((key) => `${key}="${image[key]}"`)
             .join(' ');
           return `
@@ -137,6 +135,7 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
       const links = (data as INavbar).data.value.links
         .map((link, index) => {
           const linkAttributeStr = Object.keys(link)
+            .filter((key) => key !== 'content' && att[key] !== '') // filter att=""
             .map((key) => `${key}="${link[key]}"`)
             .join(' ');
           return `
@@ -153,6 +152,7 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
       const elements = (data as ISocial).data.value.elements
         .map((element, index) => {
           const elementAttributeStr = Object.keys(element)
+            .filter((key) => key !== 'content' && att[key] !== '') // filter att=""
             .map((key) => `${key}="${element[key]}"`)
             .join(' ');
           return `
