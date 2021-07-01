@@ -1,5 +1,5 @@
 import { IEmailTemplate } from '@/typings';
-import { Formik, FormikConfig, FormikProps } from 'formik';
+import { Formik, FormikConfig, FormikProps, useFormikContext } from 'formik';
 import React, { useMemo } from 'react';
 import { BlocksProvider } from '..//BlocksProvider';
 import { HoverIdxProvider } from '../HoverIdxProvider';
@@ -16,7 +16,7 @@ export interface EmailEditorProviderProps<T extends IEmailTemplate = any>
 export const EmailEditorProvider = (
   props: EmailEditorProviderProps<IEmailTemplate>
 ) => {
-  const { data, children, onSubmit } = props;
+  const { data, children, onSubmit = () => {} } = props;
 
   const initialValues = useMemo(() => {
     return {
@@ -34,20 +34,24 @@ export const EmailEditorProvider = (
       onSubmit={onSubmit}
       enableReinitialize
     >
-      {(...rest) => {
-        return (
-          <PropsProvider {...props}>
-            <RecordProvider>
-              <BlocksProvider>
-                <HoverIdxProvider>
-                  {children(...rest)}
-                </HoverIdxProvider>
-              </BlocksProvider>
-
-            </RecordProvider>
-          </PropsProvider>
-        );
-      }}
+      <PropsProvider {...props}>
+        <RecordProvider>
+          <BlocksProvider>
+            <HoverIdxProvider>
+              <FormikWrapper children={children} />
+            </HoverIdxProvider>
+          </BlocksProvider>
+        </RecordProvider>
+      </PropsProvider>
     </Formik>
   );
 };
+
+interface FormikWrapperProps {
+  children: EmailEditorProviderProps['children'];
+}
+
+function FormikWrapper({ children }: FormikWrapperProps) {
+  const data = useFormikContext<IEmailTemplate>();
+  return <>{children(data)}</>;
+}

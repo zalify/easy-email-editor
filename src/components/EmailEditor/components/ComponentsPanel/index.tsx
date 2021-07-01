@@ -21,7 +21,7 @@ import { TextStyle } from '@/components/UI/TextStyle';
 
 const { Panel } = Collapse;
 
-export const ComponentsPanel = function () {
+export const ComponentsPanel = React.memo(function () {
   const [visible, setVisible] = useState(false);
   const { extraBlocks = [] } = useContext(EditorPropsContext);
 
@@ -280,4 +280,4 @@ export const ComponentsPanel = function () {
       </Collapse>
     </div>
   );
-};
+});

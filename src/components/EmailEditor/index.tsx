@@ -4,7 +4,7 @@ import {
   EditOutlined,
 } from '@ant-design/icons';
 import { Layout, Tabs } from 'antd';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import root from 'react-shadow';
 import { IframeComponent } from '@/components/UI/IframeComponent';
 import { ConfigurationPanel } from './components/ConfigurationPanel';
@@ -31,154 +31,157 @@ export const EmailEditor = (props: EmailEditorProps) => {
   const pageMaxWidth = pageData.attributes.width || '600px';
   const pageMinWidth = '375px';
 
-  return (
-    <Layout>
-      <div
-        style={{
-          display: 'flex',
-          width: '100vw',
-          overflow: 'hidden',
-        }}
-      >
-        <Layout.Sider theme='light' width={340}>
-          <div
-            id='leftSide'
-            style={{
-              maxHeight: '100%',
-              height: containerHeight,
-            }}
-            className={styles.customScrollBar}
-          >
-            <ComponentsPanel />
-          </div>
-        </Layout.Sider>
-
-        <Layout>
-          <div
-            id='centerEditor'
-            style={{
-              backgroundColor: pageData.attributes['background-color'],
-              height: containerHeight,
-            }}
-          >
-            <Tabs
-              activeKey={activeTab}
-              tabBarStyle={{
-                paddingLeft: 20,
-                marginBottom: 0,
-                backgroundColor: '#fff',
+  return useMemo(
+    () => (
+      <Layout>
+        <div
+          style={{
+            display: 'flex',
+            width: '100vw',
+            overflow: 'hidden',
+          }}
+        >
+          <Layout.Sider theme='light' width={340}>
+            <div
+              id='leftSide'
+              style={{
+                maxHeight: '100%',
+                height: containerHeight,
               }}
-              onChange={setActiveTab}
-              tabBarExtraContent={<ToolsPanel />}
+              className={styles.customScrollBar}
             >
-              <TabPane
-                tab={(
-                  <Stack spacing='none'>
-                    <EditOutlined />
-                    <TextStyle>Edit</TextStyle>
-                  </Stack>
-                )}
-                key='editor'
-                style={{
-                  backgroundColor: 'transparent',
+              <ComponentsPanel />
+            </div>
+          </Layout.Sider>
+
+          <Layout>
+            <div
+              id='centerEditor'
+              style={{
+                backgroundColor: pageData.attributes['background-color'],
+                height: containerHeight,
+              }}
+            >
+              <Tabs
+                activeKey={activeTab}
+                tabBarStyle={{
                   paddingLeft: 20,
-                  paddingRight: 20,
-                  height: '100%',
+                  marginBottom: 0,
+                  backgroundColor: '#fff',
                 }}
+                onChange={setActiveTab}
+                tabBarExtraContent={<ToolsPanel />}
               >
-                <root.div
-                  id='VisualEditorEditMode'
+                <TabPane
+                  tab={
+                    <Stack spacing='none'>
+                      <EditOutlined />
+                      <TextStyle>Edit</TextStyle>
+                    </Stack>
+                  }
+                  key='editor'
                   style={{
-                    width: `calc(${pageMaxWidth} + 17px)`,
-                    padding: '40px 0px',
-                    margin: 'auto',
+                    backgroundColor: 'transparent',
+                    paddingLeft: 20,
+                    paddingRight: 20,
                     height: '100%',
                   }}
                 >
-                  <EmailContent isActive={activeTab === 'editor'} />
-                </root.div>
-              </TabPane>
-              <TabPane
-                tab={(
-                  <Stack spacing='none'>
-                    <DesktopOutlined />
-                    <TextStyle>Preview</TextStyle>
-                  </Stack>
-                )}
-                key='laptopIcon'
-                style={{ backgroundColor: 'transparent' }}
-              >
-                <div
-                  style={{
-                    width: pageMaxWidth,
-                    padding: '40px 0px',
-                    margin: 'auto',
-                    height: '100%',
-                  }}
-                >
-                  <IframeComponent
-                    height='100%'
-                    width='100%'
-                    style={{ border: 'none', paddingTop: -16 }}
+                  <root.div
+                    id='VisualEditorEditMode'
+                    style={{
+                      width: `calc(${pageMaxWidth} + 17px)`,
+                      padding: '40px 0px',
+                      margin: 'auto',
+                      height: '100%',
+                    }}
                   >
-                    <PreviewEmail />
-                  </IframeComponent>
-                </div>
-              </TabPane>
-              <TabPane
-                tab={(
-                  <Stack spacing='none'>
-                    <TabletOutlined />
-                    <TextStyle>Preview</TextStyle>
-                  </Stack>
-                )}
-                key='mobileIcon'
-                style={{ backgroundColor: 'transparent' }}
-              >
-                <div
-                  style={{
-                    width: pageMinWidth,
-                    padding: 40,
-                    margin: 'auto',
-                    height: '100%',
-                  }}
+                    <EmailContent isActive={activeTab === 'editor'} />
+                  </root.div>
+                </TabPane>
+                <TabPane
+                  tab={
+                    <Stack spacing='none'>
+                      <DesktopOutlined />
+                      <TextStyle>Preview</TextStyle>
+                    </Stack>
+                  }
+                  key='laptopIcon'
+                  style={{ backgroundColor: 'transparent' }}
                 >
-                  <IframeComponent
-                    height='100%'
-                    width='100%'
-                    style={{ paddingTop: -16 }}
-                    className={styles.app}
+                  <div
+                    style={{
+                      width: pageMaxWidth,
+                      padding: '40px 0px',
+                      margin: 'auto',
+                      height: '100%',
+                    }}
                   >
-                    <style>
-                      {`
+                    <IframeComponent
+                      height='100%'
+                      width='100%'
+                      style={{ border: 'none', paddingTop: -16 }}
+                    >
+                      <PreviewEmail />
+                    </IframeComponent>
+                  </div>
+                </TabPane>
+                <TabPane
+                  tab={
+                    <Stack spacing='none'>
+                      <TabletOutlined />
+                      <TextStyle>Preview</TextStyle>
+                    </Stack>
+                  }
+                  key='mobileIcon'
+                  style={{ backgroundColor: 'transparent' }}
+                >
+                  <div
+                    style={{
+                      width: pageMinWidth,
+                      padding: 40,
+                      margin: 'auto',
+                      height: '100%',
+                    }}
+                  >
+                    <IframeComponent
+                      height='100%'
+                      width='100%'
+                      style={{ paddingTop: -16 }}
+                      className={styles.app}
+                    >
+                      <style>
+                        {`
                         body::-webkit-scrollbar {
                           width: 0px;
                           background-color: transparent;
                         }
                       `}
-                    </style>
-                    <PreviewEmail />
-                  </IframeComponent>
-                </div>
-              </TabPane>
-            </Tabs>
-          </div>
-        </Layout>
+                      </style>
+                      <PreviewEmail />
+                    </IframeComponent>
+                  </div>
+                </TabPane>
+              </Tabs>
+            </div>
+          </Layout>
 
-        <Layout.Sider theme='light' width={350}>
-          <div
-            id='rightSide'
-            style={{
-              maxHeight: '100%',
-              height: containerHeight,
-              overflowY: 'overlay',
-            }}
-            className={styles.customScrollBar}
-          >
-            <ConfigurationPanel />
-          </div>
-        </Layout.Sider>
-      </div>
-    </Layout>
+          <Layout.Sider theme='light' width={350}>
+            <div
+              id='rightSide'
+              style={{
+                maxHeight: '100%',
+                height: containerHeight,
+                overflowY: 'overlay',
+              }}
+              className={styles.customScrollBar}
+            >
+              <ConfigurationPanel />
+            </div>
+          </Layout.Sider>
+        </div>
+      </Layout>
+    ),
+    [activeTab, containerHeight, pageData.attributes, pageMaxWidth]
   );
 };
