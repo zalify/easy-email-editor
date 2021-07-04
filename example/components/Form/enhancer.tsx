@@ -8,7 +8,7 @@ import styles from './index.module.scss';
 interface Props extends Partial<FieldProps> {
   name: string;
   label: React.ReactNode;
-  lableHidden?: boolean;
+  labelHidden?: boolean;
   alignment?: StackProps['alignment'];
   distribution?: StackProps['distribution'];
   helpText?: React.ReactNode;
@@ -28,7 +28,7 @@ export default function enhancer<P>(Component: any, changeAdapter: (e: any) => a
       valueAdapter,
       inline,
       label,
-      lableHidden,
+      labelHidden,
       helpText,
       alignment,
       distribution,
@@ -73,7 +73,7 @@ export default function enhancer<P>(Component: any, changeAdapter: (e: any) => a
                   distribution={distribution}
                 >
                   <Stack.Item>
-                    <label className={lableHidden ? styles['label-hidden'] : undefined} htmlFor={id}>
+                    <label className={labelHidden ? styles['label-hidden'] : undefined} htmlFor={id}>
 
                       <span style={{ whiteSpace: 'pre' }}>
                         {required && <span style={{ color: '#ff4d4f' }}>*{' '}</span>}

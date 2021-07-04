@@ -6,6 +6,7 @@ import { TextStyle } from '@/components/UI/TextStyle';
 import { AddFont } from '@/components/core/Form/AddFont';
 
 import { useFocusIdx } from '@/hooks/useFocusIdx';
+import { FontFamily } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/FontFamliy';
 export function Panel() {
   const { focusIdx } = useFocusIdx();
 
@@ -18,22 +19,17 @@ export function Panel() {
         <TextField label='Width' name={`${focusIdx}.attributes.width`} inline />
         <Stack alignment='center'>
           <TextField
-            label={
+            label={(
               <Stack spacing='extraTight'>
                 <TextStyle>Breakpoint</TextStyle>
                 <Help title='Allows you to control on which breakpoint the layout should go desktop/mobile.' />
               </Stack>
-            }
+            )}
             name={`${focusIdx}.data.value.breakpoint`}
             inline
           />
         </Stack>
-        <TextField
-          label='Font family'
-          quickchange
-          name={`${focusIdx}.data.value.font-family`}
-          inline
-        />
+        <FontFamily />
         <ColorPickerField
           label='Text color'
           name={`${focusIdx}.data.value.text-color`}

@@ -73,12 +73,12 @@ export const EmailEditor = (props: EmailEditorProps) => {
                 tabBarExtraContent={<ToolsPanel />}
               >
                 <TabPane
-                  tab={
+                  tab={(
                     <Stack spacing='none'>
                       <EditOutlined />
                       <TextStyle>Edit</TextStyle>
                     </Stack>
-                  }
+                  )}
                   key='editor'
                   style={{
                     backgroundColor: 'transparent',
@@ -100,12 +100,12 @@ export const EmailEditor = (props: EmailEditorProps) => {
                   </root.div>
                 </TabPane>
                 <TabPane
-                  tab={
+                  tab={(
                     <Stack spacing='none'>
                       <DesktopOutlined />
                       <TextStyle>Preview</TextStyle>
                     </Stack>
-                  }
+                  )}
                   key='laptopIcon'
                   style={{ backgroundColor: 'transparent' }}
                 >
@@ -127,12 +127,12 @@ export const EmailEditor = (props: EmailEditorProps) => {
                   </div>
                 </TabPane>
                 <TabPane
-                  tab={
+                  tab={(
                     <Stack spacing='none'>
                       <TabletOutlined />
                       <TextStyle>Preview</TextStyle>
                     </Stack>
-                  }
+                  )}
                   key='mobileIcon'
                   style={{ backgroundColor: 'transparent' }}
                 >

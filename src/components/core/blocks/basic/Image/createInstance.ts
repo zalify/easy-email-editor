@@ -12,7 +12,7 @@ export const createInstance: CreateInstance<IImage> = (payload) => {
     attributes: {
       align: 'center',
       height: 'auto',
-      padding: '10px 25px',
+      padding: '0',
       width: '150px',
       src: 'https://assets.maocanhua.cn/0e7331f3-30b6-49ab-a0ab-fffd23383685-image.png',
     },

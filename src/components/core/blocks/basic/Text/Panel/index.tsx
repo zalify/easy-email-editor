@@ -18,22 +18,19 @@ import { RichTextField } from '@/components/core/Form';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 export function Panel() {
   const { focusIdx } = useFocusIdx();
-
   return (
     <Stack vertical>
       <RichTextField
         idx={focusIdx}
         name={`${focusIdx}.data.value.content`}
         label=''
-        lableHidden
+        labelHidden
       />
       <Color />
       <ContainerBackgroundColor />
       <FontSize />
       <LineHeight />
       <Align />
-      <Stack.Item />
-      <Stack.Item />
 
       <FontStyle />
       <FontWeight />

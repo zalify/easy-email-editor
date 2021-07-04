@@ -88,7 +88,7 @@ export function Link(props: LinkProps) {
                 <SearchField
                   name='link'
                   label='Link'
-                  lableHidden
+                  labelHidden
                   enterButton='Apply'
                   placeholder='https://www.example.com'
                   onSearch={() => handleSubmit()}

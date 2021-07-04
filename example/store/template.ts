@@ -6,8 +6,6 @@ import { IBlockData } from 'easy-email-editor';
 import { emailToImage } from '@example/util/emailToImage';
 import { BlocksMap, IEmailTemplate } from 'easy-email-editor';
 
-const defaultTemplateIds = [468, 462, 460, 459, 458, 456, 454, 453, 452];
-
 export function getAdaptor(data: IArticle): IEmailTemplate {
   const content = JSON.parse(data.content.content) as IBlockData;
   return {
@@ -74,24 +72,12 @@ export default createSliceState({
     ) => {
       try {
         const picture = await emailToImage(payload.template.content);
-        if (defaultTemplateIds.includes(payload.id)) {
-          const data = await article.addArticle({
-            ...payload.template,
-            picture,
-            summary: payload.template.subTitle || payload.template.subject,
-            title: payload.template.subject,
-            content: JSON.stringify(payload.template.content),
-          });
-          payload.success(data.article_id);
-          return { ...data, ...payload.template };
-        } else {
-          await article.updateArticle(payload.id, {
-            ...payload.template,
-            picture,
-            content: JSON.stringify(payload.template.content),
-          });
-          payload.success(payload.id);
-        }
+        await article.updateArticle(payload.id, {
+          ...payload.template,
+          picture,
+          content: JSON.stringify(payload.template.content),
+        });
+        payload.success(payload.id);
       } catch (error) {
         if (error?.response?.status === 404) {
           throw {

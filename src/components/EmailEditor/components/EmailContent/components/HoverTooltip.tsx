@@ -12,7 +12,7 @@ import { useHoverIdx } from '@/hooks/useHoverIdx';
 
 export function HoverTooltip() {
   const { focusIdx } = useFocusIdx();
-  const { hoverIdx } = useHoverIdx();
+  const { hoverIdx, isDragging } = useHoverIdx();
 
   const hoverBlock = useMemo(() => {
     const blockNode = findBlockNodeByIdx(hoverIdx);
@@ -84,9 +84,9 @@ export function HoverTooltip() {
             transform: 'translate(100%,-50%) rotate(-90deg)'
           }}
           />
-          {tooltip.blockName}
+          {isDragging ? `Drag to ${tooltip.blockName}` : tooltip.blockName}
         </div>
       </div>
     );
-  }, [tooltip]);
+  }, [isDragging, tooltip.blockName, tooltip.left, tooltip.top, tooltip.visible]);
 }

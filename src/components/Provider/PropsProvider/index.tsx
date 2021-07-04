@@ -17,6 +17,7 @@ export interface BlockGroup {
 
 export interface PropsProviderProps {
   extraBlocks?: BlockGroup[];
+  fontList?: { value: string; label: string; }[];
   onAddCollection?: (payload: CollectedBlock) => void;
   onRemoveCollection?: (payload: { id: string; }) => void;
   onUploadImage?: (data: Blob) => Promise<string>;
@@ -30,6 +31,7 @@ export interface PropsProviderProps {
 
 export const EditorPropsContext = React.createContext<PropsProviderProps>({
   extraBlocks: [],
+  fontList: [],
   onAddCollection: undefined,
   onRemoveCollection: undefined,
   onUploadImage: undefined

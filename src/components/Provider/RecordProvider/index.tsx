@@ -1,7 +1,7 @@
+import { IEmailTemplate } from '@/typings';
 import { useFormikContext } from 'formik';
 import { cloneDeep, isEqual } from 'lodash';
 import React, { useEffect, useMemo, useState } from 'react';
-import { EditorProps } from '../EmailEditorProvider';
 
 const MAX_RECORD_SIZE = 100;
 
@@ -9,7 +9,7 @@ export type RecordStatus = 'add' | 'redo' | 'undo';
 
 export const RecordContext = React.createContext<{
   status: RecordStatus;
-  records: Array<EditorProps>;
+  records: Array<IEmailTemplate>;
   redo: () => void;
   undo: () => void;
   reset: () => void;
@@ -26,11 +26,11 @@ export const RecordContext = React.createContext<{
 });
 
 export const RecordProvider: React.FC<{}> = (props) => {
-  const formikContext = useFormikContext<EditorProps>();
-  const [data, setData] = useState<Array<EditorProps>>([]);
+  const formikContext = useFormikContext<IEmailTemplate>();
+  const [data, setData] = useState<Array<IEmailTemplate>>([]);
   const [index, setIndex] = useState(-1);
   const [status, setStatus] = useState<RecordStatus>('add');
-  const [initialValues, setInitialValues] = useState<EditorProps>(cloneDeep(formikContext.initialValues));
+  const [initialValues, setInitialValues] = useState<IEmailTemplate>(cloneDeep(formikContext.initialValues));
 
   useEffect(() => {
     setInitialValues(cloneDeep(formikContext.initialValues));

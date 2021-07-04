@@ -26,6 +26,7 @@ import { getShadowRoot } from '@/utils/findBlockNodeByIdx';
 import { Stack } from '@/components/UI/Stack';
 import { TextStyle } from '@/components/UI/TextStyle';
 import { ColorPicker } from '../../../ColorPicker';
+import { FontFamily } from '../FontFamily';
 
 export interface TextToolbarProps {
   onChange: (content: string) => any;
@@ -116,6 +117,18 @@ export function TextToolbar(props: TextToolbarProps) {
     <div id="TextToolbar">
       <Stack vertical spacing='tight'>
         <Stack spacing='extraTight'>
+          <Tooltip
+            color='#fff'
+            title={
+              <FontFamily onChange={(val) => execCommand('fontName', val)} />
+            }
+            getPopupContainer={getMountNode}
+          >
+            <Button
+              size='small'
+              icon={<TextStyle variation='strong'><strong>F</strong></TextStyle>}
+            />
+          </Tooltip>
           <Tooltip
             color='#fff'
             title={

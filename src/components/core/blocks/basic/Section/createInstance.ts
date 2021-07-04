@@ -6,7 +6,9 @@ export const createInstance: CreateInstance<ISection> = (payload) => {
   const defaultData: ISection = {
     type: BasicType.SECTION,
     data: {
-      value: {},
+      value: {
+        noWrap: false
+      },
     },
     attributes: {
       padding: '20px 0px 20px 0px',

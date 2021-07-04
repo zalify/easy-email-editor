@@ -31,6 +31,25 @@ import { FormikHelpers } from 'formik';
 import { USER_ID } from '@example/constants';
 import { pushEvent } from '@example/util/pushEvent';
 
+const fontList = [
+  'Arial',
+  'Tahoma',
+  'Verdana',
+  'Times New Roman',
+  'Courier New',
+  'Georgia',
+  'Lato',
+  'Montserrat',
+  '黑体',
+  '仿宋',
+  '楷体',
+  '标楷体',
+  '华文仿宋',
+  '华文楷体',
+  '宋体',
+  '微软雅黑',
+].map(item => ({ value: item, label: item }));
+
 export default function Editor() {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -67,7 +86,7 @@ export default function Editor() {
             template: values,
             success() {
               message.success('Updated success!');
-              helper.resetForm({ touched: {} });
+              helper.resetForm({ touched: {}, values });
             },
           })
         );
@@ -144,6 +163,7 @@ export default function Editor() {
           dragoverColor: '#13c2c2',
           tangentColor: '#faad14',
         }}
+        fontList={fontList}
         onSubmit={onSubmit}
       >
         {({ values, handleSubmit }) => {

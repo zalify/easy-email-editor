@@ -145,8 +145,7 @@ export function useBlock() {
         const fixedBlock = findBlockByType(child.type);
         if (!fixedBlock.validParentType.includes(parent.type as BasicType)) {
           message.warning(
-            `${block.type} cannot be used inside ${
-              parentBlock.type
+            `${block.type} cannot be used inside ${parentBlock.type
             }, only inside: ${block.validParentType.join(', ')}`
           );
           return formState;
@@ -189,8 +188,7 @@ export function useBlock() {
         ) {
           const parentBlock = findBlockByType(destinationParent.type);
           message.warning(
-            `${sourceBlock.name} cannot be used inside ${
-              parentBlock.name
+            `${sourceBlock.name} cannot be used inside ${parentBlock.name
             }, only inside: ${sourceBlock.validParentType.join(', ')}`
           );
           return formState;
@@ -339,6 +337,17 @@ export function useBlock() {
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
+  const setFocusBlock = useCallback(
+    debounce((val) => {
+      setFormikState((formState) => {
+        set(formState, focusIdx, val);
+        return { ...formState };
+      });
+    }),
+    [focusBlock, focusIdx, setFormikState]
+  );
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const setFocusBlockValue = useCallback(
     debounce((val) => {
       setFormikState((formState) => {
@@ -354,6 +363,7 @@ export function useBlock() {
   return {
     values,
     focusBlock,
+    setFocusBlock,
     setFocusBlockValue,
     setValueByIdx,
     addBlock,

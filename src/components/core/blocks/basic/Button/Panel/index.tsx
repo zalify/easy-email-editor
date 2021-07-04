@@ -29,7 +29,7 @@ export function Panel() {
         idx={focusIdx}
         name={`${focusIdx}.data.value.content`}
         label=''
-        lableHidden
+        labelHidden
       />
       <Color />
       <FontSize />

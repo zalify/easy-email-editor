@@ -8,7 +8,6 @@ import {
 import { findBlockNode } from '@/utils/findBlockNode';
 import {
   BlockType,
-  BLOCK_HOVER_CLASSNAME,
   DRAG_HOVER_CLASSNAME,
   DRAG_TANGENT_CLASSNAME,
 } from '@/constants';
@@ -25,7 +24,7 @@ export function useDropBlock() {
   const { values, addBlock, moveBlock } = useBlock();
 
   const { setFocusIdx } = useFocusIdx();
-  const { setHoverIdx } = useHoverIdx();
+  const { setHoverIdx, setIsDragging } = useHoverIdx();
 
   useEffect(() => {
     if (ref) {
@@ -115,17 +114,11 @@ export function useDropBlock() {
       }
     };
 
-    const onDragstart = (ev: DragEvent) => {
-      // ev.preventDefault();
-    };
-
-    ref.addEventListener('dragstart', onDragstart);
     ref.addEventListener('drop', onDrop);
     return () => {
       ref.removeEventListener('drop', onDrop);
-      ref.removeEventListener('dragstart', onDragstart);
     };
-  }, [addBlock, moveBlock, ref, values]);
+  }, [addBlock, moveBlock, ref, setIsDragging, values]);
 
   useEffect(() => {
     if (ref) {
@@ -148,6 +141,7 @@ export function useDropBlock() {
         const blockNode = findBlockNode(ev.target as HTMLDivElement);
         if (blockNode) {
           ev.preventDefault();
+          setIsDragging(true);
 
           if (
             ['top', 'bottom', 'right', 'left'].includes(getTangentDirection(ev))
@@ -170,6 +164,7 @@ export function useDropBlock() {
         const blockNode = findBlockNode(ev.target as HTMLDivElement);
         blockNode?.classList.remove(DRAG_HOVER_CLASSNAME);
         blockNode?.classList.remove(DRAG_TANGENT_CLASSNAME);
+        setIsDragging(false);
       };
 
       ref.addEventListener('mouseover', onMouseover);
@@ -183,7 +178,7 @@ export function useDropBlock() {
         ref.removeEventListener('dragleave', onDragLeave);
       };
     }
-  }, [ref, setHoverIdx]);
+  }, [ref, setHoverIdx, setIsDragging]);
 
   return useMemo(
     () => ({

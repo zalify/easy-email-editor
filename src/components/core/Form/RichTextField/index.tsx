@@ -13,7 +13,6 @@ export function RichTextField(
   props: Omit<InlineTextProps, 'onChange'> & EnhancerProps
 ) {
   const { idx } = props;
-  const [isFocus, setIsFocus] = useState(true);
 
   const container = findBlockNodeByIdx(idx);
 
@@ -31,39 +30,9 @@ export function RichTextField(
     };
   }, [container]);
 
-  const onChange = useCallback(() => {}, []);
+  const onChange = useCallback(() => { }, []);
 
   const editorContainer = container && getEditNode(container);
-
-  useEffect(() => {
-    setIsFocus(true);
-  }, [idx]);
-
-  useEffect(() => {
-    if (!editorContainer) return;
-
-    const onFocus = () => {
-      setIsFocus(true);
-    };
-    const onBlur = (ev: Event) => {
-      const target = ev.target as HTMLElement;
-      const richTextEditorToolbar = document.querySelector(
-        '#RichTextEditorToolbar'
-      );
-
-      if (getEditorRoot()?.contains(target)) return;
-      if (richTextEditorToolbar?.contains(target)) return;
-
-      setIsFocus(false);
-    };
-
-    window.addEventListener('click', onBlur, true);
-    editorContainer.addEventListener('focus', onFocus);
-    return () => {
-      window.removeEventListener('click', onBlur, true);
-      editorContainer.removeEventListener('focus', onFocus);
-    };
-  }, [editorContainer]);
 
   const textToolbar = useMemo(() => {
     return createPortal(
@@ -77,6 +46,7 @@ export function RichTextField(
           boxSizing: 'border-box',
           backgroundColor: '#41444d',
           zIndex: 1000,
+          transition: 'all .3s'
         }}
       >
         <TextToolbar container={editorContainer} onChange={onChange} />
@@ -88,7 +58,7 @@ export function RichTextField(
   return (
     <>
       <InlineTextField key={idx} {...props} />
-      {isFocus && textToolbar}
+      {editorContainer && textToolbar}
     </>
   );
 }
