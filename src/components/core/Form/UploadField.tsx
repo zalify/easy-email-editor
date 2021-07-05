@@ -15,7 +15,7 @@ export function UploadField(props: UploadFieldProps) {
   const { onChange, inputDisabled = false, accept, uploadHandler } = props;
   const [loading, setLoading] = useState(false);
   const { current: uploader } = useRef(new Uploader(uploadHandler, {
-    count: 1,
+    limit: 1,
     accept
   }));
 

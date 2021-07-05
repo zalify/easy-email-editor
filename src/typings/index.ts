@@ -1,5 +1,6 @@
-import { IPage } from '@/components/core/blocks/basic/Page';
-import { BlockType } from '@/constants';
+import React from 'react';
+import { IPage } from '../components/core/blocks/basic/Page';
+import { BlockType } from '../constants';
 
 export interface IBlock<T extends IBlockData = IBlockData> {
   name: string;

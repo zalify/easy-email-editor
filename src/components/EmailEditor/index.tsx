@@ -5,7 +5,6 @@ import {
 } from '@ant-design/icons';
 import { Layout, Tabs } from 'antd';
 import React, { useMemo, useState } from 'react';
-import root from 'react-shadow';
 import { IframeComponent } from '@/components/UI/IframeComponent';
 import { ConfigurationPanel } from './components/ConfigurationPanel';
 import { ComponentsPanel } from './components/ComponentsPanel';
@@ -17,6 +16,7 @@ import { ToolsPanel } from './components/ToolsPanel';
 import './index.scss';
 import styles from './index.module.scss';
 import { useEditorContext } from '@/hooks/useEditorContext';
+import { ShadowDom } from '../UI/ShadowDom';
 
 const TabPane = Tabs.TabPane;
 
@@ -87,7 +87,7 @@ export const EmailEditor = (props: EmailEditorProps) => {
                     height: '100%',
                   }}
                 >
-                  <root.div
+                  <ShadowDom
                     id='VisualEditorEditMode'
                     style={{
                       width: `calc(${pageMaxWidth} + 17px)`,
@@ -97,7 +97,7 @@ export const EmailEditor = (props: EmailEditorProps) => {
                     }}
                   >
                     <EmailContent isActive={activeTab === 'editor'} />
-                  </root.div>
+                  </ShadowDom>
                 </TabPane>
                 <TabPane
                   tab={(
@@ -172,7 +172,7 @@ export const EmailEditor = (props: EmailEditorProps) => {
               style={{
                 maxHeight: '100%',
                 height: containerHeight,
-                overflowY: 'overlay',
+                overflowY: 'overlay' as any,
               }}
               className={styles.customScrollBar}
             >

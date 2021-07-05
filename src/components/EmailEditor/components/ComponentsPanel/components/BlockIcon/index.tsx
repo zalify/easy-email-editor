@@ -18,7 +18,7 @@ type BlockIconProps = {
   text: string;
   thumbnail?: string;
   helpText?: React.ReactNode;
-  type: BlockType;
+  type: BlockType | string;
   payload?: Partial<IBlockData>;
 };
 
@@ -49,7 +49,7 @@ export function BlockIcon(props: BlockIconProps) {
         >
           {props.thumbnail ? (
             <Tooltip
-              title={
+              title={(
                 <Stack>
                   <TextStyle>
                     {props.text}
@@ -61,7 +61,7 @@ export function BlockIcon(props: BlockIconProps) {
                     )}
                   </TextStyle>
                 </Stack>
-              }
+              )}
             >
               <Picture src={props.thumbnail} />
             </Tooltip>

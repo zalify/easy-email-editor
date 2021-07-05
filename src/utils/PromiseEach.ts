@@ -1,5 +1,5 @@
 export function PromiseEach(promiseLikes: PromiseLike<any>[]) {
-  const datas = [];
+  const datas: Array<any> = [];
   let count = 0;
   return new Promise((resolve) => {
     promiseLikes.forEach(async (promiseLike) => {

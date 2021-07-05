@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { BlockType } from '@/constants';
 
 export type BlockAvatarWrapperProps = {
-  type: BlockType;
+  type: BlockType | string;
   payload?: any;
   action?: 'add' | 'move';
 };

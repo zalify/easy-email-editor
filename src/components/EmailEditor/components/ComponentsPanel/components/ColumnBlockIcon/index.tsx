@@ -1,5 +1,4 @@
 import { BlocksMap } from '@/components/core/blocks';
-import { ILayout } from '@/components/core/blocks/custom/Layout';
 import {
   BlockAvatarWrapper,
   BlockAvatarWrapperProps,
@@ -29,7 +28,7 @@ export function ColumnBlockIconPanel() {
 }
 
 function OneColumn() {
-  const payload: Partial<ILayout> = {
+  const payload = {
     children: [Column.createInstance()],
   };
 
@@ -205,7 +204,7 @@ function ThreeColumns() {
 }
 
 function FourColumn() {
-  const payload: Partial<ILayout> = {
+  const payload = {
     children: [
       Column.createInstance(),
       Column.createInstance(),

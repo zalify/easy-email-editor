@@ -23,7 +23,7 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
-    "declaration": true,
+    // "declaration": true,
     "jsx": "react",
     "baseUrl": ".",
     "paths": {
