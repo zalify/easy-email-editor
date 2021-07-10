@@ -25,6 +25,7 @@ export function Panel() {
                 <Help title='Allows you to control on which breakpoint the layout should go desktop/mobile.' />
               </Stack>
             )}
+            quickchange
             name={`${focusIdx}.data.value.breakpoint`}
             inline
           />

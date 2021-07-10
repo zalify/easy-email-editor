@@ -40,14 +40,14 @@ export function HoverTooltip() {
 
   const tooltip = useMemo(() => {
     const blockName = hoverBlock?.name;
-    const visible = Boolean(hoverBlock && hoverIdx !== focusIdx);
+    const visible = Boolean(hoverBlock && hoverIdx !== focusIdx) || isDragging;
     return {
       blockName,
       visible,
       top: hoverBlock?.top,
       left: hoverBlock?.left,
     };
-  }, [focusIdx, hoverBlock, hoverIdx]);
+  }, [focusIdx, hoverBlock, hoverIdx, isDragging]);
 
   return useMemo(() => {
     return (

@@ -134,7 +134,12 @@ export function useDropBlock() {
         const blockNode = findBlockNode(ev.target as HTMLElement);
         if (blockNode) {
           setHoverIdx('');
+        } else {
+          setIsDragging(false);
         }
+      };
+      const onDrop = (ev: MouseEvent) => {
+        setIsDragging(false);
       };
 
       const onDragOver = (ev: DragEvent) => {
@@ -169,11 +174,13 @@ export function useDropBlock() {
 
       ref.addEventListener('mouseover', onMouseover);
       ref.addEventListener('mouseout', onMouseOut);
+      ref.addEventListener('drop', onDrop);
       ref.addEventListener('dragover', onDragOver);
       ref.addEventListener('dragleave', onDragLeave);
       return () => {
         ref.removeEventListener('mouseover', onMouseover);
         ref.removeEventListener('mouseout', onMouseOut);
+        ref.removeEventListener('drop', onDrop);
         ref.removeEventListener('dragover', onDragOver);
         ref.removeEventListener('dragleave', onDragLeave);
       };
