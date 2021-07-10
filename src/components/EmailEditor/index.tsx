@@ -90,7 +90,7 @@ export const EmailEditor = (props: EmailEditorProps) => {
                   <ShadowDom
                     id='VisualEditorEditMode'
                     style={{
-                      width: `calc(${pageMaxWidth} + 17px)`,
+                      width: pageMaxWidth,
                       padding: '40px 0px',
                       margin: 'auto',
                       height: '100%',

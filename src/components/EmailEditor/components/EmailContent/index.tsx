@@ -27,10 +27,40 @@ export function EmailContent({ isActive }: { isActive: boolean; }) {
           overlayStyle={{ maxWidth: 600, zIndex: 100 }}
         >
           <div
-            style={{ height: '100%', overflowY: 'scroll' }}
+            className="shadow-container"
+            style={{ height: '100%', overflowY: 'overlay' as any }}
             ref={setContainerRef}
           >
             <MjmlDomRender />
+            <style>
+              {`
+              .shadow-container {
+                overflow-y: overlay;
+              }
+              .shadow-container::-webkit-scrollbar {
+                width: 10px;
+                height: 10px;
+                background-color: transparent;
+              }
+              .shadow-container::-webkit-scrollbar-track {
+                background-color: transparent;
+              }
+              .shadow-container::-webkit-scrollbar-thumb {
+                background-color: transparent;
+              }
+              .shadow-container:hover::-webkit-scrollbar {
+                background-color: #f5f5f5;
+              }
+              .shadow-container:hover::-webkit-scrollbar-track {
+                box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+                background-color: #fff;
+              }
+              .shadow-container:hover::-webkit-scrollbar-thumb {
+                background-color: #aaa;
+              }
+
+              `}
+            </style>
           </div>
         </Tooltip>
         {isActive && <HoverTooltip />}

@@ -56,7 +56,7 @@ export function HoverTooltip() {
           position: 'fixed',
           top: tooltip.top,
           left: tooltip.left,
-          transform: 'translate(0,50%)'
+          transform: 'translate(-100%, 50%)'
         }}
       >
         <div style={{
@@ -67,7 +67,7 @@ export function HoverTooltip() {
           color: '#fff',
           minWidth: 40,
           borderRadius: 2,
-          transform: 'translate(-120%,-50%)'
+          transform: 'translate(-20%,-50%)'
         }}
         >
           <div style={{
