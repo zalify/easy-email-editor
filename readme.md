@@ -1,7 +1,32 @@
 # Easy email
 
-Easy email is developed based on the [MJML](https://mjml.io/) and has very good compatibility. At the same time, it can generate code through drag-and-drop editing.
 
+<p align="center">
+
+  <br/>
+  <a aria-label="Vercel logo" href="https://vercel.com">
+    <img src="https://badgen.net/badge/icon/Made%20by%20Vercel?icon=zeit&label&color=black&labelColor=black">
+  </a>
+  <br/>
+
+  <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg">
+  <a aria-label="NPM version" href="https://www.npmjs.com/package/easy-email-editor">
+    <img alt="" src="https://badgen.net/npm/v/easy-email-editor">
+  </a>
+  <a aria-label="React version" href="https://react.js">
+    <img alt="" src="https://img.shields.io/badge/React-17.0-yellow.svg">
+  </a>
+  <a aria-label="MJML" href="https://mjml.io/">
+    <img src="https://img.shields.io/badge/MJML-awesome-rgb(120 33 117).svg">
+  </a>
+  <a aria-label="Package size" href="https://www.typescriptlang.org/">
+    <img alt="Using TypeScript" src="https://img.shields.io/badge/%3C/%3E-TypeScript-brightgreenred.svg">
+  </a>
+  <img alt="" src="https://badgen.net/npm/license/easy-email-editor">
+</p>
+
+## Introduction
+Easy email is developed based on the [MJML](https://mjml.io/) and has very good compatibility. At the same time, it can generate code through drag-and-drop editing.
 
 Overview |
 :---: |
@@ -27,7 +52,7 @@ Check out the live demo here: <a href="http://easy-email-m-ryan.vercel.app" targ
 
 ## Getting started
 
-### Install
+## Install
 
 ```sh
 $ npm install --save easy-email-editor antd formik mjml-browser
@@ -39,7 +64,7 @@ or
 $ yarn add easy-email-editor antd formik mjml-browser
 ```
 
-### Usage
+## Usage
 
 ```js
 import React from 'react';
@@ -67,7 +92,7 @@ export function App() {
 
 ```
 
-### Development
+## Development
 
 ```sh
 $ git clone git@github.com:m-Ryan/easy-email.git
@@ -76,7 +101,7 @@ $ yarn install
 
 ```
 
-### Start the dev server
+## Start the dev server
 ```sh
 $ yarn dev
 
@@ -86,8 +111,39 @@ You could customize your own blocks and inject data before sending emails. For m
 
 <img src="https://assets.maocanhua.cn/e56ac8d8-575a-458b-a4c4-ac9e50b62799-image.png" alt="Overview" width="50%" style="text-align:center">
 
-### Examples
-Please see <a href="https://github.com/m-Ryan/easy-email/blob/master/example/pages/Editor/index.tsx" target="_blank" alt="https://github.com/m-Ryan/easy-email/blob/master/example/pages/Editor/index.tsx">https://github.com/m-Ryan/easy-email/blob/master/example/pages/Editor/index.tsx</a>
+<br/>
+<br/>
+<br/>
 
-### APIs
-See here: <a href="https://github.com/m-Ryan/easy-email/tree/master/example/pages/Editor/components/CustomBlocks" target="_blank" alt="https://github.com/m-Ryan/easy-email/blob/master/src/index.tsx">https://github.com/m-Ryan/easy-email/blob/master/src/index.tsx</a>
+## Examples
+Please see <a href="https://github.com/m-Ryan/easy-email-demo" target="_blank" alt="https://github.com/m-Ryan/easy-email-demo">https://github.com/m-Ryan/easy-email-demo</a>
+
+<br/>
+
+## EmailEditorProvider Configuration
+
+| property              | Type                              | Description                                                                  |
+| -------------------------- | --------------------------------- | ---------------------------------------------------------------------------- |
+| data       | interface IEmailTemplate { content: IPage; subject: string; subTitle: string; }            | Source data |
+| children       |  (props: FormikProps<IEmailTemplate>) => React.ReactNode;           | ReactNode |
+| onSubmit       |  FormikConfig<IEmailTemplate>['onSubmit']           | Called when the commit is triggered manually  |
+| fontList       | { value: string; label: string; }[];            | Default font list. |
+| interactiveStyle  | { hoverColor?: string; selectedColor?: string; dragoverColor?: string; tangentColor?: string; } | Interactive prompt color          |
+| onUploadImage             | (data: Blob) => Promise<string>;                       | Triggered when an image is pasted or uploaded      |
+| onAddCollection |  (payload: CollectedBlock) => void; | Add to collection list    |
+| onRemoveCollection    | (payload: { id: string; }) => void;      | remove from collection list                               |
+
+<br/>
+
+## EmailEditor Configuration
+
+| property              | Type                              | Description                                                                  |
+| -------------------------- | --------------------------------- | ---------------------------------------------------------------------------- |
+| height       |    string | number;     | Set the height of the container |
+
+
+<br/>
+
+## License
+
+The MIT License
