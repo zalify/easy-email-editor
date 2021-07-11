@@ -5,6 +5,7 @@ import { BlocksProvider } from '..//BlocksProvider';
 import { HoverIdxProvider } from '../HoverIdxProvider';
 import { PropsProvider, PropsProviderProps } from '../PropsProvider';
 import { RecordProvider } from '../RecordProvider';
+import { SelectionRangeProvider } from '../SelectionRangeProvider';
 
 export interface EmailEditorProviderProps<T extends IEmailTemplate = any>
   extends PropsProviderProps {
@@ -16,7 +17,7 @@ export interface EmailEditorProviderProps<T extends IEmailTemplate = any>
 export const EmailEditorProvider = (
   props: EmailEditorProviderProps<IEmailTemplate>
 ) => {
-  const { data, children, onSubmit = () => {} } = props;
+  const { data, children, onSubmit = () => { } } = props;
 
   const initialValues = useMemo(() => {
     return {
@@ -38,7 +39,9 @@ export const EmailEditorProvider = (
         <RecordProvider>
           <BlocksProvider>
             <HoverIdxProvider>
-              <FormikWrapper children={children} />
+              <SelectionRangeProvider>
+                <FormikWrapper children={children} />
+              </SelectionRangeProvider>
             </HoverIdxProvider>
           </BlocksProvider>
         </RecordProvider>

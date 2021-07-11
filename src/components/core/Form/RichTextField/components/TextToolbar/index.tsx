@@ -27,17 +27,17 @@ import { Stack } from '@/components/UI/Stack';
 import { TextStyle } from '@/components/UI/TextStyle';
 import { ColorPicker } from '../../../ColorPicker';
 import { FontFamily } from '../FontFamily';
+import { useContext } from 'react';
+import { SelectionRangeContext } from '@/components/Provider/SelectionRangeProvider';
 
 export interface TextToolbarProps {
   onChange: (content: string) => any;
   container: HTMLElement | null;
 }
 
-const getSelection = () => getShadowRoot().getSelection();
-
 const restoreRange = (range: Range) => {
 
-  const selection = getSelection()!;
+  const selection = getShadowRoot().getSelection()!;
   selection.removeAllRanges();
   const newRange = document.createRange();
   newRange.setStart(range.startContainer, range.startOffset);
@@ -49,36 +49,12 @@ const restoreRange = (range: Range) => {
 export function TextToolbar(props: TextToolbarProps) {
 
   const { container } = props;
-  const [currentRange, setCurrentRangeRange] = useState<
-    Range | null | undefined
-  >(null);
-
-  useEffect(() => {
-    const onSelectionChange = () => {
-      try {
-        const range = getSelection()?.getRangeAt(0);
-        if (container?.contains(range?.commonAncestorContainer!)) {
-          if (range) {
-            setCurrentRangeRange(range);
-          }
-
-        }
-      } catch (error) {
-
-      }
-    };
-
-    document.addEventListener('selectionchange', onSelectionChange);
-
-    return () => {
-      document.removeEventListener('selectionchange', onSelectionChange);
-    };
-  }, [container, currentRange]);
+  const { selectionRange: currentRange } = useContext(SelectionRangeContext);
 
   const execCommand = (cmd: string, val?: any) => {
     if (!container) return;
 
-    if (currentRange) {
+    if (currentRange && container?.contains(currentRange?.commonAncestorContainer)) {
       restoreRange(currentRange);
 
       if (cmd === 'createLink') {
@@ -88,9 +64,10 @@ export function TextToolbar(props: TextToolbarProps) {
         if (linkData.linkNode) {
           link = linkData.linkNode;
         } else {
-          const uuid = uuidv4();
+          const uuid = (+new Date()).toString();
           document.execCommand(cmd, false, uuid);
-          link = document.querySelector(
+
+          link = getShadowRoot().querySelector(
             `a[href="${uuid}"`
           )! as HTMLAnchorElement;
         }
