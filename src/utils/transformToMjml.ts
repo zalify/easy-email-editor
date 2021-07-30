@@ -35,6 +35,10 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
 
   const block = BlocksMap.findBlockByType(data.type);
 
+  if (!block) {
+    throw new Error(`Can not find ${data.type} block!!! Have you registered this block ?`);
+  }
+
   if (block.transform) {
     const transformData = block.transform(data, idx);
     att['css-class'] = classnames(att['css-class'], transformData['css-class']);
