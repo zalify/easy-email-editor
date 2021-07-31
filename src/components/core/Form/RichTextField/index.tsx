@@ -1,5 +1,6 @@
 import { findBlockNodeByIdx, getEditorRoot } from '@/utils/findBlockNodeByIdx';
 import { getEditNode } from '@/utils/getEditNode';
+import { onDrag } from '@/utils/onDrag';
 import React, { useCallback, useMemo } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -12,22 +13,23 @@ import { TextToolbar } from './components/TextToolbar';
 export function RichTextField(
   props: Omit<InlineTextProps, 'onChange'> & EnhancerProps
 ) {
+
+  const [position, setPosition] = useState({ top: 0, left: 0 });
+  const [isMove, setIsMove] = useState(false);
   const { idx } = props;
 
   const container = findBlockNodeByIdx(idx);
 
-  const textToolbarPosition = useMemo(() => {
-    if (!container)
-      return {
-        top: 0,
-        left: 0,
-      };
+  useEffect(() => {
+    if (container) {
+      const { left, top } = container.getBoundingClientRect();
 
-    const { left, top } = container.getBoundingClientRect();
-    return {
-      left,
-      top: top - 16,
-    };
+      setPosition({
+        left,
+        top: top - 16,
+      });
+    }
+
   }, [container]);
 
   const onChange = useCallback(() => { }, []);
@@ -35,25 +37,45 @@ export function RichTextField(
   const editorContainer = container && getEditNode(container);
 
   const textToolbar = useMemo(() => {
+
+    const onMoveTextToolbar = (event: React.MouseEvent) => {
+      setIsMove(true);
+      onDrag({
+        event: event as any,
+        onMove(x, y) {
+          setPosition({
+            left: position.left + x,
+            top: position.top + y,
+          });
+        },
+        onEnd() {
+          setIsMove(false);
+        }
+      });
+    };
+
     return createPortal(
       <div
         id='RichTextEditorToolbar'
         style={{
           position: 'fixed',
-          ...textToolbarPosition,
+          ...position,
           transform: 'translate(0,-100%)',
           padding: 16,
           boxSizing: 'border-box',
-          backgroundColor: '#41444d',
+
           zIndex: 1000,
-          transition: 'all .3s'
+          transition: isMove ? undefined : 'all .3s'
         }}
       >
-        <TextToolbar container={editorContainer} onChange={onChange} />
+        <div style={{ position: 'absolute', backgroundColor: '#41444d', height: '100%', width: '100%', left: 0, top: 0, cursor: 'move' }} onMouseDown={onMoveTextToolbar} />
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <TextToolbar container={editorContainer} onChange={onChange} />
+        </div>
       </div>,
       document.body
     );
-  }, [editorContainer, onChange, textToolbarPosition]);
+  }, [editorContainer, isMove, onChange, position]);
 
   return (
     <>
