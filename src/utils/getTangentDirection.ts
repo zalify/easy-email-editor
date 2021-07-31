@@ -1,7 +1,7 @@
 import { findBlockNode } from './findBlockNode';
 
 const deviation = 8;
-type Direction = 'top' | 'right' | 'bottom' | 'left';
+export type Direction = 'top' | 'right' | 'bottom' | 'left';
 
 export function getTangentDirection(ev: { target: EventTarget | null, clientY: number, clientX: number; }): Direction | '' {
   const target = ev.target as HTMLElement;

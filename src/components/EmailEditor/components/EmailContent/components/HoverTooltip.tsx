@@ -9,10 +9,11 @@ import { BlockType, BLOCK_HOVER_CLASSNAME } from '@/constants';
 import { findBlockNodeByIdx, getBlockNodes } from '@/utils/findBlockNodeByIdx';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { useHoverIdx } from '@/hooks/useHoverIdx';
+import { BlocksMap } from '@/components/core/blocks';
 
 export function HoverTooltip() {
   const { focusIdx } = useFocusIdx();
-  const { hoverIdx, isDragging } = useHoverIdx();
+  const { hoverIdx, isDragging, direction } = useHoverIdx();
 
   const hoverBlock = useMemo(() => {
     const blockNode = findBlockNodeByIdx(hoverIdx);
@@ -49,6 +50,22 @@ export function HoverTooltip() {
     };
   }, [focusIdx, hoverBlock, hoverIdx, isDragging]);
 
+  const tooltipContent = useMemo(() => {
+    const blockNode = findBlockNodeByIdx(hoverIdx);
+    if (!isDragging || !blockNode) return tooltip.blockName;
+    const type = getNodeTypeFromClassName(blockNode.classList)!;
+    const block = BlocksMap.findBlockByType(type);
+    if (direction) {
+      if (['top', 'left'].includes(direction)) {
+        return `Insert before ${block.name}`;
+      } else {
+        return `Insert after ${block.name}`;
+      }
+    }
+    return `Append to ${block.name}`;
+
+  }, [direction, hoverIdx, isDragging, tooltip.blockName]);
+
   return useMemo(() => {
     return (
       <div
@@ -84,9 +101,9 @@ export function HoverTooltip() {
             transform: 'translate(100%,-50%) rotate(-90deg)'
           }}
           />
-          {isDragging ? `Drag to ${tooltip.blockName}` : tooltip.blockName}
+          {tooltipContent}
         </div>
       </div>
     );
-  }, [isDragging, tooltip.blockName, tooltip.left, tooltip.top, tooltip.visible]);
+  }, [tooltip.left, tooltip.top, tooltip.visible, tooltipContent]);
 }

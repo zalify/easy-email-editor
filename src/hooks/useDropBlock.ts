@@ -24,7 +24,7 @@ export function useDropBlock() {
   const { values, addBlock, moveBlock } = useBlock();
 
   const { setFocusIdx } = useFocusIdx();
-  const { setHoverIdx, setIsDragging } = useHoverIdx();
+  const { setHoverIdx, setIsDragging, setDirection } = useHoverIdx();
 
   useEffect(() => {
     if (ref) {
@@ -134,6 +134,7 @@ export function useDropBlock() {
         const blockNode = findBlockNode(ev.target as HTMLElement);
         if (blockNode) {
           setHoverIdx('');
+          setDirection('');
         } else {
           setIsDragging(false);
         }
@@ -148,20 +149,21 @@ export function useDropBlock() {
           ev.preventDefault();
           setIsDragging(true);
 
+          const idx = getNodeIdxFromClassName(blockNode.classList)!;
+          const direction = getTangentDirection(ev);
+          setHoverIdx(idx);
+          setDirection(direction);
           if (
-            ['top', 'bottom', 'right', 'left'].includes(getTangentDirection(ev))
+            ['top', 'bottom', 'right', 'left'].includes(direction)
           ) {
             const idx = getParentIdx(
               getNodeIdxFromClassName(blockNode.classList)!
             )!;
-            setHoverIdx(idx);
             blockNode.classList.remove(DRAG_HOVER_CLASSNAME);
             blockNode.classList.add(DRAG_TANGENT_CLASSNAME);
           } else {
             blockNode.classList.remove(DRAG_TANGENT_CLASSNAME);
             blockNode.classList.add(DRAG_HOVER_CLASSNAME);
-            const idx = getNodeIdxFromClassName(blockNode.classList)!;
-            setHoverIdx(idx);
           }
         }
       };
@@ -185,7 +187,7 @@ export function useDropBlock() {
         ref.removeEventListener('dragleave', onDragLeave);
       };
     }
-  }, [ref, setHoverIdx, setIsDragging]);
+  }, [ref, setDirection, setHoverIdx, setIsDragging]);
 
   return useMemo(
     () => ({
