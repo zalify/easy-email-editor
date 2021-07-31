@@ -25,6 +25,7 @@ export function EmailContent({ isActive }: { isActive: boolean; }) {
           title={<BlockToolbar />}
           visible={!!focusIdx && isActive}
           overlayStyle={{ maxWidth: 600, zIndex: 100 }}
+          getPopupContainer={() => document.getElementById('FIXED_CONTAINER_ID') as HTMLDivElement}
         >
           <div
             className="shadow-container"

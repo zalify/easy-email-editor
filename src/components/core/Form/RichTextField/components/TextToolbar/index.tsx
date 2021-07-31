@@ -50,42 +50,51 @@ export function TextToolbar(props: TextToolbarProps) {
 
   const { container } = props;
   const { selectionRange: currentRange } = useContext(SelectionRangeContext);
-
   const execCommand = (cmd: string, val?: any) => {
-    if (!container) return;
+    if (!container) {
+      console.error('No container');
+      return;
+    }
+    if (!currentRange) {
+      console.error('No currentRange');
+      return;
+    }
+    if (!container?.contains(currentRange?.commonAncestorContainer) && container !== currentRange?.commonAncestorContainer) {
+      console.error('Not commonAncestorContainer');
+      return;
+    }
 
-    if (currentRange && container?.contains(currentRange?.commonAncestorContainer)) {
-      restoreRange(currentRange);
+    restoreRange(currentRange);
 
-      if (cmd === 'createLink') {
-        const linkData = val as LinkParams;
-        const target = linkData.blank ? '_blank' : '';
-        let link: HTMLAnchorElement;
-        if (linkData.linkNode) {
-          link = linkData.linkNode;
-        } else {
-          const uuid = (+new Date()).toString();
-          document.execCommand(cmd, false, uuid);
-
-          link = getShadowRoot().querySelector(
-            `a[href="${uuid}"`
-          )! as HTMLAnchorElement;
-        }
-
-        if (target) {
-          link.setAttribute('target', target);
-        }
-        link.style.textDecoration = linkData.underline ? 'underline' : 'none';
-        link.setAttribute('href', linkData.link);
-
+    if (cmd === 'createLink') {
+      const linkData = val as LinkParams;
+      const target = linkData.blank ? '_blank' : '';
+      let link: HTMLAnchorElement;
+      if (linkData.linkNode) {
+        link = linkData.linkNode;
       } else {
-        document.execCommand(cmd, false, val);
+        const uuid = (+new Date()).toString();
+        document.execCommand(cmd, false, uuid);
 
+        link = getShadowRoot().querySelector(
+          `a[href="${uuid}"`
+        )! as HTMLAnchorElement;
       }
 
-      const html = container.innerHTML;
-      props.onChange(html);
+      if (target) {
+        link.setAttribute('target', target);
+      }
+      link.style.textDecoration = linkData.underline ? 'underline' : 'none';
+      link.setAttribute('href', linkData.link);
+
+    } else {
+      document.execCommand(cmd, false, val);
+
     }
+
+    const html = container.innerHTML;
+    props.onChange(html);
+
   };
 
   const getMountNode = () => document.getElementById('TextToolbar')!;
@@ -114,18 +123,6 @@ export function TextToolbar(props: TextToolbarProps) {
             getPopupContainer={getMountNode}
           >
             <Button size='small' icon={<FontSizeOutlined />} />
-          </Tooltip>
-          <Tooltip
-            color='#fff'
-            title={
-              <Heading onChange={(val) => execCommand('formatBlock', val)} />
-            }
-            getPopupContainer={getMountNode}
-          >
-            <Button
-              size='small'
-              icon={<TextStyle variation='strong'>H</TextStyle>}
-            />
           </Tooltip>
           <ToolItem
             onClick={() => execCommand('bold')}

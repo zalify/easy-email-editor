@@ -17,6 +17,8 @@ import './index.scss';
 import styles from './index.module.scss';
 import { useEditorContext } from '@/hooks/useEditorContext';
 import { ShadowDom } from '../UI/ShadowDom';
+import { createPortal } from 'react-dom';
+import { FIXED_CONTAINER_ID } from '@/constants';
 
 const TabPane = Tabs.TabPane;
 
@@ -30,6 +32,10 @@ export const EmailEditor = (props: EmailEditorProps) => {
 
   const pageMaxWidth = pageData.attributes.width || '600px';
   const pageMinWidth = '375px';
+
+  const fixedContainer = useMemo(() => {
+    return createPortal(<div id={FIXED_CONTAINER_ID} />, document.body);
+  }, []);
 
   return useMemo(
     () => (
@@ -180,8 +186,10 @@ export const EmailEditor = (props: EmailEditorProps) => {
             </div>
           </Layout.Sider>
         </div>
+
+        {fixedContainer}
       </Layout>
     ),
-    [activeTab, containerHeight, pageData.attributes, pageMaxWidth]
+    [activeTab, containerHeight, fixedContainer, pageData.attributes, pageMaxWidth]
   );
 };
