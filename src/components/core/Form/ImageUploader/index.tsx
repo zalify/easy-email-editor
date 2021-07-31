@@ -136,7 +136,7 @@ export function ImageUploader(props: ImageUploaderProps) {
     <div className={styles.wrap}>
       <div className={styles['container']}>
         {content}
-        <Input onPaste={onPaste} value={value} onChange={(e) => setValue(e.target.value)} />
+        <Input onPaste={onPaste} value={value} onChange={(e) => setValue(e.target.value)} disabled={isUploading} />
       </div>
       <Modal
         visible={preview}

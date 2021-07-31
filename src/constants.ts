@@ -30,3 +30,6 @@ export const DRAG_TANGENT_CLASSNAME = 'block-tangent';
 export const BLOCK_SELECTED_CLASSNAME = 'block-selected';
 export const BLOCK_HOVER_CLASSNAME = 'block-hover';
 export const BLOCK_HIDDEN_CLASSNAME = 'block-hidden';
+
+// spacial dom id
+export const FIXED_CONTAINER_ID = 'FIXED_CONTAINER_ID';
