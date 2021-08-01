@@ -1,6 +1,5 @@
-import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { Stack } from '@example/components/Stack';
-import { ColorPickerField, TextField } from 'easy-email-editor';
+import { ColorPickerField, TextField, useFocusIdx } from 'easy-email-editor';
 import React from 'react';
 export function Panel() {
   const { focusIdx } = useFocusIdx();
