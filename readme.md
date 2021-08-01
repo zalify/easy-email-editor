@@ -38,11 +38,21 @@ Overview |
 </div>
 
 
-
 <div style="margin-top:20px;margin-bottom:20px;display:inline-block;">
 <img src="https://assets.maocanhua.cn/0e50aa7b-9b17-42b4-8bf9-cd310c74f3be-image.png" alt="Overview" width="45%">
 <img src="https://assets.maocanhua.cn/97c776e9-6c67-4452-b048-3f2d6e468424-image.png" alt="Overview"  width="45%">
 </div>
+
+
+<br/>
+
+
+
+|                                                          Video Overview                                                           |
+| :-------------------------------------------------------------------------------------------------------------------------------: |
+| [![Easy email](https://assets.maocanhua.cn/93c653c8-4bc9-4d2f-9e7e-11a590d3b2bc-image.png)](https://www.youtube.com/watch?v=3KdZQeZ9uqc_) |
+|                                       _Watch video overview: https://youtu.be/3KdZQeZ9uqc_                                        |
+
 
 
 ## Live Demo
