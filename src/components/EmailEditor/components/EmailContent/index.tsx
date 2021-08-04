@@ -6,11 +6,16 @@ import { MjmlDomRender } from './components/MjmlDomRender';
 import { useDropBlock } from '@/hooks/useDropBlock';
 import { HoverTooltip } from './components/HoverTooltip';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
+import { useActiveTab } from '@/hooks/useActiveTab';
+import { ActiveTabKeys } from '@/components/Provider/BlocksProvider';
 
-export function EmailContent({ isActive }: { isActive: boolean; }) {
+export function EmailContent() {
+  const { activeTab } = useActiveTab();
   const [containerRef, setContainerRef] = useState<HTMLDivElement | null>(null);
   const { focusIdx } = useFocusIdx();
   const { setRef } = useDropBlock();
+
+  const isActive = activeTab === ActiveTabKeys.EDIT;
 
   useEffect(() => {
     setRef(containerRef);
@@ -25,10 +30,12 @@ export function EmailContent({ isActive }: { isActive: boolean; }) {
           title={<BlockToolbar />}
           visible={!!focusIdx && isActive}
           overlayStyle={{ maxWidth: 600, zIndex: 100 }}
-          getPopupContainer={() => document.getElementById('FIXED_CONTAINER_ID') as HTMLDivElement}
+          getPopupContainer={() =>
+            document.getElementById('FIXED_CONTAINER_ID') as HTMLDivElement
+          }
         >
           <div
-            className="shadow-container"
+            className='shadow-container'
             style={{ height: '100%', overflowY: 'overlay' as any }}
             ref={setContainerRef}
           >

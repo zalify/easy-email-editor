@@ -1,4 +1,6 @@
+import { ActiveTabKeys } from '@/components/Provider/BlocksProvider';
 import { FIXED_CONTAINER_ID } from '@/constants';
+import { useActiveTab } from '@/hooks/useActiveTab';
 import { useBlock } from '@/hooks/useBlock';
 import { findBlockNodeByIdx, getEditorRoot } from '@/utils/findBlockNodeByIdx';
 import { getEditNode } from '@/utils/getEditNode';
@@ -15,6 +17,8 @@ import { TextToolbar } from './components/TextToolbar';
 export function RichTextField(
   props: Omit<InlineTextProps, 'onChange'> & EnhancerProps
 ) {
+  const { activeTab } = useActiveTab();
+  const isActive = activeTab === ActiveTabKeys.EDIT;
 
   const [position, setPosition] = useState({ top: 0, left: 0 });
   const [isMove, setIsMove] = useState(false);
@@ -34,15 +38,13 @@ export function RichTextField(
         top: top - 16,
       });
     }
-
   }, [container]);
 
-  const onChange = useCallback(() => { }, []);
+  const onChange = useCallback(() => {}, []);
 
   const editorContainer = container && getEditNode(container);
 
   const textToolbar = useMemo(() => {
-
     const onMoveTextToolbar = (event: React.MouseEvent) => {
       setIsMove(true);
       onDrag({
@@ -55,7 +57,7 @@ export function RichTextField(
         },
         onEnd() {
           setIsMove(false);
-        }
+        },
       });
     };
 
@@ -70,17 +72,29 @@ export function RichTextField(
           boxSizing: 'border-box',
 
           zIndex: 1000,
-          transition: isMove ? undefined : 'all .3s'
+          transition: isMove ? undefined : 'all .3s',
+          display: Boolean(isActive) ? undefined : 'none',
         }}
       >
-        <div style={{ position: 'absolute', backgroundColor: '#41444d', height: '100%', width: '100%', left: 0, top: 0, cursor: 'move' }} onMouseDown={onMoveTextToolbar} />
+        <div
+          style={{
+            position: 'absolute',
+            backgroundColor: '#41444d',
+            height: '100%',
+            width: '100%',
+            left: 0,
+            top: 0,
+            cursor: 'move',
+          }}
+          onMouseDown={onMoveTextToolbar}
+        />
         <div style={{ position: 'relative', zIndex: 1 }}>
           <TextToolbar container={editorContainer} onChange={onChange} />
         </div>
       </div>,
       document.getElementById(FIXED_CONTAINER_ID) as HTMLDivElement
     );
-  }, [editorContainer, isMove, onChange, position, text]);
+  }, [editorContainer, isActive, isMove, onChange, position, text]);
 
   return (
     <>

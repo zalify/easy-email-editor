@@ -1,5 +1,11 @@
 import { getPageIdx } from '@/utils/block';
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
+
+export enum ActiveTabKeys {
+  EDIT = 'EDIT',
+  MOBILE = 'MOBILE',
+  PC = 'PC',
+}
 
 export const BlocksContext = React.createContext<{
   focusIdx: string;
@@ -8,19 +14,24 @@ export const BlocksContext = React.createContext<{
   setDragEnabled: React.Dispatch<React.SetStateAction<boolean>>;
   collapsed: boolean;
   setCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
+  activeTab: ActiveTabKeys;
+  setActiveTab: React.Dispatch<React.SetStateAction<ActiveTabKeys>>;
 }>({
   focusIdx: getPageIdx(),
-  setFocusIdx: () => { },
+  setFocusIdx: () => {},
   dragEnabled: false,
-  setDragEnabled: () => { },
+  setDragEnabled: () => {},
   collapsed: false,
-  setCollapsed: () => { }
+  setCollapsed: () => {},
+  activeTab: ActiveTabKeys.EDIT,
+  setActiveTab: () => {},
 });
 
 export const BlocksProvider: React.FC<{}> = (props) => {
   const [focusIdx, setFocusIdx] = useState(getPageIdx());
   const [dragEnabled, setDragEnabled] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
+  const [activeTab, setActiveTab] = useState(ActiveTabKeys.EDIT);
 
   return (
     <BlocksContext.Provider
@@ -30,7 +41,9 @@ export const BlocksProvider: React.FC<{}> = (props) => {
         dragEnabled,
         setDragEnabled,
         collapsed,
-        setCollapsed
+        setCollapsed,
+        activeTab,
+        setActiveTab,
       }}
     >
       {props.children}

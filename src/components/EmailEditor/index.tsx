@@ -19,6 +19,8 @@ import { useEditorContext } from '@/hooks/useEditorContext';
 import { ShadowDom } from '../UI/ShadowDom';
 import { createPortal } from 'react-dom';
 import { FIXED_CONTAINER_ID } from '@/constants';
+import { useActiveTab } from '@/hooks/useActiveTab';
+import { ActiveTabKeys } from '../Provider/BlocksProvider';
 
 const TabPane = Tabs.TabPane;
 
@@ -27,7 +29,7 @@ export interface EmailEditorProps {
 }
 export const EmailEditor = (props: EmailEditorProps) => {
   const { height: containerHeight } = props;
-  const [activeTab, setActiveTab] = useState('editor');
+  const { activeTab, setActiveTab } = useActiveTab();
   const { pageData } = useEditorContext();
 
   const pageMaxWidth = pageData.attributes.width || '600px';
@@ -79,13 +81,13 @@ export const EmailEditor = (props: EmailEditorProps) => {
                 tabBarExtraContent={<ToolsPanel />}
               >
                 <TabPane
-                  tab={(
+                  tab={
                     <Stack spacing='none'>
                       <EditOutlined />
                       <TextStyle>Edit</TextStyle>
                     </Stack>
-                  )}
-                  key='editor'
+                  }
+                  key={ActiveTabKeys.EDIT}
                   style={{
                     backgroundColor: 'transparent',
                     paddingLeft: 20,
@@ -102,17 +104,17 @@ export const EmailEditor = (props: EmailEditorProps) => {
                       height: '100%',
                     }}
                   >
-                    <EmailContent isActive={activeTab === 'editor'} />
+                    <EmailContent />
                   </ShadowDom>
                 </TabPane>
                 <TabPane
-                  tab={(
+                  tab={
                     <Stack spacing='none'>
                       <DesktopOutlined />
                       <TextStyle>Preview</TextStyle>
                     </Stack>
-                  )}
-                  key='laptopIcon'
+                  }
+                  key={ActiveTabKeys.PC}
                   style={{ backgroundColor: 'transparent' }}
                 >
                   <div
@@ -133,13 +135,13 @@ export const EmailEditor = (props: EmailEditorProps) => {
                   </div>
                 </TabPane>
                 <TabPane
-                  tab={(
+                  tab={
                     <Stack spacing='none'>
                       <TabletOutlined />
                       <TextStyle>Preview</TextStyle>
                     </Stack>
-                  )}
-                  key='mobileIcon'
+                  }
+                  key={ActiveTabKeys.MOBILE}
                   style={{ backgroundColor: 'transparent' }}
                 >
                   <div
@@ -190,6 +192,13 @@ export const EmailEditor = (props: EmailEditorProps) => {
         {fixedContainer}
       </Layout>
     ),
-    [activeTab, containerHeight, fixedContainer, pageData.attributes, pageMaxWidth]
+    [
+      activeTab,
+      containerHeight,
+      fixedContainer,
+      pageData.attributes,
+      pageMaxWidth,
+      setActiveTab,
+    ]
   );
 };

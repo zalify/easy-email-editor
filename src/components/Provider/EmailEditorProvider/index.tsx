@@ -10,14 +10,15 @@ import { SelectionRangeProvider } from '../SelectionRangeProvider';
 export interface EmailEditorProviderProps<T extends IEmailTemplate = any>
   extends PropsProviderProps {
   data: T;
-  children: (props: FormikProps<IEmailTemplate>) => React.ReactNode;
-  onSubmit?: FormikConfig<IEmailTemplate>['onSubmit'];
+  children: (props: FormikProps<T>) => React.ReactNode;
+  onSubmit?: FormikConfig<T>['onSubmit'];
+  validationSchema?: FormikConfig<T>['validationSchema'];
 }
 
 export const EmailEditorProvider = (
   props: EmailEditorProviderProps<IEmailTemplate>
 ) => {
-  const { data, children, onSubmit = () => { } } = props;
+  const { data, children, onSubmit = () => {}, validationSchema } = props;
 
   const initialValues = useMemo(() => {
     return {
@@ -34,6 +35,7 @@ export const EmailEditorProvider = (
       initialValues={initialValues}
       onSubmit={onSubmit}
       enableReinitialize
+      validationSchema={validationSchema}
     >
       <PropsProvider {...props}>
         <RecordProvider>

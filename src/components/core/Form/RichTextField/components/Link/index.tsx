@@ -23,34 +23,56 @@ export interface LinkProps extends PopoverProps {
   onChange: (val: LinkParams) => void;
 }
 
+function getAnchorElement(
+  node: Node,
+  matchLength: number
+): HTMLAnchorElement | null {
+  if (!node || !node.parentNode) return null;
+  const isMatchLength =
+    Number(node.parentNode?.textContent?.length) === matchLength;
+
+  if (isMatchLength) {
+    if (node.parentNode instanceof HTMLAnchorElement) {
+      return node.parentNode;
+    } else {
+      return getAnchorElement(node.parentNode, matchLength);
+    }
+  }
+  return null;
+}
+
+function getLinkNode(
+  currentRange: Range | null | undefined
+): HTMLAnchorElement | null {
+  let linkNode: HTMLAnchorElement | null = null;
+  if (
+    currentRange &&
+    currentRange.startContainer === currentRange.endContainer
+  ) {
+    if (currentRange.startContainer instanceof HTMLAnchorElement) {
+      linkNode = currentRange.startContainer;
+    } else {
+      if (currentRange.startContainer.nodeType === 3) {
+        linkNode = getAnchorElement(
+          currentRange.startContainer,
+          currentRange.endOffset - currentRange.startOffset
+        );
+      }
+    }
+  }
+  return linkNode;
+}
+
 export function Link(props: LinkProps) {
   const initialValues = useMemo((): LinkParams => {
     let link = '';
     let blank = true;
     let underline = false;
-    let linkNode: HTMLAnchorElement | null = null;
-
-    if (
-      props.currentRange &&
-      props.currentRange.startContainer === props.currentRange.endContainer
-    ) {
-      linkNode =
-        props.currentRange.startContainer instanceof HTMLAnchorElement
-          ? props.currentRange.startContainer
-          : props.currentRange.startContainer.nodeType === 3 &&
-            props.currentRange.startContainer.parentNode instanceof
-            HTMLAnchorElement &&
-            Number(
-              props.currentRange.startContainer.parentNode.textContent?.length
-            ) ===
-            props.currentRange.endOffset - props.currentRange.startOffset
-            ? props.currentRange.startContainer.parentNode
-            : null;
-      if (linkNode) {
-        link = linkNode.href;
-        blank = linkNode.getAttribute('target') === '_blank';
-        underline = linkNode.style.textDecoration === 'underline';
-      }
+    let linkNode: HTMLAnchorElement | null = getLinkNode(props.currentRange);
+    if (linkNode) {
+      link = linkNode.href;
+      blank = linkNode.getAttribute('target') === '_blank';
+      underline = linkNode.style.textDecoration === 'underline';
     }
     return {
       link,
@@ -69,6 +91,7 @@ export function Link(props: LinkProps) {
 
   return (
     <Formik
+      key={initialValues.link}
       enableReinitialize
       validationSchema={schema}
       initialValues={initialValues}
