@@ -130,7 +130,7 @@ export const EmailEditor = (props: EmailEditorProps) => {
                       width='100%'
                       style={{ border: 'none', paddingTop: -16 }}
                     >
-                      <PreviewEmail />
+                      <PreviewEmail scroll />
                     </IframeComponent>
                   </div>
                 </TabPane>

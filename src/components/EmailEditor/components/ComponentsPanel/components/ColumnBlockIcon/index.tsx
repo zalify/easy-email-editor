@@ -226,11 +226,11 @@ function FourColumn() {
 }
 
 export function ColumnBlockIcon(
-  props: Omit<BlockAvatarWrapperProps, 'type'> & { avatar: string; }
+  props: Omit<BlockAvatarWrapperProps, 'type'> & { avatar: string }
 ) {
   return (
     <BlockAvatarWrapper type={BasicType.SECTION} {...props}>
-      <Picture style={{ height: 40 }} src={props.avatar} />
+      <Picture style={{ height: 40, width: '100%' }} src={props.avatar} />
     </BlockAvatarWrapper>
   );
 }

@@ -104,7 +104,7 @@ export function useBlock() {
                 }),
               ],
             });
-            nextFocusIdx += '.children.[0]';
+            nextFocusIdx += '.children.[0].children.[0]';
           } else if (parentBlock.type === BasicType.PAGE) {
             if (block.type === BasicType.DIVIDER) {
               child = createBlockItem(BasicType.SECTION, {
@@ -145,7 +145,8 @@ export function useBlock() {
         const fixedBlock = findBlockByType(child.type);
         if (!fixedBlock.validParentType.includes(parent.type as BasicType)) {
           message.warning(
-            `${block.type} cannot be used inside ${parentBlock.type
+            `${block.type} cannot be used inside ${
+              parentBlock.type
             }, only inside: ${block.validParentType.join(', ')}`
           );
           return formState;
@@ -188,7 +189,8 @@ export function useBlock() {
         ) {
           const parentBlock = findBlockByType(destinationParent.type);
           message.warning(
-            `${sourceBlock.name} cannot be used inside ${parentBlock.name
+            `${sourceBlock.name} cannot be used inside ${
+              parentBlock.name
             }, only inside: ${sourceBlock.validParentType.join(', ')}`
           );
           return formState;

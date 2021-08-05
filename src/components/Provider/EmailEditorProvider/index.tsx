@@ -6,6 +6,7 @@ import { HoverIdxProvider } from '../HoverIdxProvider';
 import { PropsProvider, PropsProviderProps } from '../PropsProvider';
 import { RecordProvider } from '../RecordProvider';
 import { SelectionRangeProvider } from '../SelectionRangeProvider';
+import { ScrollProvider } from '../ScrollProvider';
 
 export interface EmailEditorProviderProps<T extends IEmailTemplate = any>
   extends PropsProviderProps {
@@ -42,7 +43,9 @@ export const EmailEditorProvider = (
           <BlocksProvider>
             <HoverIdxProvider>
               <SelectionRangeProvider>
-                <FormikWrapper children={children} />
+                <ScrollProvider>
+                  <FormikWrapper children={children} />
+                </ScrollProvider>
               </SelectionRangeProvider>
             </HoverIdxProvider>
           </BlocksProvider>

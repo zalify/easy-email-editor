@@ -1,4 +1,10 @@
-import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react';
+import React, {
+  useState,
+  useCallback,
+  useEffect,
+  useRef,
+  useMemo,
+} from 'react';
 import { Input, message, Modal } from 'antd';
 import { PlusOutlined, EyeOutlined, DeleteOutlined } from '@ant-design/icons';
 import styles from './index.module.scss';
@@ -17,7 +23,9 @@ export interface ImageUploaderProps {
 export function ImageUploader(props: ImageUploaderProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [preview, setPreview] = useState(false);
-  const uploadHandlerRef = useRef<UploaderServer | null | undefined>(props.uploadHandler);
+  const uploadHandlerRef = useRef<UploaderServer | null | undefined>(
+    props.uploadHandler
+  );
   const [value, setValue] = useState(props.value);
 
   useEffect(() => {
@@ -75,6 +83,7 @@ export function ImageUploader(props: ImageUploaderProps) {
             props.onChange(picture);
             setIsUploading(false);
           } catch (error) {
+            message.error(error?.message || error || 'Upload failed');
             setIsUploading(false);
           }
         }
@@ -111,9 +120,7 @@ export function ImageUploader(props: ImageUploaderProps) {
     return (
       <div className={styles['item']}>
         <div className={classnames(styles['info'])}>
-          <img
-            src={value}
-          />
+          <img src={value} />
           <div className={styles['btn-wrap']}>
             <a title='Preview' onClick={() => setPreview(true)}>
               <EyeOutlined />
@@ -125,7 +132,6 @@ export function ImageUploader(props: ImageUploaderProps) {
         </div>
       </div>
     );
-
   }, [isUploading, onRemove, onUpload, props.value, value]);
 
   if (!props.uploadHandler) {
@@ -136,13 +142,14 @@ export function ImageUploader(props: ImageUploaderProps) {
     <div className={styles.wrap}>
       <div className={styles['container']}>
         {content}
-        <Input onPaste={onPaste} value={value} onChange={(e) => setValue(e.target.value)} disabled={isUploading} />
+        <Input
+          onPaste={onPaste}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          disabled={isUploading}
+        />
       </div>
-      <Modal
-        visible={preview}
-        footer={null}
-        onCancel={() => setPreview(false)}
-      >
+      <Modal visible={preview} footer={null} onCancel={() => setPreview(false)}>
         <img alt='Preview' style={{ width: '100%' }} src={value} />
       </Modal>
     </div>
