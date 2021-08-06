@@ -26,7 +26,6 @@ export enum BasicType {
 }
 
 export const DRAG_HOVER_CLASSNAME = 'block-dragover';
-export const DRAG_TANGENT_CLASSNAME = 'block-tangent';
 export const BLOCK_SELECTED_CLASSNAME = 'block-selected';
 export const BLOCK_HOVER_CLASSNAME = 'block-hover';
 export const BLOCK_HIDDEN_CLASSNAME = 'block-hidden';

@@ -77,16 +77,16 @@ export const EmailEditor = (props: EmailEditorProps) => {
                   marginBottom: 0,
                   backgroundColor: '#fff',
                 }}
-                onChange={setActiveTab}
+                onChange={setActiveTab as any}
                 tabBarExtraContent={<ToolsPanel />}
               >
                 <TabPane
-                  tab={
+                  tab={(
                     <Stack spacing='none'>
                       <EditOutlined />
                       <TextStyle>Edit</TextStyle>
                     </Stack>
-                  }
+                  )}
                   key={ActiveTabKeys.EDIT}
                   style={{
                     backgroundColor: 'transparent',
@@ -108,12 +108,12 @@ export const EmailEditor = (props: EmailEditorProps) => {
                   </ShadowDom>
                 </TabPane>
                 <TabPane
-                  tab={
+                  tab={(
                     <Stack spacing='none'>
                       <DesktopOutlined />
                       <TextStyle>Preview</TextStyle>
                     </Stack>
-                  }
+                  )}
                   key={ActiveTabKeys.PC}
                   style={{ backgroundColor: 'transparent' }}
                 >
@@ -135,12 +135,12 @@ export const EmailEditor = (props: EmailEditorProps) => {
                   </div>
                 </TabPane>
                 <TabPane
-                  tab={
+                  tab={(
                     <Stack spacing='none'>
                       <TabletOutlined />
                       <TextStyle>Preview</TextStyle>
                     </Stack>
-                  }
+                  )}
                   key={ActiveTabKeys.MOBILE}
                   style={{ backgroundColor: 'transparent' }}
                 >

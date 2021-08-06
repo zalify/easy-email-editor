@@ -51,7 +51,6 @@ const BlockLayerItem = ({
   idx: string;
   indent?: React.ReactNode;
 }) => {
-
   const { focusIdx } = useFocusIdx();
   const { collapsed, setCollapsed } = useCollapse();
   const [visible, setVisible] = useState(true);
@@ -69,18 +68,20 @@ const BlockLayerItem = ({
       setVisible(true);
     } else {
       setVisible(!collapsed);
-    };
-
+    }
   }, [collapsed, idx, isPageBlock]);
 
-  const onToggle = useCallback((e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (isPageBlock) {
-      setCollapsed(collapsed => !collapsed);
-    } else {
-      setVisible((v) => !v);
-    }
-  }, [isPageBlock, setCollapsed]);
+  const onToggle = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      if (isPageBlock) {
+        setCollapsed((collapsed) => !collapsed);
+      } else {
+        setVisible((v) => !v);
+      }
+    },
+    [isPageBlock, setCollapsed]
+  );
 
   const subIcon = useMemo(() => {
     if (noChild)
@@ -98,11 +99,7 @@ const BlockLayerItem = ({
   }, [collapsed, isPageBlock, noChild, onToggle, visible]);
 
   const listItem = (
-    <BlockAvatarWrapper
-      type={blockData.type}
-      payload={idx}
-      action='move'
-    >
+    <BlockAvatarWrapper type={blockData.type} payload={idx} action='move'>
       <li
         className={classnames(
           styles.blockItem,
@@ -185,7 +182,6 @@ function ShortcutTool({
   blockData: IBlockData;
 }) {
   const { copyBlock, removeBlock } = useBlock();
-  const { setCollapsed } = useCollapse();
 
   const enHanceHandler = useCallback((handler: (...rest: any) => void) => {
     return (e: React.MouseEvent) => {
@@ -196,7 +192,7 @@ function ShortcutTool({
 
   if (blockData.type === BasicType.PAGE) return null;
   return (
-    <div className={styles.shortcutTool} onClick={e => e.stopPropagation()}>
+    <div className={styles.shortcutTool} onClick={(e) => e.stopPropagation()}>
       <Stack>
         <CopyOutlined onClickCapture={enHanceHandler(() => copyBlock(idx))} />
         <CloseOutlined
@@ -206,4 +202,3 @@ function ShortcutTool({
     </div>
   );
 }
-

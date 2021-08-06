@@ -48,7 +48,7 @@ const fontList = [
   '华文楷体',
   '宋体',
   '微软雅黑',
-].map(item => ({ value: item, label: item }));
+].map((item) => ({ value: item, label: item }));
 
 export default function Editor() {
   const dispatch = useDispatch();
@@ -165,6 +165,7 @@ export default function Editor() {
         }}
         fontList={fontList}
         onSubmit={onSubmit}
+        autoComplete
       >
         {({ values, handleSubmit }) => {
           return (
@@ -173,7 +174,7 @@ export default function Editor() {
                 title='Edit'
                 onBack={() => history.push('/')}
                 extra={
-                  <Stack alignment="center">
+                  <Stack alignment='center'>
                     <Button onClick={() => onExportHtml(values)}>
                       Export html
                     </Button>
@@ -187,10 +188,12 @@ export default function Editor() {
                     >
                       Save
                     </Button>
-                    <a target="_blank" href="https://github.com/m-Ryan/easy-email"
+                    <a
+                      target='_blank'
+                      href='https://github.com/m-Ryan/easy-email'
                       style={{
                         color: '#000',
-                        fontSize: 28
+                        fontSize: 28,
                       }}
                       onClick={() => pushEvent({ name: 'Github' })}
                     >
