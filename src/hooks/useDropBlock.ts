@@ -1,6 +1,4 @@
-import {
-  BasicType, BLOCK_HOVER_CLASSNAME,
-} from './../constants';
+import { BasicType, BLOCK_HOVER_CLASSNAME } from './../constants';
 import { useEffect, useMemo, useState, useContext } from 'react';
 
 import {
@@ -10,14 +8,15 @@ import {
   getParentIdx,
 } from '@/utils/block';
 import { findBlockNode } from '@/utils/findBlockNode';
-import {
-  BlockType,
-  DRAG_HOVER_CLASSNAME,
-} from '@/constants';
+import { BlockType, DRAG_HOVER_CLASSNAME } from '@/constants';
 import { useBlock } from '@/hooks/useBlock';
 import { getTangentDirection } from '@/utils/getTangentDirection';
 import { get } from 'lodash';
-import { findBlockNodeByIdx, getBlockNodes, getShadowRoot } from '@/utils/findBlockNodeByIdx';
+import {
+  findBlockNodeByIdx,
+  getBlockNodes,
+  getShadowRoot,
+} from '@/utils/findBlockNodeByIdx';
 import { useFocusIdx } from './useFocusIdx';
 import { useDataTransfer } from './useDataTransfer';
 import { useHoverIdx } from './useHoverIdx';
@@ -29,7 +28,10 @@ export function useDropBlock() {
   const { values, addBlock, moveBlock } = useBlock();
   const { autoComplete } = useContext(EditorPropsContext);
 
-  const isShadowDom = useMemo(() => !Boolean(ref && document.contains(ref)), [ref]);
+  const isShadowDom = useMemo(
+    () => !Boolean(ref && document.contains(ref)),
+    [ref]
+  );
 
   const { setFocusIdx } = useFocusIdx();
   const {
@@ -176,12 +178,14 @@ export function useDropBlock() {
           setDirection(direction);
 
           const type = dataTransfer?.type!;
-          const validBlockNode = isShadowDom ? findInsertNode(
-            type,
-            direction ? blockNode.parentElement! : blockNode,
-            direction,
-            Boolean(autoComplete)
-          ) : blockNode;
+          const validBlockNode = isShadowDom
+            ? findInsertNode(
+                type,
+                direction ? blockNode.parentElement! : blockNode,
+                direction,
+                Boolean(autoComplete)
+              )
+            : blockNode;
 
           if (validBlockNode) {
             const targetType = getNodeTypeFromClassName(
@@ -191,7 +195,6 @@ export function useDropBlock() {
             // Because only the Section is lined up horizontally, right and left are only useful for section, and top and bottom are only useful for other blocks.
 
             const isInsert = !direction;
-
             const isSectionBeforeAfter =
               targetType === BasicType.SECTION &&
               ['left', 'right'].includes(direction);
@@ -200,7 +203,12 @@ export function useDropBlock() {
               targetType !== BasicType.SECTION &&
               ['top', 'bottom'].includes(direction);
 
-            if (isInsert || isSectionBeforeAfter || isOtherInsertBeforeAfter || !isShadowDom) {
+            if (
+              isInsert ||
+              isSectionBeforeAfter ||
+              isOtherInsertBeforeAfter ||
+              !isShadowDom
+            ) {
               isValid = true;
               ev.preventDefault();
               const idx = getNodeIdxFromClassName(blockNode.classList)!;
@@ -232,7 +240,15 @@ export function useDropBlock() {
         ref.removeEventListener('dragleave', onDragLeave);
       };
     }
-  }, [autoComplete, dataTransfer?.type, isShadowDom, ref, setDirection, setHoverIdx, setIsDragging]);
+  }, [
+    autoComplete,
+    dataTransfer?.type,
+    isShadowDom,
+    ref,
+    setDirection,
+    setHoverIdx,
+    setIsDragging,
+  ]);
 
   useEffect(() => {
     if (ref) {
@@ -251,22 +267,17 @@ export function useDropBlock() {
     blockNode.classList.add(DRAG_HOVER_CLASSNAME);
 
     return () => {
-      blockNode?.classList.remove(
-        DRAG_HOVER_CLASSNAME,
-      );
+      blockNode?.classList.remove(DRAG_HOVER_CLASSNAME);
     };
   }, [direction, hoverIdx, isDragging, ref]);
 
   useEffect(() => {
-
     if (!isDragging) {
       getBlockNodes(isShadowDom).forEach((blockNode) => {
-
         if (getNodeIdxFromClassName(blockNode.classList) !== hoverIdx) {
           blockNode.classList.remove(BLOCK_HOVER_CLASSNAME);
         } else {
           blockNode.classList.add(BLOCK_HOVER_CLASSNAME);
-
         }
       });
     }

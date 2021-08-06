@@ -23,7 +23,9 @@ export function findInsertNode(
   if (!block) return null;
   const blockNode = findBlockNode(node);
   if (!blockNode) return null;
-  const currentType = getNodeTypeFromClassName(blockNode.classList) as BlockType;
+  const currentType = getNodeTypeFromClassName(
+    blockNode.classList
+  ) as BlockType;
 
   if (autoComplete && ancestorOf(type, currentType) > 0) {
     return node;
