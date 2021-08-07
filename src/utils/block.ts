@@ -1,3 +1,4 @@
+import { BlockType } from './../constants';
 import { IPage } from '@/components/core/blocks/basic/Page';
 import { IBlock, IBlockData } from '@/typings';
 import { get } from 'lodash';
@@ -20,23 +21,29 @@ export function getNodeTypeClassName(type: string) {
 }
 
 export function getNodeIdxFromClassName(classList: DOMTokenList) {
-  return Array.from(classList).find(item => item.includes('node-idx-'))?.replace('node-idx-', '');
+  return Array.from(classList)
+    .find((item) => item.includes('node-idx-'))
+    ?.replace('node-idx-', '');
 }
 
-export function getNodeTypeFromClassName(classList: DOMTokenList) {
-  return Array.from(classList).find(item => item.includes('node-type-'))?.replace('node-type-', '');
+export function getNodeTypeFromClassName(
+  classList: DOMTokenList
+): string | BlockType | undefined {
+  return Array.from(classList)
+    .find((item) => item.includes('node-type-'))
+    ?.replace('node-type-', '');
 }
 
-export function findBlockByType(type: string): IBlock {
+export function findBlockByType(type: BlockType): IBlock {
   return BlocksMap.findBlockByType(type);
 }
 
 export const getIndexByIdx = (idx: string) => {
-  return Number((/\.\[(\d+)\]$/.exec(idx))?.[1]) || 0;
+  return Number(/\.\[(\d+)\]$/.exec(idx)?.[1]) || 0;
 };
 
 export const getParentIdx = (idx: string) => {
-  return (/(.*)\.children\.\[\d+\]$/.exec(idx))?.[1];
+  return /(.*)\.children\.\[\d+\]$/.exec(idx)?.[1];
 };
 
 export const getValueByIdx = <T extends IBlockData>(

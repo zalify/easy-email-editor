@@ -6,7 +6,7 @@ import { useEditorContext } from '@/hooks/useEditorContext';
 import { useDomScrollHeight } from '@/hooks/useDomScrollHeight';
 import { useActiveTab } from '@/hooks/useActiveTab';
 
-export function PreviewEmail(props: { scroll: boolean }) {
+export function PreviewEmail(props: { scroll?: boolean; }) {
   const { pageData } = useEditorContext();
   const { scrollHeight } = useDomScrollHeight();
   const { activeTab } = useActiveTab();

@@ -1,18 +1,15 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import {
   findBlockByType,
-  getNodeIdxFromClassName,
   getNodeTypeFromClassName,
 } from '@/utils/block';
-import { BlockType, BLOCK_HOVER_CLASSNAME } from '@/constants';
-import { findBlockNodeByIdx, getBlockNodes } from '@/utils/findBlockNodeByIdx';
-import { useFocusIdx } from '@/hooks/useFocusIdx';
+import { BlockType } from '@/constants';
+import { findBlockNodeByIdx } from '@/utils/findBlockNodeByIdx';
 import { useHoverIdx } from '@/hooks/useHoverIdx';
 import { BlocksMap } from '@/components/core/blocks';
 
 export function HoverTooltip() {
-  const { focusIdx } = useFocusIdx();
   const { hoverIdx, isDragging, direction } = useHoverIdx();
 
   const hoverBlock = useMemo(() => {
@@ -29,26 +26,16 @@ export function HoverTooltip() {
     return null;
   }, [hoverIdx]);
 
-  useEffect(() => {
-    getBlockNodes().forEach((blockNode) => {
-      if (getNodeIdxFromClassName(blockNode.classList) !== hoverIdx) {
-        blockNode.classList.remove(BLOCK_HOVER_CLASSNAME);
-      } else {
-        blockNode.classList.add(BLOCK_HOVER_CLASSNAME);
-      }
-    });
-  }, [hoverIdx]);
-
   const tooltip = useMemo(() => {
     const blockName = hoverBlock?.name;
-    const visible = Boolean(hoverBlock && hoverIdx !== focusIdx) || isDragging;
+    const visible = Boolean(hoverBlock);
     return {
       blockName,
       visible,
       top: hoverBlock?.top,
       left: hoverBlock?.left,
     };
-  }, [focusIdx, hoverBlock, hoverIdx, isDragging]);
+  }, [hoverBlock]);
 
   const tooltipContent = useMemo(() => {
     const blockNode = findBlockNodeByIdx(hoverIdx);
@@ -62,8 +49,8 @@ export function HoverTooltip() {
         return `Insert after ${block.name}`;
       }
     }
-    return `Append to ${block.name}`;
 
+    return `Append to ${block.name}`;
   }, [direction, hoverIdx, isDragging, tooltip.blockName]);
 
   return useMemo(() => {
@@ -73,33 +60,35 @@ export function HoverTooltip() {
           position: 'fixed',
           top: tooltip.top,
           left: tooltip.left,
-          transform: 'translate(-100%, 50%)'
+          transform: 'translate(-100%, 50%)',
         }}
       >
-        <div style={{
-          opacity: Number(tooltip.visible),
-          backgroundColor: 'rgba(0, 0, 0, 0.75)',
-          position: 'relative',
-          padding: '6px 8px',
-          color: '#fff',
-          minWidth: 40,
-          borderRadius: 2,
-          transform: 'translate(-20%,-50%)'
-        }}
-        >
-          <div style={{
-            position: 'absolute',
-            right: 0,
-            top: '50%',
-            width: 0,
-            height: 0,
-            borderTop: '5px solid rgba(0, 0, 0, 0.75)',
-            borderRight: '5px solid transparent',
-            borderLeft: '5px solid transparent',
-            borderBottom: '5px solid transparent',
-            pointerEvents: 'none',
-            transform: 'translate(100%,-50%) rotate(-90deg)'
+        <div
+          style={{
+            opacity: Number(tooltip.visible),
+            backgroundColor: 'rgba(0, 0, 0, 0.75)',
+            position: 'relative',
+            padding: '6px 8px',
+            color: '#fff',
+            minWidth: 40,
+            borderRadius: 2,
+            transform: 'translate(-20%,-50%)',
           }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              right: 0,
+              top: '50%',
+              width: 0,
+              height: 0,
+              borderTop: '5px solid rgba(0, 0, 0, 0.75)',
+              borderRight: '5px solid transparent',
+              borderLeft: '5px solid transparent',
+              borderBottom: '5px solid transparent',
+              pointerEvents: 'none',
+              transform: 'translate(100%,-50%) rotate(-90deg)',
+            }}
           />
           {tooltipContent}
         </div>

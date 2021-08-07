@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { BlockType } from '@/constants';
+import { useDataTransfer } from '@/hooks/useDataTransfer';
 
 export type BlockAvatarWrapperProps = {
   type: BlockType | string;
@@ -11,20 +12,25 @@ export const BlockAvatarWrapper: React.FC<BlockAvatarWrapperProps> = (
   props
 ) => {
   const { type, children, payload, action = 'add' } = props;
+  const { setDataTransfer } = useDataTransfer();
 
   const onDragStart = useCallback(
     (ev: React.DragEvent) => {
-      ev.dataTransfer.setData('Text', type);
-      ev.dataTransfer.setData('Action', action);
-      if (payload) {
-        ev.dataTransfer.setData('Payload', JSON.stringify(payload));
-      }
+      setDataTransfer({
+        type: type as BlockType,
+        action,
+        payload,
+      });
     },
-    [action, payload, type]
+    [action, payload, setDataTransfer, type]
   );
 
+  const onDragEnd = useCallback(() => {
+    setDataTransfer(null);
+  }, [setDataTransfer]);
+
   return (
-    <div onDragStart={onDragStart} draggable>
+    <div onDragStart={onDragStart} onDragEnd={onDragEnd} draggable>
       {children}
     </div>
   );

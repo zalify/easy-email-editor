@@ -15,7 +15,7 @@ export interface IBlockData<
   K extends { [key: string]: any; } = any,
   T extends any = any
   > {
-  type: string;
+  type: BlockType;
   data: {
     value: T;
     hidden?: boolean;

@@ -1,3 +1,4 @@
+import { EditorPropsContext } from '@/components/Provider/PropsProvider';
 import { BlockType, BasicType } from '../constants';
 import { cloneDeep, debounce, get, set } from 'lodash';
 import { IBlockData } from '../typings';
@@ -20,6 +21,8 @@ export function useBlock() {
     useEditorContext();
 
   const { focusIdx, setFocusIdx } = useFocusIdx();
+
+  const { autoComplete } = useContext(EditorPropsContext);
 
   const focusBlock = get(values, focusIdx) as IBlockData | null;
 
@@ -58,55 +61,46 @@ export function useBlock() {
         const block = findBlockByType(type);
         const parentBlock = findBlockByType(parent.type);
 
-        if ([BasicType.COLUMN, BasicType.GROUP].includes(block.type)) {
-          if (parentBlock.type === BasicType.PAGE) {
-            child = createBlockItem(BasicType.WRAPPER, {
-              children: [
-                createBlockItem(BasicType.SECTION, {
-                  children: [child],
-                }),
-              ],
-            });
-            nextFocusIdx += '.children.[0].children.[0]';
-          } else if (parentBlock.type === BasicType.WRAPPER) {
-            child = createBlockItem(BasicType.SECTION, {
-              children: [child],
-            });
-            nextFocusIdx += '.children.[0]';
-          }
-        } else if (
-          [
-            BasicType.TEXT,
-            BasicType.IMAGE,
-            BasicType.SPACER,
-            BasicType.DIVIDER,
+        if (autoComplete) {
+          if ([BasicType.COLUMN, BasicType.GROUP].includes(block.type)) {
+            if (parentBlock.type === BasicType.PAGE) {
+              child = createBlockItem(BasicType.WRAPPER, {
+                children: [
+                  createBlockItem(BasicType.SECTION, {
+                    children: [child],
+                  }),
+                ],
+              });
+              nextFocusIdx += '.children.[0].children.[0]';
+            } else if (parentBlock.type === BasicType.WRAPPER) {
+              child = createBlockItem(BasicType.SECTION, {
+                children: [child],
+              });
+              nextFocusIdx += '.children.[0]';
+            }
+          } else if (
+            [
+              BasicType.TEXT,
+              BasicType.IMAGE,
+              BasicType.SPACER,
+              BasicType.DIVIDER,
 
-            BasicType.BUTTON,
-            BasicType.ACCORDION,
-            BasicType.CAROUSEL,
-            BasicType.NAVBAR,
-            BasicType.SOCIAL,
-          ].includes(block.type)
-        ) {
-          if (
-            parentBlock.type === BasicType.SECTION ||
-            parentBlock.type === BasicType.GROUP
+              BasicType.BUTTON,
+              BasicType.ACCORDION,
+              BasicType.CAROUSEL,
+              BasicType.NAVBAR,
+              BasicType.SOCIAL,
+            ].includes(block.type)
           ) {
-            child = createBlockItem(BasicType.COLUMN, {
-              children: [child],
-            });
-            nextFocusIdx += '.children.[0]';
-          } else if (parentBlock.type === BasicType.WRAPPER) {
-            child = createBlockItem(BasicType.SECTION, {
-              children: [
-                createBlockItem(BasicType.COLUMN, {
-                  children: [child],
-                }),
-              ],
-            });
-            nextFocusIdx += '.children.[0].children.[0]';
-          } else if (parentBlock.type === BasicType.PAGE) {
-            if (block.type === BasicType.DIVIDER) {
+            if (
+              parentBlock.type === BasicType.SECTION ||
+              parentBlock.type === BasicType.GROUP
+            ) {
+              child = createBlockItem(BasicType.COLUMN, {
+                children: [child],
+              });
+              nextFocusIdx += '.children.[0]';
+            } else if (parentBlock.type === BasicType.WRAPPER) {
               child = createBlockItem(BasicType.SECTION, {
                 children: [
                   createBlockItem(BasicType.COLUMN, {
@@ -115,16 +109,27 @@ export function useBlock() {
                 ],
               });
               nextFocusIdx += '.children.[0].children.[0]';
-            } else {
-              child = createBlockItem(BasicType.SECTION, {
-                children: [
-                  createBlockItem(BasicType.COLUMN, {
-                    children: [child],
-                  }),
-                ],
-              });
+            } else if (parentBlock.type === BasicType.PAGE) {
+              if (block.type === BasicType.DIVIDER) {
+                child = createBlockItem(BasicType.SECTION, {
+                  children: [
+                    createBlockItem(BasicType.COLUMN, {
+                      children: [child],
+                    }),
+                  ],
+                });
+                nextFocusIdx += '.children.[0].children.[0]';
+              } else {
+                child = createBlockItem(BasicType.SECTION, {
+                  children: [
+                    createBlockItem(BasicType.COLUMN, {
+                      children: [child],
+                    }),
+                  ],
+                });
 
-              nextFocusIdx += '.children.[0].children.[0]';
+                nextFocusIdx += '.children.[0].children.[0]';
+              }
             }
           }
         }
@@ -145,8 +150,7 @@ export function useBlock() {
         const fixedBlock = findBlockByType(child.type);
         if (!fixedBlock.validParentType.includes(parent.type as BasicType)) {
           message.warning(
-            `${block.type} cannot be used inside ${
-              parentBlock.type
+            `${block.type} cannot be used inside ${parentBlock.type
             }, only inside: ${block.validParentType.join(', ')}`
           );
           return formState;
@@ -154,12 +158,14 @@ export function useBlock() {
 
         parent.children.splice(positionIndex, 0, child);
         set(formState.values, parentIdx, { ...parent });
-
+        formState.values.content = {
+          ...formState.values.content
+        };
         return { ...formState };
       });
       setFocusIdx(nextFocusIdx);
     },
-    [focusIdx, setFocusIdx, setFormikState]
+    [autoComplete, focusIdx, setFocusIdx, setFormikState]
   );
 
   const moveBlock = useCallback(
@@ -189,8 +195,7 @@ export function useBlock() {
         ) {
           const parentBlock = findBlockByType(destinationParent.type);
           message.warning(
-            `${sourceBlock.name} cannot be used inside ${
-              parentBlock.name
+            `${sourceBlock.name} cannot be used inside ${parentBlock.name
             }, only inside: ${sourceBlock.validParentType.join(', ')}`
           );
           return formState;

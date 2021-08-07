@@ -9,13 +9,14 @@ import {
 } from '@/utils/block';
 import { cloneDeep, isEqual } from 'lodash';
 import { IPage } from '@/components/core/blocks/basic/Page';
-import { BLOCK_SELECTED_CLASSNAME } from '@/constants';
+import { BlockType, BLOCK_SELECTED_CLASSNAME } from '@/constants';
 import { findBlockNode } from '@/utils/findBlockNode';
 import { getEditNode } from '@/utils/getEditNode';
 import { IEmailTemplate } from '@/typings';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { getBlockNodes } from '@/utils/findBlockNodeByIdx';
 import { useDraggable } from '@/hooks/useDragable';
+import { useDataTransfer } from '@/hooks/useDataTransfer';
 
 export function MjmlDomRender() {
   const formikContext = useFormikContext<IEmailTemplate>();
@@ -23,6 +24,7 @@ export function MjmlDomRender() {
   const [ref, setRef] = useState<HTMLDivElement | null>(null);
   const { focusIdx } = useFocusIdx();
   const { dragEnabled } = useDraggable();
+  const { setDataTransfer } = useDataTransfer();
 
   useEffect(() => {
     if (!isEqual(formikContext.values.content, pageData)) {
@@ -58,14 +60,16 @@ export function MjmlDomRender() {
 
         const block = getValueByIdx(formikContext.values, idx);
         if (!block) return;
-        ev.dataTransfer?.setData('Text', block.type);
-        ev.dataTransfer?.setData('Action', 'move');
-        ev.dataTransfer?.setData('Payload', JSON.stringify(idx));
+        setDataTransfer({
+          type: block.type as BlockType,
+          action: 'move',
+          payload: idx,
+        });
       }
     };
 
     ref.addEventListener('dragstart', onDragstart);
-  }, [ref, html, formikContext.values]);
+  }, [ref, html, formikContext.values, setDataTransfer]);
 
   useEffect(() => {
     if (!ref) return;

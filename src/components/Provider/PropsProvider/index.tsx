@@ -17,9 +17,9 @@ export interface BlockGroup {
 
 export interface PropsProviderProps {
   extraBlocks?: BlockGroup[];
-  fontList?: { value: string; label: string; }[];
+  fontList?: { value: string; label: string }[];
   onAddCollection?: (payload: CollectedBlock) => void;
-  onRemoveCollection?: (payload: { id: string; }) => void;
+  onRemoveCollection?: (payload: { id: string }) => void;
   onUploadImage?: (data: Blob) => Promise<string>;
   interactiveStyle?: {
     hoverColor?: string;
@@ -27,6 +27,7 @@ export interface PropsProviderProps {
     dragoverColor?: string;
     tangentColor?: string;
   };
+  autoComplete?: boolean;
 }
 
 export const EditorPropsContext = React.createContext<PropsProviderProps>({
@@ -34,11 +35,11 @@ export const EditorPropsContext = React.createContext<PropsProviderProps>({
   fontList: [],
   onAddCollection: undefined,
   onRemoveCollection: undefined,
-  onUploadImage: undefined
+  onUploadImage: undefined,
+  autoComplete: false,
 });
 
 export const PropsProvider: React.FC<PropsProviderProps> = (props) => {
-
   return (
     <EditorPropsContext.Provider value={props}>
       {props.children}
