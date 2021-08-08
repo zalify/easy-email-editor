@@ -5,6 +5,7 @@ import path from 'path';
 export default defineConfig({
   resolve: {
     alias: {
+      '@example/components/Form': path.resolve(__dirname, './src/components/core/Form'),
       '@example': path.resolve('example'),
       '@': path.resolve(__dirname, './src'),
       'easy-email-editor/lib/style.css': path.resolve(__dirname, './src/index.tsx'), // 没有用的，只是防止css 404报错

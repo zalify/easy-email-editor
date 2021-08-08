@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   BoldOutlined,
   ItalicOutlined,
@@ -29,27 +29,16 @@ import { ColorPicker } from '../../../ColorPicker';
 import { FontFamily } from '../FontFamily';
 import { useContext } from 'react';
 import { SelectionRangeContext } from '@/components/Provider/SelectionRangeProvider';
+import { useSelectionRange } from '@/hooks/useSelectionRange';
 
 export interface TextToolbarProps {
   onChange: (content: string) => any;
   container: HTMLElement | null;
 }
 
-const restoreRange = (range: Range) => {
-
-  const selection = getShadowRoot().getSelection()!;
-  selection.removeAllRanges();
-  const newRange = document.createRange();
-  newRange.setStart(range.startContainer, range.startOffset);
-  newRange.setEnd(range.endContainer, range.endOffset);
-
-  selection.addRange(newRange);
-};
-
 export function TextToolbar(props: TextToolbarProps) {
-
   const { container } = props;
-  const { selectionRange: currentRange } = useContext(SelectionRangeContext);
+  const { selectionRange: currentRange, restoreRange } = useSelectionRange();
   const execCommand = (cmd: string, val?: any) => {
     if (!container) {
       console.error('No container');
@@ -59,7 +48,10 @@ export function TextToolbar(props: TextToolbarProps) {
       console.error('No currentRange');
       return;
     }
-    if (!container?.contains(currentRange?.commonAncestorContainer) && container !== currentRange?.commonAncestorContainer) {
+    if (
+      !container?.contains(currentRange?.commonAncestorContainer) &&
+      container !== currentRange?.commonAncestorContainer
+    ) {
       console.error('Not commonAncestorContainer');
       return;
     }
@@ -86,21 +78,18 @@ export function TextToolbar(props: TextToolbarProps) {
       }
       link.style.textDecoration = linkData.underline ? 'underline' : 'none';
       link.setAttribute('href', linkData.link);
-
     } else {
       document.execCommand(cmd, false, val);
-
     }
 
     const html = container.innerHTML;
     props.onChange(html);
-
   };
 
   const getMountNode = () => document.getElementById('TextToolbar')!;
 
   return (
-    <div id="TextToolbar">
+    <div id='TextToolbar'>
       <Stack vertical spacing='tight'>
         <Stack spacing='extraTight'>
           <Tooltip
@@ -112,7 +101,11 @@ export function TextToolbar(props: TextToolbarProps) {
           >
             <Button
               size='small'
-              icon={<TextStyle variation='strong'><strong>F</strong></TextStyle>}
+              icon={
+                <TextStyle variation='strong'>
+                  <strong>F</strong>
+                </TextStyle>
+              }
             />
           </Tooltip>
           <Tooltip
@@ -138,6 +131,10 @@ export function TextToolbar(props: TextToolbarProps) {
             label=''
             onChange={(color) => execCommand('foreColor', color)}
             getPopupContainer={getMountNode}
+            placement='left'
+            align={{
+              offset: [-170],
+            }}
           >
             <ToolItem icon={<FontColorsOutlined />} title='Text color' />
           </ColorPicker>
@@ -145,6 +142,10 @@ export function TextToolbar(props: TextToolbarProps) {
             label=''
             onChange={(color) => execCommand('hiliteColor', color)}
             getPopupContainer={getMountNode}
+            placement='left'
+            align={{
+              offset: [-170],
+            }}
           >
             <ToolItem icon={<BgColorsOutlined />} title='Background color' />
           </ColorPicker>

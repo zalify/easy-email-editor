@@ -15,7 +15,7 @@ import { InlineTextProps } from '../InlineTextField';
 import { TextToolbar } from './components/TextToolbar';
 
 export function RichTextField(
-  props: Omit<InlineTextProps, 'onChange'> & EnhancerProps
+  props: Omit<InlineTextProps, 'onChange'> & EnhancerProps<string>
 ) {
   const { activeTab } = useActiveTab();
   const isActive = activeTab === ActiveTabKeys.EDIT;
@@ -23,9 +23,6 @@ export function RichTextField(
   const [position, setPosition] = useState({ top: 0, left: 0 });
   const [isMove, setIsMove] = useState(false);
   const { idx } = props;
-
-  const { focusBlock } = useBlock();
-  const text = focusBlock?.data.value.content;
 
   const container = findBlockNodeByIdx(idx);
 
@@ -40,7 +37,7 @@ export function RichTextField(
     }
   }, [container]);
 
-  const onChange = useCallback(() => {}, []);
+  const onChange = useCallback(() => { }, []);
 
   const editorContainer = container && getEditNode(container);
 
@@ -63,7 +60,7 @@ export function RichTextField(
 
     return createPortal(
       <div
-        key={text}
+        key={idx}
         style={{
           position: 'fixed',
           ...position,
@@ -94,7 +91,7 @@ export function RichTextField(
       </div>,
       document.getElementById(FIXED_CONTAINER_ID) as HTMLDivElement
     );
-  }, [editorContainer, isActive, isMove, onChange, position, text]);
+  }, [editorContainer, isActive, isMove, onChange, position, idx]);
 
   return (
     <>

@@ -1,4 +1,5 @@
 export function getEditNode(node: HTMLElement) {
+  if (!node.classList) return null;
   if (node.classList.contains('node-type-text')) {
     return node.querySelector('div');
   }

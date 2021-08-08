@@ -1,4 +1,4 @@
-import { FieldArray } from 'formik';
+import { FieldArray } from 'react-final-form-arrays';
 import React from 'react';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import { TextField } from '.';
@@ -38,7 +38,7 @@ export function AddFont() {
                 <TextStyle variation="strong" size="large">Import font <Help title="Points to a hosted css file" /></TextStyle>
                 <Stack>
                   <Button size="small" icon={<PlusOutlined />}
-                    onClick={() => arrayHelpers.push({ name: '', href: '' })}
+                    onClick={() => arrayHelpers.fields.push({ name: '', href: '' })}
                   />
                 </Stack>
               </Stack>
@@ -55,7 +55,7 @@ export function AddFont() {
                         <Stack.Item fill>
                           <TextField validate={isUrl} inline name={`${focusIdx}.data.value.fonts.${index}.href`} label="Href" />
                         </Stack.Item>
-                        <Button icon={<DeleteOutlined />} onClick={() => arrayHelpers.remove(index)} />
+                        <Button icon={<DeleteOutlined />} onClick={() => arrayHelpers.fields.remove(index)} />
                       </Stack>
                     </div>
 

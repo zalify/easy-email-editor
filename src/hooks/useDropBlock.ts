@@ -12,11 +12,7 @@ import { BlockType, DRAG_HOVER_CLASSNAME } from '@/constants';
 import { useBlock } from '@/hooks/useBlock';
 import { getTangentDirection } from '@/utils/getTangentDirection';
 import { get } from 'lodash';
-import {
-  findBlockNodeByIdx,
-  getBlockNodes,
-  getShadowRoot,
-} from '@/utils/findBlockNodeByIdx';
+import { findBlockNodeByIdx, getBlockNodes } from '@/utils/findBlockNodeByIdx';
 import { useFocusIdx } from './useFocusIdx';
 import { useDataTransfer } from './useDataTransfer';
 import { useHoverIdx } from './useHoverIdx';

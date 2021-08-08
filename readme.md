@@ -65,13 +65,13 @@ Check out the live demo here: <a href="http://easy-email-m-ryan.vercel.app" targ
 ## Install
 
 ```sh
-$ npm install --save easy-email-editor antd formik mjml-browser
+$ npm install --save easy-email-editor antd mjml-browser
 ```
 
 or
 
 ```sh
-$ yarn add easy-email-editor antd formik mjml-browser
+$ yarn add easy-email-editor antd mjml-browser
 ```
 
 ## Usage
@@ -135,8 +135,8 @@ Please see <a href="https://github.com/m-Ryan/easy-email-demo" target="_blank" a
 | property              | Type                              | Description                                                                  |
 | -------------------------- | --------------------------------- | ---------------------------------------------------------------------------- |
 | data       | interface IEmailTemplate { content: IPage; subject: string; subTitle: string; }            | Source data |
-| children       |  (props: FormikProps<IEmailTemplate>) => React.ReactNode;           | ReactNode |
-| onSubmit       |  FormikConfig<IEmailTemplate>['onSubmit']           | Called when the commit is triggered manually  |
+| children       |  ( props: FormState<T>,helper: FormApi<IEmailTemplate, Partial<IEmailTemplate>>) => React.ReactNode| ReactNode |
+| onSubmit       |  Config<IEmailTemplate, Partial<IEmailTemplate>>['onSubmit'];           | Called when the commit is triggered manually  |
 | fontList       | { value: string; label: string; }[];            | Default font list. |
 | interactiveStyle  | { hoverColor?: string; selectedColor?: string; dragoverColor?: string; tangentColor?: string; } | Interactive prompt color          |
 | onUploadImage             | (data: Blob) => Promise<string>;                       | Triggered when an image is pasted or uploaded      |
