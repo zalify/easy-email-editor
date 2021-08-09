@@ -1,5 +1,5 @@
 import { IEmailTemplate } from '@/typings';
-import { useFormikContext } from 'formik';
+import { useForm, useFormState } from 'react-final-form';
 import { cloneDeep, isEqual } from 'lodash';
 import React, { useEffect, useMemo, useState } from 'react';
 
@@ -26,15 +26,16 @@ export const RecordContext = React.createContext<{
 });
 
 export const RecordProvider: React.FC<{}> = (props) => {
-  const formikContext = useFormikContext<IEmailTemplate>();
+  const formState = useFormState<IEmailTemplate>();
   const [data, setData] = useState<Array<IEmailTemplate>>([]);
   const [index, setIndex] = useState(-1);
   const [status, setStatus] = useState<RecordStatus>('add');
-  const [initialValues, setInitialValues] = useState<IEmailTemplate>(cloneDeep(formikContext.initialValues));
+  const [initialValues, setInitialValues] = useState<IEmailTemplate>(cloneDeep(formState.initialValues as IEmailTemplate));
+  const form = useForm();
 
   useEffect(() => {
-    setInitialValues(cloneDeep(formikContext.initialValues));
-  }, [formikContext.initialValues]);
+    setInitialValues(cloneDeep(formState.initialValues as IEmailTemplate));
+  }, [formState.initialValues]);
 
   const value = useMemo(() => {
     return {
@@ -44,38 +45,38 @@ export const RecordProvider: React.FC<{}> = (props) => {
         const nextIndex = Math.min(MAX_RECORD_SIZE - 1, index + 1);
         setIndex(nextIndex);
         setStatus('redo');
-        formikContext.setValues(data[nextIndex]);
+        form.reset(data[nextIndex]);
       },
       undo: () => {
         const prevIndex = Math.max(0, index - 1);
         setIndex(prevIndex);
         setStatus('undo');
-        formikContext.setValues(data[prevIndex]);
+        form.reset(data[prevIndex]);
       },
       reset: () => {
-        formikContext.resetForm({ values: initialValues });
+        form.reset({ values: initialValues });
       },
       undoable: index > 0,
       redoable: index < data.length - 1,
     };
-  }, [data, formikContext, index, initialValues, status]);
+  }, [data, form, index, initialValues, status]);
 
   useEffect(() => {
     const currentItem = data[index];
     const isChanged = !(
       currentItem &&
-      isEqual(formikContext.values.content, currentItem.content) &&
-      formikContext.values.subTitle === currentItem.subTitle &&
-      formikContext.values.subTitle === currentItem.subTitle
+      isEqual(formState.values.content, currentItem.content) &&
+      formState.values.subTitle === currentItem.subTitle &&
+      formState.values.subTitle === currentItem.subTitle
     );
 
     if (isChanged) {
       setStatus('add');
-      const newData = [...data, cloneDeep(formikContext.values)];
+      const newData = [...data, cloneDeep(formState.values)];
       setData(newData.slice(-MAX_RECORD_SIZE));
       setIndex(Math.max(Math.min(data.length, MAX_RECORD_SIZE - 1), 0));
     }
-  }, [data, formikContext, index]);
+  }, [data, formState, index]);
 
   return (
     <RecordContext.Provider value={value}>

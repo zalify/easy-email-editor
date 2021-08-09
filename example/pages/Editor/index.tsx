@@ -27,9 +27,9 @@ import {
 import 'easy-email-editor/lib/style.css';
 import { Stack } from '@example/components/Stack';
 import { customBlocks } from './components/CustomBlocks';
-import { FormikHelpers } from 'formik';
 import { USER_ID } from '@example/constants';
 import { pushEvent } from '@example/util/pushEvent';
+import { FormApi } from 'final-form';
 
 const fontList = [
   'Arial',
@@ -77,7 +77,7 @@ export default function Editor() {
   }, [dispatch, id, userId]);
 
   const onSubmit = useCallback(
-    async (values: IEmailTemplate, helper: FormikHelpers<IEmailTemplate>) => {
+    async (values: IEmailTemplate, form: FormApi<IEmailTemplate, Partial<IEmailTemplate>>) => {
       pushEvent({ name: 'Save' });
       if (id) {
         dispatch(
@@ -86,7 +86,7 @@ export default function Editor() {
             template: values,
             success() {
               message.success('Updated success!');
-              helper.resetForm({ touched: {}, values });
+              form.restart(values);
             },
           })
         );
@@ -96,7 +96,7 @@ export default function Editor() {
             template: values,
             success(id, newTemplate) {
               message.success('Saved success!');
-              helper.resetForm({ values: newTemplate });
+              form.restart(newTemplate);
               history.replace(`/editor?id=${id}`);
             },
           })
@@ -167,7 +167,7 @@ export default function Editor() {
         onSubmit={onSubmit}
         autoComplete
       >
-        {({ values, handleSubmit }) => {
+        {({ values }, { submit }) => {
           return (
             <>
               <PageHeader
@@ -184,7 +184,7 @@ export default function Editor() {
                     <Button
                       loading={isSubmitting}
                       type='primary'
-                      onClick={() => handleSubmit()}
+                      onClick={() => submit()}
                     >
                       Save
                     </Button>

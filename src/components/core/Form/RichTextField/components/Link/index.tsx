@@ -2,7 +2,7 @@
 import { Button, PopoverProps, Tooltip } from 'antd';
 import React, { useCallback, useMemo } from 'react';
 import { LinkOutlined } from '@ant-design/icons';
-import { Formik } from 'formik';
+import { Form } from 'react-final-form';
 import { Stack } from '@/components/UI/Stack';
 import { SearchField, SwitchField } from '@/components/core/Form';
 
@@ -90,7 +90,7 @@ export function Link(props: LinkProps) {
   );
 
   return (
-    <Formik
+    <Form
       key={initialValues.link}
       enableReinitialize
       validationSchema={schema}
@@ -139,6 +139,6 @@ export function Link(props: LinkProps) {
           </Tooltip>
         );
       }}
-    </Formik>
+    </Form>
   );
 }

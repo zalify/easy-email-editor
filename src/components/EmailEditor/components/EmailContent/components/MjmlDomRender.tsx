@@ -1,25 +1,25 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { transformToMjml } from '@/utils/transformToMjml';
 import mjml from 'mjml-browser';
-import { useFormikContext } from 'formik';
 import {
   getNodeIdxFromClassName,
+  getNodeTypeFromClassName,
   getPageIdx,
-  getValueByIdx,
 } from '@/utils/block';
 import { cloneDeep, isEqual } from 'lodash';
 import { IPage } from '@/components/core/blocks/basic/Page';
 import { BlockType, BLOCK_SELECTED_CLASSNAME } from '@/constants';
 import { findBlockNode } from '@/utils/findBlockNode';
-import { getEditNode } from '@/utils/getEditNode';
-import { IEmailTemplate } from '@/typings';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { getBlockNodes } from '@/utils/findBlockNodeByIdx';
 import { useDraggable } from '@/hooks/useDragable';
 import { useDataTransfer } from '@/hooks/useDataTransfer';
+import { useEditorContext } from '@/hooks/useEditorContext';
+import { HtmlStringToReactNodes } from '@/utils/HtmlStringToReactNodes';
+import { createPortal } from 'react-dom';
 
 export function MjmlDomRender() {
-  const formikContext = useFormikContext<IEmailTemplate>();
+  const { pageData: content } = useEditorContext();
   const [pageData, setPageData] = useState<IPage | null>(null);
   const [ref, setRef] = useState<HTMLDivElement | null>(null);
   const { focusIdx } = useFocusIdx();
@@ -27,14 +27,16 @@ export function MjmlDomRender() {
   const { setDataTransfer } = useDataTransfer();
 
   useEffect(() => {
-    if (!isEqual(formikContext.values.content, pageData)) {
-      setPageData(cloneDeep(formikContext.values.content));
+    if (!isEqual(content, pageData)) {
+      setPageData(cloneDeep(content));
     }
-  }, [formikContext, pageData]);
+  }, [content, pageData]);
 
   const html = useMemo(() => {
     if (!pageData) return '';
-    return mjml(transformToMjml(pageData, getPageIdx())).html;
+
+    const renderHtml = mjml(transformToMjml(pageData, getPageIdx())).html;
+    return renderHtml;
   }, [pageData]);
 
   useEffect(() => {
@@ -56,12 +58,10 @@ export function MjmlDomRender() {
 
       if (node) {
         const idx = getNodeIdxFromClassName(node.classList);
-        if (!idx) return;
-
-        const block = getValueByIdx(formikContext.values, idx);
-        if (!block) return;
+        const type = getNodeTypeFromClassName(node.classList) as BlockType;
+        if (!idx || !type) return;
         setDataTransfer({
-          type: block.type as BlockType,
+          type: type,
           action: 'move',
           payload: idx,
         });
@@ -69,17 +69,7 @@ export function MjmlDomRender() {
     };
 
     ref.addEventListener('dragstart', onDragstart);
-  }, [ref, html, formikContext.values, setDataTransfer]);
-
-  useEffect(() => {
-    if (!ref) return;
-    getBlockNodes().forEach((child) => {
-      const editNode = getEditNode(child as HTMLElement);
-      if (editNode) {
-        editNode.contentEditable = 'true';
-      }
-    });
-  }, [ref, html]);
+  }, [ref, html, setDataTransfer]);
 
   useEffect(() => {
     if (dragEnabled) {
@@ -95,11 +85,9 @@ export function MjmlDomRender() {
 
   return useMemo(() => {
     return (
-      <div
-        ref={setRef}
-        dangerouslySetInnerHTML={{ __html: html }}
-        style={{ height: '100%' }}
-      />
+      <div ref={setRef} style={{ height: '100%' }}>
+        {ref && createPortal(HtmlStringToReactNodes(html), ref)}
+      </div>
     );
-  }, [html]);
+  }, [html, ref]);
 }

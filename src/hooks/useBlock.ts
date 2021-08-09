@@ -1,7 +1,7 @@
 import { EditorPropsContext } from '@/components/Provider/PropsProvider';
 import { BlockType, BasicType } from '../constants';
 import { cloneDeep, debounce, get, set } from 'lodash';
-import { IBlockData } from '../typings';
+import { IBlockData, IEmailTemplate } from '../typings';
 import { useCallback, useContext } from 'react';
 import { message } from 'antd';
 import {
@@ -17,7 +17,7 @@ import { RecordContext } from '@/components/Provider/RecordProvider';
 import { useFocusIdx } from './useFocusIdx';
 
 export function useBlock() {
-  const { values, setValues, getFieldHelpers, setFormikState, handleChange } =
+  const { values, getState, change, batch } =
     useEditorContext();
 
   const { focusIdx, setFocusIdx } = useFocusIdx();
@@ -45,62 +45,72 @@ export function useBlock() {
     }) => {
       let { type, parentIdx, positionIndex, payload } = params;
       let nextFocusIdx = focusIdx;
-      setFormikState((formState) => {
-        const parent = get(formState.values, parentIdx) as IBlockData | null;
-        if (!parent) {
-          message.warning('Invalid block');
-          return formState;
-        }
+      const values = cloneDeep(getState().values) as IEmailTemplate;
+      const parent = get(values, parentIdx) as IBlockData | null;
+      if (!parent) {
+        message.warning('Invalid block');
+        return;
+      }
 
-        let child = createBlockItem(type, payload);
+      let child = createBlockItem(type, payload);
 
-        if (typeof positionIndex === 'undefined') {
-          positionIndex = parent.children.length;
-        }
-        nextFocusIdx = `${parentIdx}.children.[${positionIndex}]`;
-        const block = findBlockByType(type);
-        const parentBlock = findBlockByType(parent.type);
+      if (typeof positionIndex === 'undefined') {
+        positionIndex = parent.children.length;
+      }
+      nextFocusIdx = `${parentIdx}.children.[${positionIndex}]`;
+      const block = findBlockByType(type);
+      const parentBlock = findBlockByType(parent.type);
 
-        if (autoComplete) {
-          if ([BasicType.COLUMN, BasicType.GROUP].includes(block.type)) {
-            if (parentBlock.type === BasicType.PAGE) {
-              child = createBlockItem(BasicType.WRAPPER, {
-                children: [
-                  createBlockItem(BasicType.SECTION, {
-                    children: [child],
-                  }),
-                ],
-              });
-              nextFocusIdx += '.children.[0].children.[0]';
-            } else if (parentBlock.type === BasicType.WRAPPER) {
-              child = createBlockItem(BasicType.SECTION, {
-                children: [child],
-              });
-              nextFocusIdx += '.children.[0]';
-            }
-          } else if (
-            [
-              BasicType.TEXT,
-              BasicType.IMAGE,
-              BasicType.SPACER,
-              BasicType.DIVIDER,
+      if (autoComplete) {
+        if ([BasicType.COLUMN, BasicType.GROUP].includes(block.type)) {
+          if (parentBlock.type === BasicType.PAGE) {
+            child = createBlockItem(BasicType.WRAPPER, {
+              children: [
+                createBlockItem(BasicType.SECTION, {
+                  children: [child],
+                }),
+              ],
+            });
+            nextFocusIdx += '.children.[0].children.[0]';
+          } else if (parentBlock.type === BasicType.WRAPPER) {
+            child = createBlockItem(BasicType.SECTION, {
+              children: [child],
+            });
+            nextFocusIdx += '.children.[0]';
+          }
+        } else if (
+          [
+            BasicType.TEXT,
+            BasicType.IMAGE,
+            BasicType.SPACER,
+            BasicType.DIVIDER,
 
-              BasicType.BUTTON,
-              BasicType.ACCORDION,
-              BasicType.CAROUSEL,
-              BasicType.NAVBAR,
-              BasicType.SOCIAL,
-            ].includes(block.type)
+            BasicType.BUTTON,
+            BasicType.ACCORDION,
+            BasicType.CAROUSEL,
+            BasicType.NAVBAR,
+            BasicType.SOCIAL,
+          ].includes(block.type)
+        ) {
+          if (
+            parentBlock.type === BasicType.SECTION ||
+            parentBlock.type === BasicType.GROUP
           ) {
-            if (
-              parentBlock.type === BasicType.SECTION ||
-              parentBlock.type === BasicType.GROUP
-            ) {
-              child = createBlockItem(BasicType.COLUMN, {
-                children: [child],
-              });
-              nextFocusIdx += '.children.[0]';
-            } else if (parentBlock.type === BasicType.WRAPPER) {
+            child = createBlockItem(BasicType.COLUMN, {
+              children: [child],
+            });
+            nextFocusIdx += '.children.[0]';
+          } else if (parentBlock.type === BasicType.WRAPPER) {
+            child = createBlockItem(BasicType.SECTION, {
+              children: [
+                createBlockItem(BasicType.COLUMN, {
+                  children: [child],
+                }),
+              ],
+            });
+            nextFocusIdx += '.children.[0].children.[0]';
+          } else if (parentBlock.type === BasicType.PAGE) {
+            if (block.type === BasicType.DIVIDER) {
               child = createBlockItem(BasicType.SECTION, {
                 children: [
                   createBlockItem(BasicType.COLUMN, {
@@ -109,63 +119,51 @@ export function useBlock() {
                 ],
               });
               nextFocusIdx += '.children.[0].children.[0]';
-            } else if (parentBlock.type === BasicType.PAGE) {
-              if (block.type === BasicType.DIVIDER) {
-                child = createBlockItem(BasicType.SECTION, {
-                  children: [
-                    createBlockItem(BasicType.COLUMN, {
-                      children: [child],
-                    }),
-                  ],
-                });
-                nextFocusIdx += '.children.[0].children.[0]';
-              } else {
-                child = createBlockItem(BasicType.SECTION, {
-                  children: [
-                    createBlockItem(BasicType.COLUMN, {
-                      children: [child],
-                    }),
-                  ],
-                });
+            } else {
+              child = createBlockItem(BasicType.SECTION, {
+                children: [
+                  createBlockItem(BasicType.COLUMN, {
+                    children: [child],
+                  }),
+                ],
+              });
 
-                nextFocusIdx += '.children.[0].children.[0]';
-              }
+              nextFocusIdx += '.children.[0].children.[0]';
             }
           }
         }
+      }
 
-        // Replace
-        if (params.canReplace) {
-          const parentIndex = getIndexByIdx(parentIdx);
-          const upParent = getParentByIdx(formState.values, parentIdx);
-          if (upParent) {
-            upParent.children.splice(parentIndex, 1, child);
+      // Replace
+      if (params.canReplace) {
+        const parentIndex = getIndexByIdx(parentIdx);
+        const upParent = getParentByIdx(values, parentIdx);
+        if (upParent) {
+          upParent.children.splice(parentIndex, 1, child);
 
-            set(formState.values, getParentIdx(parentIdx)!, { ...upParent });
-
-            return { ...formState };
-          }
+          return change(getParentIdx(parentIdx)!, { ...upParent });
         }
+      }
 
-        const fixedBlock = findBlockByType(child.type);
-        if (!fixedBlock.validParentType.includes(parent.type as BasicType)) {
-          message.warning(
-            `${block.type} cannot be used inside ${parentBlock.type
-            }, only inside: ${block.validParentType.join(', ')}`
-          );
-          return formState;
-        }
+      const fixedBlock = findBlockByType(child.type);
+      if (!fixedBlock.validParentType.includes(parent.type)) {
+        message.warning(
+          `${block.type} cannot be used inside ${parentBlock.type
+          }, only inside: ${block.validParentType.join(', ')}`
+        );
+        return;
+      }
 
-        parent.children.splice(positionIndex, 0, child);
-        set(formState.values, parentIdx, { ...parent });
-        formState.values.content = {
-          ...formState.values.content
-        };
-        return { ...formState };
+      parent.children.splice(positionIndex, 0, child);
+      batch(() => {
+        change(parentIdx, { ...parent }); // listeners not notified
+        change('content', {
+          ...values.content
+        });
       });
       setFocusIdx(nextFocusIdx);
     },
-    [autoComplete, focusIdx, setFocusIdx, setFormikState]
+    [autoComplete, batch, change, focusIdx, getState, setFocusIdx]
   );
 
   const moveBlock = useCallback(
@@ -177,163 +175,163 @@ export function useBlock() {
       let { sourceIdx, destinationIdx, positionIndex } = params;
       if (sourceIdx === destinationIdx) return null;
       let nextFocusIdx = focusIdx;
-      setFormikState((formState) => {
-        const source = getValueByIdx(formState.values, sourceIdx)!;
-        const sourceParentIdx = getParentIdx(sourceIdx);
-        if (!sourceParentIdx) return formState;
-        const sourceParent = getValueByIdx(formState.values, sourceParentIdx)!;
-        const destinationParent = getValueByIdx(
-          formState.values,
-          destinationIdx
-        )!;
+      const values = cloneDeep(getState().values) as IEmailTemplate;
+      const source = getValueByIdx(values, sourceIdx)!;
+      const sourceParentIdx = getParentIdx(sourceIdx);
+      if (!sourceParentIdx) return;
+      const sourceParent = getValueByIdx(values, sourceParentIdx)!;
+      const destinationParent = getValueByIdx(
+        values,
+        destinationIdx
+      )!;
 
-        const sourceBlock = findBlockByType(source.type);
-        if (
-          !sourceBlock.validParentType.includes(
-            destinationParent.type as BasicType
-          )
-        ) {
-          const parentBlock = findBlockByType(destinationParent.type);
-          message.warning(
-            `${sourceBlock.name} cannot be used inside ${parentBlock.name
-            }, only inside: ${sourceBlock.validParentType.join(', ')}`
-          );
-          return formState;
+      const sourceBlock = findBlockByType(source.type);
+      if (
+        !sourceBlock.validParentType.includes(
+          destinationParent.type
+        )
+      ) {
+        const parentBlock = findBlockByType(destinationParent.type);
+        message.warning(
+          `${sourceBlock.name} cannot be used inside ${parentBlock.name
+          }, only inside: ${sourceBlock.validParentType.join(', ')}`
+        );
+        return;
+      }
+
+      if (sourceParent === destinationParent) {
+        const sourceIndex = getIndexByIdx(sourceIdx);
+        if (sourceIndex < positionIndex) {
+          positionIndex -= 1;
         }
+        const [removed] = sourceParent.children.splice(sourceIndex, 1);
+        destinationParent.children.splice(positionIndex, 0, removed);
+      } else {
+        sourceParent.children = sourceParent.children.filter(
+          (item) => item !== source
+        );
+        destinationParent.children.splice(positionIndex, 0, source);
+        batch(() => {
+          change(sourceParentIdx, { ...sourceParent });
+          change(destinationIdx, { ...destinationParent });
+        });
+      }
 
-        if (sourceParent === destinationParent) {
-          const sourceIndex = getIndexByIdx(sourceIdx);
-          if (sourceIndex < positionIndex) {
-            positionIndex -= 1;
-          }
-          const [removed] = sourceParent.children.splice(sourceIndex, 1);
-          destinationParent.children.splice(positionIndex, 0, removed);
-        } else {
-          sourceParent.children = sourceParent.children.filter(
-            (item) => item !== source
-          );
-          destinationParent.children.splice(positionIndex, 0, source);
-          set(formState.values, sourceParentIdx, { ...sourceParent });
-          set(formState.values, destinationIdx, { ...destinationParent });
-        }
-
-        nextFocusIdx = destinationIdx + `.children.[${positionIndex}]`;
-        return { ...formState };
-      });
+      nextFocusIdx = destinationIdx + `.children.[${positionIndex}]`;
       setFocusIdx(nextFocusIdx);
     },
-    [focusIdx, setFocusIdx, setFormikState]
+    [batch, change, focusIdx, getState, setFocusIdx]
   );
 
   const copyBlock = useCallback(
     (idx: string) => {
       let nextFocusIdx = focusIdx;
-      setFormikState((formState) => {
-        const parentIdx = getParentIdx(idx);
-        if (!parentIdx) return formState;
-        const parent = get(
-          formState.values,
-          getParentIdx(idx) || ''
-        ) as IBlockData | null;
-        if (!parent) {
-          message.warning('Invalid block');
-          return formState;
-        }
-        const copyBlock = cloneDeep(get(formState.values, idx));
-        const index = getIndexByIdx(idx) + 1;
+      const values = cloneDeep(getState().values) as IEmailTemplate;
 
-        parent.children.splice(index, 0, copyBlock);
-        set(formState.values, parentIdx, { ...parent });
-        nextFocusIdx = `${parentIdx}.children.[${index}]`;
-        return { ...formState };
-      });
+      const parentIdx = getParentIdx(idx);
+      if (!parentIdx) return;
+      const parent = get(
+        values,
+        getParentIdx(idx) || ''
+      ) as IBlockData | null;
+      if (!parent) {
+        message.warning('Invalid block');
+        return;
+      }
+      const copyBlock = cloneDeep(get(values, idx));
+      const index = getIndexByIdx(idx) + 1;
+
+      parent.children.splice(index, 0, copyBlock);
+      change(parentIdx, { ...parent });
+      nextFocusIdx = `${parentIdx}.children.[${index}]`;
+
       setFocusIdx(nextFocusIdx);
     },
-    [focusIdx, setFocusIdx, setFormikState]
+    [change, focusIdx, getState, setFocusIdx]
   );
 
   const removeBlock = useCallback(
     (idx: string) => {
       let nextFocusIdx = focusIdx;
-      setFormikState((formState) => {
-        const block = getValueByIdx(values, idx);
-        if (!block) {
-          message.warning('Invalid block');
-          return formState;
-        }
-        const parentIdx = getParentIdx(idx);
-        const parent = get(
-          formState.values,
-          getParentIdx(idx) || ''
-        ) as IBlockData | null;
-        const blockIndex = getIndexByIdx(idx);
-        if (!parentIdx || !parent) {
-          if (block.type === BasicType.PAGE) {
-            message.warning('Page node can not remove');
-            return formState;
-          }
-          message.warning('Invalid block');
-          return formState;
-        }
+      const values = cloneDeep(getState().values) as IEmailTemplate;
 
-        parent.children.splice(blockIndex, 1);
-        set(values, parentIdx, { ...parent });
-        nextFocusIdx = parentIdx;
-        return { ...formState };
-      });
+      const block = getValueByIdx(values, idx);
+      if (!block) {
+        message.warning('Invalid block');
+        return;
+      }
+      const parentIdx = getParentIdx(idx);
+      const parent = get(
+        values,
+        getParentIdx(idx) || ''
+      ) as IBlockData | null;
+      const blockIndex = getIndexByIdx(idx);
+      if (!parentIdx || !parent) {
+        if (block.type === BasicType.PAGE) {
+          message.warning('Page node can not remove');
+          return;
+        }
+        message.warning('Invalid block');
+        return;
+      }
+
+      parent.children.splice(blockIndex, 1);
+      change(parentIdx, { ...parent });
+      nextFocusIdx = parentIdx;
       setFocusIdx(nextFocusIdx);
     },
-    [focusIdx, setFocusIdx, setFormikState, values]
+    [change, focusIdx, getState, setFocusIdx]
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const setValueByIdx = useCallback(
     debounce(<T extends any>(idx: string, newVal: T) => {
-      getFieldHelpers(idx).setValue(newVal);
+      change(idx, newVal);
     }),
-    [getFieldHelpers]
+    [change]
   );
 
   const moveByIdx = useCallback(
     (sourceIdx: string, destinationIdx: string) => {
       let nextFocusIdx = focusIdx;
-      setFormikState((formState) => {
-        const sourceIndex = getIndexByIdx(sourceIdx);
-        const destinationIndex = getIndexByIdx(destinationIdx);
+      const values = cloneDeep(getState().values) as IEmailTemplate;
+      const sourceIndex = getIndexByIdx(sourceIdx);
+      const destinationIndex = getIndexByIdx(destinationIdx);
 
-        const sourceParentIdx = getParentIdx(sourceIdx);
-        const destinationParentIdx = getParentIdx(destinationIdx);
+      const sourceParentIdx = getParentIdx(sourceIdx);
+      const destinationParentIdx = getParentIdx(destinationIdx);
 
-        if (!sourceParentIdx || !destinationParentIdx) {
-          message.warning('Something error');
-          return formState;
-        }
+      if (!sourceParentIdx || !destinationParentIdx) {
+        message.warning('Something error');
+        return;
+      }
 
-        const sourceParent = get(
-          formState.values,
-          sourceParentIdx
-        ) as IBlockData;
+      const sourceParent = get(
+        values,
+        sourceParentIdx
+      ) as IBlockData;
 
-        const destinationParent = get(
-          formState.values,
-          sourceParentIdx
-        ) as IBlockData;
+      const destinationParent = get(
+        values,
+        sourceParentIdx
+      ) as IBlockData;
 
-        if (destinationIndex >= destinationParent.children.length) {
-          return formState;
-        }
+      if (destinationIndex >= destinationParent.children.length) {
+        return;
+      }
 
-        const [removed] = sourceParent.children.splice(Number(sourceIndex), 1);
-        destinationParent.children.splice(Number(destinationIndex), 0, removed);
+      const [removed] = sourceParent.children.splice(Number(sourceIndex), 1);
+      destinationParent.children.splice(Number(destinationIndex), 0, removed);
 
-        set(formState.values, sourceParentIdx, sourceParent);
-        set(formState.values, destinationParentIdx, destinationParent);
-        nextFocusIdx = destinationIdx;
-        return { ...formState };
+      batch(() => {
+        change(sourceParentIdx, sourceParent);
+        change(destinationParentIdx, destinationParent);
       });
+
+      nextFocusIdx = destinationIdx;
       setFocusIdx(nextFocusIdx);
     },
-    [focusIdx, setFocusIdx, setFormikState]
+    [batch, change, focusIdx, getState, setFocusIdx]
   );
 
   const isExistBlock = useCallback(
@@ -346,25 +344,19 @@ export function useBlock() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const setFocusBlock = useCallback(
     debounce((val) => {
-      setFormikState((formState) => {
-        set(formState, focusIdx, val);
-        return { ...formState };
-      });
+      change(focusIdx, val);
     }),
-    [focusBlock, focusIdx, setFormikState]
+    [focusBlock, focusIdx, change]
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const setFocusBlockValue = useCallback(
     debounce((val) => {
-      setFormikState((formState) => {
-        if (!focusBlock) return formState;
-        focusBlock.data.value = val;
-        set(formState, focusIdx, focusBlock);
-        return { ...formState };
-      });
+      if (!focusBlock) return;
+      focusBlock.data.value = val;
+      change(focusIdx, focusBlock);
     }),
-    [focusBlock, focusIdx, setFormikState]
+    [focusBlock, focusIdx]
   );
 
   return {
@@ -379,9 +371,6 @@ export function useBlock() {
     removeBlock,
     moveByIdx,
     isExistBlock,
-    setFormikState,
-    setValues,
-    handleChange,
     redo,
     undo,
     reset,

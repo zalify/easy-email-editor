@@ -24,7 +24,7 @@ import { useBlock } from '@/hooks/useBlock';
 import { BasicType } from '@/constants';
 import { EditorPropsContext } from '@/components/Provider/PropsProvider';
 import { Modal } from 'antd';
-import { Formik } from 'formik';
+import { Form } from 'react-final-form';
 import { v4 as uuidv4 } from 'uuid';
 import { TextAreaField, TextField } from '@/components/core/Form';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
@@ -61,9 +61,8 @@ export const BlockToolbar = () => {
                   <Tooltip
                     key={index}
                     placement='topLeft'
-                    title={`Select child node ${
-                      findBlockByType(item.type)?.name
-                    }`}
+                    title={`Select child node ${findBlockByType(item.type)?.name
+                      }`}
                   >
                     <BorderOuterOutlined
                       onClick={() =>
@@ -75,7 +74,7 @@ export const BlockToolbar = () => {
               })}
             </Stack>
           ),
-          method() {},
+          method() { },
         },
       ].filter(Boolean) as SideBarItem[];
     }
@@ -107,9 +106,8 @@ export const BlockToolbar = () => {
                 <Tooltip
                   key={index}
                   placement='topLeft'
-                  title={`Select child node ${
-                    findBlockByType(item.type)?.name
-                  }`}
+                  title={`Select child node ${findBlockByType(item.type)?.name
+                    }`}
                 >
                   <BorderOuterOutlined
                     onClick={() =>
@@ -121,7 +119,7 @@ export const BlockToolbar = () => {
             })}
           </Stack>
         ),
-        method() {},
+        method() { },
       },
       {
         icon: <ArrowUpOutlined />,
@@ -162,7 +160,7 @@ export const BlockToolbar = () => {
   }, [copyBlock, focusBlock, focusIdx, moveByIdx, removeBlock, setFocusIdx]);
 
   return useMemo(() => {
-    const onSubmit = (values: { label: string; helpText: string }) => {
+    const onSubmit = (values: { label: string; helpText: string; }) => {
       if (!values.label) return;
       const uuid = uuidv4();
       onAddCollection?.({
@@ -190,7 +188,7 @@ export const BlockToolbar = () => {
             </Tooltip>
           );
         })}
-        <Formik initialValues={{ label: '', helpText: '' }} onSubmit={onSubmit}>
+        <Form initialValues={{ label: '', helpText: '' }} onSubmit={onSubmit}>
           {({ handleSubmit }) => (
             <Modal
               zIndex={2000}
@@ -213,7 +211,7 @@ export const BlockToolbar = () => {
               </Stack>
             </Modal>
           )}
-        </Formik>
+        </Form>
       </Stack>
     );
   }, [block?.name, focusBlock, modalVisible, onAddCollection, sidebarList]);

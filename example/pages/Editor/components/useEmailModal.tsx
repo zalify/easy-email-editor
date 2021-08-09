@@ -5,7 +5,7 @@ import mjml from 'mjml-browser';
 import { useDispatch } from 'react-redux';
 import email from '@example/store/email';
 import * as Yup from 'yup';
-import { Formik } from 'formik';
+import { Form } from 'react-final-form';
 import { TextField } from '@example/components/Form';
 import { useLoading } from '@example/hooks/useLoading';
 import { useCallback } from 'react';
@@ -63,7 +63,7 @@ export function useEmailModal() {
 
   const modal = useMemo(() => {
     return (
-      <Formik
+      <Form
         validationSchema={schema}
         initialValues={{ toEmail: '' }}
         onSubmit={onSendEmail}
@@ -81,7 +81,7 @@ export function useEmailModal() {
             <TextField autoFocus name='toEmail' label='To email' />
           </Modal>
         )}
-      </Formik>
+      </Form>
     );
   }, [onSendEmail, visible, emailSendLoading]);
 

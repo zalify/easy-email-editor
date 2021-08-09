@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 import { useBlock } from '@/hooks/useBlock';
 import { BasicType } from '@/constants';
 import { BlocksMap } from '../../..';
+import { useCallback } from 'react';
 
 export function Panel() {
   const { focusIdx } = useFocusIdx();
@@ -17,37 +18,46 @@ export function Panel() {
 
   const noWrap = focusBlock?.data.value.noWrap;
 
-  useEffect(() => {
-    if (!focusBlock) return;
+  const changeNoWrap = useCallback(
+    (noWrap: boolean) => {
+      if (!focusBlock) return;
 
-    if (noWrap) {
-      const children = [...focusBlock.children];
-      for (let i = 0; i < children.length; i++) {
-        const child = children[i];
-        if (!child) continue;
-        if (child.type === BasicType.GROUP) {
-          children.splice(i, 1, ...child.children);
+      if (noWrap) {
+        const children = [...focusBlock.children];
+        for (let i = 0; i < children.length; i++) {
+          const child = children[i];
+          if (!child) continue;
+          if (child.type === BasicType.GROUP) {
+            children.splice(i, 1, ...child.children);
+          }
+        }
+        focusBlock.children = [
+          BlocksMap.basicBlocksMap.Group.createInstance({
+            children: children,
+          }),
+        ];
+      } else {
+        if (
+          focusBlock.children.length === 1 &&
+          focusBlock.children[0].type === BasicType.GROUP
+        ) {
+          focusBlock.children = focusBlock.children[0]?.children || [];
         }
       }
-      focusBlock.children = [
-        BlocksMap.basicBlocksMap.Group.createInstance({
-          children: children
-        })
-      ];
-    } else {
+      setFocusBlock({ ...focusBlock });
+    },
+    [focusBlock, setFocusBlock]
+  );
 
-      if (focusBlock.children.length === 1 && focusBlock.children[0].type === BasicType.GROUP) {
-        focusBlock.children = focusBlock.children[0]?.children || [];
-      }
-    }
-    setFocusBlock(focusBlock);
-
-  }, [focusBlock, noWrap, setFocusBlock]);
+  useEffect(() => {
+    changeNoWrap(noWrap);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [noWrap]);
 
   return (
     <Stack>
       <SwitchField
-        label="Prevent columns from stacking on mobile"
+        label='Prevent columns from stacking on mobile'
         name={`${focusIdx}.data.value.noWrap`}
         checkedChildren='True'
         unCheckedChildren='False'

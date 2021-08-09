@@ -30,6 +30,9 @@
       "easy-email-editor": [
         "src/index"
       ],
+      "@example/components/Form": [
+        "src/components/core/Form"
+      ],
       "@example": [
         "example"
       ],

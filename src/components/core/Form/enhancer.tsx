@@ -1,11 +1,11 @@
 import { TextStyle } from '@/components/UI/TextStyle';
 import { Form } from 'antd';
-import { Field, FieldProps, FormikProps, useField } from 'formik';
+import { FieldProps, useField, useForm } from 'react-final-form';
 import React, { useCallback, useMemo } from 'react';
 import { Stack, StackProps } from '../../UI/Stack';
 import styles from './index.module.scss';
 
-export interface EnhancerProps extends Partial<FieldProps> {
+export interface EnhancerProps<T> extends Partial<FieldProps<T, any>> {
   name: string;
   label: React.ReactNode;
   labelHidden?: boolean;
@@ -22,7 +22,7 @@ export interface EnhancerProps extends Partial<FieldProps> {
 
 let primaryId = 0;
 export default function enhancer<P>(Component: any, changeAdapter: (e: any) => any,) {
-  return (props: EnhancerProps & Omit<P, 'value' | 'onChange'>) => {
+  return (props: EnhancerProps<P> & Omit<P, 'value' | 'onChange'>) => {
 
     const { name,
       onChangeAdapter,
@@ -41,80 +41,62 @@ export default function enhancer<P>(Component: any, changeAdapter: (e: any) => a
     const id = useMemo(() => {
       return `enhancer-${primaryId++}`;
     }, []);
+    const { change } = useForm();
+    const { input: { value }, meta: { touched, error } } = useField(name);
 
-    return useMemo(() => {
+    const onFieldChange = useCallback((e: any) => {
+      const newVal = onChangeAdapter ?
+        onChangeAdapter(changeAdapter(e))
+        : changeAdapter(e);
+      change(name, newVal);
+    }, [change, name, onChangeAdapter]);
 
-      const onChange = (e: any, form: FormikProps<any>) => {
-        const newVal = onChangeAdapter ?
-          onChangeAdapter(changeAdapter(e))
-          : changeAdapter(e);
+    if (!wrapper) return (
+      <Component
+        {...rest}
+        id={id}
+        name={name}
+        checked={valueAdapter ? valueAdapter(value) : value}
+        value={valueAdapter ? valueAdapter(value) : value}
+        onChange={onFieldChange}
+      />
+    );
+    return (
+      <Form.Item
+        style={{ margin: 0 }}
+        validateStatus={touched && error ? 'error' : undefined}
+        help={touched && error}
+      >
+        <Stack vertical spacing='extraTight'>
+          <Stack spacing={inline ? undefined : 'extraTight'}
+            wrap={false}
+            vertical={!inline}
+            alignment={alignment ? alignment : (inline ? 'center' : undefined)}
+            distribution={distribution}
+          >
+            <Stack.Item>
+              <label className={labelHidden ? styles['label-hidden'] : undefined} htmlFor={id}>
 
-        form.setFieldValue(name, newVal, true);
-        setTimeout(() => {
-          form.setFieldTouched(name, true);
-        }, 0);
-      };
-
-      return (
-
-        <Field name={name} validate={validate}>
-          {({ field, meta: { error, touched, value }, form }: FieldProps) => {
-            if (typeof error !== 'string') {
-              error = undefined;
-            }
-
-            if (!wrapper) return (
+                <span style={{ whiteSpace: 'pre' }}>
+                  {required && <span style={{ color: '#ff4d4f' }}>*{' '}</span>}
+                  <TextStyle size="small">{label}</TextStyle>
+                </span>
+              </label>
+            </Stack.Item>
+            <Stack.Item fill={inline}>
               <Component
                 {...rest}
                 id={id}
                 name={name}
                 checked={valueAdapter ? valueAdapter(value) : value}
                 value={valueAdapter ? valueAdapter(value) : value}
-                onChange={(e) => onChange(e, form)}
+                onChange={onFieldChange}
               />
-            );
-            return (
-              <Form.Item
-                style={{ margin: 0 }}
-                validateStatus={touched && error ? 'error' : undefined}
-                help={touched && error}
-              >
-                <Stack vertical spacing='extraTight'>
-                  <Stack spacing={inline ? undefined : 'extraTight'}
-                    wrap={false}
-                    vertical={!inline}
-                    alignment={alignment ? alignment : (inline ? 'center' : undefined)}
-                    distribution={distribution}
-                  >
-                    <Stack.Item>
-                      <label className={labelHidden ? styles['label-hidden'] : undefined} htmlFor={id}>
-
-                        <span style={{ whiteSpace: 'pre' }}>
-                          {required && <span style={{ color: '#ff4d4f' }}>*{' '}</span>}
-                          <TextStyle size="small">{label}</TextStyle>
-                        </span>
-                      </label>
-                    </Stack.Item>
-                    <Stack.Item fill={inline}>
-                      <Component
-                        {...rest}
-                        id={id}
-                        name={name}
-                        checked={valueAdapter ? valueAdapter(value) : value}
-                        value={valueAdapter ? valueAdapter(value) : value}
-                        onChange={(e) => onChange(e, form)}
-                      />
-                    </Stack.Item>
-                  </Stack>
-                  <div className={styles.helperText}><small>{helpText}</small></div>
-                </Stack>
-              </Form.Item>
-            );
-          }}
-
-        </Field>
-      );
-    }, [alignment, distribution, helpText, id, inline, label, labelHidden, name, required, validate, wrapper, onChangeAdapter, rest, valueAdapter]);
-
+            </Stack.Item>
+          </Stack>
+          <div className={styles.helperText}><small>{helpText}</small></div>
+        </Stack>
+      </Form.Item>
+    );
   };
 }

@@ -1,11 +1,14 @@
 import { IEmailTemplate } from '@/typings';
-import { useFormikContext } from 'formik';
+import { useFormState, useForm } from 'react-final-form';
 
 export function useEditorContext() {
-  const formikContext = useFormikContext<IEmailTemplate>();
-  const { content } = formikContext.values;
+  const formState = useFormState<IEmailTemplate>();
+  const helpers = useForm();
+
+  const { content } = formState.values;
   return {
-    ...formikContext,
+    ...formState,
+    ...helpers,
     pageData: content,
   };
 }

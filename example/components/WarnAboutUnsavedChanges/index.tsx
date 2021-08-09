@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Prompt } from 'react-router-dom';
-import { useFormikContext } from 'formik';
+import { useFormState } from 'react-final-form';
 import { ConfirmBeforeLeavePage } from '../../util/ConfirmBeforeLeavePage';
 import { Modal } from 'antd';
 
 export function WarnAboutUnsavedChanges() {
-  const formik = useFormikContext<any>();
+  const formState = useFormState<any>();
   const callbackRef = useRef<null | ((isOk: boolean) => any)>(null);
   const [visible, setVisible] = useState(false);
-  const dirty = getIsFormTouched(formik.touched as any);
+  const dirty = getIsFormTouched(formState.touched as any);
 
   const openConfirmModal = useCallback(() => {
     setVisible(true);

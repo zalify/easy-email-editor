@@ -28,7 +28,7 @@ export function getNodeIdxFromClassName(classList: DOMTokenList) {
 
 export function getNodeTypeFromClassName(
   classList: DOMTokenList
-): string | BlockType | undefined {
+): BlockType | undefined {
   return Array.from(classList)
     .find((item) => item.includes('node-type-'))
     ?.replace('node-type-', '');

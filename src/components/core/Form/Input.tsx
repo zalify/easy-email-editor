@@ -28,7 +28,7 @@ export function Input(props: InputProps) {
 
       if (step) {
         if (/^\d+/.test(value)) {
-          onChange(value.replace(/^(\d+)/, (_, match) => {
+          onChange(String(value).replace(/^(\d+)/, (_, match) => {
             return (Number(match) + step).toString();
           }));
         }
