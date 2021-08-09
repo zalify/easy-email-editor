@@ -95,7 +95,7 @@ export function RichTextField(
 
   return (
     <>
-      <InlineTextField key={idx} {...props} />
+      <InlineTextField key={idx} {...props as any} />
       {editorContainer && textToolbar}
     </>
   );

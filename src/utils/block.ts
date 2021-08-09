@@ -28,10 +28,10 @@ export function getNodeIdxFromClassName(classList: DOMTokenList) {
 
 export function getNodeTypeFromClassName(
   classList: DOMTokenList
-): BlockType | undefined {
+): BlockType | null {
   return Array.from(classList)
     .find((item) => item.includes('node-type-'))
-    ?.replace('node-type-', '');
+    ?.replace('node-type-', '') as BlockType;
 }
 
 export function findBlockByType(type: BlockType): IBlock {
