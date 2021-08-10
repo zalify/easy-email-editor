@@ -1,15 +1,8 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
-    "types": [
-      "vite/client",
-      "node"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "types": ["vite/client", "node", "jest"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": false,
@@ -23,36 +16,17 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
-    // "declaration": true,
     "jsx": "react",
     "baseUrl": ".",
     "paths": {
-      "easy-email-editor": [
-        "src/index"
-      ],
-      "@example/components/Form": [
-        "src/components/core/Form"
-      ],
-      "@example": [
-        "example"
-      ],
-      "@example/*": [
-        "example/*"
-      ],
-      "@": [
-        "src"
-      ],
-      "@/*": [
-        "src/*"
-      ],
+      "easy-email-editor": ["src/index"],
+      "@example/components/Form": ["src/components/core/Form"],
+      "@example": ["example"],
+      "@example/*": ["example/*"],
+      "@": ["src"],
+      "@/*": ["src/*"]
     }
   },
-  "include": [
-    "./src",
-    "./example",
-    "./typings"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["./src", "./example", "./typings"],
+  "exclude": ["node_modules"]
 }

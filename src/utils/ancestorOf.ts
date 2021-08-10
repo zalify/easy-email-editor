@@ -11,7 +11,7 @@ export function ancestorOf(type: BlockType, targetType: BlockType): number {
 
   if ([BasicType.COLUMN, BasicType.GROUP].includes(type)) {
     if (targetType === BasicType.PAGE) {
-      return 3; // column => section => wrapper => page
+      return 2; // column => section  => page
     } else if (targetType === BasicType.WRAPPER) {
       return 2; // column => section => wrapper
     }
@@ -31,14 +31,11 @@ export function ancestorOf(type: BlockType, targetType: BlockType): number {
   ) {
     if (targetType === BasicType.SECTION || targetType === BasicType.GROUP) {
       return 2; // text => column => section|group
-    } else if (targetType === BasicType.WRAPPER) {
+    } else if (
+      targetType === BasicType.WRAPPER ||
+      targetType === BasicType.PAGE
+    ) {
       return 3; // text => column => section => wrapper
-    } else if (targetType === BasicType.PAGE) {
-      if (type === BasicType.DIVIDER) {
-        return 3; // divider => column => section => page, 不需要 wrapper
-      } else {
-        return 4; // text => column => section => wrapper => page
-      }
     }
   }
   return level;

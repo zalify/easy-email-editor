@@ -48,28 +48,28 @@ const basicBlocks = {
 
 export class BlocksMap {
   static basicBlocksMap = basicBlocks;
-  static externalBlocksMap: { [key: string]: IBlock; } = {};
+  static externalBlocksMap: { [key: string]: IBlock } = {};
 
-  static get getBlocks() {
+  static getBlocks() {
     return [
       ...Object.values(this.basicBlocksMap),
       ...Object.values(this.externalBlocksMap),
     ];
   }
 
-  static registerBlocks(blocksMap: { [key: string]: IBlock; }) {
+  static registerBlocks(blocksMap: { [key: string]: IBlock }) {
     Object.assign(this.externalBlocksMap, blocksMap);
   }
 
   static findBlockByType(type: string): IBlock {
-    return this.getBlocks.find((child) => {
+    return this.getBlocks().find((child) => {
       return child?.type === type;
     }) as any;
   }
 
   static findBlocksByType(types: Array<BlockType>): IBlock[] {
     return types.map((item) => {
-      const block = this.getBlocks.find((child) => {
+      const block = this.getBlocks().find((child) => {
         return child.type === item;
       });
       if (!block) {
@@ -80,7 +80,7 @@ export class BlocksMap {
   }
 
   static getBlock<
-    E extends { [key: string]: IBlock; },
+    E extends { [key: string]: IBlock },
     B extends typeof BlocksMap.basicBlocksMap,
     A extends B & E,
     T extends keyof A

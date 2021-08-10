@@ -17,8 +17,7 @@ import { RecordContext } from '@/components/Provider/RecordProvider';
 import { useFocusIdx } from './useFocusIdx';
 
 export function useBlock() {
-  const { values, getState, change, batch } =
-    useEditorContext();
+  const { values, getState, change, batch } = useEditorContext();
 
   const { focusIdx, setFocusIdx } = useFocusIdx();
 
@@ -110,26 +109,14 @@ export function useBlock() {
             });
             nextFocusIdx += '.children.[0].children.[0]';
           } else if (parentBlock.type === BasicType.PAGE) {
-            if (block.type === BasicType.DIVIDER) {
-              child = createBlockItem(BasicType.SECTION, {
-                children: [
-                  createBlockItem(BasicType.COLUMN, {
-                    children: [child],
-                  }),
-                ],
-              });
-              nextFocusIdx += '.children.[0].children.[0]';
-            } else {
-              child = createBlockItem(BasicType.SECTION, {
-                children: [
-                  createBlockItem(BasicType.COLUMN, {
-                    children: [child],
-                  }),
-                ],
-              });
-
-              nextFocusIdx += '.children.[0].children.[0]';
-            }
+            child = createBlockItem(BasicType.SECTION, {
+              children: [
+                createBlockItem(BasicType.COLUMN, {
+                  children: [child],
+                }),
+              ],
+            });
+            nextFocusIdx += '.children.[0].children.[0]';
           }
         }
       }
@@ -148,7 +135,8 @@ export function useBlock() {
       const fixedBlock = findBlockByType(child.type);
       if (!fixedBlock.validParentType.includes(parent.type)) {
         message.warning(
-          `${block.type} cannot be used inside ${parentBlock.type
+          `${block.type} cannot be used inside ${
+            parentBlock.type
           }, only inside: ${block.validParentType.join(', ')}`
         );
         return;
@@ -158,7 +146,7 @@ export function useBlock() {
       batch(() => {
         change(parentIdx, { ...parent }); // listeners not notified
         change('content', {
-          ...values.content
+          ...values.content,
         });
       });
       setFocusIdx(nextFocusIdx);
@@ -180,20 +168,14 @@ export function useBlock() {
       const sourceParentIdx = getParentIdx(sourceIdx);
       if (!sourceParentIdx) return;
       const sourceParent = getValueByIdx(values, sourceParentIdx)!;
-      const destinationParent = getValueByIdx(
-        values,
-        destinationIdx
-      )!;
+      const destinationParent = getValueByIdx(values, destinationIdx)!;
 
       const sourceBlock = findBlockByType(source.type);
-      if (
-        !sourceBlock.validParentType.includes(
-          destinationParent.type
-        )
-      ) {
+      if (!sourceBlock.validParentType.includes(destinationParent.type)) {
         const parentBlock = findBlockByType(destinationParent.type);
         message.warning(
-          `${sourceBlock.name} cannot be used inside ${parentBlock.name
+          `${sourceBlock.name} cannot be used inside ${
+            parentBlock.name
           }, only inside: ${sourceBlock.validParentType.join(', ')}`
         );
         return;
@@ -230,10 +212,7 @@ export function useBlock() {
 
       const parentIdx = getParentIdx(idx);
       if (!parentIdx) return;
-      const parent = get(
-        values,
-        getParentIdx(idx) || ''
-      ) as IBlockData | null;
+      const parent = get(values, getParentIdx(idx) || '') as IBlockData | null;
       if (!parent) {
         message.warning('Invalid block');
         return;
@@ -261,10 +240,7 @@ export function useBlock() {
         return;
       }
       const parentIdx = getParentIdx(idx);
-      const parent = get(
-        values,
-        getParentIdx(idx) || ''
-      ) as IBlockData | null;
+      const parent = get(values, getParentIdx(idx) || '') as IBlockData | null;
       const blockIndex = getIndexByIdx(idx);
       if (!parentIdx || !parent) {
         if (block.type === BasicType.PAGE) {
@@ -306,15 +282,9 @@ export function useBlock() {
         return;
       }
 
-      const sourceParent = get(
-        values,
-        sourceParentIdx
-      ) as IBlockData;
+      const sourceParent = get(values, sourceParentIdx) as IBlockData;
 
-      const destinationParent = get(
-        values,
-        sourceParentIdx
-      ) as IBlockData;
+      const destinationParent = get(values, sourceParentIdx) as IBlockData;
 
       if (destinationIndex >= destinationParent.children.length) {
         return;

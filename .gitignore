@@ -5,3 +5,5 @@ dist
 .history
 yarn-error.log
 lib
+
+coverage
