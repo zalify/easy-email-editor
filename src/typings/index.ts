@@ -8,13 +8,17 @@ export interface IBlock<T extends IBlockData = IBlockData> {
   Panel: () => React.ReactNode;
   createInstance: (payload?: RecursivePartial<T>) => T;
   validParentType: BlockType[];
-  transform?: (data: IBlockData, idx?: string) => IBlockData;
+  transform?: (
+    data: IBlockData,
+    idx: string | null,
+    context: IPage
+  ) => IBlockData;
 }
 
 export interface IBlockData<
-  K extends { [key: string]: any; } = any,
+  K extends { [key: string]: any } = any,
   T extends any = any
-  > {
+> {
   type: BlockType;
   data: {
     value: T;
@@ -36,8 +40,9 @@ export interface CreateInstance<T extends any = any> {
 }
 
 export type RecursivePartial<T> = {
-  [P in keyof T]?:
-  T[P] extends (infer U)[] ? RecursivePartial<U>[] :
-  T[P] extends object ? RecursivePartial<T[P]> :
-  T[P];
+  [P in keyof T]?: T[P] extends (infer U)[]
+    ? RecursivePartial<U>[]
+    : T[P] extends object
+    ? RecursivePartial<T[P]>
+    : T[P];
 };

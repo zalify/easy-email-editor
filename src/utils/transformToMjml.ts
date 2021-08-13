@@ -13,8 +13,14 @@ import {
 } from './block';
 import { classnames } from './classnames';
 
-export function transformToMjml(data: IBlockData, idx?: string): string {
+export function transformToMjml(
+  data: IBlockData,
+  idx: string | null = 'content', // default Page block idx
+  context?: IBlockData
+): string {
   if (data?.data?.hidden) return '';
+  if (idx === undefined) idx = 'content';
+  if (context === undefined) context = data; // context is Page block
 
   const att = pickBy(
     {
@@ -24,6 +30,7 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
   );
 
   const isTest = !!idx;
+  const placeholder = isTest ? renderPlaceholder(data.type) : '';
   if (isTest) {
     att['css-class'] = classnames(
       att['css-class'],
@@ -46,24 +53,26 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
   }
 
   if (block.transform) {
-    const transformData = block.transform(data, idx);
+    const transformData = block.transform(data, idx!, context);
     att['css-class'] = classnames(att['css-class'], transformData['css-class']);
-    return transformToMjml({
-      ...transformData,
-      attributes: {
-        ...transformData.attributes,
-        'css-class': att['css-class'],
+    return transformToMjml(
+      {
+        ...transformData,
+        attributes: {
+          ...transformData.attributes,
+          'css-class': att['css-class'],
+        },
       },
-    });
+      data.children.length > 0 ? idx : null,
+      context
+    );
   }
 
   const children = data.children
     .map((child, index) =>
-      transformToMjml(child, idx ? getChildIdx(idx, index) : undefined)
+      transformToMjml(child, idx ? getChildIdx(idx, index) : null, context)
     )
     .join('\n');
-
-  const placeholder = isTest ? renderPlaceholder(data.type) : '';
 
   switch (data.type) {
     case BasicType.PAGE:
@@ -95,6 +104,9 @@ export function transformToMjml(data: IBlockData, idx?: string): string {
                     `<mj-font name="${item.name}" href="${item.href}" />`
                 )}
             </mj-attributes>
+            <mj-style>
+                ${value.headStyle || ''}
+            </mj-style>
           </mj-head>
           <mj-body ${attributeStr}>
             ${children}

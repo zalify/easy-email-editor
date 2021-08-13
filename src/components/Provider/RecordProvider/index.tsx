@@ -18,9 +18,9 @@ export const RecordContext = React.createContext<{
 }>({
   status: 'add',
   records: [],
-  redo: () => { },
-  undo: () => { },
-  reset: () => { },
+  redo: () => {},
+  undo: () => {},
+  reset: () => {},
   redoable: false,
   undoable: false,
 });
@@ -30,12 +30,8 @@ export const RecordProvider: React.FC<{}> = (props) => {
   const [data, setData] = useState<Array<IEmailTemplate>>([]);
   const [index, setIndex] = useState(-1);
   const [status, setStatus] = useState<RecordStatus>('add');
-  const [initialValues, setInitialValues] = useState<IEmailTemplate>(cloneDeep(formState.initialValues as IEmailTemplate));
-  const form = useForm();
 
-  useEffect(() => {
-    setInitialValues(cloneDeep(formState.initialValues as IEmailTemplate));
-  }, [formState.initialValues]);
+  const form = useForm();
 
   const value = useMemo(() => {
     return {
@@ -54,12 +50,12 @@ export const RecordProvider: React.FC<{}> = (props) => {
         form.reset(data[prevIndex]);
       },
       reset: () => {
-        form.reset({ values: initialValues });
+        form.reset();
       },
       undoable: index > 0,
       redoable: index < data.length - 1,
     };
-  }, [data, form, index, initialValues, status]);
+  }, [data, form, index, status]);
 
   useEffect(() => {
     const currentItem = data[index];

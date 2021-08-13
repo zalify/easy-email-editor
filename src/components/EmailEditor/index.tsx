@@ -81,12 +81,12 @@ export const EmailEditor = (props: EmailEditorProps) => {
                 tabBarExtraContent={<ToolsPanel />}
               >
                 <TabPane
-                  tab={(
+                  tab={
                     <Stack spacing='none'>
                       <EditOutlined />
                       <TextStyle>Edit</TextStyle>
                     </Stack>
-                  )}
+                  }
                   key={ActiveTabKeys.EDIT}
                   style={{
                     backgroundColor: 'transparent',
@@ -108,12 +108,12 @@ export const EmailEditor = (props: EmailEditorProps) => {
                   </ShadowDom>
                 </TabPane>
                 <TabPane
-                  tab={(
+                  tab={
                     <Stack spacing='none'>
                       <DesktopOutlined />
                       <TextStyle>Preview</TextStyle>
                     </Stack>
-                  )}
+                  }
                   key={ActiveTabKeys.PC}
                   style={{ backgroundColor: 'transparent' }}
                 >
@@ -135,19 +135,19 @@ export const EmailEditor = (props: EmailEditorProps) => {
                   </div>
                 </TabPane>
                 <TabPane
-                  tab={(
+                  tab={
                     <Stack spacing='none'>
                       <TabletOutlined />
                       <TextStyle>Preview</TextStyle>
                     </Stack>
-                  )}
+                  }
                   key={ActiveTabKeys.MOBILE}
                   style={{ backgroundColor: 'transparent' }}
                 >
                   <div
                     style={{
-                      width: pageMinWidth,
-                      padding: 40,
+                      width: 320,
+                      padding: '40px 0px',
                       margin: 'auto',
                       height: '100%',
                     }}
@@ -160,7 +160,7 @@ export const EmailEditor = (props: EmailEditorProps) => {
                     >
                       <style>
                         {`
-                        body::-webkit-scrollbar {
+                        body *::-webkit-scrollbar {
                           width: 0px;
                           background-color: transparent;
                         }

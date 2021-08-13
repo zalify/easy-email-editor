@@ -12,26 +12,47 @@ export function MjmlToJson(data: MjmlBlockItem): IPage {
         const body = item.children?.find((item) => item.tagName === 'mj-body')!;
         const head = item.children?.find((item) => item.tagName === 'mj-head');
 
-        const fonts = head?.children?.filter(child => child.tagName === 'mj-font').map(child => ({ name: child.attributes.name, href: child.attributes.href })) || [];
+        const fonts =
+          head?.children
+            ?.filter((child) => child.tagName === 'mj-font')
+            .map((child) => ({
+              name: child.attributes.name,
+              href: child.attributes.href,
+            })) || [];
         let allFontFamily = '';
         let allTextColor = '';
-        const mjAllAttributes = head?.children?.find(item => item.tagName === 'mj-attributes')?.children?.filter(item => {
-          if (item.tagName === 'mj-all') {
-            if (item.attributes['font-family']) {
-              allFontFamily = item.attributes['font-family'];
-              if (Object.keys(item.attributes).length === 1) return false; // Avoid redundancy
-            }
-          }
-          if (item.tagName === 'mj-text') {
-            if (item.attributes['color']) {
-              allTextColor = item.attributes['color'];
-              if (Object.keys(item.attributes).length === 1) return false;  // Avoid redundancy
-            }
-          }
-          return true;
-        }) || [];
+        const mjAllAttributes =
+          head?.children
+            ?.find((item) => item.tagName === 'mj-attributes')
+            ?.children?.filter((item) => {
+              if (item.tagName === 'mj-all') {
+                if (item.attributes['font-family']) {
+                  allFontFamily = item.attributes['font-family'];
+                  if (Object.keys(item.attributes).length === 1) return false; // Avoid redundancy
+                }
+              }
+              if (item.tagName === 'mj-text') {
+                if (item.attributes['color']) {
+                  allTextColor = item.attributes['color'];
+                  if (Object.keys(item.attributes).length === 1) return false; // Avoid redundancy
+                }
+              }
+              return true;
+            }) || [];
 
-        const headAttributes = mjAllAttributes.map(item => `<${item.tagName} ${Object.keys(item.attributes).map((key) => `${key}="${item.attributes[key]}"`).join(' ')} />`).join('\n');
+        const headStyle = head?.children
+          ?.filter((item) => item.tagName === 'mj-style')
+          .map((item) => item.content)
+          .join('\n');
+
+        const headAttributes = mjAllAttributes
+          .map(
+            (item) =>
+              `<${item.tagName} ${Object.keys(item.attributes)
+                .map((key) => `${key}="${item.attributes[key]}"`)
+                .join(' ')} />`
+          )
+          .join('\n');
 
         return Page.createInstance({
           attributes: body.attributes,
@@ -39,11 +60,12 @@ export function MjmlToJson(data: MjmlBlockItem): IPage {
           data: {
             value: {
               headAttributes: headAttributes,
+              headStyle: headStyle,
               'font-family': allFontFamily,
               'text-color': allTextColor,
-              fonts
-            }
-          }
+              fonts,
+            },
+          },
         });
 
       default:
