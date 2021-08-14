@@ -1,8 +1,7 @@
 import { ActiveTabKeys } from '@/components/Provider/BlocksProvider';
 import { FIXED_CONTAINER_ID } from '@/constants';
 import { useActiveTab } from '@/hooks/useActiveTab';
-import { useBlock } from '@/hooks/useBlock';
-import { findBlockNodeByIdx, getEditorRoot } from '@/utils/findBlockNodeByIdx';
+import { findBlockNodeByIdx } from '@/utils/findBlockNodeByIdx';
 import { getEditNode } from '@/utils/getEditNode';
 import { onDrag } from '@/utils/onDrag';
 import React, { useCallback, useMemo } from 'react';

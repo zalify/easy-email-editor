@@ -7,7 +7,11 @@ export async function emailToImage(content: IBlockData) {
   const container = document.createElement('div');
   container.style.position = 'absolute';
   container.style.left = '-9999px';
-  container.innerHTML = mjml(transformToMjml(content), {
+  container.innerHTML = mjml(transformToMjml({
+    data: content,
+    mode: 'production',
+    context: content
+  }), {
     beautify: true,
     validationLevel: 'soft',
   }).html;

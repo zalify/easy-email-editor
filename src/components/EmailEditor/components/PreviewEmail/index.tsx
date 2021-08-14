@@ -12,7 +12,11 @@ export function PreviewEmail(props: { scroll?: boolean; }) {
   const { activeTab } = useActiveTab();
   const [ref, setRef] = useState<HTMLDivElement | null>(null);
 
-  const html = mjml2Html(transformToMjml(pageData)).html;
+  const html = mjml2Html(transformToMjml({
+    data: pageData,
+    mode: 'production',
+    context: pageData,
+  })).html;
 
   useEffect(() => {
     if (!props.scroll) return;

@@ -13,14 +13,23 @@ import {
 } from './block';
 import { classnames } from './classnames';
 
-export function transformToMjml(
+export type TransformToMjmlOption = {
   data: IBlockData,
-  idx: string | null = 'content', // default Page block idx
-  context?: IBlockData
+  idx: string | null, // current idx for testing
+  context: IBlockData;
+  mode: 'testing';
+} | {
+  idx?: string | null;
+  data: IBlockData,
+  context: IBlockData;
+  mode: 'production';
+};
+
+export function transformToMjml(
+  options: TransformToMjmlOption
 ): string {
+  const { data, idx = 'content', context = data, mode = 'production' } = options;
   if (data?.data?.hidden) return '';
-  if (idx === undefined) idx = 'content';
-  if (context === undefined) context = data; // context is Page block
 
   const att = pickBy(
     {
@@ -29,16 +38,25 @@ export function transformToMjml(
     identity
   );
 
-  const isTest = !!idx;
+  const isTest = mode === 'testing';
   const placeholder = isTest ? renderPlaceholder(data.type) : '';
-  if (isTest) {
+
+  if (isTest && idx) {
     att['css-class'] = classnames(
       att['css-class'],
       'email-block',
-      getNodeIdxClassName(idx!),
+      getNodeIdxClassName(idx),
       getNodeTypeClassName(data.type)
     );
   }
+
+  if (data.type === BasicType.PAGE) {
+    att['css-class'] = classnames(
+      att['css-class'],
+      'mjml-body',
+    );
+  }
+
   const attributeStr = Object.keys(att)
     .filter((key) => att[key] !== '') // filter att=""
     .map((key) => `${key}="${att[key]}"`)
@@ -53,60 +71,78 @@ export function transformToMjml(
   }
 
   if (block.transform) {
-    const transformData = block.transform(data, idx!, context);
+    const transformData = block.transform(data, idx, context);
     att['css-class'] = classnames(att['css-class'], transformData['css-class']);
     return transformToMjml(
       {
-        ...transformData,
-        attributes: {
-          ...transformData.attributes,
-          'css-class': att['css-class'],
+        data: {
+          ...transformData,
+          attributes: {
+            ...transformData.attributes,
+            'css-class': att['css-class'],
+          },
         },
-      },
-      data.children.length > 0 ? idx : null,
-      context
+        idx: data.children.length > 0 ? idx : null,
+        context,
+        mode
+      }
+      ,
+
     );
   }
 
   const children = data.children
     .map((child, index) =>
-      transformToMjml(child, idx ? getChildIdx(idx, index) : null, context)
+      transformToMjml({
+        data: child,
+        idx: idx ? getChildIdx(idx, index) : null,
+        context,
+        mode
+      })
     )
     .join('\n');
 
   switch (data.type) {
     case BasicType.PAGE:
       const value: IPage['data']['value'] = data.data.value;
+
       const breakpoint = value.breakpoint
         ? `<mj-breakpoint width="${data.data.value.breakpoint}" />`
+        : '';
+
+      const nonResponsive = !value.responsive
+        ? `<mj-raw>
+            <!-- Non-responsive -->
+            <meta name="viewport" />
+           </mj-raw>
+           <mj-style inline="inline">.mjml-body { width: ${data.attributes.width || 600}px; margin: 0px auto; }</mj-style>`
         : '';
 
       return `
         <mjml>
           <mj-head>
+              ${nonResponsive}
+              <mj-style>
+                ${value.headStyle || ''}
+              </mj-style>
               ${breakpoint}
             <mj-attributes>
               ${value.headAttributes}
-              ${
-                value['font-family']
-                  ? `<mj-all font-family="${value['font-family']}" />`
-                  : ''
-              }
-              ${
-                value['text-color']
-                  ? `<mj-text color="${value['text-color']}" />`
-                  : ''
-              }
+              ${value['font-family']
+          ? `<mj-all font-family="${value['font-family']}" />`
+          : ''
+        }
+              ${value['text-color']
+          ? `<mj-text color="${value['text-color']}" />`
+          : ''
+        }
               ${value.fonts
-                ?.filter(Boolean)
-                .map(
-                  (item) =>
-                    `<mj-font name="${item.name}" href="${item.href}" />`
-                )}
+          ?.filter(Boolean)
+          .map(
+            (item) =>
+              `<mj-font name="${item.name}" href="${item.href}" />`
+          )}
             </mj-attributes>
-            <mj-style>
-                ${value.headStyle || ''}
-            </mj-style>
           </mj-head>
           <mj-body ${attributeStr}>
             ${children}
@@ -128,10 +164,9 @@ export function transformToMjml(
     case BasicType.WRAPPER:
       return `
               <mj-wrapper ${attributeStr}>
-               ${
-                 children ||
-                 `<mj-section><mj-column>${placeholder}</mj-column></mj-section>`
-               }
+               ${children ||
+        `<mj-section><mj-column>${placeholder}</mj-column></mj-section>`
+        }
               </mj-wrapper>
             `;
     case BasicType.CAROUSEL:

@@ -8,12 +8,14 @@ import mjml from 'mjml-browser';
 import { MjmlToJson } from '@/utils/MjmlToJson';
 import { TextStyle } from '@/components/UI/TextStyle';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
+import { useEditorContext } from '@/hooks/useEditorContext';
 
 export function SourceCodeManager() {
   const { setValueByIdx, focusBlock } = useBlock();
   const { focusIdx } = useFocusIdx();
   const isRoot = focusIdx === getPageIdx();
   const [mjmlText, setMjmlText] = useState('');
+  const { pageData } = useEditorContext();
 
   const code = useMemo(() => {
     if (!focusBlock) return '';
@@ -66,8 +68,12 @@ export function SourceCodeManager() {
   }, [isRoot]);
 
   useEffect(() => {
-    focusBlock && setMjmlText(transformToMjml(focusBlock));
-  }, [focusBlock]);
+    focusBlock && setMjmlText(transformToMjml({
+      data: focusBlock,
+      context: pageData,
+      mode: 'production'
+    }));
+  }, [focusBlock, pageData]);
 
   if (!focusBlock) return null;
 

@@ -54,6 +54,9 @@ export function MjmlToJson(data: MjmlBlockItem): IPage {
           )
           .join('\n');
 
+        const breakpoint = head?.children?.find((item) => item.tagName === 'mj-breakpoint');
+        const isResponsive = !Boolean(head?.children?.find((item) => item.tagName === 'mj-raw' && item.content?.includes('Non-responsive')));
+
         return Page.createInstance({
           attributes: body.attributes,
           children: body.children?.map(transform),
@@ -64,6 +67,8 @@ export function MjmlToJson(data: MjmlBlockItem): IPage {
               'font-family': allFontFamily,
               'text-color': allTextColor,
               fonts,
+              breakpoint: breakpoint?.attributes.breakpoint,
+              responsive: isResponsive
             },
           },
         });

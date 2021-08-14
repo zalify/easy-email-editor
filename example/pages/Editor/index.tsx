@@ -108,7 +108,11 @@ export default function Editor() {
 
   const onExportHtml = (values: IEmailTemplate) => {
     pushEvent({ name: 'ExportHtml' });
-    const html = mjml(transformToMjml(values.content), {
+    const html = mjml(transformToMjml({
+      data: values.content,
+      mode: 'production',
+      context: values.content,
+    }), {
       beautify: true,
       validationLevel: 'soft',
     }).html;

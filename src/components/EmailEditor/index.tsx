@@ -4,36 +4,33 @@ import {
   EditOutlined,
 } from '@ant-design/icons';
 import { Layout, Tabs } from 'antd';
-import React, { useMemo, useState } from 'react';
-import { IframeComponent } from '@/components/UI/IframeComponent';
+import React, { useMemo } from 'react';
 import { ConfigurationPanel } from './components/ConfigurationPanel';
 import { ComponentsPanel } from './components/ComponentsPanel';
-import { EmailContent } from './components/EmailContent';
-import { PreviewEmail } from './components/PreviewEmail';
 import { Stack } from '../UI/Stack';
 import { TextStyle } from '../UI/TextStyle';
 import { ToolsPanel } from './components/ToolsPanel';
 import './index.scss';
 import styles from './index.module.scss';
 import { useEditorContext } from '@/hooks/useEditorContext';
-import { ShadowDom } from '../UI/ShadowDom';
 import { createPortal } from 'react-dom';
 import { FIXED_CONTAINER_ID } from '@/constants';
 import { useActiveTab } from '@/hooks/useActiveTab';
 import { ActiveTabKeys } from '../Provider/BlocksProvider';
-
-const TabPane = Tabs.TabPane;
-
+import { DesktopEmailPreview } from './components/DesktopEmailPreview';
+import { MobileEmailPreview } from './components/MobileEmailPreview';
+import { EditEmailPreview } from './components/EditEmailPreview';
 export interface EmailEditorProps {
   height: string | number;
 }
+const TabPane = Tabs.TabPane;
+
 export const EmailEditor = (props: EmailEditorProps) => {
   const { height: containerHeight } = props;
   const { activeTab, setActiveTab } = useActiveTab();
   const { pageData } = useEditorContext();
 
-  const pageMaxWidth = pageData.attributes.width || '600px';
-  const pageMinWidth = '375px';
+  const backgroundColor = pageData.attributes['background-color'];
 
   const fixedContainer = useMemo(() => {
     return createPortal(<div id={FIXED_CONTAINER_ID} />, document.body);
@@ -66,7 +63,7 @@ export const EmailEditor = (props: EmailEditorProps) => {
             <div
               id='centerEditor'
               style={{
-                backgroundColor: pageData.attributes['background-color'],
+                backgroundColor: backgroundColor,
                 height: containerHeight,
               }}
             >
@@ -81,12 +78,12 @@ export const EmailEditor = (props: EmailEditorProps) => {
                 tabBarExtraContent={<ToolsPanel />}
               >
                 <TabPane
-                  tab={
+                  tab={(
                     <Stack spacing='none'>
                       <EditOutlined />
                       <TextStyle>Edit</TextStyle>
                     </Stack>
-                  }
+                  )}
                   key={ActiveTabKeys.EDIT}
                   style={{
                     backgroundColor: 'transparent',
@@ -95,80 +92,31 @@ export const EmailEditor = (props: EmailEditorProps) => {
                     height: '100%',
                   }}
                 >
-                  <ShadowDom
-                    id='VisualEditorEditMode'
-                    style={{
-                      width: pageMaxWidth,
-                      padding: '40px 0px',
-                      margin: 'auto',
-                      height: '100%',
-                    }}
-                  >
-                    <EmailContent />
-                  </ShadowDom>
+                  <EditEmailPreview />
                 </TabPane>
                 <TabPane
-                  tab={
+                  tab={(
                     <Stack spacing='none'>
                       <DesktopOutlined />
                       <TextStyle>Preview</TextStyle>
                     </Stack>
-                  }
+                  )}
                   key={ActiveTabKeys.PC}
                   style={{ backgroundColor: 'transparent' }}
                 >
-                  <div
-                    style={{
-                      width: pageMaxWidth,
-                      padding: '40px 0px',
-                      margin: 'auto',
-                      height: '100%',
-                    }}
-                  >
-                    <IframeComponent
-                      height='100%'
-                      width='100%'
-                      style={{ border: 'none', paddingTop: -16 }}
-                    >
-                      <PreviewEmail scroll />
-                    </IframeComponent>
-                  </div>
+                  <DesktopEmailPreview />
                 </TabPane>
                 <TabPane
-                  tab={
+                  tab={(
                     <Stack spacing='none'>
                       <TabletOutlined />
                       <TextStyle>Preview</TextStyle>
                     </Stack>
-                  }
+                  )}
                   key={ActiveTabKeys.MOBILE}
                   style={{ backgroundColor: 'transparent' }}
                 >
-                  <div
-                    style={{
-                      width: 320,
-                      padding: '40px 0px',
-                      margin: 'auto',
-                      height: '100%',
-                    }}
-                  >
-                    <IframeComponent
-                      height='100%'
-                      width='100%'
-                      style={{ paddingTop: -16 }}
-                      className={styles.app}
-                    >
-                      <style>
-                        {`
-                        body *::-webkit-scrollbar {
-                          width: 0px;
-                          background-color: transparent;
-                        }
-                      `}
-                      </style>
-                      <PreviewEmail />
-                    </IframeComponent>
-                  </div>
+                  <MobileEmailPreview />
                 </TabPane>
               </Tabs>
             </div>
@@ -192,13 +140,6 @@ export const EmailEditor = (props: EmailEditorProps) => {
         {fixedContainer}
       </Layout>
     ),
-    [
-      activeTab,
-      containerHeight,
-      fixedContainer,
-      pageData.attributes,
-      pageMaxWidth,
-      setActiveTab,
-    ]
+    [activeTab, backgroundColor, containerHeight, fixedContainer, setActiveTab]
   );
 };

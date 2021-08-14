@@ -6,7 +6,7 @@ import { BasicType } from '@/constants';
 export type IPage = IBlockData<
   {
     'background-color'?: string;
-    width?: string;
+    width: string;
   },
   {
     breakpoint?: string;
@@ -14,7 +14,8 @@ export type IPage = IBlockData<
     'text-color': string;
     headAttributes: string;
     headStyle?: string;
-    fonts?: { name: string; href: string }[];
+    responsive?: boolean;
+    fonts?: { name: string; href: string; }[];
   }
 >;
 

@@ -6,7 +6,6 @@ import { Border } from '@/components/EmailEditor/components/ConfigurationPanel/c
 import { Width } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Width';
 import { VerticalAlign } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/VerticalAlign';
 
-import { useFocusIdx } from '@/hooks/useFocusIdx';
 export function Panel() {
   return (
     <Stack>

@@ -41,15 +41,18 @@ export default function enhancer<P>(Component: any, changeAdapter: (e: any) => a
     const id = useMemo(() => {
       return `enhancer-${primaryId++}`;
     }, []);
-    const { change } = useForm();
-    const { input: { value }, meta: { touched, error } } = useField(name);
+    const { change, } = useForm();
+    const { input: { value, onBlur }, meta: { touched, error } } = useField(name, {
+      validate
+    });
 
     const onFieldChange = useCallback((e: any) => {
       const newVal = onChangeAdapter ?
         onChangeAdapter(changeAdapter(e))
         : changeAdapter(e);
       change(name, newVal);
-    }, [change, name, onChangeAdapter]);
+      onBlur();
+    }, [change, name, onBlur, onChangeAdapter]);
 
     if (!wrapper) return (
       <Component
@@ -61,6 +64,7 @@ export default function enhancer<P>(Component: any, changeAdapter: (e: any) => a
         onChange={onFieldChange}
       />
     );
+
     return (
       <Form.Item
         style={{ margin: 0 }}

@@ -35,7 +35,12 @@ export function MjmlDomRender() {
   const html = useMemo(() => {
     if (!pageData) return '';
 
-    const renderHtml = mjml(transformToMjml(pageData, getPageIdx())).html;
+    const renderHtml = mjml(transformToMjml({
+      data: pageData,
+      idx: getPageIdx(),
+      context: pageData,
+      mode: 'testing'
+    })).html;
     return renderHtml;
   }, [pageData]);
 

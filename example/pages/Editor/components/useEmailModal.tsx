@@ -28,9 +28,13 @@ export function useEmailModal() {
     async (values: { toEmail: string; }) => {
       if (!emailData) return null;
       pushEvent({ name: 'SendTestEmail' });
-      const html = mjml(transformToMjml(injectData(emailData.content)), {
-        beautify: false,
-        minify: true,
+      const content = injectData(emailData.content);
+      const html = mjml(transformToMjml({
+        data: content,
+        mode: 'production',
+        context: content
+      }), {
+        beautify: true,
         validationLevel: 'soft',
       }).html;
 

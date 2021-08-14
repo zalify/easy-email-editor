@@ -14,10 +14,12 @@ export const createInstance: CreateInstance<IPage> = (payload) => {
         'text-color': '#000000',
         headAttributes: '',
         fonts: [],
+        responsive: true
       },
     },
     attributes: {
       'background-color': '#efeeea',
+      width: '600px'
     },
     children: [Wrapper.createInstance()],
   };

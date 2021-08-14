@@ -1,6 +1,6 @@
 import React from 'react';
 import { Stack } from '@/components/UI/Stack';
-import { ColorPickerField, TextField } from '@/components/core/Form';
+import { ColorPickerField, SwitchField, TextAreaField, TextField } from '@/components/core/Form';
 import { Help } from '@/components/UI/Help';
 import { TextStyle } from '@/components/UI/TextStyle';
 import { AddFont } from '@/components/core/Form/AddFont';
@@ -16,7 +16,7 @@ export function Panel() {
       <Stack vertical>
         <TextField label='Subject' name={'subject'} inline />
         <TextField label='SubTitle' name={'subTitle'} inline />
-        <TextField label='Width' name={`${focusIdx}.attributes.width`} inline />
+        <TextField label='Width' type="number" name={`${focusIdx}.attributes.width`} inline />
         <Stack alignment='center'>
           <TextField
             label={(
@@ -30,6 +30,13 @@ export function Panel() {
             inline
           />
         </Stack>
+        <SwitchField
+          inline
+          label='Responsive'
+          name={`${focusIdx}.data.value.responsive`}
+          checkedChildren='True'
+          unCheckedChildren='False'
+        />
         <FontFamily />
         <ColorPickerField
           label='Text color'
