@@ -1,6 +1,7 @@
 import { IPage, Page } from '@/components/core/blocks/basic/Page';
 import { BasicType } from '@/constants';
 import { IBlockData } from '@/typings';
+import { identity, pickBy } from 'lodash';
 import { findBlockByType } from './block';
 
 export function MjmlToJson(data: MjmlBlockItem): IPage {
@@ -11,6 +12,7 @@ export function MjmlToJson(data: MjmlBlockItem): IPage {
       case 'mjml':
         const body = item.children?.find((item) => item.tagName === 'mj-body')!;
         const head = item.children?.find((item) => item.tagName === 'mj-head');
+        const metaData = getMetaDataFromMjml(head);
 
         const fonts =
           head?.children
@@ -19,43 +21,43 @@ export function MjmlToJson(data: MjmlBlockItem): IPage {
               name: child.attributes.name,
               href: child.attributes.href,
             })) || [];
-        let allFontFamily = '';
-        let allTextColor = '';
-        const mjAllAttributes =
-          head?.children
-            ?.find((item) => item.tagName === 'mj-attributes')
-            ?.children?.filter((item) => {
-              if (item.tagName === 'mj-all') {
-                if (item.attributes['font-family']) {
-                  allFontFamily = item.attributes['font-family'];
-                  if (Object.keys(item.attributes).length === 1) return false; // Avoid redundancy
-                }
-              }
-              if (item.tagName === 'mj-text') {
-                if (item.attributes['color']) {
-                  allTextColor = item.attributes['color'];
-                  if (Object.keys(item.attributes).length === 1) return false; // Avoid redundancy
-                }
-              }
-              return true;
-            }) || [];
 
-        const headStyle = head?.children
+        const mjAttributes =
+          head?.children?.find((item) => item.tagName === 'mj-attributes')
+            ?.children || [];
+
+        const headStyles = head?.children
           ?.filter((item) => item.tagName === 'mj-style')
-          .map((item) => item.content)
-          .join('\n');
+          .map((item) => ({ content: item.content, inline: item.inline }));
 
-        const headAttributes = mjAllAttributes
-          .map(
-            (item) =>
-              `<${item.tagName} ${Object.keys(item.attributes)
-                .map((key) => `${key}="${item.attributes[key]}"`)
-                .join(' ')} />`
-          )
-          .join('\n');
+        const headAttributes = [
+          ...new Set(
+            mjAttributes
+              .filter((item) => {
+                const isFontFamily =
+                  item.tagName === 'mj-all' &&
+                  item.attributes['font-family'] === metaData['font-family'];
+                const isTextColor =
+                  item.tagName === 'mj-text' &&
+                  item.attributes['color'] === metaData['text-color'];
+                const isContentColor =
+                  ['mj-wrapper', 'mj-section'].includes(item.tagName) &&
+                  item.attributes['background-color'] ===
+                    metaData['content-background-color'];
+                return !isFontFamily && !isTextColor && !isContentColor;
+              })
+              .map(
+                (item) =>
+                  `<${item.tagName} ${Object.keys(item.attributes)
+                    .map((key) => `${key}="${item.attributes[key]}"`)
+                    .join(' ')} />`
+              )
+          ),
+        ].join('\n');
 
-        const breakpoint = head?.children?.find((item) => item.tagName === 'mj-breakpoint');
-        const isResponsive = !Boolean(head?.children?.find((item) => item.tagName === 'mj-raw' && item.content?.includes('Non-responsive')));
+        const breakpoint = head?.children?.find(
+          (item) => item.tagName === 'mj-breakpoint'
+        );
 
         return Page.createInstance({
           attributes: body.attributes,
@@ -63,12 +65,10 @@ export function MjmlToJson(data: MjmlBlockItem): IPage {
           data: {
             value: {
               headAttributes: headAttributes,
-              headStyle: headStyle,
-              'font-family': allFontFamily,
-              'text-color': allTextColor,
+              headStyles: headStyles,
               fonts,
               breakpoint: breakpoint?.attributes.breakpoint,
-              responsive: isResponsive
+              ...metaData,
             },
           },
         });
@@ -126,4 +126,35 @@ export function MjmlToJson(data: MjmlBlockItem): IPage {
   };
 
   return transform(data);
+}
+
+export function getMetaDataFromMjml(data?: IChildrenItem): {
+  [key: string]: any;
+} {
+  const mjmlHtmlAttributes = data?.children
+    ?.filter((item) => item.tagName === 'mj-html-attributes')
+    .map((item) => item.children)
+    .flat()
+    .filter((item) => item && item.attributes.class === 'easy-email')
+    .reduce((obj: { [key: string]: any }, item) => {
+      if (!item) return obj;
+      const name = item.attributes['attribute-name'];
+      const isMultipleAttributes = Boolean(
+        item.attributes['multiple-attributes']
+      );
+      obj[name] = isMultipleAttributes
+        ? pickBy(
+            {
+              ...item.attributes,
+              'attribute-name': undefined,
+              'multiple-attributes': undefined,
+              class: undefined,
+            },
+            identity
+          )
+        : item.attributes[name];
+      return obj;
+    }, {});
+
+  return pickBy(mjmlHtmlAttributes, identity);
 }

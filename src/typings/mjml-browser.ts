@@ -34,6 +34,7 @@ interface IChildrenItem {
   children?: IChildrenItem[];
   attributes: IAttributes;
   content?: string;
+  inline?: 'inline';
 }
 interface IAttributes {
   [key: string]: any;

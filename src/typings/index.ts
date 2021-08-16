@@ -17,7 +17,7 @@ export interface IBlock<T extends IBlockData = IBlockData> {
 
 export interface IBlockData<
   K extends { [key: string]: any } = any,
-  T extends any = any
+  T extends { [key: string]: any } = any
 > {
   type: BlockType;
   data: {
@@ -25,7 +25,7 @@ export interface IBlockData<
     hidden?: boolean;
     shadow?: boolean; // Child nodes cannot be selected
   };
-  attributes: K;
+  attributes: K & { 'css-class'?: string };
   children: IBlockData[];
 }
 

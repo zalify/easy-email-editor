@@ -10,12 +10,20 @@ export type IPage = IBlockData<
   },
   {
     breakpoint?: string;
+    headAttributes: string;
+    fonts?: { name: string; href: string }[];
+    headStyles?: {
+      content?: string;
+      inline?: 'inline';
+    }[];
+    responsive?: boolean;
     'font-family': string;
     'text-color': string;
-    headAttributes: string;
-    headStyle?: string;
-    responsive?: boolean;
-    fonts?: { name: string; href: string; }[];
+    'user-style'?: {
+      content?: string;
+      inline?: 'inline';
+    };
+    'content-background-color'?: string;
   }
 >;
 

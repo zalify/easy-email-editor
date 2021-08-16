@@ -5,7 +5,7 @@ import { IPage } from '@/components/core/blocks/basic/Page';
 import { ISocial } from '@/components/core/blocks/basic/Social';
 import { BasicType, BlockType } from '@/constants';
 import { IBlockData } from '@/typings';
-import { pickBy, identity } from 'lodash';
+import { pickBy, identity, isObject } from 'lodash';
 import {
   getChildIdx,
   getNodeIdxClassName,
@@ -13,22 +13,27 @@ import {
 } from './block';
 import { classnames } from './classnames';
 
-export type TransformToMjmlOption = {
-  data: IBlockData,
-  idx: string | null, // current idx for testing
-  context: IBlockData;
-  mode: 'testing';
-} | {
-  idx?: string | null;
-  data: IBlockData,
-  context: IBlockData;
-  mode: 'production';
-};
+export type TransformToMjmlOption =
+  | {
+      data: IBlockData;
+      idx: string | null; // current idx for testing
+      context: IBlockData;
+      mode: 'testing';
+    }
+  | {
+      idx?: string | null;
+      data: IBlockData;
+      context: IBlockData;
+      mode: 'production';
+    };
 
-export function transformToMjml(
-  options: TransformToMjmlOption
-): string {
-  const { data, idx = 'content', context = data, mode = 'production' } = options;
+export function transformToMjml(options: TransformToMjmlOption): string {
+  const {
+    data,
+    idx = 'content',
+    context = data,
+    mode = 'production',
+  } = options;
   if (data?.data?.hidden) return '';
 
   const att = pickBy(
@@ -39,7 +44,7 @@ export function transformToMjml(
   );
 
   const isTest = mode === 'testing';
-  const placeholder = isTest ? renderPlaceholder(data.type) : '';
+  const placeholder = isTest && idx ? renderPlaceholder(data.type) : '';
 
   if (isTest && idx) {
     att['css-class'] = classnames(
@@ -51,10 +56,7 @@ export function transformToMjml(
   }
 
   if (data.type === BasicType.PAGE) {
-    att['css-class'] = classnames(
-      att['css-class'],
-      'mjml-body',
-    );
+    att['css-class'] = classnames(att['css-class'], 'mjml-body');
   }
 
   const attributeStr = Object.keys(att)
@@ -73,22 +75,18 @@ export function transformToMjml(
   if (block.transform) {
     const transformData = block.transform(data, idx, context);
     att['css-class'] = classnames(att['css-class'], transformData['css-class']);
-    return transformToMjml(
-      {
-        data: {
-          ...transformData,
-          attributes: {
-            ...transformData.attributes,
-            'css-class': att['css-class'],
-          },
+    return transformToMjml({
+      data: {
+        ...transformData,
+        attributes: {
+          ...transformData.attributes,
+          'css-class': att['css-class'],
         },
-        idx: data.children.length > 0 ? idx : null,
-        context,
-        mode
-      }
-      ,
-
-    );
+      },
+      idx: data.children.length > 0 ? idx : null,
+      context,
+      mode,
+    });
   }
 
   const children = data.children
@@ -97,13 +95,14 @@ export function transformToMjml(
         data: child,
         idx: idx ? getChildIdx(idx, index) : null,
         context,
-        mode
+        mode,
       })
     )
     .join('\n');
 
   switch (data.type) {
     case BasicType.PAGE:
+      const metaData = generaMjmlMetaData(data);
       const value: IPage['data']['value'] = data.data.value;
 
       const breakpoint = value.breakpoint
@@ -112,36 +111,53 @@ export function transformToMjml(
 
       const nonResponsive = !value.responsive
         ? `<mj-raw>
-            <!-- Non-responsive -->
             <meta name="viewport" />
            </mj-raw>
-           <mj-style inline="inline">.mjml-body { width: ${data.attributes.width || 600}px; margin: 0px auto; }</mj-style>`
+           <mj-style inline="inline">.mjml-body { width: ${
+             data.attributes.width || 600
+           }px; margin: 0px auto; }</mj-style>`
         : '';
-
+      const styles =
+        value.headStyles
+          ?.map(
+            (style) =>
+              `<mj-style ${style.inline ? 'inline="inline"' : ''}>${
+                style.content
+              }</mj-style>`
+          )
+          .join('\n') || '';
       return `
         <mjml>
           <mj-head>
+              ${metaData}
               ${nonResponsive}
-              <mj-style>
-                ${value.headStyle || ''}
-              </mj-style>
+              ${styles}
               ${breakpoint}
             <mj-attributes>
               ${value.headAttributes}
-              ${value['font-family']
-          ? `<mj-all font-family="${value['font-family']}" />`
-          : ''
-        }
-              ${value['text-color']
-          ? `<mj-text color="${value['text-color']}" />`
-          : ''
-        }
+              ${
+                value['font-family']
+                  ? `<mj-all font-family="${value['font-family']}" />`
+                  : ''
+              }
+              ${
+                value['text-color']
+                  ? `<mj-text color="${value['text-color']}" />`
+                  : ''
+              }
+              ${
+                value['content-background-color']
+                  ? `<mj-wrapper background-color="${value['content-background-color']}" />
+                     <mj-section background-color="${value['content-background-color']}" />
+                    `
+                  : ''
+              }
               ${value.fonts
-          ?.filter(Boolean)
-          .map(
-            (item) =>
-              `<mj-font name="${item.name}" href="${item.href}" />`
-          )}
+                ?.filter(Boolean)
+                .map(
+                  (item) =>
+                    `<mj-font name="${item.name}" href="${item.href}" />`
+                )}
             </mj-attributes>
           </mj-head>
           <mj-body ${attributeStr}>
@@ -164,9 +180,10 @@ export function transformToMjml(
     case BasicType.WRAPPER:
       return `
               <mj-wrapper ${attributeStr}>
-               ${children ||
-        `<mj-section><mj-column>${placeholder}</mj-column></mj-section>`
-        }
+               ${
+                 children ||
+                 `<mj-section><mj-column>${placeholder}</mj-column></mj-section>`
+               }
               </mj-wrapper>
             `;
     case BasicType.CAROUSEL:
@@ -258,5 +275,33 @@ export function renderPlaceholder(type: BlockType) {
       </div>
     </div>
    </mj-text>
+  `;
+}
+
+export function generaMjmlMetaData(data: IPage) {
+  const values = data.data.value;
+  const attributes = [
+    'content-background-color',
+    'text-color',
+    'font-family',
+    'user-style',
+    'responsive',
+  ];
+  return `
+    <mj-html-attributes>
+      ${attributes
+        .filter((key) => values[key] !== undefined)
+        .map((key) => {
+          const isMultipleAttributes = isObject(values[key]);
+          const value = isMultipleAttributes
+            ? Object.keys(values[key])
+                .map((childKey) => `${childKey}="${values[key][childKey]}"`)
+                .join(' ')
+            : `${key}="${values[key]}"`;
+          return `<mj-html-attribute class="easy-email" multiple-attributes="${isMultipleAttributes}" attribute-name="${key}" ${value}></mj-html-attribute>`;
+        })
+        .join('\n')}
+
+    </mj-html-attributes>
   `;
 }

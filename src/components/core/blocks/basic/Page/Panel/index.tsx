@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Stack } from '@/components/UI/Stack';
-import { ColorPickerField, SwitchField, TextAreaField, TextField } from '@/components/core/Form';
+import {
+  ColorPickerField,
+  SelectField,
+  SwitchField,
+  TextAreaField,
+  TextField,
+} from '@/components/core/Form';
 import { Help } from '@/components/UI/Help';
 import { TextStyle } from '@/components/UI/TextStyle';
 import { AddFont } from '@/components/core/Form/AddFont';
 
 import { useFocusIdx } from '@/hooks/useFocusIdx';
-import { FontFamily } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/FontFamliy';
+import { EditorPropsContext } from '@/components/Provider/PropsProvider';
+
 export function Panel() {
   const { focusIdx } = useFocusIdx();
+  const { fontList = [] } = useContext(EditorPropsContext);
 
   if (!focusIdx) return null;
   return (
@@ -16,15 +24,20 @@ export function Panel() {
       <Stack vertical>
         <TextField label='Subject' name={'subject'} inline />
         <TextField label='SubTitle' name={'subTitle'} inline />
-        <TextField label='Width' type="number" name={`${focusIdx}.attributes.width`} inline />
+        <TextField
+          label='Width'
+          type='number'
+          name={`${focusIdx}.attributes.width`}
+          inline
+        />
         <Stack alignment='center'>
           <TextField
-            label={(
+            label={
               <Stack spacing='extraTight'>
                 <TextStyle>Breakpoint</TextStyle>
                 <Help title='Allows you to control on which breakpoint the layout should go desktop/mobile.' />
               </Stack>
-            )}
+            }
             quickchange
             name={`${focusIdx}.data.value.breakpoint`}
             inline
@@ -37,7 +50,13 @@ export function Panel() {
           checkedChildren='True'
           unCheckedChildren='False'
         />
-        <FontFamily />
+        <SelectField
+          showSearch
+          label='Font family'
+          name={`${focusIdx}.data.value.font-family`}
+          inline
+          options={fontList}
+        />
         <ColorPickerField
           label='Text color'
           name={`${focusIdx}.data.value.text-color`}
@@ -47,6 +66,15 @@ export function Panel() {
           label='Background color'
           name={`${focusIdx}.attributes.background-color`}
           inline
+        />
+        <ColorPickerField
+          label='Content background color'
+          name={`${focusIdx}.data.value.content-background-color`}
+          inline
+        />
+        <TextAreaField
+          label='User style'
+          name={`${focusIdx}.data.value.user-style.content`}
         />
         <AddFont />
       </Stack>

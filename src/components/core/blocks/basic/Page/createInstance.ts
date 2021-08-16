@@ -10,16 +10,18 @@ export const createInstance: CreateInstance<IPage> = (payload) => {
     data: {
       value: {
         breakpoint: '480px',
+        headAttributes: '',
+        headStyles: [],
+        fonts: [],
+        responsive: true,
         'font-family': 'lucida Grande,Verdana,Microsoft YaHei',
         'text-color': '#000000',
-        headAttributes: '',
-        fonts: [],
-        responsive: true
+        'content-background-color': '#ffffff',
       },
     },
     attributes: {
       'background-color': '#efeeea',
-      width: '600px'
+      width: '600px',
     },
     children: [Wrapper.createInstance()],
   };
