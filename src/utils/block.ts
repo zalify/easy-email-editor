@@ -47,14 +47,14 @@ export const getParentIdx = (idx: string) => {
 };
 
 export const getValueByIdx = <T extends IBlockData>(
-  values: { content: IPage; },
+  values: { content: IPage },
   idx: string
 ): T | null => {
   return get(values, idx);
 };
 
 export const getParentByIdx = <T extends IBlockData>(
-  values: { content: IPage; },
+  values: { content: IPage },
   idx: string
 ): T | null => {
   return get(values, getParentIdx(idx) || '');
@@ -65,4 +65,20 @@ export const getSiblingIdx = (sourceIndex: string, num: number) => {
     if (Number(index) + num < 0) return '[0]';
     return `[${Number(index) + num}]`;
   });
+};
+
+export const getParentByType = <T extends IBlockData>(
+  context: { content: IPage },
+  idx: string,
+  type: BlockType
+): T | null => {
+  if (!idx) return null;
+  let parentIdx = getParentIdx(idx);
+  while (parentIdx) {
+    const parent = get(context, parentIdx) as T;
+    if (parent && parent.type === type) return parent;
+    parentIdx = getParentIdx(idx);
+  }
+
+  return null;
 };

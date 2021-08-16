@@ -30,7 +30,6 @@ export function SourceCodeManager() {
 
   const onChaneCode = useCallback(
     (event: React.FocusEvent<HTMLTextAreaElement>) => {
-
       try {
         const parseValue = JSON.parse(event.target.value);
         setValueByIdx(focusIdx, parseValue);
@@ -44,36 +43,49 @@ export function SourceCodeManager() {
   const onMjmlChange = useCallback(
     (event: React.FocusEvent<HTMLTextAreaElement>) => {
       if (!isRoot) return;
-      const { json, errors } = mjml(event.target.value, { validationLevel: 'soft' });
+      const { json, errors } = mjml(event.target.value, {
+        validationLevel: 'soft',
+      });
       console.log(errors);
       if (errors.length > 0) {
         message.error(
-          <TextStyle>Unvalid data, please visit <a href="https://mjml.io/try-it-live" target="_blank">Mjml website</a> to update.</TextStyle>
+          <TextStyle>
+            Unvalid data, please visit{' '}
+            <a href='https://mjml.io/try-it-live' target='_blank'>
+              Mjml website
+            </a>{' '}
+            to update.
+          </TextStyle>
         );
         return;
       }
-      const parseValue = MjmlToJson(
-        json
-      );
+      const parseValue = MjmlToJson(json);
       setValueByIdx(focusIdx, parseValue);
     },
     [focusIdx, isRoot, setValueByIdx]
   );
 
-  const onChangeMjmlText = useCallback((event: React.FocusEvent<HTMLTextAreaElement>) => {
-    if (!isRoot) {
-      message.warning('Only page block can edit mjml source.');
-    }
-    setMjmlText(event.target.value);
-  }, [isRoot]);
+  const onChangeMjmlText = useCallback(
+    (event: React.FocusEvent<HTMLTextAreaElement>) => {
+      if (!isRoot) {
+        message.warning('Only page block can edit mjml source.');
+      }
+      setMjmlText(event.target.value);
+    },
+    [isRoot]
+  );
 
   useEffect(() => {
-    focusBlock && setMjmlText(transformToMjml({
-      data: focusBlock,
-      context: pageData,
-      mode: 'production'
-    }));
-  }, [focusBlock, pageData]);
+    focusBlock &&
+      setMjmlText(
+        transformToMjml({
+          data: focusBlock,
+          context: pageData,
+          mode: 'testing',
+          idx: focusIdx,
+        })
+      );
+  }, [focusBlock, focusIdx, pageData]);
 
   if (!focusBlock) return null;
 

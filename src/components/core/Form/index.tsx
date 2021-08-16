@@ -1,4 +1,10 @@
-import { InputNumber, Input as AntdInput, Switch, DatePicker } from 'antd';
+import {
+  InputNumber,
+  Input as AntdInput,
+  Switch,
+  DatePicker,
+  Slider,
+} from 'antd';
 import { SearchProps, TextAreaProps } from 'antd/lib/input';
 import { InputNumberProps } from 'antd/lib/input-number';
 import { CheckboxGroupProps } from 'antd/lib/checkbox';
@@ -17,6 +23,7 @@ import { EditTab, EditTabProps } from './EditTab';
 import { DatePickerProps } from 'antd/lib/date-picker';
 import { Dayjs } from 'dayjs';
 import { InlineText, InlineTextProps } from './InlineTextField';
+import { SliderBaseProps } from 'antd/lib/slider';
 export { RichTextField } from './RichTextField';
 
 export const TextField = enhancer<InputProps>(Input, (value) => value);
@@ -34,6 +41,7 @@ export const NumberField = enhancer<InputNumberProps>(
   InputNumber,
   (e: number | string | undefined | null) => e
 );
+export const SliderField = enhancer<SliderBaseProps>(Slider, (e: number) => e);
 
 export const ColorPickerField = enhancer<ColorPickerProps>(
   ColorPicker,
@@ -76,4 +84,7 @@ export const CheckboxField = enhancer<CheckboxGroupProps>(
 
 export const EditTabField = enhancer<EditTabProps>(EditTab, (e: any[]) => e);
 
-export const InlineTextField = enhancer<InlineTextProps>(InlineText, (value) => value);
+export const InlineTextField = enhancer<InlineTextProps>(
+  InlineText,
+  (value) => value
+);

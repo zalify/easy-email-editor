@@ -9,8 +9,13 @@ console.error = (message?: any, ...optionalParams: any[]) => {
   // ignore validateDOMNesting
   if (
     typeof message === 'string' &&
-    (message.includes('validateDOMNesting') || message.includes('Invalid DOM'))
+    [
+      'Unsupported vendor-prefixed style property',
+      'validateDOMNesting',
+      'Invalid DOM',
+    ].some((item) => message.includes(item))
   ) {
+    // no console
   } else {
     errLog(message, ...optionalParams);
   }
