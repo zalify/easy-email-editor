@@ -81,8 +81,7 @@ export function SourceCodeManager() {
         transformToMjml({
           data: focusBlock,
           context: pageData,
-          mode: 'testing',
-          idx: focusIdx,
+          mode: 'production',
         })
       );
   }, [focusBlock, focusIdx, pageData]);

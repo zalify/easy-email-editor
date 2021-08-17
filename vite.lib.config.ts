@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [
     {
       ...typescript2({
-        check: true,
+        check: false,
         tsconfig: 'tsconfig.lib.json',
       }),
       apply: 'build',
@@ -14,13 +14,10 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-
       '@': path.resolve(__dirname, './src'),
     },
   },
-  define: {
-
-  },
+  define: {},
   build: {
     minify: true,
     manifest: true,
@@ -38,17 +35,16 @@ export default defineConfig({
         'react-dom',
         'antd',
         'formik',
-        'mjml-browser'
+        'mjml-browser',
+        'react-final-form',
       ],
       output: {
         entryFileNames: 'index.js',
       },
     },
-    outDir: 'lib'
+    outDir: 'lib',
   },
-  optimizeDeps: {
-
-  },
+  optimizeDeps: {},
   css: {
     modules: {
       localsConvention: 'dashes',

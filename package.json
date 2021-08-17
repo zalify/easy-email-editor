@@ -19,7 +19,7 @@
     "dev": "vite",
     "build": "vite build",
     "lib": "rimraf lib && vite build --config vite.lib.config.ts && npm run typings",
-    "preview": "npm run lib && vite --config vite.preview.config.ts",
+    "preview": "npm run lib && vite --config vite.preview.config.ts --force",
     "typings": "tsc --declaration --emitDeclarationOnly --project tsconfig.lib.json",
     "test": "jest"
   },

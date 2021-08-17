@@ -5,10 +5,12 @@ import path from 'path';
 export default defineConfig({
   resolve: {
     alias: {
-      '@example/components/Form': path.resolve(__dirname, './src/components/core/Form'),
       '@example': path.resolve('example'),
       '@': path.resolve(__dirname, './src'),
-      'easy-email-editor/lib/style.css': path.resolve(__dirname, './src/index.tsx'), // 没有用的，只是防止css 404报错
+      'easy-email-editor/lib/style.css': path.resolve(
+        __dirname,
+        './src/index.tsx'
+      ), // 没有用的，只是防止css 404报错
       'easy-email-editor': path.resolve(__dirname, './src/index.tsx'),
     },
   },
@@ -17,7 +19,7 @@ export default defineConfig({
     target: 'es2015',
   },
   optimizeDeps: {
-    include: []
+    include: [],
   },
   css: {
     modules: {
@@ -27,9 +29,8 @@ export default defineConfig({
       scss: {},
       less: {
         javascriptEnabled: true,
-      }
+      },
     },
-
   },
   server: {
     proxy: {
@@ -37,7 +38,7 @@ export default defineConfig({
         target: 'http://localhost:8080',
         changeOrigin: true,
       },
-    }
+    },
   },
   plugins: [reactRefresh()],
 });

@@ -65,13 +65,13 @@ Check out the live demo here: <a href="http://easy-email-m-ryan.vercel.app" targ
 ## Install
 
 ```sh
-$ npm install --save easy-email-editor antd mjml-browser
+$ npm install --save easy-email-editor antd mjml-browser react-final-form
 ```
 
 or
 
 ```sh
-$ yarn add easy-email-editor antd mjml-browser
+$ yarn add easy-email-editor antd mjml-browser react-final-form
 ```
 
 ## Usage
