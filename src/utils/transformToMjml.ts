@@ -16,12 +16,12 @@ import { classnames } from './classnames';
 export type TransformToMjmlOption =
   | {
       data: IBlockData;
-      idx: string | null; // current idx for testing
+      idx: string | null; // current idx
       context: IBlockData;
       mode: 'testing';
     }
   | {
-      idx?: string | null;
+      idx?: string | null; // current idx, default page idx
       data: IBlockData;
       context: IBlockData;
       mode: 'production';
@@ -126,6 +126,7 @@ export function transformToMjml(options: TransformToMjmlOption): string {
               }</mj-style>`
           )
           .join('\n') || '';
+
       return `
         <mjml>
           <mj-head>

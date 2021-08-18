@@ -1,10 +1,13 @@
 import { IPage, Page } from '@/components/core/blocks/basic/Page';
 import { BasicType } from '@/constants';
 import { IBlockData } from '@/typings';
-import { identity, pickBy } from 'lodash';
+import { identity, isString, pickBy } from 'lodash';
 import { findBlockByType } from './block';
+import { parseXMLtoBlock } from './parseXMLtoBlock';
 
-export function MjmlToJson(data: MjmlBlockItem): IPage {
+export function MjmlToJson(data: MjmlBlockItem | string): IPage {
+  if (isString(data)) return parseXMLtoBlock(data);
+
   const transform = (item: IChildrenItem): IBlockData => {
     const attributes = item.attributes as any;
 

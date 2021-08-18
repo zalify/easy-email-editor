@@ -1,19 +1,16 @@
 import { Collapse, Input, message } from 'antd';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { getPageIdx } from '@/utils/block';
 import jsonFormat from 'json-format';
 import { useBlock } from '@/hooks/useBlock';
 import { transformToMjml } from '@/utils/transformToMjml';
-import mjml from 'mjml-browser';
 import { MjmlToJson } from '@/utils/MjmlToJson';
-import { TextStyle } from '@/components/UI/TextStyle';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { useEditorContext } from '@/hooks/useEditorContext';
 
 export function SourceCodeManager() {
   const { setValueByIdx, focusBlock } = useBlock();
   const { focusIdx } = useFocusIdx();
-  const isRoot = focusIdx === getPageIdx();
+
   const [mjmlText, setMjmlText] = useState('');
   const { pageData } = useEditorContext();
 
@@ -33,8 +30,8 @@ export function SourceCodeManager() {
       try {
         const parseValue = JSON.parse(event.target.value);
         setValueByIdx(focusIdx, parseValue);
-      } catch (error) {
-        message.error(error.message);
+      } catch (error: any) {
+        message.error(error?.message || error);
       }
     },
     [focusIdx, setValueByIdx]
@@ -42,43 +39,24 @@ export function SourceCodeManager() {
 
   const onMjmlChange = useCallback(
     (event: React.FocusEvent<HTMLTextAreaElement>) => {
-      if (!isRoot) return;
-      const { json, errors } = mjml(event.target.value, {
-        validationLevel: 'soft',
-      });
-      console.log(errors);
-      if (errors.length > 0) {
-        message.error(
-          <TextStyle>
-            Unvalid data, please visit{' '}
-            <a href='https://mjml.io/try-it-live' target='_blank'>
-              Mjml website
-            </a>{' '}
-            to update.
-          </TextStyle>
-        );
-        return;
-      }
-      const parseValue = MjmlToJson(json);
+      const parseValue = MjmlToJson(event.target.value);
       setValueByIdx(focusIdx, parseValue);
     },
-    [focusIdx, isRoot, setValueByIdx]
+    [focusIdx, setValueByIdx]
   );
 
   const onChangeMjmlText = useCallback(
     (event: React.FocusEvent<HTMLTextAreaElement>) => {
-      if (!isRoot) {
-        message.warning('Only page block can edit mjml source.');
-      }
       setMjmlText(event.target.value);
     },
-    [isRoot]
+    []
   );
 
   useEffect(() => {
     focusBlock &&
       setMjmlText(
         transformToMjml({
+          idx: focusIdx,
           data: focusBlock,
           context: pageData,
           mode: 'production',
