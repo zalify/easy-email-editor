@@ -5,20 +5,30 @@ exports[`Test transformToMjml when mode is "production" should render as expecte
         <mjml>
           <mj-head>
               
-              <mj-style>
-                
-              </mj-style>
+    <mj-html-attributes>
+      <mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"content-background-color\\" content-background-color=\\"#ffffff\\"></mj-html-attribute>
+<mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"text-color\\" text-color=\\"#000000\\"></mj-html-attribute>
+<mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"font-family\\" font-family=\\"lucida Grande,Verdana,Microsoft YaHei\\"></mj-html-attribute>
+<mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"responsive\\" responsive=\\"true\\"></mj-html-attribute>
+
+    </mj-html-attributes>
+  
+              
+              
               <mj-breakpoint width=\\"480px\\" />
             <mj-attributes>
               
               <mj-all font-family=\\"lucida Grande,Verdana,Microsoft YaHei\\" />
               <mj-text color=\\"#000000\\" />
+              <mj-wrapper background-color=\\"#ffffff\\" />
+                     <mj-section background-color=\\"#ffffff\\" />
+                    
               
             </mj-attributes>
           </mj-head>
           <mj-body background-color=\\"#efeeea\\" width=\\"600px\\" css-class=\\"mjml-body\\">
             
-              <mj-section padding=\\"20px 0px 20px 0px\\" border=\\"none\\" direction=\\"ltr\\" text-align=\\"center\\" background-color=\\"#ffffff\\" background-repeat=\\"repeat\\" background-size=\\"auto\\" background-position=\\"top center\\">
+              <mj-section padding=\\"20px 0px 20px 0px\\" border=\\"none\\" direction=\\"ltr\\" text-align=\\"center\\" background-repeat=\\"repeat\\" background-size=\\"auto\\" background-position=\\"top center\\">
                
               <mj-column padding=\\"0px 0px 0px 0px\\" border=\\"none\\" vertical-align=\\"top\\">
                
@@ -40,20 +50,30 @@ exports[`Test transformToMjml when mode is "testing" should render as expected 1
         <mjml>
           <mj-head>
               
-              <mj-style>
-                
-              </mj-style>
+    <mj-html-attributes>
+      <mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"content-background-color\\" content-background-color=\\"#ffffff\\"></mj-html-attribute>
+<mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"text-color\\" text-color=\\"#000000\\"></mj-html-attribute>
+<mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"font-family\\" font-family=\\"lucida Grande,Verdana,Microsoft YaHei\\"></mj-html-attribute>
+<mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"responsive\\" responsive=\\"true\\"></mj-html-attribute>
+
+    </mj-html-attributes>
+  
+              
+              
               <mj-breakpoint width=\\"480px\\" />
             <mj-attributes>
               
               <mj-all font-family=\\"lucida Grande,Verdana,Microsoft YaHei\\" />
               <mj-text color=\\"#000000\\" />
+              <mj-wrapper background-color=\\"#ffffff\\" />
+                     <mj-section background-color=\\"#ffffff\\" />
+                    
               
             </mj-attributes>
           </mj-head>
           <mj-body background-color=\\"#efeeea\\" width=\\"600px\\" css-class=\\"email-block node-idx-content node-type-page mjml-body\\">
             
-              <mj-section padding=\\"20px 0px 20px 0px\\" border=\\"none\\" direction=\\"ltr\\" text-align=\\"center\\" background-color=\\"#ffffff\\" background-repeat=\\"repeat\\" background-size=\\"auto\\" background-position=\\"top center\\" css-class=\\"email-block node-idx-content.children.[0] node-type-section\\">
+              <mj-section padding=\\"20px 0px 20px 0px\\" border=\\"none\\" direction=\\"ltr\\" text-align=\\"center\\" background-repeat=\\"repeat\\" background-size=\\"auto\\" background-position=\\"top center\\" css-class=\\"email-block node-idx-content.children.[0] node-type-section\\">
                
               <mj-column padding=\\"0px 0px 0px 0px\\" border=\\"none\\" vertical-align=\\"top\\" css-class=\\"email-block node-idx-content.children.[0].children.[0] node-type-column\\">
                

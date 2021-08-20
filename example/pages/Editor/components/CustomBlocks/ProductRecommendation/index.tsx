@@ -1,7 +1,20 @@
 import { Panel } from './Panel';
 import { createInstance } from './createInstance';
-import { IBlock, IBlockData, BasicType, BlocksMap } from 'easy-email-editor';
+import {
+  IBlock,
+  IBlockData,
+  BasicType,
+  Column,
+  Section,
+  Wrapper,
+  Text,
+  Button,
+  Image,
+  Group,
+} from 'easy-email-editor';
 import { CustomBlocksType } from '../constants';
+import React from 'react';
+
 export type IProductRecommendation = IBlockData<
   {
     'background-color': string;
@@ -27,178 +40,128 @@ const transform = (data: IProductRecommendation) => {
   const { title, productList, buttonText } = data.data.value;
   const attributes = data.attributes;
 
-  const [Wrapper, Section, Group, Column, Image, Text, Button] = [
-    BlocksMap.getBlock('Wrapper'),
-    BlocksMap.getBlock('Section'),
-    BlocksMap.getBlock('Group'),
-    BlocksMap.getBlock('Column'),
-    BlocksMap.getBlock('Image'),
-    BlocksMap.getBlock('Text'),
-    BlocksMap.getBlock('Button'),
-  ];
+  return (
+    <Wrapper
+      padding='20px 0px 20px 0px'
+      border='none'
+      direction='ltr'
+      text-align='center'
+      background-color={attributes['background-color']}
+    >
+      <Section padding='0px'>
+        <Column padding='0px' border='none' vertical-align='top'>
+          <Text
+            font-size='20px'
+            padding='10px 25px 10px 25px'
+            line-height='1'
+            align='center'
+            font-weight='bold'
+            color={attributes['title-color']}
+          >
+            {title}
+          </Text>
+        </Column>
+      </Section>
 
-  const instance = Wrapper.createInstance({
-    attributes: {
-      'background-color': attributes['background-color'],
-    },
-    children: [
-      Section.createInstance({
-        attributes: {
-          padding: '0px 0px 0px 0px',
-        },
-        children: [
-          Column.createInstance({
-            children: [
-              Text.createInstance({
-                data: {
-                  value: {
-                    content: title,
-                  },
-                },
-                attributes: {
-                  'font-size': '20px',
-                  padding: '10px 25px 10px 25px',
-                  'line-height': '1',
-                  align: 'center',
-                  'font-weight': 'bold',
-                  color: attributes['title-color'],
-                },
-              }),
-            ],
-          }),
-        ],
-      }),
-      Section.createInstance({
-        attributes: {
-          padding: '0px 0px 0px 0px',
-        },
-        children: [
-          Group.createInstance({
-            children: productList.map((product) =>
-              Column.createInstance({
-                children: [
-                  Image.createInstance({
-                    attributes: {
-                      align: 'center',
-                      height: 'auto',
-                      padding: '10px 10px 10px 10px',
-                      src: product.image,
-                    },
-                  }),
-                ],
-              })
-            ),
-          }),
-        ],
-      }),
-      Section.createInstance({
-        attributes: {
-          padding: '0px 0px 0px 0px',
-        },
-        children: [
-          Group.createInstance({
-            children: productList.map((product) =>
-              Column.createInstance({
-                children: [
-                  Text.createInstance({
-                    type: 'text',
-                    data: {
-                      value: {
-                        content: product.title,
-                      },
-                    },
-                    attributes: {
-                      color: attributes['product-name-color'],
-                      'font-size': '12px',
-                      padding: '10px 0px 10px 0px ',
-                      'line-height': '1',
-                      align: 'center',
-                    },
-                  }),
-                ],
-              })
-            ),
-          }),
-        ],
-      }),
-      Section.createInstance({
-        attributes: {
-          padding: '0px 0px 0px 0px',
-        },
-        children: [
-          Group.createInstance({
-            children: productList.map((product) =>
-              Column.createInstance({
-                children: [
-                  Text.createInstance({
-                    type: 'text',
-                    data: {
-                      value: {
-                        content: product.price,
-                      },
-                    },
-                    attributes: {
-                      color: attributes['product-price-color'],
-                      'font-size': '12px',
-                      padding: '0px',
-                      'line-height': '1',
-                      align: 'center',
-                    },
-                  }),
-                ],
-              })
-            ),
-          }),
-        ],
-      }),
+      <Section padding='0px'>
+        <Group vertical-align='top' direction='ltr'>
+          {productList.map((item, index) => (
+            <Column
+              key={index}
+              padding='0px'
+              border='none'
+              vertical-align='top'
+            >
+              <Image
+                align='center'
+                height='auto'
+                padding='10px'
+                width='150px'
+                src={item.image}
+              />
+            </Column>
+          ))}
+        </Group>
+      </Section>
 
-      Section.createInstance({
-        attributes: {
-          padding: '0px 0px 0px 0px',
-        },
-        children: [
-          Group.createInstance({
-            children: productList.map((product) =>
-              Column.createInstance({
-                children: [
-                  Button.createInstance({
-                    data: {
-                      value: {
-                        content: buttonText,
-                      },
-                    },
-                    attributes: {
-                      align: 'center',
-                      'background-color': attributes['button-color'],
-                      color: attributes['button-text-color'],
-                      'font-size': '12px',
-                      'font-weight': 'normal',
-                      'border-radius': '3px',
-                      padding: '10px 10px 10px 10px',
-                      'inner-padding': '10px 25px 10px 25px',
-                      'line-height': '120%',
-                      target: '_blank',
-                      'vertical-align': 'middle',
-                      border: 'none',
-                      'text-align': 'center',
-                      href: product.url,
-                    },
-                  }),
-                ],
-              })
-            ),
-          }),
-        ],
-      }),
-    ],
-  });
+      <Section padding='0px'>
+        <Group vertical-align='top' direction='ltr'>
+          {productList.map((item, index) => (
+            <Column
+              key={index}
+              padding='0px'
+              border='none'
+              vertical-align='top'
+            >
+              <Text
+                font-size='12px'
+                padding='10px 0px 10px 0px '
+                line-height='1'
+                align='center'
+                color={attributes['product-name-color']}
+              >
+                {item.title}
+              </Text>
+            </Column>
+          ))}
+        </Group>
+      </Section>
 
-  return instance;
+      <Section padding='0px'>
+        <Group vertical-align='top' direction='ltr'>
+          {productList.map((item, index) => (
+            <Column
+              key={index}
+              padding='0px'
+              border='none'
+              vertical-align='top'
+            >
+              <Text
+                font-size='12px'
+                padding='0px'
+                line-height='1'
+                align='center'
+                color={attributes['product-price-color']}
+              >
+                {item.price}
+              </Text>
+            </Column>
+          ))}
+        </Group>
+      </Section>
+
+      <Section padding='0px'>
+        <Group vertical-align='top' direction='ltr'>
+          {productList.map((item, index) => (
+            <Column
+              key={index}
+              padding='0px'
+              border='none'
+              vertical-align='top'
+            >
+              <Button
+                align='center'
+                background-color={attributes['button-color']}
+                color={attributes['button-text-color']}
+                target='_blank'
+                vertical-align='middle'
+                border='none'
+                text-align='center'
+                href={item.url}
+              >
+                {buttonText}
+              </Button>
+            </Column>
+          ))}
+        </Group>
+      </Section>
+    </Wrapper>
+  );
 };
 
 export const ProductRecommendation: IBlock = {
   name: 'Product recommendation',
-  type: CustomBlocksType.PRODUCT_RECOMMENDATION,
+  type: CustomBlocksType.PRODUCT_RECOMMENDATION as any,
   Panel,
   createInstance,
   validParentType: [BasicType.PAGE],

@@ -117,9 +117,9 @@ $ yarn dev
 
 ```
 
-You could customize your own blocks and inject data before sending emails. For more details, please see  <a href="https://github.com/m-Ryan/easy-email/tree/master/example/pages/Editor/components/CustomBlocks" target="_blank" alt="https://github.com/m-Ryan/easy-email/tree/master/example/pages/Editor/components/CustomBlocks">https://github.com/m-Ryan/easy-email/tree/master/example/pages/Editor/components/CustomBlocks</a>
+You could customize your own blocks and inject data before sending emails. For more details, please see  <a href="./How to write a custom block.md" target="_blank">here</a>
 
-<img src="https://assets.maocanhua.cn/e56ac8d8-575a-458b-a4c4-ac9e50b62799-image.png" alt="Overview" width="50%" style="text-align:center">
+<img src="https://assets.maocanhua.cn/9e08ba02-f59f-4298-a174-2e162d694860-image.png" alt="Overview" width="50%" style="text-align:center" />
 
 <br/>
 <br/>

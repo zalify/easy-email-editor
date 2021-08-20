@@ -5,8 +5,8 @@ describe('Test transformToMjml when responsive is "false"', () => {
   const content = BlocksMap.basicBlocksMap.Page.createInstance({
     data: {
       value: {
-        responsive: false
-      }
+        responsive: false,
+      },
     },
     children: [
       BlocksMap.basicBlocksMap.Section.createInstance({
@@ -19,26 +19,23 @@ describe('Test transformToMjml when responsive is "false"', () => {
     ],
   });
 
-  const parseHtml = transformToMjml(
-    {
-      data: content,
-      mode: 'production',
-      context: content,
-    }
-  );
-
-  it('should contains the mark of "Non-responsive"', () => {
-    expect(parseHtml).toContain('Non-responsive');
+  const parseHtml = transformToMjml({
+    data: content,
+    mode: 'production',
+    context: content,
   });
 
+  it('should contains the mark of "<meta name="viewport" />"', () => {
+    expect(parseHtml).toContain('<meta name="viewport" />');
+  });
 });
 
 describe('Test transformToMjml when responsive is "true"', () => {
   const content = BlocksMap.basicBlocksMap.Page.createInstance({
     data: {
       value: {
-        responsive: true
-      }
+        responsive: true,
+      },
     },
     children: [
       BlocksMap.basicBlocksMap.Section.createInstance({
@@ -51,18 +48,17 @@ describe('Test transformToMjml when responsive is "true"', () => {
     ],
   });
 
-  const parseHtml = transformToMjml(
-    {
-      data: content,
-      mode: 'production',
-      context: content,
-    }
-  );
-
-  it('should not contains the mark of "Non-responsive"', () => {
-    expect(parseHtml.includes('Non-responsive')).toBeFalsy();
+  const parseHtml = transformToMjml({
+    data: content,
+    mode: 'production',
+    context: content,
   });
 
+  it('should contains the mark of responsive="true"', () => {
+    expect(
+      parseHtml.includes('attribute-name="responsive" responsive="true"')
+    ).toBeTruthy();
+  });
 });
 
 describe('Test transformToMjml when mode is "testing"', () => {
@@ -78,14 +74,12 @@ describe('Test transformToMjml when mode is "testing"', () => {
     ],
   });
 
-  const parseHtml = transformToMjml(
-    {
-      data: content,
-      mode: 'testing',
-      context: content,
-      idx: 'content'
-    }
-  );
+  const parseHtml = transformToMjml({
+    data: content,
+    mode: 'testing',
+    context: content,
+    idx: 'content',
+  });
 
   it('should contains node-type-page', () => {
     expect(parseHtml).toContain('node-type-page');
@@ -94,7 +88,6 @@ describe('Test transformToMjml when mode is "testing"', () => {
   it('should render as expected', () => {
     expect(parseHtml).toMatchSnapshot();
   });
-
 });
 
 describe('Test transformToMjml when mode is "production"', () => {
@@ -110,13 +103,11 @@ describe('Test transformToMjml when mode is "production"', () => {
     ],
   });
 
-  const parseHtml = transformToMjml(
-    {
-      data: content,
-      mode: 'production',
-      context: content,
-    }
-  );
+  const parseHtml = transformToMjml({
+    data: content,
+    mode: 'production',
+    context: content,
+  });
 
   it('should not contains node-type-page', () => {
     expect(parseHtml.includes('node-type-page')).toBeFalsy();
@@ -125,5 +116,4 @@ describe('Test transformToMjml when mode is "production"', () => {
   it('should render as expected', () => {
     expect(parseHtml).toMatchSnapshot();
   });
-
 });
