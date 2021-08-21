@@ -1,3 +1,5 @@
+import { parseMjmlBlockToBlockData } from '@/utils/parseMjmlBlockToBlockData';
+import { isValidElement } from 'react';
 import { BlocksMap } from '@/components/core/blocks';
 import { ICarousel } from '@/components/core/blocks/basic/Carousel';
 import { INavbar } from '@/components/core/blocks/basic/Navbar';
@@ -73,7 +75,10 @@ export function transformToMjml(options: TransformToMjmlOption): string {
   }
 
   if (block.transform) {
-    const transformData = block.transform(data, idx, context);
+    const transformBlockData = block.transform(data, idx, context);
+    const transformData = isValidElement(transformBlockData)
+      ? parseMjmlBlockToBlockData(transformBlockData)
+      : transformBlockData;
     att['css-class'] = classnames(att['css-class'], transformData['css-class']);
     return transformToMjml({
       data: {

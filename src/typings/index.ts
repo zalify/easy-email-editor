@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { IPage } from '../components/core/blocks/basic/Page';
 import { BlockType } from '../constants';
 
@@ -12,7 +12,7 @@ export interface IBlock<T extends IBlockData = IBlockData> {
     data: IBlockData,
     idx: string | null,
     context: IPage
-  ) => IBlockData;
+  ) => IBlockData | ReactElement;
 }
 
 export interface IBlockData<
