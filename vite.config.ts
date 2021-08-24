@@ -1,8 +1,6 @@
 import { defineConfig } from 'vite';
 import reactRefresh from '@vitejs/plugin-react-refresh';
 import path from 'path';
-import vitePluginImp from 'vite-plugin-imp';
-import { visualizer } from 'rollup-plugin-visualizer';
 
 export default defineConfig({
   resolve: {
@@ -71,16 +69,5 @@ export default defineConfig({
   },
   plugins: [
     reactRefresh(),
-    visualizer(),
-    vitePluginImp({
-      libList: [
-        {
-          libName: 'antd',
-          style(name) {
-            return `antd/lib/${name}/style/index.less`;
-          },
-        },
-      ],
-    }),
   ],
 });

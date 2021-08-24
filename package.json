@@ -72,7 +72,6 @@
     "tsc-alias": "^1.3.9",
     "typescript": "^4.1.3",
     "vite": "^2.1.3",
-    "vite-plugin-imp": "^2.0.7",
     "yup": "^0.32.9"
   },
   "dependencies": {

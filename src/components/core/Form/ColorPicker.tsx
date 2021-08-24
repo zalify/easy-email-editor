@@ -20,7 +20,7 @@ export function ColorPicker(props: ColorPickerProps) {
   }, [value]);
 
   const onChangeColor = useCallback((color: ColorResult) => {
-    const newColor = `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`;
+    const newColor = color.hex;
     setColor(newColor);
     onChange?.(newColor);
   }, [setColor, onChange]);
