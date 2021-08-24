@@ -19,6 +19,9 @@ export function parseXMLtoBlock(text: string) {
   }
 
   const transform = (node: Element): IBlockData => {
+    if (node.tagName === 'parsererror') {
+      throw new Error('Invalid content');
+    }
     const attributes: IBlockData['attributes'] = {};
     node.getAttributeNames().forEach((name) => {
       attributes[name] = node.getAttribute(name);

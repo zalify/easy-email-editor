@@ -22,7 +22,6 @@ export function SourceCodeManager() {
         size: 2,
       }) || ''
     );
-    return '';
   }, [focusBlock]);
 
   const onChaneCode = useCallback(
@@ -39,8 +38,12 @@ export function SourceCodeManager() {
 
   const onMjmlChange = useCallback(
     (event: React.FocusEvent<HTMLTextAreaElement>) => {
-      const parseValue = MjmlToJson(event.target.value);
-      setValueByIdx(focusIdx, parseValue);
+      try {
+        const parseValue = MjmlToJson(event.target.value);
+        setValueByIdx(focusIdx, parseValue);
+      } catch (error) {
+        message.error('Invalid content');
+      }
     },
     [focusIdx, setValueByIdx]
   );
