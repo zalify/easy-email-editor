@@ -1,4 +1,3 @@
-
 export const isMouseEvent = (
   event: MouseEvent | TouchEvent
 ): event is MouseEvent => !!(event.type.indexOf('mouse') !== -1);
@@ -7,7 +6,6 @@ export const isReactMouseEvent = (
   event: React.TouchEvent | React.MouseEvent
 ): event is React.MouseEvent => !!(event.type.indexOf('mouse') !== -1);
 
-import _ from 'lodash';
 /**
  *
  * @param event
@@ -15,7 +13,7 @@ import _ from 'lodash';
 export const onDrag = ({
   event,
   onMove,
-  onEnd
+  onEnd,
 }: {
   event: TouchEvent | MouseEvent;
   onMove: (x: number, y: number) => void;

@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite';
 import reactRefresh from '@vitejs/plugin-react-refresh';
 import path from 'path';
+import vitePluginImp from 'vite-plugin-imp';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 export default defineConfig({
   resolve: {
@@ -16,7 +18,34 @@ export default defineConfig({
   },
   define: {},
   build: {
+    minify: true,
+    manifest: true,
+    sourcemap: true,
     target: 'es2015',
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (/\/node_modules\/antd\/.*\.js/.test(id)) {
+            return 'antd';
+          }
+          if (/\/node_modules\/html2canvas\/.*/.test(id)) {
+            return 'html2canvas';
+          }
+          if (/\/node_modules\/lodash\/.*/.test(id)) {
+            return 'lodash';
+          }
+          if (/\/node_modules\/mjml-browser\/.*/.test(id)) {
+            return 'mjml-browser';
+          }
+          if (/^\/src\/.*/.test(id)) {
+            return 'easy-email-editor';
+          }
+          if (/^\/example\/.*/.test(id)) {
+            return 'demo';
+          }
+        },
+      },
+    },
   },
   optimizeDeps: {
     include: [],
@@ -40,5 +69,18 @@ export default defineConfig({
       },
     },
   },
-  plugins: [reactRefresh()],
+  plugins: [
+    reactRefresh(),
+    visualizer(),
+    vitePluginImp({
+      libList: [
+        {
+          libName: 'antd',
+          style(name) {
+            return `antd/lib/${name}/style/index.less`;
+          },
+        },
+      ],
+    }),
+  ],
 });
