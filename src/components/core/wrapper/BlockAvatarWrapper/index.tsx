@@ -16,6 +16,7 @@ export const BlockAvatarWrapper: React.FC<BlockAvatarWrapperProps> = (
 
   const onDragStart = useCallback(
     (ev: React.DragEvent) => {
+
       setDataTransfer({
         type: type as BlockType,
         action,
@@ -30,7 +31,12 @@ export const BlockAvatarWrapper: React.FC<BlockAvatarWrapperProps> = (
   }, [setDataTransfer]);
 
   return (
-    <div onDragStart={onDragStart} onDragEnd={onDragEnd} draggable>
+    <div onMouseDown={() => {
+      window.getSelection()?.removeAllRanges();
+    }} onDragStart={onDragStart}
+      onDragEnd={onDragEnd} draggable
+      style={{ cursor: 'grab' }}
+    >
       {children}
     </div>
   );

@@ -1,3 +1,5 @@
+import { debounce } from 'lodash';
+
 export const isMouseEvent = (
   event: MouseEvent | TouchEvent
 ): event is MouseEvent => !!(event.type.indexOf('mouse') !== -1);
@@ -31,7 +33,7 @@ export const onDrag = ({
     initY = event.touches[0].clientY;
   }
 
-  const onDragMove = _.debounce((mEvt: TouchEvent | MouseEvent) => {
+  const onDragMove = debounce((mEvt: TouchEvent | MouseEvent) => {
     let movX = 0;
     let movY = 0;
 

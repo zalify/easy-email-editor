@@ -119,7 +119,7 @@ $ yarn dev
 
 You could customize your own blocks and inject data before sending emails. For more details, please see  <a href="./How to write a custom block.md" target="_blank">here</a>
 
-<img src="https://assets.maocanhua.cn/9e08ba02-f59f-4298-a174-2e162d694860-image.png" alt="Overview" width="50%" style="text-align:center" />
+<img src="https://assets.maocanhua.cn/Fn4SuBB6jnbGaxFmiLulNZwGne5Y" alt="Overview" width="50%" style="text-align:center" />
 
 <br/>
 <br/>

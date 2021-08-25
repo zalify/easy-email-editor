@@ -132,6 +132,7 @@ export function TextToolbar(props: TextToolbarProps) {
             onChange={(color) => execCommand('foreColor', color)}
             getPopupContainer={getMountNode}
             placement='left'
+            showInput={false}
             align={{
               offset: [-170],
             }}
@@ -140,6 +141,7 @@ export function TextToolbar(props: TextToolbarProps) {
           </ColorPicker>
           <ColorPicker
             label=''
+            showInput={false}
             onChange={(color) => execCommand('hiliteColor', color)}
             getPopupContainer={getMountNode}
             placement='left'

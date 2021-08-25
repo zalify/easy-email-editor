@@ -15,6 +15,8 @@ export function EditEmailPreview() {
         padding: '40px 0px',
         margin: 'auto',
         height: '100%',
+        zIndex: 10,
+        position: 'relative'
       }}
     >
       <EmailContent />
