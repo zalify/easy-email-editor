@@ -1,7 +1,7 @@
 import { IEmailTemplate } from '@/typings';
-import { Form, useForm, useFormState } from 'react-final-form';
+import { Form, useForm, useFormState, useField } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { BlocksProvider } from '..//BlocksProvider';
 import { HoverIdxProvider } from '../HoverIdxProvider';
 import { PropsProvider, PropsProviderProps } from '../PropsProvider';
@@ -9,6 +9,7 @@ import { RecordProvider } from '../RecordProvider';
 import { SelectionRangeProvider } from '../SelectionRangeProvider';
 import { ScrollProvider } from '../ScrollProvider';
 import { Config, FormApi, FormState } from 'final-form';
+import { useEffect, useState } from 'react';
 
 export interface EmailEditorProviderProps<T extends IEmailTemplate = any>
   extends PropsProviderProps {
@@ -49,19 +50,22 @@ export const EmailEditorProvider = (
       subscription={{ submitting: true, pristine: true }}
     >
       {() => (
-        <PropsProvider {...props}>
-          <RecordProvider>
-            <BlocksProvider>
-              <HoverIdxProvider>
-                <SelectionRangeProvider>
-                  <ScrollProvider>
-                    <FormikWrapper children={children} />
-                  </ScrollProvider>
-                </SelectionRangeProvider>
-              </HoverIdxProvider>
-            </BlocksProvider>
-          </RecordProvider>
-        </PropsProvider>
+        <>
+          <PropsProvider {...props}>
+            <RecordProvider>
+              <BlocksProvider>
+                <HoverIdxProvider>
+                  <SelectionRangeProvider>
+                    <ScrollProvider>
+                      <FormikWrapper children={children} />
+                    </ScrollProvider>
+                  </SelectionRangeProvider>
+                </HoverIdxProvider>
+              </BlocksProvider>
+            </RecordProvider>
+          </PropsProvider>
+          <RegisterFields />
+        </>
       )}
     </Form>
   );
@@ -75,4 +79,37 @@ function FormikWrapper({
   const data = useFormState<IEmailTemplate>();
   const helper = useForm<IEmailTemplate>();
   return <>{children(data, helper)}</>;
+}
+
+// final-form bug https://github.com/final-form/final-form/issues/169
+
+const RegisterFields = React.memo(() => {
+  const { touched } = useFormState<IEmailTemplate>();
+  const [touchedMap, setTouchedMap] = useState<{ [key: string]: boolean }>({});
+
+  useEffect(() => {
+    if (touched) {
+      Object.keys(touched)
+        .filter((key) => touched[key])
+        .forEach((key) => {
+          setTouchedMap((obj) => {
+            obj[key] = true;
+            return { ...obj };
+          });
+        });
+    }
+  }, [touched]);
+
+  return (
+    <>
+      {Object.keys(touchedMap).map((key) => {
+        return <RegisterField key={key} name={key} />;
+      })}
+    </>
+  );
+});
+
+function RegisterField({ name }: { name: string }) {
+  useField(name);
+  return <></>;
 }

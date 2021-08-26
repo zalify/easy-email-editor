@@ -16,8 +16,8 @@
   ],
   "main": "./lib/index.js",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "cross-env NODE_ENV=development vite",
+    "build": "cross-env NODE_ENV=production vite build",
     "lib": "rimraf lib && vite build --config vite.lib.config.ts && npm run typings && tsc-alias -p tsconfig.lib.json",
     "preview": "npm run lib && vite --config vite.preview.config.ts --force",
     "typings": "tsc --declaration --emitDeclarationOnly --project tsconfig.lib.json",
@@ -72,6 +72,7 @@
     "tsc-alias": "^1.3.9",
     "typescript": "^4.1.3",
     "vite": "^2.1.3",
+    "vite-plugin-style-import": "^1.2.1",
     "yup": "^0.32.9"
   },
   "dependencies": {

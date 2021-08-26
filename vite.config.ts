@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import reactRefresh from '@vitejs/plugin-react-refresh';
 import path from 'path';
+import styleImport from 'vite-plugin-style-import';
 
 export default defineConfig({
   resolve: {
@@ -16,7 +17,7 @@ export default defineConfig({
   },
   define: {},
   build: {
-    minify: true,
+    minify: process.env.NODE_ENV === 'production' ? true : false,
     manifest: true,
     sourcemap: true,
     target: 'es2015',
@@ -69,5 +70,15 @@ export default defineConfig({
   },
   plugins: [
     reactRefresh(),
+    styleImport({
+      libs: [
+        // Dynamic import antd styles
+        {
+          libraryName: 'antd',
+          esModule: true,
+          resolveStyle: (name) => `antd/es/${name}/style/index`,
+        },
+      ],
+    }),
   ],
 });
