@@ -20,12 +20,15 @@ export function Panel() {
   const { focusIdx } = useFocusIdx();
   return (
     <Stack vertical>
-      <RichTextField
-        idx={focusIdx}
-        name={`${focusIdx}.data.value.content`}
-        label=''
-        labelHidden
-      />
+      <div style={{ position: 'absolute' }}>
+        <RichTextField
+          idx={focusIdx}
+          name={`${focusIdx}.data.value.content`}
+          label=''
+          labelHidden
+        />
+      </div>
+
       <Color />
       <ContainerBackgroundColor />
       <FontSize />

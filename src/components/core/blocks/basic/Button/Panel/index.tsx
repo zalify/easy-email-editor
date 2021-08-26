@@ -25,12 +25,15 @@ export function Panel() {
 
   return (
     <Stack vertical>
-      <InlineTextField
-        idx={focusIdx}
-        name={`${focusIdx}.data.value.content`}
-        label=''
-        labelHidden
-      />
+      <div style={{ position: 'absolute' }}>
+        <InlineTextField
+          idx={focusIdx}
+          name={`${focusIdx}.data.value.content`}
+          label=''
+          labelHidden
+        />
+      </div>
+
       <Color />
       <FontSize />
       <Link />

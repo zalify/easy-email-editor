@@ -8,7 +8,7 @@ export function ContainerBackgroundColor() {
   return useMemo(() => {
     return (
       <ColorPickerField
-        label='Container background color'
+        label='Container bg-color'
         name={`${focusIdx}.attributes.container-background-color`}
         inline
         alignment='center'

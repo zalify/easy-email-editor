@@ -23,6 +23,7 @@ import { EditTab, EditTabProps } from './EditTab';
 import { DatePickerProps } from 'antd/lib/date-picker';
 import { Dayjs } from 'dayjs';
 import { InlineText, InlineTextProps } from './InlineTextField';
+import { AutoCompleteProps, AutoComplete } from './AutoComplete';
 import { SliderBaseProps } from 'antd/lib/slider';
 export { RichTextField } from './RichTextField';
 
@@ -59,6 +60,11 @@ export const ImageUploaderField = enhancer<ImageUploaderProps>(
 );
 
 export const SelectField = enhancer<SelectProps>(Select, (e: string) => e);
+
+export const AutoCompleteField = enhancer<AutoCompleteProps>(
+  AutoComplete,
+  (e: string) => e
+);
 
 export const RadioGroupField = enhancer<RadioGroupProps>(
   RadioGroup,

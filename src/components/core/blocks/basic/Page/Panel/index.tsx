@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { Stack } from '@/components/UI/Stack';
 import {
+  AutoCompleteField,
   ColorPickerField,
-  SelectField,
   SwitchField,
   TextAreaField,
   TextField,
@@ -50,7 +50,7 @@ export function Panel() {
           checkedChildren='True'
           unCheckedChildren='False'
         />
-        <SelectField
+        <AutoCompleteField
           showSearch
           label='Font family'
           name={`${focusIdx}.data.value.font-family`}
@@ -68,7 +68,7 @@ export function Panel() {
           inline
         />
         <ColorPickerField
-          label='Content background color'
+          label='Content bg-color'
           name={`${focusIdx}.data.value.content-background-color`}
           inline
         />
