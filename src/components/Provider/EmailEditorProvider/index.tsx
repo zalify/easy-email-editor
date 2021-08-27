@@ -10,6 +10,7 @@ import { SelectionRangeProvider } from '../SelectionRangeProvider';
 import { ScrollProvider } from '../ScrollProvider';
 import { Config, FormApi, FormState } from 'final-form';
 import { useEffect, useState } from 'react';
+import setFieldTouched from 'final-form-set-field-touched';
 
 export interface EmailEditorProviderProps<T extends IEmailTemplate = any>
   extends PropsProviderProps {
@@ -46,7 +47,7 @@ export const EmailEditorProvider = (
       onSubmit={onSubmit}
       enableReinitialize
       validate={validationSchema}
-      mutators={{ ...arrayMutators }}
+      mutators={{ ...arrayMutators, setFieldTouched }}
       subscription={{ submitting: true, pristine: true }}
     >
       {() => (

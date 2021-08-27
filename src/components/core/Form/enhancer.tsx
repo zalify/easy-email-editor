@@ -16,15 +16,18 @@ export interface EnhancerProps<T> extends Partial<FieldProps<T, any>> {
   required?: boolean;
   valueAdapter?: (value: any) => any;
   onChangeAdapter?: (value: any) => any;
-  validate?: (value: any) => (string | undefined | Promise<string | undefined>);
+  validate?: (value: any) => string | undefined | Promise<string | undefined>;
   wrapper?: boolean;
 }
 
 let primaryId = 0;
-export default function enhancer<P>(Component: any, changeAdapter: (e: any) => any,) {
+export default function enhancer<P>(
+  Component: any,
+  changeAdapter: (e: any) => any
+) {
   return (props: EnhancerProps<P> & Omit<P, 'value' | 'onChange'>) => {
-
-    const { name,
+    const {
+      name,
       onChangeAdapter,
       valueAdapter,
       inline,
@@ -41,29 +44,37 @@ export default function enhancer<P>(Component: any, changeAdapter: (e: any) => a
     const id = useMemo(() => {
       return `enhancer-${primaryId++}`;
     }, []);
-    const { change, } = useForm();
-    const { input: { value, onBlur }, meta: { touched, error } } = useField(name, {
-      validate
+    const { change, mutators } = useForm();
+    const {
+      input: { value, onBlur },
+      meta: { touched, error },
+    } = useField(name, {
+      validate,
     });
 
-    const onFieldChange = useCallback((e: any) => {
-      const newVal = onChangeAdapter ?
-        onChangeAdapter(changeAdapter(e))
-        : changeAdapter(e);
-      change(name, newVal);
-      onBlur();
-    }, [change, name, onBlur, onChangeAdapter]);
-
-    if (!wrapper) return (
-      <Component
-        {...rest}
-        id={id}
-        name={name}
-        checked={valueAdapter ? valueAdapter(value) : value}
-        value={valueAdapter ? valueAdapter(value) : value}
-        onChange={onFieldChange}
-      />
+    const onFieldChange = useCallback(
+      (e: any) => {
+        const newVal = onChangeAdapter
+          ? onChangeAdapter(changeAdapter(e))
+          : changeAdapter(e);
+        change(name, newVal);
+        onBlur();
+      },
+      [change, name, onBlur, onChangeAdapter]
     );
+
+    if (!wrapper)
+      return (
+        <Component
+          {...rest}
+          mutators={mutators}
+          id={id}
+          name={name}
+          checked={valueAdapter ? valueAdapter(value) : value}
+          value={valueAdapter ? valueAdapter(value) : value}
+          onChange={onFieldChange}
+        />
+      );
 
     return (
       <Form.Item
@@ -72,24 +83,28 @@ export default function enhancer<P>(Component: any, changeAdapter: (e: any) => a
         help={touched && error}
       >
         <Stack vertical spacing='extraTight'>
-          <Stack spacing={inline ? undefined : 'extraTight'}
+          <Stack
+            spacing={inline ? undefined : 'extraTight'}
             wrap={false}
             vertical={!inline}
-            alignment={alignment ? alignment : (inline ? 'center' : undefined)}
+            alignment={alignment ? alignment : inline ? 'center' : undefined}
             distribution={distribution}
           >
             <Stack.Item>
-              <label className={labelHidden ? styles['label-hidden'] : undefined} htmlFor={id}>
-
+              <label
+                className={labelHidden ? styles['label-hidden'] : undefined}
+                htmlFor={id}
+              >
                 <span style={{ whiteSpace: 'pre' }}>
-                  {required && <span style={{ color: '#ff4d4f' }}>*{' '}</span>}
-                  <TextStyle size="small">{label}</TextStyle>
+                  {required && <span style={{ color: '#ff4d4f' }}>* </span>}
+                  <TextStyle size='small'>{label}</TextStyle>
                 </span>
               </label>
             </Stack.Item>
             <Stack.Item fill={inline}>
               <Component
                 {...rest}
+                mutators={mutators}
                 id={id}
                 name={name}
                 checked={valueAdapter ? valueAdapter(value) : value}
@@ -98,7 +113,9 @@ export default function enhancer<P>(Component: any, changeAdapter: (e: any) => a
               />
             </Stack.Item>
           </Stack>
-          <div className={styles.helperText}><small>{helpText}</small></div>
+          <div className={styles.helperText}>
+            <small>{helpText}</small>
+          </div>
         </Stack>
       </Form.Item>
     );

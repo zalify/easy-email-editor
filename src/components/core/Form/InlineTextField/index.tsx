@@ -3,14 +3,22 @@ import { findBlockNodeByIdx, getShadowRoot } from '@/utils/findBlockNodeByIdx';
 import { getEditContent, getEditNode } from '@/utils/getEditNode';
 import { useBlock } from '@/hooks/useBlock';
 import { FIXED_CONTAINER_ID } from '@/constants';
+import { useField } from 'react-final-form';
 
 export interface InlineTextProps {
   idx: string;
   children?: React.ReactNode;
   onChange: (content: string) => void;
+  mutators: Record<string, (...args: any[]) => any>;
 }
 
-export function InlineText({ idx, onChange, children }: InlineTextProps) {
+export function InlineText({
+  idx,
+  onChange,
+  children,
+  mutators: { setFieldTouched },
+}: InlineTextProps) {
+  useField(idx); // setFieldTouched will be work while register field,
   const { focusBlock } = useBlock();
 
   const textContainer = findBlockNodeByIdx(idx);
@@ -55,8 +63,15 @@ export function InlineText({ idx, onChange, children }: InlineTextProps) {
         e.stopPropagation();
       };
 
+      const onInput = () => {
+        console.log('touch', idx);
+
+        setFieldTouched(idx, true);
+      };
+
       container.addEventListener('paste', onPaste as any, true);
       container.addEventListener('dragstart', stopDrag);
+      container.addEventListener('input', onInput);
 
       document.addEventListener('mousedown', onClick);
       root.addEventListener('mousedown', onClick);
@@ -64,12 +79,12 @@ export function InlineText({ idx, onChange, children }: InlineTextProps) {
       return () => {
         container.removeEventListener('paste', onPaste as any, true);
         container.removeEventListener('dragstart', stopDrag);
-
+        container.removeEventListener('input', onInput);
         document.removeEventListener('mousedown', onClick);
         root.removeEventListener('mousedown', onClick);
       };
     }
-  }, [onTextChange, textContainer]);
+  }, [idx, onTextChange, setFieldTouched, textContainer]);
 
   return <>{children}</>;
 }
