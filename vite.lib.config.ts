@@ -34,7 +34,6 @@ export default defineConfig({
         'react',
         'react-dom',
         'antd',
-        'formik',
         'mjml-browser',
         'react-final-form',
       ],

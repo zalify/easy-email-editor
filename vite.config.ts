@@ -17,7 +17,7 @@ export default defineConfig({
   },
   define: {},
   build: {
-    minify: process.env.NODE_ENV === 'production' ? true : false,
+    minify: true,
     manifest: true,
     sourcemap: true,
     target: 'es2015',
