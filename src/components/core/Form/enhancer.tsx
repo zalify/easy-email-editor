@@ -25,7 +25,9 @@ export default function enhancer<P>(
   Component: any,
   changeAdapter: (e: any) => any
 ) {
-  return (props: EnhancerProps<P> & Omit<P, 'value' | 'onChange'>) => {
+  return (
+    props: EnhancerProps<P> & Omit<P, 'value' | 'onChange' | 'mutators'>
+  ) => {
     const {
       name,
       onChangeAdapter,
@@ -82,7 +84,7 @@ export default function enhancer<P>(
         validateStatus={touched && error ? 'error' : undefined}
         help={touched && error}
       >
-        <Stack vertical spacing='extraTight'>
+        <Stack vertical spacing="extraTight">
           <Stack
             spacing={inline ? undefined : 'extraTight'}
             wrap={false}
@@ -97,7 +99,7 @@ export default function enhancer<P>(
               >
                 <span style={{ whiteSpace: 'pre' }}>
                   {required && <span style={{ color: '#ff4d4f' }}>* </span>}
-                  <TextStyle size='small'>{label}</TextStyle>
+                  <TextStyle size="small">{label}</TextStyle>
                 </span>
               </label>
             </Stack.Item>

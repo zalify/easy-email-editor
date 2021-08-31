@@ -14,7 +14,7 @@ import { InlineTextProps } from '../InlineTextField';
 import { TextToolbar } from './components/TextToolbar';
 
 export function RichTextField(
-  props: Omit<InlineTextProps, 'onChange'> & EnhancerProps<string>
+  props: Omit<InlineTextProps, 'onChange' | 'mutators'> & EnhancerProps<string>
 ) {
   const { activeTab } = useActiveTab();
   const isActive = activeTab === ActiveTabKeys.EDIT;
@@ -94,7 +94,7 @@ export function RichTextField(
 
   return (
     <>
-      <InlineTextField key={idx} {...props as any} />
+      <InlineTextField key={idx} {...(props as any)} />
       {editorContainer && textToolbar}
     </>
   );

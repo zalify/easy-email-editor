@@ -16,7 +16,6 @@ export const createInstance: CreateInstance<IPage> = (payload) => {
         responsive: true,
         'font-family': 'lucida Grande,Verdana,Microsoft YaHei',
         'text-color': '#000000',
-        'content-background-color': '#ffffff',
       },
     },
     attributes: {
