@@ -19,7 +19,7 @@ export default function MjmlBlock<T extends IBlockData>({
 }: MjmlBlockProps<T>) {
   const block = BlocksMap.findBlockByType(type);
 
-  const mergeData = useMemo((): undefined | {} => {
+  const mergeValue = useMemo((): undefined | {} => {
     if (typeof children === 'string') {
       if (!value) {
         return {
@@ -30,19 +30,22 @@ export default function MjmlBlock<T extends IBlockData>({
         return value;
       }
     }
+
     return value;
   }, [children, value]);
 
   const instance = block.createInstance({
-    data: mergeData,
+    data: {
+      value: mergeValue
+    },
     attributes,
     children:
       typeof children === 'string'
         ? []
         : React.Children.map(
-            children,
-            (child) => child && parseMjmlBlockToBlockData(child)
-          )?.filter(Boolean) || [],
+          children,
+          (child) => child && parseMjmlBlockToBlockData(child)
+        )?.filter(Boolean) || [],
   });
 
   return <>{JSON.stringify(instance)}</>;
