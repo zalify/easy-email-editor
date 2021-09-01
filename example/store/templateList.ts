@@ -13,11 +13,11 @@ export default createSliceState({
     fetch: async (state) => {
 
       let provideUserData: IArticle[] = [];
-      if (USER.provideUserId && USER.categoryId) {
+      if (USER.provideUserId && USER.provideCategoryId) {
         // Provided template
         const data = await article.getArticleList({
           userId: USER.provideUserId,
-          categoryId: USER.categoryId,
+          categoryId: USER.provideCategoryId,
           page: 1,
           size: 1000
         });
