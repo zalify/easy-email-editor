@@ -33,7 +33,7 @@ window.removeUser = () => {
   window.location.reload();
 };
 
-export function getUserConfig(defaultUser: IConfigUser) {
+export function getUserConfig(defaultUser: IConfigUser): IConfigUser {
   try {
     const newUser = JSON.parse(localStorage.getItem(DEFAULT_USER_KEY)!);
     if (!newUser) return defaultUser;

@@ -10,6 +10,6 @@ export const USER = getUserConfig({
 
   // standard user
   provideUserId: 77,
-  provideCategoryId: 99
+  provideCategoryId: 90
 });
 
