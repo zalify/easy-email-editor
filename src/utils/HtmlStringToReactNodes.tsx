@@ -49,7 +49,7 @@ const RenderReactNode = React.memo(function ({
   node: HTMLElement;
   index: number;
 }): React.ReactElement {
-  const attributes: { [key: string]: string } = {};
+  const attributes: { [key: string]: string; } = {};
   node.getAttributeNames?.().forEach((att) => {
     if (att) {
       attributes[att] = node.getAttribute(att) || '';
@@ -91,8 +91,8 @@ const RenderReactNode = React.memo(function ({
         node.childNodes.length === 0
           ? null
           : [...node.childNodes].map((n, i) => (
-              <RenderReactNode key={i} node={n as any} index={i} />
-            )),
+            <RenderReactNode key={i} node={n as any} index={i} />
+          )),
     });
 
     return <>{reactNode}</>;
@@ -104,7 +104,7 @@ const RenderReactNode = React.memo(function ({
 function getStyle(styleText: string | null) {
   if (!styleText) return undefined;
   return styleText.split(';').reduceRight((a, b) => {
-    const arr = b.split(':');
+    const arr = b.split(/\:(?!\/)/);
     if (arr.length < 2) return a;
     a[camelCase(arr[0])] = arr[1];
     return a;

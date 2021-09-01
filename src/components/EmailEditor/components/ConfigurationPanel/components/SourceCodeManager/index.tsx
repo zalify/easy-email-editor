@@ -6,9 +6,12 @@ import { transformToMjml } from '@/utils/transformToMjml';
 import { MjmlToJson } from '@/utils/MjmlToJson';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { useEditorContext } from '@/hooks/useEditorContext';
+import { getPageIdx, getParentByIdx } from '@/utils/block';
+import { BlocksMap } from '@/components/core/blocks';
+import { BasicType } from '@/constants';
 
 export function SourceCodeManager() {
-  const { setValueByIdx, focusBlock } = useBlock();
+  const { setValueByIdx, focusBlock, values } = useBlock();
   const { focusIdx } = useFocusIdx();
 
   const [mjmlText, setMjmlText] = useState('');
@@ -40,12 +43,23 @@ export function SourceCodeManager() {
     (event: React.FocusEvent<HTMLTextAreaElement>) => {
       try {
         const parseValue = MjmlToJson(event.target.value);
+        if (parseValue.type !== BasicType.PAGE) {
+          const parentBlock = getParentByIdx(values, focusIdx)!;
+          const parseBlock = BlocksMap.findBlockByType(parseValue.type);
+
+          if (!parseBlock.validParentType.includes(parentBlock?.type)) {
+            throw new Error('Invalid content');
+          }
+        } else if (focusIdx !== getPageIdx()) {
+          throw new Error('Invalid content');
+        }
+
         setValueByIdx(focusIdx, parseValue);
       } catch (error) {
         message.error('Invalid content');
       }
     },
-    [focusIdx, setValueByIdx]
+    [focusIdx, setValueByIdx, values]
   );
 
   const onChangeMjmlText = useCallback(
