@@ -1,5 +1,6 @@
-import { CATEGORY_ID, PROVIDE_CATEGORY_ID, PROVIDE_USER_ID, USER_ID } from '@example/constants';
+import { USER } from '@example/constants';
 import { article, IArticle } from '@example/services/article';
+import { UserStorage } from '@example/util/user-storage';
 import createSliceState from './common/createSliceState';
 
 export default createSliceState({
@@ -11,22 +12,26 @@ export default createSliceState({
   effects: {
     fetch: async (state) => {
 
-      // Provided template
-      const data = await article.getArticleList({
-        userId: PROVIDE_USER_ID,
-        categoryId: PROVIDE_CATEGORY_ID,
-        page: 1,
-        size: 1000
-      });
+      let provideUserData: IArticle[] = [];
+      if (USER.provideUserId && USER.categoryId) {
+        // Provided template
+        const data = await article.getArticleList({
+          userId: USER.provideUserId,
+          categoryId: USER.categoryId,
+          page: 1,
+          size: 1000
+        });
+        provideUserData = data.list;
+      }
 
-      // Visitor data
+      // user data
       const data2 = await article.getArticleList({
-        userId: USER_ID,
-        categoryId: CATEGORY_ID,
+        userId: (await UserStorage.getAccount()).user_id,
+        categoryId: USER.categoryId,
         page: 1,
         size: 1000
       });
-      const list = [...data.list, ...data2.list];
+      const list = [...provideUserData, ...data2.list];
       list.sort((a, b) => a.updated_at > b.updated_at ? -1 : 1);
       return list;
     }
