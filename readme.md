@@ -1,6 +1,5 @@
 # Easy email
 
-
 <p align="center">
 
   <br/>
@@ -26,10 +25,12 @@
 </p>
 
 ## Introduction
+
 Easy email is developed based on the [MJML](https://mjml.io/) and has very good compatibility. At the same time, it can generate code through drag-and-drop editing.
 
-Overview |
-:---: |
+| Overview |
+| :------: |
+
 <div style="margin-top:20px;display:inline-block">
 <img src="https://assets.maocanhua.cn/b409e1b7-b9a9-43ac-a2fd-e27c285dd844-image.png" alt="Overview" width="45%">
 
@@ -37,28 +38,21 @@ Overview |
 
 </div>
 
-
 <div style="margin-top:20px;margin-bottom:20px;display:inline-block;">
 <img src="https://assets.maocanhua.cn/0e50aa7b-9b17-42b4-8bf9-cd310c74f3be-image.png" alt="Overview" width="45%">
 <img src="https://assets.maocanhua.cn/97c776e9-6c67-4452-b048-3f2d6e468424-image.png" alt="Overview"  width="45%">
 </div>
 
-
 <br/>
 
-
-
-|                                                          Video Overview                                                           |
-| :-------------------------------------------------------------------------------------------------------------------------------: |
+|                                                              Video Overview                                                               |
+| :---------------------------------------------------------------------------------------------------------------------------------------: |
 | [![Easy email](https://assets.maocanhua.cn/93c653c8-4bc9-4d2f-9e7e-11a590d3b2bc-image.png)](https://www.youtube.com/watch?v=3KdZQeZ9uqc_) |
-|                                       _Watch video overview: https://youtu.be/3KdZQeZ9uqc_                                        |
-
-
+|                                           _Watch video overview: https://youtu.be/3KdZQeZ9uqc_                                            |
 
 ## Live Demo
 
 Check out the live demo here: <a href="http://easy-email-m-ryan.vercel.app" target="_blank" alt="http://easy-email-m-ryan.vercel.app">http://easy-email-m-ryan.vercel.app</a>
-
 
 ## Getting started
 
@@ -77,29 +71,26 @@ $ yarn add easy-email-editor antd mjml-browser react-final-form
 ## Usage
 
 ```js
-import React from 'react';
-import { BlocksMap, EmailEditor, EmailEditorProvider } from 'easy-email-editor';
-import 'easy-email-editor/lib/style.css';
-import 'antd/dist/antd.css';
+import React from "react";
+import { BlocksMap, EmailEditor, EmailEditorProvider } from "easy-email-editor";
+import "easy-email-editor/lib/style.css";
+import "antd/dist/antd.css";
 
 const initialValues = {
-  subject: 'Welcome to Easy-email',
-  subTitle: 'Nice to meet you!',
-  content:BlocksMap.getBlock('Page').createInstance({}),
+  subject: "Welcome to Easy-email",
+  subTitle: "Nice to meet you!",
+  content: BlocksMap.getBlock("Page").createInstance({}),
 };
 
 export function App() {
   return (
     <EmailEditorProvider data={initialValues}>
       {({ values }) => {
-        return (
-          <EmailEditor height={'calc(100vh - 72px)'} />
-        );
+        return <EmailEditor height={"calc(100vh - 72px)"} />;
       }}
     </EmailEditorProvider>
   );
 }
-
 ```
 
 ## Development
@@ -112,45 +103,44 @@ $ yarn install
 ```
 
 ## Start the dev server
+
 ```sh
 $ yarn dev
 
 ```
 
-You could customize your own blocks and inject data before sending emails. For more details, please see  <a href="./How to write a custom block.md" target="_blank">here</a>
+## Custom block
 
-<img src="https://assets.maocanhua.cn/Fn4SuBB6jnbGaxFmiLulNZwGne5Y" alt="Overview" width="50%" style="text-align:center" />
-
-<br/>
-<br/>
-<br/>
+> You could customize your own blocks and inject data before sending emails. For more details, please see <a href="./How to write a custom block.md" target="_blank">here</a>
+>
+> <img src="https://assets.maocanhua.cn/Fn4SuBB6jnbGaxFmiLulNZwGne5Y" alt="Overview" width="50%" style="text-align:center" />
 
 ## Examples
-Please see <a href="https://github.com/m-Ryan/easy-email-demo" target="_blank" alt="https://github.com/m-Ryan/easy-email-demo">https://github.com/m-Ryan/easy-email-demo</a>
 
-<br/>
+> Please see <a href="https://github.com/m-Ryan/easy-email-demo" target="_blank" alt="https://github.com/m-Ryan/easy-email-demo">https://github.com/m-Ryan/easy-email-demo</a>
+
+## Use test account
+
+> Maybe you just want a test account that belongs to you. See <a href="./How to use an test account.md" target="_blank">here</a>.
 
 ## EmailEditorProvider Configuration
 
-| property              | Type                              | Description                                                                  |
-| -------------------------- | --------------------------------- | ---------------------------------------------------------------------------- |
-| data       | interface IEmailTemplate { content: IPage; subject: string; subTitle: string; }            | Source data |
-| children       |  ( props: FormState<T>,helper: FormApi<IEmailTemplate, Partial<IEmailTemplate>>) => React.ReactNode| ReactNode |
-| onSubmit       |  Config<IEmailTemplate, Partial<IEmailTemplate>>['onSubmit'];           | Called when the commit is triggered manually  |
-| fontList       | { value: string; label: string; }[];            | Default font list. |
-| interactiveStyle  | { hoverColor?: string; selectedColor?: string; dragoverColor?: string; tangentColor?: string; } | Interactive prompt color          |
-| onUploadImage             | (data: Blob) => Promise<string>;                       | Triggered when an image is pasted or uploaded      |
-| onAddCollection |  (payload: CollectedBlock) => void; | Add to collection list    |
-| onRemoveCollection    | (payload: { id: string; }) => void;      | remove from collection list                               |
-
-<br/>
+| property           | Type                                                                                               | Description                                   |
+| ------------------ | -------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| data               | interface IEmailTemplate { content: IPage; subject: string; subTitle: string; }                    | Source data                                   |
+| children           | ( props: FormState<T>,helper: FormApi<IEmailTemplate, Partial<IEmailTemplate>>) => React.ReactNode | ReactNode                                     |
+| onSubmit           | Config<IEmailTemplate, Partial<IEmailTemplate>>['onSubmit'];                                       | Called when the commit is triggered manually  |
+| fontList           | { value: string; label: string; }[];                                                               | Default font list.                            |
+| interactiveStyle   | { hoverColor?: string; selectedColor?: string; dragoverColor?: string; tangentColor?: string; }    | Interactive prompt color                      |
+| onUploadImage      | (data: Blob) => Promise<string>;                                                                   | Triggered when an image is pasted or uploaded |
+| onAddCollection    | (payload: CollectedBlock) => void;                                                                 | Add to collection list                        |
+| onRemoveCollection | (payload: { id: string; }) => void;                                                                | remove from collection list                   |
 
 ## EmailEditor Configuration
 
-| property              | Type                              | Description                                                                  |
-| -------------------------- | --------------------------------- | ---------------------------------------------------------------------------- |
-| height       |    string | number;     | Set the height of the container |
-
+| property | Type             | Description                     |
+| -------- | ---------------- | ------------------------------- |
+| height   | string / number; | Set the height of the container |
 
 <br/>
 

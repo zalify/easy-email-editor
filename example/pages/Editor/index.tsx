@@ -27,9 +27,9 @@ import {
 import 'easy-email-editor/lib/style.css';
 import { Stack } from '@example/components/Stack';
 import { customBlocks } from './components/CustomBlocks';
-import { USER_ID } from '@example/constants';
 import { pushEvent } from '@example/util/pushEvent';
 import { FormApi } from 'final-form';
+import { UserStorage } from '@example/util/user-storage';
 
 const fontList = [
   'Arial',
@@ -56,7 +56,7 @@ export default function Editor() {
   const templateData = useAppSelector('template');
   const extraBlocksData = useAppSelector('extraBlocks');
   const { openModal, modal } = useEmailModal();
-  const { id, userId = USER_ID } = useQuery();
+  const { id, userId } = useQuery();
   const loading = useLoading(template.loadings.fetchById);
 
   const isSubmitting = useLoading([
@@ -66,7 +66,14 @@ export default function Editor() {
 
   useEffect(() => {
     if (id) {
-      dispatch(template.actions.fetchById({ id: +id, userId: +userId }));
+      if (!userId) {
+        UserStorage.getAccount().then(account => {
+          dispatch(template.actions.fetchById({ id: +id, userId: account.user_id }));
+        });
+      } else {
+        dispatch(template.actions.fetchById({ id: +id, userId: +userId }));
+      }
+
     } else {
       dispatch(template.actions.fetchDefaultTemplate(undefined));
     }

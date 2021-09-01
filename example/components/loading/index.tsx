@@ -1,13 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { LoadingOutlined } from '@ant-design/icons';
-import { PRIMARY_COLOR } from '@example/constants';
 
 type LoadingProps = {
   loading: boolean;
   children?: React.ReactNode;
   color?: string;
 };
-export function Loading({ loading, children, color = PRIMARY_COLOR }: LoadingProps) {
+export function Loading({ loading, children, color }: LoadingProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [state, setState] = useState({
     width: 0,

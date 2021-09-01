@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { IUser } from '@example/services/user';
-import { USER_PHONE, USER_PWD } from '@example/constants';
+import { USER } from '@example/constants';
 const sessionKey = 'session-key';
 const tokenKey = 'token-key';
 export class UserStorage {
@@ -29,8 +29,8 @@ export class UserStorage {
       const { data } = await axios.post<IUser>(
         '/user/visitor/login',
         {
-          phone: USER_PHONE,
-          password: USER_PWD,
+          phone: USER.phone,
+          password: USER.password,
         },
         {
           baseURL: 'https://www.maocanhua.cn',

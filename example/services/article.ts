@@ -1,5 +1,5 @@
 import { request } from './axios.config';
-import { CATEGORY_ID } from '@example/constants';
+import { USER } from '@example/constants';
 
 export const article = {
   async getArticle(id: number | string, userId: number): Promise<IArticle> {
@@ -38,7 +38,7 @@ export const article = {
   }): Promise<IArticle> {
     return request.post<IArticle>('/article/user/create-article', {
       ...data,
-      category_id: CATEGORY_ID,
+      category_id: USER.categoryId,
       tags: [74],
       secret: 0,
     });
