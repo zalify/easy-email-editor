@@ -12,7 +12,7 @@ export function getAdaptor(data: IArticle): IEmailTemplate {
     ...data,
     content,
     subject: data.title,
-    subTitle: '',
+    subTitle: data.summary,
   };
 }
 
@@ -53,7 +53,6 @@ export default createSliceState({
     ) => {
       const picture = await emailToImage(payload.template.content);
       const data = await article.addArticle({
-        ...payload.template,
         picture,
         summary: payload.template.subTitle,
         title: payload.template.subject,
@@ -92,9 +91,10 @@ export default createSliceState({
       try {
         const picture = await emailToImage(payload.template.content);
         await article.updateArticle(payload.id, {
-          ...payload.template,
           picture,
           content: JSON.stringify(payload.template.content),
+          title: payload.template.subject,
+          summary: payload.template.subTitle
         });
         payload.success(payload.id);
       } catch (error) {
