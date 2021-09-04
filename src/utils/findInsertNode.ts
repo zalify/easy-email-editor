@@ -7,50 +7,52 @@ import { ancestorOf } from './ancestorOf';
 
 /**
  * Can it be connected by completion, like text => section
- * @param type
+ * @param dragType
  * @param node
  * @param direction
  * @param autoComplete
  * @returns
  */
 export function findInsertNode(
-  type: BlockType,
+  dragType: BlockType,
   node: HTMLElement,
   direction: Direction,
   autoComplete: boolean
 ): HTMLElement | null {
-  const block = BlocksMap.findBlockByType(type);
+  const block = BlocksMap.findBlockByType(dragType);
   if (!block) return null;
-  const blockNode = findBlockNode(node);
-  if (!blockNode) return null;
-  const currentType = getNodeTypeFromClassName(
-    blockNode.classList
+  const targetNode = findBlockNode(node);
+  if (!targetNode) return null;
+  const targetType = getNodeTypeFromClassName(
+    targetNode.classList
   ) as BlockType;
 
-  if (autoComplete && ancestorOf(type, currentType) > 0) {
-    return node;
-  } else if (block.validParentType.includes(currentType)) {
+  if (autoComplete && ancestorOf(dragType, targetType) > 0) {
     return node;
   }
+  if (!direction) return null;
+  return getMatchBlock(dragType, node);
+}
 
-  if (node.parentElement) {
-    const parentBlockNode = findBlockNode(node.parentElement);
-    if (!parentBlockNode) return null;
+function getMatchBlock(dragType: BlockType, node: HTMLElement): HTMLElement | null {
+  const draggingBlock = BlocksMap.findBlockByType(dragType);
+  let targetNode = findBlockNode(node);
 
-    const isMatchTop = direction === 'top' && node.offsetTop <= deviation;
-    const isMatchBottom =
-      direction === 'bottom' &&
-      parentBlockNode.clientHeight - node.clientHeight <= deviation;
+  while (targetNode) {
 
-    const isLeft = direction === 'left' && node.offsetLeft <= deviation;
-    const isRight =
-      direction === 'right' &&
-      parentBlockNode.clientWidth - node.clientWidth <= deviation;
+    if (!(targetNode instanceof HTMLElement)) return null;
 
-    if (isMatchTop || isMatchBottom || isLeft || isRight) {
-      return findInsertNode(type, parentBlockNode, direction, autoComplete);
+    const targetType = getNodeTypeFromClassName(
+      targetNode.classList
+    ) as BlockType;
+
+    if (draggingBlock.validParentType.includes(targetType)) {
+
+      return targetNode;
     }
-  }
+    targetNode = findBlockNode(targetNode.parentElement);
 
-  return null;
+  }
+  return targetNode;
+
 }

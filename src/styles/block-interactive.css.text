@@ -1,17 +1,49 @@
+* {
+  --tooltip-vertical-image: linear-gradient(
+      180deg,
+      transparent calc(50% - 40px),
+      var(--tangent-color) calc(50% - 40px),
+      var(--tangent-color) calc(50% + 40px),
+      transparent calc(50% + 40px)
+    ),
+    linear-gradient(
+      90deg,
+      transparent,
+      transparent calc(100% - var(--line-width)),
+      var(--tangent-color) calc(100% - var(--line-width)),
+      var(--tangent-color) 100%
+    );
+
+  --tooltip-horizontal-image: linear-gradient(
+      90deg,
+      transparent calc(50% - 40px),
+      var(--tangent-color) calc(50% - 40px),
+      var(--tangent-color) calc(50% + 40px),
+      transparent calc(50% + 40px)
+    ),
+    linear-gradient(
+      180deg,
+      var(--tangent-color) 0,
+      var(--tangent-color) var(--line-width),
+      transparent var(--line-width)
+    );
+
+  --line-width: 1px;
+}
 
 [data-dragging="false"] .block-selected {
-  position:relative;
+  position: relative;
+  overflow: hidden;
   outline-offset: -2px;
   outline: 2px solid var(--selected-color) !important;
 }
 
-
 [data-dragging="false"] .block-hover {
+  overflow: hidden;
   outline-offset: -1px;
   outline: 1px solid var(--hover-color);
   background-color: rgba(255, 255, 255, 0.015);
-  position:relative;
-  overflow: hidden;
+  position: relative;
 }
 
 [data-dragging="false"] .block-hover:after {
@@ -23,16 +55,37 @@
   height: 0;
   z-index: 1;
   outline: 10000px solid var(--hover-color);
-  filter:opacity(0.1);
+  filter: opacity(0.1);
   outline-offset: -10000px -10000px;
 }
 
-
 [data-direction="none"] .block-dragover {
-  position:relative;
+  position: relative;
   overflow: hidden;
+
   outline-offset: -2px;
   outline: 2px solid var(--dragover-color) !important;
+}
+
+.block-dragover {
+  position: relative;
+  outline: 2px solid var(--tangent-color);
+}
+
+.block-dragover:after {
+  position: absolute;
+  z-index: 1;
+  content: "Drag here";
+  font-weight: bold;
+  display: block;
+  color: #ffffff;
+  font-size: 14px;
+  pointer-events: none;
+  text-align: center;
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 [data-direction="none"] .block-dragover:after {
@@ -44,70 +97,62 @@
   height: 0;
   z-index: 1;
   outline: 10000px solid var(--dragover-color);
-  filter:opacity(0.1);
+  filter: opacity(0.1);
   outline-offset: -10000px -10000px;
 }
 
-[data-direction="top"] .block-dragover {
-  position:relative;
-  overflow: hidden;
-}
-
 [data-direction="top"] .block-dragover:after {
-  content: "";
-  position: absolute;
   left: 0;
   top: 0;
   width: 100%;
-  height: 0;
-  z-index: 1;
-  outline: 2px solid var(--tangent-color);
-}
-
-[data-direction="bottom"] .block-dragover {
-  position:relative;
-  overflow: hidden;
+  background-image: var(--tooltip-horizontal-image);
 }
 
 [data-direction="bottom"] .block-dragover:after {
-  content: "";
-  position: absolute;
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 0;
-  z-index: 1;
-  outline: 2px solid var(--tangent-color);
-}
-
-[data-direction="right"] .block-dragover {
-  position:relative;
-  overflow: hidden;
+  background-image: var(--tooltip-horizontal-image);
+  transform: translateY(100%);
 }
 
 [data-direction="right"] .block-dragover:after {
-  content: "";
-  position: absolute;
   right: 0;
-  top: 0;
-  width: 0;
+  top: 0%;
   height: 100%;
-  z-index: 1;
-  outline: 2px solid var(--tangent-color);
+  background-image: linear-gradient(
+      180deg,
+      transparent calc(50% - 40px),
+      var(--tangent-color) calc(50% - 40px),
+      var(--tangent-color) calc(50% + 40px),
+      transparent calc(50% + 40px)
+    ),
+    linear-gradient(
+      90deg,
+      transparent,
+      transparent calc(100% - var(--line-width)),
+      var(--tangent-color) calc(100% - var(--line-width)),
+      var(--tangent-color) 100%
+    );
+  writing-mode: vertical-lr;
 }
 
-[data-direction="left"] .block-dragover {
-  position:relative;
-  overflow: hidden;
-}
-
-[data-direction="left"].block-dragover:after {
-  content: "";
-  position: absolute;
+[data-direction="left"] .block-dragover:after {
   left: 0;
-  top: 0;
-  width: 0;
+  top: 0%;
   height: 100%;
-  z-index: 1;
-  outline: 2px solid var(--tangent-color);
+  background-image: linear-gradient(
+      180deg,
+      transparent calc(50% - 40px),
+      var(--tangent-color) calc(50% - 40px),
+      var(--tangent-color) calc(50% + 40px),
+      transparent calc(50% + 40px)
+    ),
+    linear-gradient(
+      90deg,
+      var(--tangent-color) 0,
+      var(--tangent-color) var(--line-width),
+      transparent var(--line-width)
+    );
+  writing-mode: vertical-lr;
 }

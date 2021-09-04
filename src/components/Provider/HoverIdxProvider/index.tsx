@@ -7,10 +7,16 @@ export interface HoverIdxState {
   hoverIdx: string;
 }
 
+export interface DragPosition {
+  left: number;
+  top: number;
+}
 export interface DataTransfer {
   type: BlockType;
   payload?: any;
   action: 'add' | 'move';
+  positionIndex?: number;
+  parentIdx?: string;
 }
 
 export const HoverIdxContext = React.createContext<{
@@ -22,15 +28,22 @@ export const HoverIdxContext = React.createContext<{
   setDirection: React.Dispatch<React.SetStateAction<Direction | ''>>;
   dataTransfer: DataTransfer | null;
   setDataTransfer: React.Dispatch<React.SetStateAction<DataTransfer | null>>;
+  dragPosition: DragPosition;
+  setDragPosition: React.Dispatch<React.SetStateAction<DragPosition>>;
 }>({
   hoverIdx: '',
+  dragPosition: {
+    left: 0,
+    top: 0
+  },
   direction: '',
   isDragging: false,
   dataTransfer: null,
-  setHoverIdx: () => {},
-  setIsDragging: () => {},
-  setDirection: () => {},
-  setDataTransfer: () => {},
+  setHoverIdx: () => { },
+  setIsDragging: () => { },
+  setDirection: () => { },
+  setDataTransfer: () => { },
+  setDragPosition: () => { },
 });
 
 export const HoverIdxProvider: React.FC<{}> = (props) => {
@@ -38,6 +51,7 @@ export const HoverIdxProvider: React.FC<{}> = (props) => {
   const [isDragging, setIsDragging] = useState(false);
   const [dataTransfer, setDataTransfer] = useState<DataTransfer | null>(null);
   const [direction, setDirection] = useState<Direction | ''>('');
+  const [dragPosition, setDragPosition] = useState<DragPosition>({ left: 0, top: 0 });
 
   return (
     <HoverIdxContext.Provider
@@ -50,6 +64,8 @@ export const HoverIdxProvider: React.FC<{}> = (props) => {
         setIsDragging,
         direction,
         setDirection,
+        dragPosition,
+        setDragPosition
       }}
     >
       {props.children}

@@ -2,12 +2,14 @@ import React, { useMemo } from 'react';
 
 import {
   findBlockByType,
+  getChildIdx,
   getNodeTypeFromClassName,
 } from '@/utils/block';
 import { BlockType } from '@/constants';
 import { findBlockNodeByIdx } from '@/utils/findBlockNodeByIdx';
 import { useHoverIdx } from '@/hooks/useHoverIdx';
 import { BlocksMap } from '@/components/core/blocks';
+import { useDataTransfer } from '@/hooks/useDataTransfer';
 
 export function HoverTooltip() {
   const { hoverIdx, isDragging, direction } = useHoverIdx();
@@ -38,10 +40,14 @@ export function HoverTooltip() {
   }, [hoverBlock]);
 
   const tooltipContent = useMemo(() => {
-    const blockNode = findBlockNodeByIdx(hoverIdx);
+    let idx = hoverIdx;
+    const blockNode = findBlockNodeByIdx(idx);
+
     if (!isDragging || !blockNode) return tooltip.blockName;
     const type = getNodeTypeFromClassName(blockNode.classList)!;
     const block = BlocksMap.findBlockByType(type);
+    if (!block) return;
+
     if (direction) {
       if (['top', 'left'].includes(direction)) {
         return `Insert before ${block.name}`;
@@ -61,6 +67,7 @@ export function HoverTooltip() {
           top: tooltip.top,
           left: tooltip.left,
           transform: 'translate(-100%, 50%)',
+          pointerEvents: 'none'
         }}
       >
         <div
