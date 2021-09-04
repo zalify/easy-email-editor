@@ -35,12 +35,14 @@
       justify-content: center;
       display: flex;
       border-top: 1px solid #eee;
+
       .listItem {
         color: #fff;
         flex: 1;
         align-items: center;
         justify-content: center;
         display: flex;
+        flex-wrap: nowrap;
         font-size: 14px;
         cursor: pointer;
         border-right: 1px solid #eee;
@@ -49,6 +51,7 @@
         }
         a {
           color: #fff;
+          white-space: nowrap;
         }
       }
     }

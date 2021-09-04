@@ -6,7 +6,7 @@ type LoadingProps = {
   children?: React.ReactNode;
   color?: string;
 };
-export function Loading({ loading, children, color }: LoadingProps) {
+export function Loading({ loading, children, color = '#1890ff' }: LoadingProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [state, setState] = useState({
     width: 0,

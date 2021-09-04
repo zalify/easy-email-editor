@@ -62,6 +62,25 @@ export default createSliceState({
       payload.success(data.article_id, getAdaptor(data));
       return { ...data, ...payload.template };
     },
+    duplicate: async (
+      state,
+      payload: {
+        article: {
+          article_id: number;
+          user_id: number;
+        };
+        success: (id: number) => void;
+      }
+    ) => {
+      const source = await article.getArticle(payload.article.article_id, payload.article.user_id);
+      const data = await article.addArticle({
+        title: source.title,
+        content: source.content.content,
+        picture: source.picture,
+        summary: source.summary,
+      });
+      payload.success(data.article_id);
+    },
     updateById: async (
       state,
       payload: {

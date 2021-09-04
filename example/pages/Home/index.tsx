@@ -33,7 +33,7 @@ export default function Home() {
       )}
     >
       <div style={{ minHeight: 400 }}>
-        <Loading loading={loading && !list.length}>
+        <Loading loading={loading}>
           <Stack>
             {list.map((item) => (
               <CardItem data={item} key={item.article_id} />

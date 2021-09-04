@@ -21,7 +21,7 @@ export default function createSliceState<State,
   Name extends string = string>
   (options: CreateSliceOptionsExt<State, CaseReducers, CaseEffects>):
   Slice<State, CaseReducers, Name> & {
-    actions: { [K in keyof CaseEffects]: (payload: Parameters<CaseEffects[K]>[1]) => void };
+    actions: { [K in keyof CaseEffects]: (payload: undefined | (Parameters<CaseEffects[K]>[1] & { _actionKey?: string | number; })) => void };
     loadings: { [K in keyof CaseEffects]: string };
   } {
 
@@ -31,12 +31,15 @@ export default function createSliceState<State,
     Object.keys(options.effects).forEach((prefix: keyof CaseEffects) => {
       const type = options.name + '/' + prefix;
       loadings[prefix] = type;
-      const asyncThunk = createAsyncThunk(type, async (payload, store) => {
-        store.dispatch(loading.actions.startLoading(type));
+      const asyncThunk = createAsyncThunk(type, async (payload: any, store) => {
+
+        const loadingType = payload?._actionKey ? options.name + '/' + prefix + '/' + payload._actionKey : options.name + '/' + prefix;
+        store.dispatch(loading.actions.startLoading(loadingType));
         try {
           const data = await options.effects[prefix]((store.getState() as any)[options.name], payload);
           return data;
         } catch (error) {
+
           store.dispatch(toast.actions.add({
             message: error.message || error,
             duration: 1.5,
@@ -44,7 +47,7 @@ export default function createSliceState<State,
           }));
         }
         finally {
-          store.dispatch(loading.actions.endLoading(type));
+          store.dispatch(loading.actions.endLoading(loadingType));
         }
       });
       effects[prefix] = asyncThunk;

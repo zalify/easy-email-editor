@@ -9,6 +9,7 @@ export default function Page({ children }: { children: React.ReactNode; }) {
   useEffect(() => {
     const current = errToast[0];
     if (current) {
+      console.error(current);
       message.error(current.message, current.duration, () => {
         toast.actions.remove(current);
       });
