@@ -61,8 +61,8 @@
 
 .block-dragover {
   position: relative;
-  outline-offset: -3px;
-  outline: 3px solid var(--tangent-color);
+  outline-offset: -2px;
+  outline: 2px solid var(--tangent-color);
 }
 
 .block-dragover:after {
@@ -111,19 +111,58 @@
     );
 }
 
-[data-direction="top"] .block-dragover:after,
-[data-direction="left"] .block-dragover:after {
+[data-direction="top"] .block-dragover:after {
   left: 0;
   top: 0;
   width: 100%;
   background-image: var(--tooltip-horizontal-image);
 }
 
-[data-direction="bottom"] .block-dragover:after,
-[data-direction="right"] .block-dragover:after {
+[data-direction="bottom"] .block-dragover:after {
   left: 0;
   bottom: 0;
   width: 100%;
   background-image: var(--tooltip-horizontal-image);
   transform: translateY(100%);
+}
+
+[data-direction="right"] .block-dragover:after {
+  right: 0;
+  top: 0%;
+  height: 100%;
+  background-image: linear-gradient(
+      180deg,
+      transparent calc(50% - 40px),
+      var(--tangent-color) calc(50% - 40px),
+      var(--tangent-color) calc(50% + 40px),
+      transparent calc(50% + 40px)
+    ),
+    linear-gradient(
+      90deg,
+      transparent,
+      transparent calc(100% - var(--line-width)),
+      var(--tangent-color) calc(100% - var(--line-width)),
+      var(--tangent-color) 100%
+    );
+  writing-mode: vertical-lr;
+}
+
+[data-direction="left"] .block-dragover:after {
+  left: 0;
+  top: 0%;
+  height: 100%;
+  background-image: linear-gradient(
+      180deg,
+      transparent calc(50% - 40px),
+      var(--tangent-color) calc(50% - 40px),
+      var(--tangent-color) calc(50% + 40px),
+      transparent calc(50% + 40px)
+    ),
+    linear-gradient(
+      90deg,
+      var(--tangent-color) 0,
+      var(--tangent-color) var(--line-width),
+      transparent var(--line-width)
+    );
+  writing-mode: vertical-lr;
 }

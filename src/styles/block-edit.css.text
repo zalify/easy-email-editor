@@ -3,7 +3,7 @@
 }
 
 .email-block {
-  outline: 1px dashed rgba(170,170,170,0.7);
+  outline: 1px dashed rgba(170, 170, 170, 0.7);
   outline-offset: -2px;
 }
 
@@ -14,15 +14,16 @@
 .node-type-page * {
   user-select: none;
 }
-.node-type-group{
-  min-height: 30px
+.node-type-group {
+  min-height: 30px;
 }
 :not(.email-block) {
   -webkit-user-drag: none;
-	cursor: default;
+  cursor: default;
 }
 
-.email-block [contentEditable="true"],.email-block [contentEditable="true"] * {
+.email-block [contentEditable="true"],
+.email-block [contentEditable="true"] * {
   outline: none;
   cursor: text;
 }

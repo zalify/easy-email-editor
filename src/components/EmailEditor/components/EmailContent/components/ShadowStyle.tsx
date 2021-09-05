@@ -8,7 +8,7 @@ export function ShadowStyle() {
       <style>
         {blockEditstyleText}
       </style>
-      <BlockInteractiveStyle />
+      <BlockInteractiveStyle isShadowDom />
     </>
   );
 }

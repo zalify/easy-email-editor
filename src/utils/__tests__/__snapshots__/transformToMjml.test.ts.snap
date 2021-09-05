@@ -6,8 +6,7 @@ exports[`Test transformToMjml when mode is "production" should render as expecte
           <mj-head>
               
     <mj-html-attributes>
-      <mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"content-background-color\\" content-background-color=\\"#ffffff\\"></mj-html-attribute>
-<mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"text-color\\" text-color=\\"#000000\\"></mj-html-attribute>
+      <mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"text-color\\" text-color=\\"#000000\\"></mj-html-attribute>
 <mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"font-family\\" font-family=\\"lucida Grande,Verdana,Microsoft YaHei\\"></mj-html-attribute>
 <mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"responsive\\" responsive=\\"true\\"></mj-html-attribute>
 
@@ -20,9 +19,7 @@ exports[`Test transformToMjml when mode is "production" should render as expecte
               
               <mj-all font-family=\\"lucida Grande,Verdana,Microsoft YaHei\\" />
               <mj-text color=\\"#000000\\" />
-              <mj-wrapper background-color=\\"#ffffff\\" />
-                     <mj-section background-color=\\"#ffffff\\" />
-                    
+              
               
             </mj-attributes>
           </mj-head>
@@ -51,8 +48,7 @@ exports[`Test transformToMjml when mode is "testing" should render as expected 1
           <mj-head>
               
     <mj-html-attributes>
-      <mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"content-background-color\\" content-background-color=\\"#ffffff\\"></mj-html-attribute>
-<mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"text-color\\" text-color=\\"#000000\\"></mj-html-attribute>
+      <mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"text-color\\" text-color=\\"#000000\\"></mj-html-attribute>
 <mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"font-family\\" font-family=\\"lucida Grande,Verdana,Microsoft YaHei\\"></mj-html-attribute>
 <mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"responsive\\" responsive=\\"true\\"></mj-html-attribute>
 
@@ -65,9 +61,7 @@ exports[`Test transformToMjml when mode is "testing" should render as expected 1
               
               <mj-all font-family=\\"lucida Grande,Verdana,Microsoft YaHei\\" />
               <mj-text color=\\"#000000\\" />
-              <mj-wrapper background-color=\\"#ffffff\\" />
-                     <mj-section background-color=\\"#ffffff\\" />
-                    
+              
               
             </mj-attributes>
           </mj-head>

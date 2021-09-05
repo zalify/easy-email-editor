@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import blockInteractiveStyleText from '@/styles/block-interactive.css.text?raw';
+import blockShadowInteractiveStyleText from '@/styles/block-shadowDom-interactive.css.text?raw';
 import { EditorPropsContext } from '@/components/Provider/PropsProvider';
 
-export function BlockInteractiveStyle() {
+export function BlockInteractiveStyle({ isShadowDom }: { isShadowDom: boolean; }) {
   const {
     interactiveStyle: {
       hoverColor = '#3b97e3',
@@ -22,7 +23,7 @@ export function BlockInteractiveStyle() {
       --tangent-color: ${tangentColor};
     }
 
-     ${blockInteractiveStyleText}
+     ${isShadowDom ? blockShadowInteractiveStyleText : blockInteractiveStyleText}
 
     `,
       }}

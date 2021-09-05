@@ -1,16 +1,14 @@
 .blockItem {
   list-style-position: inside;
   list-style-type: none;
-  padding: 16px;
-  display: flex;
-  cursor: pointer;
-  &:hover {
-    color: #1890ff;
-    background-color: #e6f7ff;
 
-    .shortcutTool {
-      opacity: 1;
-    }
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  .listItemContent {
+    display: flex;
+    flex: 1;
+    padding: 16px;
   }
 
   .shortcutTool {
@@ -27,4 +25,12 @@
 .blockItemSelected {
   color: #1890ff;
   background-color: #e6f7ff;
+}
+
+.blockItem:global(.node-type-page) {
+  background-color:initial;
+}
+
+:global(.block-hover)>.listItemContent .shortcutTool {
+  opacity: 1;
 }

@@ -1,26 +1,21 @@
-import { BasicType, BLOCK_HOVER_CLASSNAME } from './../constants';
+import { BLOCK_HOVER_CLASSNAME } from './../constants';
 import { useEffect, useMemo, useState, useContext, useRef } from 'react';
 
 import {
-  getIndexByIdx,
   getNodeIdxFromClassName,
   getNodeTypeFromClassName,
-  getParentByType,
-  getParentIdx,
-  getParenRelativeByType,
-  getChildIdx,
 } from '@/utils/block';
 import { findBlockNode } from '@/utils/findBlockNode';
 import { BlockType, DRAG_HOVER_CLASSNAME } from '@/constants';
 import { useBlock } from '@/hooks/useBlock';
-import { getTangentDirection } from '@/utils/getTangentDirection';
-import { get } from 'lodash';
+import { getDirectionPosition } from '@/utils/DirectionPosition';
 import { findBlockNodeByIdx, getBlockNodes } from '@/utils/findBlockNodeByIdx';
 import { useFocusIdx } from './useFocusIdx';
 import { useDataTransfer } from './useDataTransfer';
 import { useHoverIdx } from './useHoverIdx';
 import { findInsertNode } from '@/utils/findInsertNode';
 import { EditorPropsContext } from '@/components/Provider/PropsProvider';
+import { getInsertPosition } from '@/utils/getInsertPosition';
 
 export function useDropBlock() {
   const [ref, setRef] = useState<HTMLElement | null>(null);
@@ -157,7 +152,7 @@ export function useDropBlock() {
         });
         const blockNode = findBlockNode(ev.target as HTMLDivElement);
         if (blockNode) {
-          const direction = getTangentDirection(ev);
+          const directionPosition = getDirectionPosition(ev);
           const idx = getNodeIdxFromClassName(blockNode.classList)!;
 
           const type = dataTransfer.type;
@@ -165,7 +160,7 @@ export function useDropBlock() {
             ? findInsertNode(
               type,
               blockNode,
-              direction,
+              directionPosition,
               Boolean(autoComplete)
             )
             : blockNode;
@@ -175,49 +170,24 @@ export function useDropBlock() {
               validBlockNode.classList
             ) as BlockType;
 
-            // Because only the Section is lined up horizontally, right and left are only useful for section, and top and bottom are only useful for other blocks.
+            const positionData = getInsertPosition({
+              context: cacheValues.current,
+              idx,
+              directionPosition,
+              dragType: targetType,
+            });
 
-            // 获取当前 focus 的 节点到 目标type的一些数据， 比如 text => section， 获取section 的blockData，idx，以及插入的位置
+            if (positionData) {
+              ev.preventDefault();
+              isValid = true;
+              setDirection(positionData.endDirection);
+              setDataTransfer({
+                ...dataTransfer,
+                positionIndex: positionData.insertIndex,
+                parentIdx: positionData.parentIdx
+              });
 
-            const relativeData = getParenRelativeByType(cacheValues.current, idx, targetType);
-
-            if (relativeData) {
-              const isSectionType = targetType === BasicType.SECTION;
-              const formatDirection = isSectionType ? direction.replace(/(top|bottom|-)/, '') : direction.replace(/(right|left|-)/, '');
-              if (direction === '') {
-                isValid = true;
-              } else {
-                if (isSectionType) {
-                  if (formatDirection === 'left' || formatDirection === 'right') {
-                    isValid = true;
-                  }
-                } else {
-                  if (formatDirection === 'top' || formatDirection === 'bottom') {
-                    isValid = true;
-                  }
-                }
-
-              }
-
-              if (isValid) {
-                ev.preventDefault();
-                const recommendAppendToEnd = relativeData.parent.children.length > 0 && !direction;
-                const appendToEnd = (!formatDirection || /(right|bottom|-)/.test(formatDirection)) && relativeData.parent.children.length > 0;
-                if (appendToEnd) {
-                  setDirection(isSectionType ? 'right' : 'bottom');
-                } else {
-                  setDirection(formatDirection as any);
-                }
-
-                setDataTransfer({
-                  ...dataTransfer,
-                  positionIndex: (appendToEnd || recommendAppendToEnd) ? relativeData.insertIndex + 1 : relativeData.insertIndex,
-                  parentIdx: relativeData.parentIdx
-                });
-                setHoverIdx((appendToEnd || recommendAppendToEnd) ? getChildIdx(relativeData.parentIdx, relativeData.insertIndex) : idx);
-
-              }
-
+              setHoverIdx(positionData.hoverIdx);
             }
 
           }
