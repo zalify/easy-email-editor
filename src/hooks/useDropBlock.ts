@@ -1,35 +1,38 @@
-import { BasicType, BLOCK_HOVER_CLASSNAME } from './../constants';
-import { useEffect, useMemo, useState, useContext } from 'react';
+import { BLOCK_HOVER_CLASSNAME } from './../constants';
+import { useEffect, useMemo, useState, useContext, useRef } from 'react';
 
 import {
-  getIndexByIdx,
   getNodeIdxFromClassName,
   getNodeTypeFromClassName,
-  getParentIdx,
 } from '@/utils/block';
 import { findBlockNode } from '@/utils/findBlockNode';
 import { BlockType, DRAG_HOVER_CLASSNAME } from '@/constants';
 import { useBlock } from '@/hooks/useBlock';
-import { getTangentDirection } from '@/utils/getTangentDirection';
-import { get } from 'lodash';
+import { getDirectionPosition } from '@/utils/DirectionPosition';
 import { findBlockNodeByIdx, getBlockNodes } from '@/utils/findBlockNodeByIdx';
 import { useFocusIdx } from './useFocusIdx';
 import { useDataTransfer } from './useDataTransfer';
 import { useHoverIdx } from './useHoverIdx';
 import { findInsertNode } from '@/utils/findInsertNode';
 import { EditorPropsContext } from '@/components/Provider/PropsProvider';
+import { getInsertPosition } from '@/utils/getInsertPosition';
 
 export function useDropBlock() {
   const [ref, setRef] = useState<HTMLElement | null>(null);
   const { values, addBlock, moveBlock } = useBlock();
   const { autoComplete } = useContext(EditorPropsContext);
+  const cacheValues = useRef(values);
+
+  useEffect(() => {
+    cacheValues.current = values;
+  }, [values]);
 
   const isShadowDom = useMemo(
     () => !Boolean(ref && document.contains(ref)),
     [ref]
   );
 
-  const { setFocusIdx } = useFocusIdx();
+  const { setFocusIdx, } = useFocusIdx();
   const {
     setHoverIdx,
     setIsDragging,
@@ -37,9 +40,10 @@ export function useDropBlock() {
     isDragging,
     hoverIdx,
     direction,
+    setDragPosition
   } = useHoverIdx();
 
-  const { dataTransfer } = useDataTransfer();
+  const { dataTransfer, setDataTransfer } = useDataTransfer();
 
   useEffect(() => {
     if (ref) {
@@ -76,50 +80,33 @@ export function useDropBlock() {
     if (!ref) return;
 
     const onDrop = (ev: DragEvent) => {
+      if (!dataTransfer) return;
       const target = ev.target as HTMLElement;
       const blockNode = findBlockNode(target);
       if (!blockNode) return;
 
-      const type = dataTransfer?.type as BlockType;
-      const action = dataTransfer?.action;
+      const type = dataTransfer.type;
+      const action = dataTransfer.action;
       if (!type) return;
-      const payload = dataTransfer?.payload || {};
-
-      const parentIdx = getNodeIdxFromClassName(blockNode.classList)!;
-
-      const parent = get(values, parentIdx);
+      const payload = dataTransfer.payload || {};
 
       if (parent) {
         ev.preventDefault();
 
-        const direction = getTangentDirection(ev);
         const blockData: Parameters<typeof addBlock>[0] = {
           payload,
           type,
-          parentIdx,
+          parentIdx: dataTransfer.parentIdx!,
+          positionIndex: dataTransfer.positionIndex
         };
 
         if (action === 'move') {
-          if (direction === 'top' || direction === 'left') {
-            blockData.parentIdx = getParentIdx(parentIdx)!;
-            blockData.positionIndex = +getIndexByIdx(parentIdx);
-          } else if (direction === 'bottom' || direction === 'right') {
-            blockData.parentIdx = getParentIdx(parentIdx)!;
-            blockData.positionIndex = +getIndexByIdx(parentIdx) + 1;
-          }
           moveBlock({
             sourceIdx: blockData.payload,
             destinationIdx: blockData.parentIdx,
             positionIndex: blockData.positionIndex!,
           });
         } else {
-          if (direction === 'top' || direction === 'left') {
-            blockData.parentIdx = getParentIdx(parentIdx)!;
-            blockData.positionIndex = +getIndexByIdx(parentIdx);
-          } else if (direction === 'bottom' || direction === 'right') {
-            blockData.parentIdx = getParentIdx(parentIdx)!;
-            blockData.positionIndex = +getIndexByIdx(parentIdx) + 1;
-          }
           addBlock(blockData);
         }
       }
@@ -129,16 +116,7 @@ export function useDropBlock() {
     return () => {
       ref.removeEventListener('drop', onDrop);
     };
-  }, [
-    addBlock,
-    dataTransfer?.action,
-    dataTransfer?.payload,
-    dataTransfer?.type,
-    moveBlock,
-    ref,
-    setIsDragging,
-    values,
-  ]);
+  }, [addBlock, dataTransfer, moveBlock, ref, setIsDragging, values]);
 
   useEffect(() => {
     if (ref) {
@@ -165,51 +143,53 @@ export function useDropBlock() {
       };
 
       const onDragOver = (ev: DragEvent) => {
+        if (!dataTransfer) return;
         let isValid = false;
         setIsDragging(true);
-
+        setDragPosition({
+          left: ev.pageX,
+          top: ev.pageY
+        });
         const blockNode = findBlockNode(ev.target as HTMLDivElement);
         if (blockNode) {
-          const direction = getTangentDirection(ev);
-          setDirection(direction);
+          const directionPosition = getDirectionPosition(ev);
+          const idx = getNodeIdxFromClassName(blockNode.classList)!;
 
-          const type = dataTransfer?.type!;
+          const type = dataTransfer.type;
           const validBlockNode = isShadowDom
             ? findInsertNode(
-                type,
-                direction ? blockNode.parentElement! : blockNode,
-                direction,
-                Boolean(autoComplete)
-              )
+              type,
+              blockNode,
+              directionPosition,
+              Boolean(autoComplete)
+            )
             : blockNode;
 
           if (validBlockNode) {
             const targetType = getNodeTypeFromClassName(
               validBlockNode.classList
-            );
+            ) as BlockType;
 
-            // Because only the Section is lined up horizontally, right and left are only useful for section, and top and bottom are only useful for other blocks.
+            const positionData = getInsertPosition({
+              context: cacheValues.current,
+              idx,
+              directionPosition,
+              dragType: targetType,
+            });
 
-            const isInsert = !direction;
-            const isSectionBeforeAfter =
-              targetType === BasicType.SECTION &&
-              ['left', 'right'].includes(direction);
-
-            const isOtherInsertBeforeAfter =
-              targetType !== BasicType.SECTION &&
-              ['top', 'bottom'].includes(direction);
-
-            if (
-              isInsert ||
-              isSectionBeforeAfter ||
-              isOtherInsertBeforeAfter ||
-              !isShadowDom
-            ) {
-              isValid = true;
+            if (positionData) {
               ev.preventDefault();
-              const idx = getNodeIdxFromClassName(blockNode.classList)!;
-              setHoverIdx(idx);
+              isValid = true;
+              setDirection(positionData.endDirection);
+              setDataTransfer({
+                ...dataTransfer,
+                positionIndex: positionData.insertIndex,
+                parentIdx: positionData.parentIdx
+              });
+
+              setHoverIdx(positionData.hoverIdx);
             }
+
           }
         }
         if (!isValid) {
@@ -236,15 +216,7 @@ export function useDropBlock() {
         ref.removeEventListener('dragleave', onDragLeave);
       };
     }
-  }, [
-    autoComplete,
-    dataTransfer?.type,
-    isShadowDom,
-    ref,
-    setDirection,
-    setHoverIdx,
-    setIsDragging,
-  ]);
+  }, [autoComplete, dataTransfer, isShadowDom, ref, setDataTransfer, setDirection, setDragPosition, setHoverIdx, setIsDragging]);
 
   useEffect(() => {
     if (ref) {

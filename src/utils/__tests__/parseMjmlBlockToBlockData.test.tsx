@@ -51,9 +51,8 @@ describe('Test parseXml', () => {
               },
               children: [],
               data: {
-                content: 'hello',
                 value: {
-                  content: 'Make it easy for everyone to compose emails!',
+                  content: 'hello',
                 },
               },
               type: 'text',
@@ -69,7 +68,7 @@ describe('Test parseXml', () => {
   });
 
   it('should be error when component is not basic block', () => {
-    const reactNode = <div></div>;
+    const reactNode = <div />;
 
     expect(() => parseMjmlBlockToBlockData(reactNode)).toThrowError();
   });

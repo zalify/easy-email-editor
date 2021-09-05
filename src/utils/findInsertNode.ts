@@ -1,56 +1,77 @@
 import { BlocksMap } from './../components/core/blocks/index';
 import { findBlockNode } from './findBlockNode';
-import { deviation, Direction } from './getTangentDirection';
+import { DirectionPosition } from './DirectionPosition';
 import { BlockType } from '@/constants';
 import { getNodeTypeFromClassName } from './block';
 import { ancestorOf } from './ancestorOf';
 
 /**
  * Can it be connected by completion, like text => section
- * @param type
+ * @param dragType
  * @param node
  * @param direction
  * @param autoComplete
  * @returns
  */
 export function findInsertNode(
-  type: BlockType,
+  dragType: BlockType,
   node: HTMLElement,
-  direction: Direction,
+  direction: DirectionPosition,
   autoComplete: boolean
 ): HTMLElement | null {
-  const block = BlocksMap.findBlockByType(type);
+  const block = BlocksMap.findBlockByType(dragType);
   if (!block) return null;
-  const blockNode = findBlockNode(node);
-  if (!blockNode) return null;
-  const currentType = getNodeTypeFromClassName(
-    blockNode.classList
+  const targetNode = findBlockNode(node);
+  if (!targetNode) return null;
+  const targetType = getNodeTypeFromClassName(
+    targetNode.classList
   ) as BlockType;
 
-  if (autoComplete && ancestorOf(type, currentType) > 0) {
-    return node;
-  } else if (block.validParentType.includes(currentType)) {
+  if (autoComplete && ancestorOf(dragType, targetType) > 0) {
     return node;
   }
+  if (!direction.horizontal.direction || !direction.vertical.direction) return null;
+  return getMatchBlock(dragType, node);
+}
 
-  if (node.parentElement) {
-    const parentBlockNode = findBlockNode(node.parentElement);
-    if (!parentBlockNode) return null;
+/**
+ * 例如
+ * <Section>
+    <Column>
+      <Image />
+    </Column>
+   </Section>
+ *
 
-    const isMatchTop = direction === 'top' && node.offsetTop <= deviation;
-    const isMatchBottom =
-      direction === 'bottom' &&
-      parentBlockNode.clientHeight - node.clientHeight <= deviation;
+ * 如果 drag `Column` 到 Image 的边缘， 由于我们可以找到 Image的 ancestor 同样可以作为 Column 的 ancestor， 则可以认为是 要插入到Section，我们需要把该Column 插入到 Image的父级Column 的前面或者后面， Insert Before Column  或者  Insert After Column
+ *
+ * 要点
+ *    1. 边缘， Boolean(direction)
+ *    2. Column.validParentType.includes(Image.ancestor.type)
+ * @param dragType
+ * @param node
+ * @returns
+ */
 
-    const isLeft = direction === 'left' && node.offsetLeft <= deviation;
-    const isRight =
-      direction === 'right' &&
-      parentBlockNode.clientWidth - node.clientWidth <= deviation;
+function getMatchBlock(dragType: BlockType, node: HTMLElement): HTMLElement | null {
+  const draggingBlock = BlocksMap.findBlockByType(dragType);
+  let targetNode = findBlockNode(node);
 
-    if (isMatchTop || isMatchBottom || isLeft || isRight) {
-      return findInsertNode(type, parentBlockNode, direction, autoComplete);
+  while (targetNode) {
+
+    if (!(targetNode instanceof HTMLElement)) return null;
+
+    const targetType = getNodeTypeFromClassName(
+      targetNode.classList
+    ) as BlockType;
+
+    if (draggingBlock.validParentType.includes(targetType)) {
+
+      return targetNode;
     }
-  }
+    targetNode = findBlockNode(targetNode.parentElement);
 
-  return null;
+  }
+  return targetNode;
+
 }

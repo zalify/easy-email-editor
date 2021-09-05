@@ -64,7 +64,6 @@ export function InlineText({
       };
 
       const onInput = () => {
-        console.log('touch', idx);
 
         setFieldTouched(idx, true);
       };

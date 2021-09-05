@@ -36,7 +36,7 @@ export function BlockLayerManager() {
     return (
       <div ref={setRef}>
         <BlockLayerItem blockData={pageData} idx={getPageIdx()} />
-        <BlockInteractiveStyle />
+        <BlockInteractiveStyle isShadowDom={false} />
       </div>
     );
   }, [pageData, setRef]);
@@ -98,7 +98,7 @@ const BlockLayerItem = ({
     return <RightOutlined onClickCapture={onToggle} />;
   }, [collapsed, isPageBlock, noChild, onToggle, visible]);
 
-  const listItem = (
+  const renderListItem = (child: React.ReactNode) => (
     <BlockAvatarWrapper type={blockData.type} payload={idx} action='move'>
       <li
         className={classnames(
@@ -110,29 +110,33 @@ const BlockLayerItem = ({
         )}
         data-idx={idx}
       >
-        <Stack.Item fill>
-          <Stack distribution='equalSpacing'>
-            <Stack spacing='tight'>
-              {indent}
-              <EyeIcon idx={idx} blockData={blockData} />
-              <TextStyle>{title}</TextStyle>
+        <div className={styles.listItemContent}>
+          <Stack.Item fill>
+            <Stack distribution='equalSpacing'>
+              <Stack spacing='tight'>
+                {indent}
+                <EyeIcon idx={idx} blockData={blockData} />
+                <TextStyle>{title}</TextStyle>
+              </Stack>
+              <Stack>
+                <ShortcutTool idx={idx} blockData={blockData} />
+                {subIcon}
+                <Stack.Item />
+              </Stack>
             </Stack>
-            <Stack>
-              <ShortcutTool idx={idx} blockData={blockData} />
-              {subIcon}
-              <Stack.Item />
-            </Stack>
-          </Stack>
-        </Stack.Item>
+          </Stack.Item>
+        </div>
+        {
+          child
+        }
       </li>
     </BlockAvatarWrapper>
   );
 
-  if (noChild) return listItem;
+  if (noChild) return renderListItem(null);
   return (
     <>
-      {listItem}
-      {visible && (
+      {renderListItem(visible && (
         <ul className={classnames(styles.blockList)}>
           {blockData.children.map((item, index) => (
             <BlockLayerItem
@@ -148,7 +152,7 @@ const BlockLayerItem = ({
             />
           ))}
         </ul>
-      )}
+      ))}
     </>
   );
 };
