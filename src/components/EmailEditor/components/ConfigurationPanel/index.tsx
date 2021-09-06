@@ -8,7 +8,7 @@ export function ConfigurationPanel() {
   return useMemo(
     () => (
       <Tabs tabBarStyle={{ paddingLeft: 20 }}>
-        <Tabs.TabPane key='Configarution' tab='Configarution'>
+        <Tabs.TabPane key='Configuration' tab='Configuration'>
           <AttributesManager />
         </Tabs.TabPane>
         <Tabs.TabPane key='Block layer' tab='Block layer'>

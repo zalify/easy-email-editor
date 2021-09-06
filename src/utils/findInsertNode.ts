@@ -1,6 +1,6 @@
 import { BlocksMap } from './../components/core/blocks/index';
 import { findBlockNode } from './findBlockNode';
-import { DirectionPosition } from './DirectionPosition';
+import { DirectionPosition } from './getDirectionPosition';
 import { BlockType } from '@/constants';
 import { getNodeTypeFromClassName } from './block';
 import { ancestorOf } from './ancestorOf';
@@ -30,7 +30,8 @@ export function findInsertNode(
   if (autoComplete && ancestorOf(dragType, targetType) > 0) {
     return node;
   }
-  if (!direction.horizontal.direction || !direction.vertical.direction) return null;
+  if (!direction.horizontal.direction || !direction.vertical.direction)
+    return null;
   return getMatchBlock(dragType, node);
 }
 
@@ -53,12 +54,14 @@ export function findInsertNode(
  * @returns
  */
 
-function getMatchBlock(dragType: BlockType, node: HTMLElement): HTMLElement | null {
+function getMatchBlock(
+  dragType: BlockType,
+  node: HTMLElement
+): HTMLElement | null {
   const draggingBlock = BlocksMap.findBlockByType(dragType);
   let targetNode = findBlockNode(node);
 
   while (targetNode) {
-
     if (!(targetNode instanceof HTMLElement)) return null;
 
     const targetType = getNodeTypeFromClassName(
@@ -66,12 +69,9 @@ function getMatchBlock(dragType: BlockType, node: HTMLElement): HTMLElement | nu
     ) as BlockType;
 
     if (draggingBlock.validParentType.includes(targetType)) {
-
       return targetNode;
     }
     targetNode = findBlockNode(targetNode.parentElement);
-
   }
   return targetNode;
-
 }

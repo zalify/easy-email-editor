@@ -8,7 +8,7 @@ import {
 import { findBlockNode } from '@/utils/findBlockNode';
 import { BlockType, DRAG_HOVER_CLASSNAME } from '@/constants';
 import { useBlock } from '@/hooks/useBlock';
-import { getDirectionPosition } from '@/utils/DirectionPosition';
+import { getDirectionPosition } from '@/utils/getDirectionPosition';
 import { findBlockNodeByIdx, getBlockNodes } from '@/utils/findBlockNodeByIdx';
 import { useFocusIdx } from './useFocusIdx';
 import { useDataTransfer } from './useDataTransfer';
@@ -32,7 +32,7 @@ export function useDropBlock() {
     [ref]
   );
 
-  const { setFocusIdx, } = useFocusIdx();
+  const { setFocusIdx } = useFocusIdx();
   const {
     setHoverIdx,
     setIsDragging,
@@ -40,7 +40,7 @@ export function useDropBlock() {
     isDragging,
     hoverIdx,
     direction,
-    setDragPosition
+    setDragPosition,
   } = useHoverIdx();
 
   const { dataTransfer, setDataTransfer } = useDataTransfer();
@@ -97,7 +97,7 @@ export function useDropBlock() {
           payload,
           type,
           parentIdx: dataTransfer.parentIdx!,
-          positionIndex: dataTransfer.positionIndex
+          positionIndex: dataTransfer.positionIndex,
         };
 
         if (action === 'move') {
@@ -148,7 +148,7 @@ export function useDropBlock() {
         setIsDragging(true);
         setDragPosition({
           left: ev.pageX,
-          top: ev.pageY
+          top: ev.pageY,
         });
         const blockNode = findBlockNode(ev.target as HTMLDivElement);
         if (blockNode) {
@@ -158,11 +158,11 @@ export function useDropBlock() {
           const type = dataTransfer.type;
           const validBlockNode = isShadowDom
             ? findInsertNode(
-              type,
-              blockNode,
-              directionPosition,
-              Boolean(autoComplete)
-            )
+                type,
+                blockNode,
+                directionPosition,
+                Boolean(autoComplete)
+              )
             : blockNode;
 
           if (validBlockNode) {
@@ -184,12 +184,11 @@ export function useDropBlock() {
               setDataTransfer({
                 ...dataTransfer,
                 positionIndex: positionData.insertIndex,
-                parentIdx: positionData.parentIdx
+                parentIdx: positionData.parentIdx,
               });
 
               setHoverIdx(positionData.hoverIdx);
             }
-
           }
         }
         if (!isValid) {
@@ -216,7 +215,17 @@ export function useDropBlock() {
         ref.removeEventListener('dragleave', onDragLeave);
       };
     }
-  }, [autoComplete, dataTransfer, isShadowDom, ref, setDataTransfer, setDirection, setDragPosition, setHoverIdx, setIsDragging]);
+  }, [
+    autoComplete,
+    dataTransfer,
+    isShadowDom,
+    ref,
+    setDataTransfer,
+    setDirection,
+    setDragPosition,
+    setHoverIdx,
+    setIsDragging,
+  ]);
 
   useEffect(() => {
     if (ref) {

@@ -1,10 +1,12 @@
 import { IPage } from '@/components/core/blocks/basic/Page';
-import { BasicType, BlockType, getChildIdx, getIndexByIdx, getNodeIdxFromClassName, getNodeTypeFromClassName, getParentIdx, IBlockData } from 'easy-email-editor';
+import { BasicType, BlockType } from '@/constants';
+import { IBlockData } from '@/typings';
 import { get } from 'lodash';
-import { DirectionPosition } from './DirectionPosition';
+import { getChildIdx, getIndexByIdx, getParentIdx } from './block';
+import { DirectionPosition } from './getDirectionPosition';
 
 interface Params {
-  context: { content: IPage; };
+  context: { content: IPage };
   idx: string;
   directionPosition: DirectionPosition;
   dragType: BlockType;
@@ -13,29 +15,41 @@ interface Params {
 export function getInsertPosition(params: Params) {
   const { idx, dragType, directionPosition, context } = params;
 
-  const insertData = getInsetParentAndIndex(context, idx, dragType, directionPosition);
+  const insertData = getInsetParentAndIndex(
+    context,
+    idx,
+    dragType,
+    directionPosition
+  );
 
   return insertData;
-
 }
 
 function getInsetParentAndIndex(
-  context: { content: IPage; },
+  context: { content: IPage },
   idx: string,
   type: BlockType,
   directionPosition: DirectionPosition
-): { parentIdx: string; insertIndex: number; endDirection: string; hoverIdx: string; } | null {
+): {
+  parentIdx: string;
+  insertIndex: number;
+  endDirection: string;
+  hoverIdx: string;
+} | null {
   let hoverIdx = idx;
   let prevIdx = '';
   let parentIdx: string | undefined = idx;
   while (parentIdx) {
     const parent = get(context, parentIdx) as IBlockData;
     if (parent && parent.type === type) {
-
-      const { direction, valid, isEdge } = getValidDirection(parent.type, directionPosition);
+      const { direction, valid, isEdge } = getValidDirection(
+        parent.type,
+        directionPosition
+      );
 
       if (!valid) return null;
-      const isVertical = parent.type === BasicType.SECTION || parent.type === BasicType.GROUP;
+      const isVertical =
+        parent.type === BasicType.SECTION || parent.type === BasicType.GROUP;
 
       let insertIndex = 0; // 默认为0，表示拖拽到一个空children的节点
       let endDirection = direction;
@@ -45,12 +59,13 @@ function getInsetParentAndIndex(
         const siblingIndex = getIndexByIdx(prevIdx);
         hoverIdx = getChildIdx(parentIdx, siblingIndex);
 
-        if (parent.children.length > 0 && /(right)|(bottom)/.test(endDirection)) {
+        if (
+          parent.children.length > 0 &&
+          /(right)|(bottom)/.test(endDirection)
+        ) {
           insertIndex = siblingIndex + 1;
-
         } else {
           insertIndex = siblingIndex;
-
         }
       } else {
         // Section/Group block 只能插入column，只有左右方向
@@ -59,7 +74,6 @@ function getInsetParentAndIndex(
         }
 
         if (isVertical) {
-
           if (direction === 'left') {
             insertIndex = 0;
             // 如果有children，则让children高亮
@@ -75,14 +89,12 @@ function getInsetParentAndIndex(
             }
           }
         } else {
-
           if (direction === 'top') {
             insertIndex = 0;
             if (parent.children.length > 0) {
               hoverIdx = getChildIdx(parentIdx, 0);
               endDirection = 'top';
             }
-
           } else {
             insertIndex = parent.children.length;
             if (parent.children.length > 0) {
@@ -97,19 +109,22 @@ function getInsetParentAndIndex(
         insertIndex,
         parentIdx,
         endDirection,
-        hoverIdx
+        hoverIdx,
       };
     } else {
       prevIdx = parentIdx;
       parentIdx = getParentIdx(parentIdx);
-
     }
   }
   return null;
 }
 
-function getValidDirection(targetType: BlockType, directionPosition: DirectionPosition): { valid: boolean, direction: string; isEdge: boolean; } {
-  const isVertical = targetType === BasicType.SECTION || targetType === BasicType.GROUP;
+function getValidDirection(
+  targetType: BlockType,
+  directionPosition: DirectionPosition
+): { valid: boolean; direction: string; isEdge: boolean } {
+  const isVertical =
+    targetType === BasicType.SECTION || targetType === BasicType.GROUP;
 
   let direction = directionPosition.vertical.direction;
   let isEdge = directionPosition.vertical.isEdge;
@@ -120,10 +135,10 @@ function getValidDirection(targetType: BlockType, directionPosition: DirectionPo
   }
 
   return {
-    valid: isVertical ? Boolean(directionPosition.horizontal.direction) : Boolean(directionPosition.vertical.direction),
+    valid: isVertical
+      ? Boolean(directionPosition.horizontal.direction)
+      : Boolean(directionPosition.vertical.direction),
     direction,
-    isEdge
+    isEdge,
   };
-
 }
-

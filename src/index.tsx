@@ -5,6 +5,7 @@ export type {
   BlockGroup,
   CollectedBlock,
 } from './components/Provider/PropsProvider';
+export { EditorPropsContext } from './components/Provider/PropsProvider';
 export { EmailEditor } from './components/EmailEditor';
 export * from './components/EmailEditor/components/ConfigurationPanel';
 export { BlockAvatarWrapper } from './components/core/wrapper/BlockAvatarWrapper';
