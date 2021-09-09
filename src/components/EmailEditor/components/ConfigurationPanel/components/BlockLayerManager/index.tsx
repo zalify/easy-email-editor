@@ -99,24 +99,28 @@ const BlockLayerItem = ({
   }, [collapsed, isPageBlock, noChild, onToggle, visible]);
 
   const renderListItem = (child: React.ReactNode) => (
-    <BlockAvatarWrapper type={blockData.type} payload={idx} action='move'>
-      <li
-        className={classnames(
-          styles.blockItem,
-          focusIdx === idx && styles.blockItemSelected,
-          'email-block',
-          getNodeIdxClassName(idx),
-          getNodeTypeClassName(blockData.type)
-        )}
-        data-idx={idx}
-      >
-        <div className={styles.listItemContent}>
+    <li className={classnames(styles.blockItem)} data-idx={idx}>
+      <BlockAvatarWrapper type={blockData.type} payload={idx} action='move'>
+        <div
+          className={classnames(
+            styles.listItemContentWrapper,
+            'email-block',
+            getNodeIdxClassName(idx),
+            getNodeTypeClassName(blockData.type)
+          )}
+        >
           <Stack.Item fill>
             <Stack distribution='equalSpacing'>
               <Stack spacing='tight'>
                 {indent}
-                <EyeIcon idx={idx} blockData={blockData} />
-                <TextStyle>{title}</TextStyle>
+                <Stack.Item fill>
+                  <div className={styles.listItemContent}>
+                    <Stack spacing='tight'>
+                      <EyeIcon idx={idx} blockData={blockData} />
+                      <TextStyle>{title}</TextStyle>
+                    </Stack>
+                  </div>
+                </Stack.Item>
               </Stack>
               <Stack>
                 <ShortcutTool idx={idx} blockData={blockData} />
@@ -126,38 +130,38 @@ const BlockLayerItem = ({
             </Stack>
           </Stack.Item>
         </div>
-        {
-          child
-        }
-      </li>
-    </BlockAvatarWrapper>
+      </BlockAvatarWrapper>
+      {child}
+    </li>
   );
 
   if (noChild) return renderListItem(null);
   return (
     <>
-      {renderListItem(visible && (
-        <ul className={classnames(styles.blockList)}>
-          {blockData.children.map((item, index) => (
-            <BlockLayerItem
-              key={index}
-              indent={(
-                <Stack spacing='none'>
-                  {indent}
-                  <div style={{ width: 16, height: '100%' }} />
-                </Stack>
-              )}
-              blockData={item}
-              idx={getChildIdx(idx, index)}
-            />
-          ))}
-        </ul>
-      ))}
+      {renderListItem(
+        visible && (
+          <ul className={classnames(styles.blockList)}>
+            {blockData.children.map((item, index) => (
+              <BlockLayerItem
+                key={index}
+                indent={
+                  <Stack spacing='none'>
+                    {indent}
+                    <div style={{ width: 16, height: '100%' }} />
+                  </Stack>
+                }
+                blockData={item}
+                idx={getChildIdx(idx, index)}
+              />
+            ))}
+          </ul>
+        )
+      )}
     </>
   );
 };
 
-function EyeIcon({ idx, blockData }: { idx: string; blockData: IBlockData; }) {
+function EyeIcon({ idx, blockData }: { idx: string; blockData: IBlockData }) {
   const { setValueByIdx } = useBlock();
 
   const onToggleVisible = useCallback(

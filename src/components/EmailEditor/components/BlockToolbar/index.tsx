@@ -9,7 +9,7 @@ import {
   CopyOutlined,
   CloseOutlined,
   BorderOuterOutlined,
-  AndroidOutlined,
+  DeleteOutlined,
   FolderAddOutlined,
 } from '@ant-design/icons';
 import { Stack } from '@/components/UI/Stack';
@@ -61,8 +61,9 @@ export const BlockToolbar = () => {
                   <Tooltip
                     key={index}
                     placement='topLeft'
-                    title={`Select child node ${findBlockByType(item.type)?.name
-                      }`}
+                    title={`Select child node ${
+                      findBlockByType(item.type)?.name
+                    }`}
                   >
                     <BorderOuterOutlined
                       onClick={() =>
@@ -74,53 +75,11 @@ export const BlockToolbar = () => {
               })}
             </Stack>
           ),
-          method() { },
+          method() {},
         },
       ].filter(Boolean) as SideBarItem[];
     }
     return [
-      {
-        icon: <AndroidOutlined />,
-        title: 'Page block',
-        method() {
-          setFocusIdx(getPageIdx());
-        },
-      },
-      {
-        icon: <UpSquareOutlined />,
-        title: 'Select parent',
-        method() {
-          const parentIdx = getParentIdx(focusIdx);
-          if (parentIdx) {
-            setFocusIdx(parentIdx);
-          }
-        },
-      },
-      {
-        icon: <DownSquareOutlined />,
-        title: 'Select child',
-        toolTip: hasChildren && (
-          <Stack>
-            {focusBlock.children.map((item, index) => {
-              return (
-                <Tooltip
-                  key={index}
-                  placement='topLeft'
-                  title={`Select child node ${findBlockByType(item.type)?.name
-                    }`}
-                >
-                  <BorderOuterOutlined
-                    onClick={() =>
-                      setFocusIdx(`${focusIdx}.children.[${index}]`)
-                    }
-                  />
-                </Tooltip>
-              );
-            })}
-          </Stack>
-        ),
-        method() { },
-      },
       {
         icon: <ArrowUpOutlined />,
         title: 'Move up',
@@ -150,7 +109,7 @@ export const BlockToolbar = () => {
         },
       },
       {
-        icon: <CloseOutlined />,
+        icon: <DeleteOutlined />,
         title: 'Remove',
         method() {
           removeBlock(focusIdx);
@@ -160,7 +119,7 @@ export const BlockToolbar = () => {
   }, [copyBlock, focusBlock, focusIdx, moveByIdx, removeBlock, setFocusIdx]);
 
   return useMemo(() => {
-    const onSubmit = (values: { label: string; helpText: string; }) => {
+    const onSubmit = (values: { label: string; helpText: string }) => {
       if (!values.label) return;
       const uuid = uuidv4();
       onAddCollection?.({

@@ -26,16 +26,8 @@ export function ImageUploader(props: ImageUploaderProps) {
   const uploadHandlerRef = useRef<UploaderServer | null | undefined>(
     props.uploadHandler
   );
-  const [value, setValue] = useState(props.value);
 
-  useEffect(() => {
-    setValue(props.value);
-  }, [props.value]);
-
-  useEffect(() => {
-    props.onChange(value);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value]);
+  const onChange = props.onChange;
 
   const onUpload = useCallback(() => {
     if (isUploading) {
@@ -54,14 +46,14 @@ export function ImageUploader(props: ImageUploaderProps) {
       uploader.on('end', (data) => {
         const url = data[0]?.url;
         if (url) {
-          setValue(url);
+          onChange(url);
         }
         setIsUploading(false);
       });
     });
 
     uploader.chooseFile();
-  }, [isUploading]);
+  }, [isUploading, onChange]);
 
   const onPaste = useCallback(
     async (e: React.ClipboardEvent<HTMLInputElement>) => {
@@ -120,7 +112,7 @@ export function ImageUploader(props: ImageUploaderProps) {
     return (
       <div className={styles['item']}>
         <div className={classnames(styles['info'])}>
-          <img src={value} />
+          <img src={props.value} />
           <div className={styles['btn-wrap']}>
             <a title='Preview' onClick={() => setPreview(true)}>
               <EyeOutlined />
@@ -132,10 +124,12 @@ export function ImageUploader(props: ImageUploaderProps) {
         </div>
       </div>
     );
-  }, [isUploading, onRemove, onUpload, props.value, value]);
+  }, [isUploading, onRemove, onUpload, props.value]);
 
   if (!props.uploadHandler) {
-    return <Input value={value} onChange={(e) => setValue(e.target.value)} />;
+    return (
+      <Input value={props.value} onChange={(e) => onChange(e.target.value)} />
+    );
   }
 
   return (
@@ -144,13 +138,13 @@ export function ImageUploader(props: ImageUploaderProps) {
         {content}
         <Input
           onPaste={onPaste}
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
+          value={props.value}
+          onChange={(e) => onChange(e.target.value)}
           disabled={isUploading}
         />
       </div>
       <Modal visible={preview} footer={null} onCancel={() => setPreview(false)}>
-        <img alt='Preview' style={{ width: '100%' }} src={value} />
+        <img alt='Preview' style={{ width: '100%' }} src={props.value} />
       </Modal>
     </div>
   );

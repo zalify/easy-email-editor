@@ -3,6 +3,7 @@ import { IPage } from '@/components/core/blocks/basic/Page';
 import { IBlock, IBlockData } from '@/typings';
 import { get } from 'lodash';
 import { BlocksMap } from '../components/core/blocks';
+import { ancestorOf } from './ancestorOf';
 
 export function getPageIdx() {
   return 'content';
@@ -84,6 +85,32 @@ export const getParentByType = <T extends IBlockData>(
   return null;
 };
 
+export const getSameParent = (
+  values: { content: IPage; },
+  idx: string,
+  dragType: BlockType
+): {
+  parent: IBlockData;
+  parentIdx: string;
+} | null => {
+  let parentIdx: string | undefined | null = idx;
+  const block = BlocksMap.findBlockByType(dragType);
+  if (!block) return null;
+
+  while (parentIdx) {
+    const parent = get(values, parentIdx) as IBlockData;
+
+    if (ancestorOf(block.type, parent.type) > 0) {
+      return {
+        parent,
+        parentIdx,
+      };
+    }
+    parentIdx = getParentIdx(parentIdx);
+  }
+  return null;
+};
+
 // 如图所示 https://assets.maocanhua.cn/ce41ab7f-1475-4810-95cc-31ca0ee104ae-image.png
 // 找到插入的位置，例如 一个 2 column section，第二个 column/image，image占满column, 拖拽 一个column到 image的边缘，我们认为他是要插入一个column，获取这个插入的位置，我们这里是 第二个，所以 是 1
 export const getParenRelativeByType = <T extends IBlockData>(
@@ -91,21 +118,21 @@ export const getParenRelativeByType = <T extends IBlockData>(
   idx: string,
   type: BlockType
 ): { parentIdx: string; insertIndex: number; parent: IBlockData; } | null => {
-
   let prevIdx = '';
   let parentIdx: string | undefined = idx;
   while (parentIdx) {
     const parent = get(context, parentIdx) as T;
     if (parent && parent.type === type) {
       return {
-        insertIndex: prevIdx ? getIndexByIdx(prevIdx) : parent.children.length - 1,
+        insertIndex: prevIdx
+          ? getIndexByIdx(prevIdx)
+          : parent.children.length - 1,
         parentIdx,
-        parent
+        parent,
       };
     } else {
       prevIdx = parentIdx;
       parentIdx = getParentIdx(parentIdx);
-
     }
   }
   return null;

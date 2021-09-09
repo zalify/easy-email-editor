@@ -2,7 +2,12 @@ import { IPage } from '@/components/core/blocks/basic/Page';
 import { BasicType, BlockType } from '@/constants';
 import { IBlockData } from '@/typings';
 import { get } from 'lodash';
-import { getChildIdx, getIndexByIdx, getParentIdx } from './block';
+import {
+  getChildIdx,
+  getIndexByIdx,
+  getParentIdx,
+  getSameParent,
+} from './block';
 import { DirectionPosition } from './getDirectionPosition';
 
 interface Params {
@@ -10,15 +15,44 @@ interface Params {
   idx: string;
   directionPosition: DirectionPosition;
   dragType: BlockType;
+  isShadowDom: boolean;
+  actionType?: 'move' | 'add';
 }
 
 export function getInsertPosition(params: Params) {
-  const { idx, dragType, directionPosition, context } = params;
+  const {
+    idx,
+    dragType,
+    directionPosition,
+    context,
+    isShadowDom,
+    actionType = 'add',
+  } = params;
+
+  const parentData = getSameParent(context, idx, dragType);
+
+  if (!parentData) return null;
+
+  if (!isShadowDom) {
+    let insertIndex = getIndexByIdx(idx);
+    if (
+      directionPosition.vertical.direction === 'bottom' &&
+      actionType === 'add'
+    ) {
+      insertIndex += 1;
+    }
+    return {
+      parentIdx: parentData.parentIdx,
+      insertIndex: insertIndex,
+      endDirection: directionPosition.vertical.direction,
+      hoverIdx: idx,
+    };
+  }
 
   const insertData = getInsetParentAndIndex(
     context,
     idx,
-    dragType,
+    parentData.parent.type,
     directionPosition
   );
 

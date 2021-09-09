@@ -163,6 +163,7 @@ export function useBlock() {
       let { sourceIdx, destinationIdx, positionIndex } = params;
       if (sourceIdx === destinationIdx) return null;
       let nextFocusIdx = focusIdx;
+
       const values = cloneDeep(getState().values) as IEmailTemplate;
       const source = getValueByIdx(values, sourceIdx)!;
       const sourceParentIdx = getParentIdx(sourceIdx);
@@ -187,17 +188,20 @@ export function useBlock() {
           positionIndex -= 1;
         }
         const [removed] = sourceParent.children.splice(sourceIndex, 1);
+
         destinationParent.children.splice(positionIndex, 0, removed);
       } else {
         sourceParent.children = sourceParent.children.filter(
           (item) => item !== source
         );
         destinationParent.children.splice(positionIndex, 0, source);
-        batch(() => {
-          change(sourceParentIdx, { ...sourceParent });
-          change(destinationIdx, { ...destinationParent });
-        });
       }
+      batch(() => {
+        change(sourceParentIdx, { ...sourceParent });
+        if (sourceParentIdx !== destinationIdx) {
+          change(destinationIdx, { ...destinationParent });
+        }
+      });
 
       nextFocusIdx = destinationIdx + `.children.[${positionIndex}]`;
       setFocusIdx(nextFocusIdx);
@@ -261,8 +265,10 @@ export function useBlock() {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const setValueByIdx = useCallback(
-    debounce(<T extends any>(idx: string, newVal: T) => {
-      change(idx, newVal);
+    debounce(<T extends IBlockData>(idx: string, newVal: T) => {
+      change(idx, {
+        ...newVal,
+      });
     }),
     [change]
   );
@@ -295,7 +301,9 @@ export function useBlock() {
 
       batch(() => {
         change(sourceParentIdx, sourceParent);
-        change(destinationParentIdx, destinationParent);
+        if (sourceParentIdx !== destinationParentIdx) {
+          change(destinationParentIdx, destinationParent);
+        }
       });
 
       nextFocusIdx = destinationIdx;

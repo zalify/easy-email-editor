@@ -1,19 +1,15 @@
 import { BLOCK_HOVER_CLASSNAME } from './../constants';
 import { useEffect, useMemo, useState, useContext, useRef } from 'react';
 
-import {
-  getNodeIdxFromClassName,
-  getNodeTypeFromClassName,
-} from '@/utils/block';
+import { getNodeIdxFromClassName } from '@/utils/block';
 import { findBlockNode } from '@/utils/findBlockNode';
-import { BlockType, DRAG_HOVER_CLASSNAME } from '@/constants';
+import { DRAG_HOVER_CLASSNAME } from '@/constants';
 import { useBlock } from '@/hooks/useBlock';
 import { getDirectionPosition } from '@/utils/getDirectionPosition';
 import { findBlockNodeByIdx, getBlockNodes } from '@/utils/findBlockNodeByIdx';
 import { useFocusIdx } from './useFocusIdx';
 import { useDataTransfer } from './useDataTransfer';
 import { useHoverIdx } from './useHoverIdx';
-import { findInsertNode } from '@/utils/findInsertNode';
 import { EditorPropsContext } from '@/components/Provider/PropsProvider';
 import { getInsertPosition } from '@/utils/getInsertPosition';
 
@@ -21,11 +17,17 @@ export function useDropBlock() {
   const [ref, setRef] = useState<HTMLElement | null>(null);
   const { values, addBlock, moveBlock } = useBlock();
   const { autoComplete } = useContext(EditorPropsContext);
+  const { dataTransfer, setDataTransfer } = useDataTransfer();
   const cacheValues = useRef(values);
+  const cacheDataTransfer = useRef(dataTransfer);
 
   useEffect(() => {
     cacheValues.current = values;
   }, [values]);
+
+  useEffect(() => {
+    cacheDataTransfer.current = dataTransfer;
+  }, [dataTransfer]);
 
   const isShadowDom = useMemo(
     () => !Boolean(ref && document.contains(ref)),
@@ -42,8 +44,6 @@ export function useDropBlock() {
     direction,
     setDragPosition,
   } = useHoverIdx();
-
-  const { dataTransfer, setDataTransfer } = useDataTransfer();
 
   useEffect(() => {
     if (ref) {
@@ -120,7 +120,19 @@ export function useDropBlock() {
 
   useEffect(() => {
     if (ref) {
+      let lastHoverTarget: EventTarget | null = null;
+
+      let lastDragover: {
+        target: EventTarget | null;
+        valid: boolean;
+      } = {
+        target: null,
+        valid: false,
+      };
+
       const onMouseover = (ev: MouseEvent) => {
+        if (lastHoverTarget === ev.target) return;
+        lastHoverTarget = ev.target;
         const blockNode = findBlockNode(ev.target as HTMLElement);
 
         if (blockNode) {
@@ -139,12 +151,23 @@ export function useDropBlock() {
         }
       };
       const onDrop = (ev: MouseEvent) => {
+        lastDragover.target = null;
         setIsDragging(false);
       };
 
       const onDragOver = (ev: DragEvent) => {
-        if (!dataTransfer) return;
-        let isValid = false;
+        if (!cacheDataTransfer.current) return;
+
+        if (ev.target === lastDragover.target) {
+          if (lastDragover.valid) {
+            ev.preventDefault();
+          }
+          return;
+        }
+
+        lastDragover.target = ev.target;
+        lastDragover.valid = false;
+
         setIsDragging(true);
         setDragPosition({
           left: ev.pageX,
@@ -153,71 +176,54 @@ export function useDropBlock() {
         const blockNode = findBlockNode(ev.target as HTMLDivElement);
         if (blockNode) {
           const directionPosition = getDirectionPosition(ev);
+
           const idx = getNodeIdxFromClassName(blockNode.classList)!;
 
-          const type = dataTransfer.type;
-          const validBlockNode = isShadowDom
-            ? findInsertNode(
-                type,
-                blockNode,
-                directionPosition,
-                Boolean(autoComplete)
-              )
-            : blockNode;
-
-          if (validBlockNode) {
-            const targetType = getNodeTypeFromClassName(
-              validBlockNode.classList
-            ) as BlockType;
-
-            const positionData = getInsertPosition({
-              context: cacheValues.current,
-              idx,
-              directionPosition,
-              dragType: targetType,
+          const positionData = getInsertPosition({
+            context: cacheValues.current,
+            idx,
+            directionPosition,
+            dragType: cacheDataTransfer.current.type,
+            isShadowDom,
+            actionType: cacheDataTransfer.current.action,
+          });
+          if (positionData) {
+            ev.preventDefault();
+            lastDragover.valid = true;
+            setDirection(positionData.endDirection);
+            setDataTransfer({
+              ...cacheDataTransfer.current,
+              positionIndex: positionData.insertIndex,
+              parentIdx: positionData.parentIdx,
             });
 
-            if (positionData) {
-              ev.preventDefault();
-              isValid = true;
-              setDirection(positionData.endDirection);
-              setDataTransfer({
-                ...dataTransfer,
-                positionIndex: positionData.insertIndex,
-                parentIdx: positionData.parentIdx,
-              });
-
-              setHoverIdx(positionData.hoverIdx);
-            }
+            setHoverIdx(positionData.hoverIdx);
           }
         }
-        if (!isValid) {
+        if (!lastDragover.valid) {
           setDirection('');
           setHoverIdx('');
         }
-      };
-      const onDragLeave = (ev: DragEvent) => {
-        setIsDragging(false);
       };
 
       ref.addEventListener('mouseover', onMouseover);
       ref.addEventListener('mouseout', onMouseOut);
       document.addEventListener('dragleave', onMouseOut);
+      document.addEventListener('dragleave', onMouseOut);
       ref.addEventListener('drop', onDrop);
       ref.addEventListener('dragover', onDragOver);
-      ref.addEventListener('dragleave', onDragLeave);
+
       return () => {
         ref.removeEventListener('mouseover', onMouseover);
         ref.removeEventListener('mouseout', onMouseOut);
         document.removeEventListener('dragleave', onMouseOut);
         ref.removeEventListener('drop', onDrop);
         ref.removeEventListener('dragover', onDragOver);
-        ref.removeEventListener('dragleave', onDragLeave);
       };
     }
   }, [
     autoComplete,
-    dataTransfer,
+    cacheDataTransfer,
     isShadowDom,
     ref,
     setDataTransfer,

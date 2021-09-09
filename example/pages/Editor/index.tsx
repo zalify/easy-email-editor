@@ -169,10 +169,10 @@ export default function Editor() {
         onRemoveCollection={onRemoveCollection}
         onUploadImage={services.common.uploadByQiniu}
         interactiveStyle={{
-          hoverColor: '#3b97e3',
-          selectedColor: '#69c0ff',
-          dragoverColor: '#13c2c2',
-          tangentColor: '#E058AF',
+          hoverColor: '#1890ff',
+          selectedColor: '#1890ff',
+          dragoverColor: '#1890ff',
+          tangentColor: '#1890ff',
         }}
         fontList={fontList}
         onSubmit={onSubmit}
