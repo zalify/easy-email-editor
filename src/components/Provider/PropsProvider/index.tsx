@@ -1,5 +1,5 @@
 import { IBlockData } from '@/typings';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 export interface CollectedBlock {
   label: string;
@@ -28,6 +28,7 @@ export interface PropsProviderProps {
     tangentColor?: string;
   };
   autoComplete?: boolean;
+  dashed?: boolean;
 }
 
 export const EditorPropsContext = React.createContext<PropsProviderProps>({
@@ -37,11 +38,20 @@ export const EditorPropsContext = React.createContext<PropsProviderProps>({
   onRemoveCollection: undefined,
   onUploadImage: undefined,
   autoComplete: false,
+  dashed: true,
 });
 
 export const PropsProvider: React.FC<PropsProviderProps> = (props) => {
+  const { dashed = true } = props;
+  const formatProps = useMemo(() => {
+    return {
+      ...props,
+      dashed,
+    };
+  }, [props, dashed]);
+
   return (
-    <EditorPropsContext.Provider value={props}>
+    <EditorPropsContext.Provider value={formatProps}>
       {props.children}
     </EditorPropsContext.Provider>
   );

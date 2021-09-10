@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { transformToMjml } from '@/utils/transformToMjml';
 import mjml from 'mjml-browser';
 import {
@@ -17,6 +17,7 @@ import { useDataTransfer } from '@/hooks/useDataTransfer';
 import { useEditorContext } from '@/hooks/useEditorContext';
 import { HtmlStringToReactNodes } from '@/utils/HtmlStringToReactNodes';
 import { createPortal } from 'react-dom';
+import { EditorPropsContext } from '@/components/Provider/PropsProvider';
 
 export function MjmlDomRender() {
   const { pageData: content } = useEditorContext();
@@ -25,6 +26,7 @@ export function MjmlDomRender() {
   const { focusIdx } = useFocusIdx();
   const { dragEnabled } = useDraggable();
   const { setDataTransfer } = useDataTransfer();
+  const { dashed } = useContext(EditorPropsContext);
 
   useEffect(() => {
     if (!isEqual(content, pageData)) {
@@ -35,12 +37,14 @@ export function MjmlDomRender() {
   const html = useMemo(() => {
     if (!pageData) return '';
 
-    const renderHtml = mjml(transformToMjml({
-      data: pageData,
-      idx: getPageIdx(),
-      context: pageData,
-      mode: 'testing'
-    })).html;
+    const renderHtml = mjml(
+      transformToMjml({
+        data: pageData,
+        idx: getPageIdx(),
+        context: pageData,
+        mode: 'testing',
+      })
+    ).html;
     return renderHtml;
   }, [pageData]);
 
@@ -90,9 +94,9 @@ export function MjmlDomRender() {
 
   return useMemo(() => {
     return (
-      <div ref={setRef} style={{ height: '100%' }}>
+      <div data-dashed={dashed} ref={setRef} style={{ height: '100%' }}>
         {ref && createPortal(HtmlStringToReactNodes(html), ref)}
       </div>
     );
-  }, [html, ref]);
+  }, [html, ref, dashed]);
 }

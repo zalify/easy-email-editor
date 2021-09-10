@@ -31,12 +31,12 @@ export function RichTextField(
 
       setPosition({
         left,
-        top: top - 16,
+        top: top - 46,
       });
     }
   }, [container]);
 
-  const onChange = useCallback(() => { }, []);
+  const onChange = useCallback(() => {}, []);
 
   const editorContainer = container && getEditNode(container);
 

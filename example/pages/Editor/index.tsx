@@ -67,13 +67,14 @@ export default function Editor() {
   useEffect(() => {
     if (id) {
       if (!userId) {
-        UserStorage.getAccount().then(account => {
-          dispatch(template.actions.fetchById({ id: +id, userId: account.user_id }));
+        UserStorage.getAccount().then((account) => {
+          dispatch(
+            template.actions.fetchById({ id: +id, userId: account.user_id })
+          );
         });
       } else {
         dispatch(template.actions.fetchById({ id: +id, userId: +userId }));
       }
-
     } else {
       dispatch(template.actions.fetchDefaultTemplate(undefined));
     }
@@ -84,7 +85,10 @@ export default function Editor() {
   }, [dispatch, id, userId]);
 
   const onSubmit = useCallback(
-    async (values: IEmailTemplate, form: FormApi<IEmailTemplate, Partial<IEmailTemplate>>) => {
+    async (
+      values: IEmailTemplate,
+      form: FormApi<IEmailTemplate, Partial<IEmailTemplate>>
+    ) => {
       pushEvent({ name: 'Save' });
       if (id) {
         dispatch(
@@ -115,14 +119,17 @@ export default function Editor() {
 
   const onExportHtml = (values: IEmailTemplate) => {
     pushEvent({ name: 'ExportHtml' });
-    const html = mjml(transformToMjml({
-      data: values.content,
-      mode: 'production',
-      context: values.content,
-    }), {
-      beautify: true,
-      validationLevel: 'soft',
-    }).html;
+    const html = mjml(
+      transformToMjml({
+        data: values.content,
+        mode: 'production',
+        context: values.content,
+      }),
+      {
+        beautify: true,
+        validationLevel: 'soft',
+      }
+    ).html;
 
     copy(html);
     message.success('Copied to pasteboard!');
@@ -154,7 +161,7 @@ export default function Editor() {
     dispatch(extraBlocks.actions.add(payload));
     message.success('Added to collection!');
   };
-  const onRemoveCollection = ({ id }: { id: string; }) => {
+  const onRemoveCollection = ({ id }: { id: string }) => {
     dispatch(extraBlocks.actions.remove({ id }));
     message.success('Removed from collection.');
   };
@@ -172,11 +179,11 @@ export default function Editor() {
           hoverColor: '#1890ff',
           selectedColor: '#1890ff',
           dragoverColor: '#1890ff',
-          tangentColor: '#1890ff',
         }}
         fontList={fontList}
         onSubmit={onSubmit}
         autoComplete
+        dashed={false}
       >
         {({ values }, { submit }) => {
           return (

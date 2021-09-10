@@ -58,7 +58,7 @@ describe('Drag `Text` to `Image`', () => {
       context: { content: page },
       idx,
       directionPosition: directionPosition,
-      dragType: BasicType.COLUMN,
+      dragType: BasicType.TEXT,
       isShadowDom: true,
     });
 
@@ -86,7 +86,7 @@ describe('Drag `Text` to `Image`', () => {
       context: { content: page },
       idx,
       directionPosition: directionPosition,
-      dragType: BasicType.COLUMN,
+      dragType: BasicType.TEXT,
       isShadowDom: true,
     });
 
@@ -116,7 +116,7 @@ describe('Drag `Column` to `Image`', () => {
       context: { content: page },
       idx,
       directionPosition: directionPosition,
-      dragType: BasicType.SECTION,
+      dragType: BasicType.COLUMN,
       isShadowDom: true,
     });
 
@@ -144,7 +144,7 @@ describe('Drag `Column` to `Image`', () => {
       context: { content: page },
       idx,
       directionPosition: directionPosition,
-      dragType: BasicType.SECTION,
+      dragType: BasicType.COLUMN,
       isShadowDom: true,
     });
 
@@ -174,7 +174,7 @@ describe('Drag `Section` to 2nd `Section-Image`', () => {
       context: { content: page },
       idx,
       directionPosition: directionPosition,
-      dragType: BasicType.PAGE,
+      dragType: BasicType.SECTION,
       isShadowDom: true,
     });
 
@@ -202,7 +202,7 @@ describe('Drag `Section` to 2nd `Section-Image`', () => {
       context: { content: page },
       idx,
       directionPosition: directionPosition,
-      dragType: BasicType.PAGE,
+      dragType: BasicType.SECTION,
       isShadowDom: true,
     });
 
@@ -232,7 +232,7 @@ describe('Drag `Text` to 4th `Section`', () => {
       context: { content: page },
       idx,
       directionPosition: directionPosition,
-      dragType: BasicType.SECTION,
+      dragType: BasicType.TEXT,
       isShadowDom: true,
     });
 
