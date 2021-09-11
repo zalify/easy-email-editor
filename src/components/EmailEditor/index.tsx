@@ -22,12 +22,14 @@ import { MobileEmailPreview } from './components/MobileEmailPreview';
 import { EditEmailPreview } from './components/EditEmailPreview';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { getPageIdx } from '@/utils/block';
+import { useHotKeys } from '@/hooks/useHotKeys';
 export interface EmailEditorProps {
   height: string | number;
 }
 const TabPane = Tabs.TabPane;
 
 export const EmailEditor = (props: EmailEditorProps) => {
+  useHotKeys();
   const { height: containerHeight } = props;
   const { activeTab, setActiveTab } = useActiveTab();
   const { pageData } = useEditorContext();

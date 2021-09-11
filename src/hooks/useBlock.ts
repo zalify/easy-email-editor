@@ -1,6 +1,6 @@
 import { EditorPropsContext } from '@/components/Provider/PropsProvider';
 import { BlockType, BasicType } from '../constants';
-import { cloneDeep, debounce, get, set } from 'lodash';
+import { cloneDeep, debounce, get } from 'lodash';
 import { IBlockData, IEmailTemplate } from '../typings';
 import { useCallback, useContext } from 'react';
 import { message } from 'antd';
@@ -31,7 +31,6 @@ export function useBlock() {
     redoable,
     undoable,
     reset,
-    status: recordStatus,
   } = useContext(RecordContext);
 
   const addBlock = useCallback(
@@ -135,8 +134,7 @@ export function useBlock() {
       const fixedBlock = findBlockByType(child.type);
       if (!fixedBlock.validParentType.includes(parent.type)) {
         message.warning(
-          `${block.type} cannot be used inside ${
-            parentBlock.type
+          `${block.type} cannot be used inside ${parentBlock.type
           }, only inside: ${block.validParentType.join(', ')}`
         );
         return;
@@ -175,8 +173,7 @@ export function useBlock() {
       if (!sourceBlock.validParentType.includes(destinationParent.type)) {
         const parentBlock = findBlockByType(destinationParent.type);
         message.warning(
-          `${sourceBlock.name} cannot be used inside ${
-            parentBlock.name
+          `${sourceBlock.name} cannot be used inside ${parentBlock.name
           }, only inside: ${sourceBlock.validParentType.join(', ')}`
         );
         return;
@@ -354,6 +351,5 @@ export function useBlock() {
     reset,
     redoable,
     undoable,
-    recordStatus,
   };
 }
