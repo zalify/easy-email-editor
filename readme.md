@@ -54,6 +54,16 @@ Easy email is developed based on the [MJML](https://mjml.io/) and has very good 
 
 Check out the live demo here: <a href="http://easy-email-m-ryan.vercel.app" target="_blank" alt="http://easy-email-m-ryan.vercel.app">http://easy-email-m-ryan.vercel.app</a>
 
+## Hotkeys
+
+| hotkey   | Description  |
+| -------- | ---------------- | 
+| mod+z    | undo |
+| mod+y    | redo |
+| delete/backspace    | delete block |
+| click tabpanel    | select parent block |
+| double click tabpanel    | select page block |
+
 ## Getting started
 
 ## Install
