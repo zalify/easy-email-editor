@@ -161,7 +161,7 @@ export default function Editor() {
     dispatch(extraBlocks.actions.add(payload));
     message.success('Added to collection!');
   };
-  const onRemoveCollection = ({ id }: { id: string }) => {
+  const onRemoveCollection = ({ id }: { id: string; }) => {
     dispatch(extraBlocks.actions.remove({ id }));
     message.success('Removed from collection.');
   };
@@ -183,7 +183,7 @@ export default function Editor() {
         fontList={fontList}
         onSubmit={onSubmit}
         autoComplete
-        dashed={false}
+      // dashed={false}
       >
         {({ values }, { submit }) => {
           return (

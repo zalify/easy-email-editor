@@ -27,6 +27,7 @@ export function MjmlDomRender() {
   const { dragEnabled } = useDraggable();
   const { setDataTransfer } = useDataTransfer();
   const { dashed } = useContext(EditorPropsContext);
+  const pageMaxWidth = content.attributes.width || '600px';
 
   useEffect(() => {
     if (!isEqual(content, pageData)) {
@@ -94,9 +95,18 @@ export function MjmlDomRender() {
 
   return useMemo(() => {
     return (
-      <div data-dashed={dashed} ref={setRef} style={{ height: '100%' }}>
+      <div data-dashed={dashed} ref={setRef}
+        style={{
+          height: '100%', width: pageMaxWidth,
+          padding: '40px 0px',
+          margin: 'auto',
+          outline: 'none'
+        }}
+        role="tabpanel"
+        tabIndex={0}
+      >
         {ref && createPortal(HtmlStringToReactNodes(html), ref)}
       </div>
     );
-  }, [html, ref, dashed]);
+  }, [dashed, pageMaxWidth, ref, html]);
 }

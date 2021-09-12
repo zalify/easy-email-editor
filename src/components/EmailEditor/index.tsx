@@ -4,7 +4,7 @@ import {
   EditOutlined,
 } from '@ant-design/icons';
 import { Layout, Tabs } from 'antd';
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { ConfigurationPanel } from './components/ConfigurationPanel';
 import { ComponentsPanel } from './components/ComponentsPanel';
 import { Stack } from '../UI/Stack';
@@ -20,30 +20,22 @@ import { ActiveTabKeys } from '../Provider/BlocksProvider';
 import { DesktopEmailPreview } from './components/DesktopEmailPreview';
 import { MobileEmailPreview } from './components/MobileEmailPreview';
 import { EditEmailPreview } from './components/EditEmailPreview';
-import { useFocusIdx } from '@/hooks/useFocusIdx';
-import { getPageIdx } from '@/utils/block';
-import { useHotKeys } from '@/hooks/useHotKeys';
 export interface EmailEditorProps {
   height: string | number;
 }
 const TabPane = Tabs.TabPane;
 
 export const EmailEditor = (props: EmailEditorProps) => {
-  useHotKeys();
+
   const { height: containerHeight } = props;
   const { activeTab, setActiveTab } = useActiveTab();
   const { pageData } = useEditorContext();
-  const { setFocusIdx } = useFocusIdx();
 
   const backgroundColor = pageData.attributes['background-color'];
 
   const fixedContainer = useMemo(() => {
     return createPortal(<div id={FIXED_CONTAINER_ID} />, document.body);
   }, []);
-
-  const onPageFocus = useCallback(() => {
-    setFocusIdx(getPageIdx());
-  }, [setFocusIdx]);
 
   return useMemo(
     () => (
@@ -106,7 +98,6 @@ export const EmailEditor = (props: EmailEditorProps) => {
                     }}
 
                   >
-                    <div onClick={onPageFocus} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1 }} />
                     <EditEmailPreview />
                   </div>
                 </TabPane>
@@ -156,6 +147,6 @@ export const EmailEditor = (props: EmailEditorProps) => {
         {fixedContainer}
       </Layout>
     ),
-    [activeTab, backgroundColor, containerHeight, fixedContainer, onPageFocus, setActiveTab]
+    [activeTab, backgroundColor, containerHeight, fixedContainer, setActiveTab]
   );
 };

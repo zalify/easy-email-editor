@@ -1,61 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Easy email is developed based on the MJML and has very good compatibility. At the same time, it can generate code through drag-and-drop editing."
-    />
-    <title>easy email</title>
-    <script type="text/javascript">
-      (function (c, l, a, r, i, t, y) {
-        c[a] =
-          c[a] ||
-          function () {
-            (c[a].q = c[a].q || []).push(arguments);
-          };
-        t = l.createElement(r);
-        t.async = 1;
-        t.src = 'https://www.clarity.ms/tag/' + i;
-        y = l.getElementsByTagName(r)[0];
-        y.parentNode.insertBefore(t, y);
-      })(window, document, 'clarity', 'script', '85gnvzh5py');
-    </script>
-  </head>
 
-  <body style="height: 100vh">
-    <div id="root" style="width: 100%; height: 100%">
-      <div
-        style="
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Easy email is developed based on the MJML and has very good compatibility. At the same time, it can generate code through drag-and-drop editing." />
+  <title>easy email</title>
+</head>
+
+<body style="height: 100vh">
+  <div id="root" style="width: 100%; height: 100%">
+    <div style="
           height: 100%;
           width: 100%;
           display: flex;
           align-items: center;
           justify-content: center;
-        "
-      >
-        <img
-          width="200px"
-          src="https://assets.maocanhua.cn/Fj1gmWbF-aY3ZnPyrTrDge6atRnm"
-          alt=""
-        />
-        <p style="font-size: 24px; color: rgba(0, 0, 0, 0.65)">
-          Please wait a moment.
-        </p>
-      </div>
+        ">
+      <img width="200px" src="https://assets.maocanhua.cn/Fj1gmWbF-aY3ZnPyrTrDge6atRnm" alt="" />
+      <p style="font-size: 24px; color: rgba(0, 0, 0, 0.65)">
+        Please wait a moment.
+      </p>
     </div>
-    <script type="module" src="/example/main.tsx"></script>
-    <style>
-      a[title='站长统计'] {
-        visibility: hidden;
-        display: none !important;
-      }
-    </style>
-    <script
-      type="text/javascript"
-      src="https://s9.cnzz.com/z_stat.php?id=1280025969&web_id=1280025969"
-    ></script>
-    <script src="https://buttons.github.io/buttons.js"></script>
-  </body>
+  </div>
+  <script type="module" src="/example/main.tsx"></script>
+  <%- analysis %>
+</body>
+
 </html>

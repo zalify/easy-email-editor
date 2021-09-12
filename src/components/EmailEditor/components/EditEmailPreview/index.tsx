@@ -1,24 +1,20 @@
 import { ShadowDom } from '@/components/UI/ShadowDom';
-import { useEditorContext } from '@/hooks/useEditorContext';
 import React from 'react';
 import { EmailContent } from '../EmailContent';
 
 export function EditEmailPreview() {
-  const { pageData } = useEditorContext();
-  const pageMaxWidth = pageData.attributes.width || '600px';
 
   return (
     <ShadowDom
       id='VisualEditorEditMode'
       style={{
-        width: pageMaxWidth,
-        padding: '40px 0px',
-        margin: 'auto',
         height: '100%',
         zIndex: 10,
-        position: 'relative'
+        position: 'relative',
+        outline: 'none'
       }}
     >
+      <div id="VisualEditorEdit-mask" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} />
       <EmailContent />
     </ShadowDom>
   );

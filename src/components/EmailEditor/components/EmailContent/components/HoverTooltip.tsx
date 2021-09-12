@@ -1,74 +1,50 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { getNodeTypeFromClassName } from '@/utils/block';
 import { findBlockNodeByIdx } from '@/utils/findBlockNodeByIdx';
 import { useHoverIdx } from '@/hooks/useHoverIdx';
 import { BlocksMap } from '@/components/core/blocks';
-import { useFocusIdx } from 'easy-email-editor';
 import { createPortal } from 'react-dom';
+import { awaitForElement } from '@/utils/awaitForElement';
 
 export function HoverTooltip() {
   const { hoverIdx, direction, isDragging } = useHoverIdx();
-  const { focusIdx } = useFocusIdx();
 
-  const hoverBlock = useMemo(() => {
-    if (hoverIdx === focusIdx) return null;
-    const blockNode = findBlockNodeByIdx(hoverIdx, true);
-    if (!blockNode) return null;
-    const block = blockNode
-      ? BlocksMap.findBlockByType(
-          getNodeTypeFromClassName(blockNode.classList)!
-        )
-      : null;
-    if (!block) return null;
+  const [blockNode, setBlockNode] = useState<HTMLDivElement | null>(null);
 
-    const positionStyle = {};
-    if (direction === 'top') {
-    }
+  useEffect(() => {
+    const promiseObj = awaitForElement<HTMLDivElement>(hoverIdx);
+    promiseObj.promise.then((blockNode) => {
+      setBlockNode(blockNode);
+    });
 
-    return {
-      title: block.name,
-      node: blockNode,
-      positionStyle,
+    return () => {
+      promiseObj.cancel();
     };
-  }, [direction, focusIdx, hoverIdx]);
+  }, [hoverIdx]);
 
-  const focusBlock = useMemo(() => {
-    const blockNode = findBlockNodeByIdx(focusIdx, true);
-    if (!blockNode) return null;
-    const block = blockNode
+  const block = useMemo(() => {
+    return blockNode
       ? BlocksMap.findBlockByType(
-          getNodeTypeFromClassName(blockNode.classList)!
-        )
+        getNodeTypeFromClassName(blockNode.classList)!
+      )
       : null;
-    if (!block) return null;
+  }, [blockNode]);
 
-    return {
-      title: block.name,
-      node: blockNode,
-    };
-  }, [focusIdx]);
+  if (!block || !blockNode) return null;
 
   return (
     <>
-      {focusBlock
-        ? createPortal(
-            <TipNode title={focusBlock.title} lineWidth={2} type='selected' />,
-            focusBlock.node
-          )
-        : null}
-      {hoverBlock
-        ? createPortal(
-            <TipNode
-              type={isDragging ? 'drag' : 'hover'}
-              lineWidth={1}
-              title={hoverBlock.title}
-              direction={direction}
-              isDragging={isDragging}
-            />,
-            hoverBlock.node
-          )
-        : null}
+      {createPortal(
+        <TipNode
+          type={isDragging ? 'drag' : 'hover'}
+          lineWidth={1}
+          title={block.name}
+          direction={direction}
+          isDragging={isDragging}
+        />,
+        blockNode
+      )}
     </>
   );
 }
@@ -78,7 +54,7 @@ interface TipNodeProps {
   direction?: string;
   isDragging?: boolean;
   lineWidth: number;
-  type: 'drag' | 'hover' | 'selected';
+  type: 'drag' | 'hover';
 }
 function TipNode(props: TipNodeProps) {
   const { direction, title, isDragging, lineWidth, type } = props;
@@ -94,15 +70,8 @@ function TipNode(props: TipNodeProps) {
     return `Drag to ${title}`;
   }, [direction, title]);
 
-  const showTitle = useMemo(() => {
-    if (direction === 'top' || direction === 'bottom') return false;
-    return true;
-  }, [direction]);
-
   const color = useMemo(() => {
-    if (type === 'selected') {
-      return 'var(--selected-color)';
-    } else if (type === 'drag') {
+    if (type === 'drag') {
       return 'var(--dragover-color)';
     } else {
       return 'var(--hover-color)';
@@ -151,22 +120,6 @@ function TipNode(props: TipNodeProps) {
         )}
       </div>
 
-      {/* title */}
-      {showTitle && (
-        <div
-          style={{
-            color: '#ffffff',
-            backgroundColor: '#1890ff',
-            height: '22px',
-            lineHeight: '22px',
-            display: 'inline-flex',
-            padding: '1px 5px',
-            transform: 'translateY(-100%)',
-          }}
-        >
-          {props.title}
-        </div>
-      )}
       {/* drag direction tip */}
       {props.isDragging && (
         <div
