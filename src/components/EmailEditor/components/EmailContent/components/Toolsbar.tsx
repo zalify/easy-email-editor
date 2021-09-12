@@ -11,7 +11,10 @@ import { useBlock } from '@/hooks/useBlock';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { Stack } from '@/components/UI/Stack';
 import { TextAreaField, TextField } from '@/components/core/Form';
-import { BasicType, BlocksMap, IBlock, useHoverIdx } from 'easy-email-editor';
+import { BlocksMap } from '@/components/core/blocks';
+import { BasicType } from '@/constants';
+import { IBlock } from '@/typings';
+
 const columnBlock = BlocksMap.findBlockByType(BasicType.COLUMN);
 const sectionBlock = BlocksMap.findBlockByType(BasicType.SECTION);
 

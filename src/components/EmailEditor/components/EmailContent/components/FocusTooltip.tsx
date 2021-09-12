@@ -6,7 +6,7 @@ import { createPortal } from 'react-dom';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { ToolsBar } from './Toolsbar';
 import { awaitForElement } from '@/utils/awaitForElement';
-import { useHoverIdx } from 'easy-email-editor';
+import { useHoverIdx } from '@/hooks/useHoverIdx';
 
 export function FocusTooltip() {
   const [blockNode, setBlockNode] = useState<HTMLDivElement | null>(null);
