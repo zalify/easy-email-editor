@@ -1,4 +1,3 @@
-
 import React, { useContext, useState } from 'react';
 
 import { getIndexByIdx, getParentIdx, getSiblingIdx } from '@/utils/block';
@@ -18,15 +17,25 @@ import { IBlock } from '@/typings';
 const columnBlock = BlocksMap.findBlockByType(BasicType.COLUMN);
 const sectionBlock = BlocksMap.findBlockByType(BasicType.SECTION);
 
-export function ToolsBar({ block }: { block: IBlock; }) {
+export function ToolsBar({ block }: { block: IBlock }) {
   const [modalVisible, setModalVisible] = useState(false);
   const { onAddCollection } = useContext(EditorPropsContext);
-  const { moveByIdx, copyBlock, removeBlock, focusBlock: focusBlockData, addBlock } = useBlock();
+  const {
+    moveByIdx,
+    copyBlock,
+    removeBlock,
+    focusBlock: focusBlockData,
+    addBlock,
+  } = useBlock();
   const { focusIdx } = useFocusIdx();
   const isPage = block.type === BasicType.PAGE;
 
-  const isVerticalBlock = columnBlock.validParentType.some(item => block.validParentType.some(p => p === item));
-  const isHorizontalBlock = sectionBlock.validParentType.some(item => block.validParentType.some(p => p === item));
+  const isVerticalBlock = columnBlock.validParentType.some((item) =>
+    block.validParentType.some((p) => p === item)
+  );
+  const isHorizontalBlock = sectionBlock.validParentType.some((item) =>
+    block.validParentType.some((p) => p === item)
+  );
 
   const handleMoveUp = () => {
     moveByIdx(focusIdx, getSiblingIdx(focusIdx, -1));
@@ -41,7 +50,6 @@ export function ToolsBar({ block }: { block: IBlock; }) {
   };
 
   const handleAddToCollection = () => {
-
     setModalVisible(true);
   };
 
@@ -54,7 +62,7 @@ export function ToolsBar({ block }: { block: IBlock; }) {
     addBlock({
       type: BasicType.COLUMN,
       parentIdx: parentIdx,
-      positionIndex: getIndexByIdx(focusIdx) + 1
+      positionIndex: getIndexByIdx(focusIdx) + 1,
     });
   };
 
@@ -67,11 +75,9 @@ export function ToolsBar({ block }: { block: IBlock; }) {
         positionIndex: getIndexByIdx(focusIdx) + 1,
         payload: {
           children: sectionBlock.createInstance({
-            children: [
-              columnBlock.createInstance({})
-            ]
-          })
-        }
+            children: [columnBlock.createInstance({})],
+          }),
+        },
       });
     } else {
       const parentIdx = getParentIdx(focusIdx)!;
@@ -80,16 +86,13 @@ export function ToolsBar({ block }: { block: IBlock; }) {
         parentIdx: parentIdx,
         positionIndex: getIndexByIdx(focusIdx) + 1,
         payload: {
-          children: [
-            columnBlock.createInstance({})
-          ]
-        }
+          children: [columnBlock.createInstance({})],
+        },
       });
     }
-
   };
 
-  const onSubmit = (values: { label: string; helpText: string; }) => {
+  const onSubmit = (values: { label: string; helpText: string }) => {
     if (!values.label) return;
     const uuid = uuidv4();
     onAddCollection?.({
@@ -112,17 +115,17 @@ export function ToolsBar({ block }: { block: IBlock; }) {
           zIndex: 3,
           color: '#000',
           width: '100%',
-          pointerEvents: 'none'
-
+          lineHeight: '22px',
+          pointerEvents: 'none',
         }}
-        onClick={e => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
       >
         <div
           style={{
             color: '#ffffff',
             transform: 'translateY(-100%)',
             display: 'flex',
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
           }}
         >
           <div
@@ -130,22 +133,33 @@ export function ToolsBar({ block }: { block: IBlock; }) {
               color: '#ffffff',
               backgroundColor: '#1890ff',
               height: '22px',
-              lineHeight: '22px',
               display: 'inline-flex',
               padding: '1px 5px',
-              boxSizing: 'border-box'
+              boxSizing: 'border-box',
             }}
           >
             {block.name}
           </div>
-          <div style={{ display: isPage ? 'none' : 'flex', alignItems: 'center', justifyContent: 'center', }}>
-            <ToolItem iconName="icon-top" onClick={handleMoveUp} />
-            <ToolItem iconName="icon-bottom" onClick={handleMoveDown} />
-            <ToolItem iconName="icon-copy" onClick={handleCopy} />
-            <ToolItem iconName="icon-collection" onClick={handleAddToCollection} />
-            <ToolItem iconName="icon-delete" onClick={handleDelete} />
+          <div
+            style={{
+              display: isPage ? 'none' : 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <ToolItem iconName='icon-top' onClick={handleMoveUp} />
+            <ToolItem iconName='icon-bottom' onClick={handleMoveDown} />
+            <ToolItem iconName='icon-copy' onClick={handleCopy} />
+            <ToolItem
+              iconName='icon-collection'
+              onClick={handleAddToCollection}
+            />
+            <ToolItem iconName='icon-delete' onClick={handleDelete} />
 
-            <Form initialValues={{ label: '', helpText: '' }} onSubmit={onSubmit}>
+            <Form
+              initialValues={{ label: '', helpText: '' }}
+              onSubmit={onSubmit}
+            >
               {({ handleSubmit }) => (
                 <Modal
                   zIndex={2000}
@@ -175,39 +189,64 @@ export function ToolsBar({ block }: { block: IBlock; }) {
 
       {/* add row/ add column */}
 
-      {(
-        <div style={{
-          position: 'absolute',
-          left: 0,
-          top: 0,
-          fontSize: 14,
-          zIndex: 3,
-          color: '#000',
-          width: '100%',
-          height: '100%',
-          pointerEvents: 'none'
-
-        }}
-          onClick={e => e.stopPropagation()}
+      {
+        <div
+          style={{
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            fontSize: 14,
+            zIndex: 3,
+            color: '#000',
+            width: '100%',
+            height: '100%',
+            pointerEvents: 'none',
+          }}
+          onClick={(e) => e.stopPropagation()}
         >
           {isVerticalBlock && (
-            <div style={{ position: 'absolute', right: 0, top: '50%', transform: 'translate(100%,-50%)' }}>
-              <ToolItem width={22} iconName="icon-add" onClick={handleAddColumn} />
+            <div
+              style={{
+                position: 'absolute',
+                right: 0,
+                top: '50%',
+                transform: 'translate(100%,-50%)',
+              }}
+            >
+              <ToolItem
+                width={22}
+                iconName='icon-add'
+                onClick={handleAddColumn}
+              />
             </div>
           )}
           {isHorizontalBlock && (
-            <div style={{ position: 'absolute', left: '50%', bottom: '0', transform: 'translate(-50%, 100%)' }}>
-              <ToolItem width={22} iconName="icon-add" onClick={handleAddRows} />
+            <div
+              style={{
+                position: 'absolute',
+                left: '50%',
+                bottom: '0',
+                transform: 'translate(-50%, 100%)',
+              }}
+            >
+              <ToolItem
+                width={22}
+                iconName='icon-add'
+                onClick={handleAddRows}
+              />
             </div>
           )}
         </div>
-      )}
+      }
     </>
-
   );
 }
 
-function ToolItem(props: { iconName: string; onClick: React.MouseEventHandler<HTMLDivElement>; width?: number; }) {
+function ToolItem(props: {
+  iconName: string;
+  onClick: React.MouseEventHandler<HTMLDivElement>;
+  width?: number;
+}) {
   return (
     <div
       onClick={props.onClick}
@@ -219,7 +258,7 @@ function ToolItem(props: { iconName: string; onClick: React.MouseEventHandler<HT
         display: 'flex',
         pointerEvents: 'auto',
         cursor: 'pointer',
-        justifyContent: 'center'
+        justifyContent: 'center',
       }}
       className={classnames('iconfont', props.iconName)}
     />
