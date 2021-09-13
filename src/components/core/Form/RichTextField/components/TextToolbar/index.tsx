@@ -101,11 +101,11 @@ export function TextToolbar(props: TextToolbarProps) {
           >
             <Button
               size='small'
-              icon={
+              icon={(
                 <TextStyle variation='strong'>
                   <strong>F</strong>
                 </TextStyle>
-              }
+              )}
             />
           </Tooltip>
           <Tooltip

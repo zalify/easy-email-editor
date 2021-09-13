@@ -1,5 +1,4 @@
 
-
 import services from '@example/services';
 import createSliceState from './common/createSliceState';
 export default createSliceState({

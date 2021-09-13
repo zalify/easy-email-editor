@@ -32,12 +32,12 @@ export function Panel() {
         />
         <Stack alignment='center'>
           <TextField
-            label={
+            label={(
               <Stack spacing='extraTight'>
                 <TextStyle>Breakpoint</TextStyle>
                 <Help title='Allows you to control on which breakpoint the layout should go desktop/mobile.' />
               </Stack>
-            }
+            )}
             quickchange
             name={`${focusIdx}.data.value.breakpoint`}
             inline

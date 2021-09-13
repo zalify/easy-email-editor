@@ -17,6 +17,7 @@ export const platformList = [
 
 export function useDeviceToolbar() {
   const [width, setWidth] = useState(1200);
+
   const [selectedPlatform, setSelectedPlatform] = useState('laptop');
 
   useEffect(() => {
@@ -35,7 +36,7 @@ export function useDeviceToolbar() {
           <Button
             type={selectedPlatform === item.value ? 'primary' : undefined}
             ghost={selectedPlatform === item.value}
-            size='small'
+            size="small"
             onClick={() => setSelectedPlatform(item.value)}
           >
             {<DesktopOutlined />}

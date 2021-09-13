@@ -115,8 +115,8 @@ export function ToolsBar({ block }: { block: IBlock }) {
           zIndex: 3,
           color: '#000',
           width: '100%',
-          lineHeight: '22px',
           pointerEvents: 'none',
+          lineHeight: '22px',
         }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -133,9 +133,11 @@ export function ToolsBar({ block }: { block: IBlock }) {
               color: '#ffffff',
               backgroundColor: '#1890ff',
               height: '22px',
+
               display: 'inline-flex',
               padding: '1px 5px',
               boxSizing: 'border-box',
+              whiteSpace: 'nowrap',
             }}
           >
             {block.name}

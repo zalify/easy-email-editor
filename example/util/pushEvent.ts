@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 export function pushEvent(params: {
   page?: string;
   action?: string;

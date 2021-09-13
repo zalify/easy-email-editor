@@ -39,10 +39,10 @@ export const ComponentsPanel = React.memo(function () {
         defaultActiveKey={['1', '2', '3', '4', '5']}
       >
         <Panel
-          header='Layout'
-          key='2'
+          header="Layout"
+          key="2"
           extra={
-            <Button type='link' onClick={onToggleMore}>
+            <Button type="link" onClick={onToggleMore}>
               {visible ? ' Show less' : ' Show more'}
             </Button>
           }
@@ -54,11 +54,11 @@ export const ComponentsPanel = React.memo(function () {
             }}
           >
             <Stack.Item fill>
-              <Stack vertical alignment='center' distribution='center'>
+              <Stack vertical alignment="center" distribution="center">
                 <Stack.Item />
-                <Stack alignment='center' distribution='center'>
+                <Stack alignment="center" distribution="center">
                   <LayoutBlockIcon
-                    text='Wrapper'
+                    text="Wrapper"
                     helpText={`
                 Wrapper enables to wrap multiple sections together. It's especially useful to achieve nested layouts with shared border or background images across sections.
                 `}
@@ -66,9 +66,9 @@ export const ComponentsPanel = React.memo(function () {
                     icon={<BorderOuterOutlined />}
                   />
                   <LayoutBlockIcon
-                    text='Section'
+                    text="Section"
                     helpText={
-                      <Stack vertical spacing='none'>
+                      <Stack vertical spacing="none">
                         <TextStyle>
                           Sections are intended to be used as rows within your
                           email. They will be used to structure the layout.
@@ -83,11 +83,11 @@ export const ComponentsPanel = React.memo(function () {
                     icon={<PicCenterOutlined />}
                   />
                 </Stack>
-                <Stack alignment='center' distribution='center'>
+                <Stack alignment="center" distribution="center">
                   <LayoutBlockIcon
-                    text='Group'
+                    text="Group"
                     helpText={
-                      <Stack vertical spacing='none'>
+                      <Stack vertical spacing="none">
                         <TextStyle>
                           Group allows you to prevent columns from stacking on
                           mobile. To do so, wrap the columns inside a group
@@ -99,9 +99,9 @@ export const ComponentsPanel = React.memo(function () {
                     icon={<TableOutlined />}
                   />
                   <LayoutBlockIcon
-                    text='Column'
+                    text="Column"
                     helpText={
-                      <Stack vertical spacing='none'>
+                      <Stack vertical spacing="none">
                         <TextStyle>
                           Columns enable you to horizontally organize the
                           content within your sections. They must be located
@@ -135,12 +135,17 @@ export const ComponentsPanel = React.memo(function () {
             </div>
           </div>
         </Panel>
-        <Panel header='Content' key='1'>
+        <Panel header="Content" key="1">
           <div className={styles.list}>
             <BlockIcon
-              text='Text'
+              text="Text"
+              payload={{
+                attributes: {
+                  padding: '0px 0px 0px 0px',
+                },
+              }}
               helpText={
-                <Stack vertical spacing='none'>
+                <Stack vertical spacing="none">
                   <TextStyle>
                     This block allows you to display text in your email.
                   </TextStyle>
@@ -150,9 +155,9 @@ export const ComponentsPanel = React.memo(function () {
               icon={<FontSizeOutlined />}
             />
             <BlockIcon
-              text='Image'
+              text="Image"
               helpText={
-                <Stack vertical spacing='none'>
+                <Stack vertical spacing="none">
                   <TextStyle>
                     Displays a responsive image in your email. It is similar to
                     the HTML "&lt;img/&gt;" tag. Note that if no width is
@@ -160,15 +165,22 @@ export const ComponentsPanel = React.memo(function () {
                   </TextStyle>
                 </Stack>
               }
-              payload={{ attributes: { width: '150px' } }}
+              payload={{
+                attributes: { width: '150px', padding: '0px 0px 0px 0px' },
+              }}
               type={BasicType.IMAGE}
               icon={<PictureOutlined />}
             />
 
             <BlockIcon
-              text='Button'
+              text="Button"
+              payload={{
+                attributes: {
+                  padding: '0px 0px 0px 0px',
+                },
+              }}
               helpText={
-                <Stack vertical spacing='none'>
+                <Stack vertical spacing="none">
                   <TextStyle>Displays a customizable button.</TextStyle>
                 </Stack>
               }
@@ -176,9 +188,9 @@ export const ComponentsPanel = React.memo(function () {
               icon={<YoutubeOutlined />}
             />
             <BlockIcon
-              text='Divider'
+              text="Divider"
               helpText={
-                <Stack vertical spacing='none'>
+                <Stack vertical spacing="none">
                   <TextStyle>
                     Displays a horizontal divider that can be customized like a
                     HTML border.
@@ -189,9 +201,9 @@ export const ComponentsPanel = React.memo(function () {
               icon={<MinusOutlined />}
             />
             <BlockIcon
-              text='Spacer'
+              text="Spacer"
               helpText={
-                <Stack vertical spacing='none'>
+                <Stack vertical spacing="none">
                   <TextStyle>Displays a blank space.</TextStyle>
                 </Stack>
               }
@@ -201,9 +213,9 @@ export const ComponentsPanel = React.memo(function () {
 
             <>
               <BlockIcon
-                text='Accordion'
+                text="Accordion"
                 helpText={
-                  <Stack vertical spacing='none'>
+                  <Stack vertical spacing="none">
                     <TextStyle>
                       Accordion is an interactive component to stack content in
                       tabs, so the information is collapsed and only the titles
@@ -217,9 +229,9 @@ export const ComponentsPanel = React.memo(function () {
                 icon={<ColumnHeightOutlined />}
               />
               <BlockIcon
-                text='Hero'
+                text="Hero"
                 helpText={
-                  <Stack vertical spacing='none'>
+                  <Stack vertical spacing="none">
                     <TextStyle>
                       This block displays a hero image. It behaves like an
                       'section' with a single 'column'.
@@ -230,9 +242,9 @@ export const ComponentsPanel = React.memo(function () {
                 icon={<ColumnHeightOutlined />}
               />
               <BlockIcon
-                text='Carousel'
+                text="Carousel"
                 helpText={
-                  <Stack vertical spacing='none'>
+                  <Stack vertical spacing="none">
                     <TextStyle>
                       This block displays a gallery of images or "carousel".
                       Readers can interact by hovering and clicking on
@@ -244,9 +256,9 @@ export const ComponentsPanel = React.memo(function () {
                 icon={<ColumnHeightOutlined />}
               />
               <BlockIcon
-                text='Navbar'
+                text="Navbar"
                 helpText={
-                  <Stack vertical spacing='none'>
+                  <Stack vertical spacing="none">
                     <TextStyle>
                       Displays a menu for navigation with an optional hamburger
                       mode for mobile devices.
@@ -257,9 +269,9 @@ export const ComponentsPanel = React.memo(function () {
                 icon={<ColumnHeightOutlined />}
               />
               <BlockIcon
-                text='Social'
+                text="Social"
                 helpText={
-                  <Stack vertical spacing='none'>
+                  <Stack vertical spacing="none">
                     <TextStyle>
                       Displays calls-to-action for various social networks with
                       their associated logo.
@@ -291,7 +303,7 @@ export const ComponentsPanel = React.memo(function () {
                 />
               ))}
               <Stack.Item fill>
-                <Stack vertical distribution='center' alignment='center'>
+                <Stack vertical distribution="center" alignment="center">
                   <Stack.Item />
                   {item.blocks.length === 0 && <Empty />}
                 </Stack>

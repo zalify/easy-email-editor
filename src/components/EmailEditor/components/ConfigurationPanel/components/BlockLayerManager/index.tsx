@@ -144,12 +144,12 @@ const BlockLayerItem = ({
             {blockData.children.map((item, index) => (
               <BlockLayerItem
                 key={index}
-                indent={
+                indent={(
                   <Stack spacing='none'>
                     {indent}
                     <div style={{ width: 16, height: '100%' }} />
                   </Stack>
-                }
+                )}
                 blockData={item}
                 idx={getChildIdx(idx, index)}
               />

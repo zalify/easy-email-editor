@@ -35,7 +35,7 @@ export function FontSizeList(props: { onChange: (val: string) => void; }) {
   return (
     <Menu
       onClick={(item) => {
-        props.onChange(item.key as string);
+        props.onChange(item.key );
       }}
       selectedKeys={[]}
       style={{ width: 100, border: 'none' }}

@@ -48,6 +48,7 @@ export function useDropBlock() {
   useEffect(() => {
     if (ref) {
       const onClick = (ev: MouseEvent) => {
+        ev.preventDefault(); // prevent link
         const blockNode = findBlockNode(ev.target as HTMLElement);
         if (blockNode) {
           const idx = getNodeIdxFromClassName(blockNode.classList)!;
