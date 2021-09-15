@@ -1,17 +1,11 @@
-import {
-  EyeOutlined,
-  EyeInvisibleOutlined,
-  RightOutlined,
-  DownOutlined,
-  CopyOutlined,
-  CloseOutlined,
-} from '@ant-design/icons';
+import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useEditorContext } from '@/hooks/useEditorContext';
 import { IBlockData } from '@/typings';
 import {
   findBlockByType,
   getChildIdx,
+  getIndexByIdx,
   getNodeIdxClassName,
   getNodeTypeClassName,
   getPageIdx,
@@ -24,39 +18,84 @@ import styles from './index.module.scss';
 import { classnames } from '@/utils/classnames';
 import { useDropBlock } from '@/hooks/useDropBlock';
 
-import { BlockAvatarWrapper } from '@/components/core/wrapper/BlockAvatarWrapper';
 import { BlockInteractiveStyle } from '../../../BlockInteractiveStyle';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { useCollapse } from '@/hooks/useCollapse';
+import { IconFont } from '@/components/IconFont';
+import { getIconNameByBlockType } from '@/utils/getIconNameByBlockType';
+import { BlocksMap } from '@/components/core/blocks';
+import { AddBlockPanel } from './components/AddBlockPanel';
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+  ResponderProvided,
+} from 'react-beautiful-dnd';
+import { useHoverIdx } from '@/hooks/useHoverIdx';
 
 export function BlockLayerManager() {
   const { setRef } = useDropBlock();
   const { pageData } = useEditorContext();
+  const { focusIdx } = useFocusIdx();
+  const { setIsDragging } = useHoverIdx();
+
   return useMemo(() => {
+    if (!focusIdx) return null;
     return (
-      <div ref={setRef}>
-        <BlockLayerItem blockData={pageData} idx={getPageIdx()} />
-        <BlockInteractiveStyle isShadowDom={false} />
+      <div id='BlockLayerManager' ref={setRef}>
+        <DragDropContext onDragEnd={() => {}}>
+          <Droppable droppableId={getPageIdx()}>
+            {(provided, snapshot) => (
+              <div
+                ref={provided.innerRef}
+                className={classnames(styles.blockList)}
+              >
+                <BlockLayerItem
+                  indent={0}
+                  blockData={pageData}
+                  idx={getPageIdx()}
+                />
+              </div>
+            )}
+          </Droppable>
+
+          <BlockInteractiveStyle isShadowDom={false} />
+        </DragDropContext>
       </div>
     );
-  }, [pageData, setRef]);
+  }, [pageData, setRef, focusIdx]);
 }
 
 const BlockLayerItem = ({
   blockData,
   idx,
   indent,
+  hidden,
 }: {
   blockData: IBlockData;
   idx: string;
-  indent?: React.ReactNode;
+  indent: number;
+  hidden?: boolean;
 }) => {
   const { focusIdx } = useFocusIdx();
+  const { isDragging, setIsDragging } = useHoverIdx();
   const { collapsed, setCollapsed } = useCollapse();
   const [visible, setVisible] = useState(true);
   const title = findBlockByType(blockData.type)?.name;
   const noChild = blockData.children.length === 0;
   const isPageBlock = idx === getPageIdx();
+
+  const onDragEnd = (result: DropResult, provided: ResponderProvided) => {
+    console.log('result', result);
+    console.log('provided', provided);
+    setIsDragging(false);
+  };
+
+  const onDragStart = () => {
+    setIsDragging(true);
+  };
+
   useEffect(() => {
     if (focusIdx.startsWith(idx)) {
       setVisible(true);
@@ -84,84 +123,188 @@ const BlockLayerItem = ({
   );
 
   const subIcon = useMemo(() => {
-    if (noChild)
+    if (
+      noChild ||
+      BlocksMap.findBlockByType(blockData.type).validParentType.includes(
+        BasicType.COLUMN
+      )
+    )
       return (
         <div style={{ visibility: 'hidden' }}>
-          <DownOutlined />
+          <IconFont size={12} iconName='icon-number' />
         </div>
       );
 
     const display = isPageBlock ? !collapsed : visible;
     if (display) {
-      return <DownOutlined onClickCapture={onToggle} />;
+      return (
+        <IconFont
+          size={12}
+          iconName='icon-minus-square'
+          onClickCapture={onToggle}
+        />
+      );
     }
-    return <RightOutlined onClickCapture={onToggle} />;
-  }, [collapsed, isPageBlock, noChild, onToggle, visible]);
+    return (
+      <IconFont
+        size={12}
+        iconName='icon-plus-square'
+        onClickCapture={onToggle}
+      />
+    );
+  }, [blockData.type, collapsed, isPageBlock, noChild, onToggle, visible]);
 
-  const renderListItem = (child: React.ReactNode) => (
-    <li className={classnames(styles.blockItem)} data-idx={idx}>
-      <BlockAvatarWrapper type={blockData.type} payload={idx} action='move'>
-        <div
-          className={classnames(
-            styles.listItemContentWrapper,
-            'email-block',
-            getNodeIdxClassName(idx),
-            getNodeTypeClassName(blockData.type)
-          )}
-        >
-          <Stack.Item fill>
-            <Stack distribution='equalSpacing'>
-              <Stack spacing='tight'>
-                {indent}
-                <Stack.Item fill>
-                  <div className={styles.listItemContent}>
-                    <Stack spacing='tight'>
-                      <EyeIcon idx={idx} blockData={blockData} />
-                      <TextStyle>{title}</TextStyle>
-                    </Stack>
-                  </div>
-                </Stack.Item>
-              </Stack>
-              <Stack>
-                <ShortcutTool idx={idx} blockData={blockData} />
-                {subIcon}
-                <Stack.Item />
-              </Stack>
-            </Stack>
-          </Stack.Item>
-        </div>
-      </BlockAvatarWrapper>
-      {child}
-    </li>
-  );
+  const isSelected = idx === focusIdx;
 
-  if (noChild) return renderListItem(null);
+  const isContentBlock = BlocksMap.findBlockByType(
+    blockData.type
+  ).validParentType.includes(BasicType.COLUMN);
+
+  const renderItem = () => {
+    return (
+      <Draggable
+        draggableId={idx}
+        index={getIndexByIdx(idx)}
+        isDragDisabled={idx === getPageIdx()}
+      >
+        {(provided, snapshot) => {
+          const dragingStyle: React.CSSProperties = snapshot?.isDragging
+            ? {
+                boxShadow: '0px 0px 5px  #e2dcdc',
+                backgroundColor: '#fff',
+              }
+            : {};
+
+          return (
+            <div
+              data-dragging={Boolean(snapshot?.isDragging)}
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+              style={{
+                ...provided?.draggableProps.style,
+                ...dragingStyle,
+              }}
+              className={classnames(
+                styles.listItemContentWrapper,
+                'email-block',
+                getNodeIdxClassName(idx),
+                getNodeTypeClassName(blockData.type)
+              )}
+            >
+              <Stack.Item fill>
+                <Stack distribution='equalSpacing'>
+                  <Stack spacing='none' wrap={false}>
+                    <div style={{ width: indent * 18 }} />
+                    <Stack.Item fill>
+                      <div className={styles.listItemContent}>
+                        <Stack wrap={false} spacing='tight' alignment='center'>
+                          {subIcon}
+                          <IconFont
+                            iconName={getIconNameByBlockType(blockData.type)}
+                            style={{ fontSize: 12 }}
+                          />
+
+                          <TextStyle size='smallest'>
+                            <span
+                              title={title}
+                              style={{
+                                maxWidth: 100,
+                                whiteSpace: 'nowrap',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                display: 'block',
+                              }}
+                            >
+                              {title}
+                            </span>
+                          </TextStyle>
+                        </Stack>
+                      </div>
+                    </Stack.Item>
+                  </Stack>
+                  <Stack spacing='extraTight' wrap={false}>
+                    {/* <ShortcutTool idx={idx} blockData={blockData} /> */}
+                    <EyeIcon hidden={hidden} idx={idx} blockData={blockData} />
+
+                    <IconFont iconName='icon-drag' />
+                  </Stack>
+                </Stack>
+              </Stack.Item>
+            </div>
+          );
+        }}
+      </Draggable>
+    );
+  };
   return (
     <>
-      {renderListItem(
-        visible && (
-          <ul className={classnames(styles.blockList)}>
-            {blockData.children.map((item, index) => (
-              <BlockLayerItem
-                key={index}
-                indent={(
-                  <Stack spacing='none'>
-                    {indent}
-                    <div style={{ width: 16, height: '100%' }} />
-                  </Stack>
-                )}
-                blockData={item}
-                idx={getChildIdx(idx, index)}
-              />
-            ))}
-          </ul>
-        )
-      )}
+      <li className={classnames(styles.blockItem)} data-idx={idx}>
+        {renderItem()}
+
+        <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
+          <Droppable droppableId={idx}>
+            {(provided, snapshot) => (
+              <ul
+                ref={provided.innerRef}
+                className={classnames(styles.blockList)}
+              >
+                {visible &&
+                  blockData.children.map((item, index) => (
+                    <BlockLayerItem
+                      hidden={hidden || blockData.data.hidden}
+                      key={index}
+                      indent={indent + 1}
+                      blockData={item}
+                      idx={getChildIdx(idx, index)}
+                    />
+                  ))}
+                <li
+                  className={classnames(styles.blockItem, styles.blockAdd)}
+                  style={{
+                    display:
+                      isSelected && !isContentBlock && !isDragging
+                        ? undefined
+                        : 'none',
+                  }}
+                >
+                  <AddBlockPanel
+                    type={blockData.type}
+                    parentIdx={idx}
+                    positionIndex={blockData.children.length}
+                  >
+                    <div style={{ color: '#2c6ecb' }}>
+                      <Stack
+                        spacing='extraTight'
+                        alignment='center'
+                        wrap={false}
+                      >
+                        <div style={{ width: (indent + 1) * 18 }} />
+                        <IconFont iconName='icon-add-cycle' size={12} />
+
+                        <TextStyle size='smallest'>Add block</TextStyle>
+                      </Stack>
+                    </div>
+                  </AddBlockPanel>
+                </li>
+              </ul>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </li>
     </>
   );
 };
 
-function EyeIcon({ idx, blockData }: { idx: string; blockData: IBlockData }) {
+function EyeIcon({
+  idx,
+  blockData,
+  hidden,
+}: {
+  idx: string;
+  blockData: IBlockData;
+  hidden?: boolean;
+}) {
   const { setValueByIdx } = useBlock();
 
   const onToggleVisible = useCallback(
@@ -173,6 +316,12 @@ function EyeIcon({ idx, blockData }: { idx: string; blockData: IBlockData }) {
     [blockData, idx, setValueByIdx]
   );
 
+  if (hidden)
+    return (
+      <div style={{ visibility: 'hidden' }}>
+        <EyeOutlined />
+      </div>
+    );
   if (blockData.type === BasicType.PAGE) return null;
 
   return blockData.data.hidden ? (
@@ -201,9 +350,15 @@ function ShortcutTool({
   if (blockData.type === BasicType.PAGE) return null;
   return (
     <div className={styles.shortcutTool} onClick={(e) => e.stopPropagation()}>
-      <Stack>
-        <CopyOutlined onClickCapture={enHanceHandler(() => copyBlock(idx))} />
-        <CloseOutlined
+      <Stack spacing='extraTight'>
+        <IconFont
+          iconName='icon-copy'
+          size={12}
+          onClickCapture={enHanceHandler(() => copyBlock(idx))}
+        />
+        <IconFont
+          iconName='icon-delete'
+          size={12}
           onClickCapture={enHanceHandler(() => removeBlock(idx))}
         />
       </Stack>

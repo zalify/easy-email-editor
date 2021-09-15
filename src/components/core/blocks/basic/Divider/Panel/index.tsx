@@ -9,16 +9,19 @@ import { Width } from '@/components/EmailEditor/components/ConfigurationPanel/co
 import { Align } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Align';
 
 import { useFocusIdx } from '@/hooks/useFocusIdx';
+import { AttributesPanel } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/AttributesPanel';
 export function Panel() {
   return (
-    <Stack>
-      <Width />
-      <Align />
-      <BorderWidth />
-      <BorderStyle />
-      <BorderColor />
-      <ContainerBackgroundColor />
-      <Padding />
-    </Stack>
+    <AttributesPanel>
+      <Stack>
+        <Width />
+        <Align />
+        <BorderWidth />
+        <BorderStyle />
+        <BorderColor />
+        <ContainerBackgroundColor />
+        <Padding />
+      </Stack>
+    </AttributesPanel>
   );
 }

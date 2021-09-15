@@ -39,6 +39,8 @@ export function Picture(props: IPictureProps) {
         style={{
           width: props.style?.width || '100%',
           height: props.style?.height || '100%',
+          maxWidth: '100%',
+          maxHeight: '100%',
         }}
         src={url}
         alt=''

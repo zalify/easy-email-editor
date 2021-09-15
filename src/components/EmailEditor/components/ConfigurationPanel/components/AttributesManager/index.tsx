@@ -13,29 +13,19 @@ export function AttributesManager() {
 
   const value = getValueByIdx(values, focusIdx);
 
-  const block = value && findBlockByType(value.type) as any;
+  const block = value && (findBlockByType(value.type) as any);
 
   const content = useMemo(() => {
     if (!block) return null;
     return (
-      <Card
-        bodyStyle={{ paddingTop: 0, backgroundColor: '#fff' }}
-        title={(
-          <TextStyle variation='strong' size='large'>
-            {block.name} attributes
-          </TextStyle>
-        )}
-      >
+      <Stack vertical>
         <Stack.Item fill>
           <Stack vertical>
             <Stack.Item fill> {<block.Panel />}</Stack.Item>
             <Stack.Item />
-            <Stack.Item />
-            <Stack.Item />
-            <Stack.Item />
           </Stack>
         </Stack.Item>
-      </Card>
+      </Stack>
     );
   }, [block]);
 

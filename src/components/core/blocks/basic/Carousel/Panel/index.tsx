@@ -11,6 +11,7 @@ import { LinkOutlined } from '@ant-design/icons';
 import { Align } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Align';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { ICarousel } from '..';
+import { AttributesPanel } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/AttributesPanel';
 
 const options = [
   {
@@ -26,79 +27,81 @@ const options = [
 export function Panel() {
   const { focusIdx } = useFocusIdx();
   return (
-    <Stack vertical>
-      <ColorPickerField
-        label='Border color of the hovered thumbnail'
-        name={`${focusIdx}.attributes.tb-hover-border-color`}
-        inline
-        alignment='center'
-      />
-      <ColorPickerField
-        label='Border color of the selected thumbnail'
-        name={`${focusIdx}.attributes.tb-selected-border-color`}
-        inline
-        alignment='center'
-      />
-      <TextField
-        label='Icon width'
-        name={`${focusIdx}.attributes.icon-width`}
-        inline
-        quickchange
-      />
-      <TextField
-        label='Left icon'
-        name={`${focusIdx}.attributes.left-icon`}
-        inline
-      />
-      <TextField
-        label='Right icon'
-        name={`${focusIdx}.attributes.right-icon`}
-        inline
-      />
-      <TextField
-        label='Border of the thumbnails'
-        name={`${focusIdx}.attributes.tb-border`}
-        inline
-      />
-      <TextField
-        label='Border radius of the thumbnails'
-        name={`${focusIdx}.attributes.tb-border-radius`}
-        inline
-      />
-      <TextField
-        label='Thumbnail width'
-        name={`${focusIdx}.attributes.tb-width`}
-        quickchange
-        inline
-      />
-      <RadioGroupField
-        label='Thumbnails'
-        name={`${focusIdx}.attributes.thumbnails`}
-        options={options}
-        inline
-      />
-      <Align />
-
-      <div
-        style={{
-          borderTop: '1px solid #ccc',
-          paddingTop: 10,
-          marginTop: 20,
-        }}
-      >
-        <EditTabField
-          name={`${focusIdx}.data.value.images`}
-          label='Images'
-          renderItem={(item, index) => (
-            <CarouselImage item={item} index={index} />
-          )}
-          additionItem={{
-            src: 'https://www.mailjet.com/wp-content/uploads/2016/11/ecommerce-guide.jpg',
-            target: '_blank',
-          }}
+    <AttributesPanel>
+      <Stack vertical>
+        <ColorPickerField
+          label='Border color of the hovered thumbnail'
+          name={`${focusIdx}.attributes.tb-hover-border-color`}
+          inline
+          alignment='center'
         />
-      </div>
-    </Stack>
+        <ColorPickerField
+          label='Border color of the selected thumbnail'
+          name={`${focusIdx}.attributes.tb-selected-border-color`}
+          inline
+          alignment='center'
+        />
+        <TextField
+          label='Icon width'
+          name={`${focusIdx}.attributes.icon-width`}
+          inline
+          quickchange
+        />
+        <TextField
+          label='Left icon'
+          name={`${focusIdx}.attributes.left-icon`}
+          inline
+        />
+        <TextField
+          label='Right icon'
+          name={`${focusIdx}.attributes.right-icon`}
+          inline
+        />
+        <TextField
+          label='Border of the thumbnails'
+          name={`${focusIdx}.attributes.tb-border`}
+          inline
+        />
+        <TextField
+          label='Border radius of the thumbnails'
+          name={`${focusIdx}.attributes.tb-border-radius`}
+          inline
+        />
+        <TextField
+          label='Thumbnail width'
+          name={`${focusIdx}.attributes.tb-width`}
+          quickchange
+          inline
+        />
+        <RadioGroupField
+          label='Thumbnails'
+          name={`${focusIdx}.attributes.thumbnails`}
+          options={options}
+          inline
+        />
+        <Align />
+
+        <div
+          style={{
+            borderTop: '1px solid #ccc',
+            paddingTop: 10,
+            marginTop: 20,
+          }}
+        >
+          <EditTabField
+            name={`${focusIdx}.data.value.images`}
+            label='Images'
+            renderItem={(item, index) => (
+              <CarouselImage item={item} index={index} />
+            )}
+            additionItem={{
+              src: 'https://www.mailjet.com/wp-content/uploads/2016/11/ecommerce-guide.jpg',
+              target: '_blank',
+            }}
+          />
+        </div>
+      </Stack>
+    </AttributesPanel>
   );
 }
 

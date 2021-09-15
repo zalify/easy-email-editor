@@ -52,9 +52,8 @@ export function ColorPicker(props: ColorPickerProps) {
         {children || (
           <div
             style={{
-              display: 'inline-block',
-              height: 32,
-              width: 32,
+              height: 24,
+              width: 24,
               padding: 4,
               border: '1px solid #e6e6e6',
               borderRadius: showInput ? undefined : 4,
@@ -80,6 +79,8 @@ export function ColorPicker(props: ColorPickerProps) {
             ) : (
               <Picture
                 style={{
+                  display: 'block',
+                  width: 14,
                   filter:
                     'invert(  0.78  )  drop-shadow(0 0px 0 rgb(0 0 0 / 45%))',
                 }}
@@ -91,6 +92,7 @@ export function ColorPicker(props: ColorPickerProps) {
       </Popover>
       {showInput && (
         <Input
+          size='small'
           value={props.value}
           style={{ width: '7em', outline: 'none' }}
           onChange={onInputChange}

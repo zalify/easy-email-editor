@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { TextField } from '@/components/core/Form';
 import { Stack } from '@/components/UI/Stack';
@@ -18,7 +19,6 @@ export function Padding(props: PaddingProps = {}) {
   const getVal = useCallback(
     (index: number) => {
       return () => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         return focusBlock?.attributes[attributeName]?.split(' ')[index];
       };
     },
@@ -28,8 +28,8 @@ export function Padding(props: PaddingProps = {}) {
   const setVal = useCallback(
     (index: number) => {
       return (newVal: string) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        const vals: string[] = focusBlock?.attributes[attributeName]?.split(' ') || [];
+        const vals: string[] =
+          focusBlock?.attributes[attributeName]?.split(' ') || [];
         vals[index] = newVal || '0px';
         return vals.join(' ');
       };
@@ -39,23 +39,28 @@ export function Padding(props: PaddingProps = {}) {
 
   useEffect(() => {
     if (!focusBlock) return;
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    const paddins: string[] = focusBlock.attributes[attributeName]?.split(' ') || [];
+    const paddins: string[] =
+      focusBlock.attributes[attributeName]?.split(' ') || [];
     if (paddins.length === 2) {
       paddins[2] = paddins[0];
       paddins[3] = paddins[1];
       focusBlock.attributes[attributeName] = paddins.join(' ');
       focusBlock.attributes = { ...focusBlock.attributes };
       setValueByIdx(focusIdx, { ...focusBlock });
-      setCount(c => c + 1);
+      setCount((c) => c + 1);
     }
-
-  }, [attributeName, focusBlock, focusBlock?.attributes, focusIdx, setValueByIdx]);
+  }, [
+    attributeName,
+    focusBlock,
+    focusBlock?.attributes,
+    focusIdx,
+    setValueByIdx,
+  ]);
 
   return useMemo(() => {
     return (
       <Stack key={count} vertical spacing='extraTight'>
-        <TextStyle size='large'>{title}</TextStyle>
+        <TextStyle>{title}</TextStyle>
         <Stack wrap={false}>
           <Stack.Item fill>
             <TextField

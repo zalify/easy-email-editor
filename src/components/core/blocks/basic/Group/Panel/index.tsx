@@ -6,13 +6,16 @@ import { BackgroundColor } from '@/components/EmailEditor/components/Configurati
 import { VerticalAlign } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/VerticalAlign';
 
 import { useFocusIdx } from '@/hooks/useFocusIdx';
+import { AttributesPanel } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/AttributesPanel';
 export function Panel() {
   return (
-    <Stack vertical>
-      <Width />
-      <BackgroundColor />
-      <VerticalAlign />
-      <Direction />
-    </Stack>
+    <AttributesPanel>
+      <Stack vertical>
+        <Width />
+        <BackgroundColor />
+        <VerticalAlign />
+        <Direction />
+      </Stack>
+    </AttributesPanel>
   );
 }

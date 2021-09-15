@@ -20,39 +20,42 @@ import { LetterSpacing } from '@/components/EmailEditor/components/Configuration
 import { InlineTextField } from '@/components/core/Form';
 
 import { useFocusIdx } from '@/hooks/useFocusIdx';
+import { AttributesPanel } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/AttributesPanel';
 export function Panel() {
   const { focusIdx } = useFocusIdx();
 
   return (
-    <Stack vertical>
-      <div style={{ position: 'absolute' }}>
-        <InlineTextField
-          idx={focusIdx}
-          name={`${focusIdx}.data.value.content`}
-          label=''
-          labelHidden
-        />
-      </div>
+    <AttributesPanel>
+      <Stack vertical>
+        <div style={{ position: 'absolute' }}>
+          <InlineTextField
+            idx={focusIdx}
+            name={`${focusIdx}.data.value.content`}
+            label=''
+            labelHidden
+          />
+        </div>
 
-      <Color />
-      <FontSize />
-      <Link />
-      <LineHeight />
+        <Color />
+        <FontSize />
+        <Link />
+        <LineHeight />
 
-      <FontStyle />
-      <FontWeight />
-      <LetterSpacing />
-      <FontFamily />
-      <TextDecoration />
-      <TextTransform />
-      <BackgroundColor />
-      <Width />
-      <Align />
-      <Padding title='Inner padding' attributeName='inner-padding' />
-      <Padding title='Padding' attributeName='padding' />
-      <Border />
-      <ContainerBackgroundColor />
-      <TextAlign />
-    </Stack>
+        <FontStyle />
+        <FontWeight />
+        <LetterSpacing />
+        <FontFamily />
+        <TextDecoration />
+        <TextTransform />
+        <BackgroundColor />
+        <Width />
+        <Align />
+        <Padding title='Inner padding' attributeName='inner-padding' />
+        <Padding title='Padding' attributeName='padding' />
+        <Border />
+        <ContainerBackgroundColor />
+        <TextAlign />
+      </Stack>
+    </AttributesPanel>
   );
 }

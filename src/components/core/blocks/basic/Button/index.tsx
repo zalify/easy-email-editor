@@ -38,5 +38,5 @@ export const Button: IBlock<IButton> = {
   type: BasicType.BUTTON,
   Panel,
   createInstance,
-  validParentType: [BasicType.COLUMN],
+  validParentType: [BasicType.COLUMN, BasicType.HERO],
 };

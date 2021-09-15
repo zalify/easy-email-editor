@@ -106,6 +106,7 @@
     "qrcode-generator": "^1.4.4",
     "qs": "6.9.6",
     "react": "^17.0.1",
+    "react-beautiful-dnd": "^13.1.0",
     "react-color": "^2.19.3",
     "react-dom": "^17.0.1",
     "react-final-form": "^6.5.3",

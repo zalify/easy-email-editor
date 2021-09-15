@@ -8,39 +8,46 @@ import { Height } from '@/components/EmailEditor/components/ConfigurationPanel/c
 import { Link } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Link';
 
 import { useFocusIdx } from '@/hooks/useFocusIdx';
+import { AttributesPanel } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/AttributesPanel';
 
 export function Panel() {
   const { focusIdx } = useFocusIdx();
 
   return (
-    <Stack>
-      <ColorPickerField
-        label='color'
-        name={`${focusIdx}.attributes.color`}
-        inline
-        alignment='center'
-      />
-      <TextField
-        label='src'
-        quickchange
-        name={`${focusIdx}.attributes.src`}
-        inline
-      />
-      <Width />
-      <Height />
+    <AttributesPanel>
+      <Stack>
+        <ColorPickerField
+          label='color'
+          name={`${focusIdx}.attributes.color`}
+          inline
+          alignment='center'
+        />
+        <TextField
+          label='src'
+          quickchange
+          name={`${focusIdx}.attributes.src`}
+          inline
+        />
+        <Width />
+        <Height />
 
-      <Link />
-      <TextField label='border' name={`${focusIdx}.attributes.border`} inline />
-      <TextAlign />
-      <ColorPickerField
-        label='container-background-color'
-        name={`${focusIdx}.attributes.container-background-color`}
-        inline
-        alignment='center'
-      />
-      <Padding />
-      <TextField label='title' name={`${focusIdx}.attributes.title`} inline />
-      <TextField label='alt' name={`${focusIdx}.attributes.alt`} inline />
-    </Stack>
+        <Link />
+        <TextField
+          label='border'
+          name={`${focusIdx}.attributes.border`}
+          inline
+        />
+        <TextAlign />
+        <ColorPickerField
+          label='container-background-color'
+          name={`${focusIdx}.attributes.container-background-color`}
+          inline
+          alignment='center'
+        />
+        <Padding />
+        <TextField label='title' name={`${focusIdx}.attributes.title`} inline />
+        <TextField label='alt' name={`${focusIdx}.attributes.alt`} inline />
+      </Stack>
+    </AttributesPanel>
   );
 }

@@ -35,7 +35,7 @@ export function Background() {
   return useMemo(() => {
     return (
       <Stack key={focusIdx} vertical spacing='extraTight'>
-        <TextStyle size='large'>Background</TextStyle>
+        <TextStyle>Background</TextStyle>
         <BackgroundColor />
         <Stack vertical spacing='none'>
           <ImageUploaderField

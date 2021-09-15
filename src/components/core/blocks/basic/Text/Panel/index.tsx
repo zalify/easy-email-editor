@@ -16,33 +16,36 @@ import { LetterSpacing } from '@/components/EmailEditor/components/Configuration
 import { RichTextField } from '@/components/core/Form';
 
 import { useFocusIdx } from '@/hooks/useFocusIdx';
+import { AttributesPanel } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/AttributesPanel';
 export function Panel() {
   const { focusIdx } = useFocusIdx();
   return (
-    <Stack vertical>
-      <div style={{ position: 'absolute' }}>
-        <RichTextField
-          idx={focusIdx}
-          name={`${focusIdx}.data.value.content`}
-          label=''
-          labelHidden
-        />
-      </div>
+    <AttributesPanel>
+      <Stack vertical>
+        <div style={{ position: 'absolute' }}>
+          <RichTextField
+            idx={focusIdx}
+            name={`${focusIdx}.data.value.content`}
+            label=''
+            labelHidden
+          />
+        </div>
 
-      <Color />
-      <ContainerBackgroundColor />
-      <FontSize />
-      <LineHeight />
-      <Align />
+        <Color />
+        <ContainerBackgroundColor />
+        <FontSize />
+        <LineHeight />
+        <Align />
 
-      <FontStyle />
-      <FontWeight />
-      <LetterSpacing />
-      <Height />
-      <FontFamily />
-      <TextDecoration />
-      <TextTransform />
-      <Padding />
-    </Stack>
+        <FontStyle />
+        <FontWeight />
+        <LetterSpacing />
+        <Height />
+        <FontFamily />
+        <TextDecoration />
+        <TextTransform />
+        <Padding />
+      </Stack>
+    </AttributesPanel>
   );
 }

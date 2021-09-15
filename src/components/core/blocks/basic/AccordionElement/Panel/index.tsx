@@ -19,35 +19,38 @@ import { TextTransform } from '@/components/EmailEditor/components/Configuration
 import { LineHeight } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/LineHeight';
 import { LetterSpacing } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/LetterSpacing';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
+import { AttributesPanel } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/AttributesPanel';
 
 export function Panel() {
   const { focusIdx } = useFocusIdx();
   return (
-    <Stack vertical>
-      <TextAreaField
-        label='Content'
-        name={`${focusIdx}.data.value.content`}
-        inline
-      />
-      <Color />
-      <FontSize />
-      <LineHeight />
+    <AttributesPanel>
+      <Stack vertical>
+        <TextAreaField
+          label='Content'
+          name={`${focusIdx}.data.value.content`}
+          inline
+        />
+        <Color />
+        <FontSize />
+        <LineHeight />
 
-      <FontStyle />
-      <FontWeight />
-      <LetterSpacing />
-      <FontFamily />
-      <TextDecoration />
-      <TextTransform />
-      <BackgroundColor />
-      <Width />
-      <Align />
-      <Padding title='Inner padding' attributeName='inner-padding' />
-      <Padding title='Padding' attributeName='padding' />
-      <Link />
-      <Border />
-      <ContainerBackgroundColor />
-      <TextAlign />
-    </Stack>
+        <FontStyle />
+        <FontWeight />
+        <LetterSpacing />
+        <FontFamily />
+        <TextDecoration />
+        <TextTransform />
+        <BackgroundColor />
+        <Width />
+        <Align />
+        <Padding title='Inner padding' attributeName='inner-padding' />
+        <Padding title='Padding' attributeName='padding' />
+        <Link />
+        <Border />
+        <ContainerBackgroundColor />
+        <TextAlign />
+      </Stack>
+    </AttributesPanel>
   );
 }

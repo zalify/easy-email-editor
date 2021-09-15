@@ -10,5 +10,5 @@ export const Raw: IBlock<IRaw> = {
   type: BasicType.RAW,
   Panel,
   createInstance,
-  validParentType: [BasicType.PAGE],
+  validParentType: [],
 };

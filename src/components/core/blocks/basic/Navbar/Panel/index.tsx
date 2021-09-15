@@ -12,6 +12,7 @@ import { Align } from '@/components/EmailEditor/components/ConfigurationPanel/co
 import { LinkOutlined } from '@ant-design/icons';
 import { INavbar } from '..';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
+import { AttributesPanel } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/AttributesPanel';
 
 const options = [
   {
@@ -31,50 +32,52 @@ const options = [
 export function Panel() {
   const { focusIdx } = useFocusIdx();
   return (
-    <Stack vertical>
-      <Align />
-      <RadioGroupField
-        label='IcoAlign'
-        name={`${focusIdx}.attributes.ico-align`}
-        options={options}
-        inline
-      />
-      <ColorPickerField
-        label='Ico color'
-        name={`${focusIdx}.attributes.ico-color`}
-        inline
-        alignment='center'
-      />
-      <TextField
-        label='Ico font size'
-        name={`${focusIdx}.attributes.ico-font-size`}
-        inline
-        quickchange
-      />
-      <TextField
-        label='Ico line height'
-        name={`${focusIdx}.attributes.ico-line-height`}
-        inline
-        quickchange
-      />
-      <Padding
-        title='Ico padding'
-        attributeName={`${focusIdx}.attributes.ico-padding`}
-      />
+    <AttributesPanel>
+      <Stack vertical>
+        <Align />
+        <RadioGroupField
+          label='IcoAlign'
+          name={`${focusIdx}.attributes.ico-align`}
+          options={options}
+          inline
+        />
+        <ColorPickerField
+          label='Ico color'
+          name={`${focusIdx}.attributes.ico-color`}
+          inline
+          alignment='center'
+        />
+        <TextField
+          label='Ico font size'
+          name={`${focusIdx}.attributes.ico-font-size`}
+          inline
+          quickchange
+        />
+        <TextField
+          label='Ico line height'
+          name={`${focusIdx}.attributes.ico-line-height`}
+          inline
+          quickchange
+        />
+        <Padding
+          title='Ico padding'
+          attributeName={`${focusIdx}.attributes.ico-padding`}
+        />
 
-      <EditTabField
-        name={`${focusIdx}.data.value.links`}
-        label='Links'
-        renderItem={(item, index) => <NavbarLink item={item} index={index} />}
-        additionItem={{
-          src: 'https://www.mailjet.com/wp-content/uploads/2016/11/ecommerce-guide.jpg',
-          target: '_blank',
-          content: 'New link',
-          color: '#1890ff',
-          'font-size': '13px',
-        }}
-      />
-    </Stack>
+        <EditTabField
+          name={`${focusIdx}.data.value.links`}
+          label='Links'
+          renderItem={(item, index) => <NavbarLink item={item} index={index} />}
+          additionItem={{
+            src: 'https://www.mailjet.com/wp-content/uploads/2016/11/ecommerce-guide.jpg',
+            target: '_blank',
+            content: 'New link',
+            color: '#1890ff',
+            'font-size': '13px',
+          }}
+        />
+      </Stack>
+    </AttributesPanel>
   );
 }
 

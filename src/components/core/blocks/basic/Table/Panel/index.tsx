@@ -10,18 +10,21 @@ import { FontSize } from '@/components/EmailEditor/components/ConfigurationPanel
 import { FontStyle } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/FontStyle';
 import { FontFamily } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/FontFamliy';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
+import { AttributesPanel } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/AttributesPanel';
 export function Panel() {
   return (
-    <Stack vertical>
-      <Color />
-      <ContainerBackgroundColor />
-      <Padding />
-      <Width />
-      <FontFamily />
-      <FontSize />
-      <FontStyle />
-      <TextAlign />
-      <Border />
-    </Stack>
+    <AttributesPanel>
+      <Stack vertical>
+        <Color />
+        <ContainerBackgroundColor />
+        <Padding />
+        <Width />
+        <FontFamily />
+        <FontSize />
+        <FontStyle />
+        <TextAlign />
+        <Border />
+      </Stack>
+    </AttributesPanel>
   );
 }

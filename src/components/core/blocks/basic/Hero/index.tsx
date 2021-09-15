@@ -24,5 +24,5 @@ export const Hero: IBlock<IHero> = {
   type: BasicType.HERO,
   Panel,
   createInstance,
-  validParentType: [BasicType.PAGE],
+  validParentType: [BasicType.PAGE, BasicType.WRAPPER],
 };

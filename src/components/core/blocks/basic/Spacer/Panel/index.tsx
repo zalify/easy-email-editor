@@ -5,12 +5,15 @@ import { ContainerBackgroundColor } from '@/components/EmailEditor/components/Co
 import { Padding } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Padding';
 
 import { useFocusIdx } from '@/hooks/useFocusIdx';
+import { AttributesPanel } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/AttributesPanel';
 export function Panel() {
   return (
-    <Stack>
-      <ContainerBackgroundColor />
-      <Height />
-      <Padding />
-    </Stack>
+    <AttributesPanel>
+      <Stack>
+        <ContainerBackgroundColor />
+        <Height />
+        <Padding />
+      </Stack>
+    </AttributesPanel>
   );
 }
