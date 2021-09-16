@@ -1,8 +1,9 @@
 import { Panel } from './Panel';
-import { createInstance } from './createInstance';
-import { IBlock, IBlockData } from '@/typings';
+import { IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
 import { CSSProperties } from 'react';
+import { createBlock } from '@/utils/createBlock';
+import { merge } from 'lodash';
 export type IButton = IBlockData<
   {
     align?: string;
@@ -33,10 +34,37 @@ export type IButton = IBlockData<
   { content: string }
 >;
 
-export const Button: IBlock<IButton> = {
+export const Button = createBlock<IButton>({
   name: 'Button',
   type: BasicType.BUTTON,
   Panel,
-  createInstance,
+  create: (payload) => {
+    const defaultData: IButton = {
+      type: BasicType.BUTTON,
+      data: {
+        value: {
+          content: 'Button',
+        },
+      },
+      attributes: {
+        align: 'center',
+        'background-color': '#414141',
+        color: '#ffffff',
+        'font-size': '13px',
+        'font-weight': 'normal',
+        'border-radius': '3px',
+        padding: '10px 25px 10px 25px',
+        'inner-padding': '10px 25px 10px 25px',
+        'line-height': '120%',
+        target: '_blank',
+        'vertical-align': 'middle',
+        border: 'none',
+        'text-align': 'center',
+        href: '#',
+      },
+      children: [],
+    };
+    return merge(defaultData, payload);
+  },
   validParentType: [BasicType.COLUMN],
-};
+});

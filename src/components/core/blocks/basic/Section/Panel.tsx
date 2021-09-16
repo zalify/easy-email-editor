@@ -9,7 +9,7 @@ import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { useEffect } from 'react';
 import { useBlock } from '@/hooks/useBlock';
 import { BasicType } from '@/constants';
-import { BlocksMap } from '../../..';
+import { BlocksMap } from '../..';
 import { useCallback } from 'react';
 
 export function Panel() {

@@ -9,7 +9,7 @@ import { ContainerBackgroundColor } from '@/components/EmailEditor/components/Co
 import { FontSize } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/FontSize';
 import { FontStyle } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/FontStyle';
 import { FontFamily } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/FontFamliy';
-import { useFocusIdx } from '@/hooks/useFocusIdx';
+
 export function Panel() {
   return (
     <Stack vertical>

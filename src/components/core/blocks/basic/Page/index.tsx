@@ -1,7 +1,9 @@
 import { Panel } from './Panel';
-import { createInstance } from './createInstance';
 import { IBlock, IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
+import { createBlock } from '@/utils/createBlock';
+import { Wrapper } from '../Wrapper';
+import { merge } from 'lodash';
 
 export type IPage = IBlockData<
   {
@@ -27,10 +29,31 @@ export type IPage = IBlockData<
   }
 >;
 
-export const Page: IBlock<IPage> = {
+export const Page: IBlock<IPage> = createBlock({
   name: 'Page',
   type: BasicType.PAGE,
   Panel,
-  createInstance,
+  create: (payload) => {
+    const defaultData: IPage = {
+      type: BasicType.PAGE,
+      data: {
+        value: {
+          breakpoint: '480px',
+          headAttributes: '',
+          headStyles: [],
+          fonts: [],
+          responsive: true,
+          'font-family': 'lucida Grande,Verdana,Microsoft YaHei',
+          'text-color': '#000000',
+        },
+      },
+      attributes: {
+        'background-color': '#efeeea',
+        width: '600px',
+      },
+      children: [Wrapper.createInstance()],
+    };
+    return merge(defaultData, payload);
+  },
   validParentType: [],
-};
+});

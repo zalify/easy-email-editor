@@ -22,7 +22,8 @@
     "preview": "npm run lib && vite --config vite.preview.config.ts --force",
     "typings": "tsc --declaration --emitDeclarationOnly --project tsconfig.lib.json",
     "test": "jest",
-    "account": "node scripts/createAccount.js "
+    "lint": "eslint --fix  --ext .tsx,.ts src/ example/",
+    "account": "node scripts/createAccount.js"
   },
   "husky": {
     "hooks": {
@@ -31,7 +32,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "eslint --fix  --ext .tsx,.ts src/ example/"
+      "yarn lint"
     ]
   },
   "devDependencies": {

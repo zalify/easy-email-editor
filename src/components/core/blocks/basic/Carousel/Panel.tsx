@@ -10,7 +10,7 @@ import {
 import { LinkOutlined } from '@ant-design/icons';
 import { Align } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Align';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
-import { ICarousel } from '..';
+import { ICarousel } from '.';
 
 const options = [
   {

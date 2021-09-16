@@ -8,7 +8,6 @@ import { BorderColor } from '@/components/EmailEditor/components/ConfigurationPa
 import { Width } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Width';
 import { Align } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Align';
 
-import { useFocusIdx } from '@/hooks/useFocusIdx';
 export function Panel() {
   return (
     <Stack>

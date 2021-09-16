@@ -6,7 +6,8 @@ export interface IBlock<T extends IBlockData = IBlockData> {
   name: string;
   type: BlockType;
   Panel: () => React.ReactNode;
-  createInstance: (payload?: RecursivePartial<T>) => T;
+  createInstance: (payload?: RecursivePartial<T>) => T; //@deprecated , use create
+  create: (payload?: RecursivePartial<T>) => T;
   validParentType: BlockType[];
   transform?: (
     data: IBlockData,
