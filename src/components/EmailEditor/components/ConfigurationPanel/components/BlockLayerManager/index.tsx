@@ -89,6 +89,9 @@ const BlockLayerItem = ({
   const onDragEnd = (result: DropResult, provided: ResponderProvided) => {
     console.log('result', result);
     console.log('provided', provided);
+    if (!result.destination) {
+      return;
+    }
     setIsDragging(false);
   };
 

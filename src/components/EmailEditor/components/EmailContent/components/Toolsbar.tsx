@@ -199,6 +199,7 @@ export function ToolsBar({ block }: { block: IBlock }) {
             top: 0,
             fontSize: 14,
             zIndex: 3,
+            lineHeight: '22px',
             color: '#000',
             width: '100%',
             height: '100%',

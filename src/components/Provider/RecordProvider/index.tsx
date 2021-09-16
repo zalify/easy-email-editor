@@ -3,7 +3,7 @@ import { useForm, useFormState } from 'react-final-form';
 import { cloneDeep, isEqual } from 'lodash';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
-const MAX_RECORD_SIZE = 100;
+const MAX_RECORD_SIZE = 50;
 
 export type RecordStatus = 'add' | 'redo' | 'undo' | undefined;
 
@@ -85,8 +85,9 @@ export const RecordProvider: React.FC<{}> = (props) => {
       currentData.current = formState.values;
       statusRef.current = 'add';
       setData((oldData) => {
-        const newData = [...oldData, cloneDeep(formState.values)];
-        newData.slice(-MAX_RECORD_SIZE);
+        const newData = [...oldData, cloneDeep(formState.values)].slice(
+          -MAX_RECORD_SIZE
+        );
         setIndex((i) => Math.min(i + 1, MAX_RECORD_SIZE - 1));
         return newData;
       });
