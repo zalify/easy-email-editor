@@ -2,20 +2,26 @@ import { useEffect } from 'react';
 import isHotkey from 'is-hotkey';
 import { useBlock } from './useBlock';
 import { getEditorRoot, getShadowRoot } from '@/utils/findBlockNodeByIdx';
-import {
-  getPageIdx, getParentIdx,
-} from '@/utils/block';
+import { getPageIdx, getParentIdx } from '@/utils/block';
 import { useFocusIdx } from './useFocusIdx';
 
 function isContentEditFocus() {
   const isShadowRootFocus = document.activeElement === getEditorRoot();
   if (isShadowRootFocus) {
-    if (getEditorRoot()?.shadowRoot?.activeElement?.getAttribute('contenteditable') === 'true') {
+    if (
+      getEditorRoot()?.shadowRoot?.activeElement?.getAttribute(
+        'contenteditable'
+      ) === 'true'
+    ) {
       return true;
     }
   } else {
-
-    if (['input', 'textarea'].includes(document.activeElement?.tagName.toLocaleLowerCase() || '') || document.activeElement?.getAttribute('contenteditable') === 'true') {
+    if (
+      ['input', 'textarea'].includes(
+        document.activeElement?.tagName.toLocaleLowerCase() || ''
+      ) ||
+      document.activeElement?.getAttribute('contenteditable') === 'true'
+    ) {
       return true;
     }
   }
@@ -23,20 +29,19 @@ function isContentEditFocus() {
 }
 
 export function useHotKeys() {
-
   const { redo, undo, removeBlock } = useBlock();
   const { setFocusIdx, focusIdx } = useFocusIdx();
   const root = getShadowRoot();
   // redo/undo
   useEffect(() => {
     const onKeyDown = (ev: KeyboardEvent) => {
-
       if (isContentEditFocus()) return;
       if (isHotkey('mod+z', ev)) {
+        ev.preventDefault();
         undo();
-
       }
       if (isHotkey('mod+y', ev)) {
+        ev.preventDefault();
         redo();
       }
     };
@@ -67,7 +72,6 @@ export function useHotKeys() {
 
   // select block
   useEffect(() => {
-
     if (!root) return;
     const onSelectParent = (ev: Event) => {
       const target = ev.target as HTMLDivElement;
@@ -91,5 +95,4 @@ export function useHotKeys() {
       root.removeEventListener('dblclick', onSelectPage);
     };
   }, [root, focusIdx, removeBlock, setFocusIdx]);
-
 }

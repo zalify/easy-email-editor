@@ -3,7 +3,7 @@ import { useForm, useFormState } from 'react-final-form';
 import { cloneDeep, isEqual } from 'lodash';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
-const MAX_RECORD_SIZE = 100;
+const MAX_RECORD_SIZE = 50;
 
 export type RecordStatus = 'add' | 'redo' | 'undo' | undefined;
 
@@ -16,9 +16,9 @@ export const RecordContext = React.createContext<{
   undoable: boolean;
 }>({
   records: [],
-  redo: () => { },
-  undo: () => { },
-  reset: () => { },
+  redo: () => {},
+  undo: () => {},
+  reset: () => {},
   redoable: false,
   undoable: false,
 });
@@ -35,7 +35,6 @@ export const RecordProvider: React.FC<{}> = (props) => {
     if (index >= 0 && data.length > 0) {
       currentData.current = data[index];
     }
-
   }, [data, index]);
 
   const form = useForm();
@@ -44,7 +43,11 @@ export const RecordProvider: React.FC<{}> = (props) => {
     return {
       records: data,
       redo: () => {
-        const nextIndex = (Math.min(MAX_RECORD_SIZE - 1, index + 1, data.length - 1));
+        const nextIndex = Math.min(
+          MAX_RECORD_SIZE - 1,
+          index + 1,
+          data.length - 1
+        );
         statusRef.current = 'redo';
         setIndex(nextIndex);
         form.reset(data[nextIndex]);
@@ -54,7 +57,6 @@ export const RecordProvider: React.FC<{}> = (props) => {
         statusRef.current = 'undo';
         setIndex(prevIndex);
         form.reset(data[prevIndex]);
-
       },
       reset: () => {
         form.reset();
@@ -82,12 +84,12 @@ export const RecordProvider: React.FC<{}> = (props) => {
       currentData.current = formState.values;
       statusRef.current = 'add';
       setData((oldData) => {
-        const newData = [...oldData, cloneDeep(formState.values)];
-        newData.slice(-MAX_RECORD_SIZE);
-        setIndex((i => Math.min(i + 1, MAX_RECORD_SIZE - 1)));
+        const newData = [...oldData, cloneDeep(formState.values)].slice(
+          -MAX_RECORD_SIZE
+        );
+        setIndex((i) => Math.min(i + 1, MAX_RECORD_SIZE - 1));
         return newData;
       });
-
     }
   }, [formState]);
 

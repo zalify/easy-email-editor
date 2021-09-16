@@ -9,6 +9,7 @@ import { useEditorContext } from '@/hooks/useEditorContext';
 import { getPageIdx, getParentByIdx } from '@/utils/block';
 import { BlocksMap } from '@/components/core/blocks';
 import { BasicType } from '@/constants';
+import { IBlockData } from '@/typings';
 
 export function SourceCodeManager() {
   const { setValueByIdx, focusBlock, values } = useBlock();
@@ -30,7 +31,18 @@ export function SourceCodeManager() {
   const onChaneCode = useCallback(
     (event: React.FocusEvent<HTMLTextAreaElement>) => {
       try {
-        const parseValue = JSON.parse(event.target.value);
+        const parseValue = JSON.parse(event.target.value) as IBlockData;
+        const block = BlocksMap.findBlockByType(parseValue.type);
+        if (!block) {
+          throw new Error('Invalid content');
+        }
+        if (
+          !parseValue.data ||
+          !parseValue.attributes ||
+          !Array.isArray(parseValue.children)
+        ) {
+          throw new Error('Invalid content');
+        }
         setValueByIdx(focusIdx, parseValue);
       } catch (error: any) {
         message.error(error?.message || error);
