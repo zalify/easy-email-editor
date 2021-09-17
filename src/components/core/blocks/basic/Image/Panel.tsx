@@ -13,40 +13,47 @@ import { EditorPropsContext } from '@/components/Provider/PropsProvider';
 import { Align } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Align';
 
 import { useFocusIdx } from '@/hooks/useFocusIdx';
+import { AttributesPanel } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/AttributesPanel';
 export function Panel() {
   const { focusIdx } = useFocusIdx();
   const { onUploadImage } = useContext(EditorPropsContext);
 
   return (
-    <Stack vertical>
-      <ColorPickerField
-        label='color'
-        name={`${focusIdx}.attributes.color`}
-        inline
-        alignment='center'
-      />
-      <ImageUploaderField
-        label='src'
-        name={`${focusIdx}.attributes.src`}
-        helpText='The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.'
-        uploadHandler={onUploadImage}
-        inline
-      />
-      <Width />
-      <Height />
+    <AttributesPanel>
+      <Stack vertical>
+        <ColorPickerField
+          label='color'
+          name={`${focusIdx}.attributes.color`}
+          inline
+          alignment='center'
+        />
+        <ImageUploaderField
+          label='src'
+          name={`${focusIdx}.attributes.src`}
+          helpText='The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.'
+          uploadHandler={onUploadImage}
+          inline
+        />
+        <Width />
+        <Height />
 
-      <Link />
-      <TextField label='border' name={`${focusIdx}.attributes.border`} inline />
-      <Align />
-      <ColorPickerField
-        label='container-background-color'
-        name={`${focusIdx}.attributes.container-background-color`}
-        inline
-        alignment='center'
-      />
-      <Padding />
-      <TextField label='title' name={`${focusIdx}.attributes.title`} inline />
-      <TextField label='alt' name={`${focusIdx}.attributes.alt`} inline />
-    </Stack>
+        <Link />
+        <TextField
+          label='border'
+          name={`${focusIdx}.attributes.border`}
+          inline
+        />
+        <Align />
+        <ColorPickerField
+          label='container-background-color'
+          name={`${focusIdx}.attributes.container-background-color`}
+          inline
+          alignment='center'
+        />
+        <Padding />
+        <TextField label='title' name={`${focusIdx}.attributes.title`} inline />
+        <TextField label='alt' name={`${focusIdx}.attributes.alt`} inline />
+      </Stack>
+    </AttributesPanel>
   );
 }

@@ -4,12 +4,15 @@ import { Height } from '@/components/EmailEditor/components/ConfigurationPanel/c
 import { ContainerBackgroundColor } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/ContainerBackgroundColor';
 import { Padding } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Padding';
 
+import { AttributesPanel } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/AttributesPanel';
 export function Panel() {
   return (
-    <Stack>
-      <ContainerBackgroundColor />
-      <Height />
-      <Padding />
-    </Stack>
+    <AttributesPanel>
+      <Stack>
+        <ContainerBackgroundColor />
+        <Height />
+        <Padding />
+      </Stack>
+    </AttributesPanel>
   );
 }

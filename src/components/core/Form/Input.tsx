@@ -11,31 +11,44 @@ export interface InputProps extends Omit<AntdInputProps, 'onChange'> {
 export function Input(props: InputProps) {
   const { quickchange, value = '', onKeyDown: onPropsKeyDown } = props;
 
-  const onChange = useCallback((val: string) => {
-    props.onChange(val);
-  }, [props]);
+  const onChange = useCallback(
+    (val: string) => {
+      props.onChange(val);
+    },
+    [props]
+  );
 
-  const onKeyDown = useCallback((ev: React.KeyboardEvent<HTMLInputElement>) => {
-    onPropsKeyDown?.(ev);
-    if (quickchange) {
-      let step = 0;
-      if (ev.key === 'ArrowUp') {
-        step = 1;
-      }
-      if (ev.key === 'ArrowDown') {
-        step = -1;
-      }
+  const onKeyDown = useCallback(
+    (ev: React.KeyboardEvent<HTMLInputElement>) => {
+      onPropsKeyDown?.(ev);
+      if (quickchange) {
+        let step = 0;
+        if (ev.key === 'ArrowUp') {
+          step = 1;
+        }
+        if (ev.key === 'ArrowDown') {
+          step = -1;
+        }
 
-      if (step) {
-        if (/^\d+/.test(value)) {
-          onChange(String(value).replace(/^(\d+)/, (_, match) => {
-            return (Number(match) + step).toString();
-          }));
+        if (step) {
+          if (/^\d+/.test(value)) {
+            onChange(
+              String(value).replace(/^(\d+)/, (_, match) => {
+                return (Number(match) + step).toString();
+              })
+            );
+          }
         }
       }
+    },
+    [onPropsKeyDown, quickchange, value, onChange]
+  );
 
-    }
-  }, [onPropsKeyDown, quickchange, value, onChange]);
-
-  return <AntdInput {...{ ...props, quickchange: undefined }} onChange={(e) => onChange(e.target.value)} onKeyDown={onKeyDown} />;
+  return (
+    <AntdInput
+      {...{ ...props, quickchange: undefined }}
+      onChange={(e) => onChange(e.target.value)}
+      onKeyDown={onKeyDown}
+    />
+  );
 }

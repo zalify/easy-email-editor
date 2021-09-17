@@ -1,4 +1,7 @@
-import { BLOCK_HOVER_CLASSNAME } from './../constants';
+import {
+  BLOCK_HOVER_CLASSNAME,
+  BLOCK_SELECTED_CLASSNAME,
+} from './../constants';
 import { useEffect, useMemo, useState, useContext, useRef } from 'react';
 
 import { getNodeIdxFromClassName } from '@/utils/block';
@@ -34,7 +37,7 @@ export function useDropBlock() {
     [ref]
   );
 
-  const { setFocusIdx } = useFocusIdx();
+  const { setFocusIdx, focusIdx } = useFocusIdx();
   const {
     setHoverIdx,
     setIsDragging,
@@ -207,15 +210,14 @@ export function useDropBlock() {
       };
 
       ref.addEventListener('mouseover', onMouseover);
-      ref.addEventListener('mouseout', onMouseOut);
-      document.addEventListener('dragleave', onMouseOut);
+      // ref.addEventListener('mouseout', onMouseOut);
       document.addEventListener('dragleave', onMouseOut);
       ref.addEventListener('drop', onDrop);
       ref.addEventListener('dragover', onDragOver);
 
       return () => {
         ref.removeEventListener('mouseover', onMouseover);
-        ref.removeEventListener('mouseout', onMouseOut);
+        // ref.removeEventListener('mouseout', onMouseOut);
         document.removeEventListener('dragleave', onMouseOut);
         ref.removeEventListener('drop', onDrop);
         ref.removeEventListener('dragover', onDragOver);
@@ -265,6 +267,18 @@ export function useDropBlock() {
       });
     }
   }, [hoverIdx, isDragging, isShadowDom, ref]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      getBlockNodes(isShadowDom).forEach((child) => {
+        child.classList.remove(BLOCK_SELECTED_CLASSNAME);
+        const idx = getNodeIdxFromClassName(child.classList);
+        if (idx === focusIdx) {
+          child.classList.add(BLOCK_SELECTED_CLASSNAME);
+        }
+      });
+    }, 100);
+  }, [focusIdx, isShadowDom, ref]);
 
   return useMemo(
     () => ({

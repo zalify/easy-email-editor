@@ -1,5 +1,5 @@
 import { Panel } from './Panel';
-import { IBlock, IBlockData } from '@/typings';
+import { IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
 import { createBlock } from '@/utils/createBlock';
 import { Wrapper } from '../Wrapper';
@@ -13,7 +13,7 @@ export type IPage = IBlockData<
   {
     breakpoint?: string;
     headAttributes: string;
-    fonts?: { name: string; href: string }[];
+    fonts?: { name: string; href: string; }[];
     headStyles?: {
       content?: string;
       inline?: 'inline';
@@ -29,7 +29,7 @@ export type IPage = IBlockData<
   }
 >;
 
-export const Page: IBlock<IPage> = createBlock({
+export const Page = createBlock<IPage>({
   name: 'Page',
   type: BasicType.PAGE,
   Panel,

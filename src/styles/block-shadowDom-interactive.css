@@ -1,3 +1,43 @@
+.mj-accordion-content {
+  display: block !important;
+}
+
+.email-block {
+  position: relative;
+  z-index: 1;
+}
+
+.block-selected {
+  z-index: 2;
+}
+
+[data-dashed="true"] .email-block {
+  outline: 1px dashed rgba(170, 170, 170, 0.7);
+  outline-offset: -2px;
+}
+
+.node-type-page {
+  min-height: 100%;
+  padding-bottom: 100px;
+}
+.node-type-page * {
+  user-select: none;
+}
+.node-type-group {
+  min-height: 30px;
+}
+:not(.email-block) {
+  -webkit-user-drag: none;
+  cursor: default;
+}
+
+.email-block [contentEditable="true"],
+.email-block [contentEditable="true"] * {
+  outline: none;
+  cursor: text;
+}
+
+
 .block-dragover {
   z-index: 10;
 }

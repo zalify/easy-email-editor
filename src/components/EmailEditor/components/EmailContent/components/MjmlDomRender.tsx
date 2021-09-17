@@ -51,17 +51,6 @@ export function MjmlDomRender() {
 
   useEffect(() => {
     if (!ref) return;
-    getBlockNodes().forEach((child) => {
-      child.classList.remove(BLOCK_SELECTED_CLASSNAME);
-      const idx = getNodeIdxFromClassName(child.classList);
-      if (idx === focusIdx) {
-        child.classList.add(BLOCK_SELECTED_CLASSNAME);
-      }
-    });
-  }, [focusIdx, html, ref]);
-
-  useEffect(() => {
-    if (!ref) return;
 
     const onDragstart = (ev: DragEvent) => {
       const node = findBlockNode(ev.target as HTMLDivElement);
@@ -95,14 +84,17 @@ export function MjmlDomRender() {
 
   return useMemo(() => {
     return (
-      <div data-dashed={dashed} ref={setRef}
+      <div
+        data-dashed={dashed}
+        ref={setRef}
         style={{
-          height: '100%', width: pageMaxWidth,
+          height: '100%',
+          width: pageMaxWidth,
           padding: '40px 0px',
           margin: 'auto',
-          outline: 'none'
+          outline: 'none',
         }}
-        role="tabpanel"
+        role='tabpanel'
         tabIndex={0}
       >
         {ref && createPortal(HtmlStringToReactNodes(html), ref)}

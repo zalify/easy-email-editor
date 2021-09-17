@@ -21,5 +21,5 @@ export const Raw = createBlock<IRaw>({
     };
     return merge(defaultData, payload);
   },
-  validParentType: [BasicType.PAGE],
+  validParentType: [],
 });

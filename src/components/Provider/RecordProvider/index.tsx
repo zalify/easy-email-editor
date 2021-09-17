@@ -81,6 +81,7 @@ export const RecordProvider: React.FC<{}> = (props) => {
     );
 
     if (isChanged) {
+      console.log('isChanged', isChanged);
       currentData.current = formState.values;
       statusRef.current = 'add';
       setData((oldData) => {

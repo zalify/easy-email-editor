@@ -8,16 +8,19 @@ import { BorderColor } from '@/components/EmailEditor/components/ConfigurationPa
 import { Width } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Width';
 import { Align } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Align';
 
+import { AttributesPanel } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/AttributesPanel';
 export function Panel() {
   return (
-    <Stack>
-      <Width />
-      <Align />
-      <BorderWidth />
-      <BorderStyle />
-      <BorderColor />
-      <ContainerBackgroundColor />
-      <Padding />
-    </Stack>
+    <AttributesPanel>
+      <Stack>
+        <Width />
+        <Align />
+        <BorderWidth />
+        <BorderStyle />
+        <BorderColor />
+        <ContainerBackgroundColor />
+        <Padding />
+      </Stack>
+    </AttributesPanel>
   );
 }

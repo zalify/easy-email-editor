@@ -11,6 +11,7 @@ import { useBlock } from '@/hooks/useBlock';
 import { BasicType } from '@/constants';
 import { BlocksMap } from '../..';
 import { useCallback } from 'react';
+import { AttributesPanel } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/AttributesPanel';
 
 export function Panel() {
   const { focusIdx } = useFocusIdx();
@@ -55,17 +56,19 @@ export function Panel() {
   }, [noWrap]);
 
   return (
-    <Stack>
-      <SwitchField
-        label='Prevent columns from stacking on mobile'
-        name={`${focusIdx}.data.value.noWrap`}
-        checkedChildren='True'
-        unCheckedChildren='False'
-      />
-      <Padding />
-      <Background />
-      <TextAlign />
-      <Border />
-    </Stack>
+    <AttributesPanel>
+      <Stack>
+        <SwitchField
+          label='Prevent columns from stacking on mobile'
+          name={`${focusIdx}.data.value.noWrap`}
+          checkedChildren='True'
+          unCheckedChildren='False'
+        />
+        <Padding />
+        <Background />
+        <TextAlign />
+        <Border />
+      </Stack>
+    </AttributesPanel>
   );
 }

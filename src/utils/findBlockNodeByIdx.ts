@@ -5,7 +5,9 @@ export const getEditorRoot = () =>
 export const getShadowRoot = () => getEditorRoot()?.shadowRoot!;
 export const getBlockNodes = (inShadowDom: boolean = true) =>
   Array.from(
-    (inShadowDom ? getShadowRoot() : document).querySelectorAll('.email-block')
+    (inShadowDom ? getShadowRoot() : document)?.querySelectorAll(
+      '.email-block'
+    ) || []
   );
 
 export const findBlockNodeByIdx = (

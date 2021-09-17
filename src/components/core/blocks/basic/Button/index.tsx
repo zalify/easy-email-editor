@@ -31,7 +31,7 @@ export type IButton = IBlockData<
     'text-decoration'?: string;
     'text-transform'?: CSSProperties['textTransform'];
   },
-  { content: string }
+  { content: string; }
 >;
 
 export const Button = createBlock<IButton>({
@@ -66,5 +66,5 @@ export const Button = createBlock<IButton>({
     };
     return merge(defaultData, payload);
   },
-  validParentType: [BasicType.COLUMN],
+  validParentType: [BasicType.COLUMN, BasicType.HERO],
 });

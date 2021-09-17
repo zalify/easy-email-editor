@@ -6,27 +6,30 @@ import { TextAlign } from '@/components/EmailEditor/components/ConfigurationPane
 import { TextField } from '@/components/core/Form';
 
 import { useFocusIdx } from '@/hooks/useFocusIdx';
+import { AttributesPanel } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/AttributesPanel';
 export function Panel() {
   const { focusIdx } = useFocusIdx();
   return (
-    <Stack>
-      <Padding />
-      <Background />
-      <TextAlign />
-      <Stack vertical>
-        <TextField
-          label='Border'
-          name={`${focusIdx}.attributes.border`}
-          inline
-          quickchange
-        />
-        <TextField
-          label='Background border radius'
-          name={`${focusIdx}.attributes.border-radius`}
-          inline
-          quickchange
-        />
+    <AttributesPanel>
+      <Stack>
+        <Padding />
+        <Background />
+        <TextAlign />
+        <Stack vertical>
+          <TextField
+            label='Border'
+            name={`${focusIdx}.attributes.border`}
+            inline
+            quickchange
+          />
+          <TextField
+            label='Background border radius'
+            name={`${focusIdx}.attributes.border-radius`}
+            inline
+            quickchange
+          />
+        </Stack>
       </Stack>
-    </Stack>
+    </AttributesPanel>
   );
 }

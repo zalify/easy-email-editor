@@ -8,22 +8,25 @@ import { FontSize } from '@/components/EmailEditor/components/ConfigurationPanel
 import { FontWeight } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/FontWeight';
 import { FontFamily } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/FontFamliy';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
+import { AttributesPanel } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/AttributesPanel';
 
 export function Panel() {
   const { focusIdx } = useFocusIdx();
   return (
-    <Stack vertical>
-      <TextAreaField
-        label='Content'
-        name={`${focusIdx}.data.value.content`}
-        inline
-      />
-      <Color />
-      <BackgroundColor />
-      <FontSize />
-      <FontWeight />
-      <FontFamily />
-      <Padding title='Padding' attributeName='padding' />
-    </Stack>
+    <AttributesPanel>
+      <Stack vertical>
+        <TextAreaField
+          label='Content'
+          name={`${focusIdx}.data.value.content`}
+          inline
+        />
+        <Color />
+        <BackgroundColor />
+        <FontSize />
+        <FontWeight />
+        <FontFamily />
+        <Padding title='Padding' attributeName='padding' />
+      </Stack>
+    </AttributesPanel>
   );
 }

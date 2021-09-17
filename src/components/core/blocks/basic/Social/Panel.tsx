@@ -31,6 +31,7 @@ const options = [
 ];
 
 import { useFocusIdx } from '@/hooks/useFocusIdx';
+import { AttributesPanel } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/AttributesPanel';
 export function Panel() {
   const { focusIdx } = useFocusIdx();
   return (
@@ -100,65 +101,67 @@ function SocialElement({
 }) {
   const { focusIdx } = useFocusIdx();
   return (
-    <Stack>
-      <TextField
-        label='Font size'
-        name={`${focusIdx}.data.value.elements.[${index}].font-size`}
-        quickchange
-        inline
-      />
-      <TextField
-        label='Icon size'
-        name={`${focusIdx}.data.value.elements.[${index}].icon-size`}
-        quickchange
-        inline
-      />
-      <TextField
-        label='Icon height'
-        name={`${focusIdx}.data.value.elements.[${index}].icon-height`}
-        quickchange
-        inline
-        placeholder='overrides icon-size'
-      />
-      <TextField
-        label='Src'
-        name={`${focusIdx}.data.value.elements.[${index}].src`}
-        inline
-      />
-      <ColorPickerField
-        label='Color'
-        name={`${focusIdx}.data.value.elements.[${index}].color`}
-        inline
-        alignment='center'
-      />
-      <Stack vertical>
-        <Stack.Item fill>
-          <TextField
-            prefix={<LinkOutlined />}
-            label={<span>Href&nbsp;&nbsp;&nbsp;</span>}
-            name={`${focusIdx}.data.value.elements.[${index}].href`}
-            inline
-          />
-        </Stack.Item>
+    <AttributesPanel>
+      <Stack>
+        <TextField
+          label='Font size'
+          name={`${focusIdx}.data.value.elements.[${index}].font-size`}
+          quickchange
+          inline
+        />
+        <TextField
+          label='Icon size'
+          name={`${focusIdx}.data.value.elements.[${index}].icon-size`}
+          quickchange
+          inline
+        />
+        <TextField
+          label='Icon height'
+          name={`${focusIdx}.data.value.elements.[${index}].icon-height`}
+          quickchange
+          inline
+          placeholder='overrides icon-size'
+        />
+        <TextField
+          label='Src'
+          name={`${focusIdx}.data.value.elements.[${index}].src`}
+          inline
+        />
+        <ColorPickerField
+          label='Color'
+          name={`${focusIdx}.data.value.elements.[${index}].color`}
+          inline
+          alignment='center'
+        />
+        <Stack vertical>
+          <Stack.Item fill>
+            <TextField
+              prefix={<LinkOutlined />}
+              label={<span>Href&nbsp;&nbsp;&nbsp;</span>}
+              name={`${focusIdx}.data.value.elements.[${index}].href`}
+              inline
+            />
+          </Stack.Item>
 
-        <div style={{ minWidth: 150 }}>
-          <SelectField
-            label='Target'
-            name={`${focusIdx}.data.value.elements.[${index}].target`}
-            options={[
-              {
-                value: '_blank',
-                label: '_blank',
-              },
-              {
-                value: '_self',
-                label: '_self',
-              },
-            ]}
-            inline
-          />
-        </div>
+          <div style={{ minWidth: 150 }}>
+            <SelectField
+              label='Target'
+              name={`${focusIdx}.data.value.elements.[${index}].target`}
+              options={[
+                {
+                  value: '_blank',
+                  label: '_blank',
+                },
+                {
+                  value: '_self',
+                  label: '_self',
+                },
+              ]}
+              inline
+            />
+          </div>
+        </Stack>
       </Stack>
-    </Stack>
+    </AttributesPanel>
   );
 }
