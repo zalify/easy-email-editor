@@ -62,7 +62,7 @@ export function MjmlToJson(data: MjmlBlockItem | string): IPage {
           (item) => item.tagName === 'mj-breakpoint'
         );
 
-        return Page.createInstance({
+        return Page.create({
           attributes: body.attributes,
           children: body.children?.map(transform),
           data: {
@@ -124,7 +124,7 @@ export function MjmlToJson(data: MjmlBlockItem | string): IPage {
           payload.children = item.children.map(transform);
         }
 
-        return block.createInstance(payload);
+        return block.create(payload);
     }
   };
 

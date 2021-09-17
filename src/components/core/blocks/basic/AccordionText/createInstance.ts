@@ -1,14 +1,15 @@
 import { BasicType } from '@/constants';
-import { CreateInstance } from '@/typings';
+import { create } from '@/typings';
 import { merge } from 'lodash';
 import { IAccordionText } from '.';
 
-export const createInstance: CreateInstance<IAccordionText> = (payload) => {
+export const create: create<IAccordionText> = (payload) => {
   const defaultData: IAccordionText = {
     type: BasicType.ACCORDION_TEXT,
     data: {
       value: {
-        content: 'Because emails with a lot of content are most of the time a very bad experience on mobile, mj-accordion comes handy when you want to deliver a lot of information in a concise way'
+        content:
+          'Because emails with a lot of content are most of the time a very bad experience on mobile, mj-accordion comes handy when you want to deliver a lot of information in a concise way',
       },
     },
     attributes: {

@@ -55,8 +55,8 @@ A custom block should have the following structure
   type: BlockType; // Custom type
   Panel: () => React.ReactNode; // Configuration panel, update your block data
   validParentType: BlockType[]; // Only drag to the above blocks. For example, `Text` only drag to `Colum` block and `Hero` block.
-  createInstance: (payload?: RecursivePartial<T extends IBlockData>) => T;
-  transform?: (
+  create: (payload?: RecursivePartial<T extends IBlockData>) => T;
+  render: (
     data: IBlockData<T>, // current block data
     idx: string, // current idx
     context: IPage //
@@ -65,10 +65,10 @@ A custom block should have the following structure
 
 ```
 
-`createInstance` is a method of instance generation, Let’s say `Text`, it has the following createInstance。When dragging and dropped into the edit panel and , we will call `addBlock`. In fact, it just calls the corresponding `createInstance`.
+`create` is a method of instance generation, Let’s say `Text`, it has the following create。When dragging and dropped into the edit panel and , we will call `addBlock`. In fact, it just calls the corresponding `create`.
 
 ```ts
-const createInstance: CreateInstance<IText> = (payload) => {
+const create: create<IText> = (payload) => {
   const defaultData: IText = {
     type: BasicType.TEXT,
     data: {
@@ -89,7 +89,7 @@ const createInstance: CreateInstance<IText> = (payload) => {
 
 ```
 
-`transform`  mainly to transform your custom block into a or more basic block. When transformToMjml is called, if it is found to be a custom block, we will call its transform method to convert it into basic blocks. At the same time, the following parameters will be injected `currentBlockData, current idx, page context`.
+`render`  mainly to render your custom block into a or more basic block. When transformToMjml is called, if it is found to be a custom block, we will call its render method to convert it into basic blocks. At the same time, the following parameters will be injected `currentBlockData, current idx, page context`.
 
 You can construct your custom block through basic blocks. For example,
 a custom button, only the background color and text can be modified
@@ -99,7 +99,7 @@ import {
   Button,
 } from 'easy-email-editor';
 
-const transform = (data: ICustomButton, idx: string, context: IPage): IBlockData => {
+const render = (data: ICustomButton, idx: string, context: IPage): IBlockData => {
   const attributes = data.attributes;
   const { buttonText } = data.data.value;
 
@@ -118,7 +118,7 @@ Another way is that you can write [MJML](https://documentation.mjml.io/).
 ```ts
 import { MjmlToJson } from 'easy-email-editor';
 
-const transform = (data: ICustomButton, idx:string; context: IPage): IBlockData => {
+const render = (data: ICustomButton, idx:string; context: IPage): IBlockData => {
   const attributes = data.attributes;
   const { buttonText } = data.data.value;
 
@@ -152,7 +152,7 @@ export const customBlocks: BlockGroup = {
   blocks: [
     {
       label: YourCustomBlock.name,
-      data: YourCustomBlock.createInstance(),
+      data: YourCustomBlock.create(),
       thumbnail:
         'https://assets.maocanhua.cn/c160738b-db01-4081-89e5-e35bd3a34470-image.png',
     },
@@ -169,7 +169,7 @@ export const customBlocks: BlockGroup = {
 src/CustomBlocks/MyFirstBlock
 
 ```tsx
-import { IBlock, IBlockData, BasicType, BlocksMap, MjmlToJson, CreateInstance} from 'easy-email-editor';
+import { IBlock, IBlockData, BasicType, BlocksMap, MjmlToJson, create} from 'easy-email-editor';
 
 enum CustomBlocksType {
   MY_FIRST_BLOCK = 'MY_FIRST_BLOCK',
@@ -179,12 +179,12 @@ export const MyFirstBlock: IBlock = {
   name: 'My first block',
   type: CustomBlocksType.MY_FIRST_BLOCK as any,
   Panel,
-  createInstance,
+  create,
   validParentType: [BasicType.PAGE, BasicType.WRAPPER],
-  transform,
+  render,
 };
 
-const createInstance: CreateInstance<ICustomHeader> = (
+const create: create<ICustomHeader> = (
   payload
 ) => {
   const defaultData: ICustomHeader = {
@@ -205,7 +205,7 @@ const createInstance: CreateInstance<ICustomHeader> = (
 };
 
 
-const transform = (data: ICustomHeader) => {
+const render = (data: ICustomHeader) => {
   const { imageUrl, buttonText } = data.data.value;
   const attributes = data.attributes;
 
@@ -289,7 +289,7 @@ export const customBlocks: BlockGroup = {
   blocks: [
     {
       label: MyFirstBlock.name,
-      data: MyFirstBlock.createInstance(),
+      data: MyFirstBlock.create(),
       thumbnail:
         'https://assets.maocanhua.cn/6b783170-dd20-48e9-8d82-67069178bdb7-image.png',
     },

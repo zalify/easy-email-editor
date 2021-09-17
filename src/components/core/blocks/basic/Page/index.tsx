@@ -51,7 +51,7 @@ export const Page: IBlock<IPage> = createBlock({
         'background-color': '#efeeea',
         width: '600px',
       },
-      children: [Wrapper.createInstance()],
+      children: [Wrapper.create()],
     };
     return merge(defaultData, payload);
   },

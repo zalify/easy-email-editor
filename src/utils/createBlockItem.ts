@@ -8,7 +8,7 @@ export function createBlockItem<T extends IBlockData>(
 ): IBlockData {
   const component = findBlockByType(type);
   if (component) {
-    return component.createInstance(payload as any);
+    return component.create(payload as any);
   }
-  throw new Error('没有匹配的组件');
+  throw new Error(`No match \`${type}\` block`);
 }

@@ -1,9 +1,9 @@
 import { BasicType } from '@/constants';
-import { CreateInstance } from '@/typings';
+import { create } from '@/typings';
 import { merge } from 'lodash';
 import { IButton } from '.';
 
-export const createInstance: CreateInstance<IButton> = (payload) => {
+export const create: create<IButton> = (payload) => {
   const defaultData: IButton = {
     type: BasicType.BUTTON,
     data: {
@@ -25,7 +25,7 @@ export const createInstance: CreateInstance<IButton> = (payload) => {
       'vertical-align': 'middle',
       border: 'none',
       'text-align': 'center',
-      'href': '#'
+      href: '#',
     },
     children: [],
   };

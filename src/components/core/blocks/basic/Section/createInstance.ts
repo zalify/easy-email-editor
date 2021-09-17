@@ -1,13 +1,13 @@
 import { BasicType } from '@/constants';
-import { CreateInstance } from '@/typings';
+import { create } from '@/typings';
 import { merge } from 'lodash';
 import { ISection } from '.';
-export const createInstance: CreateInstance<ISection> = (payload) => {
+export const create: create<ISection> = (payload) => {
   const defaultData: ISection = {
     type: BasicType.SECTION,
     data: {
       value: {
-        noWrap: false
+        noWrap: false,
       },
     },
     attributes: {

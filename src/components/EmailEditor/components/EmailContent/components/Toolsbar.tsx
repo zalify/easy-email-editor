@@ -74,8 +74,8 @@ export function ToolsBar({ block }: { block: IBlock }) {
         parentIdx: parentIdx,
         positionIndex: getIndexByIdx(focusIdx) + 1,
         payload: {
-          children: sectionBlock.createInstance({
-            children: [columnBlock.createInstance({})],
+          children: sectionBlock.create({
+            children: [columnBlock.create({})],
           }),
         },
       });
@@ -86,7 +86,7 @@ export function ToolsBar({ block }: { block: IBlock }) {
         parentIdx: parentIdx,
         positionIndex: getIndexByIdx(focusIdx) + 1,
         payload: {
-          children: [columnBlock.createInstance({})],
+          children: [columnBlock.create({})],
         },
       });
     }

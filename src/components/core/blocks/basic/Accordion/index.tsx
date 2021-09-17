@@ -47,16 +47,16 @@ export const Accordion = createBlock<IAccordion>({
         border: '1px solid #d9d9d9',
       },
       children: [
-        AccordionElement.createInstance({
+        AccordionElement.create({
           children: [
-            AccordionTitle.createInstance({
+            AccordionTitle.create({
               data: {
                 value: {
                   content: 'Why use an accordion?',
                 },
               },
             }),
-            AccordionText.createInstance({
+            AccordionText.create({
               data: {
                 value: {
                   content:
@@ -66,16 +66,16 @@ export const Accordion = createBlock<IAccordion>({
             }),
           ],
         }),
-        AccordionElement.createInstance({
+        AccordionElement.create({
           children: [
-            AccordionTitle.createInstance({
+            AccordionTitle.create({
               data: {
                 value: {
                   content: 'How it works',
                 },
               },
             }),
-            AccordionText.createInstance({
+            AccordionText.create({
               data: {
                 value: {
                   content:

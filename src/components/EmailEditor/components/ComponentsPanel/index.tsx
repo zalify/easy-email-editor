@@ -142,6 +142,8 @@ export const ComponentsPanel = React.memo(function () {
               payload={{
                 attributes: {
                   padding: '0px 0px 0px 0px',
+                  'font-size': '16px',
+                  'line-height': '32px'
                 },
               }}
               helpText={

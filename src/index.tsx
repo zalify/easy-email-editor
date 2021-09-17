@@ -24,5 +24,7 @@ export { MjmlToJson } from './utils/MjmlToJson';
 export { BlocksMap } from './components/core/blocks/index';
 export * from './constants';
 export * from './utils/block';
+export * from './utils/createBlock';
+export * from './utils/createBlockItem';
 export * from './typings';
 export * from './blocks';

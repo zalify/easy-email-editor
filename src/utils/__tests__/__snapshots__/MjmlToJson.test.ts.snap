@@ -217,23 +217,3 @@ Object {
   "type": "page",
 }
 `;
-
-exports[`Test parseXml should render  as expected 2`] = `
-Object {
-  "attributes": Object {
-    "align": "left",
-    "font-size": "13px",
-    "line-height": "1",
-    "padding": "0px 0px 0px 0px",
-  },
-  "children": Array [],
-  "data": Object {
-    "value": Object {
-      "content": "
-     <div style=\\"color:#fff;\\">Make it easy for everyone to compose emails!</div>
-    ",
-    },
-  },
-  "type": "text",
-}
-`;

@@ -8,7 +8,7 @@ export const customBlocks: BlockGroup = {
   blocks: [
     {
       label: ProductRecommendation.name,
-      data: ProductRecommendation.createInstance(),
+      data: ProductRecommendation.create(),
       thumbnail:
         'https://assets.maocanhua.cn/c160738b-db01-4081-89e5-e35bd3a34470-image.png',
     },

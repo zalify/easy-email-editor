@@ -57,7 +57,7 @@ Check out the live demo here: <a href="http://easy-email-m-ryan.vercel.app" targ
 ## Hotkeys
 
 | hotkey   | Description  |
-| -------- | ---------------- | 
+| -------- | ---------------- |
 | mod+z    | undo |
 | mod+y    | redo |
 | delete/backspace    | delete block |
@@ -89,7 +89,7 @@ import "antd/dist/antd.css";
 const initialValues = {
   subject: "Welcome to Easy-email",
   subTitle: "Nice to meet you!",
-  content: BlocksMap.getBlock("Page").createInstance({}),
+  content: BlocksMap.getBlock("Page").create({}),
 };
 
 export function App() {

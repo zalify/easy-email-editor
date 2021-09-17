@@ -74,8 +74,8 @@ export function transformToMjml(options: TransformToMjmlOption): string {
     );
   }
 
-  if (block.transform) {
-    const transformBlockData = block.transform(data, idx, context);
+  if (block.render) {
+    const transformBlockData = block.render(data, idx, context);
     const transformData = isValidElement(transformBlockData)
       ? parseMjmlBlockToBlockData(transformBlockData)
       : transformBlockData;

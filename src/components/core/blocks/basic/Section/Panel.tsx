@@ -32,7 +32,7 @@ export function Panel() {
           }
         }
         focusBlock.children = [
-          BlocksMap.basicBlocksMap.Group.createInstance({
+          BlocksMap.basicBlocksMap.Group.create({
             children: children,
           }),
         ];
