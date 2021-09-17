@@ -35,16 +35,14 @@ import {
 import { useHoverIdx } from '@/hooks/useHoverIdx';
 
 export function BlockLayerManager() {
-  const { setRef } = useDropBlock();
   const { pageData } = useEditorContext();
   const { focusIdx } = useFocusIdx();
-  const { setIsDragging } = useHoverIdx();
 
   return useMemo(() => {
     if (!focusIdx) return null;
     return (
-      <div id='BlockLayerManager' ref={setRef}>
-        <DragDropContext onDragEnd={() => {}}>
+      <div id='BlockLayerManager'>
+        <DragDropContext onDragEnd={() => { }}>
           <Droppable droppableId={getPageIdx()}>
             {(provided, snapshot) => (
               <div
@@ -64,7 +62,7 @@ export function BlockLayerManager() {
         </DragDropContext>
       </div>
     );
-  }, [pageData, setRef, focusIdx]);
+  }, [pageData, focusIdx]);
 }
 
 const BlockLayerItem = ({
@@ -78,32 +76,31 @@ const BlockLayerItem = ({
   indent: number;
   hidden?: boolean;
 }) => {
-  const { focusIdx } = useFocusIdx();
-  const { isDragging, setIsDragging } = useHoverIdx();
+  const { focusIdx, setFocusIdx } = useFocusIdx();
   const { collapsed, setCollapsed } = useCollapse();
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   const title = findBlockByType(blockData.type)?.name;
   const noChild = blockData.children.length === 0;
   const isPageBlock = idx === getPageIdx();
+  const { moveBlock } = useBlock();
 
   const onDragEnd = (result: DropResult, provided: ResponderProvided) => {
-    console.log('result', result);
-    console.log('provided', provided);
     if (!result.destination) {
       return;
     }
-    setIsDragging(false);
+
+    if (result.destination.index === result.source.index && result.destination.droppableId === result.source.droppableId) {
+      return;
+    }
+    moveBlock({
+      sourceIdx: getChildIdx(result.source.droppableId, result.source.index),
+      destinationIdx: getChildIdx(result.destination.droppableId, result.destination.index),
+    });
+
   };
 
   const onDragStart = () => {
-    setIsDragging(true);
   };
-
-  useEffect(() => {
-    if (focusIdx.startsWith(idx)) {
-      setVisible(true);
-    }
-  }, [focusIdx, idx]);
 
   useEffect(() => {
     if (isPageBlock) {
@@ -111,7 +108,18 @@ const BlockLayerItem = ({
     } else {
       setVisible(!collapsed);
     }
-  }, [collapsed, idx, isPageBlock]);
+  }, [collapsed, isPageBlock]);
+
+  useEffect(() => {
+
+    if (focusIdx.startsWith(idx)) {
+      setVisible(true);
+    }
+  }, [blockData.type, focusIdx, idx]);
+
+  const onSelect = useCallback(() => {
+    setFocusIdx(idx);
+  }, [idx, setFocusIdx]);
 
   const onToggle = useCallback(
     (e: React.MouseEvent) => {
@@ -173,26 +181,24 @@ const BlockLayerItem = ({
         {(provided, snapshot) => {
           const dragingStyle: React.CSSProperties = snapshot?.isDragging
             ? {
-                boxShadow: '0px 0px 5px  #e2dcdc',
-                backgroundColor: '#fff',
-              }
+              boxShadow: '0px 0px 5px  #e2dcdc',
+              backgroundColor: '#fff',
+            }
             : {};
 
           return (
             <div
+              onClick={onSelect}
               data-dragging={Boolean(snapshot?.isDragging)}
               ref={provided.innerRef}
               {...provided.draggableProps}
-              {...provided.dragHandleProps}
               style={{
                 ...provided?.draggableProps.style,
                 ...dragingStyle,
               }}
               className={classnames(
                 styles.listItemContentWrapper,
-                'email-block',
-                getNodeIdxClassName(idx),
-                getNodeTypeClassName(blockData.type)
+                isSelected && styles.listItemSelected
               )}
             >
               <Stack.Item fill>
@@ -229,8 +235,12 @@ const BlockLayerItem = ({
                   <Stack spacing='extraTight' wrap={false}>
                     {/* <ShortcutTool idx={idx} blockData={blockData} /> */}
                     <EyeIcon hidden={hidden} idx={idx} blockData={blockData} />
+                    <div
+                      {...provided.dragHandleProps}
+                    >
+                      <IconFont iconName='icon-drag' style={{ cursor: 'grab' }} />
+                    </div>
 
-                    <IconFont iconName='icon-drag' />
                   </Stack>
                 </Stack>
               </Stack.Item>
@@ -262,7 +272,7 @@ const BlockLayerItem = ({
                       idx={getChildIdx(idx, index)}
                     />
                   ))}
-                <li
+                {/* <li
                   className={classnames(styles.blockItem, styles.blockAdd)}
                   style={{
                     display:
@@ -289,7 +299,7 @@ const BlockLayerItem = ({
                       </Stack>
                     </div>
                   </AddBlockPanel>
-                </li>
+                </li> */}
               </ul>
             )}
           </Droppable>

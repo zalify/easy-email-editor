@@ -156,18 +156,19 @@ export function useBlock() {
     (params: {
       sourceIdx: string;
       destinationIdx: string;
-      positionIndex: number;
     }) => {
-      let { sourceIdx, destinationIdx, positionIndex } = params;
+
+      let { sourceIdx, destinationIdx } = params;
       if (sourceIdx === destinationIdx) return null;
       let nextFocusIdx = focusIdx;
 
       const values = cloneDeep(getState().values) as IEmailTemplate;
       const source = getValueByIdx(values, sourceIdx)!;
       const sourceParentIdx = getParentIdx(sourceIdx);
-      if (!sourceParentIdx) return;
+      const destinationParentIdx = getParentIdx(destinationIdx);
+      if (!sourceParentIdx || !destinationParentIdx) return;
       const sourceParent = getValueByIdx(values, sourceParentIdx)!;
-      const destinationParent = getValueByIdx(values, destinationIdx)!;
+      const destinationParent = getValueByIdx(values, destinationParentIdx)!;
 
       const sourceBlock = findBlockByType(source.type);
       if (!sourceBlock.validParentType.includes(destinationParent.type)) {
@@ -178,14 +179,11 @@ export function useBlock() {
         );
         return;
       }
-
+      const positionIndex = getIndexByIdx(destinationIdx);
       if (sourceParent === destinationParent) {
         const sourceIndex = getIndexByIdx(sourceIdx);
-        if (sourceIndex < positionIndex) {
-          positionIndex -= 1;
-        }
-        const [removed] = sourceParent.children.splice(sourceIndex, 1);
 
+        const [removed] = destinationParent.children.splice(sourceIndex, 1);
         destinationParent.children.splice(positionIndex, 0, removed);
       } else {
         sourceParent.children = sourceParent.children.filter(
@@ -195,7 +193,7 @@ export function useBlock() {
       }
       batch(() => {
         change(sourceParentIdx, { ...sourceParent });
-        if (sourceParentIdx !== destinationIdx) {
+        if (sourceParentIdx !== destinationParentIdx) {
           change(destinationIdx, { ...destinationParent });
         }
       });

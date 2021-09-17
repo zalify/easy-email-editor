@@ -41,5 +41,5 @@ export const Image: IBlock<IImage> = createBlock({
     };
     return merge(defaultData, payload);
   },
-  validParentType: [BasicType.COLUMN],
+  validParentType: [BasicType.COLUMN, BasicType.HERO],
 });

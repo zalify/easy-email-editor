@@ -38,8 +38,6 @@ export const AccordionElement = createBlock<IAccordionElement>({
         'icon-width': '32px',
 
         'icon-position': 'right',
-        'icon-unwrapped-url': 'https://i.imgur.com/w4uTygT.png',
-        'icon-wrapped-url': 'https://i.imgur.com/bIXv1bk.png',
         padding: '10px 25px 10px 25px',
       },
       children: [],

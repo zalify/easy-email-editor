@@ -13,14 +13,19 @@ export function HoverTooltip() {
   const [blockNode, setBlockNode] = useState<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const promiseObj = awaitForElement<HTMLDivElement>(hoverIdx);
-    promiseObj.promise.then((blockNode) => {
-      setBlockNode(blockNode);
-    });
+    if (hoverIdx) {
+      const promiseObj = awaitForElement<HTMLDivElement>(hoverIdx);
+      promiseObj.promise.then((blockNode) => {
+        setBlockNode(blockNode);
+      });
 
-    return () => {
-      promiseObj.cancel();
-    };
+      return () => {
+        promiseObj.cancel();
+      };
+    } else {
+      setBlockNode(null);
+    }
+
   }, [hoverIdx]);
 
   const block = useMemo(() => {

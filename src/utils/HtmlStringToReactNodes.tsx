@@ -13,6 +13,7 @@ console.error = (message?: any, ...optionalParams: any[]) => {
       'Unsupported vendor-prefixed style property',
       'validateDOMNesting',
       'Invalid DOM',
+      'You provided a `checked` prop to a form field without an `onChange` handler'
     ].some((item) => message.includes(item))
   ) {
     // no console
@@ -49,7 +50,7 @@ const RenderReactNode = React.memo(function ({
   node: HTMLElement;
   index: number;
 }): React.ReactElement {
-  const attributes: { [key: string]: string } = {};
+  const attributes: { [key: string]: string; } = {};
   node.getAttributeNames?.().forEach((att) => {
     if (att) {
       attributes[att] = node.getAttribute(att) || '';
@@ -91,8 +92,8 @@ const RenderReactNode = React.memo(function ({
         node.childNodes.length === 0
           ? null
           : [...node.childNodes].map((n, i) => (
-              <RenderReactNode key={i} node={n as any} index={i} />
-            )),
+            <RenderReactNode key={i} node={n as any} index={i} />
+          )),
     });
 
     return <>{reactNode}</>;

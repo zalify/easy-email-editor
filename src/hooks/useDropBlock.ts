@@ -144,7 +144,7 @@ export function useDropBlock() {
         }
       };
 
-      const onMouseOut = (ev: MouseEvent) => {
+      const onDragleave = (ev: MouseEvent) => {
         ev.stopPropagation();
         setHoverIdx('');
         setDirection('');
@@ -211,14 +211,14 @@ export function useDropBlock() {
 
       ref.addEventListener('mouseover', onMouseover);
       // ref.addEventListener('mouseout', onMouseOut);
-      document.addEventListener('dragleave', onMouseOut);
+      document.addEventListener('dragleave', onDragleave);
       ref.addEventListener('drop', onDrop);
       ref.addEventListener('dragover', onDragOver);
 
       return () => {
         ref.removeEventListener('mouseover', onMouseover);
         // ref.removeEventListener('mouseout', onMouseOut);
-        document.removeEventListener('dragleave', onMouseOut);
+        document.removeEventListener('dragleave', onDragleave);
         ref.removeEventListener('drop', onDrop);
         ref.removeEventListener('dragover', onDragOver);
       };
@@ -234,6 +234,22 @@ export function useDropBlock() {
     setHoverIdx,
     setIsDragging,
   ]);
+
+  useEffect(() => {
+    if (!ref) return;
+
+    const onMouseOut = (ev: MouseEvent) => {
+
+      if (!isDragging) {
+        ev.stopPropagation();
+        setHoverIdx('');
+      }
+    };
+    ref.addEventListener('mouseout', onMouseOut);
+    return () => {
+      ref.removeEventListener('mouseout', onMouseOut);
+    };
+  }, [isDragging, ref, setDirection, setHoverIdx, setIsDragging]);
 
   useEffect(() => {
     if (ref) {

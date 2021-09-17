@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Padding } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Padding';
 import { Stack } from '@/components/UI/Stack';
 import { BackgroundColor } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/BackgroundColor';
 import {
+  ImageUploaderField,
   RadioGroupField,
   SelectField,
   TextField,
@@ -37,8 +38,11 @@ const alignOptions = [
 
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { AttributesPanel } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/AttributesPanel';
+import { EditorPropsContext } from '@/components/Provider/PropsProvider';
 export function Panel() {
   const { focusIdx } = useFocusIdx();
+  const { onUploadImage } = useContext(EditorPropsContext);
+
   return (
     <AttributesPanel>
       <Stack vertical>
@@ -63,17 +67,18 @@ export function Panel() {
           name={`${focusIdx}.attributes.icon-height`}
           inline
         />
-        <TextField
+
+        <ImageUploaderField
           label='Icon unwrapped url'
-          quickchange
           name={`${focusIdx}.attributes.icon-unwrapped-url`}
-          inline
+          helpText='The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.'
+          uploadHandler={onUploadImage}
         />
-        <TextField
+        <ImageUploaderField
           label='Icon wrapped url'
-          quickchange
           name={`${focusIdx}.attributes.icon-wrapped-url`}
-          inline
+          helpText='The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.'
+          uploadHandler={onUploadImage}
         />
         <RadioGroupField
           label='Icon position'

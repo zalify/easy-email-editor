@@ -45,6 +45,7 @@ module.exports = {
     'no-console': 0,
     'class-methods-use-this': 0,
     'prefer-destructuring': 0,
+    'react/jsx-wrap-multilines': 0,
     'dot-notation': 0,
     'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1, maxBOF: 1 }],
     // react 相关

@@ -13,6 +13,13 @@
   }
 
 }
+.blockList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+
 .listItemContentWrapper {
   display: flex;
   flex: 1;
@@ -23,19 +30,17 @@
   // border-bottom: 1px solid #eee;
   position: relative;
   border-radius: 4px;
+  &:hover {
+    background-color: #f2f7fe;
+  }
 }
 
-.blockList {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
 
-[data-dragging="false"]:global(.block-selected) {
+.listItemSelected {
   background-color: #f2f7fe;
 }
 
-[data-dragging="false"]:global(.block-selected::before) {
+.listItemSelected::before {
   content: "";
   background-color: rgba(44, 110, 203, 1);
   position: absolute;
