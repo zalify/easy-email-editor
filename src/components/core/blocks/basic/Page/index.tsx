@@ -20,6 +20,8 @@ export type IPage = IBlockData<
     }[];
     responsive?: boolean;
     'font-family': string;
+    'font-size': string;
+    'line-height': string;
     'text-color': string;
     'user-style'?: {
       content?: string;
@@ -32,6 +34,7 @@ export type IPage = IBlockData<
 export const Page = createBlock<IPage>({
   name: 'Page',
   type: BasicType.PAGE,
+  description: '',
   Panel,
   create: (payload) => {
     const defaultData: IPage = {
@@ -40,6 +43,8 @@ export const Page = createBlock<IPage>({
         value: {
           breakpoint: '480px',
           headAttributes: '',
+          'font-size': '14px',
+          'line-height': '1.7',
           headStyles: [],
           fonts: [],
           responsive: true,

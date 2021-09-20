@@ -20,6 +20,8 @@ export type IWrapper = IBlockData<
 export const Wrapper = createBlock<IWrapper>({
   name: 'Wrapper',
   type: BasicType.WRAPPER,
+  description: `Wrapper enables to wrap multiple sections together. It's especially useful to achieve nested layouts with shared border or background images across sections.
+  `,
   Panel,
   create: (payload) => {
     const defaultData: IWrapper = {

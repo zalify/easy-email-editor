@@ -9,13 +9,12 @@ export function Link() {
 
   return useMemo(() => {
     return (
-      <Stack vertical>
+      <Stack wrap={false}>
         <Stack.Item fill>
           <TextField
             prefix={<LinkOutlined />}
             label={<span>Href&nbsp;&nbsp;&nbsp;</span>}
             name={`${focusIdx}.attributes.href`}
-            inline
           />
         </Stack.Item>
 
@@ -33,7 +32,6 @@ export function Link() {
                 label: '_blank',
               },
             ]}
-            inline
           />
         </div>
       </Stack>

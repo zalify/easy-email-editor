@@ -36,7 +36,7 @@ export function RichTextField(
     }
   }, [container]);
 
-  const onChange = useCallback(() => {}, []);
+  const onChange = useCallback(() => { }, []);
 
   const editorContainer = container && getEditNode(container);
 
@@ -67,7 +67,7 @@ export function RichTextField(
           padding: 16,
           boxSizing: 'border-box',
 
-          zIndex: 1000,
+          zIndex: 100,
           transition: isMove ? undefined : 'all .3s',
           display: Boolean(isActive) ? undefined : 'none',
         }}

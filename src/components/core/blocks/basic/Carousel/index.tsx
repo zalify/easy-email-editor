@@ -34,6 +34,9 @@ export type ICarousel = IBlockData<
 export const Carousel = createBlock<ICarousel>({
   name: 'Carousel',
   type: BasicType.CAROUSEL,
+  description: `This block displays a gallery of images or "carousel".
+  Readers can interact by hovering and clicking on
+  thumbnails depending on the email client they use.`,
   Panel,
   create: (payload) => {
     const defaultData: ICarousel = {

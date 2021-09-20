@@ -8,10 +8,9 @@ export function BorderWidth() {
   return useMemo(() => {
     return (
       <TextField
-        label='Border width'
+        label='Width'
         quickchange
         name={`${focusIdx}.attributes.border-width`}
-        inline
       />
     );
   }, [focusIdx]);

@@ -5,11 +5,11 @@ import { Stack } from '@/components/UI/Stack';
 import { useBlock } from '@/hooks/useBlock';
 import { TextStyle } from '@/components/UI/TextStyle';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
-import { createBlockItem } from 'easy-email-editor';
+import { createBlockItem } from '@/utils/createBlockItem';
 
 export interface PaddingProps {
   title?: string;
-  attributeName?: 'padding' | 'inner-padding';
+  attributeName?: 'padding' | 'inner-padding' | 'text-padding';
 }
 export function Padding(props: PaddingProps = {}) {
   const { title = 'Padding', attributeName = 'padding' } = props;
@@ -30,6 +30,9 @@ export function Padding(props: PaddingProps = {}) {
   const setVal = useCallback(
     (index: number) => {
       return (newVal: string) => {
+        if (newVal === '') {
+          newVal = '0px';
+        }
         const vals: string[] = [getVal(0)(), getVal(1)(), getVal(2)(), getVal(3)()];
         vals[index] = newVal;
         return vals.join(' ');
@@ -41,11 +44,11 @@ export function Padding(props: PaddingProps = {}) {
   return useMemo(() => {
     return (
       <Stack vertical spacing='extraTight'>
-        <TextStyle>{title}</TextStyle>
+        <TextStyle variation="strong">{title}</TextStyle>
         <Stack wrap={false}>
           <Stack.Item fill>
             <TextField
-              label='Top'
+              label={<span>Top&nbsp;</span>}
               quickchange
               name={`${focusIdx}.attributes.${attributeName}`}
               valueAdapter={getVal(0)}
@@ -68,7 +71,7 @@ export function Padding(props: PaddingProps = {}) {
         <Stack wrap={false}>
           <Stack.Item fill>
             <TextField
-              label='Left'
+              label={<span>Left</span>}
               quickchange
               name={`${focusIdx}.attributes.${attributeName}`}
               valueAdapter={getVal(3)}
@@ -78,7 +81,7 @@ export function Padding(props: PaddingProps = {}) {
           </Stack.Item>
           <Stack.Item fill>
             <TextField
-              label='Right'
+              label={<span>Right&nbsp;</span>}
               quickchange
               name={`${focusIdx}.attributes.${attributeName}`}
               valueAdapter={getVal(1)}

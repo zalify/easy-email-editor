@@ -8,6 +8,8 @@ import { ActiveTabKeys } from '@/components/Provider/BlocksProvider';
 import { useDomScrollHeight } from '@/hooks/useDomScrollHeight';
 import { FocusTooltip } from './components/FocusTooltip';
 import { useHotKeys } from '@/hooks/useHotKeys';
+import { findBlockNodeByIdx } from '@/utils/findBlockNodeByIdx';
+import { useFocusIdx } from 'easy-email-editor';
 
 export function EmailContent() {
   useHotKeys();
@@ -15,6 +17,7 @@ export function EmailContent() {
   const [containerRef, setContainerRef] = useState<HTMLDivElement | null>(null);
   const { setRef } = useDropBlock();
   const { scrollHeight } = useDomScrollHeight();
+  const { focusIdx } = useFocusIdx();
 
   const isActive = activeTab === ActiveTabKeys.EDIT;
 
@@ -28,6 +31,16 @@ export function EmailContent() {
       container.scrollTo(0, scrollHeight.current);
     }
   }, [activeTab, containerRef, scrollHeight]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      const editBlock = findBlockNodeByIdx(focusIdx);
+      editBlock?.scrollIntoView({
+        block: 'nearest',
+        behavior: 'smooth',
+      });
+    }, 50);
+  }, [focusIdx]);
 
   const onScroll = useCallback(
     (event: React.UIEvent<HTMLDivElement, UIEvent>) => {
@@ -44,7 +57,7 @@ export function EmailContent() {
         <div
           onScroll={onScroll}
           className='shadow-container'
-          style={{ height: '100%', overflowY: 'overlay' as any }}
+          style={{ height: '100%', overflowY: 'auto', zIndex: 10 }}
           ref={setContainerRef}
         >
           <MjmlDomRender />

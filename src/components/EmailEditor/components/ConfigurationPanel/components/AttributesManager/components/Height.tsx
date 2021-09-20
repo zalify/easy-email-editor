@@ -13,7 +13,6 @@ export function Height() {
           <TextField
             label='Height'
             name={`${focusIdx}.attributes.height`}
-            inline
             quickchange
           />
         </Stack.Item>

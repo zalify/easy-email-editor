@@ -1,11 +1,11 @@
 import { IButton } from '@/components/core/blocks/basic/Button';
-import { BlockAvatarWrapper } from '@/components/core/wrapper/BlockAvatarWrapper';
+import { BlockMaskWrapper } from '@/components/core/wrapper/BlockMaskWrapper';
 import { Picture } from '@/components/UI/Picture';
 import { ShadowDom } from '@/components/UI/ShadowDom';
 import { Stack } from '@/components/UI/Stack';
 import { TextStyle } from '@/components/UI/TextStyle';
 import { BasicType } from '@/constants';
-import { RecursivePartial } from 'easy-email-editor';
+import { RecursivePartial } from '@/typings';
 import React from 'react';
 
 const buttonList = [
@@ -109,7 +109,7 @@ export function ButtonBlockItem() {
           return (
             <Stack key={index} alignment='center'>
               <Stack.Item fill>
-                <BlockAvatarWrapper
+                <BlockMaskWrapper
                   type={BasicType.BUTTON}
                   payload={
                     {
@@ -132,7 +132,7 @@ export function ButtonBlockItem() {
                       />
                     </div>
                   </ShadowDom>
-                </BlockAvatarWrapper>
+                </BlockMaskWrapper>
               </Stack.Item>
             </Stack>
           );

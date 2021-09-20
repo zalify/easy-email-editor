@@ -4,6 +4,9 @@ import { BasicType } from '@/constants';
 import { CSSProperties } from 'react';
 import { createBlock } from '@/utils/createBlock';
 import { merge } from 'lodash';
+import React from 'react';
+import { Stack } from '@/components/UI/Stack';
+import { TextStyle } from '@/components/UI/TextStyle';
 
 export type IColumn = IBlockData<
   {
@@ -23,6 +26,22 @@ export type IColumn = IBlockData<
 export const Column = createBlock<IColumn>({
   name: 'Column',
   type: BasicType.COLUMN,
+  description: (
+    <Stack vertical spacing="none">
+      <TextStyle>
+        Columns enable you to horizontally organize the
+        content within your sections. They must be located
+        under "Section" block in order to be considered by the
+        engine. To be responsive, columns are expressed in
+        terms of percentage.
+      </TextStyle>
+      <TextStyle>
+        Every single column has to contain something because
+        they are responsive containers, and will be vertically
+        stacked on a mobile view.
+      </TextStyle>
+    </Stack>
+  ),
   Panel,
   create: (payload) => {
     const defaultData: IColumn = {

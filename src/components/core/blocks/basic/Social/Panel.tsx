@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Padding } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Padding';
 import { Stack } from '@/components/UI/Stack';
 import {
   ColorPickerField,
   EditTabField,
+  ImageUploaderField,
   RadioGroupField,
   SelectField,
   TextField,
@@ -17,7 +18,14 @@ import { FontFamily } from '@/components/EmailEditor/components/ConfigurationPan
 import { FontSize } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/FontSize';
 import { FontStyle } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/FontStyle';
 import { FontWeight } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/FontWeight';
+
+import { useFocusIdx } from '@/hooks/useFocusIdx';
+
+import { AttributesPanelWrapper } from '@/components/core/wrapper/AttributesPanelWrapper';
+import { Collapse } from 'antd';
 import { TextDecoration } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/TextDecoration';
+import { LineHeight } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/LineHeight';
+import { EditorPropsContext } from '@/components/Provider/PropsProvider';
 
 const options = [
   {
@@ -30,65 +38,92 @@ const options = [
   },
 ];
 
-import { useFocusIdx } from '@/hooks/useFocusIdx';
-import { AttributesPanel } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/AttributesPanel';
 export function Panel() {
   const { focusIdx } = useFocusIdx();
   return (
-    <Stack vertical>
-      <div
-        style={{
-          borderBottom: '1px solid #ccc',
-          paddingBottom: 10,
-          marginBottom: 20,
-        }}
-      >
-        <EditTabField
-          name={`${focusIdx}.data.value.elements`}
-          label='Elements'
-          renderItem={(item, index) => (
-            <SocialElement item={item} index={index} />
-          )}
-          additionItem={{
-            'font-size': '13px',
-            href: '',
-            'icon-size': '20px',
-            'line-height': '22px',
-            'text-padding': '4px 4px 4px 0',
-            target: '_blank',
-            'vertical-align': 'middle',
-            'text-decoration': 'none',
-            src: 'https://assets.maocanhua.cn/FtBnhQQju_LU3-OtYq9_Ueu-G0lb',
-            content: 'Google',
-          }}
-        />
-      </div>
 
-      <Align />
-      <TextField
-        label='Border radius'
-        name={`${focusIdx}.attributes.border-radius`}
-        inline
-      />
-      <Color />
-      <ContainerBackgroundColor />
-      <FontFamily />
-      <FontSize />
-      <FontStyle />
-      <FontWeight />
-      <TextDecoration />
+    <AttributesPanelWrapper style={{ padding: 0 }}>
 
-      <RadioGroupField
-        label='Mode'
-        name={`${focusIdx}.attributes.mode`}
-        options={options}
-        inline
-      />
-      <Padding />
-      <Padding title='Inner padding' attributeName='inner-padding' />
-      <Padding title='Icon padding' attributeName='icon-padding' />
-      <Padding title='Text padding' attributeName='text-padding' />
-    </Stack>
+      <Collapse defaultActiveKey={['0', '1', '2',]}>
+
+        <Collapse.Panel key="1" header="Setting">
+          <Stack vertical spacing="tight">
+            <RadioGroupField
+              label='Mode'
+              name={`${focusIdx}.attributes.mode`}
+              options={options}
+              inline
+            />
+            <ContainerBackgroundColor title="Background color" />
+          </Stack>
+        </Collapse.Panel>
+
+        <Collapse.Panel key="3" header="Typography">
+          <Stack vertical spacing="tight">
+            <Stack wrap={false}>
+              <FontFamily />
+              <Stack.Item fill>
+                <FontSize />
+              </Stack.Item>
+            </Stack>
+
+            <Stack wrap={false}>
+              <FontWeight />
+              <Stack.Item fill>
+                <LineHeight />
+              </Stack.Item>
+            </Stack>
+
+            <Stack wrap={false}>
+              <TextDecoration />
+              <Stack.Item fill>
+                <Color inline={false} />
+              </Stack.Item>
+            </Stack>
+
+            <FontStyle />
+          </Stack>
+        </Collapse.Panel>
+
+        <Collapse.Panel key="2" header="Social element">
+          <EditTabField
+            tabPosition="left"
+            name={`${focusIdx}.data.value.elements`}
+            label='Elements'
+            renderItem={(item, index) => (
+              <SocialElement item={item} index={index} />
+            )}
+            additionItem={{
+              href: '',
+              'icon-size': '20px',
+              target: '_blank',
+              src: 'https://assets.maocanhua.cn/FtBnhQQju_LU3-OtYq9_Ueu-G0lb',
+              content: 'Google',
+            }}
+          />
+        </Collapse.Panel>
+
+        <Collapse.Panel key="0" header="Dimension">
+          <Stack vertical spacing="tight">
+
+            <Align />
+            <TextField
+              label='Border radius'
+              name={`${focusIdx}.attributes.border-radius`}
+              inline
+            />
+            <Padding />
+            <Padding attributeName="inner-padding" title="Inner padding" />
+            <Padding attributeName="text-padding" title="Text padding" />
+
+          </Stack>
+
+        </Collapse.Panel>
+
+      </Collapse>
+
+    </AttributesPanelWrapper>
+
   );
 }
 
@@ -100,68 +135,59 @@ function SocialElement({
   index: number;
 }) {
   const { focusIdx } = useFocusIdx();
-  return (
-    <AttributesPanel>
-      <Stack>
-        <TextField
-          label='Font size'
-          name={`${focusIdx}.data.value.elements.[${index}].font-size`}
-          quickchange
-          inline
-        />
-        <TextField
-          label='Icon size'
-          name={`${focusIdx}.data.value.elements.[${index}].icon-size`}
-          quickchange
-          inline
-        />
-        <TextField
-          label='Icon height'
-          name={`${focusIdx}.data.value.elements.[${index}].icon-height`}
-          quickchange
-          inline
-          placeholder='overrides icon-size'
-        />
-        <TextField
-          label='Src'
-          name={`${focusIdx}.data.value.elements.[${index}].src`}
-          inline
-        />
-        <ColorPickerField
-          label='Color'
-          name={`${focusIdx}.data.value.elements.[${index}].color`}
-          inline
-          alignment='center'
-        />
-        <Stack vertical>
-          <Stack.Item fill>
-            <TextField
-              prefix={<LinkOutlined />}
-              label={<span>Href&nbsp;&nbsp;&nbsp;</span>}
-              name={`${focusIdx}.data.value.elements.[${index}].href`}
-              inline
-            />
-          </Stack.Item>
+  const { onUploadImage } = useContext(EditorPropsContext);
 
-          <div style={{ minWidth: 150 }}>
-            <SelectField
-              label='Target'
-              name={`${focusIdx}.data.value.elements.[${index}].target`}
-              options={[
-                {
-                  value: '_blank',
-                  label: '_blank',
-                },
-                {
-                  value: '_self',
-                  label: '_self',
-                },
-              ]}
-              inline
-            />
-          </div>
-        </Stack>
+  return (
+    <Stack vertical spacing="tight">
+
+      <ImageUploaderField
+        label='Image'
+        name={`${focusIdx}.data.value.elements.[${index}].src`}
+        helpText='The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.'
+        uploadHandler={onUploadImage}
+        inline
+      />
+
+      <TextField
+        label='Icon width'
+        name={`${focusIdx}.data.value.elements.[${index}].icon-size`}
+        quickchange
+        inline
+      />
+      <TextField
+        label='Icon height'
+        name={`${focusIdx}.data.value.elements.[${index}].icon-height`}
+        quickchange
+        inline
+      />
+
+      <Stack wrap={false}>
+        <Stack.Item fill>
+          <TextField
+            prefix={<LinkOutlined />}
+            label={<span>Href</span>}
+            name={`${focusIdx}.data.value.elements.[${index}].href`}
+          />
+        </Stack.Item>
+
+        <SelectField
+          style={{ minWidth: 65 }}
+          label='Target'
+          name={`${focusIdx}.data.value.elements.[${index}].target`}
+          options={[
+            {
+              value: '_blank',
+              label: '_blank',
+            },
+            {
+              value: '_self',
+              label: '_self',
+            },
+          ]}
+        />
+
       </Stack>
-    </AttributesPanel>
+
+    </Stack>
   );
 }

@@ -4,6 +4,9 @@ import { BasicType } from '@/constants';
 import { CSSProperties } from 'react';
 import { createBlock } from '@/utils/createBlock';
 import { merge } from 'lodash';
+import React from 'react';
+import { Stack } from '@/components/UI/Stack';
+import { TextStyle } from '@/components/UI/TextStyle';
 
 export type IImage = IBlockData<{
   alt?: string;
@@ -24,6 +27,15 @@ export type IImage = IBlockData<{
 export const Image: IBlock<IImage> = createBlock({
   name: 'Image',
   type: BasicType.IMAGE,
+  description: (
+    <Stack vertical spacing="none">
+      <TextStyle>
+        Displays a responsive image in your email. It is similar to
+        the HTML "&lt;img/&gt;" tag. Note that if no width is
+        provided, the image will use the parent column width.
+      </TextStyle>
+    </Stack>
+  ),
   Panel,
   create: (payload) => {
     const defaultData: IImage = {
@@ -34,7 +46,7 @@ export const Image: IBlock<IImage> = createBlock({
       attributes: {
         align: 'center',
         height: 'auto',
-        padding: '0px 0px 0px 0px',
+        padding: '10px 25px 10px 25px',
         src: 'https://assets.maocanhua.cn/0e7331f3-30b6-49ab-a0ab-fffd23383685-image.png',
       },
       children: [],

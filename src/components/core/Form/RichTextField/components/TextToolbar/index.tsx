@@ -16,19 +16,15 @@ import {
   AlignCenterOutlined,
   CloseOutlined,
 } from '@ant-design/icons';
-import { v4 as uuidv4 } from 'uuid';
 import { Button, Tooltip } from 'antd';
 import { ToolItem } from '../../components/ToolItem';
 import { Link, LinkParams } from '../../components/Link';
 import { FontSizeList } from '../../components/FontSizeList';
-import { Heading } from '../../components/Heading';
 import { getShadowRoot } from '@/utils/findBlockNodeByIdx';
 import { Stack } from '@/components/UI/Stack';
 import { TextStyle } from '@/components/UI/TextStyle';
 import { ColorPicker } from '../../../ColorPicker';
 import { FontFamily } from '../FontFamily';
-import { useContext } from 'react';
-import { SelectionRangeContext } from '@/components/Provider/SelectionRangeProvider';
 import { useSelectionRange } from '@/hooks/useSelectionRange';
 
 export interface TextToolbarProps {
@@ -76,6 +72,7 @@ export function TextToolbar(props: TextToolbarProps) {
       if (target) {
         link.setAttribute('target', target);
       }
+      link.style.color = 'inherit';
       link.style.textDecoration = linkData.underline ? 'underline' : 'none';
       link.setAttribute('href', linkData.link);
     } else {
@@ -156,11 +153,11 @@ export function TextToolbar(props: TextToolbarProps) {
             onChange={(values) => execCommand('createLink', values)}
             getPopupContainer={getMountNode}
           />
-          <ToolItem
+          {/* <ToolItem
             onClick={() => execCommand('unlink')}
             icon={<StopOutlined />}
             title='Unlink'
-          />
+          /> */}
           <ToolItem
             onClick={() => execCommand('removeFormat')}
             icon={<CloseOutlined />}
@@ -185,16 +182,6 @@ export function TextToolbar(props: TextToolbarProps) {
             title='Align right'
           />
           <ToolItem
-            onClick={() => execCommand('strikeThrough')}
-            icon={<StrikethroughOutlined />}
-            title='StrikethroughOutlined'
-          />
-          <ToolItem
-            onClick={() => execCommand('underline')}
-            icon={<UnderlineOutlined />}
-            title='UnderlineOutlined'
-          />
-          <ToolItem
             onClick={() => execCommand('insertOrderedList')}
             icon={<OrderedListOutlined />}
             title='Orderlist'
@@ -203,6 +190,16 @@ export function TextToolbar(props: TextToolbarProps) {
             onClick={() => execCommand('insertUnorderedList')}
             icon={<UnorderedListOutlined />}
             title='Unorderlist'
+          />
+          <ToolItem
+            onClick={() => execCommand('strikeThrough')}
+            icon={<StrikethroughOutlined />}
+            title='StrikethroughOutlined'
+          />
+          <ToolItem
+            onClick={() => execCommand('underline')}
+            icon={<UnderlineOutlined />}
+            title='UnderlineOutlined'
           />
 
           <ToolItem

@@ -36,6 +36,8 @@ export type INavbar = IBlockData<
 export const Navbar: IBlock<INavbar> = createBlock({
   name: 'Navbar',
   type: BasicType.NAVBAR,
+  description: `Displays a menu for navigation with an optional hamburger
+  mode for mobile devices.`,
   Panel,
   create: (payload) => {
     const defaultData: INavbar = {
@@ -49,6 +51,7 @@ export const Navbar: IBlock<INavbar> = createBlock({
               color: '#1890ff',
               'font-size': '13px',
               target: '_blank',
+              padding: '15px 10px'
             },
             {
               href: '/try-it-live',
@@ -56,6 +59,7 @@ export const Navbar: IBlock<INavbar> = createBlock({
               color: '#1890ff',
               'font-size': '13px',
               target: '_blank',
+              padding: '15px 10px'
             },
             {
               href: '/templates',
@@ -63,6 +67,7 @@ export const Navbar: IBlock<INavbar> = createBlock({
               color: '#1890ff',
               'font-size': '13px',
               target: '_blank',
+              padding: '15px 10px'
             },
             {
               href: '/components',
@@ -70,18 +75,13 @@ export const Navbar: IBlock<INavbar> = createBlock({
               color: '#1890ff',
               'font-size': '13px',
               target: '_blank',
+              padding: '15px 10px'
             },
           ],
         },
       },
       attributes: {
-        hamburger: 'hamburger',
         align: 'center',
-        'ico-align': 'center',
-        'ico-color': '#1890ff',
-        'ico-font-size': '30px',
-        'ico-line-height': '30px',
-        'ico-padding': '10px 10px 10px 10px',
       },
       children: [],
     };

@@ -31,7 +31,8 @@ export function SourceCodeManager() {
   const onChaneCode = useCallback(
     (event: React.FocusEvent<HTMLTextAreaElement>) => {
       try {
-        const parseValue = JSON.parse(event.target.value) as IBlockData;
+        const parseValue = JSON.parse(JSON.stringify(eval('(' + event.target.value + ')'))) as IBlockData;
+
         const block = BlocksMap.findBlockByType(parseValue.type);
         if (!block) {
           throw new Error('Invalid content');

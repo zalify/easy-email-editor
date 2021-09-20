@@ -160,6 +160,7 @@ export function useBlock() {
 
       let { sourceIdx, destinationIdx } = params;
       if (sourceIdx === destinationIdx) return null;
+
       let nextFocusIdx = focusIdx;
 
       const values = cloneDeep(getState().values) as IEmailTemplate;
@@ -183,18 +184,19 @@ export function useBlock() {
       if (sourceParent === destinationParent) {
         const sourceIndex = getIndexByIdx(sourceIdx);
 
-        const [removed] = destinationParent.children.splice(sourceIndex, 1);
+        const [removed] = sourceParent.children.splice(sourceIndex, 1);
         destinationParent.children.splice(positionIndex, 0, removed);
       } else {
-        sourceParent.children = sourceParent.children.filter(
-          (item) => item !== source
-        );
-        destinationParent.children.splice(positionIndex, 0, source);
+        const sourceIndex = getIndexByIdx(sourceIdx);
+
+        const [removed] = sourceParent.children.splice(sourceIndex, 1);
+        destinationParent.children.splice(positionIndex, 0, removed);
+
       }
       batch(() => {
         change(sourceParentIdx, { ...sourceParent });
         if (sourceParentIdx !== destinationParentIdx) {
-          change(destinationIdx, { ...destinationParent });
+          change(destinationParentIdx, { ...destinationParent });
         }
       });
 
@@ -334,6 +336,7 @@ export function useBlock() {
 
   return {
     values,
+    change,
     focusBlock,
     setFocusBlock,
     setFocusBlockValue,

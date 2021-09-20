@@ -1,7 +1,7 @@
 import { BlockType } from './../constants';
 import { IPage } from '@/components/core/blocks/basic/Page';
 import { IBlock, IBlockData } from '@/typings';
-import { get } from 'lodash';
+import { get, isString } from 'lodash';
 import { BlocksMap } from '../components/core/blocks';
 import { ancestorOf } from './ancestorOf';
 
@@ -28,9 +28,9 @@ export function getNodeIdxFromClassName(classList: DOMTokenList) {
 }
 
 export function getNodeTypeFromClassName(
-  classList: DOMTokenList
+  classList: DOMTokenList | string
 ): BlockType | null {
-  return Array.from(classList)
+  return Array.from(isString(classList) ? classList.split(' ') : classList)
     .find((item) => item.includes('node-type-'))
     ?.replace('node-type-', '') as BlockType;
 }
@@ -136,4 +136,10 @@ export const getParenRelativeByType = <T extends IBlockData>(
     }
   }
   return null;
+};
+
+export const getValidChildBlocks = (type: BlockType): IBlock[] => {
+  return BlocksMap.getBlocks().filter((item) =>
+    item.validParentType.includes(type)
+  );
 };

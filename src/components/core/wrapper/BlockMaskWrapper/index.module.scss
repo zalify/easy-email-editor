@@ -1,0 +1,13 @@
+.mask {
+  width: 270px;
+  display:flex;
+  justify-content: flex-end;
+  align-items: center;
+  cursor: default;
+  position: relative;
+  transition: all .3s;
+  pointer-events: auto;
+}
+.drag {
+  background-color: rgba(0,0,0,0.65);
+}

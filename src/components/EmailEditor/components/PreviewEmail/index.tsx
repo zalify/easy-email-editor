@@ -38,7 +38,6 @@ export function PreviewEmail(props: { scroll?: boolean; }) {
   return (
     <div
       onScroll={onScroll}
-      style={{ height: '100vh', overflow: 'overlay' }}
       ref={setRef}
       dangerouslySetInnerHTML={{ __html: html }}
     />

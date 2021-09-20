@@ -5,6 +5,7 @@ import { BlockType } from '../constants';
 export interface IBlock<T extends IBlockData = IBlockData> {
   name: string;
   type: BlockType;
+  description: React.ReactNode;
   Panel: () => React.ReactNode;
   create: (payload?: RecursivePartial<T>) => T; //@deprecated , use create
   validParentType: BlockType[];
@@ -16,16 +17,16 @@ export interface IBlock<T extends IBlockData = IBlockData> {
 }
 
 export interface IBlockData<
-  K extends { [key: string]: any } = any,
-  T extends { [key: string]: any } = any
-> {
+  K extends { [key: string]: any; } = any,
+  T extends { [key: string]: any; } = any
+  > {
   type: BlockType;
   data: {
     value: T;
     hidden?: boolean;
     shadow?: boolean; // Child nodes cannot be selected
   };
-  attributes: K & { 'css-class'?: string };
+  attributes: K & { 'css-class'?: string; };
   children: IBlockData[];
 }
 
@@ -41,8 +42,8 @@ export interface create<T extends any = any> {
 
 export type RecursivePartial<T> = {
   [P in keyof T]?: T[P] extends (infer U)[]
-    ? RecursivePartial<U>[]
-    : T[P] extends object
-    ? RecursivePartial<T[P]>
-    : T[P];
+  ? RecursivePartial<U>[]
+  : T[P] extends object
+  ? RecursivePartial<T[P]>
+  : T[P];
 };

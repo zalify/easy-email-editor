@@ -29,6 +29,7 @@ export type IText = IBlockData<
 export const Text = createBlock<IText>({
   name: 'Text',
   type: BasicType.TEXT,
+  description: 'This block allows you to display text in your email.',
   Panel,
   create: (payload) => {
     const defaultData: IText = {
@@ -39,9 +40,7 @@ export const Text = createBlock<IText>({
         },
       },
       attributes: {
-        'font-size': '13px',
         padding: '10px 25px 10px 25px',
-        'line-height': 1,
         align: 'left',
       },
       children: [],

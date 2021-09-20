@@ -23,9 +23,9 @@ export function MobileEmailPreview() {
         width='100%'
         style={{
           paddingTop: -16,
-          border: ' 2px solid #e9e9e9',
+          border: '10px solid rgb(16 4 4)',
           boxSizing: 'content-box',
-          boxShadow: '5px 5px 5px rgba(17, 17, 17, 0.699)',
+          boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.699)',
           borderRadius: '25px',
           maxHeight: isResponsive ? 667 : 667 / (MOBILE_WIDTH / parseFloat(pageMaxWidth)),
           transform: isResponsive ? undefined : `scale(${MOBILE_WIDTH / parseFloat(pageMaxWidth)})`,
@@ -35,7 +35,7 @@ export function MobileEmailPreview() {
       >
         <style>
           {`
-            body *::-webkit-scrollbar {
+            *::-webkit-scrollbar {
               width: 0px;
               background-color: transparent;
             }

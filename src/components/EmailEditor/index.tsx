@@ -39,7 +39,7 @@ export const EmailEditor = (props: EmailEditorProps) => {
     return createPortal(<div id={FIXED_CONTAINER_ID} />, document.body);
   }, []);
 
-  const onTogglePanel = () => {};
+  const onTogglePanel = () => { };
 
   return useMemo(
     () => (
@@ -134,19 +134,17 @@ export const EmailEditor = (props: EmailEditorProps) => {
                   tabBarExtraContent={<ToolsPanel />}
                 >
                   <TabPane
-                    tab={
+                    tab={(
                       <Stack spacing='none'>
                         <EditOutlined />
                         <TextStyle>Edit</TextStyle>
                       </Stack>
-                    }
+                    )}
                     key={ActiveTabKeys.EDIT}
                   >
                     <div
                       style={{
                         backgroundColor: 'transparent',
-                        paddingLeft: 20,
-                        paddingRight: 20,
                         height: '100%',
                         position: 'relative',
                       }}
@@ -155,24 +153,24 @@ export const EmailEditor = (props: EmailEditorProps) => {
                     </div>
                   </TabPane>
                   <TabPane
-                    tab={
+                    tab={(
                       <Stack spacing='none'>
                         <DesktopOutlined />
                         <TextStyle>Preview</TextStyle>
                       </Stack>
-                    }
+                    )}
                     key={ActiveTabKeys.PC}
                     style={{ backgroundColor: 'transparent' }}
                   >
                     <DesktopEmailPreview />
                   </TabPane>
                   <TabPane
-                    tab={
+                    tab={(
                       <Stack spacing='none'>
                         <TabletOutlined />
                         <TextStyle>Preview</TextStyle>
                       </Stack>
-                    }
+                    )}
                     key={ActiveTabKeys.MOBILE}
                     style={{ backgroundColor: 'transparent' }}
                   >
@@ -186,7 +184,7 @@ export const EmailEditor = (props: EmailEditorProps) => {
           <Layout.Sider
             style={{ height: containerHeight }}
             theme='light'
-            width={280}
+            width={350}
           >
             <Card
               size='small'

@@ -30,7 +30,6 @@ export function TextTransform() {
         label='Text transform'
         name={`${focusIdx}.attributes.text-transform`}
         options={options}
-        inline
       />
     );
   }, [focusIdx]);

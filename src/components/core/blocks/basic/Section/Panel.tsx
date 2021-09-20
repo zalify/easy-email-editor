@@ -4,7 +4,7 @@ import { Background } from '@/components/EmailEditor/components/ConfigurationPan
 import { Stack } from '@/components/UI/Stack';
 import { TextAlign } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/TextAlign';
 import { Border } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Border';
-import { SwitchField } from '@/components/core/Form';
+import { SwitchField, TextField } from '@/components/core/Form';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { useEffect } from 'react';
 import { useBlock } from '@/hooks/useBlock';
@@ -12,6 +12,9 @@ import { BasicType } from '@/constants';
 import { BlocksMap } from '../..';
 import { useCallback } from 'react';
 import { AttributesPanel } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/AttributesPanel';
+import { AttributesPanelWrapper } from '@/components/core/wrapper/AttributesPanelWrapper';
+import { Collapse } from 'antd';
+import { TextStyle } from '@/components/UI/TextStyle';
 
 export function Panel() {
   const { focusIdx } = useFocusIdx();
@@ -56,19 +59,43 @@ export function Panel() {
   }, [noWrap]);
 
   return (
-    <AttributesPanel>
-      <Stack>
-        <SwitchField
-          label='Prevent columns from stacking on mobile'
-          name={`${focusIdx}.data.value.noWrap`}
-          checkedChildren='True'
-          unCheckedChildren='False'
-        />
-        <Padding />
-        <Background />
-        <TextAlign />
-        <Border />
-      </Stack>
-    </AttributesPanel>
+
+    <AttributesPanelWrapper style={{ padding: 0 }}>
+      <Collapse defaultActiveKey={['0', '1', '2']}>
+
+        <Collapse.Panel key="0" header="Dimension">
+          <Stack vertical>
+            <Stack vertical spacing="none">
+              <TextStyle variation="strong">Group</TextStyle>
+              <Stack wrap={false} alignment="trailing">
+                <Stack.Item fill>
+                  <TextStyle>
+                    Prevent columns from stacking on mobile.
+                  </TextStyle>
+                </Stack.Item>
+                <SwitchField
+                  label=''
+                  labelHidden
+                  name={`${focusIdx}.data.value.noWrap`}
+                  checkedChildren='True'
+                  unCheckedChildren='False'
+                  inline
+                />
+              </Stack>
+            </Stack>
+            <Padding />
+          </Stack>
+        </Collapse.Panel>
+        <Collapse.Panel key="1" header="Background">
+          <Stack vertical spacing="tight">
+            <Background />
+          </Stack>
+        </Collapse.Panel>
+        <Collapse.Panel key="2" header="Border">
+          <Border />
+        </Collapse.Panel>
+      </Collapse>
+
+    </AttributesPanelWrapper>
   );
 }

@@ -1,4 +1,4 @@
-import { BlockAvatarWrapper } from '@/components/core/wrapper/BlockAvatarWrapper';
+import { BlockMaskWrapper } from '@/components/core/wrapper/BlockMaskWrapper';
 import { ShadowDom } from '@/components/UI/ShadowDom';
 import { Stack } from '@/components/UI/Stack';
 import { BasicType } from '@/constants';
@@ -12,24 +12,25 @@ export function TextBlockItem() {
       <Stack vertical>
         {fontList.map((item, index) => {
           return (
-            <BlockAvatarWrapper
-              key={index}
-              type={BasicType.TEXT}
-              payload={{
-                attributes: {
-                  'font-size': item + 'px',
-                },
-                data: {
-                  value: {
-                    content: item + 'px',
-                  }
-                }
-              }}
-            >
-              <ShadowDom>
-                <div style={{ fontSize: item, width: '100%', paddingLeft: 20 }}>{item}px</div>
-              </ShadowDom>
-            </BlockAvatarWrapper>
+            <Stack.Item fill key={index}>
+              <BlockMaskWrapper
+                type={BasicType.TEXT}
+                payload={{
+                  attributes: {
+                    'font-size': item + 'px',
+                  },
+                  data: {
+                    value: {
+                      content: item + 'px',
+                    },
+                  },
+                }}
+              >
+                <div style={{ fontSize: item, width: '100%', paddingLeft: 20 }}>
+                  {item}px
+                </div>
+              </BlockMaskWrapper>
+            </Stack.Item>
           );
         })}
       </Stack>

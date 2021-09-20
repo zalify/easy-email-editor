@@ -7,8 +7,9 @@ import { Height } from '@/components/EmailEditor/components/ConfigurationPanel/c
 import { VerticalAlign } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/VerticalAlign';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { Padding } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Padding';
-import { AttributesPanel } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/AttributesPanel';
 import { EditorPropsContext } from '@/components/Provider/PropsProvider';
+import { Collapse } from 'antd';
+import { AttributesPanelWrapper } from '@/components/core/wrapper/AttributesPanelWrapper';
 
 const options = [
   {
@@ -26,49 +27,72 @@ export function Panel() {
   const { onUploadImage } = useContext(EditorPropsContext);
 
   return (
-    <AttributesPanel>
-      <Stack vertical>
-        <Padding />
-        <TextField
-          label='Background height'
-          name={`${focusIdx}.attributes.background-height`}
-          inline
-        />
-        <TextField
-          label='Background position'
-          name={`${focusIdx}.attributes.background-position`}
-          inline
-        />
-        <ImageUploaderField
-          label='src'
-          name={`${focusIdx}.attributes.background-url`}
-          helpText='The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.'
-          uploadHandler={onUploadImage}
-          inline
-        />
 
-        <TextField
-          label='Background width'
-          name={`${focusIdx}.attributes.background-width`}
-          inline
-        />
-        <TextField
-          label='Border radius'
-          name={`${focusIdx}.attributes.border-radius`}
-          inline
-          quickchange
-        />
-        <Width />
-        <RadioGroupField
-          label='Mode'
-          name={`${focusIdx}.attributes.mode`}
-          options={options}
-          inline
-        />
-        <Height />
-        <VerticalAlign />
-        <BackgroundColor />
-      </Stack>
-    </AttributesPanel>
+    <AttributesPanelWrapper>
+
+      <Collapse defaultActiveKey={['0', '1', '2']}>
+
+        <Collapse.Panel key="0" header="Dimension">
+          <Stack vertical spacing="tight">
+            <RadioGroupField
+              label='Mode'
+              name={`${focusIdx}.attributes.mode`}
+              options={options}
+            />
+
+            <Stack wrap={false}>
+              <Stack.Item fill>
+                <Width />
+              </Stack.Item>
+              <Stack.Item fill>
+                <Height />
+              </Stack.Item>
+            </Stack>
+
+            <Padding />
+            <VerticalAlign />
+          </Stack>
+
+        </Collapse.Panel>
+        <Collapse.Panel key="1" header="Background">
+          <Stack vertical spacing="tight">
+
+            <TextField
+              label='Background height'
+              name={`${focusIdx}.attributes.background-height`}
+              inline
+            />
+            <TextField
+              label='Background position'
+              name={`${focusIdx}.attributes.background-position`}
+              inline
+            />
+            <ImageUploaderField
+              label='src'
+              name={`${focusIdx}.attributes.background-url`}
+              helpText='The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.'
+              uploadHandler={onUploadImage}
+              inline
+            />
+
+            <TextField
+              label='Background width'
+              name={`${focusIdx}.attributes.background-width`}
+              inline
+            />
+            <TextField
+              label='Border radius'
+              name={`${focusIdx}.attributes.border-radius`}
+              inline
+              quickchange
+            />
+
+            <BackgroundColor />
+          </Stack>
+        </Collapse.Panel>
+
+      </Collapse>
+
+    </AttributesPanelWrapper>
   );
 }

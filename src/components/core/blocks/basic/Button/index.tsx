@@ -37,6 +37,7 @@ export type IButton = IBlockData<
 export const Button = createBlock<IButton>({
   name: 'Button',
   type: BasicType.BUTTON,
+  description: 'Displays a customizable button.',
   Panel,
   create: (payload) => {
     const defaultData: IButton = {

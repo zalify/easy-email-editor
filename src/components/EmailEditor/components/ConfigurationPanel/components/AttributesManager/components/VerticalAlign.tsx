@@ -33,7 +33,6 @@ export function VerticalAlign({
           label='Vertical align'
           name={`${focusIdx}.attributes.${attributeName}`}
           options={options}
-          inline
         />
       </Stack>
     );

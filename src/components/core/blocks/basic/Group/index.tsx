@@ -14,6 +14,11 @@ export type IGroup = IBlockData<{
 export const Group: IBlock<IGroup> = createBlock({
   name: 'Group',
   type: BasicType.GROUP,
+  description: (
+    `Group allows you to prevent columns from stacking on
+    mobile. To do so, wrap the columns inside a group
+    block, so they'll stay side by side on mobile.`
+  ),
   Panel,
   create: (payload) => {
     const defaultData: IGroup = {

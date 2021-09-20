@@ -40,7 +40,6 @@ export function useDropBlock() {
   const { setFocusIdx, focusIdx } = useFocusIdx();
   const {
     setHoverIdx,
-    setIsDragging,
     setDirection,
     isDragging,
     hoverIdx,
@@ -56,19 +55,6 @@ export function useDropBlock() {
         if (blockNode) {
           const idx = getNodeIdxFromClassName(blockNode.classList)!;
           setFocusIdx(idx);
-          const editBlock = findBlockNodeByIdx(idx);
-          if (editBlock === blockNode) {
-            const listItemNode = document.querySelector(`[data-idx="${idx}"]`);
-            listItemNode?.scrollIntoView({
-              block: 'center',
-              behavior: 'smooth',
-            });
-          } else {
-            editBlock?.scrollIntoView({
-              block: 'center',
-              behavior: 'smooth',
-            });
-          }
         }
       };
 
@@ -107,7 +93,6 @@ export function useDropBlock() {
           moveBlock({
             sourceIdx: blockData.payload,
             destinationIdx: blockData.parentIdx,
-            positionIndex: blockData.positionIndex!,
           });
         } else {
           addBlock(blockData);
@@ -119,7 +104,7 @@ export function useDropBlock() {
     return () => {
       ref.removeEventListener('drop', onDrop);
     };
-  }, [addBlock, dataTransfer, moveBlock, ref, setIsDragging, values]);
+  }, [addBlock, dataTransfer, moveBlock, ref, values]);
 
   useEffect(() => {
     if (ref) {
@@ -144,18 +129,8 @@ export function useDropBlock() {
         }
       };
 
-      const onDragleave = (ev: MouseEvent) => {
-        ev.stopPropagation();
-        setHoverIdx('');
-        setDirection('');
-        const blockNode = findBlockNode(ev.target as HTMLElement);
-        if (!blockNode) {
-          setIsDragging(false);
-        }
-      };
       const onDrop = (ev: MouseEvent) => {
         lastDragover.target = null;
-        setIsDragging(false);
       };
 
       const onDragOver = (ev: DragEvent) => {
@@ -164,19 +139,18 @@ export function useDropBlock() {
         if (ev.target === lastDragover.target) {
           if (lastDragover.valid) {
             ev.preventDefault();
+            return;
           }
-          return;
         }
-
         lastDragover.target = ev.target;
         lastDragover.valid = false;
 
-        setIsDragging(true);
         setDragPosition({
           left: ev.pageX,
           top: ev.pageY,
         });
         const blockNode = findBlockNode(ev.target as HTMLDivElement);
+
         if (blockNode) {
           const directionPosition = getDirectionPosition(ev);
 
@@ -211,14 +185,12 @@ export function useDropBlock() {
 
       ref.addEventListener('mouseover', onMouseover);
       // ref.addEventListener('mouseout', onMouseOut);
-      document.addEventListener('dragleave', onDragleave);
       ref.addEventListener('drop', onDrop);
       ref.addEventListener('dragover', onDragOver);
 
       return () => {
         ref.removeEventListener('mouseover', onMouseover);
         // ref.removeEventListener('mouseout', onMouseOut);
-        document.removeEventListener('dragleave', onDragleave);
         ref.removeEventListener('drop', onDrop);
         ref.removeEventListener('dragover', onDragOver);
       };
@@ -232,14 +204,12 @@ export function useDropBlock() {
     setDirection,
     setDragPosition,
     setHoverIdx,
-    setIsDragging,
   ]);
 
   useEffect(() => {
     if (!ref) return;
 
     const onMouseOut = (ev: MouseEvent) => {
-
       if (!isDragging) {
         ev.stopPropagation();
         setHoverIdx('');
@@ -249,7 +219,7 @@ export function useDropBlock() {
     return () => {
       ref.removeEventListener('mouseout', onMouseOut);
     };
-  }, [isDragging, ref, setDirection, setHoverIdx, setIsDragging]);
+  }, [isDragging, ref, setHoverIdx]);
 
   useEffect(() => {
     if (ref) {
@@ -283,18 +253,6 @@ export function useDropBlock() {
       });
     }
   }, [hoverIdx, isDragging, isShadowDom, ref]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      getBlockNodes(isShadowDom).forEach((child) => {
-        child.classList.remove(BLOCK_SELECTED_CLASSNAME);
-        const idx = getNodeIdxFromClassName(child.classList);
-        if (idx === focusIdx) {
-          child.classList.add(BLOCK_SELECTED_CLASSNAME);
-        }
-      });
-    }, 100);
-  }, [focusIdx, isShadowDom, ref]);
 
   return useMemo(
     () => ({

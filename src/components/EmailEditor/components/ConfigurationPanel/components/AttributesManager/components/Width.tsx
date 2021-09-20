@@ -6,7 +6,7 @@ import { useBlock } from '@/hooks/useBlock';
 import { BasicType } from '@/constants';
 import { getParentByIdx } from '@/utils/block';
 
-export function Width() {
+export function Width({ inline = false }: { inline?: boolean; }) {
   const { focusIdx, } = useFocusIdx();
   const { focusBlock, values } = useBlock();
   const parentType = getParentByIdx(values, focusIdx)?.type;
@@ -26,8 +26,8 @@ export function Width() {
           <TextField
             validate={validate}
             label='Width'
+            inline={inline}
             name={`${focusIdx}.attributes.width`}
-            inline
             quickchange
           />
         </Stack.Item>

@@ -29,7 +29,7 @@ export interface HtmlStringToReactNodesOptions {
 export function HtmlStringToReactNodes(content: string) {
   let doc = domParser.parseFromString(content, 'text/html'); // The average time is about 1.4 ms
   doc
-    .querySelectorAll('.node-type-text, .node-type-button')
+    .querySelectorAll('.node-type-text')
     .forEach((child) => {
       const editNode = getEditNode(child as HTMLElement);
 

@@ -6,9 +6,10 @@ import { useHoverIdx } from '@/hooks/useHoverIdx';
 import { BlocksMap } from '@/components/core/blocks';
 import { createPortal } from 'react-dom';
 import { awaitForElement } from '@/utils/awaitForElement';
+import { styleZIndex } from '@/constants';
 
 export function HoverTooltip() {
-  const { hoverIdx, direction, isDragging } = useHoverIdx();
+  const { hoverIdx, direction, isDragging, setHoverIdx, setIsDragging, setDirection } = useHoverIdx();
 
   const [blockNode, setBlockNode] = useState<HTMLDivElement | null>(null);
 
@@ -90,7 +91,7 @@ function TipNode(props: TipNodeProps) {
         left: 0,
         top: 0,
         fontSize: 14,
-        zIndex: 100,
+        zIndex: styleZIndex.HOVER_BLOCK_TOOLTIP,
         color: '#000',
         width: '100%',
         height: '100%',
@@ -110,19 +111,40 @@ function TipNode(props: TipNodeProps) {
           outline: `${lineWidth}px solid ${color}`,
         }}
       >
-        {type === 'hover' && (
-          <div
-            style={{
-              position: 'absolute',
-              left: 0,
-              top: 0,
-              width: '100%',
-              height: '100%',
-              backgroundColor: color,
-              opacity: 0.1,
-            }}
-          />
-        )}
+        {
+          type === 'hover' && (
+            <>
+              <div
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  top: 0,
+                  backgroundColor: color,
+                  color: '#ffffff',
+                  height: '22px',
+                  display: 'inline-flex',
+                  padding: '1px 5px',
+                  boxSizing: 'border-box',
+                  whiteSpace: 'nowrap',
+                  transform: 'translateY(-100%)'
+                }}
+              >
+                {title}
+              </div>
+              <div
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  top: 0,
+                  width: '100%',
+                  height: '100%',
+                  backgroundColor: color,
+                  opacity: 0.1,
+                }}
+              />
+            </>
+          )
+        }
       </div>
 
       {/* drag direction tip */}

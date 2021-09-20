@@ -8,15 +8,16 @@ import {
   getIndexByIdx,
   getNodeIdxClassName,
   getNodeTypeClassName,
+  getNodeTypeFromClassName,
   getPageIdx,
+  getValidChildBlocks,
 } from '@/utils/block';
 import { useBlock } from '@/hooks/useBlock';
-import { BasicType } from '@/constants';
+import { BasicType, BlockType } from '@/constants';
 import { Stack } from '@/components/UI/Stack';
 import { TextStyle } from '@/components/UI/TextStyle';
 import styles from './index.module.scss';
 import { classnames } from '@/utils/classnames';
-import { useDropBlock } from '@/hooks/useDropBlock';
 
 import { BlockInteractiveStyle } from '../../../BlockInteractiveStyle';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
@@ -24,45 +25,53 @@ import { useCollapse } from '@/hooks/useCollapse';
 import { IconFont } from '@/components/IconFont';
 import { getIconNameByBlockType } from '@/utils/getIconNameByBlockType';
 import { BlocksMap } from '@/components/core/blocks';
-import { AddBlockPanel } from './components/AddBlockPanel';
-import {
-  DragDropContext,
-  Droppable,
-  Draggable,
-  DropResult,
-  ResponderProvided,
-} from 'react-beautiful-dnd';
-import { useHoverIdx } from '@/hooks/useHoverIdx';
+import { BlockSortableWrapper } from '@/components/core/wrapper/BlockSortableWrapper';
+import { useHoverIdx } from 'easy-email-editor';
+
+interface IBlockDataWithId extends IBlockData {
+  id: string;
+  children: IBlockDataWithId[];
+}
 
 export function BlockLayerManager() {
   const { pageData } = useEditorContext();
   const { focusIdx } = useFocusIdx();
 
+  const list = useMemo(() => {
+    return [pageData] as any as IBlockDataWithId[];
+  }, [pageData]);
+
   return useMemo(() => {
     if (!focusIdx) return null;
     return (
       <div id='BlockLayerManager'>
-        <DragDropContext onDragEnd={() => { }}>
-          <Droppable droppableId={getPageIdx()}>
-            {(provided, snapshot) => (
-              <div
-                ref={provided.innerRef}
-                className={classnames(styles.blockList)}
-              >
-                <BlockLayerItem
-                  indent={0}
-                  blockData={pageData}
-                  idx={getPageIdx()}
-                />
-              </div>
-            )}
-          </Droppable>
+        <BlockInteractiveStyle isShadowDom={false} />
 
-          <BlockInteractiveStyle isShadowDom={false} />
-        </DragDropContext>
+        <BlockSortableWrapper
+          action="move"
+          type={BasicType.PAGE}
+          list={list}
+          disabled
+        >
+          {list.map((block, blockIndex) => (
+            <div
+              className={classnames(styles.blockList)}
+              data-parent-type={null}
+              data-idx={getPageIdx()}
+              key={blockIndex}
+            >
+              <BlockLayerItem
+                indent={0}
+                parentType={null}
+                blockData={block}
+                idx={getPageIdx()}
+              />
+            </div>
+          ))}
+        </BlockSortableWrapper>
       </div>
     );
-  }, [pageData, focusIdx]);
+  }, [focusIdx, list]);
 }
 
 const BlockLayerItem = ({
@@ -70,10 +79,12 @@ const BlockLayerItem = ({
   idx,
   indent,
   hidden,
+  parentType,
 }: {
-  blockData: IBlockData;
+  blockData: IBlockDataWithId;
   idx: string;
   indent: number;
+  parentType: BlockType | null;
   hidden?: boolean;
 }) => {
   const { focusIdx, setFocusIdx } = useFocusIdx();
@@ -82,25 +93,8 @@ const BlockLayerItem = ({
   const title = findBlockByType(blockData.type)?.name;
   const noChild = blockData.children.length === 0;
   const isPageBlock = idx === getPageIdx();
-  const { moveBlock } = useBlock();
-
-  const onDragEnd = (result: DropResult, provided: ResponderProvided) => {
-    if (!result.destination) {
-      return;
-    }
-
-    if (result.destination.index === result.source.index && result.destination.droppableId === result.source.droppableId) {
-      return;
-    }
-    moveBlock({
-      sourceIdx: getChildIdx(result.source.droppableId, result.source.index),
-      destinationIdx: getChildIdx(result.destination.droppableId, result.destination.index),
-    });
-
-  };
-
-  const onDragStart = () => {
-  };
+  const [isDragging, setIsDragging] = useState(false);
+  const { setHoverIdx } = useHoverIdx();
 
   useEffect(() => {
     if (isPageBlock) {
@@ -111,7 +105,6 @@ const BlockLayerItem = ({
   }, [collapsed, isPageBlock]);
 
   useEffect(() => {
-
     if (focusIdx.startsWith(idx)) {
       setVisible(true);
     }
@@ -120,6 +113,14 @@ const BlockLayerItem = ({
   const onSelect = useCallback(() => {
     setFocusIdx(idx);
   }, [idx, setFocusIdx]);
+
+  const onStart = useCallback(() => {
+    setIsDragging(true);
+  }, []);
+
+  const onEnd = useCallback(() => {
+    setIsDragging(false);
+  }, []);
 
   const onToggle = useCallback(
     (e: React.MouseEvent) => {
@@ -167,143 +168,176 @@ const BlockLayerItem = ({
 
   const isSelected = idx === focusIdx;
 
-  const isContentBlock = BlocksMap.findBlockByType(
-    blockData.type
-  ).validParentType.includes(BasicType.COLUMN);
+  const childPlaceHolder = useMemo(() => {
+    const validChildBlock = getValidChildBlocks(blockData.type)[0];
+    if (validChildBlock) {
+      return validChildBlock.create({
+        data: {
+          value: {
+            placeholder: true,
+          },
+        },
+      });
+    }
+    return null;
+  }, [blockData.type]);
+
+  const childrenList = useMemo(() => {
+    if (blockData.children.length > 1) return blockData.children;
+    if (blockData.children.length == 1 && !isDragging)
+      return blockData.children;
+    return [...blockData.children, childPlaceHolder].filter(
+      Boolean
+    ) as any as IBlockDataWithId[];
+  }, [blockData.children, childPlaceHolder, isDragging]);
+
+  const onMouseEnter = () => {
+    setHoverIdx(idx);
+  };
+
+  const onMouseLeave = () => {
+    setHoverIdx('');
+  };
 
   const renderItem = () => {
     return (
-      <Draggable
-        draggableId={idx}
-        index={getIndexByIdx(idx)}
-        isDragDisabled={idx === getPageIdx()}
+      <div
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        onClick={onSelect}
+        className={classnames(
+          styles.listItemContentWrapper,
+          isSelected && styles.listItemSelected
+        )}
       >
-        {(provided, snapshot) => {
-          const dragingStyle: React.CSSProperties = snapshot?.isDragging
-            ? {
-              boxShadow: '0px 0px 5px  #e2dcdc',
-              backgroundColor: '#fff',
-            }
-            : {};
-
-          return (
-            <div
-              onClick={onSelect}
-              data-dragging={Boolean(snapshot?.isDragging)}
-              ref={provided.innerRef}
-              {...provided.draggableProps}
-              style={{
-                ...provided?.draggableProps.style,
-                ...dragingStyle,
-              }}
-              className={classnames(
-                styles.listItemContentWrapper,
-                isSelected && styles.listItemSelected
-              )}
-            >
+        <Stack.Item fill>
+          <Stack distribution='equalSpacing'>
+            <Stack spacing='none' wrap={false}>
+              <div style={{ width: indent * 18 }} />
               <Stack.Item fill>
-                <Stack distribution='equalSpacing'>
-                  <Stack spacing='none' wrap={false}>
-                    <div style={{ width: indent * 18 }} />
-                    <Stack.Item fill>
-                      <div className={styles.listItemContent}>
-                        <Stack wrap={false} spacing='tight' alignment='center'>
-                          {subIcon}
-                          <IconFont
-                            iconName={getIconNameByBlockType(blockData.type)}
-                            style={{ fontSize: 12 }}
-                          />
+                <div className={styles.listItemContent}>
+                  <Stack wrap={false} spacing='tight' alignment='center'>
+                    {subIcon}
+                    <IconFont
+                      iconName={getIconNameByBlockType(blockData.type)}
+                      style={{ fontSize: 12 }}
+                    />
 
-                          <TextStyle size='smallest'>
-                            <span
-                              title={title}
-                              style={{
-                                maxWidth: 100,
-                                whiteSpace: 'nowrap',
-                                overflow: 'hidden',
-                                textOverflow: 'ellipsis',
-                                display: 'block',
-                              }}
-                            >
-                              {title}
-                            </span>
-                          </TextStyle>
-                        </Stack>
-                      </div>
-                    </Stack.Item>
+                    <TextStyle size='smallest'>
+                      <span
+                        title={title}
+                        style={{
+                          maxWidth: 100,
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          display: 'block',
+                        }}
+                      >
+                        {title}
+                      </span>
+                    </TextStyle>
                   </Stack>
-                  <Stack spacing='extraTight' wrap={false}>
-                    {/* <ShortcutTool idx={idx} blockData={blockData} /> */}
-                    <EyeIcon hidden={hidden} idx={idx} blockData={blockData} />
-                    <div
-                      {...provided.dragHandleProps}
-                    >
-                      <IconFont iconName='icon-drag' style={{ cursor: 'grab' }} />
-                    </div>
-
-                  </Stack>
-                </Stack>
+                </div>
               </Stack.Item>
-            </div>
-          );
-        }}
-      </Draggable>
+            </Stack>
+            <Stack spacing='extraTight' wrap={false}>
+              {/* <ShortcutTool idx={idx} blockData={blockData} /> */}
+              <EyeIcon hidden={hidden} idx={idx} blockData={blockData} />
+              <div>
+                <IconFont iconName='icon-drag' style={{ cursor: 'grab' }} />
+              </div>
+            </Stack>
+          </Stack>
+        </Stack.Item>
+      </div>
     );
   };
+  if (blockData.data.value.placeholder) {
+    return (
+      <li
+        className={classnames(
+          styles.blockItem,
+          getNodeIdxClassName(idx),
+          getNodeTypeClassName(blockData.type)
+        )}
+        onMouseDown={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}
+        style={{
+          opacity: 0,
+          cursor: 'default',
+        }}
+        data-parent-type={parentType}
+        data-idx={idx}
+      >
+        Placeholder
+      </li>
+    );
+  }
   return (
     <>
-      <li className={classnames(styles.blockItem)} data-idx={idx}>
+      <li
+        className={classnames(
+          styles.blockItem,
+          'email-block',
+          getNodeIdxClassName(idx),
+          getNodeTypeClassName(blockData.type)
+        )}
+        onMouseDown={(e) => {
+          if (blockData.data.value.placeholder) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
+        data-parent-type={parentType}
+        data-idx={idx}
+      >
         {renderItem()}
-
-        <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
-          <Droppable droppableId={idx}>
-            {(provided, snapshot) => (
-              <ul
-                ref={provided.innerRef}
-                className={classnames(styles.blockList)}
+        {visible && (
+          <ul className={classnames(styles.blockList)}>
+            <BlockSortableWrapper
+              type={blockData.type}
+              action="move"
+              key={idx}
+              idx={idx}
+              list={childrenList}
+              onStart={onStart}
+              onEnd={onEnd}
+            >
+              {childrenList.map((item, index) => (
+                <BlockLayerItem
+                  hidden={hidden || blockData.data.hidden}
+                  key={index}
+                  indent={indent + 1}
+                  blockData={item}
+                  parentType={blockData.type}
+                  idx={getChildIdx(idx, index)}
+                />
+              ))}
+            </BlockSortableWrapper>
+            {/* <li
+              className={classnames(styles.blockItem, styles.blockAdd)}
+              style={{}}
+            >
+              <AddBlockPanel
+                type={blockData.type}
+                parentIdx={idx}
+                positionIndex={blockData.children.length}
               >
-                {visible &&
-                  blockData.children.map((item, index) => (
-                    <BlockLayerItem
-                      hidden={hidden || blockData.data.hidden}
-                      key={index}
-                      indent={indent + 1}
-                      blockData={item}
-                      idx={getChildIdx(idx, index)}
-                    />
-                  ))}
-                {/* <li
-                  className={classnames(styles.blockItem, styles.blockAdd)}
-                  style={{
-                    display:
-                      isSelected && !isContentBlock && !isDragging
-                        ? undefined
-                        : 'none',
-                  }}
-                >
-                  <AddBlockPanel
-                    type={blockData.type}
-                    parentIdx={idx}
-                    positionIndex={blockData.children.length}
-                  >
-                    <div style={{ color: '#2c6ecb' }}>
-                      <Stack
-                        spacing='extraTight'
-                        alignment='center'
-                        wrap={false}
-                      >
-                        <div style={{ width: (indent + 1) * 18 }} />
-                        <IconFont iconName='icon-add-cycle' size={12} />
+                <div style={{ color: '#2c6ecb' }}>
+                  <Stack spacing='extraTight' alignment='center' wrap={false}>
+                    <div style={{ width: (indent + 1) * 18 }} />
+                    <IconFont iconName='icon-add-cycle' size={12} />
 
-                        <TextStyle size='smallest'>Add block</TextStyle>
-                      </Stack>
-                    </div>
-                  </AddBlockPanel>
-                </li> */}
-              </ul>
-            )}
-          </Droppable>
-        </DragDropContext>
+                    <TextStyle size='smallest'>Add block</TextStyle>
+                  </Stack>
+                </div>
+              </AddBlockPanel>
+            </li> */}
+          </ul>
+        )}
       </li>
     </>
   );

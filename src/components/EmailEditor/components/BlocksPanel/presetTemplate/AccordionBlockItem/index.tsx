@@ -1,4 +1,4 @@
-import { BlockAvatarWrapper } from '@/components/core/wrapper/BlockAvatarWrapper';
+import { BlockMaskWrapper } from '@/components/core/wrapper/BlockMaskWrapper';
 import { ShadowDom } from '@/components/UI/ShadowDom';
 import { Stack } from '@/components/UI/Stack';
 import { BasicType } from '@/constants';
@@ -124,7 +124,7 @@ export function AccordionBlockItem() {
       <Stack vertical>
         {list.map((item, index) => {
           return (
-            <BlockAvatarWrapper
+            <BlockMaskWrapper
               key={index}
               type={BasicType.ACCORDION}
               payload={item.payload}
@@ -135,7 +135,7 @@ export function AccordionBlockItem() {
                   <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 2 }} />
                 </div>
               </ShadowDom>
-            </BlockAvatarWrapper>
+            </BlockMaskWrapper>
           );
         })}
       </Stack>

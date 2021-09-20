@@ -18,6 +18,7 @@ export type IAccordionTitle = IBlockData<
 export const AccordionTitle: IBlock = createBlock({
   name: 'Accordion title',
   type: BasicType.ACCORDION_TITLE,
+  description: '',
   Panel,
   create: (payload) => {
     const defaultData: IAccordionTitle = {

@@ -13,7 +13,6 @@ export function LineHeight() {
           <TextField
             label='Line height'
             name={`${focusIdx}.attributes.line-height`}
-            inline
             quickchange
           />
         </Stack.Item>

@@ -43,10 +43,9 @@ export function BorderStyle() {
   return useMemo(() => {
     return (
       <SelectField
-        label='Border style'
+        label='Style'
         name={`${focusIdx}.attributes.border-style`}
         options={borderStyleOptions}
-        inline
       />
     );
   }, [focusIdx]);

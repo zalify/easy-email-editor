@@ -1,4 +1,4 @@
-import { BlockAvatarWrapper } from '@/components/core/wrapper/BlockAvatarWrapper';
+import { BlockMaskWrapper } from '@/components/core/wrapper/BlockMaskWrapper';
 import { ShadowDom } from '@/components/UI/ShadowDom';
 import { Stack } from '@/components/UI/Stack';
 import { BasicType } from '@/constants';
@@ -45,7 +45,7 @@ export function CarouselBlockItem() {
       <Stack vertical>
         {list.map((item, index) => {
           return (
-            <BlockAvatarWrapper
+            <BlockMaskWrapper
               key={index}
               type={BasicType.CAROUSEL}
               payload={item.payload}
@@ -56,7 +56,7 @@ export function CarouselBlockItem() {
                   <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 2 }} />
                 </div>
               </ShadowDom>
-            </BlockAvatarWrapper>
+            </BlockMaskWrapper>
           );
         })}
       </Stack>

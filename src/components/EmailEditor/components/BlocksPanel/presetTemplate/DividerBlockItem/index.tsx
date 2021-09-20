@@ -1,10 +1,10 @@
 import { IDivider } from '@/components/core/blocks/basic/Divider';
 import { ISpacer } from '@/components/core/blocks/basic/Spacer';
-import { BlockAvatarWrapper } from '@/components/core/wrapper/BlockAvatarWrapper';
+import { BlockMaskWrapper } from '@/components/core/wrapper/BlockMaskWrapper';
 import { Stack } from '@/components/UI/Stack';
 import { TextStyle } from '@/components/UI/TextStyle';
 import { BasicType } from '@/constants';
-import { RecursivePartial } from 'easy-email-editor';
+import { RecursivePartial } from '@/typings';
 import React from 'react';
 
 const dividerList = [
@@ -33,16 +33,18 @@ export function DividerBlockItem() {
         <Stack.Item />
         {dividerList.map((item, index) => {
           return (
-            <Stack key={index} alignment='center'>
-              <Stack.Item fill>
-                <BlockAvatarWrapper
-                  type={BasicType.DIVIDER}
-                  payload={
-                    {
-                      attributes: { ...item, padding: '10px 0px' },
-                    } as RecursivePartial<IDivider>
-                  }
-                >
+            <BlockMaskWrapper
+              key={index}
+              type={BasicType.DIVIDER}
+              payload={
+                {
+                  attributes: { ...item, padding: '10px 0px' },
+                } as RecursivePartial<IDivider>
+              }
+            >
+              <Stack alignment='center'>
+                <Stack.Item fill>
+
                   <div
                     style={{
                       backgroundColor: '#fff',
@@ -59,10 +61,11 @@ export function DividerBlockItem() {
                       }}
                     />
                   </div>
-                </BlockAvatarWrapper>
-              </Stack.Item>
-              <TextStyle>{item['border-style']}</TextStyle>
-            </Stack>
+
+                </Stack.Item>
+                <TextStyle>{item['border-style']}</TextStyle>
+              </Stack>
+            </BlockMaskWrapper>
           );
         })}
       </Stack>

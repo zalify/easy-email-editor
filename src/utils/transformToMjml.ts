@@ -17,17 +17,17 @@ import { classnames } from './classnames';
 
 export type TransformToMjmlOption =
   | {
-      data: IBlockData;
-      idx: string | null; // current idx
-      context: IBlockData;
-      mode: 'testing';
-    }
+    data: IBlockData;
+    idx: string | null; // current idx
+    context: IBlockData;
+    mode: 'testing';
+  }
   | {
-      idx?: string | null; // current idx, default page idx
-      data: IBlockData;
-      context: IBlockData;
-      mode: 'production';
-    };
+    idx?: string | null; // current idx, default page idx
+    data: IBlockData;
+    context: IBlockData;
+    mode: 'production';
+  };
 
 export function transformToMjml(options: TransformToMjmlOption): string {
   const {
@@ -118,16 +118,14 @@ export function transformToMjml(options: TransformToMjmlOption): string {
         ? `<mj-raw>
             <meta name="viewport" />
            </mj-raw>
-           <mj-style inline="inline">.mjml-body { width: ${
-             data.attributes.width || 600
-           }px; margin: 0px auto; }</mj-style>`
+           <mj-style inline="inline">.mjml-body { width: ${data.attributes.width || 600
+        }px; margin: 0px auto; }</mj-style>`
         : '';
       const styles =
         value.headStyles
           ?.map(
             (style) =>
-              `<mj-style ${style.inline ? 'inline="inline"' : ''}>${
-                style.content
+              `<mj-style ${style.inline ? 'inline="inline"' : ''}>${style.content
               }</mj-style>`
           )
           .join('\n') || '';
@@ -141,29 +139,34 @@ export function transformToMjml(options: TransformToMjmlOption): string {
               ${breakpoint}
             <mj-attributes>
               ${value.headAttributes}
-              ${
-                value['font-family']
-                  ? `<mj-all font-family="${value['font-family']}" />`
-                  : ''
-              }
-              ${
-                value['text-color']
-                  ? `<mj-text color="${value['text-color']}" />`
-                  : ''
-              }
-              ${
-                value['content-background-color']
-                  ? `<mj-wrapper background-color="${value['content-background-color']}" />
+              ${value['font-family']
+          ? `<mj-all font-family="${value['font-family']}" />`
+          : ''
+        }
+              ${value['font-size']
+          ? `<mj-text font-size="${value['font-size']}" />`
+          : ''
+        }
+              ${value['text-color']
+          ? `<mj-text color="${value['text-color']}" />`
+          : ''
+        }
+              ${value['line-height']
+          ? `<mj-text line-height="${value['line-height']}" />`
+          : ''
+        }
+              ${value['content-background-color']
+          ? `<mj-wrapper background-color="${value['content-background-color']}" />
                      <mj-section background-color="${value['content-background-color']}" />
                     `
-                  : ''
-              }
+          : ''
+        }
               ${value.fonts
-                ?.filter(Boolean)
-                .map(
-                  (item) =>
-                    `<mj-font name="${item.name}" href="${item.href}" />`
-                )}
+          ?.filter(Boolean)
+          .map(
+            (item) =>
+              `<mj-font name="${item.name}" href="${item.href}" />`
+          )}
             </mj-attributes>
           </mj-head>
           <mj-body ${attributeStr}>
@@ -183,13 +186,16 @@ export function transformToMjml(options: TransformToMjmlOption): string {
                ${children || `<mj-column>${placeholder}</mj-column>`}
               </mj-section>
             `;
+    case BasicType.GROUP:
+      return `
+              <mj-group ${attributeStr}>
+               ${children || `<mj-column>${placeholder}</mj-column>`}
+              </mj-group>
+            `;
     case BasicType.WRAPPER:
       return `
               <mj-wrapper ${attributeStr}>
-               ${
-                 children ||
-                 `<mj-section><mj-column>${placeholder}</mj-column></mj-section>`
-               }
+               ${children || `<mj-section><mj-column>${placeholder}</mj-column></mj-section>`}
               </mj-wrapper>
             `;
     case BasicType.CAROUSEL:
@@ -260,7 +266,7 @@ export function renderPlaceholder(type: BlockType) {
     text = 'Drop a Wrapper block here';
   } else if (type === BasicType.WRAPPER) {
     text = 'Drop a Section block here';
-  } else if (type === BasicType.SECTION) {
+  } else if (type === BasicType.SECTION || type === BasicType.GROUP) {
     text = 'Drop a Column block here';
   } else if (type === BasicType.COLUMN) {
     text = 'Drop a content block here';
@@ -290,23 +296,25 @@ export function generaMjmlMetaData(data: IPage) {
     'content-background-color',
     'text-color',
     'font-family',
+    'font-size',
+    'line-height',
     'user-style',
     'responsive',
   ];
   return `
     <mj-html-attributes>
       ${attributes
-        .filter((key) => values[key] !== undefined)
-        .map((key) => {
-          const isMultipleAttributes = isObject(values[key]);
-          const value = isMultipleAttributes
-            ? Object.keys(values[key])
-                .map((childKey) => `${childKey}="${values[key][childKey]}"`)
-                .join(' ')
-            : `${key}="${values[key]}"`;
-          return `<mj-html-attribute class="easy-email" multiple-attributes="${isMultipleAttributes}" attribute-name="${key}" ${value}></mj-html-attribute>`;
-        })
-        .join('\n')}
+      .filter((key) => values[key] !== undefined)
+      .map((key) => {
+        const isMultipleAttributes = isObject(values[key]);
+        const value = isMultipleAttributes
+          ? Object.keys(values[key])
+            .map((childKey) => `${childKey}="${values[key][childKey]}"`)
+            .join(' ')
+          : `${key}="${values[key]}"`;
+        return `<mj-html-attribute class="easy-email" multiple-attributes="${isMultipleAttributes}" attribute-name="${key}" ${value}></mj-html-attribute>`;
+      })
+      .join('\n')}
 
     </mj-html-attributes>
   `;

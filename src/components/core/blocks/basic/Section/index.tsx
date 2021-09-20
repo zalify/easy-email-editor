@@ -4,6 +4,9 @@ import { BasicType } from '@/constants';
 import { CSSProperties } from 'react';
 import { createBlock } from '@/utils/createBlock';
 import { merge } from 'lodash';
+import React from 'react';
+import { Stack } from '@/components/UI/Stack';
+import { TextStyle } from '@/components/UI/TextStyle';
 export type ISection = IBlockData<
   {
     'background-color'?: string;
@@ -27,6 +30,18 @@ export type ISection = IBlockData<
 export const Section = createBlock<ISection>({
   name: 'Section',
   type: BasicType.SECTION,
+  description: (
+    <Stack vertical spacing="none">
+      <TextStyle>
+        Sections are intended to be used as rows within your
+        email. They will be used to structure the layout.
+      </TextStyle>
+      <TextStyle>
+        Sections cannot nest in sections. Columns can nest in
+        sections; all content must be in a column.
+      </TextStyle>
+    </Stack>
+  ),
   Panel,
   create: (payload) => {
     const defaultData: ISection = {

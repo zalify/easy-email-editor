@@ -1,16 +1,12 @@
-import { BlocksMap } from '@/components/core/blocks';
 import { IconFont } from '@/components/IconFont';
 import { Stack } from '@/components/UI/Stack';
 import { TextStyle } from '@/components/UI/TextStyle';
 import { BlockType } from '@/constants';
 import { useBlock } from '@/hooks/useBlock';
-import { getChildIdx } from '@/utils/block';
-import { findBlockNodeByIdx } from '@/utils/findBlockNodeByIdx';
+import { getValidChildBlocks } from '@/utils/block';
 import { getIconNameByBlockType } from '@/utils/getIconNameByBlockType';
 import { AutoComplete } from 'antd';
 import React, { useMemo } from 'react';
-
-const blocks = BlocksMap.getBlocks();
 
 export const AddBlockPanel: React.FC<{
   type: BlockType;
@@ -19,7 +15,7 @@ export const AddBlockPanel: React.FC<{
 }> = (props) => {
   const { addBlock } = useBlock();
   const validChildBlocks = useMemo(() => {
-    return blocks.filter((item) => item.validParentType.includes(props.type));
+    return getValidChildBlocks(props.type);
   }, [props.type]);
 
   const onAdd = (selectType: string) => {
@@ -28,16 +24,6 @@ export const AddBlockPanel: React.FC<{
       parentIdx: props.parentIdx,
       positionIndex: props.positionIndex,
     });
-
-    setTimeout(() => {
-      const editBlock = findBlockNodeByIdx(
-        getChildIdx(props.parentIdx, props.positionIndex)
-      );
-      editBlock?.scrollIntoView({
-        block: 'center',
-        behavior: 'smooth',
-      });
-    }, 50);
   };
 
   return (

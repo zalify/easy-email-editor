@@ -4,11 +4,12 @@ import { BasicType } from '@/constants';
 import { createBlock } from '@/utils/createBlock';
 import { merge } from 'lodash';
 
-export type ITable = IBlockData<{}, { content: string }>;
+export type ITable = IBlockData<{}, { content: string; }>;
 
 export const Table = createBlock<ITable>({
   name: 'Table',
   type: BasicType.TABLE,
+  description: '',
   Panel,
   create: (payload) => {
     const defaultData: ITable = {

@@ -8,18 +8,16 @@ export function Border() {
 
   return useMemo(() => {
     return (
-      <Stack vertical>
+      <Stack vertical spacing="tight">
         <TextField
           label='Border'
           name={`${focusIdx}.attributes.border`}
           inline
-          quickchange
         />
         <TextField
           label='Border radius'
           name={`${focusIdx}.attributes.border-radius`}
           inline
-          quickchange
         />
       </Stack>
     );

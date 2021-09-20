@@ -1,4 +1,4 @@
-import { BlockAvatarWrapper } from '@/components/core/wrapper/BlockAvatarWrapper';
+import { BlockMaskWrapper } from '@/components/core/wrapper/BlockMaskWrapper';
 import { Picture } from '@/components/UI/Picture';
 import { ShadowDom } from '@/components/UI/ShadowDom';
 import { Stack } from '@/components/UI/Stack';
@@ -11,7 +11,7 @@ export function HeroBlockItem() {
       <Stack vertical>
         {heroList.map((item, index) => {
           return (
-            <BlockAvatarWrapper
+            <BlockMaskWrapper
               key={index}
               type={BasicType.HERO}
               payload={item.payload}
@@ -22,7 +22,7 @@ export function HeroBlockItem() {
                   <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 2 }} />
                 </div>
               </ShadowDom>
-            </BlockAvatarWrapper>
+            </BlockMaskWrapper>
           );
         })}
       </Stack>

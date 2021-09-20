@@ -42,7 +42,7 @@ export default function enhancer<P>(
       distribution,
       validate,
       required,
-      size = 'small',
+      size = 'normal',
       wrapper = true,
       ...rest
     } = props;

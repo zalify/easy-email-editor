@@ -23,7 +23,6 @@ export function MjmlDomRender() {
   const { pageData: content } = useEditorContext();
   const [pageData, setPageData] = useState<IPage | null>(null);
   const [ref, setRef] = useState<HTMLDivElement | null>(null);
-  const { focusIdx } = useFocusIdx();
   const { dragEnabled } = useDraggable();
   const { setDataTransfer } = useDataTransfer();
   const { dashed } = useContext(EditorPropsContext);
@@ -88,11 +87,12 @@ export function MjmlDomRender() {
         data-dashed={dashed}
         ref={setRef}
         style={{
-          height: '100%',
+
           width: pageMaxWidth,
           padding: '40px 0px',
           margin: 'auto',
           outline: 'none',
+          position: 'relative'
         }}
         role='tabpanel'
         tabIndex={0}

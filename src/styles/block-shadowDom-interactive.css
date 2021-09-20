@@ -2,15 +2,6 @@
   display: block !important;
 }
 
-.email-block {
-  position: relative;
-  z-index: 1;
-}
-
-.block-selected {
-  z-index: 2;
-}
-
 [data-dashed="true"] .email-block {
   outline: 1px dashed rgba(170, 170, 170, 0.7);
   outline-offset: -2px;
@@ -37,7 +28,18 @@
   cursor: text;
 }
 
-
+.block-selected,
+.block-hover,
 .block-dragover {
-  z-index: 10;
+  position: relative;
+  z-index: 1;
+}
+
+.block-selected .email-block {
+  z-index: 2;
+}
+.block-hover .email-block,
+.block-dragover .email-block {
+  position: relative;
+  z-index: 3;
 }
