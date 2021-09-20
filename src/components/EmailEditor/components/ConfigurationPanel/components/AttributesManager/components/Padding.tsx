@@ -1,61 +1,50 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { TextField } from '@/components/core/Form';
 import { Stack } from '@/components/UI/Stack';
 import { useBlock } from '@/hooks/useBlock';
 import { TextStyle } from '@/components/UI/TextStyle';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
+import { createBlockItem } from '@/utils/createBlockItem';
 
 export interface PaddingProps {
   title?: string;
-  attributeName?: string;
+  attributeName?: 'padding' | 'inner-padding';
 }
 export function Padding(props: PaddingProps = {}) {
   const { title = 'Padding', attributeName = 'padding' } = props;
-  const { focusBlock, setValueByIdx } = useBlock();
+  const { focusBlock } = useBlock();
   const { focusIdx } = useFocusIdx();
-  const [count, setCount] = useState(0);
+
+  const defaultConfig = useMemo(() => focusBlock && createBlockItem(focusBlock.type), [focusBlock]);
 
   const getVal = useCallback(
     (index: number) => {
       return () => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        return focusBlock?.attributes[attributeName]?.split(' ')[index];
+        return focusBlock?.attributes[attributeName]?.split(' ')[index] || (defaultConfig?.attributes[attributeName])?.split(' ')[index];
       };
     },
-    [attributeName, focusBlock?.attributes]
+    [attributeName, defaultConfig?.attributes, focusBlock?.attributes]
   );
 
   const setVal = useCallback(
     (index: number) => {
       return (newVal: string) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        const vals: string[] = focusBlock?.attributes[attributeName]?.split(' ') || [];
-        vals[index] = newVal || '0px';
+        if (newVal === '') {
+          newVal = '0px';
+        }
+        const vals: string[] = [getVal(0)(), getVal(1)(), getVal(2)(), getVal(3)()];
+        vals[index] = newVal;
         return vals.join(' ');
       };
     },
-    [attributeName, focusBlock?.attributes]
+    [getVal]
   );
-
-  useEffect(() => {
-    if (!focusBlock) return;
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    const paddins: string[] = focusBlock.attributes[attributeName]?.split(' ') || [];
-    if (paddins.length === 2) {
-      paddins[2] = paddins[0];
-      paddins[3] = paddins[1];
-      focusBlock.attributes[attributeName] = paddins.join(' ');
-      focusBlock.attributes = { ...focusBlock.attributes };
-      setValueByIdx(focusIdx, { ...focusBlock });
-      setCount(c => c + 1);
-    }
-
-  }, [attributeName, focusBlock, focusBlock?.attributes, focusIdx, setValueByIdx]);
 
   return useMemo(() => {
     return (
-      <Stack key={count} vertical spacing='extraTight'>
-        <TextStyle size='large'>{title}</TextStyle>
+      <Stack vertical spacing='extraTight'>
+        <TextStyle>{title}</TextStyle>
         <Stack wrap={false}>
           <Stack.Item fill>
             <TextField
@@ -103,5 +92,5 @@ export function Padding(props: PaddingProps = {}) {
         </Stack>
       </Stack>
     );
-  }, [attributeName, count, focusIdx, getVal, setVal, title]);
+  }, [attributeName, focusIdx, getVal, setVal, title]);
 }
