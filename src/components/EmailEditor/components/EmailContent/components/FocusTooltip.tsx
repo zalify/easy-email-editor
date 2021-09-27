@@ -7,7 +7,7 @@ import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { ToolsBar } from './Toolsbar';
 import { awaitForElement } from '@/utils/awaitForElement';
 import { useHoverIdx } from '@/hooks/useHoverIdx';
-import { styleZIndex } from 'easy-email-editor';
+import { BLOCK_SELECTED_CLASSNAME, styleZIndex } from '@/constants';
 
 export function FocusTooltip() {
   const [blockNode, setBlockNode] = useState<HTMLDivElement | null>(null);
@@ -26,11 +26,20 @@ export function FocusTooltip() {
     };
   }, [focusIdx]);
 
+  useEffect(() => {
+    if (blockNode) {
+      blockNode.classList.add(BLOCK_SELECTED_CLASSNAME);
+      return () => {
+        blockNode.classList.remove(BLOCK_SELECTED_CLASSNAME);
+      };
+    }
+  }, [blockNode]);
+
   const block = useMemo(() => {
     return blockNode
       ? BlocksMap.findBlockByType(
-        getNodeTypeFromClassName(blockNode.classList)!
-      )
+          getNodeTypeFromClassName(blockNode.classList)!
+        )
       : null;
   }, [blockNode]);
 
@@ -39,15 +48,16 @@ export function FocusTooltip() {
   return (
     <>
       {createPortal(
-        <div style={{
-          position: 'absolute',
-          width: '100%',
-          height: '100%',
-          pointerEvents: 'none',
-          left: 0,
-          top: 0,
-          zIndex: styleZIndex.SELECT_BLOCK_TOOLTIP,
-        }}
+        <div
+          style={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            pointerEvents: 'none',
+            left: 0,
+            top: 0,
+            zIndex: styleZIndex.SELECT_BLOCK_TOOLTIP,
+          }}
         >
           <ToolsBar block={block} />
           {/* outline */}
@@ -67,7 +77,6 @@ export function FocusTooltip() {
         </div>,
         blockNode
       )}
-
     </>
   );
 }

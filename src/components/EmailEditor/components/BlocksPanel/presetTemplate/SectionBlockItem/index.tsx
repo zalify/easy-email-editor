@@ -13,13 +13,22 @@ export function SectionBlockItem() {
           return (
             <BlockMaskWrapper
               key={index}
-              type={BasicType.WRAPPER}
+              type={BasicType.SECTION}
               payload={item.payload}
             >
               <ShadowDom>
                 <div style={{ position: 'relative' }}>
                   <Picture src={item.thumbnail} />
-                  <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 2 }} />
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                      zIndex: 2,
+                    }}
+                  />
                 </div>
               </ShadowDom>
             </BlockMaskWrapper>
@@ -32,235 +41,216 @@ export function SectionBlockItem() {
 
 const list = [
   {
-    thumbnail: 'https://assets.maocanhua.cn/284f98e2-9fda-41f3-ac34-33a62da79a98-image.png',
-    payload: {}
+    thumbnail:
+      'https://assets.maocanhua.cn/284f98e2-9fda-41f3-ac34-33a62da79a98-image.png',
+    payload: {},
   },
   {
     thumbnail: 'https://assets.maocanhua.cn/Flkau7Ob6TlzE9AxAkTLQ4aC6l5_',
     payload: {
-      'type': 'section',
-      'data': {
-        'value': {
-          'noWrap': false
-        }
+      type: 'section',
+      data: {
+        value: {
+          noWrap: false,
+        },
       },
-      'attributes': {
-        'padding': '20px 0px 20px 0px',
+      attributes: {
+        padding: '20px 0px 20px 0px',
         'background-repeat': 'repeat',
         'background-size': 'auto',
         'background-position': 'top center',
-        'border': 'none',
-        'direction': 'ltr',
-        'text-align': 'center'
+        border: 'none',
+        direction: 'ltr',
+        'text-align': 'center',
       },
-      'children': [
+      children: [
         {
-          'type': 'column',
-          'data': {
-            'value': {
-
-            }
+          type: 'column',
+          data: {
+            value: {},
           },
-          'attributes': {
-            'padding': '0px 0px 0px 0px',
-            'border': 'none',
-            'vertical-align': 'top'
+          attributes: {
+            padding: '0px 0px 0px 0px',
+            border: 'none',
+            'vertical-align': 'top',
           },
-          'children': []
-        }
-      ]
-    }
+          children: [],
+        },
+      ],
+    },
   },
   {
     thumbnail: 'https://assets.maocanhua.cn/Fhs9SLF6TcjwGZ3JZMVL6iuzhvuw',
     payload: {
-      'type': 'section',
-      'data': {
-        'value': {
-          'noWrap': false
-        }
+      type: 'section',
+      data: {
+        value: {
+          noWrap: false,
+        },
       },
-      'attributes': {
-        'padding': '20px 0px 20px 0px',
+      attributes: {
+        padding: '20px 0px 20px 0px',
         'background-repeat': 'repeat',
         'background-size': 'auto',
         'background-position': 'top center',
-        'border': 'none',
-        'direction': 'ltr',
-        'text-align': 'center'
+        border: 'none',
+        direction: 'ltr',
+        'text-align': 'center',
       },
-      'children': [
+      children: [
         {
-          'type': 'column',
-          'data': {
-            'value': {
-
-            }
+          type: 'column',
+          data: {
+            value: {},
           },
-          'attributes': {
-            'padding': '0px 0px 0px 0px',
-            'border': 'none',
-            'vertical-align': 'top'
+          attributes: {
+            padding: '0px 0px 0px 0px',
+            border: 'none',
+            'vertical-align': 'top',
           },
-          'children': []
+          children: [],
         },
         {
-          'type': 'column',
-          'data': {
-            'value': {
-
-            }
+          type: 'column',
+          data: {
+            value: {},
           },
-          'attributes': {
-            'padding': '0px 0px 0px 0px',
-            'border': 'none',
-            'vertical-align': 'top'
+          attributes: {
+            padding: '0px 0px 0px 0px',
+            border: 'none',
+            'vertical-align': 'top',
           },
-          'children': []
-        }
-      ]
-    }
+          children: [],
+        },
+      ],
+    },
   },
   {
     thumbnail: 'https://assets.maocanhua.cn/Fruky5Aii829hZuLeg5VtR9IwTMP',
     payload: {
-      'type': 'section',
-      'data': {
-        'value': {
-          'noWrap': false
-        }
+      type: 'section',
+      data: {
+        value: {
+          noWrap: false,
+        },
       },
-      'attributes': {
-        'padding': '20px 0px 20px 0px',
+      attributes: {
+        padding: '20px 0px 20px 0px',
         'background-repeat': 'repeat',
         'background-size': 'auto',
         'background-position': 'top center',
-        'border': 'none',
-        'direction': 'ltr',
-        'text-align': 'center'
+        border: 'none',
+        direction: 'ltr',
+        'text-align': 'center',
       },
-      'children': [
+      children: [
         {
-          'type': 'column',
-          'data': {
-            'value': {
-
-            }
+          type: 'column',
+          data: {
+            value: {},
           },
-          'attributes': {
-            'padding': '0px 0px 0px 0px',
-            'border': 'none',
-            'vertical-align': 'top'
+          attributes: {
+            padding: '0px 0px 0px 0px',
+            border: 'none',
+            'vertical-align': 'top',
           },
-          'children': []
+          children: [],
         },
         {
-          'type': 'column',
-          'data': {
-            'value': {
-
-            }
+          type: 'column',
+          data: {
+            value: {},
           },
-          'attributes': {
-            'padding': '0px 0px 0px 0px',
-            'border': 'none',
-            'vertical-align': 'top'
+          attributes: {
+            padding: '0px 0px 0px 0px',
+            border: 'none',
+            'vertical-align': 'top',
           },
-          'children': []
+          children: [],
         },
         {
-          'type': 'column',
-          'data': {
-            'value': {
-
-            }
+          type: 'column',
+          data: {
+            value: {},
           },
-          'attributes': {
-            'padding': '0px 0px 0px 0px',
-            'border': 'none',
-            'vertical-align': 'top'
+          attributes: {
+            padding: '0px 0px 0px 0px',
+            border: 'none',
+            'vertical-align': 'top',
           },
-          'children': []
-        }
-      ]
-    }
+          children: [],
+        },
+      ],
+    },
   },
   {
     thumbnail: 'https://assets.maocanhua.cn/Foz01zhkb0U_LVKi8c4NhBFPqLDe',
     payload: {
-      'type': 'section',
-      'data': {
-        'value': {
-          'noWrap': false
-        }
+      type: 'section',
+      data: {
+        value: {
+          noWrap: false,
+        },
       },
-      'attributes': {
-        'padding': '20px 0px 20px 0px',
+      attributes: {
+        padding: '20px 0px 20px 0px',
         'background-repeat': 'repeat',
         'background-size': 'auto',
         'background-position': 'top center',
-        'border': 'none',
-        'direction': 'ltr',
-        'text-align': 'center'
+        border: 'none',
+        direction: 'ltr',
+        'text-align': 'center',
       },
-      'children': [
+      children: [
         {
-          'type': 'column',
-          'data': {
-            'value': {
-
-            }
+          type: 'column',
+          data: {
+            value: {},
           },
-          'attributes': {
-            'padding': '0px 0px 0px 0px',
-            'border': 'none',
-            'vertical-align': 'top'
+          attributes: {
+            padding: '0px 0px 0px 0px',
+            border: 'none',
+            'vertical-align': 'top',
           },
-          'children': []
+          children: [],
         },
         {
-          'type': 'column',
-          'data': {
-            'value': {
-
-            }
+          type: 'column',
+          data: {
+            value: {},
           },
-          'attributes': {
-            'padding': '0px 0px 0px 0px',
-            'border': 'none',
-            'vertical-align': 'top'
+          attributes: {
+            padding: '0px 0px 0px 0px',
+            border: 'none',
+            'vertical-align': 'top',
           },
-          'children': []
+          children: [],
         },
         {
-          'type': 'column',
-          'data': {
-            'value': {
-
-            }
+          type: 'column',
+          data: {
+            value: {},
           },
-          'attributes': {
-            'padding': '0px 0px 0px 0px',
-            'border': 'none',
-            'vertical-align': 'top'
+          attributes: {
+            padding: '0px 0px 0px 0px',
+            border: 'none',
+            'vertical-align': 'top',
           },
-          'children': []
+          children: [],
         },
         {
-          'type': 'column',
-          'data': {
-            'value': {
-
-            }
+          type: 'column',
+          data: {
+            value: {},
           },
-          'attributes': {
-            'padding': '0px 0px 0px 0px',
-            'border': 'none',
-            'vertical-align': 'top'
+          attributes: {
+            padding: '0px 0px 0px 0px',
+            border: 'none',
+            'vertical-align': 'top',
           },
-          'children': []
-        }
-      ]
-    }
+          children: [],
+        },
+      ],
+    },
   },
 ];

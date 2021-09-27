@@ -26,7 +26,8 @@ import { IconFont } from '@/components/IconFont';
 import { getIconNameByBlockType } from '@/utils/getIconNameByBlockType';
 import { BlocksMap } from '@/components/core/blocks';
 import { BlockSortableWrapper } from '@/components/core/wrapper/BlockSortableWrapper';
-import { useHoverIdx } from 'easy-email-editor';
+import { useHoverIdx } from '@/hooks/useHoverIdx';
+import { findBlockNodeByIdx } from '@/utils/findBlockNodeByIdx';
 
 interface IBlockDataWithId extends IBlockData {
   id: string;
@@ -36,6 +37,17 @@ interface IBlockDataWithId extends IBlockData {
 export function BlockLayerManager() {
   const { pageData } = useEditorContext();
   const { focusIdx } = useFocusIdx();
+
+  useEffect(() => {
+    setTimeout(() => {
+      const block = findBlockNodeByIdx(focusIdx, false);
+      console.log('block-scroll', block);
+      block?.scrollIntoView({
+        block: 'nearest',
+        behavior: 'smooth',
+      });
+    }, 150);
+  }, [focusIdx]);
 
   const list = useMemo(() => {
     return [pageData] as any as IBlockDataWithId[];
@@ -48,7 +60,7 @@ export function BlockLayerManager() {
         <BlockInteractiveStyle isShadowDom={false} />
 
         <BlockSortableWrapper
-          action="move"
+          action='move'
           type={BasicType.PAGE}
           list={list}
           disabled
@@ -299,7 +311,7 @@ const BlockLayerItem = ({
           <ul className={classnames(styles.blockList)}>
             <BlockSortableWrapper
               type={blockData.type}
-              action="move"
+              action='move'
               key={idx}
               idx={idx}
               list={childrenList}

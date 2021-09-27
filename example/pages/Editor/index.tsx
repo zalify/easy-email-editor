@@ -14,7 +14,7 @@ import extraBlocks from '@example/store/extraBlocks';
 import { CollectedBlock } from 'easy-email-editor';
 import { copy } from '@example/util/clipboard';
 import { useEmailModal } from './components/useEmailModal';
-import { WarnAboutUnsavedChanges } from '@example/components/WarnAboutUnsavedChanges';
+import { AutoSaveAndRestoreEmail } from '@example/components/AutoSaveAndRestoreEmail';
 import services from '@example/services';
 import { GithubOutlined } from '@ant-design/icons';
 
@@ -161,7 +161,7 @@ export default function Editor() {
     dispatch(extraBlocks.actions.add(payload));
     message.success('Added to collection!');
   };
-  const onRemoveCollection = ({ id }: { id: string; }) => {
+  const onRemoveCollection = ({ id }: { id: string }) => {
     dispatch(extraBlocks.actions.remove({ id }));
     message.success('Removed from collection.');
   };
@@ -221,7 +221,7 @@ export default function Editor() {
                 }
               />
               <EmailEditor height={'calc(100vh - 85px)'} />
-              <WarnAboutUnsavedChanges />
+              <AutoSaveAndRestoreEmail />
             </>
           );
         }}

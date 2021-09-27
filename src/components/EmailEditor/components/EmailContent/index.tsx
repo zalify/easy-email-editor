@@ -9,7 +9,7 @@ import { useDomScrollHeight } from '@/hooks/useDomScrollHeight';
 import { FocusTooltip } from './components/FocusTooltip';
 import { useHotKeys } from '@/hooks/useHotKeys';
 import { findBlockNodeByIdx } from '@/utils/findBlockNodeByIdx';
-import { useFocusIdx } from 'easy-email-editor';
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 
 export function EmailContent() {
   useHotKeys();

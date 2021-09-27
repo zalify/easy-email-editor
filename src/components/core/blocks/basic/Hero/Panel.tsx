@@ -1,7 +1,11 @@
 import React, { useContext } from 'react';
 import { Stack } from '@/components/UI/Stack';
 import { BackgroundColor } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/BackgroundColor';
-import { ImageUploaderField, RadioGroupField, TextField } from '@/components/core/Form';
+import {
+  ImageUploaderField,
+  RadioGroupField,
+  TextField,
+} from '@/components/core/Form';
 import { Width } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Width';
 import { Height } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Height';
 import { VerticalAlign } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/VerticalAlign';
@@ -27,13 +31,10 @@ export function Panel() {
   const { onUploadImage } = useContext(EditorPropsContext);
 
   return (
-
     <AttributesPanelWrapper>
-
       <Collapse defaultActiveKey={['0', '1', '2']}>
-
-        <Collapse.Panel key="0" header="Dimension">
-          <Stack vertical spacing="tight">
+        <Collapse.Panel key='0' header='Dimension'>
+          <Stack vertical spacing='tight'>
             <RadioGroupField
               label='Mode'
               name={`${focusIdx}.attributes.mode`}
@@ -52,11 +53,14 @@ export function Panel() {
             <Padding />
             <VerticalAlign />
           </Stack>
-
         </Collapse.Panel>
-        <Collapse.Panel key="1" header="Background">
-          <Stack vertical spacing="tight">
-
+        <Collapse.Panel key='1' header='Background'>
+          <Stack vertical spacing='tight'>
+            <TextField
+              label='Background width'
+              name={`${focusIdx}.attributes.background-width`}
+              inline
+            />
             <TextField
               label='Background height'
               name={`${focusIdx}.attributes.background-height`}
@@ -76,11 +80,6 @@ export function Panel() {
             />
 
             <TextField
-              label='Background width'
-              name={`${focusIdx}.attributes.background-width`}
-              inline
-            />
-            <TextField
               label='Border radius'
               name={`${focusIdx}.attributes.border-radius`}
               inline
@@ -90,9 +89,7 @@ export function Panel() {
             <BackgroundColor />
           </Stack>
         </Collapse.Panel>
-
       </Collapse>
-
     </AttributesPanelWrapper>
   );
 }

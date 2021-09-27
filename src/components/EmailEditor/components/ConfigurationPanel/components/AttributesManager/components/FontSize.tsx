@@ -10,6 +10,7 @@ export function FontSize() {
       <TextField
         label='Font size'
         name={`${focusIdx}.attributes.font-size`}
+        quickchange
       />
     );
   }, [focusIdx]);

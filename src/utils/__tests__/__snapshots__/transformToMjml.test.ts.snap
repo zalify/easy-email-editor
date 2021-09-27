@@ -8,6 +8,8 @@ exports[`Test transformToMjml when mode is "production" should render as expecte
     <mj-html-attributes>
       <mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"text-color\\" text-color=\\"#000000\\"></mj-html-attribute>
 <mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"font-family\\" font-family=\\"lucida Grande,Verdana,Microsoft YaHei\\"></mj-html-attribute>
+<mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"font-size\\" font-size=\\"14px\\"></mj-html-attribute>
+<mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"line-height\\" line-height=\\"1.7\\"></mj-html-attribute>
 <mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"responsive\\" responsive=\\"true\\"></mj-html-attribute>
 
     </mj-html-attributes>
@@ -18,7 +20,9 @@ exports[`Test transformToMjml when mode is "production" should render as expecte
             <mj-attributes>
               
               <mj-all font-family=\\"lucida Grande,Verdana,Microsoft YaHei\\" />
+              <mj-text font-size=\\"14px\\" />
               <mj-text color=\\"#000000\\" />
+              <mj-text line-height=\\"1.7\\" />
               
               
             </mj-attributes>
@@ -29,7 +33,7 @@ exports[`Test transformToMjml when mode is "production" should render as expecte
                
               <mj-column padding=\\"0px 0px 0px 0px\\" border=\\"none\\" vertical-align=\\"top\\">
                
-          <mj-text font-size=\\"13px\\" padding=\\"10px 25px 10px 25px\\" line-height=\\"1\\" align=\\"left\\">
+          <mj-text padding=\\"10px 25px 10px 25px\\" align=\\"left\\">
            Make it easy for everyone to compose emails!
           </mj-text>
         
@@ -50,6 +54,8 @@ exports[`Test transformToMjml when mode is "testing" should render as expected 1
     <mj-html-attributes>
       <mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"text-color\\" text-color=\\"#000000\\"></mj-html-attribute>
 <mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"font-family\\" font-family=\\"lucida Grande,Verdana,Microsoft YaHei\\"></mj-html-attribute>
+<mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"font-size\\" font-size=\\"14px\\"></mj-html-attribute>
+<mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"line-height\\" line-height=\\"1.7\\"></mj-html-attribute>
 <mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"responsive\\" responsive=\\"true\\"></mj-html-attribute>
 
     </mj-html-attributes>
@@ -60,7 +66,9 @@ exports[`Test transformToMjml when mode is "testing" should render as expected 1
             <mj-attributes>
               
               <mj-all font-family=\\"lucida Grande,Verdana,Microsoft YaHei\\" />
+              <mj-text font-size=\\"14px\\" />
               <mj-text color=\\"#000000\\" />
+              <mj-text line-height=\\"1.7\\" />
               
               
             </mj-attributes>
@@ -71,7 +79,7 @@ exports[`Test transformToMjml when mode is "testing" should render as expected 1
                
               <mj-column padding=\\"0px 0px 0px 0px\\" border=\\"none\\" vertical-align=\\"top\\" css-class=\\"email-block node-idx-content.children.[0].children.[0] node-type-column\\">
                
-          <mj-text font-size=\\"13px\\" padding=\\"10px 25px 10px 25px\\" line-height=\\"1\\" align=\\"left\\" css-class=\\"email-block node-idx-content.children.[0].children.[0].children.[0] node-type-text\\">
+          <mj-text padding=\\"10px 25px 10px 25px\\" align=\\"left\\" css-class=\\"email-block node-idx-content.children.[0].children.[0].children.[0] node-type-text\\">
            Make it easy for everyone to compose emails!
           </mj-text>
         

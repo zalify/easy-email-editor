@@ -9,9 +9,9 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { presetTemplate } from './presetTemplate';
 import styles from './index.module.scss';
 import { Help } from '@/components/UI/Help';
-import { useHoverIdx } from 'easy-email-editor';
 import { createPortal } from 'react-dom';
 import { IconFont } from '@/components/IconFont';
+import { useHoverIdx } from '@/hooks/useHoverIdx';
 
 const contentBlocks = [
   BasicType.TEXT,
