@@ -28,6 +28,7 @@ import { BlocksMap } from '@/components/core/blocks';
 import { BlockSortableWrapper } from '@/components/core/wrapper/BlockSortableWrapper';
 import { useHoverIdx } from '@/hooks/useHoverIdx';
 import { findBlockNodeByIdx } from '@/utils/findBlockNodeByIdx';
+import { scrollFocusBlockIntoView } from '@/utils/scrollFocusBlockIntoView';
 
 interface IBlockDataWithId extends IBlockData {
   id: string;
@@ -37,17 +38,6 @@ interface IBlockDataWithId extends IBlockData {
 export function BlockLayerManager() {
   const { pageData } = useEditorContext();
   const { focusIdx } = useFocusIdx();
-
-  useEffect(() => {
-    setTimeout(() => {
-      const block = findBlockNodeByIdx(focusIdx, false);
-      console.log('block-scroll', block);
-      block?.scrollIntoView({
-        block: 'nearest',
-        behavior: 'smooth',
-      });
-    }, 150);
-  }, [focusIdx]);
 
   const list = useMemo(() => {
     return [pageData] as any as IBlockDataWithId[];
@@ -106,7 +96,7 @@ const BlockLayerItem = ({
   const noChild = blockData.children.length === 0;
   const isPageBlock = idx === getPageIdx();
   const [isDragging, setIsDragging] = useState(false);
-  const { setHoverIdx } = useHoverIdx();
+  const { setHoverIdx, hoverIdx } = useHoverIdx();
 
   useEffect(() => {
     if (isPageBlock) {
@@ -124,6 +114,7 @@ const BlockLayerItem = ({
 
   const onSelect = useCallback(() => {
     setFocusIdx(idx);
+    scrollFocusBlockIntoView({ idx, inShadowDom: true });
   }, [idx, setFocusIdx]);
 
   const onStart = useCallback(() => {
@@ -179,6 +170,7 @@ const BlockLayerItem = ({
   }, [blockData.type, collapsed, isPageBlock, noChild, onToggle, visible]);
 
   const isSelected = idx === focusIdx;
+  const isHover = idx === hoverIdx;
 
   const childPlaceHolder = useMemo(() => {
     const validChildBlock = getValidChildBlocks(blockData.type)[0];
@@ -219,7 +211,8 @@ const BlockLayerItem = ({
         onClick={onSelect}
         className={classnames(
           styles.listItemContentWrapper,
-          isSelected && styles.listItemSelected
+          isSelected && styles.listItemSelected,
+          isHover && styles.listItemHover
         )}
       >
         <Stack.Item fill>

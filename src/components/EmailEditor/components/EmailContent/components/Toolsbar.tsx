@@ -17,7 +17,7 @@ import { IBlock } from '@/typings';
 const columnBlock = BlocksMap.findBlockByType(BasicType.COLUMN);
 const sectionBlock = BlocksMap.findBlockByType(BasicType.SECTION);
 
-export function ToolsBar({ block }: { block: IBlock }) {
+export function ToolsBar({ block }: { block: IBlock; }) {
   const [modalVisible, setModalVisible] = useState(false);
   const { onAddCollection } = useContext(EditorPropsContext);
   const {
@@ -92,7 +92,7 @@ export function ToolsBar({ block }: { block: IBlock }) {
     }
   };
 
-  const onSubmit = (values: { label: string; helpText: string }) => {
+  const onSubmit = (values: { label: string; helpText: string; }) => {
     if (!values.label) return;
     const uuid = uuidv4();
     onAddCollection?.({
@@ -125,7 +125,7 @@ export function ToolsBar({ block }: { block: IBlock }) {
             color: '#ffffff',
             transform: 'translateY(-100%)',
             display: 'flex',
-            justifyContent: 'space-between',
+            // justifyContent: 'space-between',
           }}
         >
           <div

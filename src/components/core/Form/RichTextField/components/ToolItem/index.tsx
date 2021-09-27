@@ -9,7 +9,12 @@ export const ToolItem: React.FC<{
 }> = (props) => {
   return (
     // <Tooltip placement="top" title={props.title} trigger={props.trigger}>
-    <Button title={props.title} size='small' icon={props.icon} onClick={props.onClick} />
+    <Button
+      title={props.title}
+      size='small'
+      icon={props.icon}
+      onClick={props.onClick}
+    />
     // </Tooltip>
   );
 };

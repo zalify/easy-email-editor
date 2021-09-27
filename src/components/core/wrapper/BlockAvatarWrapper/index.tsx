@@ -25,8 +25,6 @@ export const BlockAvatarWrapper: React.FC<BlockAvatarWrapperProps> = (
 
   const onDragStart = useCallback(
     (ev: React.DragEvent) => {
-      console.log('ev', ev);
-
       setIsDragging(true);
       setDataTransfer({
         type: type as BlockType,
@@ -50,7 +48,6 @@ export const BlockAvatarWrapper: React.FC<BlockAvatarWrapperProps> = (
 
     ele.addEventListener('dragend', onDragEnd);
     return () => {
-
       ele.removeEventListener('dragend', onDragEnd);
     };
   }, [onDragEnd]);

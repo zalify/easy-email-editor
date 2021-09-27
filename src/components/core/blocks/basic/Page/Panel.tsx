@@ -13,6 +13,7 @@ import { AddFont } from '@/components/core/Form/AddFont';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { AttributesPanelWrapper } from '@/components/core/wrapper/AttributesPanelWrapper';
 import { Collapse } from 'antd';
+import { FontFamily } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/FontFamliy';
 
 export function Panel() {
   const { focusIdx } = useFocusIdx();
@@ -22,24 +23,23 @@ export function Panel() {
     <AttributesPanelWrapper style={{ padding: 0 }}>
       <Stack.Item fill>
         <Collapse defaultActiveKey={['0', '1']}>
-          <Collapse.Panel key="0" header="Email Setting">
-            <Stack vertical spacing="tight">
+          <Collapse.Panel key='0' header='Email Setting'>
+            <Stack vertical spacing='tight'>
               <TextField label='Subject' name={'subject'} inline />
               <TextField label='SubTitle' name={'subTitle'} inline />
               <TextField
                 label='Width'
-                type='number'
                 name={`${focusIdx}.attributes.width`}
                 inline
               />
               <Stack alignment='center'>
                 <TextField
-                  label={(
+                  label={
                     <Stack spacing='extraTight'>
                       <TextStyle>Breakpoint</TextStyle>
                       <Help title='Allows you to control on which breakpoint the layout should go desktop/mobile.' />
                     </Stack>
-                  )}
+                  }
                   quickchange
                   name={`${focusIdx}.data.value.breakpoint`}
                   inline
@@ -52,33 +52,36 @@ export function Panel() {
                 checkedChildren='True'
                 unCheckedChildren='False'
               />
-
             </Stack>
           </Collapse.Panel>
-          <Collapse.Panel key="1" header="Theme Setting">
-            <Stack vertical spacing="tight">
-              <Stack wrap={false}>
+          <Collapse.Panel key='1' header='Theme Setting'>
+            <Stack vertical spacing='tight'>
+              <Stack>
+                <Stack.Item fill>
+                  <FontFamily />
+                </Stack.Item>
                 <Stack.Item fill>
                   <TextField
-                    label="Font size"
+                    label='Font size'
                     quickchange
                     name={`${focusIdx}.data.value.font-size`}
                   />
                 </Stack.Item>
+              </Stack>
+              <Stack>
                 <Stack.Item fill>
-                  <TextField
-                    label="Line height"
-                    quickchange
-                    name={`${focusIdx}.data.value.line-height`}
-                  />
-                </Stack.Item>
-                <Stack.Item>
                   <ColorPickerField
                     label='Text color'
                     name={`${focusIdx}.data.value.text-color`}
                   />
                 </Stack.Item>
-
+                <Stack.Item fill>
+                  <TextField
+                    label='Line height'
+                    quickchange
+                    name={`${focusIdx}.data.value.line-height`}
+                  />
+                </Stack.Item>
               </Stack>
 
               <Stack wrap={false}>
@@ -87,7 +90,7 @@ export function Panel() {
                   name={`${focusIdx}.attributes.background-color`}
                 />
                 <ColorPickerField
-                  label='Content bg-color'
+                  label='Content background color'
                   name={`${focusIdx}.data.value.content-background-color`}
                 />
               </Stack>
@@ -99,7 +102,6 @@ export function Panel() {
             </Stack>
           </Collapse.Panel>
         </Collapse>
-
       </Stack.Item>
     </AttributesPanelWrapper>
   );

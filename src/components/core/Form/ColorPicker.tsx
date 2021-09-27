@@ -41,13 +41,18 @@ export function ColorPicker(props: ColorPickerProps) {
   return (
     <Stack spacing='none' wrap={false}>
       <Popover
-        {...props}
-        content={
-          <SketchPicker color={color} onChangeComplete={onChangeComplete} />
-        }
-        placement='topRight'
         title={props.label}
         trigger='click'
+        {...props}
+        content={(
+          <SketchPicker
+            width={150}
+            presetColors={[]}
+            color={color}
+            disableAlpha
+            onChangeComplete={onChangeComplete}
+          />
+        )}
       >
         {children || (
           <div

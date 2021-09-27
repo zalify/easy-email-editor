@@ -32,16 +32,6 @@ export function EmailContent() {
     }
   }, [activeTab, containerRef, scrollHeight]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      const editBlock = findBlockNodeByIdx(focusIdx);
-      editBlock?.scrollIntoView({
-        block: 'nearest',
-        behavior: 'smooth',
-      });
-    }, 50);
-  }, [focusIdx]);
-
   const onScroll = useCallback(
     (event: React.UIEvent<HTMLDivElement, UIEvent>) => {
       const target = event.target as HTMLDivElement;
@@ -55,10 +45,10 @@ export function EmailContent() {
       <>
         <ShadowStyle />
         <div
-          onScroll={onScroll}
           className='shadow-container'
           style={{ height: '100%', overflowY: 'auto', zIndex: 10 }}
           ref={setContainerRef}
+          onScroll={onScroll}
         >
           <MjmlDomRender />
         </div>

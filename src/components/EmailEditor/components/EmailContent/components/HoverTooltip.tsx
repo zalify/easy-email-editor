@@ -1,22 +1,16 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { getNodeTypeFromClassName } from '@/utils/block';
-import { findBlockNodeByIdx } from '@/utils/findBlockNodeByIdx';
 import { useHoverIdx } from '@/hooks/useHoverIdx';
 import { BlocksMap } from '@/components/core/blocks';
 import { createPortal } from 'react-dom';
 import { awaitForElement } from '@/utils/awaitForElement';
 import { styleZIndex } from '@/constants';
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 
 export function HoverTooltip() {
-  const {
-    hoverIdx,
-    direction,
-    isDragging,
-    setHoverIdx,
-    setIsDragging,
-    setDirection,
-  } = useHoverIdx();
+  const { hoverIdx, direction, isDragging } = useHoverIdx();
+  const { focusIdx } = useFocusIdx();
 
   const [blockNode, setBlockNode] = useState<HTMLDivElement | null>(null);
 
@@ -43,6 +37,7 @@ export function HoverTooltip() {
       : null;
   }, [blockNode]);
 
+  if (focusIdx === hoverIdx) return null;
   if (!block || !blockNode) return null;
 
   return (
@@ -69,7 +64,7 @@ interface TipNodeProps {
   type: 'drag' | 'hover';
 }
 function TipNode(props: TipNodeProps) {
-  const { direction, title, isDragging, lineWidth, type } = props;
+  const { direction, title, lineWidth, type } = props;
 
   const dragTitle = useMemo(() => {
     if (direction === 'top') {
@@ -132,7 +127,7 @@ function TipNode(props: TipNodeProps) {
                 padding: '1px 5px',
                 boxSizing: 'border-box',
                 whiteSpace: 'nowrap',
-                transform: 'translateY(-100%)',
+                // transform: 'translateY(-100%)',
               }}
             >
               {title}

@@ -26,6 +26,7 @@ import { TextStyle } from '@/components/UI/TextStyle';
 import { ColorPicker } from '../../../ColorPicker';
 import { FontFamily } from '../FontFamily';
 import { useSelectionRange } from '@/hooks/useSelectionRange';
+import { FIXED_CONTAINER_ID } from '@/constants';
 
 export interface TextToolbarProps {
   onChange: (content: string) => any;
@@ -83,132 +84,120 @@ export function TextToolbar(props: TextToolbarProps) {
     props.onChange(html);
   };
 
-  const getMountNode = () => document.getElementById('TextToolbar')!;
+  const getMountNode = () => getShadowRoot().getElementById('TextToolbar')!;
+  const getPopoverMountNode = () =>
+    document.getElementById(FIXED_CONTAINER_ID)!;
 
   return (
-    <div id='TextToolbar'>
-      <Stack vertical spacing='tight'>
-        <Stack spacing='extraTight'>
-          <Tooltip
-            color='#fff'
-            title={
-              <FontFamily onChange={(val) => execCommand('fontName', val)} />
-            }
-            getPopupContainer={getMountNode}
-          >
-            <Button
-              size='small'
-              icon={(
-                <TextStyle variation='strong'>
-                  <strong>F</strong>
-                </TextStyle>
-              )}
-            />
-          </Tooltip>
-          <Tooltip
-            color='#fff'
-            title={
-              <FontSizeList onChange={(val) => execCommand('fontSize', val)} />
-            }
-            getPopupContainer={getMountNode}
-          >
-            <Button size='small' icon={<FontSizeOutlined />} />
-          </Tooltip>
-          <ToolItem
-            onClick={() => execCommand('bold')}
-            icon={<BoldOutlined />}
-            title='Bold'
-          />
-          <ToolItem
-            onClick={() => execCommand('italic')}
-            icon={<ItalicOutlined />}
-            title='Italic'
-          />
-          <ColorPicker
-            label=''
-            onChange={(color) => execCommand('foreColor', color)}
-            getPopupContainer={getMountNode}
-            placement='left'
-            showInput={false}
-            align={{
-              offset: [-170],
-            }}
-          >
-            <ToolItem icon={<FontColorsOutlined />} title='Text color' />
-          </ColorPicker>
-          <ColorPicker
-            label=''
-            showInput={false}
-            onChange={(color) => execCommand('hiliteColor', color)}
-            getPopupContainer={getMountNode}
-            placement='left'
-            align={{
-              offset: [-170],
-            }}
-          >
-            <ToolItem icon={<BgColorsOutlined />} title='Background color' />
-          </ColorPicker>
-          <Link
-            currentRange={currentRange}
-            onChange={(values) => execCommand('createLink', values)}
-            getPopupContainer={getMountNode}
-          />
-          {/* <ToolItem
+    <div id='TextToolbar' style={{ display: 'flex', flexWrap: 'nowrap' }}>
+      <Tooltip
+        color='#fff'
+        title={<FontFamily onChange={(val) => execCommand('fontName', val)} />}
+        getPopupContainer={getMountNode}
+      >
+        <Button
+          size='small'
+          icon={(
+            <TextStyle variation='strong'>
+              <strong>F</strong>
+            </TextStyle>
+          )}
+        />
+      </Tooltip>
+      <Tooltip
+        color='#fff'
+        title={
+          <FontSizeList onChange={(val) => execCommand('fontSize', val)} />
+        }
+        getPopupContainer={getMountNode}
+      >
+        <Button size='small' icon={<FontSizeOutlined />} />
+      </Tooltip>
+      <ToolItem
+        onClick={() => execCommand('bold')}
+        icon={<BoldOutlined />}
+        title='Bold'
+      />
+      <ToolItem
+        onClick={() => execCommand('italic')}
+        icon={<ItalicOutlined />}
+        title='Italic'
+      />
+      <ColorPicker
+        label=''
+        placement='topLeft'
+        onChange={(color) => execCommand('foreColor', color)}
+        getPopupContainer={getPopoverMountNode}
+        showInput={false}
+      >
+        <ToolItem icon={<FontColorsOutlined />} title='Text color' />
+      </ColorPicker>
+      <ColorPicker
+        label=''
+        showInput={false}
+        placement='topLeft'
+        onChange={(color) => execCommand('hiliteColor', color)}
+        getPopupContainer={getPopoverMountNode}
+      >
+        <ToolItem icon={<BgColorsOutlined />} title='Background color' />
+      </ColorPicker>
+      <Link
+        currentRange={currentRange}
+        onChange={(values) => execCommand('createLink', values)}
+        getPopupContainer={getMountNode}
+      />
+      {/* <ToolItem
             onClick={() => execCommand('unlink')}
             icon={<StopOutlined />}
             title='Unlink'
           /> */}
-          <ToolItem
-            onClick={() => execCommand('removeFormat')}
-            icon={<CloseOutlined />}
-            title='Remove format'
-          />
-        </Stack>
+      <ToolItem
+        onClick={() => execCommand('removeFormat')}
+        icon={<CloseOutlined />}
+        title='Remove format'
+      />
 
-        <Stack spacing='extraTight'>
-          <ToolItem
-            onClick={() => execCommand('justifyLeft')}
-            icon={<AlignLeftOutlined />}
-            title='Align left'
-          />
-          <ToolItem
-            onClick={() => execCommand('justifyCenter')}
-            icon={<AlignCenterOutlined />}
-            title='Align center'
-          />
-          <ToolItem
-            onClick={() => execCommand('justifyRight')}
-            icon={<AlignRightOutlined />}
-            title='Align right'
-          />
-          <ToolItem
-            onClick={() => execCommand('insertOrderedList')}
-            icon={<OrderedListOutlined />}
-            title='Orderlist'
-          />
-          <ToolItem
-            onClick={() => execCommand('insertUnorderedList')}
-            icon={<UnorderedListOutlined />}
-            title='Unorderlist'
-          />
-          <ToolItem
-            onClick={() => execCommand('strikeThrough')}
-            icon={<StrikethroughOutlined />}
-            title='StrikethroughOutlined'
-          />
-          <ToolItem
-            onClick={() => execCommand('underline')}
-            icon={<UnderlineOutlined />}
-            title='UnderlineOutlined'
-          />
+      <ToolItem
+        onClick={() => execCommand('justifyLeft')}
+        icon={<AlignLeftOutlined />}
+        title='Align left'
+      />
+      <ToolItem
+        onClick={() => execCommand('justifyCenter')}
+        icon={<AlignCenterOutlined />}
+        title='Align center'
+      />
+      <ToolItem
+        onClick={() => execCommand('justifyRight')}
+        icon={<AlignRightOutlined />}
+        title='Align right'
+      />
+      <ToolItem
+        onClick={() => execCommand('insertOrderedList')}
+        icon={<OrderedListOutlined />}
+        title='Orderlist'
+      />
+      <ToolItem
+        onClick={() => execCommand('insertUnorderedList')}
+        icon={<UnorderedListOutlined />}
+        title='Unorderlist'
+      />
+      <ToolItem
+        onClick={() => execCommand('strikeThrough')}
+        icon={<StrikethroughOutlined />}
+        title='StrikethroughOutlined'
+      />
+      <ToolItem
+        onClick={() => execCommand('underline')}
+        icon={<UnderlineOutlined />}
+        title='UnderlineOutlined'
+      />
 
-          <ToolItem
-            onClick={() => execCommand('insertHorizontalRule')}
-            icon={<MinusOutlined />}
-            title='Line'
-          />
-        </Stack>
-      </Stack>
+      <ToolItem
+        onClick={() => execCommand('insertHorizontalRule')}
+        icon={<MinusOutlined />}
+        title='Line'
+      />
     </div>
   );
 }

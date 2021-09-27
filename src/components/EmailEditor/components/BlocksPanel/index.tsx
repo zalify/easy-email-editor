@@ -62,18 +62,22 @@ export const BlocksPanel: React.FC = (props) => {
                 pointerEvents: isDragging ? 'none' : undefined,
                 position: 'absolute',
                 width: isDragging ? 0 : 650,
-                height: 600,
+                maxHeight: 600,
                 zIndex: 200,
                 top: -16,
                 left: 47,
                 transition: 'all .5s',
+                boxShadow:
+                  '0 1px 5px 0 rgb(0 0 0 / 12%), 0 2px 10px 0 rgb(0 0 0 / 8%), 0 1px 20px 0 rgb(0 0 0 / 8%)',
               }}
             >
               <Card
                 bodyStyle={{ padding: 0 }}
                 title='Drag block'
                 extra={
-                  <IconFont iconName='icon-close' onClick={toggleVisible} />
+                  <div className={styles.closeBtn}>
+                    <IconFont iconName='icon-close' onClick={toggleVisible} />
+                  </div>
                 }
               >
                 <Tabs

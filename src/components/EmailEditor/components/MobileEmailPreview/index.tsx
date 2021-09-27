@@ -19,19 +19,26 @@ export function MobileEmailPreview() {
       }}
     >
       <IframeComponent
-        height={isResponsive ? '100%' : 667 / (MOBILE_WIDTH / parseFloat(pageMaxWidth))}
+        height={
+          isResponsive
+            ? '100%'
+            : 667 / (MOBILE_WIDTH / parseFloat(pageMaxWidth))
+        }
         width='100%'
         style={{
-          paddingTop: -16,
+          padding: 10,
           border: '10px solid rgb(16 4 4)',
           boxSizing: 'content-box',
           boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.699)',
           borderRadius: '25px',
-          maxHeight: isResponsive ? 667 : 667 / (MOBILE_WIDTH / parseFloat(pageMaxWidth)),
-          transform: isResponsive ? undefined : `scale(${MOBILE_WIDTH / parseFloat(pageMaxWidth)})`,
-          transformOrigin: 'center top'
+          maxHeight: isResponsive
+            ? 667
+            : 667 / (MOBILE_WIDTH / parseFloat(pageMaxWidth)),
+          transform: isResponsive
+            ? undefined
+            : `scale(${MOBILE_WIDTH / parseFloat(pageMaxWidth)})`,
+          transformOrigin: 'center top',
         }}
-
       >
         <style>
           {`

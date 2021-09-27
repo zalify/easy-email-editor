@@ -15,6 +15,7 @@ import { useDataTransfer } from './useDataTransfer';
 import { useHoverIdx } from './useHoverIdx';
 import { EditorPropsContext } from '@/components/Provider/PropsProvider';
 import { getInsertPosition } from '@/utils/getInsertPosition';
+import { scrollFocusBlockIntoView } from '@/utils/scrollFocusBlockIntoView';
 
 export function useDropBlock() {
   const [ref, setRef] = useState<HTMLElement | null>(null);
@@ -55,6 +56,7 @@ export function useDropBlock() {
         if (blockNode) {
           const idx = getNodeIdxFromClassName(blockNode.classList)!;
           setFocusIdx(idx);
+          scrollFocusBlockIntoView({ idx, inShadowDom: false });
         }
       };
 
