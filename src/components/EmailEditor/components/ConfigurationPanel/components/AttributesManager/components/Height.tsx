@@ -3,7 +3,7 @@ import { TextField } from '@/components/core/Form';
 import { Stack } from '@/components/UI/Stack';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 
-export function Height() {
+export function Height({ inline }: { inline?: boolean; }) {
   const { focusIdx } = useFocusIdx();
 
   return useMemo(() => {
@@ -14,9 +14,10 @@ export function Height() {
             label='Height'
             name={`${focusIdx}.attributes.height`}
             quickchange
+            inline={inline}
           />
         </Stack.Item>
       </Stack>
     );
-  }, [focusIdx]);
+  }, [focusIdx, inline]);
 }

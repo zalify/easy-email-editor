@@ -1,8 +1,15 @@
 import { Input, Popover, PopoverProps } from 'antd';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { ColorResult, SketchPicker } from 'react-color';
 import { Picture } from '@/components/UI/Picture';
 import { Stack } from '@/components/UI/Stack';
+import { PresetColorsContext } from '@/components/Provider/PresetColorsProvider';
 
 export interface ColorPickerProps extends PopoverProps {
   onChange?: (val: string) => void;
@@ -13,6 +20,8 @@ export interface ColorPickerProps extends PopoverProps {
 }
 
 export function ColorPicker(props: ColorPickerProps) {
+  const { colors: presetColors, addCurrentColor } =
+    useContext(PresetColorsContext);
   const [color, setColor] = useState('');
   const { value = '', onChange, children, showInput = true } = props;
 
@@ -27,16 +36,18 @@ export function ColorPicker(props: ColorPickerProps) {
       const newColor = color.hex;
       setColor(newColor);
       onChange?.(newColor);
+      addCurrentColor(newColor);
     },
-    [onChange]
+    [addCurrentColor, onChange]
   );
 
   const onInputChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setColor(event.target.value);
       onChange?.(event.target.value);
+      addCurrentColor(event.target.value);
     },
-    [onChange]
+    [addCurrentColor, onChange]
   );
   return (
     <Stack spacing='none' wrap={false}>
@@ -46,8 +57,7 @@ export function ColorPicker(props: ColorPickerProps) {
         {...props}
         content={(
           <SketchPicker
-            width={150}
-            presetColors={[]}
+            presetColors={presetColors}
             color={color}
             disableAlpha
             onChangeComplete={onChangeComplete}

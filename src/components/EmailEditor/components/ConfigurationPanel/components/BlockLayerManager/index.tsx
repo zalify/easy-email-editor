@@ -1,10 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useEditorContext } from '@/hooks/useEditorContext';
 import { IBlockData } from '@/typings';
-import {
-  getPageIdx,
-} from '@/utils/block';
-import { useBlock } from '@/hooks/useBlock';
+import { getPageIdx } from '@/utils/block';
 import { BasicType, BlockType } from '@/constants';
 import styles from './index.module.scss';
 import { classnames } from '@/utils/classnames';

@@ -32,12 +32,16 @@ export const BlockLayerItemContent = ({
   indent,
   hidden,
   parentType,
+  visible,
+  setVisible,
 }: {
   blockData: IBlockData;
   idx: string;
   indent: number;
   parentType: BlockType | null;
   hidden?: boolean;
+  visible: boolean;
+  setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const { focusIdx, setFocusIdx } = useFocusIdx();
   const title = findBlockByType(blockData.type)?.name;
@@ -61,65 +65,88 @@ export const BlockLayerItemContent = ({
     setHoverIdx('');
   }, [setHoverIdx]);
 
-  return useMemo(() => (
-    <div
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      onClick={onSelect}
-      className={classnames(
-        styles.listItemContentWrapper,
-        isSelected && styles.listItemSelected,
-        isHover && styles.listItemHover,
+  return useMemo(
+    () => (
+      <div
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        onClick={onSelect}
+        className={classnames(
+          styles.listItemContentWrapper,
+          isSelected && styles.listItemSelected,
+          isHover && styles.listItemHover
+        )}
+      >
+        <Stack.Item fill>
+          <Stack distribution='equalSpacing'>
+            <Stack spacing='none' wrap={false}>
+              <div style={{ width: indent * 18 }} />
+              <Stack.Item fill>
+                <div className={styles.listItemContent}>
+                  <Stack wrap={false} spacing='tight' alignment='center'>
+                    <SubIcon
+                      blockType={blockData.type}
+                      noChild={noChild}
+                      isPageBlock={isPageBlock}
+                      focusIdx={focusIdx}
+                      idx={idx}
+                      visible={visible}
+                      setVisible={setVisible}
+                    />
+                    <Stack spacing='none'>
+                      <IconFont
+                        iconName={getIconNameByBlockType(blockData.type)}
+                        style={{ fontSize: 12 }}
+                      />
 
-      )}
-    >
-      <Stack.Item fill>
-        <Stack distribution='equalSpacing'>
-          <Stack spacing='none' wrap={false}>
-            <div style={{ width: indent * 18 }} />
-            <Stack.Item fill>
-              <div className={styles.listItemContent}>
-                <Stack wrap={false} spacing='tight' alignment='center'>
-                  <SubIcon
-                    blockType={blockData.type}
-                    noChild={noChild}
-                    isPageBlock={isPageBlock}
-                    focusIdx={focusIdx} idx={idx}
-                  />
-                  <IconFont
-                    iconName={getIconNameByBlockType(blockData.type)}
-                    style={{ fontSize: 12 }}
-                  />
-
-                  <TextStyle size='smallest'>
-                    <span
-                      title={title}
-                      style={{
-                        maxWidth: 100,
-                        whiteSpace: 'nowrap',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        display: 'block',
-                      }}
-                    >
-                      {title}
-                    </span>
-                  </TextStyle>
-                </Stack>
+                      <TextStyle size='smallest'>
+                        <span
+                          title={title}
+                          style={{
+                            maxWidth: 100,
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            display: 'block',
+                          }}
+                        >
+                          {title}
+                        </span>
+                      </TextStyle>
+                    </Stack>
+                  </Stack>
+                </div>
+              </Stack.Item>
+            </Stack>
+            <Stack spacing='extraTight' wrap={false}>
+              {/* <ShortcutTool idx={idx} blockData={blockData} /> */}
+              <EyeIcon hidden={hidden} idx={idx} blockData={blockData} />
+              <div>
+                <IconFont iconName='icon-drag' style={{ cursor: 'grab' }} />
               </div>
-            </Stack.Item>
+            </Stack>
           </Stack>
-          <Stack spacing='extraTight' wrap={false}>
-            {/* <ShortcutTool idx={idx} blockData={blockData} /> */}
-            <EyeIcon hidden={hidden} idx={idx} blockData={blockData} />
-            <div>
-              <IconFont iconName='icon-drag' style={{ cursor: 'grab' }} />
-            </div>
-          </Stack>
-        </Stack>
-      </Stack.Item>
-    </div>
-  ), [blockData, focusIdx, hidden, idx, indent, isHover, isPageBlock, isSelected, noChild, onMouseEnter, onMouseLeave, onSelect, parentType, title]);
+        </Stack.Item>
+      </div>
+    ),
+    [
+      blockData,
+      focusIdx,
+      hidden,
+      idx,
+      indent,
+      isHover,
+      isPageBlock,
+      isSelected,
+      noChild,
+      onMouseEnter,
+      onMouseLeave,
+      onSelect,
+      setVisible,
+      title,
+      visible,
+    ]
+  );
 };
 
 function EyeIcon({
@@ -157,67 +184,63 @@ function EyeIcon({
   );
 }
 
-const SubIcon: React.FC<{ blockType: BlockType, noChild: boolean, isPageBlock: boolean, focusIdx: string; idx: string; }> = React.memo(({ blockType, noChild, isPageBlock, focusIdx, idx }) => {
+const SubIcon: React.FC<{
+  blockType: BlockType;
+  noChild: boolean;
+  isPageBlock: boolean;
+  focusIdx: string;
+  idx: string;
+  visible: boolean;
+  setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+}> = React.memo(
+  ({ blockType, noChild, isPageBlock, focusIdx, idx, visible, setVisible }) => {
+    const { collapsed, setCollapsed } = useCollapse();
 
-  const { collapsed, setCollapsed } = useCollapse();
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    if (focusIdx.startsWith(idx)) {
-      setVisible(true);
-    }
-  }, [focusIdx, idx]);
-
-  useEffect(() => {
-    if (isPageBlock) {
-      setVisible(true);
-    } else {
-      setVisible(!collapsed);
-    }
-  }, [collapsed, isPageBlock]);
-
-  const onToggle = useCallback(
-    (e: React.MouseEvent) => {
-      e.stopPropagation();
-      if (isPageBlock) {
-        setCollapsed((collapsed) => !collapsed);
-      } else {
-        setVisible((v) => !v);
+    useEffect(() => {
+      if (focusIdx.startsWith(idx)) {
+        setVisible(true);
       }
-    },
-    [isPageBlock, setCollapsed]
-  );
+    }, [focusIdx, idx, setVisible]);
 
-  if (
-    noChild ||
-    BlocksMap.findBlockByType(blockType).validParentType.includes(
-      BasicType.COLUMN
-    )
-  )
-    return (
-      <div style={{ visibility: 'hidden' }}>
-        <IconFont size={12} iconName='icon-number' />
-      </div>
+    const onToggle = useCallback(
+      (e: React.MouseEvent) => {
+        e.stopPropagation();
+        if (isPageBlock) {
+          setCollapsed((collapsed) => !collapsed);
+        } else {
+          setVisible((v) => !v);
+        }
+      },
+      [isPageBlock, setCollapsed, setVisible]
     );
 
-  const display = isPageBlock ? !collapsed : visible;
-  if (display) {
+    if (
+      noChild ||
+      BlocksMap.findBlockByType(blockType).validParentType.includes(
+        BasicType.COLUMN
+      )
+    )
+      return <IconFont size={12} iconName='icon-dot' />;
+
+    const display = isPageBlock ? !collapsed : visible;
+    if (display) {
+      return (
+        <IconFont
+          size={12}
+          iconName='icon-minus-square'
+          onClickCapture={onToggle}
+        />
+      );
+    }
     return (
       <IconFont
         size={12}
-        iconName='icon-minus-square'
+        iconName='icon-plus-square'
         onClickCapture={onToggle}
       />
     );
   }
-  return (
-    <IconFont
-      size={12}
-      iconName='icon-plus-square'
-      onClickCapture={onToggle}
-    />
-  );
-});
+);
 
 function ShortcutTool({
   idx,

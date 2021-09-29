@@ -139,9 +139,6 @@ export function useBlock() {
       parent.children.splice(positionIndex, 0, child);
       batch(() => {
         change(parentIdx, { ...parent }); // listeners not notified
-        change('content', {
-          ...values.content,
-        });
       });
       setFocusIdx(nextFocusIdx);
       scrollFocusBlockIntoView({

@@ -3,14 +3,18 @@ import { BlockType } from '@/constants';
 import { IBlockData, RecursivePartial } from '@/typings';
 import { ReactSortable } from 'react-sortablejs';
 import { useHoverIdx } from '@/hooks/useHoverIdx';
-import { getChildIdx, getNodeIdxFromClassName, getNodeTypeFromClassName } from '@/utils/block';
+import {
+  getChildIdx,
+  getNodeIdxFromClassName,
+  getNodeTypeFromClassName,
+} from '@/utils/block';
 import { BlocksMap } from '../../blocks';
 import { useBlock } from '@/hooks/useBlock';
 import { findBlockNode } from '@/utils/findBlockNode';
 
 type BlockSortableWrapperProps = {
   list: IBlockData[];
-  action: 'add' | 'move',
+  action: 'add' | 'move';
   type: BlockType;
   payload?: RecursivePartial<IBlockData>;
   tag?: string;
@@ -22,63 +26,105 @@ type BlockSortableWrapperProps = {
   className?: string;
   style?: any;
 };
-export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (props) => {
-  const { children, list, disabled, idx, onStart, onEnd, tag, action, type, payload, ...restProps } = props;
+export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
+  props
+) => {
+  const {
+    children,
+    list,
+    disabled,
+    idx,
+    onStart,
+    onEnd,
+    tag,
+    action,
+    type,
+    payload,
+    ...restProps
+  } = props;
   const { setIsDragging, setHoverIdx, setDirection } = useHoverIdx();
   const { addBlock, moveBlock } = useBlock();
 
-  const onDragEnd = useCallback((evt: { originalEvent: { dataTransfer: DataTransfer; }; from: HTMLElement; to: HTMLElement; newIndex: number; oldIndex: number; }, sortable: any, store: any) => {
+  const onDragEnd = useCallback(
+    (
+      evt: {
+        originalEvent: { dataTransfer: DataTransfer };
+        from: HTMLElement;
+        to: HTMLElement;
+        newIndex: number;
+        oldIndex: number;
+      },
+      sortable: any,
+      store: any
+    ) => {
+      setIsDragging(false);
+      setHoverIdx('');
+      onEnd?.();
 
-    setIsDragging(false);
-    setHoverIdx('');
-    onEnd?.();
+      const targetBlockNode = findBlockNode(evt.to);
+      if (!targetBlockNode) return;
+      const idx = getNodeIdxFromClassName(targetBlockNode.classList)!;
+      if (action === 'add') {
+        if (targetBlockNode) {
+          addBlock({
+            type,
+            parentIdx: idx,
+            positionIndex: evt.newIndex,
+            payload,
+          });
+        }
+      } else {
+        const sourceParentBlockNode = findBlockNode(evt.from);
+        if (!sourceParentBlockNode) return;
+        const sourceIdx = getChildIdx(
+          getNodeIdxFromClassName(sourceParentBlockNode.classList)!,
+          evt.oldIndex
+        );
+        const targetIdx = getChildIdx(idx, evt.newIndex);
 
-    const targetBlockNode = findBlockNode(evt.to);
-    if (!targetBlockNode) return;
-    const idx = getNodeIdxFromClassName(targetBlockNode.classList)!;
-
-    if (action === 'add') {
-
-      if (targetBlockNode) {
-
-        addBlock({
-          type,
-          parentIdx: idx,
-          positionIndex: evt.newIndex,
-          payload
+        moveBlock({
+          sourceIdx: sourceIdx,
+          destinationIdx: targetIdx,
         });
       }
-    } else {
-      const sourceParentBlockNode = findBlockNode(evt.from);
-      if (!sourceParentBlockNode) return;
-      const sourceIdx = getChildIdx(getNodeIdxFromClassName(sourceParentBlockNode.classList)!, evt.oldIndex);
-      const targetIdx = getChildIdx(idx, evt.newIndex);
+    },
+    [
+      action,
+      addBlock,
+      moveBlock,
+      onEnd,
+      payload,
+      setHoverIdx,
+      setIsDragging,
+      type,
+    ]
+  );
 
-      moveBlock({
-        sourceIdx: sourceIdx,
-        destinationIdx: targetIdx,
-      });
+  const onDragStart = useCallback(
+    (evt: { originalEvent: { dataTransfer: DataTransfer } }) => {
+      setIsDragging(true);
+      onStart?.();
+    },
+    [onStart, setIsDragging]
+  );
 
-    }
+  const onSpill = useCallback(
+    (evt: { originalEvent: { dataTransfer: DataTransfer } }) => {},
+    []
+  );
 
-  }, [action, addBlock, moveBlock, onEnd, payload, setHoverIdx, setIsDragging, type]);
-
-  const onDragStart = useCallback((evt: { originalEvent: { dataTransfer: DataTransfer; }; }) => {
-    setIsDragging(true);
-    onStart?.();
-  }, [onStart, setIsDragging]);
-
-  const onSpill = useCallback((evt: { originalEvent: { dataTransfer: DataTransfer; }; }) => {
-
-  }, []);
-
-  const onChoose = useCallback(() => {
-
-  }, []);
+  const onChoose = useCallback(() => {}, []);
 
   const onCheckValidate = useCallback(
-    (evt: { dragged: HTMLElement; related: HTMLElement; willInsertAfter: boolean; }, sortable: any, store: any) => {
-
+    (
+      evt: {
+        dragged: HTMLElement;
+        related: HTMLElement;
+        willInsertAfter: boolean;
+      },
+      sortable: any,
+      store: any
+    ) => {
       if (!evt.dragged) return false;
 
       const type =
@@ -113,7 +159,7 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (props)
       revertOnSpill
       disabled={disabled}
       list={list as any}
-      setList={() => { }}
+      setList={() => {}}
       onMove={onCheckValidate}
       onEnd={onDragEnd}
       onSpill={onSpill}

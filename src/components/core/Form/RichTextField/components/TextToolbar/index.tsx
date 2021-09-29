@@ -144,7 +144,7 @@ export function TextToolbar(props: TextToolbarProps) {
       <Link
         currentRange={currentRange}
         onChange={(values) => execCommand('createLink', values)}
-        getPopupContainer={getMountNode}
+        getPopupContainer={getPopoverMountNode}
       />
       {/* <ToolItem
             onClick={() => execCommand('unlink')}

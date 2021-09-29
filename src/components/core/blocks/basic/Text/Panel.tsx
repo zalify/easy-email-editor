@@ -19,13 +19,13 @@ import { AttributesPanelWrapper } from '@/components/core/wrapper/AttributesPane
 import { Collapse } from 'antd';
 
 export function Panel() {
-  const { focusIdx } = useFocusIdx();
+
   return (
     <AttributesPanelWrapper>
       <Collapse defaultActiveKey={['0', '1', '2']}>
         <Collapse.Panel key='0' header='Dimension'>
           <Stack vertical spacing='tight'>
-            <Height />
+            <Height inline />
             <Padding />
           </Stack>
         </Collapse.Panel>

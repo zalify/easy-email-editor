@@ -1,32 +1,19 @@
-import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useEditorContext } from '@/hooks/useEditorContext';
 import { IBlockData } from '@/typings';
 import {
-  findBlockByType,
   getChildIdx,
-  getIndexByIdx,
   getNodeIdxClassName,
   getNodeTypeClassName,
-  getNodeTypeFromClassName,
   getPageIdx,
   getValidChildBlocks,
 } from '@/utils/block';
-import { useBlock } from '@/hooks/useBlock';
-import { BasicType, BlockType } from '@/constants';
-import { Stack } from '@/components/UI/Stack';
-import { TextStyle } from '@/components/UI/TextStyle';
+import { BlockType } from '@/constants';
 import styles from './index.module.scss';
 import { classnames } from '@/utils/classnames';
 
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { useCollapse } from '@/hooks/useCollapse';
-import { IconFont } from '@/components/IconFont';
-import { getIconNameByBlockType } from '@/utils/getIconNameByBlockType';
-import { BlocksMap } from '@/components/core/blocks';
 import { BlockSortableWrapper } from '@/components/core/wrapper/BlockSortableWrapper';
-import { useHoverIdx } from '@/hooks/useHoverIdx';
-import { scrollFocusBlockIntoView } from '@/utils/scrollFocusBlockIntoView';
 import { BlockLayerItemContent } from '../BlockLayerItemContent';
 
 export const BlockLayerItem = ({
@@ -99,8 +86,7 @@ export const BlockLayerItem = ({
         className={classnames(
           styles.blockItem,
           getNodeIdxClassName(idx),
-          getNodeTypeClassName(blockData.type),
-
+          getNodeTypeClassName(blockData.type)
         )}
         onMouseDown={(e) => {
           e.preventDefault();
@@ -117,6 +103,8 @@ export const BlockLayerItem = ({
       </li>
     );
   }
+  const onlyPlaceHolderChild =
+    blockData.children.length === 0 && childrenList.length === 1;
   return (
     <li
       data-parent-type={parentType}
@@ -128,9 +116,21 @@ export const BlockLayerItem = ({
         getNodeTypeClassName(blockData.type)
       )}
     >
-      <BlockLayerItemContent blockData={blockData} idx={idx} indent={indent} parentType={parentType} />
+      <BlockLayerItemContent
+        visible={visible}
+        setVisible={setVisible}
+        blockData={blockData}
+        idx={idx}
+        indent={indent}
+        parentType={parentType}
+      />
 
-      <ul style={{ display: visible ? undefined : 'none' }} className={classnames(styles.blockList)}>
+      <ul
+        style={{
+          display: visible || onlyPlaceHolderChild ? undefined : 'none',
+        }}
+        className={classnames(styles.blockList)}
+      >
         <BlockSortableWrapper
           type={blockData.type}
           action='move'
@@ -152,7 +152,6 @@ export const BlockLayerItem = ({
           ))}
         </BlockSortableWrapper>
       </ul>
-
     </li>
   );
 };

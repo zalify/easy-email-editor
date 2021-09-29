@@ -35,7 +35,11 @@
   z-index: 1;
 }
 
-.block-selected .email-block ,.block-hover .email-block,
-.block-dragover .email-block{
+.block-selected .email-block ,.block-hover .email-block {
   z-index: 2;
+}
+
+
+.block-dragover .email-block{
+  z-index: 3;
 }

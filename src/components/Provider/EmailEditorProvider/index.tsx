@@ -11,6 +11,7 @@ import { ScrollProvider } from '../ScrollProvider';
 import { Config, FormApi, FormState } from 'final-form';
 import { useEffect, useState } from 'react';
 import setFieldTouched from 'final-form-set-field-touched';
+import { PresetColorsProvider } from '../PresetColorsProvider';
 
 export interface EmailEditorProviderProps<T extends IEmailTemplate = any>
   extends PropsProviderProps {
@@ -58,7 +59,9 @@ export const EmailEditorProvider = (
                 <HoverIdxProvider>
                   <SelectionRangeProvider>
                     <ScrollProvider>
-                      <FormikWrapper children={children} />
+                      <PresetColorsProvider>
+                        <FormikWrapper children={children} />
+                      </PresetColorsProvider>
                     </ScrollProvider>
                   </SelectionRangeProvider>
                 </HoverIdxProvider>

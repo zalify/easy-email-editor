@@ -68,7 +68,7 @@ export function Panel() {
                   />
                 </Stack.Item>
               </Stack>
-              <Stack>
+              <Stack wrap={false}>
                 <Stack.Item fill>
                   <ColorPickerField
                     label='Text color'
