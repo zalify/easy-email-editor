@@ -1,5 +1,9 @@
-import React, { useCallback, useEffect } from 'react';
-import { findBlockNodeByIdx, getShadowRoot } from '@/utils/findBlockNodeByIdx';
+import React, { useCallback, useEffect, useState } from 'react';
+import {
+  findBlockNodeByIdx,
+  getEditorRoot,
+  getShadowRoot,
+} from '@/utils/findBlockNodeByIdx';
 import { getEditContent, getEditNode } from '@/utils/getEditNode';
 import { useBlock } from '@/hooks/useBlock';
 import { FIXED_CONTAINER_ID } from '@/constants';
@@ -18,6 +22,8 @@ export function InlineText({
   children,
   mutators: { setFieldTouched },
 }: InlineTextProps) {
+  const [isFocus, setIsFocus] = useState(false);
+
   useField(idx); // setFieldTouched will be work while register field,
   const { focusBlock } = useBlock();
 
@@ -64,7 +70,6 @@ export function InlineText({
       };
 
       const onInput = () => {
-
         setFieldTouched(idx, true);
       };
 
@@ -85,5 +90,25 @@ export function InlineText({
     }
   }, [idx, onTextChange, setFieldTouched, textContainer]);
 
+  useEffect(() => {
+    const onFocus = (ev: Event) => {
+      ev.stopPropagation();
+      if (document.activeElement === getEditorRoot()) {
+        setIsFocus(true);
+      } else {
+        setIsFocus(false);
+      }
+    };
+    getShadowRoot().addEventListener('click', onFocus);
+    getShadowRoot().addEventListener('focusin', onFocus);
+    window.addEventListener('focusin', onFocus);
+    return () => {
+      getShadowRoot().addEventListener('click', onFocus);
+      getShadowRoot().removeEventListener('focusin', onFocus);
+      window.removeEventListener('focusin', onFocus);
+    };
+  }, []);
+
+  if (!isFocus) return null;
   return <>{children}</>;
 }

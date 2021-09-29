@@ -13,7 +13,6 @@ import { Color } from '@/components/EmailEditor/components/ConfigurationPanel/co
 import { Align } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Align';
 import { LineHeight } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/LineHeight';
 import { LetterSpacing } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/LetterSpacing';
-import { RichTextField } from '@/components/core/Form';
 
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { AttributesPanelWrapper } from '@/components/core/wrapper/AttributesPanelWrapper';
@@ -22,32 +21,22 @@ import { Collapse } from 'antd';
 export function Panel() {
   const { focusIdx } = useFocusIdx();
   return (
-
     <AttributesPanelWrapper>
-
       <Collapse defaultActiveKey={['0', '1', '2']}>
-        <Collapse.Panel key="0" header="Dimension">
-          <Stack vertical spacing="tight">
-            <div style={{ position: 'absolute' }}>
-              <RichTextField
-                idx={focusIdx}
-                name={`${focusIdx}.data.value.content`}
-                label=''
-                labelHidden
-              />
-            </div>
+        <Collapse.Panel key='0' header='Dimension'>
+          <Stack vertical spacing='tight'>
             <Height />
             <Padding />
           </Stack>
         </Collapse.Panel>
-        <Collapse.Panel key="1" header="Color">
-          <Stack vertical spacing="tight">
+        <Collapse.Panel key='1' header='Color'>
+          <Stack vertical spacing='tight'>
             <Color />
-            <ContainerBackgroundColor title="Background color" />
+            <ContainerBackgroundColor title='Background color' />
           </Stack>
         </Collapse.Panel>
-        <Collapse.Panel key="2" header="Typography">
-          <Stack vertical spacing="tight">
+        <Collapse.Panel key='2' header='Typography'>
+          <Stack vertical spacing='tight'>
             <Stack wrap={false}>
               <FontFamily />
               <Stack.Item fill>
@@ -58,7 +47,6 @@ export function Panel() {
             <Stack wrap={false}>
               <FontWeight />
               <Stack.Item fill>
-
                 <LineHeight />
               </Stack.Item>
             </Stack>
@@ -75,10 +63,7 @@ export function Panel() {
             <FontStyle />
           </Stack>
         </Collapse.Panel>
-
       </Collapse>
-
     </AttributesPanelWrapper>
-
   );
 }

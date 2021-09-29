@@ -1,3 +1,4 @@
+import { RichTextField } from '@/components/core/Form/RichTextField';
 import { useBlock } from '@/hooks/useBlock';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { findBlockByType, getValueByIdx } from '@/utils/block';
@@ -15,9 +16,19 @@ export function AttributesManager() {
   const content = useMemo(() => {
     if (!block) return null;
     return (
-      <block.Panel />
+      <>
+        <block.Panel />
+        <div style={{ position: 'absolute' }}>
+          <RichTextField
+            idx={focusIdx}
+            name={`${focusIdx}.data.value.content`}
+            label=''
+            labelHidden
+          />
+        </div>
+      </>
     );
-  }, [block]);
+  }, [block, focusIdx]);
 
   if (!value) return null;
   return content;
