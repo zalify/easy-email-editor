@@ -47,7 +47,7 @@ export const BlockLayerItemContent = ({
   const title = findBlockByType(blockData.type)?.name;
   const noChild = blockData.children.length === 0;
   const isPageBlock = idx === getPageIdx();
-  const { setHoverIdx, hoverIdx } = useHoverIdx();
+  const { setHoverIdx, hoverIdx, isDragging } = useHoverIdx();
 
   const onSelect = useCallback(() => {
     setFocusIdx(idx);
@@ -55,7 +55,7 @@ export const BlockLayerItemContent = ({
   }, [idx, setFocusIdx]);
 
   const isSelected = idx === focusIdx;
-  const isHover = idx === hoverIdx;
+  const isHover = !isDragging && idx === hoverIdx;
 
   const onMouseEnter = useCallback(() => {
     setHoverIdx(idx);
@@ -74,11 +74,11 @@ export const BlockLayerItemContent = ({
         className={classnames(
           styles.listItemContentWrapper,
           isSelected && styles.listItemSelected,
-          isHover && styles.listItemHover
+          isHover && !isSelected && styles.listItemHover
         )}
       >
         <Stack.Item fill>
-          <Stack distribution='equalSpacing'>
+          <Stack distribution='equalSpacing' alignment='center'>
             <Stack spacing='none' wrap={false}>
               <div style={{ width: indent * 18 }} />
               <Stack.Item fill>

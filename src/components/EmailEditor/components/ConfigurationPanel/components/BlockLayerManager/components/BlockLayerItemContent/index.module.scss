@@ -34,8 +34,32 @@
 }
 
 .listItemHover {
-  background-color: #eaf3ff;
+  background-color: #fff  !important;
 }
+.listItemHover::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  display: block;
+  width: 100%;
+  outline-offset: -1px;
+  outline: 1px solid var(--hover-color);
+}
+
+.listItemHover::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: block;
+  background-color: var(--hover-color);
+  opacity: 0.1;
+}
+
 
 .listItemSelected {
   background-color: #eaf3ff;

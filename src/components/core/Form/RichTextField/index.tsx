@@ -44,7 +44,7 @@ const RichTextFieldItem = (
     }
   }, [idx, locationState?.left, locationState?.top]);
 
-  const onChange = useCallback(() => {}, []);
+  const onChange = useCallback(() => { }, []);
 
   const editorContainer = container && getEditNode(container);
 
@@ -80,7 +80,6 @@ const RichTextFieldItem = (
           boxSizing: 'border-box',
 
           zIndex: 100,
-          transition: isMove ? undefined : 'all .3s',
           display: Boolean(isActive) ? undefined : 'none',
         }}
       >
@@ -102,15 +101,7 @@ const RichTextFieldItem = (
       </div>,
       document.getElementById(FIXED_CONTAINER_ID) as HTMLDivElement
     );
-  }, [
-    idx,
-    position,
-    isMove,
-    isActive,
-    editorContainer,
-    onChange,
-    setLocationState,
-  ]);
+  }, [idx, position, isActive, editorContainer, onChange, setLocationState]);
 
   return (
     <>

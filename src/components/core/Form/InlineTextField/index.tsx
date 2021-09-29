@@ -99,12 +99,13 @@ export function InlineText({
         setIsFocus(false);
       }
     };
-    getShadowRoot().addEventListener('click', onFocus);
-    getShadowRoot().addEventListener('focusin', onFocus);
+    const root = getShadowRoot();
+    root.addEventListener('click', onFocus);
+    root.addEventListener('focusin', onFocus);
     window.addEventListener('focusin', onFocus);
     return () => {
-      getShadowRoot().addEventListener('click', onFocus);
-      getShadowRoot().removeEventListener('focusin', onFocus);
+      root.addEventListener('click', onFocus);
+      root.removeEventListener('focusin', onFocus);
       window.removeEventListener('focusin', onFocus);
     };
   }, []);

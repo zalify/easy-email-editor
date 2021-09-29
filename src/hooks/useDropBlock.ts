@@ -4,7 +4,7 @@ import {
 } from './../constants';
 import { useEffect, useMemo, useState, useContext, useRef } from 'react';
 
-import { getNodeIdxFromClassName } from '@/utils/block';
+import { getNodeIdxFromClassName, getNodeTypeFromClassName } from '@/utils/block';
 import { findBlockNode } from '@/utils/findBlockNode';
 import { DRAG_HOVER_CLASSNAME } from '@/constants';
 import { useBlock } from '@/hooks/useBlock';
@@ -16,6 +16,8 @@ import { useHoverIdx } from './useHoverIdx';
 import { EditorPropsContext } from '@/components/Provider/PropsProvider';
 import { getInsertPosition } from '@/utils/getInsertPosition';
 import { scrollFocusBlockIntoView } from '@/utils/scrollFocusBlockIntoView';
+import { BasicType } from 'easy-email-editor';
+import { getEditNode } from '@/utils/getEditNode';
 
 export function useDropBlock() {
   const [ref, setRef] = useState<HTMLElement | null>(null);
@@ -51,18 +53,46 @@ export function useDropBlock() {
   useEffect(() => {
     if (ref) {
       const onClick = (ev: MouseEvent) => {
+
         ev.preventDefault(); // prevent link
-        const blockNode = findBlockNode(ev.target as HTMLElement);
-        if (blockNode) {
-          const idx = getNodeIdxFromClassName(blockNode.classList)!;
-          setFocusIdx(idx);
-          scrollFocusBlockIntoView({ idx, inShadowDom: false });
+
+        const target = ev.target;
+        if (target instanceof HTMLElement) {
+          const blockType = getNodeTypeFromClassName(target.classList);
+          if (blockType === BasicType.TEXT) {
+            const idx = getNodeIdxFromClassName(target.classList)!;
+            setFocusIdx(idx);
+            scrollFocusBlockIntoView({ idx, inShadowDom: false });
+            const editNode = getEditNode(target);
+
+            editNode?.focus();
+          }
         }
       };
 
       ref.addEventListener('click', onClick);
       return () => {
         ref.removeEventListener('click', onClick);
+      };
+    }
+  }, [ref, setFocusIdx]);
+
+  useEffect(() => {
+    if (ref) {
+      const onFocusin = (ev: FocusEvent) => {
+        ev.preventDefault();
+        const blockNode = findBlockNode(ev.target as HTMLElement);
+        if (blockNode) {
+          const idx = getNodeIdxFromClassName(blockNode.classList)!;
+          setFocusIdx(idx);
+          scrollFocusBlockIntoView({ idx, inShadowDom: false });
+        }
+
+      };
+
+      ref.addEventListener('focusin', onFocusin);
+      return () => {
+        ref.removeEventListener('focusin', onFocusin);
       };
     }
   }, [ref, setFocusIdx]);
