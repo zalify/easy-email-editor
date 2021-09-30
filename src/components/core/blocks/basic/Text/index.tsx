@@ -29,7 +29,6 @@ export type IText = IBlockData<
 export const Text = createBlock<IText>({
   name: 'Text',
   type: BasicType.TEXT,
-  description: 'This block allows you to display text in your email.',
   Panel,
   create: (payload) => {
     const defaultData: IText = {

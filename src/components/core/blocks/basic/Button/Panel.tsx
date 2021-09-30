@@ -14,10 +14,8 @@ import { FontStyle } from '@/components/EmailEditor/components/ConfigurationPane
 import { FontWeight } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/FontWeight';
 import { FontFamily } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/FontFamliy';
 import { TextDecoration } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/TextDecoration';
-import { TextTransform } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/TextTransform';
 import { LineHeight } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/LineHeight';
 import { LetterSpacing } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/LetterSpacing';
-import { InlineTextField } from '@/components/core/Form';
 
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { AttributesPanelWrapper } from '@/components/core/wrapper/AttributesPanelWrapper';
@@ -29,37 +27,38 @@ export function Panel() {
 
   return (
     <AttributesPanelWrapper>
-
       <Collapse defaultActiveKey={['-1', '0', '1', '2', '3']}>
-
-        <Collapse.Panel key="-1" header="Setting">
+        <Collapse.Panel key='-1' header='Setting'>
           <Stack vertical>
-            <TextField label="Content" name={`${focusIdx}.data.value.content`} inline />
+            <TextField
+              label='Content'
+              name={`${focusIdx}.data.value.content`}
+              inline
+            />
             <Link />
           </Stack>
         </Collapse.Panel>
 
-        <Collapse.Panel key="0" header="Dimension">
-          <Stack vertical spacing="tight">
+        <Collapse.Panel key='0' header='Dimension'>
+          <Stack vertical spacing='tight'>
             <Stack vertical>
               <Width />
               <Padding title='Padding' attributeName='padding' />
               <Padding title='Inner padding' attributeName='inner-padding' />
             </Stack>
           </Stack>
-
         </Collapse.Panel>
 
-        <Collapse.Panel key="1" header="Color">
-          <Stack vertical spacing="tight">
-            <Color title="Text color" />
-            <BackgroundColor title="Button color" />
-            <ContainerBackgroundColor title="Background color" />
+        <Collapse.Panel key='1' header='Color'>
+          <Stack vertical spacing='tight'>
+            <Color title='Text color' />
+            <BackgroundColor title='Button color' />
+            <ContainerBackgroundColor title='Background color' />
           </Stack>
         </Collapse.Panel>
 
-        <Collapse.Panel key="2" header="Typography">
-          <Stack vertical spacing="tight">
+        <Collapse.Panel key='2' header='Typography'>
+          <Stack vertical spacing='tight'>
             <Stack wrap={false}>
               <FontFamily />
               <Stack.Item fill>
@@ -70,7 +69,6 @@ export function Panel() {
             <Stack wrap={false}>
               <FontWeight />
               <Stack.Item fill>
-
                 <LineHeight />
               </Stack.Item>
             </Stack>
@@ -88,13 +86,10 @@ export function Panel() {
           </Stack>
         </Collapse.Panel>
 
-        <Collapse.Panel key="3" header="Border">
+        <Collapse.Panel key='3' header='Border'>
           <Border />
         </Collapse.Panel>
-
       </Collapse>
-
     </AttributesPanelWrapper>
-
   );
 }

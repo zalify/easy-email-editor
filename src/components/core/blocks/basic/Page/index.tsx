@@ -13,7 +13,7 @@ export type IPage = IBlockData<
   {
     breakpoint?: string;
     headAttributes: string;
-    fonts?: { name: string; href: string; }[];
+    fonts?: { name: string; href: string }[];
     headStyles?: {
       content?: string;
       inline?: 'inline';
@@ -34,7 +34,6 @@ export type IPage = IBlockData<
 export const Page = createBlock<IPage>({
   name: 'Page',
   type: BasicType.PAGE,
-  description: '',
   Panel,
   create: (payload) => {
     const defaultData: IPage = {

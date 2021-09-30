@@ -21,7 +21,6 @@ export type IAccordionText = IBlockData<
 export const AccordionText: IBlock = createBlock({
   name: 'Accordion text',
   type: BasicType.ACCORDION_TEXT,
-  description: '',
   Panel,
   create: (payload) => {
     const defaultData: IAccordionText = {

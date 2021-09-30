@@ -1,36 +1,16 @@
 /* eslint-disable react/jsx-wrap-multilines */
-import { BlocksMap } from '@/components/core/blocks';
 import { Stack } from '@/components/UI/Stack';
-import { TextStyle } from '@/components/UI/TextStyle';
-import { BasicType, BlockType } from '@/constants';
-import { IBlock } from '@/typings';
 import { Card, Tabs } from 'antd';
 import React, { useCallback, useEffect, useState } from 'react';
-import { presetTemplate } from './presetTemplate';
 import styles from './index.module.scss';
 import { Help } from '@/components/UI/Help';
 import { createPortal } from 'react-dom';
 import { IconFont } from '@/components/IconFont';
 import { useHoverIdx } from '@/hooks/useHoverIdx';
-
-const contentBlocks = [
-  BasicType.TEXT,
-  BasicType.IMAGE,
-  BasicType.BUTTON,
-  BasicType.HERO,
-  BasicType.SPACER,
-  BasicType.DIVIDER,
-  BasicType.NAVBAR,
-  BasicType.SOCIAL,
-  BasicType.CAROUSEL,
-];
-
-const layoutBlocks = [
-  BasicType.WRAPPER,
-  BasicType.SECTION,
-  BasicType.GROUP,
-  BasicType.COLUMN,
-];
+import {
+  BlockMarketCategory,
+  BlockMarketManager,
+} from '@/utils/BlockMarketManager';
 
 export const BlocksPanel: React.FC = (props) => {
   const { isDragging } = useHoverIdx();
@@ -62,7 +42,6 @@ export const BlocksPanel: React.FC = (props) => {
                 pointerEvents: isDragging ? 'none' : undefined,
                 position: 'absolute',
                 width: isDragging ? 0 : 650,
-                maxHeight: 600,
                 zIndex: 200,
                 top: -16,
                 left: 47,
@@ -85,20 +64,15 @@ export const BlocksPanel: React.FC = (props) => {
                   tabBarStyle={{ padding: 0 }}
                   tabPosition='left'
                 >
-                  <Tabs.TabPane
-                    style={{ padding: 0 }}
-                    key='Layout'
-                    tab='content'
-                  >
-                    <BlockPanelItem blockTypes={contentBlocks} />
-                  </Tabs.TabPane>
-                  <Tabs.TabPane
-                    style={{ padding: 0 }}
-                    key='content'
-                    tab='Layout'
-                  >
-                    <BlockPanelItem blockTypes={layoutBlocks} />
-                  </Tabs.TabPane>
+                  {BlockMarketManager.getCategories().map((category) => (
+                    <Tabs.TabPane
+                      style={{ padding: 0 }}
+                      key={category.title}
+                      tab={category.title}
+                    >
+                      <BlockPanelItem category={category} />
+                    </Tabs.TabPane>
+                  ))}
                 </Tabs>
               </Card>
             </div>,
@@ -110,52 +84,36 @@ export const BlocksPanel: React.FC = (props) => {
 };
 
 const BlockPanelItem: React.FC<{
-  blockTypes: Array<BlockType>;
+  category: BlockMarketCategory;
 }> = (props) => {
   return (
     <Tabs tabPosition='left'>
-      {props.blockTypes.map((blockType, index) => {
-        const block = BlocksMap.findBlockByType(blockType);
+      {props.category.blocks.map((block, index) => {
         return (
           <Tabs.TabPane
             style={{ padding: 0 }}
-            key={block.type}
+            key={block.title}
             tab={
               <Stack alignment='center' spacing='extraTight'>
-                <div className={styles.blockItem}>{block.name}</div>
+                <div className={styles.blockItem}>{block.title}</div>
                 {block.description && <Help title={block.description} />}
               </Stack>
             }
           >
             <div
               style={{
-                maxHeight: 'calc(100vh - 180px)',
+                maxHeight: 600,
                 overflow: 'scroll',
                 paddingRight: 10,
                 overflowX: 'hidden',
                 padding: '24px 48px 24px 24px',
               }}
             >
-              <BlockItem block={block} />
+              {block.ExampleComponent && <block.ExampleComponent />}
             </div>
           </Tabs.TabPane>
         );
       })}
     </Tabs>
-  );
-};
-
-const BlockItem: React.FC<{
-  block: IBlock;
-}> = (props) => {
-  const BlockComponent = presetTemplate[props.block.type];
-
-  if (BlockComponent) {
-    return <BlockComponent />;
-  }
-  return (
-    <Stack vertical>
-      <TextStyle>{props.block.name}</TextStyle>
-    </Stack>
   );
 };

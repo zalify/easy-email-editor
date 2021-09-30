@@ -27,15 +27,6 @@ export type IImage = IBlockData<{
 export const Image: IBlock<IImage> = createBlock({
   name: 'Image',
   type: BasicType.IMAGE,
-  description: (
-    <Stack vertical spacing="none">
-      <TextStyle>
-        Displays a responsive image in your email. It is similar to
-        the HTML "&lt;img/&gt;" tag. Note that if no width is
-        provided, the image will use the parent column width.
-      </TextStyle>
-    </Stack>
-  ),
   Panel,
   create: (payload) => {
     const defaultData: IImage = {

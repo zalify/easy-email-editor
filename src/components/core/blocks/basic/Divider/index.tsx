@@ -19,8 +19,6 @@ export type IDivider = IBlockData<
 export const Divider = createBlock<IDivider>({
   name: 'Divider',
   type: BasicType.DIVIDER,
-  description: ` Displays a horizontal divider that can be customized like a
-  HTML border.`,
   Panel,
   create: (payload) => {
     const defaultData: IDivider = {

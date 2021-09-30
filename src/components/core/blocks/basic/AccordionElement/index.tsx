@@ -25,7 +25,6 @@ export type IAccordionElement = IBlockData<
 export const AccordionElement = createBlock<IAccordionElement>({
   name: 'Accordion element',
   type: BasicType.ACCORDION_ELEMENT,
-  description: '',
   Panel,
   create: (payload) => {
     const defaultData: IAccordionElement = {

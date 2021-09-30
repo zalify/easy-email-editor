@@ -13,7 +13,6 @@ export type ISpacer = IBlockData<{
 export const Spacer: IBlock<ISpacer> = createBlock({
   name: 'Spacer',
   type: BasicType.SPACER,
-  description: 'Displays a blank space.',
   Panel,
   create: (payload) => {
     const defaultData: ISpacer = {

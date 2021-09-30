@@ -56,8 +56,6 @@ export type ISocial = IBlockData<
 export const Social: IBlock<ISocial> = createBlock({
   name: 'Social',
   type: BasicType.SOCIAL,
-  description: `Displays calls-to-action for various social networks with
-  their associated logo.`,
   Panel,
   create: (payload) => {
     const defaultData: ISocial = {

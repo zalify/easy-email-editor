@@ -28,12 +28,6 @@ export type IAccordion = IBlockData<
 export const Accordion = createBlock<IAccordion>({
   name: 'Accordion',
   type: BasicType.ACCORDION,
-  description: `Accordion is an interactive component to stack content in
-  tabs, so the information is collapsed and only the titles
-  are visible. Readers can interact by clicking on the tabs
-  to reveal the content, providing a great experience on
-  mobile devices where space is scarce.`
-  ,
   Panel,
   validParentType: [BasicType.COLUMN],
   create: (payload) => {

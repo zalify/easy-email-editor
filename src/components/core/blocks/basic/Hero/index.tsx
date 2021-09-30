@@ -25,8 +25,6 @@ export type IHero = IBlockData<
 export const Hero = createBlock<IHero>({
   name: 'Hero',
   type: BasicType.HERO,
-  description: `This block displays a hero image. It behaves like an
-  'section' with a single 'column'.`,
   Panel,
   create: (payload) => {
     const defaultData: IHero = {

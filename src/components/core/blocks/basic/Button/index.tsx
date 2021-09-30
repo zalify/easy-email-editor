@@ -31,13 +31,12 @@ export type IButton = IBlockData<
     'text-decoration'?: string;
     'text-transform'?: CSSProperties['textTransform'];
   },
-  { content: string; }
+  { content: string }
 >;
 
 export const Button = createBlock<IButton>({
   name: 'Button',
   type: BasicType.BUTTON,
-  description: 'Displays a customizable button.',
   Panel,
   create: (payload) => {
     const defaultData: IButton = {
