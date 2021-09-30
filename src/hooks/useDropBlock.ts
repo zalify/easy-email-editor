@@ -21,7 +21,7 @@ import { getEditNode } from '@/utils/getEditNode';
 
 export function useDropBlock() {
   const [ref, setRef] = useState<HTMLElement | null>(null);
-  const { values, addBlock, moveBlock } = useBlock();
+  const { values, addBlock, moveBlock, focusBlock } = useBlock();
   const { autoComplete } = useContext(EditorPropsContext);
   const { dataTransfer, setDataTransfer } = useDataTransfer();
   const cacheValues = useRef(values);
@@ -51,9 +51,20 @@ export function useDropBlock() {
   } = useHoverIdx();
 
   useEffect(() => {
+    if (focusBlock?.type === BasicType.TEXT) {
+      const node = findBlockNodeByIdx(focusIdx);
+      if (node) {
+        const editNode = getEditNode(node);
+
+        editNode?.focus();
+      }
+    }
+
+  }, [focusBlock?.type, focusIdx]);
+
+  useEffect(() => {
     if (ref) {
       const onClick = (ev: MouseEvent) => {
-
         ev.preventDefault(); // prevent link
 
         const target = ev.target;
@@ -80,14 +91,15 @@ export function useDropBlock() {
   useEffect(() => {
     if (ref) {
       const onFocusin = (ev: FocusEvent) => {
+
         ev.preventDefault();
+
         const blockNode = findBlockNode(ev.target as HTMLElement);
         if (blockNode) {
           const idx = getNodeIdxFromClassName(blockNode.classList)!;
           setFocusIdx(idx);
           scrollFocusBlockIntoView({ idx, inShadowDom: false });
         }
-
       };
 
       ref.addEventListener('focusin', onFocusin);

@@ -1,3 +1,4 @@
+
 // export components
 export { EmailEditorProvider } from './components/Provider/EmailEditorProvider';
 export * from './components/core/Form';
@@ -10,7 +11,7 @@ export { EmailEditor } from './components/EmailEditor';
 export * from './components/EmailEditor/components/ConfigurationPanel';
 export { BlockAvatarWrapper } from './components/core/wrapper/BlockAvatarWrapper';
 export { Stack } from './components/UI/Stack';
-
+export * from './utils/BlockMarketManager';
 // export hooks
 export { useBlock } from './hooks/useBlock';
 export { useDropBlock } from './hooks/useDropBlock';

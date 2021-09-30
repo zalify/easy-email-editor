@@ -8,8 +8,6 @@ import { ActiveTabKeys } from '@/components/Provider/BlocksProvider';
 import { useDomScrollHeight } from '@/hooks/useDomScrollHeight';
 import { FocusTooltip } from './components/FocusTooltip';
 import { useHotKeys } from '@/hooks/useHotKeys';
-import { findBlockNodeByIdx } from '@/utils/findBlockNodeByIdx';
-import { useFocusIdx } from '@/hooks/useFocusIdx';
 
 export function EmailContent() {
   useHotKeys();
@@ -17,7 +15,6 @@ export function EmailContent() {
   const [containerRef, setContainerRef] = useState<HTMLDivElement | null>(null);
   const { setRef } = useDropBlock();
   const { scrollHeight } = useDomScrollHeight();
-  const { focusIdx } = useFocusIdx();
 
   const isActive = activeTab === ActiveTabKeys.EDIT;
 

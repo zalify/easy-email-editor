@@ -153,9 +153,9 @@ export interface BlockMarketCategory {
   title: string;
   name: string;
   blocks: {
-    title?: string;
+    title: string;
     description?: React.ReactNode;
-    ExampleComponent?: () => JSX.Element;
+    ExampleComponent: () => JSX.Element;
   }[];
 }
 
@@ -175,14 +175,19 @@ export class BlockMarketManager {
       ExampleComponent: () => JSX.Element;
     }[]
   ) {
-    this.category[name] = {
+    const index = this.category.findIndex(item => item.name === name);
+    if (index !== -1) {
+      this.category.splice(index, 1);
+    }
+
+    this.category.push({
       name,
       title,
       blocks,
-    };
+    });
   }
 
   public static removeCategory(name: string) {
-    delete this.category[name];
+    this.category = this.category.filter(item => item.name !== name);
   }
 }

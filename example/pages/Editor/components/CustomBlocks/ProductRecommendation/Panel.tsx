@@ -1,6 +1,7 @@
 import { Stack } from '@example/components/Stack';
 import { ColorPickerField, TextField, useFocusIdx } from 'easy-email-editor';
 import React from 'react';
+
 export function Panel() {
   const { focusIdx } = useFocusIdx();
   return (

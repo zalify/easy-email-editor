@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-wrap-multilines */
 import { Stack } from '@/components/UI/Stack';
 import { Card, Tabs } from 'antd';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import styles from './index.module.scss';
 import { Help } from '@/components/UI/Help';
 import { createPortal } from 'react-dom';
@@ -11,11 +11,13 @@ import {
   BlockMarketCategory,
   BlockMarketManager,
 } from '@/utils/BlockMarketManager';
+import { EditorPropsContext } from 'easy-email-editor';
 
 export const BlocksPanel: React.FC = (props) => {
   const { isDragging } = useHoverIdx();
   const [visible, setVisible] = useState(false);
   const [ele, setEle] = useState<HTMLElement | null>(null);
+  const { extraBlocks } = useContext(EditorPropsContext);
 
   useEffect(() => {
     if (!isDragging) {
@@ -28,6 +30,10 @@ export const BlocksPanel: React.FC = (props) => {
   const toggleVisible = useCallback(() => {
     setVisible((v) => !v);
   }, []);
+
+  const categories = useMemo(() => {
+    return [...BlockMarketManager.getCategories(), ...(extraBlocks || [])].filter(item => item.blocks.length > 0);
+  }, [extraBlocks]);
 
   return (
     <>
@@ -64,7 +70,7 @@ export const BlocksPanel: React.FC = (props) => {
                   tabBarStyle={{ padding: 0 }}
                   tabPosition='left'
                 >
-                  {BlockMarketManager.getCategories().map((category) => (
+                  {categories.map((category) => (
                     <Tabs.TabPane
                       style={{ padding: 0 }}
                       key={category.title}
@@ -87,7 +93,7 @@ const BlockPanelItem: React.FC<{
   category: BlockMarketCategory;
 }> = (props) => {
   return (
-    <Tabs tabPosition='left'>
+    <Tabs tabBarStyle={{ padding: '20px 0' }} tabPosition='left'>
       {props.category.blocks.map((block, index) => {
         return (
           <Tabs.TabPane
