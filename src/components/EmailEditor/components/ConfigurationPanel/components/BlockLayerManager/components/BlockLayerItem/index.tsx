@@ -79,79 +79,80 @@ export const BlockLayerItem = ({
       Boolean
     ) as IBlockData[];
   }, [blockData.children, childPlaceHolder, isDragging]);
+  return useMemo(() => {
 
-  if (blockData.data.value.placeholder) {
+    if (blockData.data.value.placeholder) {
+      return (
+        <li
+          className={classnames(
+            styles.blockItem,
+            getNodeIdxClassName(idx),
+            getNodeTypeClassName(blockData.type)
+          )}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          }}
+          style={{
+            opacity: 0,
+            cursor: 'default',
+          }}
+          data-parent-type={parentType}
+          data-idx={idx}
+        >
+          Placeholder
+        </li>
+      );
+    }
+    const onlyPlaceHolderChild =
+      blockData.children.length === 0 && childrenList.length === 1;
     return (
       <li
+        data-parent-type={parentType}
+        data-idx={idx}
         className={classnames(
           styles.blockItem,
+          'email-block',
           getNodeIdxClassName(idx),
           getNodeTypeClassName(blockData.type)
         )}
-        onMouseDown={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-        }}
-        style={{
-          opacity: 0,
-          cursor: 'default',
-        }}
-        data-parent-type={parentType}
-        data-idx={idx}
       >
-        Placeholder
+        <BlockLayerItemContent
+          visible={visible}
+          setVisible={setVisible}
+          blockData={blockData}
+          idx={idx}
+          indent={indent}
+          parentType={parentType}
+        />
+
+        {(visible || onlyPlaceHolderChild) && (
+          <ul
+            className={classnames(styles.blockList)}
+          >
+            <BlockSortableWrapper
+              type={blockData.type}
+              action='move'
+              key={idx}
+              idx={idx}
+              list={childrenList}
+              onStart={onStart}
+              onEnd={onEnd}
+            >
+              {childrenList.map((item, index) => (
+                <BlockLayerItem
+                  hidden={hidden || blockData.data.hidden}
+                  key={index}
+                  indent={indent + 1}
+                  blockData={item}
+                  parentType={blockData.type}
+                  idx={getChildIdx(idx, index)}
+                />
+              ))}
+            </BlockSortableWrapper>
+          </ul>
+        )}
       </li>
     );
-  }
-  const onlyPlaceHolderChild =
-    blockData.children.length === 0 && childrenList.length === 1;
-  return (
-    <li
-      data-parent-type={parentType}
-      data-idx={idx}
-      className={classnames(
-        styles.blockItem,
-        'email-block',
-        getNodeIdxClassName(idx),
-        getNodeTypeClassName(blockData.type)
-      )}
-    >
-      <BlockLayerItemContent
-        visible={visible}
-        setVisible={setVisible}
-        blockData={blockData}
-        idx={idx}
-        indent={indent}
-        parentType={parentType}
-      />
-
-      <ul
-        style={{
-          display: visible || onlyPlaceHolderChild ? undefined : 'none',
-        }}
-        className={classnames(styles.blockList)}
-      >
-        <BlockSortableWrapper
-          type={blockData.type}
-          action='move'
-          key={idx}
-          idx={idx}
-          list={childrenList}
-          onStart={onStart}
-          onEnd={onEnd}
-        >
-          {childrenList.map((item, index) => (
-            <BlockLayerItem
-              hidden={hidden || blockData.data.hidden}
-              key={index}
-              indent={indent + 1}
-              blockData={item}
-              parentType={blockData.type}
-              idx={getChildIdx(idx, index)}
-            />
-          ))}
-        </BlockSortableWrapper>
-      </ul>
-    </li>
-  );
+  }, [blockData, childrenList, hidden, idx, indent, onEnd, onStart, parentType, visible]);
 };

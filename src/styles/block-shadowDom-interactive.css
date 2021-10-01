@@ -28,11 +28,15 @@
   cursor: text;
 }
 
-.block-selected,
+.block-selected {
+  position: relative;
+  z-index: 1;
+}
+
 .block-hover,
 .block-dragover {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .block-selected .email-block,

@@ -21,9 +21,7 @@ export const BlocksPanel: React.FC = (props) => {
 
   useEffect(() => {
     if (!isDragging) {
-      setTimeout(() => {
-        setVisible(false);
-      }, 0);
+      setVisible(false);
     }
   }, [isDragging]);
 
@@ -35,23 +33,23 @@ export const BlocksPanel: React.FC = (props) => {
     return [...BlockMarketManager.getCategories(), ...(extraBlocks || [])].filter(item => item.blocks.length > 0);
   }, [extraBlocks]);
 
-  return (
+  return useMemo(() => (
     <>
       <div ref={setEle} style={{ position: 'relative' }}>
         <div onClick={toggleVisible}>{props.children}</div>
 
-        {ele &&
+        {ele && visible &&
           createPortal(
             <div
               style={{
-                display: visible ? undefined : 'none',
                 pointerEvents: isDragging ? 'none' : undefined,
                 position: 'absolute',
                 width: isDragging ? 0 : 650,
                 zIndex: 200,
                 top: -16,
                 left: 47,
-                transition: 'all .5s',
+                transition: 'width .5s',
+                overflow: 'hidden',
                 boxShadow:
                   '0 1px 5px 0 rgb(0 0 0 / 12%), 0 2px 10px 0 rgb(0 0 0 / 8%), 0 1px 20px 0 rgb(0 0 0 / 8%)',
               }}
@@ -86,12 +84,12 @@ export const BlocksPanel: React.FC = (props) => {
           )}
       </div>
     </>
-  );
+  ), [categories, ele, isDragging, props.children, toggleVisible, visible]);
 };
 
 const BlockPanelItem: React.FC<{
   category: BlockMarketCategory;
-}> = (props) => {
+}> = React.memo((props) => {
   return (
     <Tabs tabBarStyle={{ padding: '20px 0' }} tabPosition='left'>
       {props.category.blocks.map((block, index) => {
@@ -122,4 +120,4 @@ const BlockPanelItem: React.FC<{
       })}
     </Tabs>
   );
-};
+});

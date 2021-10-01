@@ -18,7 +18,7 @@ img.src =
 export const BlockAvatarWrapper: React.FC<BlockAvatarWrapperProps> = (
   props
 ) => {
-  const { type, children, payload, action = 'add', hideIcon } = props;
+  const { type, children, payload, action = 'add' } = props;
   const { setDataTransfer } = useDataTransfer();
   const { setIsDragging, setHoverIdx } = useHoverIdx();
   const ref = useRef<HTMLDivElement>(null);

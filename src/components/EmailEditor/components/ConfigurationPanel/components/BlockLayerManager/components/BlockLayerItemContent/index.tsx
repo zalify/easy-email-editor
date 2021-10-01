@@ -1,16 +1,9 @@
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useEditorContext } from '@/hooks/useEditorContext';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { IBlockData } from '@/typings';
 import {
   findBlockByType,
-  getChildIdx,
-  getIndexByIdx,
-  getNodeIdxClassName,
-  getNodeTypeClassName,
-  getNodeTypeFromClassName,
   getPageIdx,
-  getValidChildBlocks,
 } from '@/utils/block';
 import { useBlock } from '@/hooks/useBlock';
 import { BasicType, BlockType } from '@/constants';
@@ -48,6 +41,7 @@ export const BlockLayerItemContent = ({
   const noChild = blockData.children.length === 0;
   const isPageBlock = idx === getPageIdx();
   const { setHoverIdx, hoverIdx, isDragging } = useHoverIdx();
+  const ref = useRef<HTMLDivElement>(null);
 
   const onSelect = useCallback(() => {
     setFocusIdx(idx);
@@ -57,25 +51,47 @@ export const BlockLayerItemContent = ({
   const isSelected = idx === focusIdx;
   const isHover = !isDragging && idx === hoverIdx;
 
-  const onMouseEnter = useCallback(() => {
-    setHoverIdx(idx);
-  }, [idx, setHoverIdx]);
+  const onMouseEnter: React.MouseEventHandler<HTMLDivElement> = useCallback((ev) => {
+    if (ref.current) {
+      setHoverIdx(ref.current.getAttribute('data-idx')!);
+    }
+
+  }, [setHoverIdx]);
 
   const onMouseLeave = useCallback(() => {
     setHoverIdx('');
   }, [setHoverIdx]);
 
+  useEffect(() => {
+    if (ref.current) {
+      if (isSelected) {
+        ref.current.classList.add(styles.listItemSelected);
+      } else {
+        ref.current.classList.remove(styles.listItemSelected);
+      }
+    }
+  }, [isSelected]);
+
+  useEffect(() => {
+    if (ref.current) {
+      if (isHover && !isSelected) {
+        ref.current.classList.add(styles.listItemHover);
+      } else {
+        ref.current.classList.remove(styles.listItemHover);
+      }
+    }
+  }, [isHover, isSelected]);
+  console.log(isHover, idx);
+
   return useMemo(
     () => (
       <div
+        ref={ref}
+        data-idx={idx}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
         onClick={onSelect}
-        className={classnames(
-          styles.listItemContentWrapper,
-          isSelected && styles.listItemSelected,
-          isHover && !isSelected && styles.listItemHover
-        )}
+        className={classnames(styles.listItemContentWrapper)}
       >
         <Stack.Item fill>
           <Stack distribution='equalSpacing' alignment='center'>
@@ -88,8 +104,6 @@ export const BlockLayerItemContent = ({
                       blockType={blockData.type}
                       noChild={noChild}
                       isPageBlock={isPageBlock}
-                      focusIdx={focusIdx}
-                      idx={idx}
                       visible={visible}
                       setVisible={setVisible}
                     />
@@ -101,6 +115,7 @@ export const BlockLayerItemContent = ({
 
                       <TextStyle size='smallest'>
                         <span
+
                           title={title}
                           style={{
                             maxWidth: 100,
@@ -129,23 +144,7 @@ export const BlockLayerItemContent = ({
         </Stack.Item>
       </div>
     ),
-    [
-      blockData,
-      focusIdx,
-      hidden,
-      idx,
-      indent,
-      isHover,
-      isPageBlock,
-      isSelected,
-      noChild,
-      onMouseEnter,
-      onMouseLeave,
-      onSelect,
-      setVisible,
-      title,
-      visible,
-    ]
+    [blockData, hidden, idx, indent, isPageBlock, noChild, onMouseEnter, onMouseLeave, onSelect, setVisible, title, visible]
   );
 };
 
@@ -188,19 +187,11 @@ const SubIcon: React.FC<{
   blockType: BlockType;
   noChild: boolean;
   isPageBlock: boolean;
-  focusIdx: string;
-  idx: string;
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }> = React.memo(
-  ({ blockType, noChild, isPageBlock, focusIdx, idx, visible, setVisible }) => {
+  ({ blockType, noChild, isPageBlock, visible, setVisible }) => {
     const { collapsed, setCollapsed } = useCollapse();
-
-    useEffect(() => {
-      if (focusIdx.startsWith(idx)) {
-        setVisible(true);
-      }
-    }, [focusIdx, idx, setVisible]);
 
     const onToggle = useCallback(
       (e: React.MouseEvent) => {

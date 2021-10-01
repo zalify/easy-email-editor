@@ -23,7 +23,6 @@ const RichTextFieldItem = (
   const isActive = activeTab === ActiveTabKeys.EDIT;
 
   const [position, setPosition] = useState({ top: 0, left: 0 });
-  const [isMove, setIsMove] = useState(false);
   const [locationState, setLocationState] = useLocalStorage(
     TEXT_BAR_LOCATION_KEY,
     { left: 0, top: 0 }
@@ -50,7 +49,7 @@ const RichTextFieldItem = (
 
   const textToolbar = useMemo(() => {
     const onMoveTextToolbar = (event: React.MouseEvent) => {
-      setIsMove(true);
+
       onDrag({
         event: event as any,
         onMove(x, y) {
@@ -64,7 +63,7 @@ const RichTextFieldItem = (
           });
         },
         onEnd() {
-          setIsMove(false);
+
         },
       });
     };

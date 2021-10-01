@@ -1,5 +1,4 @@
 import { IDivider } from '@/components/core/blocks/basic/Divider';
-import { ISpacer } from '@/components/core/blocks/basic/Spacer';
 import { BlockMaskWrapper } from '@/components/core/wrapper/BlockMaskWrapper';
 import { Stack } from '@/components/UI/Stack';
 import { TextStyle } from '@/components/UI/TextStyle';

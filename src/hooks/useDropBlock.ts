@@ -1,12 +1,8 @@
-import {
-  BLOCK_HOVER_CLASSNAME,
-  BLOCK_SELECTED_CLASSNAME,
-} from './../constants';
 import { useEffect, useMemo, useState, useContext, useRef } from 'react';
 
 import { getNodeIdxFromClassName, getNodeTypeFromClassName } from '@/utils/block';
 import { findBlockNode } from '@/utils/findBlockNode';
-import { DRAG_HOVER_CLASSNAME } from '@/constants';
+import { BLOCK_HOVER_CLASSNAME, DRAG_HOVER_CLASSNAME } from '@/constants';
 import { useBlock } from '@/hooks/useBlock';
 import { getDirectionPosition } from '@/utils/getDirectionPosition';
 import { findBlockNodeByIdx, getBlockNodes } from '@/utils/findBlockNodeByIdx';
@@ -26,6 +22,7 @@ export function useDropBlock() {
   const { dataTransfer, setDataTransfer } = useDataTransfer();
   const cacheValues = useRef(values);
   const cacheDataTransfer = useRef(dataTransfer);
+  const cacheDropData = useRef<{ parentIdx?: string; positionIndex: number; }>({ positionIndex: 0 });
 
   useEffect(() => {
     cacheValues.current = values;
@@ -47,7 +44,6 @@ export function useDropBlock() {
     isDragging,
     hoverIdx,
     direction,
-    setDragPosition,
   } = useHoverIdx();
 
   useEffect(() => {
@@ -113,6 +109,7 @@ export function useDropBlock() {
     if (!ref) return;
 
     const onDrop = (ev: DragEvent) => {
+
       if (!dataTransfer) return;
       const target = ev.target as HTMLElement;
       const blockNode = findBlockNode(target);
@@ -123,24 +120,25 @@ export function useDropBlock() {
       if (!type) return;
       const payload = dataTransfer.payload || {};
 
-      if (parent) {
+      if (parent && cacheDropData.current.parentIdx) {
         ev.preventDefault();
 
         const blockData: Parameters<typeof addBlock>[0] = {
           payload,
           type,
-          parentIdx: dataTransfer.parentIdx!,
-          positionIndex: dataTransfer.positionIndex,
+          parentIdx: cacheDropData.current.parentIdx,
+          positionIndex: cacheDropData.current.positionIndex,
         };
 
         if (action === 'move') {
           moveBlock({
             sourceIdx: blockData.payload,
-            destinationIdx: blockData.parentIdx,
+            destinationIdx: cacheDropData.current.parentIdx,
           });
         } else {
           addBlock(blockData);
         }
+
       }
     };
 
@@ -148,10 +146,11 @@ export function useDropBlock() {
     return () => {
       ref.removeEventListener('drop', onDrop);
     };
-  }, [addBlock, dataTransfer, moveBlock, ref, values]);
+  }, [addBlock, dataTransfer, moveBlock, ref]);
 
   useEffect(() => {
     if (ref) {
+
       let lastHoverTarget: EventTarget | null = null;
 
       let lastDragover: {
@@ -183,21 +182,18 @@ export function useDropBlock() {
         if (ev.target === lastDragover.target) {
           if (lastDragover.valid) {
             ev.preventDefault();
+
             return;
           }
         }
+        const start = performance.now();
         lastDragover.target = ev.target;
         lastDragover.valid = false;
 
-        setDragPosition({
-          left: ev.pageX,
-          top: ev.pageY,
-        });
         const blockNode = findBlockNode(ev.target as HTMLDivElement);
 
         if (blockNode) {
           const directionPosition = getDirectionPosition(ev);
-
           const idx = getNodeIdxFromClassName(blockNode.classList)!;
 
           const positionData = getInsertPosition({
@@ -211,13 +207,9 @@ export function useDropBlock() {
           if (positionData) {
             ev.preventDefault();
             lastDragover.valid = true;
+            cacheDropData.current.parentIdx = positionData.parentIdx;
+            cacheDropData.current.positionIndex = positionData.insertIndex;
             setDirection(positionData.endDirection);
-            setDataTransfer({
-              ...cacheDataTransfer.current,
-              positionIndex: positionData.insertIndex,
-              parentIdx: positionData.parentIdx,
-            });
-
             setHoverIdx(positionData.hoverIdx);
           }
         }
@@ -225,6 +217,7 @@ export function useDropBlock() {
           setDirection('');
           setHoverIdx('');
         }
+
       };
 
       ref.addEventListener('mouseover', onMouseover);
@@ -246,7 +239,6 @@ export function useDropBlock() {
     ref,
     setDataTransfer,
     setDirection,
-    setDragPosition,
     setHoverIdx,
   ]);
 
@@ -271,6 +263,18 @@ export function useDropBlock() {
       ref.setAttribute('data-direction', direction || 'none');
     }
   }, [direction, isDragging, ref]);
+
+  useEffect(() => {
+    if (ref) {
+      ref.setAttribute('data-hoverIdx', hoverIdx);
+    }
+  }, [hoverIdx, ref]);
+
+  useEffect(() => {
+    if (ref) {
+      ref.setAttribute('data-focusIdx', focusIdx);
+    }
+  }, [focusIdx, ref]);
 
   useEffect(() => {
     if (!isDragging) return;

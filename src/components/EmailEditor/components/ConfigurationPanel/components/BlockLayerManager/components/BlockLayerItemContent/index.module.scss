@@ -5,7 +5,6 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  cursor: pointer;
   margin-top: 2px;
 
   .shortcutTool {
@@ -30,7 +29,7 @@
   // border-bottom: 1px solid #eee;
   position: relative;
   border-radius: 4px;
-
+  outline: none;
 }
 
 .listItemHover {

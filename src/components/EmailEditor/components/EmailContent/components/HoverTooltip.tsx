@@ -32,12 +32,12 @@ export function HoverTooltip() {
   const block = useMemo(() => {
     return blockNode
       ? BlocksMap.findBlockByType(
-          getNodeTypeFromClassName(blockNode.classList)!
-        )
+        getNodeTypeFromClassName(blockNode.classList)!
+      )
       : null;
   }, [blockNode]);
 
-  if (focusIdx === hoverIdx) return null;
+  if (focusIdx === hoverIdx && !isDragging) return null;
   if (!block || !blockNode) return null;
 
   return (
@@ -170,6 +170,7 @@ function TipNode(props: TipNodeProps) {
               maxWidth: '100%',
               textAlign: 'center',
               whiteSpace: 'nowrap',
+              padding: '1px 5px',
 
               ...positionStyleMap[props.direction || 'none'],
             }}

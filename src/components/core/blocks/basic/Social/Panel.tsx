@@ -149,6 +149,13 @@ function SocialElement({
       />
 
       <TextField
+        label='Content'
+        name={`${focusIdx}.data.value.elements.[${index}].content`}
+        quickchange
+        inline
+      />
+
+      <TextField
         label='Icon width'
         name={`${focusIdx}.data.value.elements.[${index}].icon-size`}
         quickchange

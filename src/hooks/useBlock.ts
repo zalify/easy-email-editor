@@ -8,6 +8,7 @@ import { message } from 'antd';
 import {
   findBlockByType,
   getIndexByIdx,
+  getPageIdx,
   getParentByIdx,
   getParentIdx,
   getValueByIdx,
@@ -36,6 +37,7 @@ export function useBlock() {
       payload?: any;
       canReplace?: boolean;
     }) => {
+
       let { type, parentIdx, positionIndex, payload } = params;
       let nextFocusIdx = focusIdx;
       const values = cloneDeep(getState().values) as IEmailTemplate;
@@ -129,28 +131,25 @@ export function useBlock() {
       const fixedBlock = findBlockByType(child.type);
       if (!fixedBlock.validParentType.includes(parent.type)) {
         message.warning(
-          `${block.type} cannot be used inside ${
-            parentBlock.type
+          `${block.type} cannot be used inside ${parentBlock.type
           }, only inside: ${block.validParentType.join(', ')}`
         );
         return;
       }
 
       parent.children.splice(positionIndex, 0, child);
-      batch(() => {
-        change(parentIdx, { ...parent }); // listeners not notified
-      });
+      change(parentIdx, { ...parent }); // listeners not notified
       setFocusIdx(nextFocusIdx);
       scrollFocusBlockIntoView({
         idx: nextFocusIdx,
         inShadowDom: true,
       });
     },
-    [autoComplete, batch, change, focusIdx, getState, setFocusIdx]
+    [autoComplete, change, focusIdx, getState, setFocusIdx]
   );
 
   const moveBlock = useCallback(
-    (params: { sourceIdx: string; destinationIdx: string }) => {
+    (params: { sourceIdx: string; destinationIdx: string; }) => {
       let { sourceIdx, destinationIdx } = params;
       if (sourceIdx === destinationIdx) return null;
 
@@ -168,8 +167,7 @@ export function useBlock() {
       if (!sourceBlock.validParentType.includes(destinationParent.type)) {
         const parentBlock = findBlockByType(destinationParent.type);
         message.warning(
-          `${sourceBlock.name} cannot be used inside ${
-            parentBlock.name
+          `${sourceBlock.name} cannot be used inside ${parentBlock.name
           }, only inside: ${sourceBlock.validParentType.join(', ')}`
         );
         return;
@@ -186,13 +184,7 @@ export function useBlock() {
         const [removed] = sourceParent.children.splice(sourceIndex, 1);
         destinationParent.children.splice(positionIndex, 0, removed);
       }
-      batch(() => {
-        change(sourceParentIdx, { ...sourceParent });
-        if (sourceParentIdx !== destinationParentIdx) {
-          change(destinationParentIdx, { ...destinationParent });
-        }
-      });
-
+      change(getPageIdx(), { ...values.content });
       nextFocusIdx = destinationIdx + `.children.[${positionIndex}]`;
       setFocusIdx(nextFocusIdx);
       scrollFocusBlockIntoView({
@@ -200,7 +192,7 @@ export function useBlock() {
         inShadowDom: true,
       });
     },
-    [batch, change, focusIdx, getState, setFocusIdx]
+    [change, focusIdx, getState, setFocusIdx]
   );
 
   const copyBlock = useCallback(

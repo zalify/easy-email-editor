@@ -28,7 +28,6 @@ const buttonList = [
         border: 'none',
         'text-align': 'center',
         href: '#',
-        'font-family': 'helvetica',
       },
       data: {
         value: {
@@ -57,7 +56,6 @@ const buttonList = [
         border: '2px solid #000',
         'text-align': 'center',
         href: '#',
-        'font-family': 'helvetica',
       },
       data: {
         value: {
@@ -87,7 +85,6 @@ const buttonList = [
         border: '2px dashed #ffffff',
         'text-align': 'center',
         href: '#',
-        'font-family': 'helvetica',
         'container-background-color': '#97c0f0',
       },
       data: {

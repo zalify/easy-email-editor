@@ -48,7 +48,7 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
   const onDragEnd = useCallback(
     (
       evt: {
-        originalEvent: { dataTransfer: DataTransfer };
+        originalEvent: { dataTransfer: DataTransfer; };
         from: HTMLElement;
         to: HTMLElement;
         newIndex: number;
@@ -81,7 +81,6 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
           evt.oldIndex
         );
         const targetIdx = getChildIdx(idx, evt.newIndex);
-
         moveBlock({
           sourceIdx: sourceIdx,
           destinationIdx: targetIdx,
@@ -101,7 +100,7 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
   );
 
   const onDragStart = useCallback(
-    (evt: { originalEvent: { dataTransfer: DataTransfer } }) => {
+    (evt: { originalEvent: DragEvent; }) => {
       setIsDragging(true);
       onStart?.();
     },
@@ -109,11 +108,11 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
   );
 
   const onSpill = useCallback(
-    (evt: { originalEvent: { dataTransfer: DataTransfer } }) => {},
+    (evt: { originalEvent: { dataTransfer: DataTransfer; }; }) => { },
     []
   );
 
-  const onChoose = useCallback(() => {}, []);
+  const onChoose = useCallback(() => { }, []);
 
   const onCheckValidate = useCallback(
     (
@@ -159,7 +158,7 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
       revertOnSpill
       disabled={disabled}
       list={list as any}
-      setList={() => {}}
+      setList={() => { }}
       onMove={onCheckValidate}
       onEnd={onDragEnd}
       onSpill={onSpill}

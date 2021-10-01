@@ -10,6 +10,7 @@ import { BlockInteractiveStyle } from '../../../BlockInteractiveStyle';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { BlockSortableWrapper } from '@/components/core/wrapper/BlockSortableWrapper';
 import { BlockLayerItem } from './components/BlockLayerItem';
+import { useHoverIdx } from 'easy-email-editor';
 
 interface IBlockDataWithId extends IBlockData {
   id: string;
@@ -24,8 +25,9 @@ export function BlockLayerManager() {
     return [pageData] as any as IBlockDataWithId[];
   }, [pageData]);
 
+  const hasFocus = Boolean(focusIdx);
   return useMemo(() => {
-    if (!focusIdx) return null;
+    if (!hasFocus) return null;
     return (
       <div id='BlockLayerManager'>
         <BlockInteractiveStyle isShadowDom={false} />
@@ -54,5 +56,5 @@ export function BlockLayerManager() {
         </BlockSortableWrapper>
       </div>
     );
-  }, [focusIdx, list]);
+  }, [hasFocus, list]);
 }

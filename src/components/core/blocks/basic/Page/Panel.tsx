@@ -13,7 +13,6 @@ import { AddFont } from '@/components/core/Form/AddFont';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { AttributesPanelWrapper } from '@/components/core/wrapper/AttributesPanelWrapper';
 import { Collapse } from 'antd';
-import { FontFamily } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/FontFamliy';
 
 export function Panel() {
   const { focusIdx } = useFocusIdx();
@@ -56,9 +55,13 @@ export function Panel() {
           </Collapse.Panel>
           <Collapse.Panel key='1' header='Theme Setting'>
             <Stack vertical spacing='tight'>
-              <Stack>
+              <Stack wrap={false}>
                 <Stack.Item fill>
-                  <FontFamily />
+                  <TextField
+                    label='Font family'
+                    quickchange
+                    name={`${focusIdx}.data.value.font-family`}
+                  />
                 </Stack.Item>
                 <Stack.Item fill>
                   <TextField
