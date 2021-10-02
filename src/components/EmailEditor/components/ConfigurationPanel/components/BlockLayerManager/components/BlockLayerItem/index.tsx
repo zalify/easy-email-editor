@@ -83,33 +83,53 @@ export const BlockLayerItem = ({
 
     if (blockData.data.value.placeholder) {
       return (
-        <li
+        <BlockSortableWrapper
+          type={blockData.type}
+          action='move'
+          key={idx}
+          idx={idx}
+          payload={blockData}
+          onStart={onStart}
+          onEnd={onEnd}
           className={classnames(
             styles.blockItem,
+            'email-block',
             getNodeIdxClassName(idx),
             getNodeTypeClassName(blockData.type)
           )}
-          onMouseDown={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-          }}
-          style={{
-            opacity: 0,
-            cursor: 'default',
-          }}
-          data-parent-type={parentType}
-          data-idx={idx}
         >
-          Placeholder
-        </li>
+          <li
+            className={classnames(
+              styles.blockItem,
+            )}
+            onMouseDown={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+            style={{
+              opacity: 0,
+              cursor: 'default',
+            }}
+            data-parent-type={parentType}
+            data-idx={idx}
+          >
+            Placeholder
+          </li>
+        </BlockSortableWrapper>
+
       );
     }
     const onlyPlaceHolderChild =
       blockData.children.length === 0 && childrenList.length === 1;
     return (
-      <li
-        data-parent-type={parentType}
-        data-idx={idx}
+      <BlockSortableWrapper
+        type={blockData.type}
+        action='move'
+        key={idx}
+        idx={idx}
+        payload={blockData}
+        onStart={onStart}
+        onEnd={onEnd}
         className={classnames(
           styles.blockItem,
           'email-block',
@@ -117,27 +137,22 @@ export const BlockLayerItem = ({
           getNodeTypeClassName(blockData.type)
         )}
       >
-        <BlockLayerItemContent
-          visible={visible}
-          setVisible={setVisible}
-          blockData={blockData}
-          idx={idx}
-          indent={indent}
-          parentType={parentType}
-        />
+        <li
+          data-parent-type={parentType}
+          data-idx={idx}
+        >
+          <BlockLayerItemContent
+            visible={visible}
+            setVisible={setVisible}
+            blockData={blockData}
+            idx={idx}
+            indent={indent}
+            parentType={parentType}
+          />
 
-        {(visible || onlyPlaceHolderChild) && (
-          <ul
-            className={classnames(styles.blockList)}
-          >
-            <BlockSortableWrapper
-              type={blockData.type}
-              action='move'
-              key={idx}
-              idx={idx}
-              list={childrenList}
-              onStart={onStart}
-              onEnd={onEnd}
+          {(visible || onlyPlaceHolderChild) && (
+            <ul
+              className={classnames(styles.blockList)}
             >
               {childrenList.map((item, index) => (
                 <BlockLayerItem
@@ -149,10 +164,12 @@ export const BlockLayerItem = ({
                   idx={getChildIdx(idx, index)}
                 />
               ))}
-            </BlockSortableWrapper>
-          </ul>
-        )}
-      </li>
+
+            </ul>
+          )}
+        </li>
+      </BlockSortableWrapper>
+
     );
   }, [blockData, childrenList, hidden, idx, indent, onEnd, onStart, parentType, visible]);
 };

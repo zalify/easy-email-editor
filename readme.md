@@ -127,7 +127,7 @@ $ yarn dev
 
 ## Examples
 
-> Please see <a href="https://github.com/m-Ryan/easy-email-demo" target="_blank" alt="https://github.com/m-Ryan/easy-email-demo">https://github.com/m-Ryan/easy-email-demo</a>
+> Todo
 
 ## Use test account
 
@@ -141,7 +141,7 @@ $ yarn dev
 | children           | ( props: FormState<T>,helper: FormApi<IEmailTemplate, Partial<IEmailTemplate>>) => React.ReactNode | ReactNode                                     |
 | onSubmit           | Config<IEmailTemplate, Partial<IEmailTemplate>>['onSubmit'];                                       | Called when the commit is triggered manually  |
 | fontList           | { value: string; label: string; }[];                                                               | Default font list.                            |
-| interactiveStyle   | { hoverColor?: string; selectedColor?: string; dragoverColor?: string; tangentColor?: string; }    | Interactive prompt color                      |
+| interactiveStyle   | { hoverColor?: string; selectedColor?: string;}    | Interactive prompt color                      |
 | onUploadImage      | (data: Blob) => Promise<string>;                                                                   | Triggered when an image is pasted or uploaded |
 | onAddCollection    | (payload: CollectedBlock) => void;                                                                 | Add to collection list                        |
 | onRemoveCollection | (payload: { id: string; }) => void;                                                                | remove from collection list                   |

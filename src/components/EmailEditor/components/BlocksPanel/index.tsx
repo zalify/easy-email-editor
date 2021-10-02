@@ -11,7 +11,7 @@ import {
   BlockMarketCategory,
   BlockMarketManager,
 } from '@/utils/BlockMarketManager';
-import { EditorPropsContext } from 'easy-email-editor';
+import { EditorPropsContext } from '@/components/Provider/PropsProvider';
 
 export const BlocksPanel: React.FC = (props) => {
   const { isDragging } = useHoverIdx();

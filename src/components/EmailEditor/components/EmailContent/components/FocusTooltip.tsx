@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { getNodeTypeFromClassName } from '@/utils/block';
 import { BlocksMap } from '@/components/core/blocks';
 import { createPortal } from 'react-dom';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
@@ -8,11 +7,12 @@ import { ToolsBar } from './Toolsbar';
 import { awaitForElement } from '@/utils/awaitForElement';
 import { useHoverIdx } from '@/hooks/useHoverIdx';
 import { BLOCK_SELECTED_CLASSNAME, styleZIndex } from '@/constants';
+import { useBlock } from '@/hooks/useBlock';
 
 export function FocusTooltip() {
   const [blockNode, setBlockNode] = useState<HTMLDivElement | null>(null);
   const { isDragging } = useHoverIdx();
-
+  const { focusBlock } = useBlock();
   const { focusIdx } = useFocusIdx();
 
   useEffect(() => {
@@ -24,24 +24,21 @@ export function FocusTooltip() {
     return () => {
       promiseObj.cancel();
     };
-  }, [focusIdx]);
+  }, [focusIdx, focusBlock]);
 
   useEffect(() => {
-    if (blockNode) {
+    if (blockNode && focusBlock) {
       blockNode.classList.add(BLOCK_SELECTED_CLASSNAME);
       return () => {
         blockNode.classList.remove(BLOCK_SELECTED_CLASSNAME);
       };
     }
-  }, [blockNode]);
+  }, [blockNode, focusBlock]);
 
   const block = useMemo(() => {
-    return blockNode
-      ? BlocksMap.findBlockByType(
-          getNodeTypeFromClassName(blockNode.classList)!
-        )
-      : null;
-  }, [blockNode]);
+    if (!focusBlock) return null;
+    return BlocksMap.findBlockByType(focusBlock.type);
+  }, [focusBlock]);
 
   if (!block || !blockNode || isDragging) return null;
 

@@ -2,6 +2,7 @@ import { ActiveTabKeys } from '@/components/Provider/BlocksProvider';
 import { BasicType, FIXED_CONTAINER_ID } from '@/constants';
 import { useActiveTab } from '@/hooks/useActiveTab';
 import { useBlock } from '@/hooks/useBlock';
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { findBlockNodeByIdx, getEditorRoot } from '@/utils/findBlockNodeByIdx';
 import { getEditNode } from '@/utils/getEditNode';
 import { onDrag } from '@/utils/onDrag';
@@ -114,6 +115,7 @@ export const RichTextField = (
   props: Omit<InlineTextProps, 'onChange' | 'mutators'> & EnhancerProps<string>
 ) => {
   const { focusBlock } = useBlock();
+  const { focusIdx } = useFocusIdx();
   if (focusBlock?.type !== BasicType.TEXT) return null;
-  return <RichTextFieldItem {...props} />;
+  return <RichTextFieldItem key={focusIdx} {...props} />;
 };

@@ -1,22 +1,24 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { BlockType } from '@/constants';
 import { IBlockData, RecursivePartial } from '@/typings';
 import { ReactSortable } from 'react-sortablejs';
 import { useHoverIdx } from '@/hooks/useHoverIdx';
 import {
   getChildIdx,
+  getIndexByIdx,
   getNodeIdxFromClassName,
-  getNodeTypeFromClassName,
+  getParentIdx,
 } from '@/utils/block';
 import { BlocksMap } from '../../blocks';
 import { useBlock } from '@/hooks/useBlock';
 import { findBlockNode } from '@/utils/findBlockNode';
+import { useDataTransfer } from '@/hooks/useDataTransfer';
+import { isUndefined } from 'lodash';
 
 type BlockSortableWrapperProps = {
-  list: IBlockData[];
   action: 'add' | 'move';
   type: BlockType;
-  payload?: RecursivePartial<IBlockData>;
+  payload: RecursivePartial<IBlockData>;
   tag?: string;
   disabled?: boolean;
   idx?: string;
@@ -31,7 +33,6 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
 ) => {
   const {
     children,
-    list,
     disabled,
     idx,
     onStart,
@@ -44,6 +45,12 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
   } = props;
   const { setIsDragging, setHoverIdx, setDirection } = useHoverIdx();
   const { addBlock, moveBlock } = useBlock();
+  const { setDataTransfer, dataTransfer } = useDataTransfer();
+  const cacheDataTransfer = useRef(dataTransfer);
+
+  useEffect(() => {
+    cacheDataTransfer.current = dataTransfer;
+  }, [dataTransfer]);
 
   const onDragEnd = useCallback(
     (
@@ -61,35 +68,36 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
       setHoverIdx('');
       onEnd?.();
 
-      const targetBlockNode = findBlockNode(evt.to);
-      if (!targetBlockNode) return;
-      const idx = getNodeIdxFromClassName(targetBlockNode.classList)!;
-      if (action === 'add') {
-        if (targetBlockNode) {
-          addBlock({
-            type,
-            parentIdx: idx,
-            positionIndex: evt.newIndex,
-            payload,
+      const transferData = cacheDataTransfer.current;
+      if (!transferData) return;
+      if (action === 'add' && !isUndefined(transferData.parentIdx)) {
+        addBlock({
+          type,
+          parentIdx: transferData.parentIdx,
+          positionIndex: transferData.positionIndex,
+          payload,
+        });
+      } else {
+        if (
+          idx &&
+          !isUndefined(transferData.sourceIdx) &&
+          !isUndefined(transferData.parentIdx) &&
+          !isUndefined(transferData.positionIndex)
+        ) {
+          moveBlock({
+            sourceIdx: transferData.sourceIdx,
+            destinationIdx: getChildIdx(
+              transferData.parentIdx,
+              transferData.positionIndex
+            ),
           });
         }
-      } else {
-        const sourceParentBlockNode = findBlockNode(evt.from);
-        if (!sourceParentBlockNode) return;
-        const sourceIdx = getChildIdx(
-          getNodeIdxFromClassName(sourceParentBlockNode.classList)!,
-          evt.oldIndex
-        );
-        const targetIdx = getChildIdx(idx, evt.newIndex);
-        moveBlock({
-          sourceIdx: sourceIdx,
-          destinationIdx: targetIdx,
-        });
       }
     },
     [
       action,
       addBlock,
+      idx,
       moveBlock,
       onEnd,
       payload,
@@ -101,10 +109,24 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
 
   const onDragStart = useCallback(
     (evt: { originalEvent: DragEvent; }) => {
+      if (action === 'add') {
+        setDataTransfer({
+          type: type,
+          action,
+          payload,
+        });
+      } else {
+        setDataTransfer({
+          type: type,
+          action,
+          sourceIdx: idx,
+        });
+      }
+
       setIsDragging(true);
       onStart?.();
     },
-    [onStart, setIsDragging]
+    [action, idx, onStart, payload, setDataTransfer, setIsDragging, type]
   );
 
   const onSpill = useCallback(
@@ -114,7 +136,7 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
 
   const onChoose = useCallback(() => { }, []);
 
-  const onCheckValidate = useCallback(
+  const onMove = useCallback(
     (
       evt: {
         dragged: HTMLElement;
@@ -124,11 +146,6 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
       sortable: any,
       store: any
     ) => {
-      if (!evt.dragged) return false;
-
-      const type =
-        getNodeTypeFromClassName(evt.dragged.classList) ||
-        (evt.dragged.getAttribute('data-type') as BlockType);
 
       const dragoverType = evt.related.getAttribute(
         'data-parent-type'
@@ -137,18 +154,26 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
 
       const block = BlocksMap.findBlockByType(type);
       const isValid = block.validParentType.includes(dragoverType);
-      const targetIdx = getNodeIdxFromClassName(evt.related.classList)!;
+      const targetIdx = evt.related.getAttribute('data-idx')!;
+
       if (isValid) {
         setHoverIdx(targetIdx);
         setDirection(evt.willInsertAfter ? 'bottom' : 'top');
+        setDataTransfer((dataTransfer: any) => {
+          return {
+            ...dataTransfer,
+            parentIdx: getParentIdx(targetIdx),
+            positionIndex:
+              getIndexByIdx(targetIdx) + (evt.willInsertAfter ? 1 : 0),
+          };
+        });
       } else {
         setHoverIdx('');
         setDirection('');
       }
-
       return isValid;
     },
-    [setHoverIdx, setDirection]
+    [type, setHoverIdx, setDirection, setDataTransfer]
   );
 
   return (
@@ -157,9 +182,9 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
       tag={tag as any}
       revertOnSpill
       disabled={disabled}
-      list={list as any}
+      list={[{}] as any}
       setList={() => { }}
-      onMove={onCheckValidate}
+      onMove={onMove}
       onEnd={onDragEnd}
       onSpill={onSpill}
       onChoose={onChoose}

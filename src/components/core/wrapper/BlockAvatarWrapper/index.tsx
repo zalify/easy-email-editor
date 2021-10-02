@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { BlockType } from '@/constants';
-import { useDataTransfer } from '@/hooks/useDataTransfer';
-import { BlocksMap } from '../../blocks';
 import { BlockSortableWrapper } from '../BlockSortableWrapper';
 import { useHoverIdx } from '@/hooks/useHoverIdx';
 
@@ -19,28 +17,20 @@ export const BlockAvatarWrapper: React.FC<BlockAvatarWrapperProps> = (
   props
 ) => {
   const { type, children, payload, action = 'add' } = props;
-  const { setDataTransfer } = useDataTransfer();
   const { setIsDragging, setHoverIdx } = useHoverIdx();
   const ref = useRef<HTMLDivElement>(null);
 
   const onDragStart = useCallback(
     (ev: React.DragEvent) => {
       setIsDragging(true);
-      setDataTransfer({
-        type: type as BlockType,
-        action,
-        payload,
-      });
-      // ev.dataTransfer.setDragImage(img, 25, 25);
     },
-    [action, payload, setDataTransfer, setIsDragging, type]
+    [setIsDragging]
   );
 
   const onDragEnd = useCallback(() => {
-    setDataTransfer(null);
     setIsDragging(false);
     setHoverIdx('');
-  }, [setDataTransfer, setHoverIdx, setIsDragging]);
+  }, [setHoverIdx, setIsDragging]);
 
   useEffect(() => {
     const ele = ref.current;
@@ -57,7 +47,6 @@ export const BlockAvatarWrapper: React.FC<BlockAvatarWrapperProps> = (
       payload={payload}
       action={action}
       type={type as any}
-      list={[BlocksMap.findBlockByType(type).create(payload)]}
     >
       <div
         ref={ref}

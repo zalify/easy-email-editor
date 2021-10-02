@@ -9,7 +9,6 @@ export type ITable = IBlockData<{}, { content: string; }>;
 export const Table = createBlock<ITable>({
   name: 'Table',
   type: BasicType.TABLE,
-  description: '',
   Panel,
   create: (payload) => {
     const defaultData: ITable = {

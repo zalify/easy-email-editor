@@ -15,6 +15,7 @@ export interface DataTransfer {
   action: 'add' | 'move';
   positionIndex?: number;
   parentIdx?: string;
+  sourceIdx?: string;
 }
 
 export const HoverIdxContext = React.createContext<{

@@ -127,7 +127,7 @@ function TipNode(props: TipNodeProps) {
                 padding: '1px 5px',
                 boxSizing: 'border-box',
                 whiteSpace: 'nowrap',
-                // transform: 'translateY(-100%)',
+                transform: 'translateX(-100%)',
               }}
             >
               {title}

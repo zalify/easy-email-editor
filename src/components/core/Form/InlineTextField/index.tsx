@@ -8,6 +8,7 @@ import { getEditContent, getEditNode } from '@/utils/getEditNode';
 import { useBlock } from '@/hooks/useBlock';
 import { FIXED_CONTAINER_ID } from '@/constants';
 import { useField } from 'react-final-form';
+import { awaitForElement } from '@/utils/awaitForElement';
 
 export interface InlineTextProps {
   idx: string;
@@ -23,11 +24,21 @@ export function InlineText({
   mutators: { setFieldTouched },
 }: InlineTextProps) {
   const [isFocus, setIsFocus] = useState(false);
+  const [textContainer, setTextContainer] = useState<HTMLElement | null>(null);
 
   useField(idx); // setFieldTouched will be work while register field,
   const { focusBlock } = useBlock();
 
-  const textContainer = findBlockNodeByIdx(idx);
+  useEffect(() => {
+    const promiseObj = awaitForElement<HTMLDivElement>(idx);
+    promiseObj.promise.then((blockNode) => {
+      setTextContainer(blockNode);
+    });
+
+    return () => {
+      promiseObj.cancel();
+    };
+  }, [idx, focusBlock]);
 
   const onTextChange = useCallback(
     (text: string) => {
@@ -44,6 +55,7 @@ export function InlineText({
     const container = getEditNode(textContainer);
 
     if (container) {
+      container.focus();
       let focusTarget: HTMLElement | null = null;
       const root = getShadowRoot();
 
@@ -62,6 +74,8 @@ export function InlineText({
       const onPaste = (e: ClipboardEvent) => {
         e.preventDefault();
         const text = e.clipboardData?.getData('text/plain') || '';
+        console.log(text);
+        debugger;
         document.execCommand('insertHTML', false, text);
       };
       const stopDrag = (e: Event) => {

@@ -1,7 +1,7 @@
-import { BasicType, getChildIdx, getPageIdx } from 'easy-email-editor';
+import { BasicType } from '@/constants';
 import { camelCase } from 'lodash';
 import React from 'react';
-import { getNodeTypeFromClassName } from './block';
+import { getChildIdx, getNodeTypeFromClassName, getPageIdx } from './block';
 import { getEditNode } from './getEditNode';
 const domParser = new DOMParser();
 
@@ -152,7 +152,7 @@ function createElement(
   props?: React.ClassAttributes<Element> & {
     style?: {} | undefined;
     children?: JSX.Element[] | null;
-    key: number;
+    key: string | number;
     tabIndex?: string;
     class?: string;
     role?: string;
@@ -164,7 +164,9 @@ function createElement(
     if (![BasicType.TEXT].includes(blockType as any)) {
       props.role = 'tab';
       props.tabIndex = '0';
+
     }
+    props.key = props.class;
   }
 
   return React.createElement(type, props);

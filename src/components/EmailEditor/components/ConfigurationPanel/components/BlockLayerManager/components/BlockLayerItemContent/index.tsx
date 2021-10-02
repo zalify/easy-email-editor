@@ -81,7 +81,6 @@ export const BlockLayerItemContent = ({
       }
     }
   }, [isHover, isSelected]);
-  console.log(isHover, idx);
 
   return useMemo(
     () => (

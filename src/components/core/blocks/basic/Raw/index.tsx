@@ -9,7 +9,6 @@ export type IRaw = IBlockData<{}>;
 export const Raw = createBlock<IRaw>({
   name: 'Raw',
   type: BasicType.RAW,
-  description: '',
   Panel,
   create: (payload) => {
     const defaultData: IRaw = {

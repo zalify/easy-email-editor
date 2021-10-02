@@ -94,3 +94,5 @@ export const InlineTextField = enhancer<InlineTextProps>(
   InlineText,
   (value) => value
 );
+
+export { enhancer };

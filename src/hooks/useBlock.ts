@@ -37,7 +37,6 @@ export function useBlock() {
       payload?: any;
       canReplace?: boolean;
     }) => {
-
       let { type, parentIdx, positionIndex, payload } = params;
       let nextFocusIdx = focusIdx;
       const values = cloneDeep(getState().values) as IEmailTemplate;
@@ -178,15 +177,25 @@ export function useBlock() {
 
         const [removed] = sourceParent.children.splice(sourceIndex, 1);
         destinationParent.children.splice(positionIndex, 0, removed);
+
+        nextFocusIdx =
+          destinationParentIdx +
+          `.children.[${destinationParent.children.findIndex(
+            (item) => item === removed
+          )}]`;
       } else {
         const sourceIndex = getIndexByIdx(sourceIdx);
-
         const [removed] = sourceParent.children.splice(sourceIndex, 1);
         destinationParent.children.splice(positionIndex, 0, removed);
+        nextFocusIdx = destinationIdx;
       }
+
       change(getPageIdx(), { ...values.content });
-      nextFocusIdx = destinationIdx + `.children.[${positionIndex}]`;
-      setFocusIdx(nextFocusIdx);
+
+      setTimeout(() => {
+        setFocusIdx(nextFocusIdx);
+      }, 50);
+
       scrollFocusBlockIntoView({
         idx: nextFocusIdx,
         inShadowDom: true,

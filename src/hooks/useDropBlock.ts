@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState, useContext, useRef } from 'react';
 
 import { getNodeIdxFromClassName, getNodeTypeFromClassName } from '@/utils/block';
 import { findBlockNode } from '@/utils/findBlockNode';
-import { BLOCK_HOVER_CLASSNAME, DRAG_HOVER_CLASSNAME } from '@/constants';
+import { BasicType, BLOCK_HOVER_CLASSNAME, DRAG_HOVER_CLASSNAME } from '@/constants';
 import { useBlock } from '@/hooks/useBlock';
 import { getDirectionPosition } from '@/utils/getDirectionPosition';
 import { findBlockNodeByIdx, getBlockNodes } from '@/utils/findBlockNodeByIdx';
@@ -12,7 +12,6 @@ import { useHoverIdx } from './useHoverIdx';
 import { EditorPropsContext } from '@/components/Provider/PropsProvider';
 import { getInsertPosition } from '@/utils/getInsertPosition';
 import { scrollFocusBlockIntoView } from '@/utils/scrollFocusBlockIntoView';
-import { BasicType } from 'easy-email-editor';
 import { getEditNode } from '@/utils/getEditNode';
 
 export function useDropBlock() {
@@ -22,7 +21,6 @@ export function useDropBlock() {
   const { dataTransfer, setDataTransfer } = useDataTransfer();
   const cacheValues = useRef(values);
   const cacheDataTransfer = useRef(dataTransfer);
-  const cacheDropData = useRef<{ parentIdx?: string; positionIndex: number; }>({ positionIndex: 0 });
 
   useEffect(() => {
     cacheValues.current = values;
@@ -106,49 +104,6 @@ export function useDropBlock() {
   }, [ref, setFocusIdx]);
 
   useEffect(() => {
-    if (!ref) return;
-
-    const onDrop = (ev: DragEvent) => {
-
-      if (!dataTransfer) return;
-      const target = ev.target as HTMLElement;
-      const blockNode = findBlockNode(target);
-      if (!blockNode) return;
-
-      const type = dataTransfer.type;
-      const action = dataTransfer.action;
-      if (!type) return;
-      const payload = dataTransfer.payload || {};
-
-      if (parent && cacheDropData.current.parentIdx) {
-        ev.preventDefault();
-
-        const blockData: Parameters<typeof addBlock>[0] = {
-          payload,
-          type,
-          parentIdx: cacheDropData.current.parentIdx,
-          positionIndex: cacheDropData.current.positionIndex,
-        };
-
-        if (action === 'move') {
-          moveBlock({
-            sourceIdx: blockData.payload,
-            destinationIdx: cacheDropData.current.parentIdx,
-          });
-        } else {
-          addBlock(blockData);
-        }
-
-      }
-    };
-
-    ref.addEventListener('drop', onDrop);
-    return () => {
-      ref.removeEventListener('drop', onDrop);
-    };
-  }, [addBlock, dataTransfer, moveBlock, ref]);
-
-  useEffect(() => {
     if (ref) {
 
       let lastHoverTarget: EventTarget | null = null;
@@ -186,7 +141,7 @@ export function useDropBlock() {
             return;
           }
         }
-        const start = performance.now();
+
         lastDragover.target = ev.target;
         lastDragover.valid = false;
 
@@ -207,8 +162,13 @@ export function useDropBlock() {
           if (positionData) {
             ev.preventDefault();
             lastDragover.valid = true;
-            cacheDropData.current.parentIdx = positionData.parentIdx;
-            cacheDropData.current.positionIndex = positionData.insertIndex;
+            setDataTransfer((dataTransfer: any) => {
+              return {
+                ...dataTransfer,
+                parentIdx: positionData.parentIdx,
+                positionIndex: positionData.insertIndex
+              };
+            });
             setDirection(positionData.endDirection);
             setHoverIdx(positionData.hoverIdx);
           }

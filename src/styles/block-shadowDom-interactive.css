@@ -28,12 +28,11 @@
   cursor: text;
 }
 
-.block-selected {
+.block-selected ,.block-hover{
   position: relative;
   z-index: 1;
 }
 
-.block-hover,
 .block-dragover {
   position: relative;
   z-index: 2;

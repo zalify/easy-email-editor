@@ -6,7 +6,7 @@ import { PreviewEmail } from '../PreviewEmail';
 const MOBILE_WIDTH = 375;
 const MOBILE_Height = (MOBILE_WIDTH / 375) * 667;
 
-const responsiveScale = 280 / MOBILE_WIDTH;
+const responsiveScale = 320 / MOBILE_WIDTH;
 
 export function MobileEmailPreview() {
   const { pageData } = useEditorContext();
