@@ -1,5 +1,6 @@
-import { BlockMaskWrapper } from '@/components/core/wrapper/BlockMaskWrapper';
+
 import { Picture } from '@/components/UI/Picture';
+import { BlockMaskWrapper } from 'easy-email-editor';
 import React from 'react';
 import { CustomBlocksType } from '../constants';
 

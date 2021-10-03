@@ -2,6 +2,7 @@
 // export components
 export { EmailEditorProvider } from './components/Provider/EmailEditorProvider';
 export { AttributesPanelWrapper } from './components/core/wrapper/AttributesPanelWrapper';
+export { BlockMaskWrapper } from './components/core/wrapper/BlockMaskWrapper';
 export * from './components/core/Form';
 export type {
   BlockGroup,
