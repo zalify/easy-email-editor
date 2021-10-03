@@ -135,7 +135,7 @@ export function Link(props: LinkProps) {
               </Stack>
             }
           >
-            <Button size='small' icon={<LinkOutlined />} />
+            <Button title='Link' size='small' icon={<LinkOutlined />} />
           </Tooltip>
         );
       }}

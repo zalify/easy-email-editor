@@ -9,7 +9,7 @@ import { EditorPropsContext } from '@/components/Provider/PropsProvider';
 import { useBlock } from '@/hooks/useBlock';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { Stack } from '@/components/UI/Stack';
-import { TextAreaField, TextField } from '@/components/core/Form';
+import { ImageUploaderField, TextAreaField, TextField } from '@/components/core/Form';
 import { BlocksMap } from '@/components/core/blocks';
 import { BasicType } from '@/constants';
 import { IBlock } from '@/typings';
@@ -17,7 +17,7 @@ import { IBlock } from '@/typings';
 const columnBlock = BlocksMap.findBlockByType(BasicType.COLUMN);
 const sectionBlock = BlocksMap.findBlockByType(BasicType.SECTION);
 
-export function ToolsBar({ block }: { block: IBlock }) {
+export function ToolsBar({ block }: { block: IBlock; }) {
   const [modalVisible, setModalVisible] = useState(false);
   const { onAddCollection } = useContext(EditorPropsContext);
   const {
@@ -27,6 +27,7 @@ export function ToolsBar({ block }: { block: IBlock }) {
     focusBlock: focusBlockData,
     addBlock,
   } = useBlock();
+  const { onUploadImage } = useContext(EditorPropsContext);
   const { focusIdx } = useFocusIdx();
   const isPage = block.type === BasicType.PAGE;
 
@@ -74,8 +75,8 @@ export function ToolsBar({ block }: { block: IBlock }) {
         parentIdx: parentIdx,
         positionIndex: getIndexByIdx(focusIdx) + 1,
         payload: {
-          children: sectionBlock.createInstance({
-            children: [columnBlock.createInstance({})],
+          children: sectionBlock.create({
+            children: [columnBlock.create({})],
           }),
         },
       });
@@ -86,19 +87,20 @@ export function ToolsBar({ block }: { block: IBlock }) {
         parentIdx: parentIdx,
         positionIndex: getIndexByIdx(focusIdx) + 1,
         payload: {
-          children: [columnBlock.createInstance({})],
+          children: [columnBlock.create({})],
         },
       });
     }
   };
 
-  const onSubmit = (values: { label: string; helpText: string }) => {
+  const onSubmit = (values: { label: string; helpText: string; thumbnail: string; }) => {
     if (!values.label) return;
     const uuid = uuidv4();
     onAddCollection?.({
       label: values.label,
       helpText: values.helpText,
       data: focusBlockData!,
+      thumbnail: values.thumbnail,
       id: uuid,
     });
     setModalVisible(false);
@@ -118,14 +120,13 @@ export function ToolsBar({ block }: { block: IBlock }) {
           pointerEvents: 'none',
           lineHeight: '22px',
         }}
-        onClick={(e) => e.stopPropagation()}
       >
         <div
           style={{
             color: '#ffffff',
             transform: 'translateY(-100%)',
             display: 'flex',
-            justifyContent: 'space-between',
+            // justifyContent: 'space-between',
           }}
         >
           <div
@@ -143,10 +144,18 @@ export function ToolsBar({ block }: { block: IBlock }) {
             {block.name}
           </div>
           <div
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            onMouseDown={(ev) => {
+              ev.preventDefault();
+
+            }}
             style={{
               display: isPage ? 'none' : 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              pointerEvents: 'auto'
             }}
           >
             <ToolItem iconName='icon-top' onClick={handleMoveUp} />
@@ -158,35 +167,44 @@ export function ToolsBar({ block }: { block: IBlock }) {
             />
             <ToolItem iconName='icon-delete' onClick={handleDelete} />
 
-            <Form
-              initialValues={{ label: '', helpText: '' }}
-              onSubmit={onSubmit}
-            >
-              {({ handleSubmit }) => (
-                <Modal
-                  zIndex={2000}
-                  visible={modalVisible}
-                  title='Add to collection'
-                  onOk={() => handleSubmit()}
-                  onCancel={() => setModalVisible(false)}
-                >
-                  <Stack vertical>
-                    <Stack.Item />
-                    <TextField
-                      label='Title'
-                      name='label'
-                      validate={(val: string) => {
-                        if (!val) return 'Title required!';
-                        return undefined;
-                      }}
-                    />
-                    <TextAreaField label='Description' name='helpText' />
-                  </Stack>
-                </Modal>
-              )}
-            </Form>
           </div>
         </div>
+        <Form
+          initialValues={{ label: '', helpText: '', thumbnail: '' }}
+          onSubmit={onSubmit}
+        >
+          {({ handleSubmit }) => (
+            <Modal
+              zIndex={2000}
+              visible={modalVisible}
+              title='Add to collection'
+              onOk={() => handleSubmit()}
+              onCancel={() => setModalVisible(false)}
+            >
+              <Stack vertical>
+                <Stack.Item />
+                <TextField
+                  label='Title'
+                  name='label'
+                  validate={(val: string) => {
+                    if (!val) return 'Title required!';
+                    return undefined;
+                  }}
+                />
+                <TextAreaField label='Description' name='helpText' />
+                <ImageUploaderField
+                  label='Thumbnail'
+                  name={'thumbnail'}
+                  uploadHandler={onUploadImage}
+                  validate={(val: string) => {
+                    if (!val) return 'Thumbnail required!';
+                    return undefined;
+                  }}
+                />
+              </Stack>
+            </Modal>
+          )}
+        </Form>
       </div>
 
       {/* add row/ add column */}

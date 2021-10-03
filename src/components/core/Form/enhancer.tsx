@@ -4,6 +4,7 @@ import { FieldProps, useField, useForm } from 'react-final-form';
 import React, { useCallback, useMemo } from 'react';
 import { Stack, StackProps } from '../../UI/Stack';
 import styles from './index.module.scss';
+import { InputProps } from './Input';
 
 export interface EnhancerProps<T> extends Partial<FieldProps<T, any>> {
   name: string;
@@ -18,6 +19,7 @@ export interface EnhancerProps<T> extends Partial<FieldProps<T, any>> {
   onChangeAdapter?: (value: any) => any;
   validate?: (value: any) => string | undefined | Promise<string | undefined>;
   wrapper?: boolean;
+  size?: InputProps['size'];
 }
 
 let primaryId = 0;
@@ -40,6 +42,7 @@ export default function enhancer<P>(
       distribution,
       validate,
       required,
+      size = 'normal',
       wrapper = true,
       ...rest
     } = props;
@@ -84,7 +87,7 @@ export default function enhancer<P>(
         validateStatus={touched && error ? 'error' : undefined}
         help={touched && error}
       >
-        <Stack vertical spacing="extraTight">
+        <Stack vertical spacing='extraTight'>
           <Stack
             spacing={inline ? undefined : 'extraTight'}
             wrap={false}
@@ -99,12 +102,15 @@ export default function enhancer<P>(
               >
                 <span style={{ whiteSpace: 'pre' }}>
                   {required && <span style={{ color: '#ff4d4f' }}>* </span>}
-                  <TextStyle size="small">{label}</TextStyle>
+                  <TextStyle size={size === 'small' ? 'smallest' : 'small'}>
+                    {label}
+                  </TextStyle>
                 </span>
               </label>
             </Stack.Item>
             <Stack.Item fill={inline}>
               <Component
+                size={size}
                 {...rest}
                 mutators={mutators}
                 id={id}

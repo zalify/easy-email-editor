@@ -1,7 +1,7 @@
 import { transformToMjml, IBlockData } from 'easy-email-editor';
-
+import html2canvas from 'html2canvas';
 import services from '@example/services';
-
+window.html2canvas = html2canvas;
 export async function emailToImage(content: IBlockData) {
   const mjml = (await import('mjml-browser')).default;
   const html2canvas = (await import('html2canvas')).default;

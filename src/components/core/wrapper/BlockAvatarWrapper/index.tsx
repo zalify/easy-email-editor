@@ -1,8 +1,7 @@
-import React, { useCallback, useState } from 'react';
-import { BlockType, FIXED_CONTAINER_ID } from '@/constants';
-import { useDataTransfer } from '@/hooks/useDataTransfer';
-import { createPortal } from 'react-dom';
-import { debounce } from 'lodash';
+import React, { useCallback, useEffect, useRef } from 'react';
+import { BlockType } from '@/constants';
+import { BlockSortableWrapper } from '../BlockSortableWrapper';
+import { useHoverIdx } from '@/hooks/useHoverIdx';
 
 export type BlockAvatarWrapperProps = {
   type: BlockType | string;
@@ -12,43 +11,54 @@ export type BlockAvatarWrapperProps = {
 };
 const img = new Image();
 img.src =
-  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII=';
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAAAXNSR0IArs4c6QAAAVRJREFUWEftl6GOhEAMhrvBIjAI3oAnwGHWAgnJKgwvgMHhMJsQHMHgcaBQJGtwaPS+wgaHwAEbJjl33AwMgks6tn/L34+mA7dlWRa48LmhQc63gwQ5AQISRIK8BHjzT5vBcRzB932YpgnSNAVRFHm9kfzTDNZ1DaZpkqJVVYFt29cyWBQFOI5DTOV5Dq7rosFdBJDgLly/iJHgvyY4DAOUZQmfz2ezj67ryP5bj2VZoGnaplZRFHg8HiBJEpUL06IOwxCezye12B5BEAQQxzE1hclglmXgeR612B5BkiTkaqQdJoNrkff7DX3fb9Z7vV4QRRGJr3QMw9jUyrIMqqrSvJ17F+OaYeL9hwgJIsGDBJjXDK3+5WewbVvQdZ300TQN3O93Wk9M8dMIzvNM7uv1p2n99BcEgckATXSaQdqDjsbR4FFyP3lIEAnyEuDNxxnkJfgFyvA4mF2a5hwAAAAASUVORK5CYII=';
 
 export const BlockAvatarWrapper: React.FC<BlockAvatarWrapperProps> = (
   props
 ) => {
-  const { type, children, payload, action = 'add', hideIcon } = props;
-  const { setDataTransfer } = useDataTransfer();
+  const { type, children, payload, action = 'add' } = props;
+  const { setIsDragging, setHoverIdx } = useHoverIdx();
+  const ref = useRef<HTMLDivElement>(null);
 
   const onDragStart = useCallback(
     (ev: React.DragEvent) => {
-      setDataTransfer({
-        type: type as BlockType,
-        action,
-        payload,
-      });
-      if (hideIcon) {
-        ev.dataTransfer.setDragImage(img, 0, 0);
-      }
+      setIsDragging(true);
     },
-    [action, hideIcon, payload, setDataTransfer, type]
+    [setIsDragging]
   );
 
   const onDragEnd = useCallback(() => {
-    setDataTransfer(null);
-  }, [setDataTransfer]);
+    setIsDragging(false);
+    setHoverIdx('');
+  }, [setHoverIdx, setIsDragging]);
+
+  useEffect(() => {
+    const ele = ref.current;
+    if (!ele) return;
+
+    ele.addEventListener('dragend', onDragEnd);
+    return () => {
+      ele.removeEventListener('dragend', onDragEnd);
+    };
+  }, [onDragEnd]);
 
   return (
-    <div
-      onMouseDown={() => {
-        window.getSelection()?.removeAllRanges();
-      }}
-      onDragStart={onDragStart}
-      onDragEnd={onDragEnd}
-      draggable
-      style={{ cursor: 'grab' }}
+    <BlockSortableWrapper
+      payload={payload}
+      action={action}
+      type={type as any}
     >
-      {children}
-    </div>
+      <div
+        ref={ref}
+        onMouseDown={() => {
+          window.getSelection()?.removeAllRanges();
+        }}
+        data-type={type}
+        onDragStart={onDragStart}
+        draggable
+      >
+        {children}
+      </div>
+    </BlockSortableWrapper>
   );
 };

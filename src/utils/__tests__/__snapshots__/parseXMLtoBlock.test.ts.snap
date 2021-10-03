@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test parseXml should as expected 1`] = `
+exports[`Test parseXml should render  as expected 1`] = `
 Object {
   "attributes": Object {
     "background-color": "#efeeea",
@@ -173,7 +173,6 @@ Object {
                 "font-size": "13px",
                 "font-weight": "normal",
                 "href": "#",
-                "inner-padding": "10px 25px 10px 25px",
                 "line-height": "120%",
                 "padding": "10px 25px 10px 25px",
                 "target": "_blank",
@@ -207,13 +206,35 @@ Object {
     "value": Object {
       "breakpoint": "480px",
       "font-family": "'Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo",
+      "font-size": "14px",
       "fonts": Array [],
       "headAttributes": "",
       "headStyles": Array [],
+      "line-height": "1.7",
       "responsive": true,
       "text-color": "#000000",
     },
   },
   "type": "page",
+}
+`;
+
+exports[`Test parseXml should render  as expected 2`] = `
+Object {
+  "attributes": Object {
+    "align": "left",
+    "font-size": "13px",
+    "line-height": "1",
+    "padding": "0px 0px 0px 0px",
+  },
+  "children": Array [],
+  "data": Object {
+    "value": Object {
+      "content": "
+     <div style=\\"color:#fff;\\">Make it easy for everyone to compose emails!</div>
+    ",
+    },
+  },
+  "type": "text",
 }
 `;

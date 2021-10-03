@@ -1,7 +1,8 @@
 import { Panel } from './Panel';
-import { createInstance } from './createInstance';
-import { IBlock, IBlockData } from '@/typings';
+import { IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
+import { createBlock } from '@/utils/createBlock';
+import { merge } from 'lodash';
 export type IAccordionElement = IBlockData<
   {
     'icon-width': string;
@@ -21,10 +22,27 @@ export type IAccordionElement = IBlockData<
   {}
 >;
 
-export const AccordionElement: IBlock = {
+export const AccordionElement = createBlock<IAccordionElement>({
   name: 'Accordion element',
   type: BasicType.ACCORDION_ELEMENT,
   Panel,
-  createInstance,
+  create: (payload) => {
+    const defaultData: IAccordionElement = {
+      type: BasicType.ACCORDION_ELEMENT,
+      data: {
+        value: {},
+      },
+      attributes: {
+        'icon-align': 'middle',
+        'icon-height': '32px',
+        'icon-width': '32px',
+
+        'icon-position': 'right',
+        padding: '10px 25px 10px 25px',
+      },
+      children: [],
+    };
+    return merge(defaultData, payload);
+  },
   validParentType: [BasicType.ACCORDION],
-};
+});

@@ -1,9 +1,7 @@
-import { Stack } from '@/components/UI/Stack';
-import { TextStyle } from '@/components/UI/TextStyle';
+import { RichTextField } from '@/components/core/Form/RichTextField';
 import { useBlock } from '@/hooks/useBlock';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { findBlockByType, getValueByIdx } from '@/utils/block';
-import { Card } from 'antd';
 import React from 'react';
 import { useMemo } from 'react';
 
@@ -13,31 +11,24 @@ export function AttributesManager() {
 
   const value = getValueByIdx(values, focusIdx);
 
-  const block = value && findBlockByType(value.type) as any;
+  const block = value && (findBlockByType(value.type) as any);
 
   const content = useMemo(() => {
     if (!block) return null;
     return (
-      <Card
-        bodyStyle={{ paddingTop: 0, backgroundColor: '#fff' }}
-        title={(
-          <TextStyle variation='strong' size='large'>
-            {block.name} attributes
-          </TextStyle>
-        )}
-      >
-        <Stack.Item fill>
-          <Stack vertical>
-            <Stack.Item fill> {<block.Panel />}</Stack.Item>
-            <Stack.Item />
-            <Stack.Item />
-            <Stack.Item />
-            <Stack.Item />
-          </Stack>
-        </Stack.Item>
-      </Card>
+      <>
+        <block.Panel />
+        <div style={{ position: 'absolute' }}>
+          <RichTextField
+            idx={focusIdx}
+            name={`${focusIdx}.data.value.content`}
+            label=''
+            labelHidden
+          />
+        </div>
+      </>
     );
-  }, [block]);
+  }, [block, focusIdx]);
 
   if (!value) return null;
   return content;

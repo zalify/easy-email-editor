@@ -1,17 +1,18 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { getNodeTypeFromClassName } from '@/utils/block';
 import { BlocksMap } from '@/components/core/blocks';
 import { createPortal } from 'react-dom';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { ToolsBar } from './Toolsbar';
 import { awaitForElement } from '@/utils/awaitForElement';
 import { useHoverIdx } from '@/hooks/useHoverIdx';
+import { BLOCK_SELECTED_CLASSNAME, styleZIndex } from '@/constants';
+import { useBlock } from '@/hooks/useBlock';
 
 export function FocusTooltip() {
   const [blockNode, setBlockNode] = useState<HTMLDivElement | null>(null);
   const { isDragging } = useHoverIdx();
-
+  const { focusBlock } = useBlock();
   const { focusIdx } = useFocusIdx();
 
   useEffect(() => {
@@ -23,43 +24,45 @@ export function FocusTooltip() {
     return () => {
       promiseObj.cancel();
     };
-  }, [focusIdx]);
+  }, [focusIdx, focusBlock]);
+
+  useEffect(() => {
+    if (blockNode && focusBlock) {
+      blockNode.classList.add(BLOCK_SELECTED_CLASSNAME);
+      return () => {
+        blockNode.classList.remove(BLOCK_SELECTED_CLASSNAME);
+      };
+    }
+  }, [blockNode, focusBlock]);
 
   const block = useMemo(() => {
-    return blockNode
-      ? BlocksMap.findBlockByType(
-        getNodeTypeFromClassName(blockNode.classList)!
-      )
-      : null;
-  }, [blockNode]);
+    if (!focusBlock) return null;
+    return BlocksMap.findBlockByType(focusBlock.type);
+  }, [focusBlock]);
 
   if (!block || !blockNode || isDragging) return null;
 
   return (
     <>
       {createPortal(
-        <ToolsBar block={block} />,
-        blockNode
-      )}
-      {createPortal(
         <div
           style={{
             position: 'absolute',
-            left: 0,
-            top: 0,
-            fontSize: 14,
-            zIndex: 2,
-            color: '#000',
             width: '100%',
             height: '100%',
             pointerEvents: 'none',
-            textAlign: 'left',
+            left: 0,
+            top: 0,
+            zIndex: styleZIndex.SELECT_BLOCK_TOOLTIP,
           }}
         >
+          <ToolsBar block={block} />
           {/* outline */}
           <div
             style={{
               position: 'absolute',
+              fontSize: 14,
+              zIndex: 2,
               left: 0,
               top: 0,
               width: '100%',
@@ -68,11 +71,9 @@ export function FocusTooltip() {
               outline: '2px solid var(--selected-color)',
             }}
           />
-
         </div>,
         blockNode
       )}
-
     </>
   );
 }

@@ -1,38 +1,6 @@
-.blockItem {
-  list-style-position: inside;
-  list-style-type: none;
-
-  display: flex;
-  flex-direction: column;
-  cursor: pointer;
-
-
-  .shortcutTool {
-    opacity: 0;
-  }
-}
-.listItemContentWrapper {
-  background-color: #fff;
-  display: flex;
-  flex: 1;
-  padding: 16px;
-  border-bottom: 1px solid #eee;
-}
 .blockList {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-[data-dragging="false"]  .blockItemSelected .listItemContentWrapper {
-  color: #1890ff;
-  background-color: #e6f7ff;
-}
-
-.blockItem:global(.node-type-page) {
-  background-color:initial;
-}
-
-:global(.block-hover)>.listItemContentWrapper .shortcutTool {
-  opacity: 1;
-}

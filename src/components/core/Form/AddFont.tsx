@@ -21,53 +21,64 @@ const isUrl = async (v: string) => {
 };
 
 export function AddFont() {
-
   const { focusBlock } = useBlock();
   const { focusIdx } = useFocusIdx();
   const value: IPage['data']['value'] = focusBlock?.data.value;
   return (
-
     <FieldArray
       name={`${focusIdx}.data.value.fonts`}
-      render={arrayHelpers => {
-
+      render={(arrayHelpers) => {
         return (
           <div>
-            <Stack vertical spacing="tight">
-              <Stack distribution="equalSpacing">
-                <TextStyle variation="strong" size="large">Import font <Help title="Points to a hosted css file" /></TextStyle>
+            <Stack vertical spacing='tight'>
+              <Stack distribution='equalSpacing'>
+                <TextStyle variation='strong'>
+                  Import font <Help title='Points to a hosted css file' />
+                </TextStyle>
                 <Stack>
-                  <Button size="small" icon={<PlusOutlined />}
-                    onClick={() => arrayHelpers.fields.push({ name: '', href: '' })}
+                  <Button
+                    size='small'
+                    icon={<PlusOutlined />}
+                    onClick={() =>
+                      arrayHelpers.fields.push({ name: '', href: '' })
+                    }
                   />
                 </Stack>
               </Stack>
 
-              <Stack vertical spacing="extraTight">
+              <Stack vertical spacing='extraTight'>
                 {value.fonts?.map((item, index) => {
                   return (
-
                     <div key={index}>
-                      <Stack alignment="center" wrap={false}>
+                      <Stack alignment='center' wrap={false}>
                         <Stack.Item fill>
-                          <TextField inline name={`${focusIdx}.data.value.fonts.${index}.name`} label="Name" />
+                          <TextField
+                            inline
+                            name={`${focusIdx}.data.value.fonts.${index}.name`}
+                            label='Name'
+                          />
                         </Stack.Item>
                         <Stack.Item fill>
-                          <TextField validate={isUrl} inline name={`${focusIdx}.data.value.fonts.${index}.href`} label="Href" />
+                          <TextField
+                            validate={isUrl}
+                            inline
+                            name={`${focusIdx}.data.value.fonts.${index}.href`}
+                            label='Href'
+                          />
                         </Stack.Item>
-                        <Button icon={<DeleteOutlined />} onClick={() => arrayHelpers.fields.remove(index)} />
+                        <Button
+                          icon={<DeleteOutlined />}
+                          onClick={() => arrayHelpers.fields.remove(index)}
+                        />
                       </Stack>
                     </div>
-
                   );
                 })}
               </Stack>
             </Stack>
           </div>
-
         );
       }}
     />
-
   );
 }

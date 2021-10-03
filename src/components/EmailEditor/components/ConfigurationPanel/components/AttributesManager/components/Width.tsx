@@ -6,18 +6,25 @@ import { useBlock } from '@/hooks/useBlock';
 import { BasicType } from '@/constants';
 import { getParentByIdx } from '@/utils/block';
 
-export function Width() {
-  const { focusIdx, } = useFocusIdx();
+export function Width({ inline = false }: { inline?: boolean }) {
+  const { focusIdx } = useFocusIdx();
   const { focusBlock, values } = useBlock();
   const parentType = getParentByIdx(values, focusIdx)?.type;
 
-  const validate = useCallback((val: string): string | undefined => {
-
-    if (focusBlock?.type === BasicType.COLUMN && parentType === BasicType.GROUP) {
-      return /(\d)*%/.test(val) ? undefined : 'Column inside a group must have a width in percentage, not in pixel';
-    }
-    return undefined;
-  }, [focusBlock?.type, parentType]);
+  const validate = useCallback(
+    (val: string): string | undefined => {
+      if (
+        focusBlock?.type === BasicType.COLUMN &&
+        parentType === BasicType.GROUP
+      ) {
+        return /(\d)*%/.test(val)
+          ? undefined
+          : 'Column inside a group must have a width in percentage, not in pixel';
+      }
+      return undefined;
+    },
+    [focusBlock?.type, parentType]
+  );
 
   return useMemo(() => {
     return (
@@ -26,12 +33,12 @@ export function Width() {
           <TextField
             validate={validate}
             label='Width'
+            inline={inline}
             name={`${focusIdx}.attributes.width`}
-            inline
             quickchange
           />
         </Stack.Item>
       </Stack>
     );
-  }, [focusIdx, validate]);
+  }, [focusIdx, inline, validate]);
 }

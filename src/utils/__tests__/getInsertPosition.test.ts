@@ -3,39 +3,39 @@ import { BasicType } from '@/constants';
 import { getInsertPosition } from '../getInsertPosition';
 const blocks = BlocksMap.basicBlocksMap;
 
-const page = blocks.Page.createInstance({
+const page = blocks.Page.create({
   children: [
-    blocks.Section.createInstance({
+    blocks.Section.create({
       children: [
-        blocks.Column.createInstance({
-          children: [blocks.Text.createInstance()],
+        blocks.Column.create({
+          children: [blocks.Text.create()],
         }),
-        blocks.Column.createInstance({
-          children: [blocks.Image.createInstance()],
+        blocks.Column.create({
+          children: [blocks.Image.create()],
         }),
       ],
     }),
-    blocks.Section.createInstance({
+    blocks.Section.create({
       children: [
-        blocks.Column.createInstance({
-          children: [blocks.Text.createInstance()],
+        blocks.Column.create({
+          children: [blocks.Text.create()],
         }),
-        blocks.Column.createInstance({
-          children: [blocks.Image.createInstance()],
+        blocks.Column.create({
+          children: [blocks.Image.create()],
         }),
       ],
     }),
-    blocks.Section.createInstance({
+    blocks.Section.create({
       children: [
-        blocks.Column.createInstance({
-          children: [blocks.Text.createInstance()],
+        blocks.Column.create({
+          children: [blocks.Text.create()],
         }),
-        blocks.Column.createInstance({
-          children: [blocks.Image.createInstance()],
+        blocks.Column.create({
+          children: [blocks.Image.create()],
         }),
       ],
     }),
-    blocks.Section.createInstance({
+    blocks.Section.create({
       children: [],
     }),
   ],

@@ -13,8 +13,6 @@ export function LetterSpacing() {
           <TextField
             label='Letter spacing'
             name={`${focusIdx}.attributes.letter-spacing`}
-            inline
-            quickchange
           />
         </Stack.Item>
       </Stack>

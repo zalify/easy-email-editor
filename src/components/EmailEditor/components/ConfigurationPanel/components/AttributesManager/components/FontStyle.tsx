@@ -13,7 +13,7 @@ const options = [
   },
 ];
 
-export function FontStyle() {
+export function FontStyle({ inline = true }: { inline?: boolean; }) {
   const { focusIdx } = useFocusIdx();
 
   return useMemo(() => {
@@ -22,8 +22,8 @@ export function FontStyle() {
         label='Font style'
         name={`${focusIdx}.attributes.font-style`}
         options={options}
-        inline
+        inline={inline}
       />
     );
-  }, [focusIdx]);
+  }, [focusIdx, inline]);
 }

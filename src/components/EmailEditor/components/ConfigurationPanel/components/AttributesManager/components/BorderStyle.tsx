@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { SelectField } from '@/components/core/Form';
 
-const options = [
+export const borderStyleOptions = [
   {
     value: 'dashed',
     label: 'Dashed',
@@ -15,6 +15,26 @@ const options = [
     value: 'solid',
     label: 'Solid',
   },
+  {
+    value: 'double',
+    label: 'double',
+  },
+  {
+    value: 'ridge',
+    label: 'ridge',
+  },
+  {
+    value: 'groove',
+    label: 'groove',
+  },
+  {
+    value: 'inset',
+    label: 'inset',
+  },
+  {
+    value: 'outset',
+    label: 'outset',
+  },
 ];
 
 export function BorderStyle() {
@@ -23,10 +43,9 @@ export function BorderStyle() {
   return useMemo(() => {
     return (
       <SelectField
-        label='Border style'
+        label='Style'
         name={`${focusIdx}.attributes.border-style`}
-        options={options}
-        inline
+        options={borderStyleOptions}
       />
     );
   }, [focusIdx]);

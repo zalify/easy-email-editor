@@ -35,27 +35,28 @@ export function Background() {
   return useMemo(() => {
     return (
       <Stack key={focusIdx} vertical spacing='extraTight'>
-        <TextStyle size='large'>Background</TextStyle>
+
+        <ImageUploaderField
+          label='Background image'
+          name={`${focusIdx}.attributes.background-url`}
+          helpText='The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.'
+          uploadHandler={onUploadImage}
+        />
         <BackgroundColor />
-        <Stack vertical spacing='none'>
-          <ImageUploaderField
-            label='Background image'
-            name={`${focusIdx}.attributes.background-url`}
-            helpText='The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.'
-            uploadHandler={onUploadImage}
-          />
-          <TextField
-            label='Background size'
-            inline
-            name={`${focusIdx}.attributes.background-size`}
+        <Stack wrap={false}>
+          <Stack.Item fill>
+            <TextField
+              label='Background size'
+              name={`${focusIdx}.attributes.background-size`}
+            />
+
+          </Stack.Item>
+          <SelectField
+            label='Background repeat'
+            name={`${focusIdx}.attributes.background-repeat`}
+            options={backgroundRepeatOptions}
           />
         </Stack>
-        <SelectField
-          label='Background repeat'
-          name={`${focusIdx}.attributes.background-repeat`}
-          options={backgroundRepeatOptions}
-          inline
-        />
       </Stack>
     );
   }, [focusIdx, onUploadImage]);

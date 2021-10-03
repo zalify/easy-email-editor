@@ -25,10 +25,16 @@ export default createSliceState({
     },
   },
   effects: {
-    fetchById: async (state, { id, userId }: {
-      id: number,
-      userId: number;
-    }) => {
+    fetchById: async (
+      state,
+      {
+        id,
+        userId,
+      }: {
+        id: number;
+        userId: number;
+      }
+    ) => {
       try {
         const data = await article.getArticle(id, userId);
         return getAdaptor(data);
@@ -41,7 +47,7 @@ export default createSliceState({
       return {
         subject: 'Welcome to Easy-email',
         subTitle: 'Nice to meet you!',
-        content: BlocksMap.getBlock('Page').createInstance({}),
+        content: BlocksMap.getBlock('Page').create({}),
       } as IEmailTemplate;
     },
     create: async (
@@ -71,7 +77,10 @@ export default createSliceState({
         success: (id: number) => void;
       }
     ) => {
-      const source = await article.getArticle(payload.article.article_id, payload.article.user_id);
+      const source = await article.getArticle(
+        payload.article.article_id,
+        payload.article.user_id
+      );
       const data = await article.addArticle({
         title: source.title,
         content: source.content.content,
@@ -94,18 +103,18 @@ export default createSliceState({
           picture,
           content: JSON.stringify(payload.template.content),
           title: payload.template.subject,
-          summary: payload.template.subTitle
+          summary: payload.template.subTitle,
         });
         payload.success(payload.id);
       } catch (error) {
         if (error?.response?.status === 404) {
           throw {
-            message: 'Cannot change the default template'
+            message: 'Cannot change the default template',
           };
         }
       }
     },
-    removeById: async (state, payload: { id: number; success: () => void; }) => {
+    removeById: async (state, payload: { id: number; success: () => void }) => {
       try {
         await article.deleteArticle(payload.id);
         payload.success();
@@ -113,7 +122,7 @@ export default createSliceState({
       } catch (error) {
         if (error?.response?.status === 404) {
           throw {
-            message: 'Cannot delete the default template'
+            message: 'Cannot delete the default template',
           };
         }
       }

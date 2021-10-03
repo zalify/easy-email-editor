@@ -70,29 +70,4 @@ export function useHotKeys() {
     };
   }, [focusIdx, removeBlock]);
 
-  // select block
-  useEffect(() => {
-    if (!root) return;
-    const onSelectParent = (ev: Event) => {
-      const target = ev.target as HTMLDivElement;
-
-      if (target.id !== 'VisualEditorEdit-mask') return;
-      if (focusIdx === getPageIdx()) return;
-      setFocusIdx(getParentIdx(focusIdx)!);
-    };
-
-    const onSelectPage = (ev: Event) => {
-      const target = ev.target as HTMLDivElement;
-      if (target.id !== 'VisualEditorEdit-mask') return;
-      setFocusIdx(getPageIdx());
-    };
-
-    root.addEventListener('click', onSelectParent);
-    root.addEventListener('dblclick', onSelectPage);
-
-    return () => {
-      root.removeEventListener('click', onSelectParent);
-      root.removeEventListener('dblclick', onSelectPage);
-    };
-  }, [root, focusIdx, removeBlock, setFocusIdx]);
 }

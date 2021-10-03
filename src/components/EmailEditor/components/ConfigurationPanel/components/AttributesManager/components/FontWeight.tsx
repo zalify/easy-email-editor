@@ -58,7 +58,6 @@ export function FontWeight() {
         label='Font weight'
         name={`${focusIdx}.attributes.font-weight`}
         options={options}
-        inline
       />
     );
   }, [focusIdx]);

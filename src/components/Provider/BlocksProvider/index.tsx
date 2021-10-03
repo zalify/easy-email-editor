@@ -30,7 +30,7 @@ export const BlocksContext = React.createContext<{
 export const BlocksProvider: React.FC<{}> = (props) => {
   const [focusIdx, setFocusIdx] = useState(getPageIdx());
   const [dragEnabled, setDragEnabled] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   const [activeTab, setActiveTab] = useState(ActiveTabKeys.EDIT);
 
   return (

@@ -1,13 +1,13 @@
 import { IBlockData } from '@/typings';
+import { BlockMarketCategory } from '@/utils/BlockMarketManager';
 import React, { useMemo } from 'react';
 
 export interface CollectedBlock {
   label: string;
-  helpText?: string;
-  thumbnail?: string;
-  icon?: React.ReactElement;
+  helpText: string;
+  thumbnail: string;
   data: IBlockData;
-  id?: string;
+  id: string;
 }
 
 export interface BlockGroup {
@@ -16,10 +16,10 @@ export interface BlockGroup {
 }
 
 export interface PropsProviderProps {
-  extraBlocks?: BlockGroup[];
-  fontList?: { value: string; label: string }[];
+  extraBlocks?: BlockMarketCategory[];
+  fontList?: { value: string; label: string; }[];
   onAddCollection?: (payload: CollectedBlock) => void;
-  onRemoveCollection?: (payload: { id: string }) => void;
+  onRemoveCollection?: (payload: { id: string; }) => void;
   onUploadImage?: (data: Blob) => Promise<string>;
   interactiveStyle?: {
     hoverColor?: string;

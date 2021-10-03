@@ -1,8 +1,15 @@
 import { Input, Popover, PopoverProps } from 'antd';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { ColorResult, SketchPicker } from 'react-color';
 import { Picture } from '@/components/UI/Picture';
 import { Stack } from '@/components/UI/Stack';
+import { PresetColorsContext } from '@/components/Provider/PresetColorsProvider';
 
 export interface ColorPickerProps extends PopoverProps {
   onChange?: (val: string) => void;
@@ -13,6 +20,8 @@ export interface ColorPickerProps extends PopoverProps {
 }
 
 export function ColorPicker(props: ColorPickerProps) {
+  const { colors: presetColors, addCurrentColor } =
+    useContext(PresetColorsContext);
   const [color, setColor] = useState('');
   const { value = '', onChange, children, showInput = true } = props;
 
@@ -27,27 +36,33 @@ export function ColorPicker(props: ColorPickerProps) {
       const newColor = color.hex;
       setColor(newColor);
       onChange?.(newColor);
+      addCurrentColor(newColor);
     },
-    [onChange]
+    [addCurrentColor, onChange]
   );
 
   const onInputChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setColor(event.target.value);
       onChange?.(event.target.value);
+      addCurrentColor(event.target.value);
     },
-    [onChange]
+    [addCurrentColor, onChange]
   );
   return (
     <Stack spacing='none' wrap={false}>
       <Popover
-        {...props}
-        content={
-          <SketchPicker color={color} onChangeComplete={onChangeComplete} />
-        }
-        placement='topRight'
         title={props.label}
         trigger='click'
+        {...props}
+        content={(
+          <SketchPicker
+            presetColors={presetColors}
+            color={color}
+            disableAlpha
+            onChangeComplete={onChangeComplete}
+          />
+        )}
       >
         {children || (
           <div
@@ -92,7 +107,7 @@ export function ColorPicker(props: ColorPickerProps) {
       {showInput && (
         <Input
           value={props.value}
-          style={{ width: '7em', outline: 'none' }}
+          style={{ width: '80px', outline: 'none' }}
           onChange={onInputChange}
         />
       )}

@@ -1,8 +1,12 @@
 import { Panel } from './Panel';
-import { createInstance } from './createInstance';
-import { IBlock, IBlockData } from '@/typings';
+import { IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
 import { CSSProperties } from 'react';
+import { createBlock } from '@/utils/createBlock';
+import { merge } from 'lodash';
+import React from 'react';
+import { Stack } from '@/components/UI/Stack';
+import { TextStyle } from '@/components/UI/TextStyle';
 export type ISection = IBlockData<
   {
     'background-color'?: string;
@@ -23,10 +27,30 @@ export type ISection = IBlockData<
   {}
 >;
 
-export const Section: IBlock<ISection> = {
+export const Section = createBlock<ISection>({
   name: 'Section',
   type: BasicType.SECTION,
   Panel,
-  createInstance,
+  create: (payload) => {
+    const defaultData: ISection = {
+      type: BasicType.SECTION,
+      data: {
+        value: {
+          noWrap: false,
+        },
+      },
+      attributes: {
+        padding: '20px 0px 20px 0px',
+        'background-repeat': 'repeat',
+        'background-size': 'auto',
+        'background-position': 'top center',
+        border: 'none',
+        direction: 'ltr',
+        'text-align': 'center',
+      },
+      children: [],
+    };
+    return merge(defaultData, payload);
+  },
   validParentType: [BasicType.PAGE, BasicType.WRAPPER],
-};
+});

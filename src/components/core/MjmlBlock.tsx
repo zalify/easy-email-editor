@@ -34,18 +34,18 @@ export default function MjmlBlock<T extends IBlockData>({
     return value;
   }, [children, value]);
 
-  const instance = block.createInstance({
+  const instance = block.create({
     data: {
-      value: mergeValue
+      value: mergeValue,
     },
     attributes,
     children:
       typeof children === 'string'
         ? []
         : React.Children.map(
-          children,
-          (child) => child && parseMjmlBlockToBlockData(child)
-        )?.filter(Boolean) || [],
+            children,
+            (child) => child && parseMjmlBlockToBlockData(child)
+          )?.filter(Boolean) || [],
   });
 
   return <>{JSON.stringify(instance)}</>;

@@ -9,7 +9,7 @@ import { createBlockItem } from '@/utils/createBlockItem';
 
 export interface PaddingProps {
   title?: string;
-  attributeName?: 'padding' | 'inner-padding';
+  attributeName?: 'padding' | 'inner-padding' | 'text-padding';
 }
 export function Padding(props: PaddingProps = {}) {
   const { title = 'Padding', attributeName = 'padding' } = props;
@@ -44,11 +44,11 @@ export function Padding(props: PaddingProps = {}) {
   return useMemo(() => {
     return (
       <Stack vertical spacing='extraTight'>
-        <TextStyle>{title}</TextStyle>
+        <TextStyle variation="strong">{title}</TextStyle>
         <Stack wrap={false}>
           <Stack.Item fill>
             <TextField
-              label='Top'
+              label={<span>Top&nbsp;</span>}
               quickchange
               name={`${focusIdx}.attributes.${attributeName}`}
               valueAdapter={getVal(0)}
@@ -71,7 +71,7 @@ export function Padding(props: PaddingProps = {}) {
         <Stack wrap={false}>
           <Stack.Item fill>
             <TextField
-              label='Left'
+              label={<span>Left</span>}
               quickchange
               name={`${focusIdx}.attributes.${attributeName}`}
               valueAdapter={getVal(3)}
@@ -81,7 +81,7 @@ export function Padding(props: PaddingProps = {}) {
           </Stack.Item>
           <Stack.Item fill>
             <TextField
-              label='Right'
+              label={<span>Right&nbsp;</span>}
               quickchange
               name={`${focusIdx}.attributes.${attributeName}`}
               valueAdapter={getVal(1)}

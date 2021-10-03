@@ -38,7 +38,6 @@ export function TextDecoration() {
         label='Text decoration'
         name={`${focusIdx}.attributes.text-decoration`}
         options={options}
-        inline
       />
     );
   }, [focusIdx]);

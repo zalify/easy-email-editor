@@ -10,15 +10,14 @@ import { useHistory } from 'react-router-dom';
 import { cloneDeep } from 'lodash';
 import { Loading } from '@example/components/loading';
 import mjml from 'mjml-browser';
-import extraBlocks from '@example/store/extraBlocks';
-import { CollectedBlock } from 'easy-email-editor';
 import { copy } from '@example/util/clipboard';
 import { useEmailModal } from './components/useEmailModal';
-import { WarnAboutUnsavedChanges } from '@example/components/WarnAboutUnsavedChanges';
+import { AutoSaveAndRestoreEmail } from '@example/components/AutoSaveAndRestoreEmail';
 import services from '@example/services';
 import { GithubOutlined } from '@ant-design/icons';
 
 import {
+  BlockMarketCategory,
   EmailEditor,
   EmailEditorProvider,
   IEmailTemplate,
@@ -26,10 +25,13 @@ import {
 } from 'easy-email-editor';
 import 'easy-email-editor/lib/style.css';
 import { Stack } from '@example/components/Stack';
-import { customBlocks } from './components/CustomBlocks';
 import { pushEvent } from '@example/util/pushEvent';
 import { FormApi } from 'final-form';
 import { UserStorage } from '@example/util/user-storage';
+
+import './components/CustomBlocks';
+import { useCollection } from './components/useCollection';
+import { customBlocks } from './components/CustomBlocks';
 
 const fontList = [
   'Arial',
@@ -54,7 +56,7 @@ export default function Editor() {
   const dispatch = useDispatch();
   const history = useHistory();
   const templateData = useAppSelector('template');
-  const extraBlocksData = useAppSelector('extraBlocks');
+  const { addCollection, collectionCategory } = useCollection();
   const { openModal, modal } = useEmailModal();
   const { id, userId } = useQuery();
   const loading = useLoading(template.loadings.fetchById);
@@ -63,6 +65,11 @@ export default function Editor() {
     template.loadings.create,
     template.loadings.updateById,
   ]);
+
+  const extraBlocks = useMemo((): BlockMarketCategory[] => {
+    if (!collectionCategory) return [customBlocks];
+    return [customBlocks, collectionCategory];
+  }, [collectionCategory]);
 
   useEffect(() => {
     if (id) {
@@ -143,10 +150,6 @@ export default function Editor() {
     };
   }, [templateData]);
 
-  const extraBlocksList = useMemo(() => {
-    return [customBlocks, ...extraBlocksData];
-  }, [extraBlocksData]);
-
   if (!templateData && loading) {
     return (
       <Loading loading={loading}>
@@ -157,33 +160,22 @@ export default function Editor() {
 
   if (!initialValues) return null;
 
-  const onAddCollection = (payload: CollectedBlock) => {
-    dispatch(extraBlocks.actions.add(payload));
-    message.success('Added to collection!');
-  };
-  const onRemoveCollection = ({ id }: { id: string; }) => {
-    dispatch(extraBlocks.actions.remove({ id }));
-    message.success('Removed from collection.');
-  };
-
   return (
     <div>
       <EmailEditorProvider
         key={id}
         data={initialValues}
-        extraBlocks={extraBlocksList}
-        onAddCollection={onAddCollection}
-        onRemoveCollection={onRemoveCollection}
+        extraBlocks={extraBlocks}
+        onAddCollection={addCollection}
         onUploadImage={services.common.uploadByQiniu}
         interactiveStyle={{
-          hoverColor: '#1890ff',
+          hoverColor: '#ff18e3',
           selectedColor: '#1890ff',
-          dragoverColor: '#1890ff',
         }}
         fontList={fontList}
         onSubmit={onSubmit}
         autoComplete
-      // dashed={false}
+        dashed={false}
       >
         {({ values }, { submit }) => {
           return (
@@ -221,7 +213,7 @@ export default function Editor() {
                 }
               />
               <EmailEditor height={'calc(100vh - 85px)'} />
-              <WarnAboutUnsavedChanges />
+              <AutoSaveAndRestoreEmail />
             </>
           );
         }}

@@ -1,26 +1,32 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { getNodeTypeFromClassName } from '@/utils/block';
-import { findBlockNodeByIdx } from '@/utils/findBlockNodeByIdx';
 import { useHoverIdx } from '@/hooks/useHoverIdx';
 import { BlocksMap } from '@/components/core/blocks';
 import { createPortal } from 'react-dom';
 import { awaitForElement } from '@/utils/awaitForElement';
+import { styleZIndex } from '@/constants';
+import { useFocusIdx } from '@/hooks/useFocusIdx';
 
 export function HoverTooltip() {
   const { hoverIdx, direction, isDragging } = useHoverIdx();
+  const { focusIdx } = useFocusIdx();
 
   const [blockNode, setBlockNode] = useState<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const promiseObj = awaitForElement<HTMLDivElement>(hoverIdx);
-    promiseObj.promise.then((blockNode) => {
-      setBlockNode(blockNode);
-    });
+    if (hoverIdx) {
+      const promiseObj = awaitForElement<HTMLDivElement>(hoverIdx);
+      promiseObj.promise.then((blockNode) => {
+        setBlockNode(blockNode);
+      });
 
-    return () => {
-      promiseObj.cancel();
-    };
+      return () => {
+        promiseObj.cancel();
+      };
+    } else {
+      setBlockNode(null);
+    }
   }, [hoverIdx]);
 
   const block = useMemo(() => {
@@ -31,6 +37,7 @@ export function HoverTooltip() {
       : null;
   }, [blockNode]);
 
+  if (focusIdx === hoverIdx && !isDragging) return null;
   if (!block || !blockNode) return null;
 
   return (
@@ -57,7 +64,7 @@ interface TipNodeProps {
   type: 'drag' | 'hover';
 }
 function TipNode(props: TipNodeProps) {
-  const { direction, title, isDragging, lineWidth, type } = props;
+  const { direction, title, lineWidth, type } = props;
 
   const dragTitle = useMemo(() => {
     if (direction === 'top') {
@@ -85,7 +92,7 @@ function TipNode(props: TipNodeProps) {
         left: 0,
         top: 0,
         fontSize: 14,
-        zIndex: 100,
+        zIndex: styleZIndex.HOVER_BLOCK_TOOLTIP,
         color: '#000',
         width: '100%',
         height: '100%',
@@ -106,17 +113,37 @@ function TipNode(props: TipNodeProps) {
         }}
       >
         {type === 'hover' && (
-          <div
-            style={{
-              position: 'absolute',
-              left: 0,
-              top: 0,
-              width: '100%',
-              height: '100%',
-              backgroundColor: color,
-              opacity: 0.1,
-            }}
-          />
+          <>
+            <div
+              style={{
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                backgroundColor: color,
+                color: '#ffffff',
+                height: '22px',
+                lineHeight: '22px',
+                display: 'inline-flex',
+                padding: '1px 5px',
+                boxSizing: 'border-box',
+                whiteSpace: 'nowrap',
+                transform: 'translateX(-100%)',
+              }}
+            >
+              {title}
+            </div>
+            <div
+              style={{
+                position: 'absolute',
+                left: 0,
+                top: 0,
+                width: '100%',
+                height: '100%',
+                backgroundColor: color,
+                opacity: 0.1,
+              }}
+            />
+          </>
         )}
       </div>
 
@@ -143,6 +170,7 @@ function TipNode(props: TipNodeProps) {
               maxWidth: '100%',
               textAlign: 'center',
               whiteSpace: 'nowrap',
+              padding: '1px 5px',
 
               ...positionStyleMap[props.direction || 'none'],
             }}

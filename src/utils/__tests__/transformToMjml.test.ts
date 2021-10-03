@@ -2,17 +2,17 @@ import { BlocksMap } from '@/components/core/blocks';
 import { transformToMjml } from '../transformToMjml';
 
 describe('Test transformToMjml when responsive is "false"', () => {
-  const content = BlocksMap.basicBlocksMap.Page.createInstance({
+  const content = BlocksMap.basicBlocksMap.Page.create({
     data: {
       value: {
         responsive: false,
       },
     },
     children: [
-      BlocksMap.basicBlocksMap.Section.createInstance({
+      BlocksMap.basicBlocksMap.Section.create({
         children: [
-          BlocksMap.basicBlocksMap.Column.createInstance({
-            children: [BlocksMap.basicBlocksMap.Text.createInstance({})],
+          BlocksMap.basicBlocksMap.Column.create({
+            children: [BlocksMap.basicBlocksMap.Text.create({})],
           }),
         ],
       }),
@@ -31,17 +31,17 @@ describe('Test transformToMjml when responsive is "false"', () => {
 });
 
 describe('Test transformToMjml when responsive is "true"', () => {
-  const content = BlocksMap.basicBlocksMap.Page.createInstance({
+  const content = BlocksMap.basicBlocksMap.Page.create({
     data: {
       value: {
         responsive: true,
       },
     },
     children: [
-      BlocksMap.basicBlocksMap.Section.createInstance({
+      BlocksMap.basicBlocksMap.Section.create({
         children: [
-          BlocksMap.basicBlocksMap.Column.createInstance({
-            children: [BlocksMap.basicBlocksMap.Text.createInstance({})],
+          BlocksMap.basicBlocksMap.Column.create({
+            children: [BlocksMap.basicBlocksMap.Text.create({})],
           }),
         ],
       }),
@@ -62,12 +62,12 @@ describe('Test transformToMjml when responsive is "true"', () => {
 });
 
 describe('Test transformToMjml when mode is "testing"', () => {
-  const content = BlocksMap.basicBlocksMap.Page.createInstance({
+  const content = BlocksMap.basicBlocksMap.Page.create({
     children: [
-      BlocksMap.basicBlocksMap.Section.createInstance({
+      BlocksMap.basicBlocksMap.Section.create({
         children: [
-          BlocksMap.basicBlocksMap.Column.createInstance({
-            children: [BlocksMap.basicBlocksMap.Text.createInstance({})],
+          BlocksMap.basicBlocksMap.Column.create({
+            children: [BlocksMap.basicBlocksMap.Text.create({})],
           }),
         ],
       }),
@@ -91,12 +91,12 @@ describe('Test transformToMjml when mode is "testing"', () => {
 });
 
 describe('Test transformToMjml when mode is "production"', () => {
-  const content = BlocksMap.basicBlocksMap.Page.createInstance({
+  const content = BlocksMap.basicBlocksMap.Page.create({
     children: [
-      BlocksMap.basicBlocksMap.Section.createInstance({
+      BlocksMap.basicBlocksMap.Section.create({
         children: [
-          BlocksMap.basicBlocksMap.Column.createInstance({
-            children: [BlocksMap.basicBlocksMap.Text.createInstance({})],
+          BlocksMap.basicBlocksMap.Column.create({
+            children: [BlocksMap.basicBlocksMap.Text.create({})],
           }),
         ],
       }),

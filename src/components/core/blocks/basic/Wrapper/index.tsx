@@ -1,8 +1,9 @@
 import { Panel } from './Panel';
-import { createInstance } from './createInstance';
-import { IBlock, IBlockData } from '@/typings';
+import { IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
 import { CSSProperties } from 'react';
+import { createBlock } from '@/utils/createBlock';
+import { merge } from 'lodash';
 export type IWrapper = IBlockData<
   {
     'background-color'?: string;
@@ -16,10 +17,25 @@ export type IWrapper = IBlockData<
   {}
 >;
 
-export const Wrapper: IBlock<IWrapper> = {
+export const Wrapper = createBlock<IWrapper>({
   name: 'Wrapper',
   type: BasicType.WRAPPER,
   Panel,
-  createInstance,
+  create: (payload) => {
+    const defaultData: IWrapper = {
+      type: BasicType.WRAPPER,
+      data: {
+        value: {},
+      },
+      attributes: {
+        padding: '20px 0px 20px 0px',
+        border: 'none',
+        direction: 'ltr',
+        'text-align': 'center',
+      },
+      children: [],
+    };
+    return merge(defaultData, payload);
+  },
   validParentType: [BasicType.PAGE],
-};
+});

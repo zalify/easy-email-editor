@@ -1,48 +1,56 @@
 import { ActiveTabKeys } from '@/components/Provider/BlocksProvider';
-import { FIXED_CONTAINER_ID } from '@/constants';
+import { BasicType, FIXED_CONTAINER_ID } from '@/constants';
 import { useActiveTab } from '@/hooks/useActiveTab';
-import { findBlockNodeByIdx } from '@/utils/findBlockNodeByIdx';
+import { useBlock } from '@/hooks/useBlock';
+import { useFocusIdx } from '@/hooks/useFocusIdx';
+import { findBlockNodeByIdx, getEditorRoot } from '@/utils/findBlockNodeByIdx';
 import { getEditNode } from '@/utils/getEditNode';
 import { onDrag } from '@/utils/onDrag';
 import React, { useCallback, useMemo } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { useLocalStorage } from 'react-use';
 import { EnhancerProps } from '../enhancer';
 import { InlineTextField } from '../index';
 import { InlineTextProps } from '../InlineTextField';
 import { TextToolbar } from './components/TextToolbar';
 
-export function RichTextField(
+const TEXT_BAR_LOCATION_KEY = 'TEXT_BAR_LOCATION_KEY';
+const RichTextFieldItem = (
   props: Omit<InlineTextProps, 'onChange' | 'mutators'> & EnhancerProps<string>
-) {
+) => {
   const { activeTab } = useActiveTab();
   const isActive = activeTab === ActiveTabKeys.EDIT;
 
   const [position, setPosition] = useState({ top: 0, left: 0 });
-  const [isMove, setIsMove] = useState(false);
+  const [locationState, setLocationState] = useLocalStorage(
+    TEXT_BAR_LOCATION_KEY,
+    { left: 0, top: 0 }
+  );
   const { idx } = props;
 
   const container = findBlockNodeByIdx(idx);
 
   useEffect(() => {
-    if (container) {
-      const { left, top } = container.getBoundingClientRect();
+    const fixContainer = getEditorRoot();
+    if (fixContainer && idx) {
+      const { left, top } = fixContainer.getBoundingClientRect();
 
       setPosition({
-        left,
-        top: top - 46,
+        left: locationState?.left || left,
+        top: locationState?.top || top - 46,
       });
     }
-  }, [container]);
+  }, [idx, locationState?.left, locationState?.top]);
 
-  const onChange = useCallback(() => {}, []);
+  const onChange = useCallback(() => { }, []);
 
   const editorContainer = container && getEditNode(container);
 
   const textToolbar = useMemo(() => {
     const onMoveTextToolbar = (event: React.MouseEvent) => {
-      setIsMove(true);
+
       onDrag({
         event: event as any,
         onMove(x, y) {
@@ -50,9 +58,13 @@ export function RichTextField(
             left: position.left + x,
             top: position.top + y,
           });
+          setLocationState({
+            left: position.left + x,
+            top: position.top + y,
+          });
         },
         onEnd() {
-          setIsMove(false);
+
         },
       });
     };
@@ -67,8 +79,7 @@ export function RichTextField(
           padding: 16,
           boxSizing: 'border-box',
 
-          zIndex: 1000,
-          transition: isMove ? undefined : 'all .3s',
+          zIndex: 100,
           display: Boolean(isActive) ? undefined : 'none',
         }}
       >
@@ -90,12 +101,21 @@ export function RichTextField(
       </div>,
       document.getElementById(FIXED_CONTAINER_ID) as HTMLDivElement
     );
-  }, [editorContainer, isActive, isMove, onChange, position, idx]);
+  }, [idx, position, isActive, editorContainer, onChange, setLocationState]);
 
   return (
     <>
-      <InlineTextField key={idx} {...(props as any)} />
+      <InlineTextField {...(props as any)} />
       {editorContainer && textToolbar}
     </>
   );
-}
+};
+
+export const RichTextField = (
+  props: Omit<InlineTextProps, 'onChange' | 'mutators'> & EnhancerProps<string>
+) => {
+  const { focusBlock } = useBlock();
+  const { focusIdx } = useFocusIdx();
+  if (focusBlock?.type !== BasicType.TEXT) return null;
+  return <RichTextFieldItem key={focusIdx} {...props} />;
+};

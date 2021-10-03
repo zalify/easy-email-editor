@@ -3,7 +3,10 @@ import { useEditorContext } from '@/hooks/useEditorContext';
 import React from 'react';
 import { PreviewEmail } from '../PreviewEmail';
 
-const MOBILE_WIDTH = 320;
+const MOBILE_WIDTH = 375;
+const MOBILE_Height = (MOBILE_WIDTH / 375) * 667;
+
+const responsiveScale = 320 / MOBILE_WIDTH;
 
 export function MobileEmailPreview() {
   const { pageData } = useEditorContext();
@@ -19,23 +22,30 @@ export function MobileEmailPreview() {
       }}
     >
       <IframeComponent
-        height={isResponsive ? '100%' : 667 / (MOBILE_WIDTH / parseFloat(pageMaxWidth))}
+        height={
+          isResponsive
+            ? '100%'
+            : MOBILE_Height / (MOBILE_WIDTH / parseFloat(pageMaxWidth))
+        }
         width='100%'
         style={{
-          paddingTop: -16,
-          border: ' 2px solid #e9e9e9',
+          padding: 10,
+          border: '10px solid rgb(64 61 61)',
           boxSizing: 'content-box',
-          boxShadow: '5px 5px 5px rgba(17, 17, 17, 0.699)',
+          boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.699)',
           borderRadius: '25px',
-          maxHeight: isResponsive ? 667 : 667 / (MOBILE_WIDTH / parseFloat(pageMaxWidth)),
-          transform: isResponsive ? undefined : `scale(${MOBILE_WIDTH / parseFloat(pageMaxWidth)})`,
-          transformOrigin: 'center top'
+          maxHeight: isResponsive
+            ? MOBILE_Height
+            : MOBILE_Height / (MOBILE_WIDTH / parseFloat(pageMaxWidth)),
+          transform: isResponsive
+            ? `scale(${responsiveScale})`
+            : `scale(${MOBILE_WIDTH / parseFloat(pageMaxWidth)})`,
+          transformOrigin: `center ${isResponsive ? 'center' : 'top'}`,
         }}
-
       >
         <style>
           {`
-            body *::-webkit-scrollbar {
+            *::-webkit-scrollbar {
               width: 0px;
               background-color: transparent;
             }

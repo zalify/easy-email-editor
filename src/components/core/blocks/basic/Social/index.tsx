@@ -1,8 +1,9 @@
 import { Panel } from './Panel';
-import { createInstance } from './createInstance';
 import { IBlock, IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
 import { CSSProperties } from 'react';
+import { createBlock } from '@/utils/createBlock';
+import { merge } from 'lodash';
 export type ISocial = IBlockData<
   {
     align?: string;
@@ -52,10 +53,57 @@ export type ISocial = IBlockData<
   }
 >;
 
-export const Social: IBlock<ISocial> = {
+export const Social: IBlock<ISocial> = createBlock({
   name: 'Social',
   type: BasicType.SOCIAL,
   Panel,
-  createInstance,
+  create: (payload) => {
+    const defaultData: ISocial = {
+      type: BasicType.SOCIAL,
+      data: {
+        value: {
+          elements: [
+            {
+              href: '#',
+              'icon-size': '20px',
+              target: '_blank',
+              src: 'https://assets.maocanhua.cn/93013b18-062d-48d7-ae00-4a5f0a9ac988.png',
+              content: 'Facebook',
+            },
+            {
+              href: '#',
+              'icon-size': '20px',
+              target: '_blank',
+              src: 'https://assets.maocanhua.cn/a81ddd4b-3a12-47be-91f3-28d71eced397.png',
+              content: 'Google',
+            },
+            {
+              href: '',
+              'icon-size': '20px',
+              target: '_blank',
+              src: 'https://assets.maocanhua.cn/0a411326-17c5-4814-ad3a-6927266f097e.png',
+              content: 'Twitter',
+            },
+          ],
+        },
+      },
+      attributes: {
+        align: 'center',
+        color: '#333333',
+        mode: 'horizontal',
+        'font-size': '13px',
+        'font-weight': 'normal',
+        'border-radius': '3px',
+        padding: '10px 25px 10px 25px',
+        'inner-padding': '4px 4px 4px 4px',
+        'line-height': '22px',
+        'text-padding': '4px 4px 4px 0px',
+        'icon-padding': '0px',
+        'icon-size': '20px',
+      },
+      children: [],
+    };
+    return merge(defaultData, payload);
+  },
   validParentType: [BasicType.COLUMN],
-};
+});

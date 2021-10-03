@@ -6,10 +6,10 @@ export interface IBlock<T extends IBlockData = IBlockData> {
   name: string;
   type: BlockType;
   Panel: () => React.ReactNode;
-  createInstance: (payload?: RecursivePartial<T>) => T;
+  create: (payload?: RecursivePartial<T>) => T; //@deprecated , use create
   validParentType: BlockType[];
-  transform?: (
-    data: IBlockData,
+  render?: (
+    data: T,
     idx: string | null,
     context: IPage
   ) => IBlockData | ReactElement;
@@ -35,7 +35,7 @@ export interface IEmailTemplate {
   subTitle: string;
 }
 
-export interface CreateInstance<T extends any = any> {
+export interface create<T extends any = any> {
   (payload?: RecursivePartial<T>): T;
 }
 

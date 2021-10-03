@@ -1,0 +1,220 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test parseXml should render  as expected 1`] = `
+Object {
+  "attributes": Object {
+    "background-color": "#efeeea",
+    "css-class": "mjml-body",
+    "width": "600px",
+  },
+  "children": Array [
+    Object {
+      "attributes": Object {
+        "background-color": "rgba(255, 255, 255, 0)",
+        "border": "none",
+        "direction": "ltr",
+        "padding": "20px 0px 20px 0px",
+        "text-align": "center",
+      },
+      "children": Array [
+        Object {
+          "attributes": Object {
+            "background-position": "top center",
+            "background-repeat": "repeat",
+            "background-size": "auto",
+            "border": "none",
+            "direction": "ltr",
+            "padding": "20px 0px 0px 0px",
+            "text-align": "center",
+          },
+          "children": Array [
+            Object {
+              "attributes": Object {
+                "border": "none",
+                "padding": "0px 0px 0px 0px",
+                "vertical-align": "top",
+              },
+              "children": Array [
+                Object {
+                  "attributes": Object {
+                    "align": "center",
+                    "height": "auto",
+                    "padding": "10px 25px 10px 25px",
+                    "src": "https://i.postimg.cc/63Bzt8fw/Tabechoku-Tastin-collab.png",
+                    "width": "150px",
+                  },
+                  "children": Array [],
+                  "data": Object {
+                    "value": Object {},
+                  },
+                  "type": "image",
+                },
+                Object {
+                  "attributes": Object {
+                    "align": "center",
+                    "font-size": "13px",
+                    "line-height": "1",
+                    "padding": "10px 25px 10px 25px",
+                  },
+                  "children": Array [],
+                  "data": Object {
+                    "value": Object {
+                      "content": "この度は、#cookforJapn by 食べチョクのご利用ありがとうございます。<div>シェフからのメッセージをお楽しみください。</div>",
+                    },
+                  },
+                  "type": "text",
+                },
+              ],
+              "data": Object {
+                "value": Object {},
+              },
+              "type": "column",
+            },
+          ],
+          "data": Object {
+            "value": Object {
+              "noWrap": false,
+            },
+          },
+          "type": "section",
+        },
+      ],
+      "data": Object {
+        "value": Object {},
+      },
+      "type": "wrapper",
+    },
+    Object {
+      "attributes": Object {
+        "background-color": "rgba(255, 255, 255, 1)",
+        "background-position": "top center",
+        "background-repeat": "repeat",
+        "background-size": "auto",
+        "border": "none",
+        "direction": "ltr",
+        "padding": "20px 0px 20px 0px",
+        "text-align": "center",
+      },
+      "children": Array [
+        Object {
+          "attributes": Object {
+            "border": "none",
+            "padding": "0px 0px 0px 0px",
+            "vertical-align": "top",
+          },
+          "children": Array [
+            Object {
+              "attributes": Object {
+                "align": "left",
+                "font-size": "16px",
+                "line-height": "1",
+                "padding": "10px 25px 10px 25px",
+              },
+              "children": Array [],
+              "data": Object {
+                "value": Object {
+                  "content": "<b>飲み物にもこだわる大切さ</b>",
+                },
+              },
+              "type": "text",
+            },
+            Object {
+              "attributes": Object {
+                "align": "left",
+                "font-size": "13px",
+                "line-height": "1",
+                "padding": "0px 25px 0px 25px",
+              },
+              "children": Array [],
+              "data": Object {
+                "value": Object {
+                  "content": "担当料理: 日本酒",
+                },
+              },
+              "type": "text",
+            },
+            Object {
+              "attributes": Object {
+                "align": "center",
+                "height": "auto",
+                "href": "https://soundcloud.com/kyle-comstock-126175966/food-podcast",
+                "padding": "10px 25px 10px 25px",
+                "src": "https://i.postimg.cc/brF57GLv/image.png",
+                "width": "1000px",
+              },
+              "children": Array [],
+              "data": Object {
+                "value": Object {},
+              },
+              "type": "image",
+            },
+            Object {
+              "attributes": Object {
+                "align": "left",
+                "font-size": "13px",
+                "line-height": "1",
+                "padding": "10px 25px 10px 25px",
+              },
+              "children": Array [],
+              "data": Object {
+                "value": Object {
+                  "content": "日本酒と日本酒を育てた方や育った場所に寄り添い、新しいことも積極的に取り入れ実験し、挑戦なさる橋野さん。そんな橋野さんの味わい深くも、モダンなお考えや想い、ストーリーをお届けします。",
+                },
+              },
+              "type": "text",
+            },
+            Object {
+              "attributes": Object {
+                "align": "center",
+                "background-color": "rgba(50, 73, 103, 1)",
+                "border": "none",
+                "border-radius": "3px",
+                "color": "#ffffff",
+                "font-size": "13px",
+                "font-weight": "normal",
+                "href": "#",
+                "line-height": "120%",
+                "padding": "10px 25px 10px 25px",
+                "target": "_blank",
+                "text-align": "center",
+                "vertical-align": "middle",
+              },
+              "children": Array [],
+              "data": Object {
+                "value": Object {
+                  "content": "🎧視聴する",
+                },
+              },
+              "type": "button",
+            },
+          ],
+          "data": Object {
+            "value": Object {},
+          },
+          "type": "column",
+        },
+      ],
+      "data": Object {
+        "value": Object {
+          "noWrap": false,
+        },
+      },
+      "type": "section",
+    },
+  ],
+  "data": Object {
+    "value": Object {
+      "breakpoint": "480px",
+      "font-family": "'Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo",
+      "font-size": "14px",
+      "fonts": Array [],
+      "headAttributes": "",
+      "headStyles": Array [],
+      "line-height": "1.7",
+      "responsive": true,
+      "text-color": "#000000",
+    },
+  },
+  "type": "page",
+}
+`;

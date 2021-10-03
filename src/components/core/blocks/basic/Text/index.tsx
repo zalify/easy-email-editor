@@ -1,8 +1,9 @@
 import { Panel } from './Panel';
-import { createInstance } from './createInstance';
-import { IBlock, IBlockData } from '@/typings';
+import { IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
 import { CSSProperties } from 'react';
+import { createBlock } from '@/utils/createBlock';
+import { merge } from 'lodash';
 export type IText = IBlockData<
   {
     color?: string;
@@ -25,10 +26,25 @@ export type IText = IBlockData<
   }
 >;
 
-export const Text: IBlock<IText> = {
+export const Text = createBlock<IText>({
   name: 'Text',
   type: BasicType.TEXT,
   Panel,
-  createInstance,
+  create: (payload) => {
+    const defaultData: IText = {
+      type: BasicType.TEXT,
+      data: {
+        value: {
+          content: 'Make it easy for everyone to compose emails!',
+        },
+      },
+      attributes: {
+        padding: '10px 25px 10px 25px',
+        align: 'left',
+      },
+      children: [],
+    };
+    return merge(defaultData, payload);
+  },
   validParentType: [BasicType.COLUMN, BasicType.HERO],
-};
+});

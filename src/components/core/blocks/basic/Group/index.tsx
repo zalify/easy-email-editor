@@ -1,7 +1,8 @@
 import { Panel } from './Panel';
-import { createInstance } from './createInstance';
 import { IBlock, IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
+import { createBlock } from '@/utils/createBlock';
+import { merge } from 'lodash';
 
 export type IGroup = IBlockData<{
   width?: string;
@@ -10,10 +11,23 @@ export type IGroup = IBlockData<{
   direction?: 'ltr' | 'rtl';
 }>;
 
-export const Group: IBlock<IGroup> = {
+export const Group: IBlock<IGroup> = createBlock({
   name: 'Group',
   type: BasicType.GROUP,
   Panel,
-  createInstance,
+  create: (payload) => {
+    const defaultData: IGroup = {
+      type: BasicType.GROUP,
+      data: {
+        value: {},
+      },
+      attributes: {
+        'vertical-align': 'top',
+        direction: 'ltr',
+      },
+      children: [],
+    };
+    return merge(defaultData, payload);
+  },
   validParentType: [BasicType.SECTION],
-};
+});

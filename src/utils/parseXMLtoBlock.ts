@@ -1,6 +1,7 @@
+import { BlocksMap } from '@/components/core/blocks';
 import mjml from 'mjml-browser';
 import { IBlockData } from '@/typings';
-import { BlockType } from './../constants';
+import { BlockType, BasicType } from './../constants';
 import { MjmlToJson } from './MjmlToJson';
 
 const domParser = new DOMParser();
@@ -26,8 +27,15 @@ export function parseXMLtoBlock(text: string) {
     node.getAttributeNames().forEach((name) => {
       attributes[name] = node.getAttribute(name);
     });
+    const type = node.tagName.replace('mj-', '');
+
+    if (!BlocksMap.findBlockByType(type)) {
+      if (!node.parentElement || node.parentElement.tagName !== 'mj-text')
+        throw new Error('Invalid content');
+    }
+
     const block: IBlockData = {
-      type: node.tagName.replace('mj-', '') as BlockType,
+      type: type as BlockType,
       attributes: attributes,
       data: {
         value: {
@@ -38,6 +46,13 @@ export function parseXMLtoBlock(text: string) {
         .filter((item) => item instanceof Element)
         .map(transform as any),
     };
+
+    switch (type) {
+      case BasicType.TEXT:
+        block.data.value.content = node.innerHTML;
+        block.children = [];
+    }
+
     return block;
   };
 

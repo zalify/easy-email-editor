@@ -46,7 +46,7 @@ export function MjmlToJson(data: MjmlBlockItem | string): IPage {
                 const isContentColor =
                   ['mj-wrapper', 'mj-section'].includes(item.tagName) &&
                   item.attributes['background-color'] ===
-                    metaData['content-background-color'];
+                  metaData['content-background-color'];
                 return !isFontFamily && !isTextColor && !isContentColor;
               })
               .map(
@@ -62,7 +62,7 @@ export function MjmlToJson(data: MjmlBlockItem | string): IPage {
           (item) => item.tagName === 'mj-breakpoint'
         );
 
-        return Page.createInstance({
+        return Page.create({
           attributes: body.attributes,
           children: body.children?.map(transform),
           data: {
@@ -105,10 +105,18 @@ export function MjmlToJson(data: MjmlBlockItem | string): IPage {
         } else if (block.type === BasicType.NAVBAR) {
           payload.data.value.links =
             item.children?.map((child) => {
-              return {
+              const navbarLinkData = {
+                // default config
+                color: '#1890ff',
+                'font-size': '13px',
+                target: '_blank',
+                padding: '15px 10px',
+
                 ...child.attributes,
                 content: child.content,
               };
+              formatPadding(navbarLinkData, 'padding');
+              return navbarLinkData;
             }) || [];
           payload.children = [];
         } else if (block.type === BasicType.SOCIAL) {
@@ -124,7 +132,12 @@ export function MjmlToJson(data: MjmlBlockItem | string): IPage {
           payload.children = item.children.map(transform);
         }
 
-        return block.createInstance(payload);
+        const blockData = block.create(payload);
+
+        // format padding
+        formatPadding(blockData.attributes, 'padding');
+        formatPadding(blockData.attributes, 'inner-padding');
+        return blockData;
     }
   };
 
@@ -139,7 +152,7 @@ export function getMetaDataFromMjml(data?: IChildrenItem): {
     .map((item) => item.children)
     .flat()
     .filter((item) => item && item.attributes.class === 'easy-email')
-    .reduce((obj: { [key: string]: any }, item) => {
+    .reduce((obj: { [key: string]: any; }, item) => {
       if (!item) return obj;
       const name = item.attributes['attribute-name'];
       const isMultipleAttributes = Boolean(
@@ -147,17 +160,38 @@ export function getMetaDataFromMjml(data?: IChildrenItem): {
       );
       obj[name] = isMultipleAttributes
         ? pickBy(
-            {
-              ...item.attributes,
-              'attribute-name': undefined,
-              'multiple-attributes': undefined,
-              class: undefined,
-            },
-            identity
-          )
+          {
+            ...item.attributes,
+            'attribute-name': undefined,
+            'multiple-attributes': undefined,
+            class: undefined,
+          },
+          identity
+        )
         : item.attributes[name];
       return obj;
     }, {});
 
   return pickBy(mjmlHtmlAttributes, identity);
+}
+
+function formatPadding(attributes: IBlockData['attributes'], attributeName: 'padding' | 'inner-padding') {
+  const ele = document.createElement('div');
+  Object.keys(attributes).forEach((key: string) => {
+    if (new RegExp(`^${attributeName}`).test(key)) {
+      const formatKey = new RegExp(`^${attributeName}(.*)`).exec(key)?.[0];
+
+      if (formatKey) {
+        ele.style[formatKey] = attributes[key];
+        delete attributes[key];
+      }
+
+    }
+  });
+  const newPadding = [ele.style.paddingTop, ele.style.paddingRight, ele.style.paddingBottom, ele.style.paddingLeft].filter(Boolean).join(' ');
+
+  if (newPadding) {
+    attributes[attributeName] = newPadding;
+  }
+
 }

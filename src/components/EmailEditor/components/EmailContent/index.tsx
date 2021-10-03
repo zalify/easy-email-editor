@@ -42,10 +42,10 @@ export function EmailContent() {
       <>
         <ShadowStyle />
         <div
-          onScroll={onScroll}
           className='shadow-container'
-          style={{ height: '100%', overflowY: 'overlay' as any }}
+          style={{ height: '100%', overflowY: 'auto', zIndex: 10 }}
           ref={setContainerRef}
+          onScroll={onScroll}
         >
           <MjmlDomRender />
         </div>

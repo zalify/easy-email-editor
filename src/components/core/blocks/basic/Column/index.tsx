@@ -1,8 +1,12 @@
 import { Panel } from './Panel';
-import { createInstance } from './createInstance';
-import { IBlock, IBlockData } from '@/typings';
+import { IBlockData } from '@/typings';
 import { BasicType } from '@/constants';
 import { CSSProperties } from 'react';
+import { createBlock } from '@/utils/createBlock';
+import { merge } from 'lodash';
+import React from 'react';
+import { Stack } from '@/components/UI/Stack';
+import { TextStyle } from '@/components/UI/TextStyle';
 
 export type IColumn = IBlockData<
   {
@@ -19,10 +23,24 @@ export type IColumn = IBlockData<
   {}
 >;
 
-export const Column: IBlock<IColumn> = {
+export const Column = createBlock<IColumn>({
   name: 'Column',
   type: BasicType.COLUMN,
   Panel,
-  createInstance,
+  create: (payload) => {
+    const defaultData: IColumn = {
+      type: BasicType.COLUMN,
+      data: {
+        value: {},
+      },
+      attributes: {
+        padding: '0px 0px 0px 0px',
+        border: 'none',
+        'vertical-align': 'top',
+      },
+      children: [],
+    };
+    return merge(defaultData, payload);
+  },
   validParentType: [BasicType.SECTION, BasicType.GROUP],
-};
+});

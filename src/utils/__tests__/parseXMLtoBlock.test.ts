@@ -86,7 +86,33 @@ const mjmlText = `
 describe('Test parseXml', () => {
   const instance = parseXMLtoBlock(mjmlText);
 
-  it('should as expected', () => {
+  it('should render  as expected', () => {
     expect(instance).toMatchSnapshot();
+  });
+
+  it('should render  as expected', () => {
+    expect(
+      parseXMLtoBlock(`
+    <mj-text font-size="13px" padding="0px 0px 0px 0px" line-height="1" align="left">
+     <div style="color:#fff;">Make it easy for everyone to compose emails!</div>
+    </mj-text>
+  `)
+    ).toMatchSnapshot();
+  });
+
+  it('should throw error when xml is unexpected', () => {
+    expect(() => parseXMLtoBlock('<mj-button><mj-button>')).toThrowError(
+      'Invalid content'
+    );
+    expect(() => parseXMLtoBlock('<html></html>')).toThrowError(
+      'Invalid content'
+    );
+    expect(() =>
+      parseXMLtoBlock(`
+    <mj-button font-size="13px" padding="0px 0px 0px 0px" line-height="1" align="left">
+     <div style="color:#fff;">Make it easy for everyone to compose emails!</div>
+    </mj-button>
+  `)
+    ).toThrowError('Invalid content');
   });
 });

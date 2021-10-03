@@ -1,5 +1,8 @@
+
 // export components
 export { EmailEditorProvider } from './components/Provider/EmailEditorProvider';
+export { AttributesPanelWrapper } from './components/core/wrapper/AttributesPanelWrapper';
+export { BlockMaskWrapper } from './components/core/wrapper/BlockMaskWrapper';
 export * from './components/core/Form';
 export type {
   BlockGroup,
@@ -10,7 +13,7 @@ export { EmailEditor } from './components/EmailEditor';
 export * from './components/EmailEditor/components/ConfigurationPanel';
 export { BlockAvatarWrapper } from './components/core/wrapper/BlockAvatarWrapper';
 export { Stack } from './components/UI/Stack';
-
+export * from './utils/BlockMarketManager';
 // export hooks
 export { useBlock } from './hooks/useBlock';
 export { useDropBlock } from './hooks/useDropBlock';
@@ -24,5 +27,7 @@ export { MjmlToJson } from './utils/MjmlToJson';
 export { BlocksMap } from './components/core/blocks/index';
 export * from './constants';
 export * from './utils/block';
+export * from './utils/createBlock';
+export * from './utils/createBlockItem';
 export * from './typings';
 export * from './blocks';
