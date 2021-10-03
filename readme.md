@@ -47,8 +47,8 @@ Easy email is developed based on the [MJML](https://mjml.io/) and has very good 
 
 |                                                              Video Overview                                                               |
 | :---------------------------------------------------------------------------------------------------------------------------------------: |
-| [![Easy email](https://assets.maocanhua.cn/93c653c8-4bc9-4d2f-9e7e-11a590d3b2bc-image.png)](https://www.youtube.com/watch?v=3KdZQeZ9uqc_) |
-|                                           _Watch video overview: https://youtu.be/3KdZQeZ9uqc_                                            |
+| [![Easy email](https://assets.maocanhua.cn/93c653c8-4bc9-4d2f-9e7e-11a590d3b2bc-image.png)]https://www.bilibili.com/video/BV1YQ4y167bb) |
+|                                           _Watch video overview:https://www.bilibili.com/video/BV1YQ4y167bb                                           |
 
 ## Live Demo
 
@@ -61,8 +61,6 @@ Check out the live demo here: <a href="http://easy-email-m-ryan.vercel.app" targ
 | mod+z    | undo |
 | mod+y    | redo |
 | delete/backspace    | delete block |
-| click tabpanel    | select parent block |
-| double click tabpanel    | select page block |
 
 ## Getting started
 
@@ -119,15 +117,10 @@ $ yarn dev
 
 ```
 
-## Custom block
-
-> You could customize your own blocks and inject data before sending emails. For more details, please see <a href="./How to write a custom block.md" target="_blank">here</a>
->
-> <img src="https://assets.maocanhua.cn/Fn4SuBB6jnbGaxFmiLulNZwGne5Y" alt="Overview" width="50%" style="text-align:center" />
-
 ## Examples
 
-> Todo
+> Please see <a href="https://github.com/m-Ryan/easy-email-demo" target="_blank" alt="https://github.com/m-Ryan/easy-email-demo">https://github.com/m-Ryan/easy-email-demo</a>
+
 
 ## Use test account
 
@@ -144,7 +137,7 @@ $ yarn dev
 | interactiveStyle   | { hoverColor?: string; selectedColor?: string;}    | Interactive prompt color                      |
 | onUploadImage      | (data: Blob) => Promise<string>;                                                                   | Triggered when an image is pasted or uploaded |
 | onAddCollection    | (payload: CollectedBlock) => void;                                                                 | Add to collection list                        |
-| onRemoveCollection | (payload: { id: string; }) => void;                                                                | remove from collection list                   |
+| onRemoveCollection | (payload: { id: string; }) => void;                                                                | Remove from collection list                   | dashed             | boolean                                                                                            | Show dashed bold
 
 ## EmailEditor Configuration
 
