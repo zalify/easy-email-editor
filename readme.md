@@ -47,9 +47,11 @@ Easy email is developed based on the [MJML](https://mjml.io/) and has very good 
 
 <br/>
 
+
 |                                                              Video Overview                                                               |
 | :---------------------------------------------------------------------------------------------------------------------------------------: |
-| ![Easy email](https://assets.maocanhua.cn/e2ba1d5c-c944-4351-9668-c519baf67361-image.png)(https://www.bilibili.com/video/BV1YQ4y167bb) |
+| <a href="https://www.bilibili.com/video/BV1YQ4y167bb" target="_blank"><img src="https://assets.maocanhua.cn/e2ba1d5c-c944-4351-9668-c519baf67361-image.png" alt="Overview" ></a> |
+|                                           _Watch video overview:https://www.bilibili.com/video/BV1YQ4y167bb                                           |
 
 ## Live Demo
 
