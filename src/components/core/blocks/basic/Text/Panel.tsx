@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Padding } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/Padding';
 import { Stack } from '@/components/UI/Stack';
 import { TextDecoration } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/TextDecoration';
@@ -14,14 +14,15 @@ import { Align } from '@/components/EmailEditor/components/ConfigurationPanel/co
 import { LineHeight } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/LineHeight';
 import { LetterSpacing } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/LetterSpacing';
 
-import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { AttributesPanelWrapper } from '@/components/core/wrapper/AttributesPanelWrapper';
-import { Collapse } from 'antd';
+import { Button, Collapse, Tooltip } from 'antd';
+import { IconFont } from '@/components/IconFont';
+import { HtmlEditor } from './HtmlEditor';
 
 export function Panel() {
-
+  const [visible, setVisible] = useState(false);
   return (
-    <AttributesPanelWrapper>
+    <AttributesPanelWrapper extra={<Tooltip title="Html mode"><Button onClick={() => setVisible(true)} icon={<IconFont iconName="icon-html" />} /></Tooltip>}>
       <Collapse defaultActiveKey={['0', '1', '2']}>
         <Collapse.Panel key='0' header='Dimension'>
           <Stack vertical spacing='tight'>
@@ -64,6 +65,7 @@ export function Panel() {
           </Stack>
         </Collapse.Panel>
       </Collapse>
+      <HtmlEditor visible={visible} setVisible={setVisible} />
     </AttributesPanelWrapper>
   );
 }

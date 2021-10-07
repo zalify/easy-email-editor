@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import path from 'path';
 import typescript2 from 'rollup-plugin-typescript2';
 
+
 export default defineConfig({
   plugins: [
     {
@@ -38,12 +39,17 @@ export default defineConfig({
         'react-final-form',
       ],
       output: {
+        inlineDynamicImports: true,
         entryFileNames: 'index.js',
       },
     },
     outDir: 'lib',
   },
-  optimizeDeps: {},
+  optimizeDeps: {
+    include: [
+      'monaco-editor'
+    ]
+  },
   css: {
     modules: {
       localsConvention: 'dashes',

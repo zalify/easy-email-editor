@@ -37,6 +37,9 @@ export default defineConfig({
           if (/\/node_modules\/mjml-browser\/.*/.test(id)) {
             return 'mjml-browser';
           }
+          if (/\/node_modules\/monaco-editor\/.*/.test(id)) {
+            return 'monaco-editor';
+          }
           if (/^\/src\/.*/.test(id)) {
             return 'easy-email-editor';
           }
