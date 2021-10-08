@@ -30,7 +30,7 @@ function isContentEditFocus() {
 
 export function useHotKeys() {
   const { redo, undo, removeBlock } = useBlock();
-  const { setFocusIdx, focusIdx } = useFocusIdx();
+  const { focusIdx } = useFocusIdx();
   const root = getShadowRoot();
   // redo/undo
   useEffect(() => {
@@ -69,5 +69,4 @@ export function useHotKeys() {
       window.removeEventListener('keydown', onKeyDown);
     };
   }, [focusIdx, removeBlock]);
-
 }

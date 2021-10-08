@@ -72,8 +72,6 @@ export function InlineText({
       const onPaste = (e: ClipboardEvent) => {
         e.preventDefault();
         const text = e.clipboardData?.getData('text/plain') || '';
-        console.log(text);
-        debugger;
         document.execCommand('insertHTML', false, text);
       };
       const stopDrag = (e: Event) => {

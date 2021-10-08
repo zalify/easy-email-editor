@@ -8,9 +8,10 @@ import { Button, Drawer } from 'antd';
 import React, { Suspense, useEffect, useMemo, useState } from 'react';
 import { IText } from '.';
 
-const CodeMirrorEditor = React.lazy(
-  () => import('@/components/EmailEditor/components/CodemirrorEditor')
+const CodeMirrorEditorPromise = import(
+  '@/components/EmailEditor/components/CodemirrorEditor'
 );
+const CodeMirrorEditor = React.lazy(() => CodeMirrorEditorPromise);
 
 export const HtmlEditor: React.FC<{
   visible: boolean;

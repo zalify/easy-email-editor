@@ -6,9 +6,11 @@ import store from '@example/store';
 import '@example/styles/common.scss';
 import { history } from './util/history';
 
-const Home = React.lazy(() => import('@example/pages/Home'));
+const HomePromise = import('@example/pages/Home');
+const EditorPromise = import('@example/pages/Editor');
+const Home = React.lazy(() => HomePromise);
 
-const Editor = React.lazy(() => import('@example/pages/Editor'));
+const Editor = React.lazy(() => EditorPromise);
 
 export default function App() {
   return (

@@ -1,5 +1,6 @@
 import { Input, Popover, PopoverProps } from 'antd';
 import React, {
+  Suspense,
   useCallback,
   useContext,
   useEffect,
@@ -9,12 +10,10 @@ import React, {
 import { Picture } from '@/components/UI/Picture';
 import { Stack } from '@/components/UI/Stack';
 import { PresetColorsContext } from '@/components/Provider/PresetColorsProvider';
-
-const SketchPicker = React.lazy(() =>
-  import('react-color').then(({ SketchPicker }) => ({
-    default: SketchPicker,
-  }))
-);
+const SketchPickerPromise = import('react-color').then(({ SketchPicker }) => ({
+  default: SketchPicker,
+}));
+const SketchPicker = React.lazy(() => SketchPickerPromise);
 
 export interface ColorPickerProps extends PopoverProps {
   onChange?: (val: string) => void;
@@ -61,12 +60,14 @@ export function ColorPicker(props: ColorPickerProps) {
         trigger='click'
         {...props}
         content={(
-          <SketchPicker
-            presetColors={presetColors}
-            color={color}
-            disableAlpha
-            onChangeComplete={onChangeComplete}
-          />
+          <Suspense fallback={<div>Loading</div>}>
+            <SketchPicker
+              presetColors={presetColors}
+              color={color}
+              disableAlpha
+              onChangeComplete={onChangeComplete}
+            />
+          </Suspense>
         )}
       >
         {children || (
