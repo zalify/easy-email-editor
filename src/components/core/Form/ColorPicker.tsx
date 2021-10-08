@@ -6,10 +6,15 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { ColorResult, SketchPicker } from 'react-color';
 import { Picture } from '@/components/UI/Picture';
 import { Stack } from '@/components/UI/Stack';
 import { PresetColorsContext } from '@/components/Provider/PresetColorsProvider';
+
+const SketchPicker = React.lazy(() =>
+  import('react-color').then(({ SketchPicker }) => ({
+    default: SketchPicker,
+  }))
+);
 
 export interface ColorPickerProps extends PopoverProps {
   onChange?: (val: string) => void;
@@ -30,7 +35,7 @@ export function ColorPicker(props: ColorPickerProps) {
   }, [value]);
 
   const onChangeComplete = useCallback(
-    (color: ColorResult, event: React.ChangeEvent<HTMLInputElement>) => {
+    (color: { hex: string }, event: React.ChangeEvent<HTMLInputElement>) => {
       if (event.target.value && event.target.value.replace('#', '').length < 6)
         return;
       const newColor = color.hex;

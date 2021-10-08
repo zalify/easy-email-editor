@@ -8,16 +8,18 @@ import { TextStyle } from '@/components/UI/TextStyle';
 import { useBlock } from '@/hooks/useBlock';
 import { IPage } from '../blocks/basic/Page';
 import { Help } from '@/components/UI/Help';
-import * as Yup from 'yup';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 
 const isUrl = async (v: string) => {
-  try {
-    await Yup.string().url().validate(v);
-    return undefined;
-  } catch (error) {
+  if (
+    !/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(
+      v
+    )
+  ) {
     return 'Unvalid hosted css file.';
   }
+
+  return undefined;
 };
 
 export function AddFont() {
