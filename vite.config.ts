@@ -3,6 +3,7 @@ import reactRefresh from '@vitejs/plugin-react-refresh';
 import path from 'path';
 import styleImport from 'vite-plugin-style-import';
 import { injectHtml } from 'vite-plugin-html';
+import visualizer from 'rollup-plugin-visualizer';
 
 export default defineConfig({
   resolve: {
@@ -70,6 +71,12 @@ export default defineConfig({
     },
   },
   plugins: [
+    process.env.ANALYZE === 'true' &&
+      visualizer({
+        open: true,
+        gzipSize: true,
+        brotliSize: true,
+      }),
     reactRefresh(),
     styleImport({
       libs: [
@@ -83,7 +90,9 @@ export default defineConfig({
     }),
     injectHtml({
       data: {
-        analysis: process.env.NODE_ENV !== 'development' ? `
+        analysis:
+          process.env.NODE_ENV !== 'development'
+            ? `
         <script type="text/javascript">
         (function (c, l, a, r, i, t, y) {
           c[a] =
@@ -109,8 +118,9 @@ export default defineConfig({
         src="https://s9.cnzz.com/z_stat.php?id=1280025969&web_id=1280025969"
       ></script>
       <script src="https://buttons.github.io/buttons.js"></script>
-        `: '',
+        `
+            : '',
       },
     }),
-  ],
+  ].filter(Boolean),
 });

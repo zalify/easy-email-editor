@@ -6,11 +6,6 @@ import { Form } from 'react-final-form';
 import { Stack } from '@/components/UI/Stack';
 import { SearchField, SwitchField } from '@/components/core/Form';
 
-import * as Yup from 'yup';
-
-const schema = Yup.object().shape({
-  link: Yup.string().url().required(),
-});
 export interface LinkParams {
   link: string;
   blank: boolean;
@@ -93,7 +88,6 @@ export function Link(props: LinkProps) {
     <Form
       key={initialValues.link}
       enableReinitialize
-      validationSchema={schema}
       initialValues={initialValues}
       onSubmit={onSubmit}
     >

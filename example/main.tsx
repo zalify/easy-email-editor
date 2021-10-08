@@ -3,6 +3,7 @@ import React from 'react';
 import App from './App';
 import { UserStorage } from './util/user-storage';
 import { message } from 'antd';
+import 'antd/dist/antd.css';
 
 UserStorage.getAccount()
   .then(() => {

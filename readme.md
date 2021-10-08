@@ -47,11 +47,10 @@ Easy email is developed based on the [MJML](https://mjml.io/) and has very good 
 
 <br/>
 
-
-|                                                              Video Overview                                                               |
-| :---------------------------------------------------------------------------------------------------------------------------------------: |
+|                                                                                  Video Overview                                                                                  |
+| :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 | <a href="https://www.bilibili.com/video/BV1YQ4y167bb" target="_blank"><img src="https://assets.maocanhua.cn/e2ba1d5c-c944-4351-9668-c519baf67361-image.png" alt="Overview" ></a> |
-|                                           _Watch video overview:https://www.bilibili.com/video/BV1YQ4y167bb                                           |
+|                                                        \_Watch video overview:https://www.bilibili.com/video/BV1YQ4y167bb                                                        |
 
 ## Live Demo
 
@@ -59,11 +58,11 @@ Check out the live demo here: <a href="http://easy-email-m-ryan.vercel.app" targ
 
 ## Hotkeys
 
-| hotkey   | Description  |
-| -------- | ---------------- |
-| mod+z    | undo |
-| mod+y    | redo |
-| delete/backspace    | delete block |
+| hotkey           | Description  |
+| ---------------- | ------------ |
+| mod+z            | undo         |
+| mod+y            | redo         |
+| delete/backspace | delete block |
 
 ## Getting started
 
@@ -104,6 +103,16 @@ export function App() {
 }
 ```
 
+## Custom blocks
+
+You could customize your own blocks and inject data before sending emails. For more details, please see <a href="https://github.com/m-Ryan/easy-email/tree/master/example/pages/Editor/components/CustomBlocks" target="_blank" alt="https://github.com/m-Ryan/easy-email/tree/master/example/pages/Editor/components/CustomBlocks">https://github.com/m-Ryan/easy-email/tree/master/example/pages/Editor/components/CustomBlocks</a>
+
+<img src="https://assets.maocanhua.cn/4dde0dbb-f7d4-4ea3-b495-fd104c0f6306-image.png" alt="Custom block" width="50%" style="text-align:center">
+
+<br/>
+<br/>
+<br/>
+
 ## Development
 
 ```sh
@@ -120,10 +129,17 @@ $ yarn dev
 
 ```
 
+## Define custom block
+
+Maybe you need to
+
+```sh
+
+```
+
 ## Examples
 
 > Please see <a href="https://github.com/m-Ryan/easy-email-demo" target="_blank" alt="https://github.com/m-Ryan/easy-email-demo">https://github.com/m-Ryan/easy-email-demo</a>
-
 
 ## Use test account
 
@@ -132,15 +148,15 @@ $ yarn dev
 ## EmailEditorProvider Configuration
 
 | property           | Type                                                                                               | Description                                   |
-| ------------------ | -------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| ------------------ | -------------------------------------------------------------------------------------------------- | --------------------------------------------- | ------ | ------- | ---------------- |
 | data               | interface IEmailTemplate { content: IPage; subject: string; subTitle: string; }                    | Source data                                   |
 | children           | ( props: FormState<T>,helper: FormApi<IEmailTemplate, Partial<IEmailTemplate>>) => React.ReactNode | ReactNode                                     |
 | onSubmit           | Config<IEmailTemplate, Partial<IEmailTemplate>>['onSubmit'];                                       | Called when the commit is triggered manually  |
 | fontList           | { value: string; label: string; }[];                                                               | Default font list.                            |
-| interactiveStyle   | { hoverColor?: string; selectedColor?: string;}    | Interactive prompt color                      |
+| interactiveStyle   | { hoverColor?: string; selectedColor?: string;}                                                    | Interactive prompt color                      |
 | onUploadImage      | (data: Blob) => Promise<string>;                                                                   | Triggered when an image is pasted or uploaded |
 | onAddCollection    | (payload: CollectedBlock) => void;                                                                 | Add to collection list                        |
-| onRemoveCollection | (payload: { id: string; }) => void;                                                                | Remove from collection list                   | dashed             | boolean                                                                                            | Show dashed bold
+| onRemoveCollection | (payload: { id: string; }) => void;                                                                | Remove from collection list                   | dashed | boolean | Show dashed bold |
 
 ## EmailEditor Configuration
 

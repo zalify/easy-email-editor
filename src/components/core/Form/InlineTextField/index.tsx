@@ -42,11 +42,9 @@ export function InlineText({
 
   const onTextChange = useCallback(
     (text: string) => {
-      if (focusBlock?.data.value.content !== text) {
-        onChange(text);
-      }
+      onChange(text);
     },
-    [focusBlock?.data.value.content, onChange]
+    [onChange]
   );
 
   useEffect(() => {

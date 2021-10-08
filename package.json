@@ -2,7 +2,7 @@
   "name": "easy-email-editor",
   "license": "MIT",
   "description": "Email editor",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "author": "m-Ryan",
   "repository": {
     "type": "git",
@@ -19,6 +19,8 @@
     "dev": "cross-env NODE_ENV=development vite",
     "build": "cross-env NODE_ENV=production vite build",
     "lib": "rimraf lib && vite build --config vite.lib.config.ts && npm run typings && tsc-alias -p tsconfig.lib.json",
+    "analyze:build": "cross-env ANALYZE=true yarn build",
+    "analyze": "cross-env ANALYZE=true yarn lib",
     "preview": "npm run lib && vite --config vite.preview.config.ts --force",
     "typings": "tsc --declaration --emitDeclarationOnly --project tsconfig.lib.json",
     "test": "jest",
@@ -94,6 +96,7 @@
   },
   "dependencies": {
     "antd": "^4.15.5",
+    "codemirror": "^5.63.1",
     "final-form": "^4.20.2",
     "final-form-arrays": "^3.0.2",
     "final-form-set-field-touched": "^1.0.1",
@@ -108,6 +111,7 @@
     "qs": "6.9.6",
     "react": "^17.0.1",
     "react-beautiful-dnd": "^13.1.0",
+    "react-codemirror2": "^7.2.1",
     "react-color": "^2.19.3",
     "react-dom": "^17.0.1",
     "react-final-form": "^6.5.3",

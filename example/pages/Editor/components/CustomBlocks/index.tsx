@@ -1,10 +1,10 @@
-import { BlocksMap, BlockMarketCategory } from 'easy-email-editor';
+import { BlocksMap } from 'easy-email-editor';
 import { ProductRecommendation } from './ProductRecommendation';
 import { Example } from './ProductRecommendation/Example';
 
 BlocksMap.registerBlocks({ ProductRecommendation: ProductRecommendation });
 
-export const customBlocks: BlockMarketCategory = {
+export const customBlocks = {
   title: 'Custom',
   name: 'Custom',
   blocks: [
