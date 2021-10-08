@@ -129,14 +129,6 @@ $ yarn dev
 
 ```
 
-## Define custom block
-
-Maybe you need to
-
-```sh
-
-```
-
 ## Examples
 
 > Please see <a href="https://github.com/m-Ryan/easy-email-demo" target="_blank" alt="https://github.com/m-Ryan/easy-email-demo">https://github.com/m-Ryan/easy-email-demo</a>
@@ -148,7 +140,7 @@ Maybe you need to
 ## EmailEditorProvider Configuration
 
 | property           | Type                                                                                               | Description                                   |
-| ------------------ | -------------------------------------------------------------------------------------------------- | --------------------------------------------- | ------ | ------- | ---------------- |
+| ------------------ | -------------------------------------------------------------------------------------------------- | --------------------------------------------- |
 | data               | interface IEmailTemplate { content: IPage; subject: string; subTitle: string; }                    | Source data                                   |
 | children           | ( props: FormState<T>,helper: FormApi<IEmailTemplate, Partial<IEmailTemplate>>) => React.ReactNode | ReactNode                                     |
 | onSubmit           | Config<IEmailTemplate, Partial<IEmailTemplate>>['onSubmit'];                                       | Called when the commit is triggered manually  |
@@ -156,13 +148,14 @@ Maybe you need to
 | interactiveStyle   | { hoverColor?: string; selectedColor?: string;}                                                    | Interactive prompt color                      |
 | onUploadImage      | (data: Blob) => Promise<string>;                                                                   | Triggered when an image is pasted or uploaded |
 | onAddCollection    | (payload: CollectedBlock) => void;                                                                 | Add to collection list                        |
-| onRemoveCollection | (payload: { id: string; }) => void;                                                                | Remove from collection list                   | dashed | boolean | Show dashed bold |
+| onRemoveCollection | (payload: { id: string; }) => void;                                                                | Remove from collection list
+ | dashed | boolean | Show dashed |
 
 ## EmailEditor Configuration
 
 | property | Type             | Description                     |
 | -------- | ---------------- | ------------------------------- |
-| height   | string / number; | Set the height of the container |
+| height   | string / number | Set the height of the container |
 
 <br/>
 
