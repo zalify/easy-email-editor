@@ -117,7 +117,7 @@ export default defineConfig({
         type="text/javascript"
         src="https://s9.cnzz.com/z_stat.php?id=1280025969&web_id=1280025969"
       ></script>
-      <script src="https://buttons.github.io/buttons.js"></script>
+
         `
             : '',
       },
