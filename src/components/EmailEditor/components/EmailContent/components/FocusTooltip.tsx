@@ -13,11 +13,11 @@ import { IconFont } from '@/components/IconFont';
 
 export function FocusTooltip() {
   const [blockNode, setBlockNode] = useState<HTMLDivElement | null>(null);
-  const { isDragging } = useHoverIdx();
   const { focusBlock } = useBlock();
   const { focusIdx } = useFocusIdx();
 
   useEffect(() => {
+
     const promiseObj = awaitForElement<HTMLDivElement>(focusIdx);
     promiseObj.promise.then((blockNode) => {
       setBlockNode(blockNode);
@@ -81,7 +81,7 @@ export function FocusTooltip() {
                   cursor: 'grab',
                   pointerEvents: 'auto',
                   WebkitUserDrag: 'element'
-                }}
+                } as any}
               >
                 <IconFont iconName="icon-move" style={{ color: '#fff', cursor: 'grab', }} />
               </div>

@@ -111,6 +111,7 @@ export function useDropBlock() {
       };
 
       const onDragOver = (ev: DragEvent) => {
+
         if (!cacheDataTransfer.current) return;
 
         if (ev.target === lastDragover.target) {
@@ -155,6 +156,12 @@ export function useDropBlock() {
         if (!lastDragover.valid) {
           setDirection('');
           setHoverIdx('');
+          setDataTransfer((dataTransfer: any) => {
+            return {
+              ...dataTransfer,
+              parentIdx: undefined,
+            };
+          });
         }
 
       };
