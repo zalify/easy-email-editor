@@ -48,7 +48,8 @@ const basicBlocks = {
 
 export class BlocksMap {
   static basicBlocksMap = basicBlocks;
-  static externalBlocksMap: { [key: string]: IBlock } = {};
+  static externalBlocksMap: { [key: string]: IBlock; } = {};
+  private static autoCompletePath: { [key: string]: Array<BlockType[]>; } = {};
 
   static getBlocks() {
     return [
@@ -57,8 +58,9 @@ export class BlocksMap {
     ];
   }
 
-  static registerBlocks(blocksMap: { [key: string]: IBlock }) {
+  static registerBlocks(blocksMap: { [key: string]: IBlock; }) {
     Object.assign(this.externalBlocksMap, blocksMap);
+    this.autoCompletePath = this.setAutoCompletePath();
   }
 
   static findBlockByType(type: string): IBlock {
@@ -80,7 +82,7 @@ export class BlocksMap {
   }
 
   static getBlock<
-    E extends { [key: string]: IBlock },
+    E extends { [key: string]: IBlock; },
     B extends typeof BlocksMap.basicBlocksMap,
     A extends B & E,
     T extends keyof A
@@ -88,4 +90,43 @@ export class BlocksMap {
     const key: any = name;
     return this.basicBlocksMap[key] || this.externalBlocksMap[key];
   }
+
+  static setAutoCompletePath() {
+    const paths: { [key: string]: Array<BlockType[]>; } = {};
+
+    const renderFullPath = (type: BlockType, pathObj: Array<BlockType[]>, prevPaths: BlockType[]) => {
+      const block = this.findBlockByType(type);
+      const currentPaths = [...prevPaths, type];
+      if (block.validParentType.length === 0) {
+        pathObj.push(currentPaths);
+      };
+      return block.validParentType.map(item => {
+        return renderFullPath(item, pathObj, currentPaths);
+      });
+
+    };
+
+    this.getBlocks().forEach(item => {
+      paths[item.type] = [];
+      renderFullPath(item.type, paths[item.type], []);
+
+    });
+    return paths;
+  }
+
+  static getAutoCompleteFullPath() {
+    if (Object.keys(this.autoCompletePath).length === 0) {
+      this.autoCompletePath = this.setAutoCompletePath();
+    }
+    return this.autoCompletePath;
+  }
+
+  static getAutoCompletePath(type: BlockType, targetType: BlockType) {
+    const paths = this.getAutoCompleteFullPath()[type].find(item => item.includes(targetType));
+    if (!paths) return null;
+    const findIndex = paths.findIndex(item => item === targetType);
+    return paths.slice(1, findIndex);
+  }
+
 }
+

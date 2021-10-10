@@ -56,7 +56,7 @@ export default function Editor() {
   const dispatch = useDispatch();
   const history = useHistory();
   const templateData = useAppSelector('template');
-  const { addCollection, collectionCategory } = useCollection();
+  const { addCollection, removeCollection, collectionCategory } = useCollection();
   const { openModal, modal } = useEmailModal();
   const { id, userId } = useQuery();
   const loading = useLoading(template.loadings.fetchById);
@@ -167,6 +167,7 @@ export default function Editor() {
         data={initialValues}
         extraBlocks={extraBlocks}
         onAddCollection={addCollection}
+        onRemoveCollection={({ id }) => removeCollection(id)}
         onUploadImage={services.common.uploadByQiniu}
         interactiveStyle={{
           hoverColor: '#ff18e3',

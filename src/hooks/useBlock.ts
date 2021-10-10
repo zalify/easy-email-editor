@@ -17,6 +17,7 @@ import { createBlockItem } from '@/utils/createBlockItem';
 import { useEditorContext } from './useEditorContext';
 import { RecordContext } from '@/components/Provider/RecordProvider';
 import { useFocusIdx } from './useFocusIdx';
+import { BlocksMap } from '@/components/core/blocks';
 
 export function useBlock() {
   const { values, getState, change, batch } = useEditorContext();
@@ -56,63 +57,14 @@ export function useBlock() {
       const parentBlock = findBlockByType(parent.type);
 
       if (autoComplete) {
-        if ([BasicType.COLUMN, BasicType.GROUP].includes(block.type)) {
-          if (parentBlock.type === BasicType.PAGE) {
-            child = createBlockItem(BasicType.WRAPPER, {
-              children: [
-                createBlockItem(BasicType.SECTION, {
-                  children: [child],
-                }),
-              ],
-            });
-            nextFocusIdx += '.children.[0].children.[0]';
-          } else if (parentBlock.type === BasicType.WRAPPER) {
-            child = createBlockItem(BasicType.SECTION, {
+        const autoCompletePaths = BlocksMap.getAutoCompletePath(type, parent.type);
+        if (autoCompletePaths) {
+          autoCompletePaths.forEach(item => {
+            child = createBlockItem(item, {
               children: [child],
             });
             nextFocusIdx += '.children.[0]';
-          }
-        } else if (
-          [
-            BasicType.TEXT,
-            BasicType.IMAGE,
-            BasicType.SPACER,
-            BasicType.DIVIDER,
-
-            BasicType.BUTTON,
-            BasicType.ACCORDION,
-            BasicType.CAROUSEL,
-            BasicType.NAVBAR,
-            BasicType.SOCIAL,
-          ].includes(block.type)
-        ) {
-          if (
-            parentBlock.type === BasicType.SECTION ||
-            parentBlock.type === BasicType.GROUP
-          ) {
-            child = createBlockItem(BasicType.COLUMN, {
-              children: [child],
-            });
-            nextFocusIdx += '.children.[0]';
-          } else if (parentBlock.type === BasicType.WRAPPER) {
-            child = createBlockItem(BasicType.SECTION, {
-              children: [
-                createBlockItem(BasicType.COLUMN, {
-                  children: [child],
-                }),
-              ],
-            });
-            nextFocusIdx += '.children.[0].children.[0]';
-          } else if (parentBlock.type === BasicType.PAGE) {
-            child = createBlockItem(BasicType.SECTION, {
-              children: [
-                createBlockItem(BasicType.COLUMN, {
-                  children: [child],
-                }),
-              ],
-            });
-            nextFocusIdx += '.children.[0].children.[0]';
-          }
+          });
         }
       }
 
@@ -163,19 +115,25 @@ export function useBlock() {
       const destinationParent = getValueByIdx(values, destinationParentIdx)!;
 
       const sourceBlock = findBlockByType(source.type);
-      if (!sourceBlock.validParentType.includes(destinationParent.type)) {
-        const parentBlock = findBlockByType(destinationParent.type);
-        message.warning(
-          `${sourceBlock.name} cannot be used inside ${parentBlock.name
-          }, only inside: ${sourceBlock.validParentType.join(', ')}`
-        );
-        return;
+      const sourceIndex = getIndexByIdx(sourceIdx);
+      let [removed] = sourceParent.children.splice(sourceIndex, 1);
+      if (autoComplete) {
+        const autoCompletePaths = BlocksMap.getAutoCompletePath(source.type, destinationParent.type);
+        if (autoCompletePaths) {
+          autoCompletePaths.forEach(item => {
+            removed = createBlockItem(item, {
+              children: [removed],
+            });
+            nextFocusIdx += '.children.[0]';
+          });
+        } else {
+          message.warning('Something when wrong');
+        }
       }
+
       const positionIndex = getIndexByIdx(destinationIdx);
       if (sourceParent === destinationParent) {
-        const sourceIndex = getIndexByIdx(sourceIdx);
 
-        const [removed] = sourceParent.children.splice(sourceIndex, 1);
         destinationParent.children.splice(positionIndex, 0, removed);
 
         nextFocusIdx =
@@ -184,8 +142,6 @@ export function useBlock() {
             (item) => item === removed
           )}]`;
       } else {
-        const sourceIndex = getIndexByIdx(sourceIdx);
-        const [removed] = sourceParent.children.splice(sourceIndex, 1);
         destinationParent.children.splice(positionIndex, 0, removed);
         nextFocusIdx = destinationIdx;
       }
@@ -201,7 +157,7 @@ export function useBlock() {
         inShadowDom: true,
       });
     },
-    [change, focusIdx, getState, setFocusIdx]
+    [autoComplete, change, focusIdx, getState, setFocusIdx]
   );
 
   const copyBlock = useCallback(

@@ -67,7 +67,6 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
       setIsDragging(false);
       setHoverIdx('');
       onEnd?.();
-
       const transferData = cacheDataTransfer.current;
       if (!transferData) return;
       if (action === 'add' && !isUndefined(transferData.parentIdx)) {

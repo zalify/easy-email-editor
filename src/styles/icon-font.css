@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 2806724 */
-  src: url("//at.alicdn.com/t/font_2806724_t378doqe3es.woff2?t=1633574579495") format("woff2"),
-    url("//at.alicdn.com/t/font_2806724_t378doqe3es.woff?t=1633574579495") format("woff"),
-    url("//at.alicdn.com/t/font_2806724_t378doqe3es.ttf?t=1633574579495") format("truetype");
+  src: url("//at.alicdn.com/t/font_2806724_2y1p2ky7lss.woff2?t=1633838992191") format("woff2"),
+    url("//at.alicdn.com/t/font_2806724_2y1p2ky7lss.woff?t=1633838992191") format("woff"),
+    url("//at.alicdn.com/t/font_2806724_2y1p2ky7lss.ttf?t=1633838992191") format("truetype");
 }
 
 .iconfont {
@@ -11,6 +11,30 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-move:before {
+  content: "\e6ff";
+}
+
+.icon-soc:before {
+  content: "\e7a1";
+}
+
+.icon-carousel:before {
+  content: "\eb5c";
+}
+
+.icon-hero:before {
+  content: "\e69f";
+}
+
+.icon-spacing:before {
+  content: "\e606";
+}
+
+.icon-accordion:before {
+  content: "\ecbc";
 }
 
 .icon-navbar:before {
@@ -83,10 +107,6 @@
 
 .icon-button:before {
   content: "\e6cc";
-}
-
-.icon-spacing:before {
-  content: "\e641";
 }
 
 .icon-img:before {

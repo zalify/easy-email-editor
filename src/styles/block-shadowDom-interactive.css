@@ -28,7 +28,8 @@
   cursor: text;
 }
 
-.block-selected ,.block-hover{
+.block-selected,
+.block-hover {
   position: relative;
   z-index: 1;
 }

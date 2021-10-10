@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { BlocksMap } from '@/components/core/blocks';
 import { createPortal } from 'react-dom';
@@ -8,14 +8,16 @@ import { awaitForElement } from '@/utils/awaitForElement';
 import { useHoverIdx } from '@/hooks/useHoverIdx';
 import { BLOCK_SELECTED_CLASSNAME, styleZIndex } from '@/constants';
 import { useBlock } from '@/hooks/useBlock';
+import { BlockAvatarWrapper } from '@/components/core/wrapper/BlockAvatarWrapper';
+import { IconFont } from '@/components/IconFont';
 
 export function FocusTooltip() {
   const [blockNode, setBlockNode] = useState<HTMLDivElement | null>(null);
-  const { isDragging } = useHoverIdx();
   const { focusBlock } = useBlock();
   const { focusIdx } = useFocusIdx();
 
   useEffect(() => {
+
     const promiseObj = awaitForElement<HTMLDivElement>(focusIdx);
     promiseObj.promise.then((blockNode) => {
       setBlockNode(blockNode);
@@ -40,7 +42,7 @@ export function FocusTooltip() {
     return BlocksMap.findBlockByType(focusBlock.type);
   }, [focusBlock]);
 
-  if (!block || !blockNode || isDragging) return null;
+  if (!block || !blockNode) return null;
 
   return (
     <>
@@ -56,6 +58,37 @@ export function FocusTooltip() {
             zIndex: styleZIndex.SELECT_BLOCK_TOOLTIP,
           }}
         >
+          <div style={{
+            position: 'absolute',
+            zIndex: 9999,
+            right: 0,
+            top: '50%',
+          }}
+          >
+            <BlockAvatarWrapper idx={focusIdx} type={block.type} action="move">
+              <div
+                style={{
+                  position: 'absolute',
+                  backgroundColor: 'var(--selected-color)',
+                  color: '#ffffff',
+                  height: '28px',
+                  width: '28px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transform: 'translate(-50%, -50%)',
+                  borderRadius: '50%',
+                  cursor: 'grab',
+                  pointerEvents: 'auto',
+                  WebkitUserDrag: 'element'
+                } as any}
+              >
+                <IconFont iconName="icon-move" style={{ color: '#fff', cursor: 'grab', }} />
+              </div>
+
+            </BlockAvatarWrapper>
+          </div>
+
           <ToolsBar block={block} />
           {/* outline */}
           <div

@@ -61,44 +61,23 @@ export function useDropBlock() {
       const onClick = (ev: MouseEvent) => {
         ev.preventDefault(); // prevent link
 
-        const target = ev.target;
-        if (target instanceof HTMLElement) {
+        if (ev.target instanceof HTMLElement) {
+          const target = findBlockNode(ev.target);
+          if (!target) return;
           const blockType = getNodeTypeFromClassName(target.classList);
+          const idx = getNodeIdxFromClassName(target.classList)!;
           if (blockType === BasicType.TEXT) {
-            const idx = getNodeIdxFromClassName(target.classList)!;
-            setFocusIdx(idx);
-            scrollFocusBlockIntoView({ idx, inShadowDom: false });
             const editNode = getEditNode(target);
-
             editNode?.focus();
           }
+          setFocusIdx(idx);
+          scrollFocusBlockIntoView({ idx, inShadowDom: false });
         }
       };
 
       ref.addEventListener('click', onClick);
       return () => {
         ref.removeEventListener('click', onClick);
-      };
-    }
-  }, [ref, setFocusIdx]);
-
-  useEffect(() => {
-    if (ref) {
-      const onFocusin = (ev: FocusEvent) => {
-
-        ev.preventDefault();
-
-        const blockNode = findBlockNode(ev.target as HTMLElement);
-        if (blockNode) {
-          const idx = getNodeIdxFromClassName(blockNode.classList)!;
-          setFocusIdx(idx);
-          scrollFocusBlockIntoView({ idx, inShadowDom: false });
-        }
-      };
-
-      ref.addEventListener('focusin', onFocusin);
-      return () => {
-        ref.removeEventListener('focusin', onFocusin);
       };
     }
   }, [ref, setFocusIdx]);
@@ -132,6 +111,7 @@ export function useDropBlock() {
       };
 
       const onDragOver = (ev: DragEvent) => {
+
         if (!cacheDataTransfer.current) return;
 
         if (ev.target === lastDragover.target) {
@@ -176,6 +156,12 @@ export function useDropBlock() {
         if (!lastDragover.valid) {
           setDirection('');
           setHoverIdx('');
+          setDataTransfer((dataTransfer: any) => {
+            return {
+              ...dataTransfer,
+              parentIdx: undefined,
+            };
+          });
         }
 
       };

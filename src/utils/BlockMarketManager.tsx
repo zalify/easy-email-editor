@@ -13,22 +13,31 @@ import {
   TextBlockItem,
   DividerBlockItem,
   WrapperBlockItem,
+  BasicType,
 } from '@/components/EmailEditor/components/BlocksPanel/presetTemplate';
 import { Stack } from '@/components/UI/Stack';
 import { TextStyle } from '@/components/UI/TextStyle';
+import { BlockType } from '@/constants';
 import React from 'react';
+
+export enum CategoryName {
+  CONTENT = 'CONTENT',
+  LAYOUT = 'LAYOUT',
+}
 
 const defaultCategories = [
   {
     title: 'Content',
-    name: 'contentBlocks',
+    name: CategoryName.CONTENT,
     blocks: [
       {
+        type: BasicType.TEXT,
         title: 'Text',
         description: 'This block allows you to display text in your email.',
         ExampleComponent: TextBlockItem,
       },
       {
+        type: BasicType.IMAGE,
         title: 'Image',
         description: (
           <Stack vertical spacing='none'>
@@ -42,34 +51,40 @@ const defaultCategories = [
         ExampleComponent: ImageBlockItem,
       },
       {
+        type: BasicType.BUTTON,
         title: 'Button',
         description: 'Displays a customizable button.',
         ExampleComponent: ButtonBlockItem,
       },
       {
+        type: BasicType.HERO,
         title: 'Hero',
         description: `This block displays a hero image. It behaves like an
         'section' with a single 'column'.`,
         ExampleComponent: HeroBlockItem,
       },
       {
+        type: BasicType.NAVBAR,
         title: 'Navbar',
         description: `Displays a menu for navigation with an optional hamburger
         mode for mobile devices.`,
         ExampleComponent: NavbarBlockItem,
       },
       {
+        type: BasicType.SPACER,
         title: 'Spacer',
         description: 'Displays a blank space.',
         ExampleComponent: SpacerBlockItem,
       },
       {
+        type: BasicType.DIVIDER,
         title: 'Divider',
         description: `Displays a horizontal divider that can be customized like a
         HTML border.`,
         ExampleComponent: DividerBlockItem,
       },
       {
+        type: BasicType.ACCORDION,
         title: 'Accordion',
         description: `Accordion is an interactive component to stack content in
         tabs, so the information is collapsed and only the titles
@@ -79,6 +94,7 @@ const defaultCategories = [
         ExampleComponent: AccordionBlockItem,
       },
       {
+        type: BasicType.CAROUSEL,
         title: 'Carousel',
         description: `This block displays a gallery of images or "carousel".
         Readers can interact by hovering and clicking on
@@ -86,6 +102,7 @@ const defaultCategories = [
         ExampleComponent: CarouselBlockItem,
       },
       {
+        type: BasicType.SOCIAL,
         title: 'Social',
         description: `Displays calls-to-action for various social networks with
         their associated logo.`,
@@ -95,15 +112,17 @@ const defaultCategories = [
   },
   {
     title: 'Layout',
-    name: 'layoutBlocks',
+    name: CategoryName.LAYOUT,
     blocks: [
       {
+        type: BasicType.WRAPPER,
         title: 'Wrapper',
         description: `Wrapper enables to wrap multiple sections together. It's especially useful to achieve nested layouts with shared border or background images across sections.
         `,
         ExampleComponent: WrapperBlockItem,
       },
       {
+        type: BasicType.SECTION,
         title: 'Section',
         description: (
           <Stack vertical spacing='none'>
@@ -120,6 +139,7 @@ const defaultCategories = [
         ExampleComponent: SectionBlockItem,
       },
       {
+        type: BasicType.GROUP,
         title: 'Group',
         description: `Group allows you to prevent columns from stacking on
           mobile. To do so, wrap the columns inside a group
@@ -127,6 +147,7 @@ const defaultCategories = [
         ExampleComponent: GroupBlockItem,
       },
       {
+        type: BasicType.COLUMN,
         title: 'Column',
         description: (
           <Stack vertical spacing='none'>
@@ -150,17 +171,23 @@ const defaultCategories = [
 ];
 
 export interface BlockMarketCategory {
-  title: string;
   name: string;
+  title: string;
   blocks: {
+    type: BlockType;
     title: string;
     description?: React.ReactNode;
+    thumbnail?: string;
     ExampleComponent: () => JSX.Element;
   }[];
 }
 
 export class BlockMarketManager {
   private static category: BlockMarketCategory[] = [...defaultCategories];
+
+  public static getCategory(name: string) {
+    return this.category.find(item => item.name === name);
+  }
 
   public static getCategories() {
     return this.category;
@@ -170,6 +197,7 @@ export class BlockMarketManager {
     name: string,
     title: string,
     blocks: {
+      type: BlockType;
       title: string;
       description?: string;
       ExampleComponent: () => JSX.Element;
