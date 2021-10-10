@@ -8,6 +8,7 @@ export type BlockAvatarWrapperProps = {
   payload?: any;
   action?: 'add' | 'move';
   hideIcon?: boolean;
+  idx?: string;
 };
 const img = new Image();
 img.src =
@@ -16,7 +17,7 @@ img.src =
 export const BlockAvatarWrapper: React.FC<BlockAvatarWrapperProps> = (
   props
 ) => {
-  const { type, children, payload, action = 'add' } = props;
+  const { type, children, payload, action = 'add', idx } = props;
   const { setIsDragging, setHoverIdx } = useHoverIdx();
   const ref = useRef<HTMLDivElement>(null);
 
@@ -47,8 +48,10 @@ export const BlockAvatarWrapper: React.FC<BlockAvatarWrapperProps> = (
       payload={payload}
       action={action}
       type={type as any}
+      idx={idx}
     >
       <div
+        style={{ cursor: 'grab' }}
         ref={ref}
         onMouseDown={() => {
           window.getSelection()?.removeAllRanges();

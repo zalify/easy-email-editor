@@ -51,7 +51,9 @@ export function useCollection() {
 
   const removeCollection = useCallback(
     (id: string) => {
+
       if (!collection) return;
+
       collection[0].blocks = collection[0].blocks.filter(
         (item) => item.id !== id
       );
@@ -64,8 +66,11 @@ export function useCollection() {
   const collectionCategory = useMemo((): BlockMarketCategory | null => {
     if (!collection) return null;
     const blockComponents = collection[0].blocks.map((item) => ({
+      id: item.id,
+      type: item.data.type,
       title: item.title,
       description: item.description,
+      thumbnail: item.thumbnail,
       ExampleComponent: () => (
         <BlockMaskWrapper
           key={item.id}
@@ -109,6 +114,7 @@ export function useCollection() {
   }, [collection, removeCollection]);
 
   return {
+    removeCollection,
     addCollection,
     collectionCategory,
   };

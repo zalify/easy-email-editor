@@ -158,8 +158,6 @@ export function ToolsBar({ block }: { block: IBlock; }) {
               pointerEvents: 'auto'
             }}
           >
-            <ToolItem iconName='icon-top' onClick={handleMoveUp} />
-            <ToolItem iconName='icon-bottom' onClick={handleMoveDown} />
             <ToolItem iconName='icon-copy' onClick={handleCopy} />
             <ToolItem
               iconName='icon-collection'
@@ -209,7 +207,7 @@ export function ToolsBar({ block }: { block: IBlock; }) {
 
       {/* add row/ add column */}
 
-      {
+      {/* {
         <div
           style={{
             position: 'absolute',
@@ -258,7 +256,7 @@ export function ToolsBar({ block }: { block: IBlock; }) {
             </div>
           )}
         </div>
-      }
+      } */}
     </>
   );
 }

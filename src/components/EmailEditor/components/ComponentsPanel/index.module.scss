@@ -1,0 +1,28 @@
+.container {
+  background-color: #fff;
+  :global(.ant-collapse-content > .ant-collapse-content-box) {
+    padding: 0;
+  }
+  .collapse {
+    background-color: #fff;
+    border-left: none;
+    .list {
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      flex: 1;
+
+    }
+  }
+}
+
+.container  .layoutGrid {
+  width: 50%;
+  padding: 10px;
+}
+
+.container  .contentGrid {
+  width: 33%;
+  padding: 0px;
+}

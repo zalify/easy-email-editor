@@ -22,6 +22,7 @@ import { EditEmailPreview } from './components/EditEmailPreview';
 import { BlockLayerManager } from './components/ConfigurationPanel/components/BlockLayerManager';
 import { IconFont } from '../IconFont';
 import { BlocksPanel } from './components/BlocksPanel';
+import { ComponentsPanel } from './components/ComponentsPanel';
 export interface EmailEditorProps {
   height: string | number;
 }
@@ -42,7 +43,7 @@ export const EmailEditor = (props: EmailEditorProps) => {
     return createPortal(<div id={FIXED_CONTAINER_ID} />, document.body);
   }, []);
 
-  const onTogglePanel = () => {};
+  const onTogglePanel = () => { };
 
   return useMemo(
     () => (
@@ -58,7 +59,7 @@ export const EmailEditor = (props: EmailEditorProps) => {
           <Layout.Sider
             theme='light'
             width={60}
-            style={{ border: '1px solid #f0f0f0', borderRight: 0 }}
+            style={{ border: '1px solid #f0f0f0' }}
           >
             <Stack vertical alignment='center' distribution='center'>
               <Stack.Item />
@@ -83,33 +84,27 @@ export const EmailEditor = (props: EmailEditorProps) => {
             </Stack>
           </Layout.Sider>
           <Layout.Sider
-            style={{ height: containerHeight }}
+            style={{ height: containerHeight, borderLeft: 'none' }}
             theme='light'
-            width={280}
+            width={300}
           >
-            <Card
-              size='small'
-              style={{
-                maxHeight: '100%',
-                height: '100%',
+            <Tabs
+              tabBarStyle={{
+                paddingLeft: 20,
+                marginBottom: 0,
+                backgroundColor: '#fff',
               }}
-              className={styles.customScrollBar}
-              bodyStyle={{ padding: 0 }}
+              style={{ height: '100%', overflow: 'auto', borderLeft: 'none', }}
+              defaultActiveKey="Blocks"
             >
-              <div
-                style={{
-                  paddingLeft: 20,
-                  height: 45,
-                  lineHeight: '45px',
-                  borderBottom: '1px solid #f0f0f0',
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                <TextStyle variation='strong'>Layout</TextStyle>
-              </div>
-              <BlockLayerManager />
-            </Card>
+              <TabPane key="Blocks" tab="Blocks" style={{ borderLeft: 'none' }}>
+                <ComponentsPanel />
+
+              </TabPane>
+              <TabPane key="Layout" tab="Layout">
+                <BlockLayerManager />
+              </TabPane>
+            </Tabs>
           </Layout.Sider>
 
           <Layout style={{ height: containerHeight }}>
@@ -138,12 +133,12 @@ export const EmailEditor = (props: EmailEditorProps) => {
                   tabBarExtraContent={<ToolsPanel />}
                 >
                   <TabPane
-                    tab={
+                    tab={(
                       <Stack spacing='none'>
                         <EditOutlined />
                         <TextStyle>Edit</TextStyle>
                       </Stack>
-                    }
+                    )}
                     key={ActiveTabKeys.EDIT}
                   >
                     <div
@@ -157,24 +152,24 @@ export const EmailEditor = (props: EmailEditorProps) => {
                     </div>
                   </TabPane>
                   <TabPane
-                    tab={
+                    tab={(
                       <Stack spacing='none'>
                         <DesktopOutlined />
                         <TextStyle>Preview</TextStyle>
                       </Stack>
-                    }
+                    )}
                     key={ActiveTabKeys.PC}
                     style={{ backgroundColor: 'transparent' }}
                   >
                     <DesktopEmailPreview />
                   </TabPane>
                   <TabPane
-                    tab={
+                    tab={(
                       <Stack spacing='none'>
                         <TabletOutlined />
                         <TextStyle>Preview</TextStyle>
                       </Stack>
-                    }
+                    )}
                     key={ActiveTabKeys.MOBILE}
                     style={{ backgroundColor: 'transparent' }}
                   >
