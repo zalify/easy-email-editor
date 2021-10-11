@@ -93,7 +93,7 @@ export function TextToolbar(props: TextToolbarProps) {
       <Tooltip
         color='#fff'
         title={<FontFamily onChange={(val) => execCommand('fontName', val)} />}
-        getPopupContainer={getMountNode}
+        getPopupContainer={getPopoverMountNode}
       >
         <Button
           size='small'
@@ -109,7 +109,7 @@ export function TextToolbar(props: TextToolbarProps) {
         title={
           <FontSizeList onChange={(val) => execCommand('fontSize', val)} />
         }
-        getPopupContainer={getMountNode}
+        getPopupContainer={getPopoverMountNode}
       >
         <Button size='small' icon={<FontSizeOutlined />} />
       </Tooltip>

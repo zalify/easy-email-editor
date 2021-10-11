@@ -91,6 +91,7 @@ export const ComponentsPanel = React.memo(function () {
                   <Card.Grid className={styles.contentGrid} key={block.type}>
                     <BlockIcon
                       {...block}
+                      payload={block.payload}
                       text={block.title}
                       type={block.type}
                       thumbnail={block.thumbnail}

@@ -69,6 +69,7 @@ export function useCollection() {
       id: item.id,
       type: item.data.type,
       title: item.title,
+      payload: item.data,
       description: item.description,
       thumbnail: item.thumbnail,
       ExampleComponent: () => (

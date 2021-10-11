@@ -18,6 +18,7 @@ import {
 import { Stack } from '@/components/UI/Stack';
 import { TextStyle } from '@/components/UI/TextStyle';
 import { BlockType } from '@/constants';
+import { IBlockData } from '@/typings';
 import React from 'react';
 
 export enum CategoryName {
@@ -178,6 +179,7 @@ export interface BlockMarketCategory {
     title: string;
     description?: React.ReactNode;
     thumbnail?: string;
+    payload?: IBlockData;
     ExampleComponent: () => JSX.Element;
   }[];
 }
