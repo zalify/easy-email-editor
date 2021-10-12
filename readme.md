@@ -28,45 +28,25 @@
 
 Easy email is developed based on the [MJML](https://mjml.io/) and has very good compatibility. At the same time, it can generate code through drag-and-drop editing.
 
-| Overview |
-| :------: |
+## Features:
 
-<div style="margin-top:20px;margin-bottom:20px;display:inline-block;">
-    <a href="https://easy-email-m-ryan.vercel.app/editor?id=623&userId=77" target="_blank"><img src="https://assets.maocanhua.cn/3ba3146c-9ac6-45dc-838b-6030e4e950a3-image.png" alt="Overview"  width="30%"></a>
-   <a href="https://easy-email-m-ryan.vercel.app/editor?id=605&userId=77" target="_blank"><img src="https://assets.maocanhua.cn/c1864078-fe3f-4b00-8f15-fca85e887e3d-image.png" width="30%"></a>
-      <a href="https://easy-email-m-ryan.vercel.app/editor?id=611&userId=107" target="_blank"><img src="https://assets.maocanhua.cn/8932f09f-1b2d-4534-ae5e-2b07ab291e8d-image.png" width="30%"></a>
-</div>
-<br/>
+- Drag and drop editor
+- Can be converted into `MJML`, or generated through `MJML`
+- Collect blocks and reuse them at other times
+- Defined custom block
+- Dynamic rendering
 
-<div style="margin-top:20px;display:inline-block">
-   <a href="https://easy-email-m-ryan.vercel.app/editor?id=618&userId=77" target="_blank"><img src="https://assets.maocanhua.cn/7afb1f2e-3527-4a50-b14e-2ea593db6cfb-image.png" alt="Overview" width="30%"></a>
-   <a href="https://easy-email-m-ryan.vercel.app/editor?id=622&userId=77&userId=77" target="_blank"><img src="https://assets.maocanhua.cn/b26a7784-e2ba-4124-9821-b4a4076ec4e6-image.png" alt="Overview" width="30%"></a>
-   <a href="https://easy-email-m-ryan.vercel.app/editor?id=471&userId=77" target="_blank"><img src="https://assets.maocanhua.cn/05bf4e32-d62a-4405-b991-b54cd489fe8b-image.png" alt="Overview" width="30%"></a>
-
-</div>
-
-<br/>
 
 |                                                                                  Video Overview                                                                                  |
 | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 | <a href="https://www.bilibili.com/video/BV1YQ4y167bb" target="_blank"><img src="https://assets.maocanhua.cn/e2ba1d5c-c944-4351-9668-c519baf67361-image.png" alt="Overview" ></a> |
-|                                                        \_Watch video overview:https://www.bilibili.com/video/BV1YQ4y167bb                                                        |
+|                                                         Watch video overview:https://www.bilibili.com/video/BV1YQ4y167bb                                                         |
 
 ## Live Demo
 
 Check out the live demo here: <a href="http://easy-email-m-ryan.vercel.app" target="_blank" alt="http://easy-email-m-ryan.vercel.app">http://easy-email-m-ryan.vercel.app</a>
 
-## Hotkeys
-
-| hotkey           | Description  |
-| ---------------- | ------------ |
-| mod+z            | undo         |
-| mod+y            | redo         |
-| delete/backspace | delete block |
-
 ## Getting started
-
-## Install
 
 ```sh
 $ npm install --save easy-email-editor antd mjml-browser react-final-form
@@ -77,8 +57,6 @@ or
 ```sh
 $ yarn add easy-email-editor antd mjml-browser react-final-form
 ```
-
-## Usage
 
 ```js
 import React from "react";
@@ -103,15 +81,13 @@ export function App() {
 }
 ```
 
-## Custom blocks
+## Docs
 
-You could customize your own blocks and inject data before sending emails. For more details, please see <a href="https://github.com/m-Ryan/easy-email/tree/master/example/pages/Editor/components/CustomBlocks" target="_blank" alt="https://github.com/m-Ryan/easy-email/tree/master/example/pages/Editor/components/CustomBlocks">https://github.com/m-Ryan/easy-email/tree/master/example/pages/Editor/components/CustomBlocks</a>
+Check out [documentation](https://docs-easy-email.vercel.app/) for guides and a full API reference.
 
-<img src="https://assets.maocanhua.cn/4dde0dbb-f7d4-4ea3-b495-fd104c0f6306-image.png" alt="Custom block" width="50%" style="text-align:center">
+## Examples
 
-<br/>
-<br/>
-<br/>
+> Please see <a href="https://github.com/m-Ryan/easy-email-demo" target="_blank" alt="https://github.com/m-Ryan/easy-email-demo">https://github.com/m-Ryan/easy-email-demo</a>
 
 ## Development
 
@@ -128,36 +104,6 @@ $ yarn install
 $ yarn dev
 
 ```
-
-## Examples
-
-> Please see <a href="https://github.com/m-Ryan/easy-email-demo" target="_blank" alt="https://github.com/m-Ryan/easy-email-demo">https://github.com/m-Ryan/easy-email-demo</a>
-
-## Use test account
-
-> Maybe you just want a test account that belongs to you. See <a href="./How to use an test account.md" target="_blank">here</a>.
-
-## EmailEditorProvider Configuration
-
-| property           | Type                                                                                               | Description                                   |
-| ------------------ | -------------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| data               | interface IEmailTemplate { content: IPage; subject: string; subTitle: string; }                    | Source data                                   |
-| children           | ( props: FormState<T>,helper: FormApi<IEmailTemplate, Partial<IEmailTemplate>>) => React.ReactNode | ReactNode                                     |
-| onSubmit           | Config<IEmailTemplate, Partial<IEmailTemplate>>['onSubmit'];                                       | Called when the commit is triggered manually  |
-| fontList           | { value: string; label: string; }[];                                                               | Default font list.                            |
-| interactiveStyle   | { hoverColor?: string; selectedColor?: string;}                                                    | Interactive prompt color                      |
-| onUploadImage      | (data: Blob) => Promise<string>;                                                                   | Triggered when an image is pasted or uploaded |
-| onAddCollection    | (payload: CollectedBlock) => void;                                                                 | Add to collection list                        |
-| onRemoveCollection | (payload: { id: string; }) => void;                                                                | Remove from collection list
- | dashed | boolean | Show dashed |
-
-## EmailEditor Configuration
-
-| property | Type             | Description                     |
-| -------- | ---------------- | ------------------------------- |
-| height   | string / number | Set the height of the container |
-
-<br/>
 
 ## License
 
