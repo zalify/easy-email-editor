@@ -9,7 +9,11 @@ import { EditorPropsContext } from '@/components/Provider/PropsProvider';
 import { useBlock } from '@/hooks/useBlock';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { Stack } from '@/components/UI/Stack';
-import { ImageUploaderField, TextAreaField, TextField } from '@/components/core/Form';
+import {
+  ImageUploaderField,
+  TextAreaField,
+  TextField,
+} from '@/components/core/Form';
 import { BlocksMap } from '@/components/core/blocks';
 import { BasicType } from '@/constants';
 import { IBlock } from '@/typings';
@@ -17,7 +21,7 @@ import { IBlock } from '@/typings';
 const columnBlock = BlocksMap.findBlockByType(BasicType.COLUMN);
 const sectionBlock = BlocksMap.findBlockByType(BasicType.SECTION);
 
-export function ToolsBar({ block }: { block: IBlock; }) {
+export function ToolsBar({ block }: { block: IBlock }) {
   const [modalVisible, setModalVisible] = useState(false);
   const { onAddCollection } = useContext(EditorPropsContext);
   const {
@@ -28,7 +32,7 @@ export function ToolsBar({ block }: { block: IBlock; }) {
     addBlock,
   } = useBlock();
   const { onUploadImage } = useContext(EditorPropsContext);
-  const { focusIdx } = useFocusIdx();
+  const { focusIdx, setFocusIdx } = useFocusIdx();
   const isPage = block.type === BasicType.PAGE;
 
   const isVerticalBlock = columnBlock.validParentType.some((item) =>
@@ -58,13 +62,8 @@ export function ToolsBar({ block }: { block: IBlock; }) {
     removeBlock(focusIdx);
   };
 
-  const handleAddColumn = () => {
-    const parentIdx = getParentIdx(focusIdx)!;
-    addBlock({
-      type: BasicType.COLUMN,
-      parentIdx: parentIdx,
-      positionIndex: getIndexByIdx(focusIdx) + 1,
-    });
+  const handleSelectParent = () => {
+    setFocusIdx(getParentIdx(focusIdx)!);
   };
 
   const handleAddRows = () => {
@@ -93,7 +92,11 @@ export function ToolsBar({ block }: { block: IBlock; }) {
     }
   };
 
-  const onSubmit = (values: { label: string; helpText: string; thumbnail: string; }) => {
+  const onSubmit = (values: {
+    label: string;
+    helpText: string;
+    thumbnail: string;
+  }) => {
     if (!values.label) return;
     const uuid = uuidv4();
     onAddCollection?.({
@@ -149,22 +152,25 @@ export function ToolsBar({ block }: { block: IBlock; }) {
             }}
             onMouseDown={(ev) => {
               ev.preventDefault();
-
             }}
             style={{
               display: isPage ? 'none' : 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              pointerEvents: 'auto'
+              pointerEvents: 'auto',
             }}
           >
+            <ToolItem
+              width={12}
+              iconName='icon-back-parent'
+              onClick={handleSelectParent}
+            />
             <ToolItem iconName='icon-copy' onClick={handleCopy} />
             <ToolItem
               iconName='icon-collection'
               onClick={handleAddToCollection}
             />
             <ToolItem iconName='icon-delete' onClick={handleDelete} />
-
           </div>
         </div>
         <Form
@@ -273,7 +279,9 @@ function ToolItem(props: {
         color: '#ffffff',
         backgroundColor: '#1890ff',
         height: 22,
-        width: props.width || 26,
+        fontSize: props.width || 14,
+        lineHeight: '22px',
+        width: 22,
         display: 'flex',
         pointerEvents: 'auto',
         cursor: 'pointer',

@@ -44,13 +44,12 @@ const RichTextFieldItem = (
     }
   }, [idx, locationState?.left, locationState?.top]);
 
-  const onChange = useCallback(() => { }, []);
+  const onChange = useCallback(() => {}, []);
 
   const editorContainer = container && getEditNode(container);
 
   const textToolbar = useMemo(() => {
     const onMoveTextToolbar = (event: React.MouseEvent) => {
-
       onDrag({
         event: event as any,
         onMove(x, y) {
@@ -63,9 +62,7 @@ const RichTextFieldItem = (
             top: position.top + y,
           });
         },
-        onEnd() {
-
-        },
+        onEnd() {},
       });
     };
 
@@ -76,7 +73,7 @@ const RichTextFieldItem = (
           position: 'fixed',
           ...position,
           transform: 'translate(0,-100%)',
-          padding: 16,
+          padding: '10px 12px',
           boxSizing: 'border-box',
 
           zIndex: 100,
