@@ -1,10 +1,13 @@
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { IBlockData } from '@/typings';
-import {
-  findBlockByType,
-  getPageIdx,
-} from '@/utils/block';
+import { findBlockByType, getPageIdx } from '@/utils/block';
 import { useBlock } from '@/hooks/useBlock';
 import { BasicType, BlockType } from '@/constants';
 import { Stack } from '@/components/UI/Stack';
@@ -18,6 +21,7 @@ import { getIconNameByBlockType } from '@/utils/getIconNameByBlockType';
 import { BlocksMap } from '@/components/core/blocks';
 import { useHoverIdx } from '@/hooks/useHoverIdx';
 import { scrollFocusBlockIntoView } from '@/utils/scrollFocusBlockIntoView';
+import { ContextMenu } from '@/components/EmailEditor/components/ContextMenu';
 
 export const BlockLayerItemContent = ({
   blockData,
@@ -41,7 +45,7 @@ export const BlockLayerItemContent = ({
   const noChild = blockData.children.length === 0;
   const isPageBlock = idx === getPageIdx();
   const { setHoverIdx, hoverIdx, isDragging } = useHoverIdx();
-  const ref = useRef<HTMLDivElement>(null);
+  const [ref, setRef] = useState<HTMLDivElement | null>(null);
 
   const onSelect = useCallback(() => {
     setFocusIdx(idx);
@@ -51,41 +55,43 @@ export const BlockLayerItemContent = ({
   const isSelected = idx === focusIdx;
   const isHover = !isDragging && idx === hoverIdx;
 
-  const onMouseEnter: React.MouseEventHandler<HTMLDivElement> = useCallback((ev) => {
-    if (ref.current) {
-      setHoverIdx(ref.current.getAttribute('data-idx')!);
-    }
-
-  }, [setHoverIdx]);
+  const onMouseEnter: React.MouseEventHandler<HTMLDivElement> = useCallback(
+    (ev) => {
+      if (ref) {
+        setHoverIdx(ref.getAttribute('data-idx')!);
+      }
+    },
+    [ref, setHoverIdx]
+  );
 
   const onMouseLeave = useCallback(() => {
     setHoverIdx('');
   }, [setHoverIdx]);
 
   useEffect(() => {
-    if (ref.current) {
+    if (ref) {
       if (isSelected) {
-        ref.current.classList.add(styles.listItemSelected);
+        ref.classList.add(styles.listItemSelected);
       } else {
-        ref.current.classList.remove(styles.listItemSelected);
+        ref.classList.remove(styles.listItemSelected);
       }
     }
-  }, [isSelected]);
+  }, [isSelected, ref]);
 
   useEffect(() => {
-    if (ref.current) {
+    if (ref) {
       if (isHover && !isSelected) {
-        ref.current.classList.add(styles.listItemHover);
+        ref.classList.add(styles.listItemHover);
       } else {
-        ref.current.classList.remove(styles.listItemHover);
+        ref.classList.remove(styles.listItemHover);
       }
     }
-  }, [isHover, isSelected]);
+  }, [isHover, isSelected, ref]);
 
   return useMemo(
     () => (
       <div
-        ref={ref}
+        ref={setRef}
         data-idx={idx}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
@@ -114,7 +120,6 @@ export const BlockLayerItemContent = ({
 
                       <TextStyle size='smallest'>
                         <span
-
                           title={title}
                           style={{
                             maxWidth: 100,
@@ -141,9 +146,24 @@ export const BlockLayerItemContent = ({
             </Stack>
           </Stack>
         </Stack.Item>
+        {ref && <ContextMenu ele={ref} idx={idx} />}
       </div>
     ),
-    [blockData, hidden, idx, indent, isPageBlock, noChild, onMouseEnter, onMouseLeave, onSelect, setVisible, title, visible]
+    [
+      blockData,
+      hidden,
+      idx,
+      indent,
+      isPageBlock,
+      noChild,
+      onMouseEnter,
+      onMouseLeave,
+      onSelect,
+      ref,
+      setVisible,
+      title,
+      visible,
+    ]
   );
 };
 
@@ -188,49 +208,43 @@ const SubIcon: React.FC<{
   isPageBlock: boolean;
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
-}> = React.memo(
-  ({ blockType, noChild, isPageBlock, visible, setVisible }) => {
-    const { collapsed, setCollapsed } = useCollapse();
+}> = React.memo(({ blockType, noChild, isPageBlock, visible, setVisible }) => {
+  const { collapsed, setCollapsed } = useCollapse();
 
-    const onToggle = useCallback(
-      (e: React.MouseEvent) => {
-        e.stopPropagation();
-        if (isPageBlock) {
-          setCollapsed((collapsed) => !collapsed);
-        } else {
-          setVisible((v) => !v);
-        }
-      },
-      [isPageBlock, setCollapsed, setVisible]
-    );
+  const onToggle = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      if (isPageBlock) {
+        setCollapsed((collapsed) => !collapsed);
+      } else {
+        setVisible((v) => !v);
+      }
+    },
+    [isPageBlock, setCollapsed, setVisible]
+  );
 
-    if (
-      noChild ||
-      BlocksMap.findBlockByType(blockType).validParentType.includes(
-        BasicType.COLUMN
-      )
+  if (
+    noChild ||
+    BlocksMap.findBlockByType(blockType).validParentType.includes(
+      BasicType.COLUMN
     )
-      return <IconFont size={12} iconName='icon-dot' />;
+  )
+    return <IconFont size={12} iconName='icon-dot' />;
 
-    const display = isPageBlock ? !collapsed : visible;
-    if (display) {
-      return (
-        <IconFont
-          size={12}
-          iconName='icon-minus-square'
-          onClickCapture={onToggle}
-        />
-      );
-    }
+  const display = isPageBlock ? !collapsed : visible;
+  if (display) {
     return (
       <IconFont
         size={12}
-        iconName='icon-plus-square'
+        iconName='icon-minus-square'
         onClickCapture={onToggle}
       />
     );
   }
-);
+  return (
+    <IconFont size={12} iconName='icon-plus-square' onClickCapture={onToggle} />
+  );
+});
 
 function ShortcutTool({
   idx,

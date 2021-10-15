@@ -1,0 +1,31 @@
+.wrap {
+  position: fixed;
+  left: 500px;
+  top: 200px;
+  z-index: 9999;
+  background-color: #fff;
+  box-shadow: 1px 1px 4px rgb(0 0 0 / 30%);
+  border-radius: 8px;
+  overflow: hidden;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+
+  .listItem {
+    padding: 5px 15px;
+    display: flex;
+    flex-wrap: nowrap;
+    cursor: default !important;
+    &:hover {
+      background-color: rgba(0,0,0,0.1);
+    }
+  }
+}
+
+.contextmenuMark {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  z-index: 9998;
+}

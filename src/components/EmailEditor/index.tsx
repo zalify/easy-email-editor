@@ -43,7 +43,7 @@ export const EmailEditor = (props: EmailEditorProps) => {
     return createPortal(<div id={FIXED_CONTAINER_ID} />, document.body);
   }, []);
 
-  const onTogglePanel = () => { };
+  const onTogglePanel = () => {};
 
   return useMemo(
     () => (
@@ -94,14 +94,13 @@ export const EmailEditor = (props: EmailEditorProps) => {
                 marginBottom: 0,
                 backgroundColor: '#fff',
               }}
-              style={{ height: '100%', overflow: 'auto', borderLeft: 'none', }}
-              defaultActiveKey="Blocks"
+              style={{ height: '100%', overflow: 'auto', borderLeft: 'none' }}
+              defaultActiveKey='Layout'
             >
-              <TabPane key="Blocks" tab="Blocks" style={{ borderLeft: 'none' }}>
+              <TabPane key='Blocks' tab='Blocks' style={{ borderLeft: 'none' }}>
                 <ComponentsPanel />
-
               </TabPane>
-              <TabPane key="Layout" tab="Layout">
+              <TabPane key='Layout' tab='Layout'>
                 <BlockLayerManager />
               </TabPane>
             </Tabs>
@@ -133,12 +132,12 @@ export const EmailEditor = (props: EmailEditorProps) => {
                   tabBarExtraContent={<ToolsPanel />}
                 >
                   <TabPane
-                    tab={(
+                    tab={
                       <Stack spacing='none'>
                         <EditOutlined />
                         <TextStyle>Edit</TextStyle>
                       </Stack>
-                    )}
+                    }
                     key={ActiveTabKeys.EDIT}
                   >
                     <div
@@ -152,24 +151,24 @@ export const EmailEditor = (props: EmailEditorProps) => {
                     </div>
                   </TabPane>
                   <TabPane
-                    tab={(
+                    tab={
                       <Stack spacing='none'>
                         <DesktopOutlined />
                         <TextStyle>Preview</TextStyle>
                       </Stack>
-                    )}
+                    }
                     key={ActiveTabKeys.PC}
                     style={{ backgroundColor: 'transparent' }}
                   >
                     <DesktopEmailPreview />
                   </TabPane>
                   <TabPane
-                    tab={(
+                    tab={
                       <Stack spacing='none'>
                         <TabletOutlined />
                         <TextStyle>Preview</TextStyle>
                       </Stack>
-                    )}
+                    }
                     key={ActiveTabKeys.MOBILE}
                     style={{ backgroundColor: 'transparent' }}
                   >

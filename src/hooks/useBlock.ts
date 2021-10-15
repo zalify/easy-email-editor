@@ -1,3 +1,4 @@
+import { getSiblingIdx } from './../utils/block';
 import { scrollFocusBlockIntoView } from '@/utils/scrollFocusBlockIntoView';
 import { EditorPropsContext } from '@/components/Provider/PropsProvider';
 import { BlockType, BasicType } from '../constants';
@@ -57,9 +58,12 @@ export function useBlock() {
       const parentBlock = findBlockByType(parent.type);
 
       if (autoComplete) {
-        const autoCompletePaths = BlocksMap.getAutoCompletePath(type, parent.type);
+        const autoCompletePaths = BlocksMap.getAutoCompletePath(
+          type,
+          parent.type
+        );
         if (autoCompletePaths) {
-          autoCompletePaths.forEach(item => {
+          autoCompletePaths.forEach((item) => {
             child = createBlockItem(item, {
               children: [child],
             });
@@ -82,7 +86,8 @@ export function useBlock() {
       const fixedBlock = findBlockByType(child.type);
       if (!fixedBlock.validParentType.includes(parent.type)) {
         message.warning(
-          `${block.type} cannot be used inside ${parentBlock.type
+          `${block.type} cannot be used inside ${
+            parentBlock.type
           }, only inside: ${block.validParentType.join(', ')}`
         );
         return;
@@ -100,7 +105,7 @@ export function useBlock() {
   );
 
   const moveBlock = useCallback(
-    (params: { sourceIdx: string; destinationIdx: string; }) => {
+    (params: { sourceIdx: string; destinationIdx: string }) => {
       let { sourceIdx, destinationIdx } = params;
       if (sourceIdx === destinationIdx) return null;
 
@@ -118,9 +123,12 @@ export function useBlock() {
       const sourceIndex = getIndexByIdx(sourceIdx);
       let [removed] = sourceParent.children.splice(sourceIndex, 1);
       if (autoComplete) {
-        const autoCompletePaths = BlocksMap.getAutoCompletePath(source.type, destinationParent.type);
+        const autoCompletePaths = BlocksMap.getAutoCompletePath(
+          source.type,
+          destinationParent.type
+        );
         if (autoCompletePaths) {
-          autoCompletePaths.forEach(item => {
+          autoCompletePaths.forEach((item) => {
             removed = createBlockItem(item, {
               children: [removed],
             });
@@ -133,7 +141,6 @@ export function useBlock() {
 
       const positionIndex = getIndexByIdx(destinationIdx);
       if (sourceParent === destinationParent) {
-
         destinationParent.children.splice(positionIndex, 0, removed);
 
         nextFocusIdx =
@@ -205,10 +212,14 @@ export function useBlock() {
         message.warning('Invalid block');
         return;
       }
+      if (blockIndex !== parent.children.length - 1) {
+        nextFocusIdx = idx;
+      } else {
+        nextFocusIdx = parentIdx;
+      }
 
       parent.children.splice(blockIndex, 1);
       change(parentIdx, { ...parent });
-      nextFocusIdx = parentIdx;
       setFocusIdx(nextFocusIdx);
     },
     [change, focusIdx, getState, setFocusIdx]
@@ -251,9 +262,9 @@ export function useBlock() {
       destinationParent.children.splice(Number(destinationIndex), 0, removed);
 
       batch(() => {
-        change(sourceParentIdx, sourceParent);
+        change(sourceParentIdx, { ...sourceParent });
         if (sourceParentIdx !== destinationParentIdx) {
-          change(destinationParentIdx, destinationParent);
+          change(destinationParentIdx, { ...destinationParent });
         }
       });
 

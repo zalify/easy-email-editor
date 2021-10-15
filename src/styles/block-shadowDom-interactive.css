@@ -1,3 +1,6 @@
+:host() * {
+  all: initial;
+}
 .mj-accordion-content {
   display: block !important;
 }
@@ -14,9 +17,7 @@
 .node-type-page * {
   user-select: none;
 }
-.node-type-group {
-  min-height: 30px;
-}
+
 :not(.email-block) {
   -webkit-user-drag: none;
   cursor: default;
