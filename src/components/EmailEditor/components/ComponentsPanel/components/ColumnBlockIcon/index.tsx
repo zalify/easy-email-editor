@@ -1,3 +1,4 @@
+import { IMAGE_LIST } from '@/assets/image';
 import { BlocksMap } from '@/components/core/blocks';
 import {
   BlockAvatarWrapper,
@@ -37,10 +38,7 @@ function OneColumn() {
       <Stack distribution='equalSpacing'>
         <TextStyle>1 column</TextStyle>
       </Stack>
-      <ColumnBlockIcon
-        payload={payload}
-        avatar={'https://assets.maocanhua.cn/Flkau7Ob6TlzE9AxAkTLQ4aC6l5_'}
-      />
+      <ColumnBlockIcon payload={payload} avatar={IMAGE_LIST.IMAGE_60} />
     </Stack>
   );
 }
@@ -50,23 +48,23 @@ function TwoColumns() {
 
   const scales = [
     {
-      avatar: 'https://assets.maocanhua.cn/Fhs9SLF6TcjwGZ3JZMVL6iuzhvuw',
+      avatar: IMAGE_LIST.IMAGE_61,
       scale: [undefined, undefined],
     },
     {
-      avatar: 'https://assets.maocanhua.cn/FiwjNQm0nuKeybGAEwfUEQK616-z',
+      avatar: IMAGE_LIST.IMAGE_62,
       scale: [25, 75],
     },
     {
-      avatar: 'https://assets.maocanhua.cn/Fjey4SZkZNj6_9xN5xEIxkXqq2q1',
+      avatar: IMAGE_LIST.IMAGE_63,
       scale: [33.3, 66.7],
     },
     {
-      avatar: 'https://assets.maocanhua.cn/Fki_hVmq51kjjt8ydA8gQw4AuL6Q',
+      avatar: IMAGE_LIST.IMAGE_64,
       scale: [66.7, 33.3],
     },
     {
-      avatar: 'https://assets.maocanhua.cn/FlnB5Xq-3Cw_scqWv7NTe7VSaSl7',
+      avatar: IMAGE_LIST.IMAGE_65,
       scale: [75, 25],
     },
   ];
@@ -129,19 +127,19 @@ function ThreeColumns() {
 
   const scales = [
     {
-      avatar: 'https://assets.maocanhua.cn/Fruky5Aii829hZuLeg5VtR9IwTMP',
+      avatar: IMAGE_LIST.IMAGE_66,
       scale: [undefined, undefined, undefined],
     },
     {
-      avatar: 'https://assets.maocanhua.cn/FloLcOZ_7YJ1S3kranpA7tOnSVhB',
+      avatar: IMAGE_LIST.IMAGE_67,
       scale: [25, 25, 50],
     },
     {
-      avatar: 'https://assets.maocanhua.cn/Fm68ZvFvWSfAQXG2CatVDGykHUhv',
+      avatar: IMAGE_LIST.IMAGE_68,
       scale: [25, 50, 25],
     },
     {
-      avatar: 'https://assets.maocanhua.cn/FmfbOoulGj13LGxYKPVm0noVLodV',
+      avatar: IMAGE_LIST.IMAGE_69,
       scale: [50, 25, 25],
     },
   ];
@@ -217,16 +215,13 @@ function FourColumn() {
       <Stack distribution='equalSpacing'>
         <TextStyle>4 column</TextStyle>
       </Stack>
-      <ColumnBlockIcon
-        payload={payload}
-        avatar={'https://assets.maocanhua.cn/Foz01zhkb0U_LVKi8c4NhBFPqLDe'}
-      />
+      <ColumnBlockIcon payload={payload} avatar={IMAGE_LIST.IMAGE_70} />
     </Stack>
   );
 }
 
 export function ColumnBlockIcon(
-  props: Omit<BlockAvatarWrapperProps, 'type'> & { avatar: string; }
+  props: Omit<BlockAvatarWrapperProps, 'type'> & { avatar: string }
 ) {
   return (
     <BlockAvatarWrapper type={BasicType.SECTION} {...props}>

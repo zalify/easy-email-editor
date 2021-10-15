@@ -10,6 +10,7 @@ import React, {
 import { Picture } from '@/components/UI/Picture';
 import { Stack } from '@/components/UI/Stack';
 import { PresetColorsContext } from '@/components/Provider/PresetColorsProvider';
+import { IMAGE_LIST } from '@/assets/image';
 const SketchPickerPromise = import('react-color').then(({ SketchPicker }) => ({
   default: SketchPicker,
 }));
@@ -59,7 +60,7 @@ export function ColorPicker(props: ColorPickerProps) {
         title={props.label}
         trigger='click'
         {...props}
-        content={(
+        content={
           <Suspense fallback={<div>Loading</div>}>
             <SketchPicker
               presetColors={presetColors}
@@ -68,7 +69,7 @@ export function ColorPicker(props: ColorPickerProps) {
               onChangeComplete={onChangeComplete}
             />
           </Suspense>
-        )}
+        }
       >
         {children || (
           <div
@@ -104,7 +105,7 @@ export function ColorPicker(props: ColorPickerProps) {
                   filter:
                     'invert(  0.78  )  drop-shadow(0 0px 0 rgb(0 0 0 / 45%))',
                 }}
-                src='https://assets.maocanhua.cn/3e952a6e-2506-470e-b395-3e0d995157c5.png'
+                src={IMAGE_LIST.IMAGE_06}
               />
             )}
           </div>

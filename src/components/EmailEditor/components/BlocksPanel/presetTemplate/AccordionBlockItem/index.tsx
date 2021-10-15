@@ -1,3 +1,4 @@
+import { IMAGE_LIST } from '@/assets/image';
 import { BlockMaskWrapper } from '@/components/core/wrapper/BlockMaskWrapper';
 import { Picture } from '@/components/UI/Picture';
 import { ShadowDom } from '@/components/UI/ShadowDom';
@@ -7,8 +8,7 @@ import React from 'react';
 
 const list = [
   {
-    thumbnail:
-      'https://assets.maocanhua.cn/65360c06-1efd-4ffe-9fcf-c8d574ba47b1-image.png',
+    thumbnail: IMAGE_LIST.IMAGE_08,
     payload: {
       type: 'accordion',
       data: {
@@ -19,10 +19,8 @@ const list = [
         'icon-width': '32px',
         'icon-align': 'middle',
         'icon-position': 'right',
-        'icon-unwrapped-url':
-          'https://assets.maocanhua.cn/81f1fdfb-fbe2-4c14-94c8-d9d0d04a97f3-image.png',
-        'icon-wrapped-url':
-          'https://assets.maocanhua.cn/9328a9b9-7ed5-493b-ba75-f72d2966ace6-image.png',
+        'icon-unwrapped-url': IMAGE_LIST.IMAGE_09,
+        'icon-wrapped-url': IMAGE_LIST.IMAGE_10,
         padding: '10px 25px 10px 25px',
         border: '1px solid #d9d9d9',
       },

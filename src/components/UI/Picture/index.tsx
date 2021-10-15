@@ -1,3 +1,4 @@
+import { IMAGE_LIST } from '@/assets/image';
 import React, { useEffect, useState } from 'react';
 
 interface IPictureProps
@@ -8,8 +9,7 @@ interface IPictureProps
   src: string;
   className?: string;
 }
-const fallbackPicture =
-  'https://assets.maocanhua.cn/FrtDhP0Bly3etOe0i6S_4QW8kTlU';
+const fallbackPicture = IMAGE_LIST.IMAGE_59;
 
 export function Picture(props: IPictureProps) {
   const [url, setUrl] = useState(props.src);

@@ -7,6 +7,7 @@ import { merge } from 'lodash';
 import React from 'react';
 import { Stack } from '@/components/UI/Stack';
 import { TextStyle } from '@/components/UI/TextStyle';
+import { IMAGE_LIST } from '@/assets/image';
 
 export type IImage = IBlockData<{
   alt?: string;
@@ -38,7 +39,7 @@ export const Image: IBlock<IImage> = createBlock({
         align: 'center',
         height: 'auto',
         padding: '10px 25px 10px 25px',
-        src: 'https://assets.maocanhua.cn/0e7331f3-30b6-49ab-a0ab-fffd23383685-image.png',
+        src: IMAGE_LIST.IMAGE_01,
       },
       children: [],
     };

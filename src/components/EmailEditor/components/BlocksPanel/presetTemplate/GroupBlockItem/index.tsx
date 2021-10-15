@@ -1,3 +1,4 @@
+import { IMAGE_LIST } from '@/assets/image';
 import { BlockMaskWrapper } from '@/components/core/wrapper/BlockMaskWrapper';
 import { Picture } from '@/components/UI/Picture';
 import { ShadowDom } from '@/components/UI/ShadowDom';
@@ -19,7 +20,16 @@ export function GroupBlockItem() {
               <ShadowDom>
                 <div style={{ position: 'relative' }}>
                   <Picture src={item.thumbnail} />
-                  <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 2 }} />
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                      zIndex: 2,
+                    }}
+                  />
                 </div>
               </ShadowDom>
             </BlockMaskWrapper>
@@ -32,243 +42,218 @@ export function GroupBlockItem() {
 
 const list = [
   {
-    thumbnail: 'https://assets.maocanhua.cn/284f98e2-9fda-41f3-ac34-33a62da79a98-image.png',
-    payload: {}
+    thumbnail: IMAGE_LIST.IMAGE_22,
+    payload: {},
   },
   {
-    thumbnail: 'https://assets.maocanhua.cn/5de555fe-7fb3-4dff-9fbc-7a68352d0546-image.png',
+    thumbnail: IMAGE_LIST.IMAGE_23,
     payload: {
-      'type': 'group',
-      'data': {
-        'value': {
-
-        }
+      type: 'group',
+      data: {
+        value: {},
       },
-      'attributes': {
+      attributes: {
         'vertical-align': 'top',
-        'direction': 'ltr'
+        direction: 'ltr',
       },
-      'children': [
+      children: [
         {
-          'type': 'column',
-          'data': {
-            'value': {
-
-            }
+          type: 'column',
+          data: {
+            value: {},
           },
-          'attributes': {
-            'padding': '0px 0px 0px 0px',
-            'border': 'none',
-            'vertical-align': 'top'
+          attributes: {
+            padding: '0px 0px 0px 0px',
+            border: 'none',
+            'vertical-align': 'top',
           },
-          'children': [
+          children: [
             {
-              'type': 'image',
-              'data': {
-                'value': {
-
-                }
+              type: 'image',
+              data: {
+                value: {},
               },
-              'attributes': {
-                'align': 'center',
-                'height': 'auto',
-                'padding': '0px 5px 0px 10px',
-                'src': 'https://assets.maocanhua.cn/2a1dc6bb-d277-48fa-a337-9ccb97d9ea0e-image.png',
-                'width': ''
+              attributes: {
+                align: 'center',
+                height: 'auto',
+                padding: '0px 5px 0px 10px',
+                src: IMAGE_LIST.IMAGE_24,
+                width: '',
               },
-              'children': []
-            }
-          ]
+              children: [],
+            },
+          ],
         },
         {
-          'type': 'column',
-          'data': {
-            'value': {
-
-            }
+          type: 'column',
+          data: {
+            value: {},
           },
-          'attributes': {
-            'padding': '0px 0px 0px 0px',
-            'border': 'none',
-            'vertical-align': 'top'
+          attributes: {
+            padding: '0px 0px 0px 0px',
+            border: 'none',
+            'vertical-align': 'top',
           },
-          'children': [
+          children: [
             {
-              'type': 'image',
-              'data': {
-                'value': {
-
-                }
+              type: 'image',
+              data: {
+                value: {},
               },
-              'attributes': {
-                'align': 'center',
-                'height': 'auto',
-                'padding': '0px 10px 0px 5px',
-                'src': 'https://assets.maocanhua.cn/45e55c10-2e30-47d8-ad72-5492c42ced71-image.png',
-                'width': ''
+              attributes: {
+                align: 'center',
+                height: 'auto',
+                padding: '0px 10px 0px 5px',
+                src: IMAGE_LIST.IMAGE_25,
+                width: '',
               },
-              'children': []
-            }
-          ]
-        }
-      ]
-    }
+              children: [],
+            },
+          ],
+        },
+      ],
+    },
   },
   {
-    thumbnail: 'https://assets.maocanhua.cn/b6e29bf0-8b56-4515-ae74-f19dc33d615c-image.png',
+    thumbnail: IMAGE_LIST.IMAGE_26,
     payload: {
-      'type': 'group',
-      'data': {
-        'value': {
-
-        }
+      type: 'group',
+      data: {
+        value: {},
       },
-      'attributes': {
+      attributes: {
         'vertical-align': 'top',
-        'direction': 'ltr',
-        'background-color': '#ffffff'
+        direction: 'ltr',
+        'background-color': '#ffffff',
       },
-      'children': [
+      children: [
         {
-          'type': 'column',
-          'data': {
-            'value': {
-
-            }
+          type: 'column',
+          data: {
+            value: {},
           },
-          'attributes': {
-            'padding': '0px 5px 0px 5px',
-            'border': 'none',
-            'vertical-align': 'top'
+          attributes: {
+            padding: '0px 5px 0px 5px',
+            border: 'none',
+            'vertical-align': 'top',
           },
-          'children': [
+          children: [
             {
-              'type': 'image',
-              'data': {
-                'value': {
-
-                }
+              type: 'image',
+              data: {
+                value: {},
               },
-              'attributes': {
-                'align': 'center',
-                'height': 'auto',
-                'padding': '0px 0px 0px 0px',
-                'src': 'https://assets.maocanhua.cn/2a1dc6bb-d277-48fa-a337-9ccb97d9ea0e-image.png',
-                'width': ''
+              attributes: {
+                align: 'center',
+                height: 'auto',
+                padding: '0px 0px 0px 0px',
+                src: IMAGE_LIST.IMAGE_29,
+                width: '',
               },
-              'children': []
+              children: [],
             },
             {
-              'type': 'text',
-              'data': {
-                'value': {
-                  'content': 'Office Room\nPrinting'
-                }
+              type: 'text',
+              data: {
+                value: {
+                  content: 'Office Room\nPrinting',
+                },
               },
-              'attributes': {
+              attributes: {
                 'font-size': '18px',
-                'padding': '10px 5px 10px 5px',
+                padding: '10px 5px 10px 5px',
                 'line-height': 1,
-                'align': 'center'
+                align: 'center',
               },
-              'children': []
-            }
-          ]
+              children: [],
+            },
+          ],
         },
         {
-          'type': 'column',
-          'data': {
-            'value': {
-
-            }
+          type: 'column',
+          data: {
+            value: {},
           },
-          'attributes': {
-            'padding': '0px 5px 0px 5px',
-            'border': 'none',
-            'vertical-align': 'top'
+          attributes: {
+            padding: '0px 5px 0px 5px',
+            border: 'none',
+            'vertical-align': 'top',
           },
-          'children': [
+          children: [
             {
-              'type': 'image',
-              'data': {
-                'value': {
-
-                }
+              type: 'image',
+              data: {
+                value: {},
               },
-              'attributes': {
-                'align': 'center',
-                'height': 'auto',
-                'padding': '0px 0px 0px 0px',
-                'src': 'https://assets.maocanhua.cn/4b1595cd-a1f1-48a5-ad8c-5e6198d48c92-image.png',
-                'width': ''
+              attributes: {
+                align: 'center',
+                height: 'auto',
+                padding: '0px 0px 0px 0px',
+                src: IMAGE_LIST.IMAGE_27,
+                width: '',
               },
-              'children': []
+              children: [],
             },
             {
-              'type': 'text',
-              'data': {
-                'value': {
-                  'content': 'Workplace\nDesign<div><br></div>'
-                }
+              type: 'text',
+              data: {
+                value: {
+                  content: 'Workplace\nDesign<div><br></div>',
+                },
               },
-              'attributes': {
+              attributes: {
                 'font-size': '18px',
-                'padding': '10px 5px 10px 5px',
+                padding: '10px 5px 10px 5px',
                 'line-height': 1,
-                'align': 'center'
+                align: 'center',
               },
-              'children': []
-            }
-          ]
+              children: [],
+            },
+          ],
         },
         {
-          'type': 'column',
-          'data': {
-            'value': {
-
-            }
+          type: 'column',
+          data: {
+            value: {},
           },
-          'attributes': {
-            'padding': '0px 5px 0px 5px',
-            'border': 'none',
-            'vertical-align': 'top'
+          attributes: {
+            padding: '0px 5px 0px 5px',
+            border: 'none',
+            'vertical-align': 'top',
           },
-          'children': [
+          children: [
             {
-              'type': 'image',
-              'data': {
-                'value': {
-
-                }
+              type: 'image',
+              data: {
+                value: {},
               },
-              'attributes': {
-                'align': 'center',
-                'height': 'auto',
-                'padding': '0px 0px 0px 0px',
-                'src': 'https://assets.maocanhua.cn/45e55c10-2e30-47d8-ad72-5492c42ced71-image.png',
-                'width': ''
+              attributes: {
+                align: 'center',
+                height: 'auto',
+                padding: '0px 0px 0px 0px',
+                src: IMAGE_LIST.IMAGE_28,
+                width: '',
               },
-              'children': []
+              children: [],
             },
             {
-              'type': 'text',
-              'data': {
-                'value': {
-                  'content': 'Modern Design\nBranding'
-                }
+              type: 'text',
+              data: {
+                value: {
+                  content: 'Modern Design\nBranding',
+                },
               },
-              'attributes': {
+              attributes: {
                 'font-size': '18px',
-                'padding': '10px 5px 10px 5px',
+                padding: '10px 5px 10px 5px',
                 'line-height': 1,
-                'align': 'center'
+                align: 'center',
               },
-              'children': []
-            }
-          ]
-        }
-      ]
-    }
+              children: [],
+            },
+          ],
+        },
+      ],
+    },
   },
-
 ];

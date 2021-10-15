@@ -1,3 +1,4 @@
+import { IMAGE_LIST } from '@/assets/image';
 import { IButton } from '@/components/core/blocks/basic/Button';
 import { BlockMaskWrapper } from '@/components/core/wrapper/BlockMaskWrapper';
 import { Picture } from '@/components/UI/Picture';
@@ -10,8 +11,7 @@ import React from 'react';
 
 const buttonList = [
   {
-    thumbnail:
-      'https://assets.maocanhua.cn/6e844bb8-1bfc-4178-ae13-55df753b2416-image.png',
+    thumbnail: IMAGE_LIST.IMAGE_11,
     payload: {
       attributes: {
         align: 'center',
@@ -37,8 +37,7 @@ const buttonList = [
     },
   },
   {
-    thumbnail:
-      'https://assets.maocanhua.cn/1dcea6e8-bd25-4336-b1b9-df9d307a0fab-image.png',
+    thumbnail: IMAGE_LIST.IMAGE_12,
     payload: {
       type: 'button',
       attributes: {
@@ -66,8 +65,7 @@ const buttonList = [
     },
   },
   {
-    thumbnail:
-      'https://assets.maocanhua.cn/086fa048-5277-4296-8e6c-bdffea8bfdc1-image.png',
+    thumbnail: IMAGE_LIST.IMAGE_13,
     payload: {
       type: 'button',
       attributes: {

@@ -1,6 +1,4 @@
-import { Column } from '@/components/core/blocks/basic/Column';
-import { IImage } from '@/components/core/blocks/basic/Image';
-import { Section } from '@/components/core/blocks/basic/Section';
+import { IMAGE_LIST } from '@/assets/image';
 import { BlockMaskWrapper } from '@/components/core/wrapper/BlockMaskWrapper';
 import { Picture } from '@/components/UI/Picture';
 import { ShadowDom } from '@/components/UI/ShadowDom';
@@ -10,8 +8,7 @@ import React from 'react';
 
 const list = [
   {
-    thumbnail:
-      'https://assets.maocanhua.cn/ddd29b0a-adca-4f37-82b8-dd1ea43bc541-image.png',
+    thumbnail: IMAGE_LIST.IMAGE_46,
     payload: {
       type: BasicType.NAVBAR,
       data: {

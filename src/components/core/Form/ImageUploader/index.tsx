@@ -11,7 +11,8 @@ import styles from './index.module.scss';
 import { Uploader, UploaderServer } from '@/utils/Uploader';
 import { classnames } from '@/utils/classnames';
 import { previewLoadImage } from '@/utils/previewLoadImage';
-const LOADING_ICON = 'https://assets.maocanhua.cn/Fi_vI4vyLhTM-Tp6ivq4dR_ieGHk';
+import { IMAGE_LIST } from '@/assets/image';
+const LOADING_ICON = IMAGE_LIST.IMAGE_07;
 
 export interface ImageUploaderProps {
   onChange: (val: string) => void;

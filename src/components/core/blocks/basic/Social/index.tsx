@@ -4,6 +4,7 @@ import { BasicType } from '@/constants';
 import { CSSProperties } from 'react';
 import { createBlock } from '@/utils/createBlock';
 import { merge } from 'lodash';
+import { IMAGE_LIST } from '@/assets/image';
 export type ISocial = IBlockData<
   {
     align?: string;
@@ -67,21 +68,21 @@ export const Social: IBlock<ISocial> = createBlock({
               href: '#',
               'icon-size': '20px',
               target: '_blank',
-              src: 'https://assets.maocanhua.cn/93013b18-062d-48d7-ae00-4a5f0a9ac988.png',
+              src: IMAGE_LIST.IMAGE_02,
               content: 'Facebook',
             },
             {
               href: '#',
               'icon-size': '20px',
               target: '_blank',
-              src: 'https://assets.maocanhua.cn/a81ddd4b-3a12-47be-91f3-28d71eced397.png',
+              src: IMAGE_LIST.IMAGE_03,
               content: 'Google',
             },
             {
               href: '',
               'icon-size': '20px',
               target: '_blank',
-              src: 'https://assets.maocanhua.cn/0a411326-17c5-4814-ad3a-6927266f097e.png',
+              src: IMAGE_LIST.IMAGE_04,
               content: 'Twitter',
             },
           ],

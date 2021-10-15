@@ -1,6 +1,4 @@
-import { Column } from '@/components/core/blocks/basic/Column';
-import { IImage } from '@/components/core/blocks/basic/Image';
-import { Section } from '@/components/core/blocks/basic/Section';
+import { IMAGE_LIST } from '@/assets/image';
 import { BlockMaskWrapper } from '@/components/core/wrapper/BlockMaskWrapper';
 import { Picture } from '@/components/UI/Picture';
 import { ShadowDom } from '@/components/UI/ShadowDom';
@@ -10,8 +8,7 @@ import React from 'react';
 
 const list = [
   {
-    thumbnail:
-      'https://assets.maocanhua.cn/efefa70c-06a4-4146-afef-3da74e656e0d-image.png',
+    thumbnail: IMAGE_LIST.IMAGE_52,
     payload: {
       type: BasicType.SOCIAL,
       data: {
@@ -21,21 +18,21 @@ const list = [
               href: '#',
               'icon-size': '20px',
               target: '_blank',
-              src: 'https://assets.maocanhua.cn/93013b18-062d-48d7-ae00-4a5f0a9ac988.png',
+              src: IMAGE_LIST.IMAGE_53,
               content: 'Facebook',
             },
             {
               href: '#',
               'icon-size': '20px',
               target: '_blank',
-              src: 'https://assets.maocanhua.cn/a81ddd4b-3a12-47be-91f3-28d71eced397.png',
+              src: IMAGE_LIST.IMAGE_54,
               content: 'Google',
             },
             {
               href: '',
               'icon-size': '20px',
               target: '_blank',
-              src: 'https://assets.maocanhua.cn/0a411326-17c5-4814-ad3a-6927266f097e.png',
+              src: IMAGE_LIST.IMAGE_55,
               content: 'Twitter',
             },
           ],

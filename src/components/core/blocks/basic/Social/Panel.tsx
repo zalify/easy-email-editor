@@ -26,6 +26,7 @@ import { Collapse } from 'antd';
 import { TextDecoration } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/TextDecoration';
 import { LineHeight } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/LineHeight';
 import { EditorPropsContext } from '@/components/Provider/PropsProvider';
+import { IMAGE_LIST } from '@/assets/image';
 
 const options = [
   {
@@ -41,25 +42,22 @@ const options = [
 export function Panel() {
   const { focusIdx } = useFocusIdx();
   return (
-
     <AttributesPanelWrapper style={{ padding: 0 }}>
-
-      <Collapse defaultActiveKey={['0', '1', '2',]}>
-
-        <Collapse.Panel key="1" header="Setting">
-          <Stack vertical spacing="tight">
+      <Collapse defaultActiveKey={['0', '1', '2']}>
+        <Collapse.Panel key='1' header='Setting'>
+          <Stack vertical spacing='tight'>
             <RadioGroupField
               label='Mode'
               name={`${focusIdx}.attributes.mode`}
               options={options}
               inline
             />
-            <ContainerBackgroundColor title="Background color" />
+            <ContainerBackgroundColor title='Background color' />
           </Stack>
         </Collapse.Panel>
 
-        <Collapse.Panel key="3" header="Typography">
-          <Stack vertical spacing="tight">
+        <Collapse.Panel key='3' header='Typography'>
+          <Stack vertical spacing='tight'>
             <Stack wrap={false}>
               <FontFamily />
               <Stack.Item fill>
@@ -85,9 +83,9 @@ export function Panel() {
           </Stack>
         </Collapse.Panel>
 
-        <Collapse.Panel key="2" header="Social element">
+        <Collapse.Panel key='2' header='Social element'>
           <EditTabField
-            tabPosition="left"
+            tabPosition='left'
             name={`${focusIdx}.data.value.elements`}
             label='Elements'
             renderItem={(item, index) => (
@@ -97,15 +95,14 @@ export function Panel() {
               href: '',
               'icon-size': '20px',
               target: '_blank',
-              src: 'https://assets.maocanhua.cn/FtBnhQQju_LU3-OtYq9_Ueu-G0lb',
+              src: IMAGE_LIST.IMAGE_05,
               content: 'Google',
             }}
           />
         </Collapse.Panel>
 
-        <Collapse.Panel key="0" header="Dimension">
-          <Stack vertical spacing="tight">
-
+        <Collapse.Panel key='0' header='Dimension'>
+          <Stack vertical spacing='tight'>
             <Align />
             <TextField
               label='Border radius'
@@ -113,17 +110,12 @@ export function Panel() {
               inline
             />
             <Padding />
-            <Padding attributeName="inner-padding" title="Inner padding" />
-            <Padding attributeName="text-padding" title="Text padding" />
-
+            <Padding attributeName='inner-padding' title='Inner padding' />
+            <Padding attributeName='text-padding' title='Text padding' />
           </Stack>
-
         </Collapse.Panel>
-
       </Collapse>
-
     </AttributesPanelWrapper>
-
   );
 }
 
@@ -138,8 +130,7 @@ function SocialElement({
   const { onUploadImage } = useContext(EditorPropsContext);
 
   return (
-    <Stack vertical spacing="tight">
-
+    <Stack vertical spacing='tight'>
       <ImageUploaderField
         label='Image'
         name={`${focusIdx}.data.value.elements.[${index}].src`}
@@ -192,9 +183,7 @@ function SocialElement({
             },
           ]}
         />
-
       </Stack>
-
     </Stack>
   );
 }

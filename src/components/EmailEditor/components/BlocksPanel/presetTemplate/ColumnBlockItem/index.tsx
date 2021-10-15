@@ -1,3 +1,4 @@
+import { IMAGE_LIST } from '@/assets/image';
 import { BlockMaskWrapper } from '@/components/core/wrapper/BlockMaskWrapper';
 import { Picture } from '@/components/UI/Picture';
 import { ShadowDom } from '@/components/UI/ShadowDom';
@@ -19,7 +20,16 @@ export function ColumnBlockItem() {
               <ShadowDom>
                 <div style={{ position: 'relative' }}>
                   <Picture src={item.thumbnail} />
-                  <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 2 }} />
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                      zIndex: 2,
+                    }}
+                  />
                 </div>
               </ShadowDom>
             </BlockMaskWrapper>
@@ -32,89 +42,85 @@ export function ColumnBlockItem() {
 
 const list = [
   {
-    thumbnail: 'https://assets.maocanhua.cn/a2927379-5a16-4f20-8155-ffbacb07980f-image.png',
+    thumbnail: IMAGE_LIST.IMAGE_20,
     payload: {
-      'type': 'column',
-      'data': {
-        'value': {
-
-        }
+      type: 'column',
+      data: {
+        value: {},
       },
-      'attributes': {
-        'padding': '20px 0px 20px 0px',
-        'border': 'none',
+      attributes: {
+        padding: '20px 0px 20px 0px',
+        border: 'none',
         'vertical-align': 'top',
-        'background-color': '#ffffff'
+        'background-color': '#ffffff',
       },
-      'children': [
+      children: [
         {
-          'type': 'image',
-          'data': {
-            'value': {
-
-            }
+          type: 'image',
+          data: {
+            value: {},
           },
-          'attributes': {
-            'align': 'center',
-            'height': 'auto',
-            'padding': '0px 0px 0px 0px',
-            'src': 'https://assets.maocanhua.cn/ed4b9013-b222-4c8a-9988-3e741feaeb64-image.png',
-            'width': '150px'
+          attributes: {
+            align: 'center',
+            height: 'auto',
+            padding: '0px 0px 0px 0px',
+            src: IMAGE_LIST.IMAGE_21,
+            width: '150px',
           },
-          'children': []
+          children: [],
         },
         {
-          'type': 'text',
-          'data': {
-            'value': {
-              'content': 'Business Key to Success'
-            }
+          type: 'text',
+          data: {
+            value: {
+              content: 'Business Key to Success',
+            },
           },
-          'attributes': {
+          attributes: {
             'font-size': '20px',
-            'padding': '10px 0px 10px 0px',
+            padding: '10px 0px 10px 0px',
             'line-height': '1.7',
-            'align': 'center',
-            'font-family': '"Nunito Sans", sans-serif'
+            align: 'center',
+            'font-family': '"Nunito Sans", sans-serif',
           },
-          'children': []
+          children: [],
         },
         {
-          'type': 'text',
-          'data': {
-            'value': {
-              'content': 'POSTED ON FEB 18, 2019 FOOD'
-            }
+          type: 'text',
+          data: {
+            value: {
+              content: 'POSTED ON FEB 18, 2019 FOOD',
+            },
           },
-          'attributes': {
+          attributes: {
             'font-size': '15px',
-            'padding': '0px 0px 10px 0px',
+            padding: '0px 0px 10px 0px',
             'line-height': '1.7',
-            'align': 'center',
-            'color': '#9b9b9b',
-            'font-family': '"Nunito Sans", sans-serif'
+            align: 'center',
+            color: '#9b9b9b',
+            'font-family': '"Nunito Sans", sans-serif',
           },
-          'children': []
+          children: [],
         },
         {
-          'type': 'text',
-          'data': {
-            'value': {
-              'content': 'Far far away, behind the word mountains, far from the countries'
-            }
+          type: 'text',
+          data: {
+            value: {
+              content:
+                'Far far away, behind the word mountains, far from the countries',
+            },
           },
-          'attributes': {
+          attributes: {
             'font-size': '15px',
-            'padding': '0px 0px 0px 0px',
+            padding: '0px 0px 0px 0px',
             'line-height': '1.7',
-            'align': 'center',
-            'color': '#9b9b9b',
-            'font-family': '"Nunito Sans", sans-serif'
+            align: 'center',
+            color: '#9b9b9b',
+            'font-family': '"Nunito Sans", sans-serif',
           },
-          'children': []
-        }
-      ]
-    }
+          children: [],
+        },
+      ],
+    },
   },
-
 ];
