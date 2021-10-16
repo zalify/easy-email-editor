@@ -15,14 +15,12 @@ import {
   TextAreaField,
   TextField,
 } from '@/components/core/Form';
-import { BlocksMap } from '@/components/core/blocks';
-import { BasicType } from '@/constants';
 
 import { createPortal } from 'react-dom';
 import styles from './index.module.scss';
 import { scrollFocusBlockIntoView } from '@/utils/scrollFocusBlockIntoView';
 
-export function ContextMenu({ ele, idx }: { ele: HTMLElement; idx: string }) {
+export function ContextMenu({ ele, idx }: { ele: HTMLElement; idx: string; }) {
   const [position, setPosition] = useState({ left: 0, top: 0 });
   const [visible, setVisible] = useState(false);
 
@@ -40,6 +38,14 @@ export function ContextMenu({ ele, idx }: { ele: HTMLElement; idx: string }) {
   useEffect(() => {
     if (ele) {
       const onContextmenu = (e: MouseEvent) => {
+
+        if (visible) {
+          e.preventDefault();
+          setVisible(false);
+          return;
+        }
+        if (!ele.contains(e.target as HTMLElement)) return;
+
         e.preventDefault();
         setPosition({
           left: e.clientX,
@@ -48,20 +54,18 @@ export function ContextMenu({ ele, idx }: { ele: HTMLElement; idx: string }) {
         setVisible(true);
       };
 
-      const onClick = (e: MouseEvent) => {
-        setVisible(false);
-      };
-
-      ele.addEventListener('contextmenu', onContextmenu);
-
-      document.addEventListener('click', onClick, true);
+      window.addEventListener('contextmenu', onContextmenu, true);
 
       return () => {
-        ele.removeEventListener('contextmenu', onContextmenu);
-        document.removeEventListener('click', onClick, true);
+        window.removeEventListener('contextmenu', onContextmenu, true);
       };
     }
-  }, [ele]);
+  }, [ele, visible]);
+
+  const onClose = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setVisible(false);
+  };
 
   const handleMoveUp = () => {
     moveByIdx(idx, getSiblingIdx(idx, -1));
@@ -188,7 +192,7 @@ export function ContextMenu({ ele, idx }: { ele: HTMLElement; idx: string }) {
           )}
         </Form>
       </div>
-      <div className={styles.contextmenuMark} />
+      <div className={styles.contextmenuMark} onClick={onClose} />
     </div>,
     document.getElementById(FIXED_CONTAINER_ID)!
   );
