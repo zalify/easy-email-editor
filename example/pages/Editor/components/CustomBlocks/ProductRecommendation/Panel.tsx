@@ -5,7 +5,7 @@ import React from 'react';
 export function Panel() {
   const { focusIdx } = useFocusIdx();
   return (
-    <AttributesPanelWrapper>
+    <AttributesPanelWrapper style={{ padding: '20px' }}>
       <Stack vertical>
         <TextField
           label='Title'
