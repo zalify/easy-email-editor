@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   BoldOutlined,
   ItalicOutlined,
@@ -22,12 +22,13 @@ import { Link, LinkParams } from '../../components/Link';
 import { FontSizeList } from '../../components/FontSizeList';
 import { getShadowRoot } from '@/utils/findBlockNodeByIdx';
 import { Stack } from '@/components/UI/Stack';
-import { TextStyle } from '@/components/UI/TextStyle';
 import { ColorPicker } from '../../../ColorPicker';
 import { FontFamily } from '../FontFamily';
 import { useSelectionRange } from '@/hooks/useSelectionRange';
 import { FIXED_CONTAINER_ID } from '@/constants';
 import { IconFont } from '@/components/IconFont';
+import { MergeTags } from '@/components/EmailEditor/components/ConfigurationPanel/components/AttributesManager/components/MergeTags';
+import { EditorPropsContext } from '@/components/Provider/PropsProvider';
 
 export interface TextToolbarProps {
   onChange: (content: string) => any;
@@ -37,6 +38,8 @@ export interface TextToolbarProps {
 export function TextToolbar(props: TextToolbarProps) {
   const { container } = props;
   const { selectionRange: currentRange, restoreRange } = useSelectionRange();
+  const { mergeTags } = useContext(EditorPropsContext);
+
   const execCommand = (cmd: string, val?: any) => {
     if (!container) {
       console.error('No container');
@@ -149,6 +152,19 @@ export function TextToolbar(props: TextToolbarProps) {
             icon={<StopOutlined />}
             title='Unlink'
           /> */}
+          {mergeTags && (
+            <Tooltip
+              color='#fff'
+              placement="bottom"
+              title={
+                <MergeTags value="" onChange={(val) => execCommand('insertHTML', val)} />
+              }
+              getPopupContainer={getPopoverMountNode}
+            >
+              <Button size='small' title='Merge tag' icon={<IconFont iconName="icon-merge-tags" />} />
+            </Tooltip>
+          )}
+
           <ToolItem
             onClick={() => execCommand('removeFormat')}
             icon={<CloseOutlined />}

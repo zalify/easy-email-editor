@@ -27,7 +27,7 @@ export const BlockLayerItem = ({
   idx: string;
   indent: number;
   parentType: BlockType | null;
-  hidden?: boolean;
+  hidden?: boolean | string;
 }) => {
   const { focusIdx } = useFocusIdx();
   const { collapsed } = useCollapse();

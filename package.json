@@ -18,7 +18,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development vite",
     "build": "cross-env NODE_ENV=production vite build",
-    "lib": "rimraf lib && vite build --config vite.lib.config.ts && npm run typings && tsc-alias -p tsconfig.lib.json",
+    "lib": "rimraf lib  && npm run typings && tsc-alias -p tsconfig.lib.json && vite build --config vite.lib.config.ts",
     "analyze:build": "cross-env ANALYZE=true yarn build",
     "analyze": "cross-env ANALYZE=true yarn lib",
     "preview": "npm run lib && vite --config vite.preview.config.ts --force",
@@ -95,6 +95,7 @@
     "yup": "^0.32.9"
   },
   "dependencies": {
+    "@types/mustache": "^4.1.2",
     "antd": "^4.15.5",
     "codemirror": "^5.63.1",
     "final-form": "^4.20.2",
@@ -107,6 +108,7 @@
     "lodash-es": "^4.17.21",
     "mjml": "^4.9.3",
     "mjml-browser": "^4.9.3",
+    "mustache": "^4.2.0",
     "qrcode-generator": "^1.4.4",
     "qs": "6.9.6",
     "react": "^17.0.1",

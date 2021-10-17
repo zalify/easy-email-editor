@@ -1,7 +1,7 @@
+import { IPage } from '@/components/core/blocks/basic/Page';
 import { IBlockData } from '@/typings';
 import { BlockMarketCategory } from '@/utils/BlockMarketManager';
 import React, { useMemo } from 'react';
-
 export interface CollectedBlock {
   label: string;
   helpText: string;
@@ -29,6 +29,9 @@ export interface PropsProviderProps {
   };
   autoComplete?: boolean;
   dashed?: boolean;
+  mergeTags?: { [key: string]: any; },
+  onBeforePreview?: (data: IPage, mergeTags: PropsProviderProps['mergeTags']) => IPage;
+
 }
 
 export const EditorPropsContext = React.createContext<PropsProviderProps>({
