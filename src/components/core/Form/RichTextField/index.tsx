@@ -6,6 +6,7 @@ import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { findBlockNodeByIdx, getEditorRoot } from '@/utils/findBlockNodeByIdx';
 import { getEditNode } from '@/utils/getEditNode';
 import { onDrag } from '@/utils/onDrag';
+import { isBoolean } from 'lodash';
 import React, { useCallback, useMemo } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -15,6 +16,7 @@ import { EnhancerProps } from '../enhancer';
 import { InlineTextField } from '../index';
 import { InlineTextProps } from '../InlineTextField';
 import { TextToolbar } from './components/TextToolbar';
+import styles from './index.module.scss';
 
 const TEXT_BAR_LOCATION_KEY = 'TEXT_BAR_LOCATION_KEY';
 const RichTextFieldItem = (
@@ -44,7 +46,7 @@ const RichTextFieldItem = (
     }
   }, [idx, locationState?.left, locationState?.top]);
 
-  const onChange = useCallback(() => {}, []);
+  const onChange = useCallback(() => { }, []);
 
   const editorContainer = container && getEditNode(container);
 
@@ -62,12 +64,13 @@ const RichTextFieldItem = (
             top: position.top + y,
           });
         },
-        onEnd() {},
+        onEnd() { },
       });
     };
 
     return createPortal(
       <div
+        className={styles.container}
         key={idx}
         style={{
           position: 'fixed',
@@ -113,6 +116,7 @@ export const RichTextField = (
 ) => {
   const { focusBlock } = useBlock();
   const { focusIdx } = useFocusIdx();
+  if (isBoolean(focusBlock?.data.hidden) && focusBlock?.data.hidden || (focusBlock?.data.hidden === 'true')) return null;
   if (focusBlock?.type !== BasicType.TEXT) return null;
   return <RichTextFieldItem key={focusIdx} {...props} />;
 };

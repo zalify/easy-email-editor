@@ -191,6 +191,7 @@ export const ProductRecommendation = createCustomBlock<IProductRecommendation>({
               >
                 <Button
                   align='center'
+                  padding="15px 0px"
                   background-color={attributes['button-color']}
                   color={attributes['button-text-color']}
                   target='_blank'

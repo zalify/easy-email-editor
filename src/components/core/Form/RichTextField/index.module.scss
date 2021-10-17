@@ -1,20 +1,13 @@
-.contaner {
+:global(.ant-tooltip-content) *{
+  &::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 8px !important;
+  }
 
-  .editorWrapper {
-
-    div[contentEditable] {
-      outline: none;
-      padding: 10px;
-
-      border: 1px solid #ccc;
-      cursor: text;
-      &:hover {
-        border-color: #40a9ff;
-      }
-      &:focus{
-        border-color: #40a9ff;
-        box-shadow: 0 0 0 2px rgb(24 144 255 / 20%);
-      }
-    }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+    -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
   }
 }

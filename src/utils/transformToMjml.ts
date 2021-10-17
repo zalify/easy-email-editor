@@ -7,7 +7,7 @@ import { IPage } from '@/components/core/blocks/basic/Page';
 import { ISocial } from '@/components/core/blocks/basic/Social';
 import { BasicType, BlockType } from '@/constants';
 import { IBlockData } from '@/typings';
-import { pickBy, identity, isObject } from 'lodash';
+import { pickBy, identity, isObject, isBoolean } from 'lodash';
 import {
   getChildIdx,
   getNodeIdxClassName,
@@ -36,7 +36,9 @@ export function transformToMjml(options: TransformToMjmlOption): string {
     context = data,
     mode = 'production',
   } = options;
-  if (data?.data?.hidden) return '';
+  if ((isBoolean(data?.data?.hidden) && data?.data?.hidden) || data?.data?.hidden === 'true') {
+    return '';
+  }
 
   const att = pickBy(
     {

@@ -1,4 +1,4 @@
-import { IEmailTemplate, transformToMjml } from 'easy-email-editor';
+import { IBlockData, IEmailTemplate, transformToMjml } from 'easy-email-editor';
 import { message, Modal } from 'antd';
 import React, { useMemo, useState } from 'react';
 import mjml from 'mjml-browser';
@@ -9,10 +9,11 @@ import { Form } from 'react-final-form';
 import { TextField } from '@example/components/Form';
 import { useLoading } from '@example/hooks/useLoading';
 import { useCallback } from 'react';
-import { IBlockData } from 'easy-email-editor';
-import { cloneDeep, merge } from 'lodash';
-import { CustomBlocksType } from './CustomBlocks/constants';
 import { pushEvent } from '@example/util/pushEvent';
+import { TextAreaField } from '@example/components/Form';
+import mustache from 'mustache';
+import { CustomBlocksType } from './CustomBlocks/constants';
+import { cloneDeep, merge } from 'lodash';
 
 const schema = Yup.object().shape({
   toEmail: Yup.string().email('Unvalid email').required('Email required'),
@@ -22,17 +23,27 @@ export function useEmailModal() {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [emailData, setEmailData] = useState<IEmailTemplate | null>(null);
+  const [mergeTags, setMergeTags] = useState<any>(null);
   const emailSendLoading = useLoading(email.loadings.send);
 
   const onSendEmail = useCallback(
-    async (values: { toEmail: string; }) => {
+    async (values: { toEmail: string; mergeTags: string; }) => {
       if (!emailData) return null;
       pushEvent({ name: 'SendTestEmail' });
-      const content = injectData(emailData.content);
+      let mergeTagsPayload = {};
+      try {
+        mergeTagsPayload = JSON.parse(values.mergeTags);
+      } catch (error) {
+        message.error('invalid JSON');
+        return;
+      }
+      const content = JSON.parse(mustache.render(JSON.stringify(emailData.content), mergeTagsPayload));
+      const customBlockData = injectData(content);
+
       const html = mjml(transformToMjml({
-        data: content,
+        data: customBlockData,
         mode: 'production',
-        context: content
+        context: customBlockData
       }), {
         beautify: true,
         validationLevel: 'soft',
@@ -56,12 +67,14 @@ export function useEmailModal() {
     [dispatch, emailData]
   );
 
-  const openModal = (value: IEmailTemplate) => {
+  const openModal = (value: IEmailTemplate, mergeTags: any) => {
     setEmailData(value);
+    setMergeTags(mergeTags);
     setVisible(true);
   };
   const closeModal = () => {
     setEmailData(null);
+    setMergeTags(null);
     setVisible(false);
   };
 
@@ -69,7 +82,7 @@ export function useEmailModal() {
     return (
       <Form
         validationSchema={schema}
-        initialValues={{ toEmail: '' }}
+        initialValues={{ toEmail: '', mergeTags: JSON.stringify(mergeTags, null, 2) }}
         onSubmit={onSendEmail}
       >
         {({ handleSubmit }) => (
@@ -83,11 +96,12 @@ export function useEmailModal() {
             onCancel={closeModal}
           >
             <TextField autoFocus name='toEmail' label='To email' />
+            <TextAreaField rows={15} autoFocus name='mergeTags' label='Dynamic data' />
           </Modal>
         )}
       </Form>
     );
-  }, [onSendEmail, visible, emailSendLoading]);
+  }, [mergeTags, onSendEmail, visible, emailSendLoading]);
 
   return {
     modal,
@@ -96,9 +110,9 @@ export function useEmailModal() {
 }
 
 function injectData(data: IBlockData) {
-  const testData = cloneDeep(data);
-  testData.children.forEach((item) => {
-    if (item.type === CustomBlocksType.PRODUCT_RECOMMENDATION) {
+  const customBlockData = cloneDeep(data);
+  customBlockData.children.forEach((item) => {
+    if (item.type === CustomBlocksType.PRODUCT_RECOMMENDATION as any) {
       item.data.value = merge(item.data.value, {
         productList: [
           {
@@ -127,5 +141,5 @@ function injectData(data: IBlockData) {
     }
   });
 
-  return testData;
+  return customBlockData;
 }

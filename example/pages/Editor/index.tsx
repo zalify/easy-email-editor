@@ -20,6 +20,7 @@ import {
   BlockMarketCategory,
   EmailEditor,
   EmailEditorProvider,
+  EmailEditorProviderProps,
   IEmailTemplate,
   transformToMjml,
 } from 'easy-email-editor';
@@ -32,6 +33,7 @@ import { UserStorage } from '@example/util/user-storage';
 import './components/CustomBlocks';
 import { useCollection } from './components/useCollection';
 import { customBlocks } from './components/CustomBlocks';
+import mustache from 'mustache';
 
 const fontList = [
   'Arial',
@@ -90,6 +92,25 @@ export default function Editor() {
       dispatch(template.actions.set(null));
     };
   }, [dispatch, id, userId]);
+
+  const mergeTags = useMemo(() => {
+    return {
+      user: {
+        name: 'Ryan',
+        avatar: 'https://assets.maocanhua.cn/bbb041da-62c3-4e6a-9648-60a06738836b-image.png'
+      },
+      company: {
+        name: 'Easy email',
+      },
+      date: {
+        today: () => new Date().toDateString(),
+      },
+      condition: {
+        isHidden: true,
+        isNotHidden: false,
+      }
+    };
+  }, []);
 
   const onSubmit = useCallback(
     async (
@@ -150,6 +171,10 @@ export default function Editor() {
     };
   }, [templateData]);
 
+  const onBeforePreview: EmailEditorProviderProps['onBeforePreview'] = useCallback((data, mergeTags) => {
+    return JSON.parse(mustache.render(JSON.stringify(data), mergeTags));
+  }, []);
+
   if (!templateData && loading) {
     return (
       <Loading loading={loading}>
@@ -177,6 +202,9 @@ export default function Editor() {
         onSubmit={onSubmit}
         autoComplete
         dashed={false}
+
+        mergeTags={mergeTags}
+        onBeforePreview={onBeforePreview}
       >
         {({ values }, { submit }) => {
           return (
@@ -189,7 +217,7 @@ export default function Editor() {
                     <Button onClick={() => onExportHtml(values)}>
                       Export html
                     </Button>
-                    <Button onClick={() => openModal(values)}>
+                    <Button onClick={() => openModal(values, mergeTags)}>
                       Send test email
                     </Button>
                     <Button

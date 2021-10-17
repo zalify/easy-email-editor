@@ -13,11 +13,11 @@ export default defineConfig({
       apply: 'build',
     },
     process.env.ANALYZE === 'true' &&
-      visualizer({
-        open: true,
-        gzipSize: true,
-        brotliSize: true,
-      }),
+    visualizer({
+      open: true,
+      gzipSize: true,
+      brotliSize: true,
+    }),
   ].filter(Boolean) as any,
   resolve: {
     alias: {
@@ -26,6 +26,7 @@ export default defineConfig({
   },
   define: {},
   build: {
+    emptyOutDir: false,
     minify: true,
     manifest: true,
     sourcemap: true,

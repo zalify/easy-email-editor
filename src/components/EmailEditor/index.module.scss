@@ -9,7 +9,7 @@
   overflow: scroll;
   &::-webkit-scrollbar {
     -webkit-appearance: none;
-    width: 8px;
+    width: 8px !important;
   }
 
   &::-webkit-scrollbar-thumb {
