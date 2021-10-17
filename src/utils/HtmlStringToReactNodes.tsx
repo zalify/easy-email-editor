@@ -1,3 +1,4 @@
+import { IMAGE_LIST } from '@/assets/image';
 import { BasicType } from '@/constants';
 import { camelCase } from 'lodash';
 import React from 'react';
@@ -156,9 +157,12 @@ function createElement(
     tabIndex?: string;
     class?: string;
     role?: string;
-    dangerouslySetInnerHTML?: any;
+    src?: string;
   }
 ) {
+  if (type === 'img' && props?.src && /{{([\s\S]+?)}}/g.test(props.src)) {
+    props.src = IMAGE_LIST.IMAGE_59;
+  }
   if (props?.class && props.class.includes('email-block')) {
     const blockType = getNodeTypeFromClassName(props.class);
     if (![BasicType.TEXT].includes(blockType as any)) {

@@ -58,7 +58,7 @@ export enum IMAGE_LIST {
   IMAGE_56 = 'https://assets.maocanhua.cn/4dce2860-ed2e-4776-a92f-209d86a5e705-image.png',
   IMAGE_57 = 'https://assets.maocanhua.cn/5e91c0b4-21eb-4a0a-95db-4694ae440328-image.png',
   IMAGE_58 = 'https://assets.maocanhua.cn/7f882aa0-cd5a-4420-8ba4-3e8991f56846-image.png',
-  IMAGE_59 = 'https://assets.maocanhua.cn/FrtDhP0Bly3etOe0i6S_4QW8kTlU',
+  IMAGE_59 = 'https://assets.maocanhua.cn/8e0e07e2-3f84-4426-84c1-2add355c558b-image.png',
 
   IMAGE_60 = 'https://assets.maocanhua.cn/Flkau7Ob6TlzE9AxAkTLQ4aC6l5_',
   IMAGE_61 = 'https://assets.maocanhua.cn/Fhs9SLF6TcjwGZ3JZMVL6iuzhvuw',
