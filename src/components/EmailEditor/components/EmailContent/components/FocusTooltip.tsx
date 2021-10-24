@@ -9,6 +9,7 @@ import { BLOCK_SELECTED_CLASSNAME, styleZIndex } from '@/constants';
 import { useBlock } from '@/hooks/useBlock';
 import { BlockAvatarWrapper } from '@/components/core/wrapper/BlockAvatarWrapper';
 import { IconFont } from '@/components/IconFont';
+import { BasicType } from 'easy-email-editor';
 
 export function FocusTooltip() {
   const [blockNode, setBlockNode] = useState<HTMLDivElement | null>(null);
@@ -27,9 +28,15 @@ export function FocusTooltip() {
   }, [focusIdx, focusBlock]);
 
   useEffect(() => {
+    if (focusBlock && focusBlock.type === BasicType.RAW) {
+      setBlockNode(null);
+      return;
+    }
+
     if (blockNode && focusBlock) {
       blockNode.classList.add(BLOCK_SELECTED_CLASSNAME);
       return () => {
+
         blockNode.classList.remove(BLOCK_SELECTED_CLASSNAME);
       };
     }

@@ -15,6 +15,7 @@ import {
   WrapperBlockItem,
   BasicType,
 } from '@/components/EmailEditor/components/BlocksPanel/presetTemplate';
+import { RawBlockItem } from '@/components/EmailEditor/components/BlocksPanel/presetTemplate/RawBlockItem';
 import { Stack } from '@/components/UI/Stack';
 import { TextStyle } from '@/components/UI/TextStyle';
 import { BlockType } from '@/constants';
@@ -108,6 +109,12 @@ const defaultCategories = [
         description: `Displays calls-to-action for various social networks with
         their associated logo.`,
         ExampleComponent: SocialBlockItem,
+      },
+      {
+        type: BasicType.RAW,
+        title: 'Raw',
+        description: 'Displays raw HTML that is not going to be parsed by the MJML engine. Anything left inside this tag should be raw, responsive HTML.',
+        ExampleComponent: RawBlockItem,
       },
     ],
   },

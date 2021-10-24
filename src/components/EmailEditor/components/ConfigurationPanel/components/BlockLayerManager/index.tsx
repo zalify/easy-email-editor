@@ -1,14 +1,12 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { useEditorContext } from '@/hooks/useEditorContext';
 import { IBlockData } from '@/typings';
 import { getPageIdx } from '@/utils/block';
-import { BasicType, BlockType } from '@/constants';
 import styles from './index.module.scss';
 import { classnames } from '@/utils/classnames';
 
 import { BlockInteractiveStyle } from '../../../BlockInteractiveStyle';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
-import { BlockSortableWrapper } from '@/components/core/wrapper/BlockSortableWrapper';
 import { BlockLayerItem } from './components/BlockLayerItem';
 
 interface IBlockDataWithId extends IBlockData {

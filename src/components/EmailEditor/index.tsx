@@ -63,7 +63,7 @@ export const EmailEditor = (props: EmailEditorProps) => {
           >
             <Stack vertical alignment='center' distribution='center'>
               <Stack.Item />
-              <BlocksPanel>
+              <BlocksPanel height={containerHeight}>
                 <IconFont
                   onClick={onTogglePanel}
                   iconName='icon-add'

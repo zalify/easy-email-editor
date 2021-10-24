@@ -7,7 +7,7 @@ import { IPage } from '@/components/core/blocks/basic/Page';
 import { ISocial } from '@/components/core/blocks/basic/Social';
 import { BasicType, BlockType } from '@/constants';
 import { IBlockData } from '@/typings';
-import { pickBy, identity, isObject, isBoolean } from 'lodash';
+import { pickBy, identity, isObject, isBoolean, isString } from 'lodash';
 import {
   getChildIdx,
   getNodeIdxClassName,
@@ -65,7 +65,11 @@ export function transformToMjml(options: TransformToMjmlOption): string {
 
   const attributeStr = Object.keys(att)
     .filter((key) => att[key] !== '') // filter att=""
-    .map((key) => `${key}="${att[key]}"`)
+    .map((key) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      const val = isString(att[key]) ? att[key].replace(/"/gm, '') : att[key];
+      return `${key}="${val}"`;
+    })
     .join(' ');
 
   const block = BlocksMap.findBlockByType(data.type);
@@ -254,7 +258,12 @@ export function transformToMjml(options: TransformToMjmlOption): string {
                ${elements}
               </mj-social>
             `;
-
+    case BasicType.RAW:
+      return `
+              <mj-raw ${attributeStr}>
+                ${data.data.value?.content}
+              </mj-raw>
+            `;
     default:
       return `
           <mj-${data.type} ${attributeStr}>
