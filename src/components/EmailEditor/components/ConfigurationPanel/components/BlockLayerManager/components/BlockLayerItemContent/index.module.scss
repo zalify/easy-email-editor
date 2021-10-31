@@ -1,3 +1,13 @@
+.hoverVisible {
+  visibility: hidden;
+}
+
+.listItemContentWrapper:hover {
+  .hoverVisible {
+    visibility: visible;
+  }
+}
+
 .blockItem {
   list-style-position: inside;
   list-style-type: none;
@@ -23,7 +33,7 @@
   display: flex;
   flex: 1;
   height: 35px;
-  padding: 5px 5px 5px 0px;
+  padding: 5px ;
   margin-left: 10px;
   margin-right: 10px;
   // border-bottom: 1px solid #eee;

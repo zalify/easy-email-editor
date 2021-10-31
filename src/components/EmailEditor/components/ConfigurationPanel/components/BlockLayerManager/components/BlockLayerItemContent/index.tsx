@@ -112,7 +112,7 @@ export const BlockLayerItemContent = ({
                       visible={visible}
                       setVisible={setVisible}
                     />
-                    <Stack spacing='none'>
+                    <Stack spacing='extraTight' alignment="center">
                       <IconFont
                         iconName={getIconNameByBlockType(blockData.type)}
                         style={{ fontSize: 12 }}
@@ -139,7 +139,7 @@ export const BlockLayerItemContent = ({
             </Stack>
             <Stack spacing='extraTight' wrap={false}>
               {/* <ShortcutTool idx={idx} blockData={blockData} /> */}
-              <EyeIcon hidden={hidden} idx={idx} blockData={blockData} />
+              <div className={styles.hoverVisible}><EyeIcon hidden={hidden} idx={idx} blockData={blockData} /></div>
               <div>
                 <IconFont iconName='icon-drag' style={{ cursor: 'grab' }} />
               </div>
@@ -229,20 +229,29 @@ const SubIcon: React.FC<{
       BasicType.COLUMN
     )
   )
-    return <IconFont size={12} iconName='icon-dot' />;
+    return (
+      <div style={{
+        borderLeft: '1px solid rgba(0, 0, 0, 0.55)',
+        borderBottom: '1px solid rgba(0, 0, 0, 0.55)',
+        height: 16,
+        width: 8,
+        transform: 'translate(85%, -50%)'
+      }}
+      />
+    );
 
   const display = isPageBlock ? !collapsed : visible;
   if (display) {
     return (
       <IconFont
-        size={12}
+        size={14}
         iconName='icon-minus-square'
         onClickCapture={onToggle}
       />
     );
   }
   return (
-    <IconFont size={12} iconName='icon-plus-square' onClickCapture={onToggle} />
+    <IconFont size={14} iconName='icon-plus-square' onClickCapture={onToggle} />
   );
 });
 
@@ -268,12 +277,12 @@ function ShortcutTool({
       <Stack spacing='extraTight'>
         <IconFont
           iconName='icon-copy'
-          size={12}
+          size={14}
           onClickCapture={enHanceHandler(() => copyBlock(idx))}
         />
         <IconFont
           iconName='icon-delete'
-          size={12}
+          size={14}
           onClickCapture={enHanceHandler(() => removeBlock(idx))}
         />
       </Stack>

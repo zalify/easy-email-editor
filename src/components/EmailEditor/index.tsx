@@ -84,27 +84,27 @@ export const EmailEditor = (props: EmailEditorProps) => {
             </Stack>
           </Layout.Sider>
           <Layout.Sider
-            style={{ height: containerHeight, borderLeft: 'none' }}
+            style={{ borderLeft: 'none', height: containerHeight, overflow: 'auto', }}
+            className={styles.customScrollBar}
             theme='light'
             width={300}
           >
-            <Tabs
-              tabBarStyle={{
-                paddingLeft: 20,
-                marginBottom: 0,
-                backgroundColor: '#fff',
-              }}
-              className={styles.customScrollBar}
-              style={{ height: '100%', overflow: 'auto', borderLeft: 'none' }}
-              defaultActiveKey='Layout'
-            >
-              <TabPane key='Blocks' tab='Blocks' style={{ borderLeft: 'none' }}>
-                <ComponentsPanel />
-              </TabPane>
-              <TabPane key='Layout' tab='Layout'>
-                <BlockLayerManager />
-              </TabPane>
-            </Tabs>
+            <Card bodyStyle={{ padding: 0, paddingBottom: 50, }} style={{ borderBottom: 'none' }}>
+              <Tabs
+                tabBarStyle={{
+                  paddingLeft: 20,
+                  marginBottom: 0,
+                  backgroundColor: '#fff',
+                }}
+
+                style={{ borderLeft: 'none', }}
+                defaultActiveKey='Layout'
+              >
+                <TabPane style={{ paddingTop: 10 }} key='Layout' tab='Layout'>
+                  <BlockLayerManager />
+                </TabPane>
+              </Tabs>
+            </Card>
           </Layout.Sider>
 
           <Layout style={{ height: containerHeight }}>

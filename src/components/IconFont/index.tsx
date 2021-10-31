@@ -15,6 +15,7 @@ export function IconFont(props: {
       style={{
         cursor: 'pointer',
         pointerEvents: 'auto',
+        color: 'rgba(0, 0, 0, 0.85)',
         ...props.style,
         fontSize: props.size || props.style?.fontSize,
       }}

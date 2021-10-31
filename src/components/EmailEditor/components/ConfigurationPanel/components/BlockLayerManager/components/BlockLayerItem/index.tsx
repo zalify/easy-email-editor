@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { IBlockData } from '@/typings';
 import {
   getChildIdx,
@@ -50,6 +50,7 @@ export const BlockLayerItem = ({
   }, [blockData.type, focusIdx, idx]);
 
   const onStart = useCallback(() => {
+    setVisible(false);
     setIsDragging(true);
   }, []);
 
@@ -122,14 +123,10 @@ export const BlockLayerItem = ({
     const onlyPlaceHolderChild =
       blockData.children.length === 0 && childrenList.length === 1;
     return (
-      <BlockSortableWrapper
-        type={blockData.type}
-        action='move'
-        key={idx}
-        idx={idx}
-        payload={blockData}
-        onStart={onStart}
-        onEnd={onEnd}
+
+      <li
+        data-parent-type={parentType}
+        data-idx={idx}
         className={classnames(
           styles.blockItem,
           'email-block',
@@ -137,9 +134,15 @@ export const BlockLayerItem = ({
           getNodeTypeClassName(blockData.type)
         )}
       >
-        <li
-          data-parent-type={parentType}
-          data-idx={idx}
+        <BlockSortableWrapper
+          type={blockData.type}
+          action='move'
+          key={idx}
+          idx={idx}
+          payload={blockData}
+          onStart={onStart}
+          onEnd={onEnd}
+
         >
           <BlockLayerItemContent
             visible={visible}
@@ -149,26 +152,25 @@ export const BlockLayerItem = ({
             indent={indent}
             parentType={parentType}
           />
+        </BlockSortableWrapper>
+        {(visible || onlyPlaceHolderChild) && (
+          <ul
+            className={classnames(styles.blockList)}
+          >
+            {childrenList.map((item, index) => (
+              <BlockLayerItem
+                hidden={hidden || blockData.data.hidden}
+                key={index}
+                indent={indent + 1}
+                blockData={item}
+                parentType={blockData.type}
+                idx={getChildIdx(idx, index)}
+              />
+            ))}
 
-          {(visible || onlyPlaceHolderChild) && (
-            <ul
-              className={classnames(styles.blockList)}
-            >
-              {childrenList.map((item, index) => (
-                <BlockLayerItem
-                  hidden={hidden || blockData.data.hidden}
-                  key={index}
-                  indent={indent + 1}
-                  blockData={item}
-                  parentType={blockData.type}
-                  idx={getChildIdx(idx, index)}
-                />
-              ))}
-
-            </ul>
-          )}
-        </li>
-      </BlockSortableWrapper>
+          </ul>
+        )}
+      </li>
 
     );
   }, [blockData, childrenList, hidden, idx, indent, onEnd, onStart, parentType, visible]);
