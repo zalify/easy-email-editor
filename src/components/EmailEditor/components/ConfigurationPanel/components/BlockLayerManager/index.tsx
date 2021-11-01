@@ -2,16 +2,16 @@ import React, { useCallback, useMemo } from 'react';
 import { useEditorContext } from '@/hooks/useEditorContext';
 import { IBlockData } from '@/typings';
 import { getChildIdx, getPageIdx } from '@/utils/block';
-import styles from './index.module.scss';
-import { classnames } from '@/utils/classnames';
 
 import { BlockInteractiveStyle } from '../../../BlockInteractiveStyle';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
-import { BlockLayerItem } from './components/BlockLayerItem';
-import { BlockTree } from './components/BlockTree';
+import { BlockTree, BlockTreeProps } from './components/BlockTree';
+import { cloneDeep } from 'lodash';
+import { BlocksMap } from 'easy-email-editor';
 
 interface IBlockDataWithId extends IBlockData {
   id: string;
+  parent: IBlockDataWithId | null;
   children: IBlockDataWithId[];
 }
 
@@ -27,9 +27,38 @@ export function BlockLayerManager() {
     return <div>{data.type}</div>;
   }, []);
 
-  const getId = useCallback((index: number, parentId: string, data: IBlockData<any, any>) => {
-    return getChildIdx(parentId, index);
+  const allowDrop: BlockTreeProps<IBlockDataWithId>['allowDrop'] = useCallback((params) => {
+    const {
+      dragNode,
+      dropNode,
+      event,
+      dragIndex,
+      dropIndex,
+      willInsertAfter,
+    } = params;
+
+    const dragBlock = BlocksMap.findBlockByType(dragNode.type);
+    if (dropNode.parent && dragBlock.validParentType.includes(dropNode.parent.type)) {
+      return true;
+    }
+
+    return false;
+
   }, []);
+
+  const treeData = useMemo(() => {
+    const copyData = cloneDeep(pageData) as IBlockDataWithId;
+    const loop = (item: IBlockDataWithId, id: string, parent: IBlockDataWithId | null) => {
+      item.id = id;
+      item.parent = parent;
+      item.children.map((child, index) => loop(child, getChildIdx(id, index), item));
+    };
+
+    loop(copyData, getPageIdx(), null);
+
+    return [copyData];
+
+  }, [pageData]);
 
   const hasFocus = Boolean(focusIdx);
   return useMemo(() => {
@@ -37,7 +66,7 @@ export function BlockLayerManager() {
     return (
       <div id='BlockLayerManager'>
         <BlockInteractiveStyle isShadowDom={false} />
-        <BlockTree defaultExpandAll data={pageData} getId={getId} renderTitle={renderTitle} />
+        <BlockTree allowDrop={allowDrop} defaultExpandAll treeData={treeData} renderTitle={renderTitle} />
 
         {/* {list.map((block, blockIndex) => (
           <div
@@ -56,5 +85,5 @@ export function BlockLayerManager() {
         ))} */}
       </div>
     );
-  }, [getId, hasFocus, pageData, renderTitle]);
+  }, [allowDrop, hasFocus, renderTitle, treeData]);
 }

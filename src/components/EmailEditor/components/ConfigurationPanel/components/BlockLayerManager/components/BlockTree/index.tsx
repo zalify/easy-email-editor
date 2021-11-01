@@ -1,36 +1,58 @@
 import { ReactSortable, ReactSortableProps } from 'react-sortablejs';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styles from './index.module.scss';
 import { TreeCollapse } from './components/TreeCollapse';
 import { classnames } from '@/utils/classnames';
 import { IconFont } from '@/components/IconFont';
+import { BlockTreeItem, DATA_ATTRIBUTE_ID, DATA_ATTRIBUTE_INDEX, TreeNode } from './components/BlockTreeItem';
 
-interface Node {
-  children?: Node[];
-}
-
-interface BlockTreeProps<T extends Node> {
-  data: T;
-  getId: (index: number, parentId: string, data: T) => string;
+export interface BlockTreeProps<T extends TreeNode<T>> {
+  treeData: T[];
   renderTitle: (data: T) => React.ReactNode;
   defaultExpandAll?: boolean;
-  allowDrop: (params: { dragNode; dropNode; event }) => boolean;
+  allowDrop: (params: { dragNode: T; dropNode: T; event: DragEvent; dragIndex: number; dropIndex: number; willInsertAfter: boolean; }) => boolean;
 }
 
 const getCurrenTreeNode = (
   ele: HTMLElement,
-  rootEle: HTMLElement
+  rootEle?: HTMLElement
 ): HTMLElement | null => {
   if (ele.classList.contains(styles.treeNode)) return ele;
-  if (ele.parentElement && rootEle.contains(ele.parentElement))
+  if (ele.parentElement && rootEle && rootEle.contains(ele.parentElement))
     return getCurrenTreeNode(ele.parentElement, rootEle);
   return null;
 };
 
-export function BlockTree<T>(props: BlockTreeProps<T>) {
+export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
   const [eleRef, setEleRef] = useState<HTMLElement | null>(null);
   const [selectedId, setSelectedId] = useState('');
-  // const [dnd, setDnd] = useState()
+
+  const { treeData, allowDrop } = props;
+
+  const treeDataMap = useMemo(() => {
+
+    const map: { [key: string]: T; } = {};
+
+    const loop = (node: T) => {
+      if (map[node.id]) {
+        console.warn(`have same id ${node.id}`);
+      }
+
+      map[node.id] = node;
+      if (node.children) {
+        node.children.forEach(item => {
+          loop(item);
+        });
+      }
+    };
+
+    treeData.forEach(item => {
+      loop(item);
+    });
+
+    return map;
+
+  }, [treeData]);
 
   useEffect(() => {
     if (!eleRef) return;
@@ -39,7 +61,7 @@ export function BlockTree<T>(props: BlockTreeProps<T>) {
       if (ev.target instanceof HTMLElement) {
         const treeNode = getCurrenTreeNode(ev.target, eleRef);
         if (treeNode) {
-          setSelectedId(treeNode.getAttribute('data-tree-node-id')!);
+          setSelectedId(treeNode.getAttribute(DATA_ATTRIBUTE_ID)!);
         }
       }
     };
@@ -58,7 +80,7 @@ export function BlockTree<T>(props: BlockTreeProps<T>) {
         node.classList.remove(styles.treeNodeSelected);
       }
       const selectedNode = eleRef.querySelector(
-        `[data-tree-node-id="${selectedId}"]`
+        `[${DATA_ATTRIBUTE_ID}="${selectedId}"]`
       );
       if (selectedNode) {
         selectedNode.classList.add(styles.treeNodeSelected);
@@ -66,39 +88,14 @@ export function BlockTree<T>(props: BlockTreeProps<T>) {
     }
   }, [eleRef, selectedId]);
 
-  return (
-    <div ref={setEleRef} className={styles.tree}>
-      <ul className={styles.treeNodeList}>
-        <BlockTreeItem<T>
-          data={props.data}
-          renderTitle={props.renderTitle}
-          getId={props.getId}
-          parentId=''
-          indent={0}
-          index={0}
-          allowDrop={props.allowDrop}
-          defaultExpandAll={props.defaultExpandAll}
-        />
-      </ul>
-    </div>
-  );
-}
-
-function BlockTreeItem<T extends Node>(
-  props: BlockTreeProps<T> & { parentId: string; indent: number; index: number }
-) {
-  const [expand, setExpand] = useState<boolean>(
-    Boolean(props.defaultExpandAll)
-  );
-  const id = props.getId(props.index, props.parentId, props.data);
-
   const onDragStart: ReactSortableProps<T>['onStart'] = useCallback(
     (evt, sortable, store) => {
-      console.log('onDragStart', props.data);
+      console.log('onDragStart',);
     },
-    [props.data]
+    []
   );
-  const onMove: ReactSortableProps<T>['onMove'] = useCallback(
+
+  const onDragMove: ReactSortableProps<T>['onMove'] = useCallback(
     (
       evt: {
         dragged: HTMLElement;
@@ -106,70 +103,64 @@ function BlockTreeItem<T extends Node>(
         willInsertAfter: boolean;
       },
       originalEvent,
-      sortable,
-      store
     ) => {
-      const dragEle = evt.dragged;
-      const dropEle = evt.related;
-      console.log('onMove', props.data);
-      return true;
+      console.log('---move');
+
+      const dragEle = getCurrenTreeNode(evt.dragged);
+      const dropEle = getCurrenTreeNode(evt.related);
+      if (dropEle && dragEle) {
+        const dragId = dragEle.getAttribute(DATA_ATTRIBUTE_ID)!;
+        const dragIndex = dragEle.getAttribute(DATA_ATTRIBUTE_INDEX)!;
+        const dropId = dropEle.getAttribute(DATA_ATTRIBUTE_ID)!;
+        const dropIndex = dropEle.getAttribute(DATA_ATTRIBUTE_INDEX)!;
+        return allowDrop({
+          dragNode: treeDataMap[dragId],
+          dragIndex: Number(dragIndex),
+          dropIndex: Number(dropIndex),
+          dropNode: treeDataMap[dropId],
+          willInsertAfter: evt.willInsertAfter,
+          event: originalEvent
+        });
+      }
+
+      return false;
     },
-    [props.data]
+    [allowDrop, treeDataMap]
+  );
+
+  const onDragEnd: ReactSortableProps<T>['onEnd'] = useCallback(
+    (evt: {
+      originalEvent: { dataTransfer: DataTransfer; };
+      from: HTMLElement;
+      to: HTMLElement;
+      newIndex: number;
+      oldIndex: number;
+    }) => {
+      console.log('onDragStart',
+        evt.from, evt.to, evt.newIndex, evt.oldIndex);
+    },
+    []
   );
 
   return (
-    <li className={styles.treeNodeWrapper}>
-      <div className={styles.treeNodeContentWrapper}>
-        <ReactSortable
-          revertOnSpill
-          list={[{ id: id }]}
-          setList={() => {}}
-          onMove={onMove}
-          // onEnd={onDragEnd}
-          // onSpill={onSpill}
-          // onChoose={onChoose}
-          onStart={onDragStart}
-          {...{
-            animation: 150,
-            fallbackOnBody: true,
-            swapThreshold: 0.65,
-            ghostClass: 'ghost',
-            group: 'shared',
-          }}
-        >
-          <div className={classnames(styles.treeNode)} data-tree-node-id={id}>
-            <div style={{ width: props.indent * 18 }} />
-            <TreeCollapse expand={expand} setExpand={setExpand} />
-            <div className={styles.treeNodeTitle}>
-              {props.renderTitle(props.data)}
-            </div>
-            <IconFont
-              iconName='icon-drag'
-              style={{ cursor: 'grab', fontSize: 12 }}
-            />
-          </div>
-        </ReactSortable>
-      </div>
-
-      <ul
-        style={{ maxHeight: expand ? undefined : 0, overflow: 'hidden' }}
-        className={styles.treeNodeList}
-      >
-        {props.data.children?.map((item, index) => {
-          return (
+    <div ref={setEleRef} className={styles.tree}>
+      {
+        props.treeData.map(item => (
+          <ul key={item.id} className={styles.treeNodeList}>
             <BlockTreeItem<T>
-              key={index}
-              index={index}
-              parentId={id}
-              data={item as T}
+              nodeData={item}
               renderTitle={props.renderTitle}
-              getId={props.getId}
-              indent={props.indent + 1}
-              defaultExpandAll={props.defaultExpandAll}
+              indent={0}
+              index={0}
+              defaultExpandAll={Boolean(props.defaultExpandAll)}
+              onDragStart={onDragStart}
+              onDragMove={onDragMove}
+              onDragEnd={onDragEnd}
             />
-          );
-        })}
-      </ul>
-    </li>
+          </ul>
+        ))
+      }
+
+    </div>
   );
 }
