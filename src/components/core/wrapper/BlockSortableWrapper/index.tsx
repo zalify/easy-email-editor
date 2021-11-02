@@ -55,7 +55,7 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
   const onDragEnd = useCallback(
     (
       evt: {
-        originalEvent: { dataTransfer: DataTransfer; };
+        originalEvent: { dataTransfer: DataTransfer };
         from: HTMLElement;
         to: HTMLElement;
         newIndex: number;
@@ -83,13 +83,10 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
           !isUndefined(transferData.parentIdx) &&
           !isUndefined(transferData.positionIndex)
         ) {
-          moveBlock({
-            sourceIdx: transferData.sourceIdx,
-            destinationIdx: getChildIdx(
-              transferData.parentIdx,
-              transferData.positionIndex
-            ),
-          });
+          moveBlock(
+            transferData.sourceIdx,
+            getChildIdx(transferData.parentIdx, transferData.positionIndex)
+          );
         }
       }
     },
@@ -107,7 +104,7 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
   );
 
   const onDragStart = useCallback(
-    (evt: { originalEvent: DragEvent; }) => {
+    (evt: { originalEvent: DragEvent }) => {
       if (action === 'add') {
         setDataTransfer({
           type: type,
@@ -129,11 +126,11 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
   );
 
   const onSpill = useCallback(
-    (evt: { originalEvent: { dataTransfer: DataTransfer; }; }) => { },
+    (evt: { originalEvent: { dataTransfer: DataTransfer } }) => {},
     []
   );
 
-  const onChoose = useCallback(() => { }, []);
+  const onChoose = useCallback(() => {}, []);
 
   const onMove = useCallback(
     (
@@ -145,7 +142,6 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
       sortable: any,
       store: any
     ) => {
-
       const dragoverType = evt.related.getAttribute(
         'data-parent-type'
       ) as BlockType;
@@ -182,7 +178,7 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
       revertOnSpill
       disabled={disabled}
       list={[{}] as any}
-      setList={() => { }}
+      setList={() => {}}
       onMove={onMove}
       onEnd={onDragEnd}
       onSpill={onSpill}

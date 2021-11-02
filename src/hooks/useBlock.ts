@@ -105,8 +105,7 @@ export function useBlock() {
   );
 
   const moveBlock = useCallback(
-    (params: { sourceIdx: string; destinationIdx: string }) => {
-      let { sourceIdx, destinationIdx } = params;
+    (sourceIdx: string, destinationIdx: string) => {
       if (sourceIdx === destinationIdx) return null;
 
       let nextFocusIdx = focusIdx;
@@ -119,7 +118,6 @@ export function useBlock() {
       const sourceParent = getValueByIdx(values, sourceParentIdx)!;
       const destinationParent = getValueByIdx(values, destinationParentIdx)!;
 
-      const sourceBlock = findBlockByType(source.type);
       const sourceIndex = getIndexByIdx(sourceIdx);
       let [removed] = sourceParent.children.splice(sourceIndex, 1);
       if (autoComplete) {
@@ -235,45 +233,6 @@ export function useBlock() {
     [change]
   );
 
-  const moveByIdx = useCallback(
-    (sourceIdx: string, destinationIdx: string) => {
-      let nextFocusIdx = focusIdx;
-      const values = cloneDeep(getState().values) as IEmailTemplate;
-      const sourceIndex = getIndexByIdx(sourceIdx);
-      const destinationIndex = getIndexByIdx(destinationIdx);
-
-      const sourceParentIdx = getParentIdx(sourceIdx);
-      const destinationParentIdx = getParentIdx(destinationIdx);
-
-      if (!sourceParentIdx || !destinationParentIdx) {
-        message.warning('Something error');
-        return;
-      }
-
-      const sourceParent = get(values, sourceParentIdx) as IBlockData;
-
-      const destinationParent = get(values, sourceParentIdx) as IBlockData;
-
-      if (destinationIndex >= destinationParent.children.length) {
-        return;
-      }
-
-      const [removed] = sourceParent.children.splice(Number(sourceIndex), 1);
-      destinationParent.children.splice(Number(destinationIndex), 0, removed);
-
-      batch(() => {
-        change(sourceParentIdx, { ...sourceParent });
-        if (sourceParentIdx !== destinationParentIdx) {
-          change(destinationParentIdx, { ...destinationParent });
-        }
-      });
-
-      nextFocusIdx = destinationIdx;
-      setFocusIdx(nextFocusIdx);
-    },
-    [batch, change, focusIdx, getState, setFocusIdx]
-  );
-
   const isExistBlock = useCallback(
     (idx: string) => {
       return Boolean(get(values, idx));
@@ -310,7 +269,6 @@ export function useBlock() {
     moveBlock,
     copyBlock,
     removeBlock,
-    moveByIdx,
     isExistBlock,
     redo,
     undo,

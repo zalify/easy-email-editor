@@ -20,14 +20,14 @@ import { createPortal } from 'react-dom';
 import styles from './index.module.scss';
 import { scrollFocusBlockIntoView } from '@/utils/scrollFocusBlockIntoView';
 
-export function ContextMenu({ ele, idx }: { ele: HTMLElement; idx: string; }) {
+export function ContextMenu({ ele, idx }: { ele: HTMLElement; idx: string }) {
   const [position, setPosition] = useState({ left: 0, top: 0 });
   const [visible, setVisible] = useState(false);
 
   const [modalVisible, setModalVisible] = useState(false);
   const { onAddCollection } = useContext(EditorPropsContext);
   const {
-    moveByIdx,
+    moveBlock,
     copyBlock,
     removeBlock,
     focusBlock: focusBlockData,
@@ -38,7 +38,6 @@ export function ContextMenu({ ele, idx }: { ele: HTMLElement; idx: string; }) {
   useEffect(() => {
     if (ele) {
       const onContextmenu = (e: MouseEvent) => {
-
         if (visible) {
           e.preventDefault();
           setVisible(false);
@@ -68,7 +67,7 @@ export function ContextMenu({ ele, idx }: { ele: HTMLElement; idx: string; }) {
   };
 
   const handleMoveUp = () => {
-    moveByIdx(idx, getSiblingIdx(idx, -1));
+    moveBlock(idx, getSiblingIdx(idx, -1));
     scrollFocusBlockIntoView({
       idx: getSiblingIdx(idx, -1),
       inShadowDom: true,
@@ -77,7 +76,7 @@ export function ContextMenu({ ele, idx }: { ele: HTMLElement; idx: string; }) {
   };
 
   const handleMoveDown = () => {
-    moveByIdx(idx, getSiblingIdx(idx, 1));
+    moveBlock(idx, getSiblingIdx(idx, 1));
     scrollFocusBlockIntoView({
       idx: getSiblingIdx(idx, 1),
       inShadowDom: true,

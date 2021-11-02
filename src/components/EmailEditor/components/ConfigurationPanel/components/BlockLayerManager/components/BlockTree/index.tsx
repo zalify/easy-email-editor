@@ -1,16 +1,33 @@
-import { ReactSortable, ReactSortableProps } from 'react-sortablejs';
+import { ReactSortableProps } from 'react-sortablejs';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styles from './index.module.scss';
-import { TreeCollapse } from './components/TreeCollapse';
-import { classnames } from '@/utils/classnames';
-import { IconFont } from '@/components/IconFont';
-import { BlockTreeItem, DATA_ATTRIBUTE_ID, DATA_ATTRIBUTE_INDEX, TreeNode } from './components/BlockTreeItem';
+import {
+  BlockTreeItem,
+  DATA_ATTRIBUTE_ID,
+  DATA_ATTRIBUTE_INDEX,
+  TreeNode,
+} from './components/BlockTreeItem';
 
 export interface BlockTreeProps<T extends TreeNode<T>> {
   treeData: T[];
   renderTitle: (data: T) => React.ReactNode;
   defaultExpandAll?: boolean;
-  allowDrop: (params: { dragNode: T; dropNode: T; event: DragEvent; dragIndex: number; dropIndex: number; willInsertAfter: boolean; }) => boolean;
+  allowDrop: (params: {
+    dragNode: T;
+    dropNode: T;
+    event: DragEvent;
+    dragIndex: number;
+    dropIndex: number;
+    willInsertAfter: boolean;
+  }) => boolean;
+  onDrop: (params: {
+    dragNode: T;
+    dropNode: T;
+    event: DragEvent;
+    dragIndex: number;
+    dropIndex: number;
+    willInsertAfter: boolean;
+  }) => void;
 }
 
 const getCurrenTreeNode = (
@@ -26,12 +43,19 @@ const getCurrenTreeNode = (
 export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
   const [eleRef, setEleRef] = useState<HTMLElement | null>(null);
   const [selectedId, setSelectedId] = useState('');
+  const [dropData, setDropData] = useState<null | {
+    dragNode: T;
+    dropNode: T;
+    event: DragEvent;
+    dragIndex: number;
+    dropIndex: number;
+    willInsertAfter: boolean;
+  }>(null);
 
   const { treeData, allowDrop } = props;
 
   const treeDataMap = useMemo(() => {
-
-    const map: { [key: string]: T; } = {};
+    const map: { [key: string]: T } = {};
 
     const loop = (node: T) => {
       if (map[node.id]) {
@@ -40,18 +64,17 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
 
       map[node.id] = node;
       if (node.children) {
-        node.children.forEach(item => {
+        node.children.forEach((item) => {
           loop(item);
         });
       }
     };
 
-    treeData.forEach(item => {
+    treeData.forEach((item) => {
       loop(item);
     });
 
     return map;
-
   }, [treeData]);
 
   useEffect(() => {
@@ -89,9 +112,7 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
   }, [eleRef, selectedId]);
 
   const onDragStart: ReactSortableProps<T>['onStart'] = useCallback(
-    (evt, sortable, store) => {
-      console.log('onDragStart',);
-    },
+    (evt, sortable, store) => {},
     []
   );
 
@@ -102,10 +123,8 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
         related: HTMLElement;
         willInsertAfter: boolean;
       },
-      originalEvent,
+      originalEvent
     ) => {
-      console.log('---move');
-
       const dragEle = getCurrenTreeNode(evt.dragged);
       const dropEle = getCurrenTreeNode(evt.related);
       if (dropEle && dragEle) {
@@ -113,16 +132,23 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
         const dragIndex = dragEle.getAttribute(DATA_ATTRIBUTE_INDEX)!;
         const dropId = dropEle.getAttribute(DATA_ATTRIBUTE_ID)!;
         const dropIndex = dropEle.getAttribute(DATA_ATTRIBUTE_INDEX)!;
-        return allowDrop({
+        const dropData = {
           dragNode: treeDataMap[dragId],
           dragIndex: Number(dragIndex),
           dropIndex: Number(dropIndex),
           dropNode: treeDataMap[dropId],
           willInsertAfter: evt.willInsertAfter,
-          event: originalEvent
-        });
+          event: originalEvent,
+        };
+        const isAllowDrop = allowDrop(dropData);
+
+        if (isAllowDrop) {
+          setDropData(dropData);
+          return true;
+        }
       }
 
+      setDropData(null);
       return false;
     },
     [allowDrop, treeDataMap]
@@ -130,37 +156,35 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
 
   const onDragEnd: ReactSortableProps<T>['onEnd'] = useCallback(
     (evt: {
-      originalEvent: { dataTransfer: DataTransfer; };
+      originalEvent: { dataTransfer: DataTransfer };
       from: HTMLElement;
       to: HTMLElement;
       newIndex: number;
       oldIndex: number;
     }) => {
-      console.log('onDragStart',
-        evt.from, evt.to, evt.newIndex, evt.oldIndex);
+      if (dropData) {
+        props.onDrop(dropData);
+      }
     },
-    []
+    [dropData, props]
   );
 
   return (
     <div ref={setEleRef} className={styles.tree}>
-      {
-        props.treeData.map(item => (
-          <ul key={item.id} className={styles.treeNodeList}>
-            <BlockTreeItem<T>
-              nodeData={item}
-              renderTitle={props.renderTitle}
-              indent={0}
-              index={0}
-              defaultExpandAll={Boolean(props.defaultExpandAll)}
-              onDragStart={onDragStart}
-              onDragMove={onDragMove}
-              onDragEnd={onDragEnd}
-            />
-          </ul>
-        ))
-      }
-
+      {props.treeData.map((item) => (
+        <ul key={item.id} className={styles.treeNodeList}>
+          <BlockTreeItem<T>
+            nodeData={item}
+            renderTitle={props.renderTitle}
+            indent={0}
+            index={0}
+            defaultExpandAll={Boolean(props.defaultExpandAll)}
+            onDragStart={onDragStart}
+            onDragMove={onDragMove}
+            onDragEnd={onDragEnd}
+          />
+        </ul>
+      ))}
     </div>
   );
 }
