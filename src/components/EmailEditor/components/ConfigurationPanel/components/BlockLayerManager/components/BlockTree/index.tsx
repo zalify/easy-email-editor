@@ -52,10 +52,10 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
     willInsertAfter: boolean;
   }>(null);
 
-  const { treeData, allowDrop } = props;
+  const { treeData, allowDrop, onDrop } = props;
 
   const treeDataMap = useMemo(() => {
-    const map: { [key: string]: T } = {};
+    const map: { [key: string]: T; } = {};
 
     const loop = (node: T) => {
       if (map[node.id]) {
@@ -112,8 +112,11 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
   }, [eleRef, selectedId]);
 
   const onDragStart: ReactSortableProps<T>['onStart'] = useCallback(
-    (evt, sortable, store) => {},
-    []
+    (evt, sortable, store) => {
+      if (!eleRef) return;
+      eleRef.setAttribute('data-tree-dragging', 'true');
+    },
+    [eleRef]
   );
 
   const onDragMove: ReactSortableProps<T>['onMove'] = useCallback(
@@ -125,6 +128,7 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
       },
       originalEvent
     ) => {
+
       const dragEle = getCurrenTreeNode(evt.dragged);
       const dropEle = getCurrenTreeNode(evt.related);
       if (dropEle && dragEle) {
@@ -143,12 +147,11 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
         const isAllowDrop = allowDrop(dropData);
 
         if (isAllowDrop) {
+          dropEle.classList.add(styles.treeNodeDrop);
           setDropData(dropData);
           return true;
         }
       }
-
-      setDropData(null);
       return false;
     },
     [allowDrop, treeDataMap]
@@ -156,17 +159,27 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
 
   const onDragEnd: ReactSortableProps<T>['onEnd'] = useCallback(
     (evt: {
-      originalEvent: { dataTransfer: DataTransfer };
+      originalEvent: { dataTransfer: DataTransfer; };
       from: HTMLElement;
       to: HTMLElement;
       newIndex: number;
       oldIndex: number;
     }) => {
+
       if (dropData) {
-        props.onDrop(dropData);
+        onDrop(dropData);
       }
+      setDropData(null);
+      if (!eleRef) return;
     },
-    [dropData, props]
+    [dropData, eleRef, onDrop]
+  );
+
+  const onSpill = useCallback(
+    (evt: { originalEvent: { dataTransfer: DataTransfer; }; }) => {
+      setDropData(null);
+    },
+    []
   );
 
   return (
@@ -182,6 +195,7 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
             onDragStart={onDragStart}
             onDragMove={onDragMove}
             onDragEnd={onDragEnd}
+            onSpill={onSpill}
           />
         </ul>
       ))}

@@ -49,16 +49,15 @@ export function BlockLayerManager() {
       const {
         dragNode,
         dropNode,
-        event,
-        dragIndex,
-        dropIndex,
-        willInsertAfter,
+        willInsertAfter
       } = params;
 
       const dragBlock = BlocksMap.findBlockByType(dragNode.type);
+      if (dragBlock.validParentType.includes(dropNode.type) && willInsertAfter) {
+        return true;
+      }
       if (
-        dropNode.parent &&
-        dragBlock.validParentType.includes(dropNode.parent.type)
+        dropNode.parent && dragBlock.validParentType.includes(dropNode.parent.type)
       ) {
         return true;
       }
@@ -73,16 +72,22 @@ export function BlockLayerManager() {
       const {
         dragNode,
         dropNode,
-        event,
-        dragIndex,
-        dropIndex,
         willInsertAfter,
       } = params;
-      debugger;
-      moveBlock(
-        dragNode.id,
-        willInsertAfter ? getSiblingIdx(dragNode.id, 1) : dragNode.id
-      );
+      const dragBlock = BlocksMap.findBlockByType(dragNode.type);
+
+      if (dragBlock.validParentType.includes(dropNode.type) && willInsertAfter) {
+        moveBlock(
+          dragNode.id,
+          getChildIdx(dropNode.id, 0)
+        );
+      } else {
+        moveBlock(
+          dragNode.id,
+          willInsertAfter ? getSiblingIdx(dropNode.id, 1) : dropNode.id
+        );
+      }
+
     },
     [moveBlock]
   );

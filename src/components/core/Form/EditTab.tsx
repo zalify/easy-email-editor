@@ -27,7 +27,7 @@ export function EditTab<T extends any = any>(props: EditTabProps<T>) {
 
   return (
     <Tabs tabPosition={props.tabPosition} type='editable-card' onEdit={onEdit}>
-      {value.map((item, index) => (
+      {Array.isArray(value) && value.map((item, index) => (
         <TabPane style={{ paddingLeft: 12 }} tab={`${props.label || 'Tab'} ${index + 1}`} key={index}>
           {props.renderItem(item, index)}
         </TabPane>
