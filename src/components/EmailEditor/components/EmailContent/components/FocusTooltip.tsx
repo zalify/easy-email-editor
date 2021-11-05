@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { BlocksMap } from '@/components/core/blocks';
 import { createPortal } from 'react-dom';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { ToolsBar } from './Toolsbar';
 import { awaitForElement } from '@/utils/awaitForElement';
-import { BLOCK_SELECTED_CLASSNAME, styleZIndex } from '@/constants';
+import { BasicType, BLOCK_SELECTED_CLASSNAME, styleZIndex } from '@/constants';
 import { useBlock } from '@/hooks/useBlock';
 import { BlockAvatarWrapper } from '@/components/core/wrapper/BlockAvatarWrapper';
 import { IconFont } from '@/components/IconFont';
@@ -14,6 +14,8 @@ export function FocusTooltip() {
   const [blockNode, setBlockNode] = useState<HTMLDivElement | null>(null);
   const { focusBlock } = useBlock();
   const { focusIdx } = useFocusIdx();
+
+  const isPage = focusBlock?.type === BasicType.PAGE;
 
   useEffect(() => {
     const promiseObj = awaitForElement<HTMLDivElement>(focusIdx);
@@ -62,6 +64,7 @@ export function FocusTooltip() {
               zIndex: 9999,
               right: 0,
               top: '50%',
+              display: isPage ? 'none' : undefined,
             }}
           >
             <BlockAvatarWrapper idx={focusIdx} type={block.type} action='move'>
