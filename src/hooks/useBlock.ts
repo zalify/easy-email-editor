@@ -40,7 +40,7 @@ export function useBlock() {
       canReplace?: boolean;
     }) => {
       let { type, parentIdx, positionIndex, payload } = params;
-      let nextFocusIdx = focusIdx;
+      let nextFocusIdx: string;
       const values = cloneDeep(getState().values) as IEmailTemplate;
       const parent = get(values, parentIdx) as IBlockData | null;
       if (!parent) {
@@ -86,8 +86,7 @@ export function useBlock() {
       const fixedBlock = findBlockByType(child.type);
       if (!fixedBlock.validParentType.includes(parent.type)) {
         message.warning(
-          `${block.type} cannot be used inside ${
-            parentBlock.type
+          `${block.type} cannot be used inside ${parentBlock.type
           }, only inside: ${block.validParentType.join(', ')}`
         );
         return;
@@ -101,14 +100,14 @@ export function useBlock() {
         inShadowDom: true,
       });
     },
-    [autoComplete, change, focusIdx, getState, setFocusIdx]
+    [autoComplete, change, getState, setFocusIdx]
   );
 
   const moveBlock = useCallback(
     (sourceIdx: string, destinationIdx: string) => {
       if (sourceIdx === destinationIdx) return null;
 
-      let nextFocusIdx = focusIdx;
+      let nextFocusIdx: string;
 
       const values = cloneDeep(getState().values) as IEmailTemplate;
       const source = getValueByIdx(values, sourceIdx)!;
@@ -162,12 +161,12 @@ export function useBlock() {
         inShadowDom: true,
       });
     },
-    [autoComplete, change, focusIdx, getState, setFocusIdx]
+    [autoComplete, change, getState, setFocusIdx]
   );
 
   const copyBlock = useCallback(
     (idx: string) => {
-      let nextFocusIdx = focusIdx;
+      let nextFocusIdx: string;
       const values = cloneDeep(getState().values) as IEmailTemplate;
 
       const parentIdx = getParentIdx(idx);
@@ -186,12 +185,12 @@ export function useBlock() {
 
       setFocusIdx(nextFocusIdx);
     },
-    [change, focusIdx, getState, setFocusIdx]
+    [change, getState, setFocusIdx]
   );
 
   const removeBlock = useCallback(
     (idx: string) => {
-      let nextFocusIdx = focusIdx;
+      let nextFocusIdx: string;
       const values = cloneDeep(getState().values) as IEmailTemplate;
 
       const block = getValueByIdx(values, idx);
@@ -220,7 +219,7 @@ export function useBlock() {
       change(parentIdx, { ...parent });
       setFocusIdx(nextFocusIdx);
     },
-    [change, focusIdx, getState, setFocusIdx]
+    [change, getState, setFocusIdx]
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps

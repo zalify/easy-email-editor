@@ -1,9 +1,10 @@
+import { createPortal } from 'react-dom';
 import { IconFont } from '@/components/IconFont';
 import { TextStyle } from '@/components/UI/TextStyle';
 import { FIXED_CONTAINER_ID } from '@/constants';
 import React, { useContext, useEffect, useState } from 'react';
 
-import { getIndexByIdx, getParentIdx, getSiblingIdx } from '@/utils/block';
+import { getIndexByIdx, getSiblingIdx } from '@/utils/block';
 import { Form } from 'react-final-form';
 import { v4 as uuidv4 } from 'uuid';
 import { Modal } from 'antd';
@@ -15,15 +16,12 @@ import {
   TextAreaField,
   TextField,
 } from '@/components/core/Form';
-
-import { createPortal } from 'react-dom';
-import styles from './index.module.scss';
 import { scrollFocusBlockIntoView } from '@/utils/scrollFocusBlockIntoView';
+import styles from './index.module.scss';
 
-export function ContextMenu({ ele, idx }: { ele: HTMLElement; idx: string }) {
+export function ContextMenu({ idx }: { idx: string; }) {
   const [position, setPosition] = useState({ left: 0, top: 0 });
   const [visible, setVisible] = useState(false);
-
   const [modalVisible, setModalVisible] = useState(false);
   const { onAddCollection } = useContext(EditorPropsContext);
   const {
@@ -31,19 +29,21 @@ export function ContextMenu({ ele, idx }: { ele: HTMLElement; idx: string }) {
     copyBlock,
     removeBlock,
     focusBlock: focusBlockData,
-    addBlock,
   } = useBlock();
   const { onUploadImage } = useContext(EditorPropsContext);
+  const [ele, setEle] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
-    if (ele) {
+    const blockNode = ele?.parentElement?.parentElement;
+    if (blockNode) {
       const onContextmenu = (e: MouseEvent) => {
+
         if (visible) {
           e.preventDefault();
           setVisible(false);
           return;
         }
-        if (!ele.contains(e.target as HTMLElement)) return;
+        if (!blockNode.contains(e.target as HTMLElement)) return;
 
         e.preventDefault();
         setPosition({
@@ -122,77 +122,84 @@ export function ContextMenu({ ele, idx }: { ele: HTMLElement; idx: string }) {
 
   const isFirst = getIndexByIdx(idx) === 0;
 
-  return createPortal(
-    <div style={{ display: visible ? undefined : 'none' }}>
-      <div
-        style={{
-          left: position.left,
-          top: position.top,
-        }}
-        className={styles.wrap}
-        onClick={(e) => e.stopPropagation()}
-      >
-        {!isFirst && (
-          <div className={styles.listItem} onClick={handleMoveUp}>
-            <IconFont iconName='icon-top' style={{ marginRight: 10 }} />{' '}
-            <TextStyle>Move up</TextStyle>
-          </div>
-        )}
-        <div className={styles.listItem} onClick={handleMoveDown}>
-          <IconFont iconName='icon-bottom' style={{ marginRight: 10 }} />{' '}
-          <TextStyle>Move down</TextStyle>
-        </div>
-        <div className={styles.listItem} onClick={handleCopy}>
-          <IconFont iconName='icon-copy' style={{ marginRight: 10 }} />{' '}
-          <TextStyle>Copy</TextStyle>
-        </div>
-        <div className={styles.listItem} onClick={handleDelete}>
-          <IconFont iconName='icon-delete' style={{ marginRight: 10 }} />{' '}
-          <TextStyle>Delete</TextStyle>
-        </div>
-        <div className={styles.listItem} onClick={handleAddToCollection}>
-          <IconFont iconName='icon-start' style={{ marginRight: 10 }} />{' '}
-          <TextStyle>Add to collection</TextStyle>
-        </div>
-        <Form
-          initialValues={{ label: '', helpText: '', thumbnail: '' }}
-          onSubmit={onSubmit}
-        >
-          {({ handleSubmit }) => (
-            <Modal
-              zIndex={2000}
-              visible={modalVisible}
-              title='Add to collection'
-              onOk={() => handleSubmit()}
-              onCancel={() => setModalVisible(false)}
+  return (
+    <>
+      <div ref={setEle} />
+      {
+        createPortal(
+          <div style={{ display: visible ? undefined : 'none' }}>
+            <div
+              style={{
+                left: position.left,
+                top: position.top,
+              }}
+              className={styles.wrap}
+              onClick={(e) => e.stopPropagation()}
             >
-              <Stack vertical>
-                <Stack.Item />
-                <TextField
-                  label='Title'
-                  name='label'
-                  validate={(val: string) => {
-                    if (!val) return 'Title required!';
-                    return undefined;
-                  }}
-                />
-                <TextAreaField label='Description' name='helpText' />
-                <ImageUploaderField
-                  label='Thumbnail'
-                  name={'thumbnail'}
-                  uploadHandler={onUploadImage}
-                  validate={(val: string) => {
-                    if (!val) return 'Thumbnail required!';
-                    return undefined;
-                  }}
-                />
-              </Stack>
-            </Modal>
-          )}
-        </Form>
-      </div>
-      <div className={styles.contextmenuMark} onClick={onClose} />
-    </div>,
-    document.getElementById(FIXED_CONTAINER_ID)!
+              {!isFirst && (
+                <div className={styles.listItem} onClick={handleMoveUp}>
+                  <IconFont iconName='icon-top' style={{ marginRight: 10 }} />{' '}
+                  <TextStyle>Move up</TextStyle>
+                </div>
+              )}
+              <div className={styles.listItem} onClick={handleMoveDown}>
+                <IconFont iconName='icon-bottom' style={{ marginRight: 10 }} />{' '}
+                <TextStyle>Move down</TextStyle>
+              </div>
+              <div className={styles.listItem} onClick={handleCopy}>
+                <IconFont iconName='icon-copy' style={{ marginRight: 10 }} />{' '}
+                <TextStyle>Copy</TextStyle>
+              </div>
+              <div className={styles.listItem} onClick={handleDelete}>
+                <IconFont iconName='icon-delete' style={{ marginRight: 10 }} />{' '}
+                <TextStyle>Delete</TextStyle>
+              </div>
+              <div className={styles.listItem} onClick={handleAddToCollection}>
+                <IconFont iconName='icon-start' style={{ marginRight: 10 }} />{' '}
+                <TextStyle>Add to collection</TextStyle>
+              </div>
+              <Form
+                initialValues={{ label: '', helpText: '', thumbnail: '' }}
+                onSubmit={onSubmit}
+              >
+                {({ handleSubmit }) => (
+                  <Modal
+                    zIndex={2000}
+                    visible={modalVisible}
+                    title='Add to collection'
+                    onOk={() => handleSubmit()}
+                    onCancel={() => setModalVisible(false)}
+                  >
+                    <Stack vertical>
+                      <Stack.Item />
+                      <TextField
+                        label='Title'
+                        name='label'
+                        validate={(val: string) => {
+                          if (!val) return 'Title required!';
+                          return undefined;
+                        }}
+                      />
+                      <TextAreaField label='Description' name='helpText' />
+                      <ImageUploaderField
+                        label='Thumbnail'
+                        name={'thumbnail'}
+                        uploadHandler={onUploadImage}
+                        validate={(val: string) => {
+                          if (!val) return 'Thumbnail required!';
+                          return undefined;
+                        }}
+                      />
+                    </Stack>
+                  </Modal>
+                )}
+              </Form>
+            </div>
+            <div className={styles.contextmenuMark} onClick={onClose} />
+          </div>,
+          document.body
+        )
+      }
+    </>
   );
 }

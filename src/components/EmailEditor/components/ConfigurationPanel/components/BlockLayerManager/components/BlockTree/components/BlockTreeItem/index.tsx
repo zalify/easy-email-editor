@@ -1,5 +1,5 @@
 import { ReactSortable, ReactSortableProps } from 'react-sortablejs';
-import React, { forwardRef, useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { classnames } from '@/utils/classnames';
 import { IconFont } from '@/components/IconFont';
 import { TreeCollapse } from '../TreeCollapse';
@@ -19,6 +19,9 @@ export interface BlockTreeItemProps<T> {
   nodeData: T;
   renderTitle: (data: T) => React.ReactNode;
   defaultExpandAll: boolean;
+  onSelect: (id: string) => void;
+  onMouseEnter?: (id: string, event: React.MouseEvent) => void;
+  onContextMenu?: (id: string, event: React.MouseEvent) => void;
   onDragStart: ReactSortableProps<T>['onStart'];
   onDragMove: ReactSortableProps<T>['onMove'];
   onDragEnd: ReactSortableProps<T>['onEnd'];
@@ -36,9 +39,52 @@ export function BlockTreeItem<T extends TreeNode<T>>(props: BlockTreeItemProps<T
     onSpill,
     indent,
     index,
+    onSelect: handleSelect,
+    onMouseEnter: handleMouseEnter,
+    onContextMenu: handleContextMenu,
   } = props;
 
   const [expand, setExpand] = useState<boolean>(Boolean(defaultExpandAll));
+  const ulRef = useRef<HTMLUListElement | null>(null);
+  const initedRef = useRef<boolean>(false);
+
+  useEffect(() => {
+    const ulEle = ulRef.current;
+    if (!ulEle) return;
+    if (!initedRef.current) {
+      initedRef.current = true;
+      if (!expand) {
+        ulEle.style.setProperty('max-height', '0px');
+      }
+      return;
+    }
+
+    if (expand) {
+      const onTransitionEnd = () => {
+        ulEle.style.removeProperty('max-height');
+        ulEle.removeEventListener('transitionend', onTransitionEnd);
+      };
+      ulEle.style.setProperty('transition', 'none');
+      ulEle.style.removeProperty('max-height');
+      const maxHeight = ulEle.getBoundingClientRect().height;
+      ulEle.style.setProperty('max-height', '0px');
+      ulEle.addEventListener('transitionend', onTransitionEnd);
+      requestAnimationFrame(() => {
+        ulEle.style.setProperty('transition', 'all .3s ease-out');
+        ulEle.style.setProperty('max-height', maxHeight + 'px');
+      });
+
+    } else {
+      ulEle.style.setProperty('transition', 'none');
+      const maxHeight = ulEle.getBoundingClientRect().height;
+      ulEle.style.setProperty('max-height', maxHeight + 'px');
+      requestAnimationFrame(() => {
+        ulEle.style.setProperty('transition', 'all .3s ease-out');
+        ulEle.style.setProperty('max-height', '0px');
+      });
+
+    }
+  }, [expand]);
 
   const onStart: ReactSortableProps<T>['onStart'] = useCallback((evt, sortable, store) => {
     if (onDragStart) {
@@ -47,12 +93,26 @@ export function BlockTreeItem<T extends TreeNode<T>>(props: BlockTreeItemProps<T
     setExpand(false);
   }, [onDragStart]);
 
+  const onSelect = useCallback((ev: React.MouseEvent) => {
+    ev.stopPropagation();
+    handleSelect(nodeData.id);
+  }, [nodeData.id, handleSelect]);
+
+  const onMouseEnter = useCallback((ev: React.MouseEvent) => {
+    handleMouseEnter && handleMouseEnter(nodeData.id, ev);
+  }, [nodeData.id, handleMouseEnter]);
+
+  const onContextMenu = useCallback((ev: React.MouseEvent) => {
+    handleContextMenu && handleContextMenu(nodeData.id, ev);
+  }, [nodeData.id, handleContextMenu]);
+
   return (
     <li className={styles.treeNodeWrapper}>
       <ReactSortable
         revertOnSpill
         list={[{ id: nodeData.id }]}
         setList={() => { }}
+
         onMove={onDragMove}
         onEnd={onDragEnd}
         onStart={onStart}
@@ -66,6 +126,8 @@ export function BlockTreeItem<T extends TreeNode<T>>(props: BlockTreeItemProps<T
         }}
       >
         <div
+          onMouseEnter={onMouseEnter}
+          onContextMenu={onContextMenu}
           className={classnames(styles.treeNode)}
           {
           ...{
@@ -76,8 +138,8 @@ export function BlockTreeItem<T extends TreeNode<T>>(props: BlockTreeItemProps<T
 
         >
           <div style={{ width: indent * 18 }} />
-          <TreeCollapse expand={expand} setExpand={setExpand} />
-          <div className={styles.treeNodeTitle}>{renderTitle(nodeData)}</div>
+          <TreeCollapse hasChildren={Boolean(nodeData.children?.length)} expand={expand} setExpand={setExpand} />
+          <div className={styles.treeNodeTitle} onClick={onSelect}>{renderTitle(nodeData)}</div>
           <IconFont
             iconName="icon-drag"
             style={{ cursor: 'grab', fontSize: 12 }}
@@ -86,7 +148,8 @@ export function BlockTreeItem<T extends TreeNode<T>>(props: BlockTreeItemProps<T
       </ReactSortable>
 
       <ul
-        style={{ maxHeight: expand ? undefined : 0, overflow: 'hidden' }}
+        ref={ulRef}
+        style={{ overflow: 'hidden' }}
         className={styles.treeNodeList}
       >
         {nodeData.children?.map((item, index) => {
@@ -94,6 +157,9 @@ export function BlockTreeItem<T extends TreeNode<T>>(props: BlockTreeItemProps<T
             <BlockTreeItem<T>
               key={index}
               index={index}
+              onSelect={handleSelect}
+              onMouseEnter={handleMouseEnter}
+              onContextMenu={handleContextMenu}
               nodeData={item}
               renderTitle={renderTitle}
               indent={indent + 1}

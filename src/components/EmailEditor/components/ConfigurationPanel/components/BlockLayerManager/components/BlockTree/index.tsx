@@ -1,5 +1,5 @@
 import { ReactSortableProps } from 'react-sortablejs';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styles from './index.module.scss';
 import {
   BlockTreeItem,
@@ -10,6 +10,11 @@ import {
 
 export interface BlockTreeProps<T extends TreeNode<T>> {
   treeData: T[];
+  selectedId?: string;
+  onSelect: (selectedId: string) => void;
+  onContextMenu?: (id: string) => void;
+  onMouseLeave?: () => void;
+  onMouseEnter?: (id: string, event: React.MouseEvent) => void;
   renderTitle: (data: T) => React.ReactNode;
   defaultExpandAll?: boolean;
   allowDrop: (params: {
@@ -42,8 +47,8 @@ const getCurrenTreeNode = (
 
 export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
   const [eleRef, setEleRef] = useState<HTMLElement | null>(null);
-  const [selectedId, setSelectedId] = useState('');
-  const [dropData, setDropData] = useState<null | {
+  const [selectedId, setSelectedId] = useState(props.selectedId);
+  const dropDataRef = useRef<null | {
     dragNode: T;
     dropNode: T;
     event: DragEvent;
@@ -52,7 +57,7 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
     willInsertAfter: boolean;
   }>(null);
 
-  const { treeData, allowDrop, onDrop } = props;
+  const { treeData, allowDrop, onDrop, onSelect, onMouseEnter, onMouseLeave, onContextMenu } = props;
 
   const treeDataMap = useMemo(() => {
     const map: { [key: string]: T; } = {};
@@ -78,22 +83,8 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
   }, [treeData]);
 
   useEffect(() => {
-    if (!eleRef) return;
-
-    const onClick = (ev: MouseEvent) => {
-      if (ev.target instanceof HTMLElement) {
-        const treeNode = getCurrenTreeNode(ev.target, eleRef);
-        if (treeNode) {
-          setSelectedId(treeNode.getAttribute(DATA_ATTRIBUTE_ID)!);
-        }
-      }
-    };
-
-    eleRef.addEventListener('click', onClick);
-    return () => {
-      eleRef.removeEventListener('click', onClick);
-    };
-  }, [eleRef]);
+    setSelectedId(props.selectedId);
+  }, [props.selectedId]);
 
   useEffect(() => {
     if (!eleRef) return;
@@ -131,12 +122,13 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
 
       const dragEle = getCurrenTreeNode(evt.dragged);
       const dropEle = getCurrenTreeNode(evt.related);
+
       if (dropEle && dragEle) {
         const dragId = dragEle.getAttribute(DATA_ATTRIBUTE_ID)!;
         const dragIndex = dragEle.getAttribute(DATA_ATTRIBUTE_INDEX)!;
         const dropId = dropEle.getAttribute(DATA_ATTRIBUTE_ID)!;
         const dropIndex = dropEle.getAttribute(DATA_ATTRIBUTE_INDEX)!;
-        const dropData = {
+        const currentDropData = {
           dragNode: treeDataMap[dragId],
           dragIndex: Number(dragIndex),
           dropIndex: Number(dropIndex),
@@ -144,11 +136,11 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
           willInsertAfter: evt.willInsertAfter,
           event: originalEvent,
         };
-        const isAllowDrop = allowDrop(dropData);
+        const isAllowDrop = allowDrop(currentDropData);
 
         if (isAllowDrop) {
           dropEle.classList.add(styles.treeNodeDrop);
-          setDropData(dropData);
+          dropDataRef.current = currentDropData;
           return true;
         }
       }
@@ -166,24 +158,24 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
       oldIndex: number;
     }) => {
 
-      if (dropData) {
-        onDrop(dropData);
+      if (dropDataRef.current) {
+        onDrop(dropDataRef.current);
       }
-      setDropData(null);
+      dropDataRef.current = null;
       if (!eleRef) return;
     },
-    [dropData, eleRef, onDrop]
+    [dropDataRef, eleRef, onDrop]
   );
 
   const onSpill = useCallback(
     (evt: { originalEvent: { dataTransfer: DataTransfer; }; }) => {
-      setDropData(null);
+      dropDataRef.current = null;
     },
     []
   );
 
-  return (
-    <div ref={setEleRef} className={styles.tree}>
+  return useMemo(() => (
+    <div ref={setEleRef} className={styles.tree} onMouseLeave={onMouseLeave}>
       {props.treeData.map((item) => (
         <ul key={item.id} className={styles.treeNodeList}>
           <BlockTreeItem<T>
@@ -191,6 +183,9 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
             renderTitle={props.renderTitle}
             indent={0}
             index={0}
+            onSelect={onSelect}
+            onMouseEnter={onMouseEnter}
+            onContextMenu={onContextMenu}
             defaultExpandAll={Boolean(props.defaultExpandAll)}
             onDragStart={onDragStart}
             onDragMove={onDragMove}
@@ -200,5 +195,5 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
         </ul>
       ))}
     </div>
-  );
+  ), [onContextMenu, onDragEnd, onDragMove, onDragStart, onMouseEnter, onMouseLeave, onSelect, onSpill, props.defaultExpandAll, props.renderTitle, props.treeData]);
 }

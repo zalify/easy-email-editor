@@ -7,8 +7,13 @@ import { BlockInteractiveStyle } from '../../../BlockInteractiveStyle';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { BlockTree, BlockTreeProps } from './components/BlockTree';
 import { cloneDeep } from 'lodash';
-import { BlocksMap } from 'easy-email-editor';
 import { useBlock } from '@/hooks/useBlock';
+import { scrollFocusBlockIntoView } from '@/utils/scrollFocusBlockIntoView';
+import { EyeIcon } from './components/EyeIcon';
+import { useHoverIdx } from '@/hooks/useHoverIdx';
+import { TextStyle } from '@/components/UI/TextStyle';
+import { BlocksMap } from '@/components/core/blocks';
+import { ContextMenu } from '../../../ContextMenu';
 
 interface IBlockDataWithId extends IBlockData {
   id: string;
@@ -18,11 +23,21 @@ interface IBlockDataWithId extends IBlockData {
 
 export function BlockLayerManager() {
   const { pageData } = useEditorContext();
-  const { focusIdx } = useFocusIdx();
+  const { focusIdx, setFocusIdx } = useFocusIdx();
+  const { setHoverIdx } = useHoverIdx();
   const { moveBlock } = useBlock();
 
-  const renderTitle = useCallback((data: IBlockData<any, any>) => {
-    return <div>{data.type}</div>;
+  const renderTitle = useCallback((data: IBlockDataWithId) => {
+    const block = BlocksMap.findBlockByType(data.type);
+    return (
+      <div style={{ padding: 4, display: 'flex', justifyContent: 'space-between', paddingRight: 8 }}>
+        <TextStyle size="smallest">{block.name}</TextStyle>
+        <div>
+          <EyeIcon blockData={data} idx={data.id} />
+          <ContextMenu idx={data.id} />
+        </div>
+      </div>
+    );
   }, []);
 
   const treeData = useMemo(() => {
@@ -44,6 +59,19 @@ export function BlockLayerManager() {
     return [copyData];
   }, [pageData]);
 
+  const onSelect = useCallback((selectedId: string) => {
+    setFocusIdx(selectedId);
+    scrollFocusBlockIntoView({ idx: selectedId, inShadowDom: true });
+  }, [setFocusIdx]);
+
+  const onMouseEnter = useCallback((id: string) => {
+    setHoverIdx(id);
+  }, [setHoverIdx]);
+
+  const onMouseLeave = useCallback(() => {
+    setHoverIdx('');
+  }, [setHoverIdx]);
+
   const allowDrop: BlockTreeProps<IBlockDataWithId>['allowDrop'] = useCallback(
     (params) => {
       const {
@@ -51,14 +79,11 @@ export function BlockLayerManager() {
         dropNode,
         willInsertAfter
       } = params;
-
       const dragBlock = BlocksMap.findBlockByType(dragNode.type);
       if (dragBlock.validParentType.includes(dropNode.type) && willInsertAfter) {
         return true;
       }
-      if (
-        dropNode.parent && dragBlock.validParentType.includes(dropNode.parent.type)
-      ) {
+      if (dropNode.parent && dragBlock.validParentType.includes(dropNode.parent.type)) {
         return true;
       }
 
@@ -100,29 +125,17 @@ export function BlockLayerManager() {
       <div id='BlockLayerManager'>
         <BlockInteractiveStyle isShadowDom={false} />
         <BlockTree<IBlockDataWithId>
+          selectedId={focusIdx}
           defaultExpandAll
           treeData={treeData}
           renderTitle={renderTitle}
           allowDrop={allowDrop}
           onDrop={onDrop}
+          onSelect={onSelect}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
         />
-
-        {/* {list.map((block, blockIndex) => (
-          <div
-            className={classnames(styles.blockList)}
-            data-parent-type={null}
-            data-idx={getPageIdx()}
-            key={blockIndex}
-          >
-            <BlockLayerItem
-              indent={0}
-              parentType={null}
-              blockData={block}
-              idx={getPageIdx()}
-            />
-          </div>
-        ))} */}
       </div>
     );
-  }, [allowDrop, hasFocus, onDrop, renderTitle, treeData]);
+  }, [hasFocus, focusIdx, treeData, renderTitle, allowDrop, onDrop, onSelect, onMouseEnter, onMouseLeave]);
 }
