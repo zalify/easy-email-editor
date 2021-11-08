@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 2806724 */
-  src: url("//at.alicdn.com/t/font_2806724_ilwwaykjs4b.woff2?t=1636376217056") format("woff2"),
-    url("//at.alicdn.com/t/font_2806724_ilwwaykjs4b.woff?t=1636376217056") format("woff"),
-    url("//at.alicdn.com/t/font_2806724_ilwwaykjs4b.ttf?t=1636376217056") format("truetype");
+  src: url("//at.alicdn.com/t/font_2806724_i1k0qtfw74.woff2?t=1636381700844") format("woff2"),
+    url("//at.alicdn.com/t/font_2806724_i1k0qtfw74.woff?t=1636381700844") format("woff"),
+    url("//at.alicdn.com/t/font_2806724_i1k0qtfw74.ttf?t=1636381700844") format("truetype");
 }
 
 .iconfont {
@@ -11,6 +11,18 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-more:before {
+  content: "\e6cb";
+}
+
+.icon-text-rounded:before {
+  content: "\e6aa";
+}
+
+.icon-button:before {
+  content: "\ed65";
 }
 
 .icon-eye:before {
@@ -163,10 +175,6 @@
 
 .icon-number:before {
   content: "\e7f8";
-}
-
-.icon-button:before {
-  content: "\e6cc";
 }
 
 .icon-img:before {

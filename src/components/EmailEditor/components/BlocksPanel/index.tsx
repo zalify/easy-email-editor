@@ -59,7 +59,7 @@ export const BlocksPanel: React.FC<{ height: string | number; }> = (props) => {
                   position: 'absolute',
                   width: isDragging ? 0 : 650,
                   zIndex: 200,
-                  top: -16,
+                  top: -160,
                   left: 47,
                   transition: 'width .5s',
                   boxShadow:

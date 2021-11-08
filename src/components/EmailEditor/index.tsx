@@ -23,6 +23,7 @@ import { BlockLayerManager } from './components/ConfigurationPanel/components/Bl
 import { IconFont } from '../IconFont';
 import { BlocksPanel } from './components/BlocksPanel';
 import { ComponentsPanel } from './components/ComponentsPanel';
+import { ShortcutToolbar } from './components/ShortcutToolbar';
 export interface EmailEditorProps {
   height: string | number;
 }
@@ -43,8 +44,6 @@ export const EmailEditor = (props: EmailEditorProps) => {
     return createPortal(<div id={FIXED_CONTAINER_ID} />, document.body);
   }, []);
 
-  const onTogglePanel = () => { };
-
   return useMemo(
     () => (
       <Layout>
@@ -61,27 +60,7 @@ export const EmailEditor = (props: EmailEditorProps) => {
             width={60}
             style={{ border: '1px solid #f0f0f0' }}
           >
-            <Stack vertical alignment='center' distribution='center'>
-              <Stack.Item />
-              <BlocksPanel height={containerHeight}>
-                <IconFont
-                  onClick={onTogglePanel}
-                  iconName='icon-add'
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: '#000',
-                    width: 36,
-                    height: 36,
-                    borderRadius: '50%',
-                    boxShadow:
-                      '0 0 12px -3px rgb(0 0 0 / 20%), 0 2px 7px -1px rgb(0 0 0 / 14%), 0 2px 4px -1px rgb(0 0 0 / 20%)',
-                    fontSize: 20,
-                  }}
-                />
-              </BlocksPanel>
-            </Stack>
+            <ShortcutToolbar height={containerHeight} />
           </Layout.Sider>
           <Layout.Sider
             style={{ borderLeft: 'none', height: containerHeight, overflow: 'auto', }}
