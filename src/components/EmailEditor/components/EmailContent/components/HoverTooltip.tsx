@@ -132,7 +132,7 @@ function TipNode(props: TipNodeProps) {
             >
               {title}
             </div>
-            <div
+            {/* <div
               style={{
                 position: 'absolute',
                 left: 0,
@@ -142,7 +142,7 @@ function TipNode(props: TipNodeProps) {
                 backgroundColor: color,
                 opacity: 0.1,
               }}
-            />
+            /> */}
           </>
         )}
       </div>

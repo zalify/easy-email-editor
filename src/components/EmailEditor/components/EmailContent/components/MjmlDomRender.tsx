@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { transformToMjml } from '@/utils/transformToMjml';
 import mjml from 'mjml-browser';
-import {
-  getPageIdx,
-} from '@/utils/block';
+import { getPageIdx } from '@/utils/block';
 import { cloneDeep, isEqual } from 'lodash';
 import { IPage } from '@/components/core/blocks/basic/Page';
 import { useEditorContext } from '@/hooks/useEditorContext';
@@ -16,7 +14,6 @@ export function MjmlDomRender() {
   const [pageData, setPageData] = useState<IPage | null>(null);
   const [ref, setRef] = useState<HTMLDivElement | null>(null);
   const { dashed } = useContext(EditorPropsContext);
-  const pageMaxWidth = content.attributes.width || '600px';
 
   useEffect(() => {
     if (!isEqual(content, pageData)) {
@@ -36,7 +33,7 @@ export function MjmlDomRender() {
       })
     ).html;
     return renderHtml;
-  }, [pageData]);;
+  }, [pageData]);
 
   return useMemo(() => {
     return (
@@ -44,12 +41,11 @@ export function MjmlDomRender() {
         data-dashed={dashed}
         ref={setRef}
         style={{
-
-          width: pageMaxWidth,
           padding: '40px 0px',
-          margin: 'auto',
+          marginLeft: 20,
+          marginRight: 20,
           outline: 'none',
-          position: 'relative'
+          position: 'relative',
         }}
         role='tabpanel'
         tabIndex={0}
@@ -57,5 +53,5 @@ export function MjmlDomRender() {
         {ref && createPortal(HtmlStringToReactNodes(html), ref)}
       </div>
     );
-  }, [dashed, pageMaxWidth, ref, html]);
+  }, [dashed, ref, html]);
 }
