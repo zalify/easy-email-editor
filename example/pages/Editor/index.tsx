@@ -195,7 +195,7 @@ export default function Editor() {
         onRemoveCollection={({ id }) => removeCollection(id)}
         onUploadImage={services.common.uploadByQiniu}
         interactiveStyle={{
-          hoverColor: '#ff18e3',
+          hoverColor: '#78A349',
           selectedColor: '#1890ff',
         }}
         fontList={fontList}

@@ -12,16 +12,17 @@ export const IframeComponent = ({
   title,
   ...props
 }: Props) => {
-  const [contentRef, setContentRef] = useState<HTMLIFrameElement | null>(null);
-  const mountNode =
-    contentRef?.contentWindow?.document?.body;
+  const [mountNode, setMountNode] = useState(null);
 
-  if (mountNode) {
-    mountNode.style.backgroundColor = 'transparent';
-  }
+  const onLoad: React.ReactEventHandler<HTMLIFrameElement> = (evt) => {
+    const innerBody = (evt.target as any)?.contentWindow?.document.body;
+    innerBody.style.backgroundColor = 'transparent';
+    setMountNode(innerBody);
+
+  };
 
   return (
-    <iframe title={title} {...props} ref={setContentRef}>
+    <iframe title={title} srcDoc={'<!doctype html> <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"> <head></head> <body> </body> </html>'} {...props} onLoad={onLoad}>
       {mountNode && createPortal(children, mountNode)}
     </iframe>
   );

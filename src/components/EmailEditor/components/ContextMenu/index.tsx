@@ -1,13 +1,12 @@
 import { IconFont } from '@/components/IconFont';
 import { TextStyle } from '@/components/UI/TextStyle';
-import { FIXED_CONTAINER_ID } from '@/constants';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useRef, useState } from 'react';
 
-import { getIndexByIdx, getParentIdx, getSiblingIdx } from '@/utils/block';
+import { getIndexByIdx, getSiblingIdx } from '@/utils/block';
 import { Form } from 'react-final-form';
 import { v4 as uuidv4 } from 'uuid';
 import { Modal } from 'antd';
-import { EditorPropsContext } from '@/components/Provider/PropsProvider';
+import { PropsProviderProps } from '@/components/Provider/PropsProvider';
 import { useBlock } from '@/hooks/useBlock';
 import { Stack } from '@/components/UI/Stack';
 import {
@@ -15,74 +14,53 @@ import {
   TextAreaField,
   TextField,
 } from '@/components/core/Form';
-
-import { createPortal } from 'react-dom';
-import styles from './index.module.scss';
 import { scrollFocusBlockIntoView } from '@/utils/scrollFocusBlockIntoView';
+import styles from './index.module.scss';
+import { IBlockDataWithId } from '../ConfigurationPanel/components/BlockLayerManager';
 
-export function ContextMenu({ ele, idx }: { ele: HTMLElement; idx: string; }) {
-  const [position, setPosition] = useState({ left: 0, top: 0 });
-  const [visible, setVisible] = useState(false);
-
-  const [modalVisible, setModalVisible] = useState(false);
-  const { onAddCollection } = useContext(EditorPropsContext);
-  const {
-    moveByIdx,
-    copyBlock,
-    removeBlock,
-    focusBlock: focusBlockData,
-    addBlock,
-  } = useBlock();
-  const { onUploadImage } = useContext(EditorPropsContext);
-
-  useEffect(() => {
-    if (ele) {
-      const onContextmenu = (e: MouseEvent) => {
-
-        if (visible) {
-          e.preventDefault();
-          setVisible(false);
-          return;
-        }
-        if (!ele.contains(e.target as HTMLElement)) return;
-
-        e.preventDefault();
-        setPosition({
-          left: e.clientX,
-          top: e.clientY,
-        });
-        setVisible(true);
-      };
-
-      window.addEventListener('contextmenu', onContextmenu, true);
-
-      return () => {
-        window.removeEventListener('contextmenu', onContextmenu, true);
-      };
-    }
-  }, [ele, visible]);
-
-  const onClose = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setVisible(false);
+export function ContextMenu({
+  moveBlock,
+  copyBlock,
+  removeBlock,
+  contextMenuData,
+  onClose,
+  onUploadImage,
+  onAddCollection,
+}: {
+  onClose: (ev?: React.MouseEvent) => void;
+  moveBlock: ReturnType<typeof useBlock>['moveBlock'];
+  copyBlock: ReturnType<typeof useBlock>['copyBlock'];
+  removeBlock: ReturnType<typeof useBlock>['removeBlock'];
+  contextMenuData: {
+    blockData: IBlockDataWithId;
+    left: number;
+    top: number;
   };
 
+  onAddCollection: PropsProviderProps['onAddCollection'];
+  onUploadImage: PropsProviderProps['onUploadImage'];
+}) {
+  const { blockData, left, top } = contextMenuData;
+  const idx = blockData.id;
+  const [modalVisible, setModalVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
   const handleMoveUp = () => {
-    moveByIdx(idx, getSiblingIdx(idx, -1));
+    moveBlock(idx, getSiblingIdx(idx, -1));
     scrollFocusBlockIntoView({
       idx: getSiblingIdx(idx, -1),
       inShadowDom: true,
     });
-    setVisible(false);
+    onClose();
   };
 
   const handleMoveDown = () => {
-    moveByIdx(idx, getSiblingIdx(idx, 1));
+    moveBlock(idx, getSiblingIdx(idx, 1));
     scrollFocusBlockIntoView({
       idx: getSiblingIdx(idx, 1),
       inShadowDom: true,
     });
-    setVisible(false);
+    onClose();
   };
 
   const handleCopy: React.MouseEventHandler<HTMLDivElement> = (ev) => {
@@ -91,7 +69,7 @@ export function ContextMenu({ ele, idx }: { ele: HTMLElement; idx: string; }) {
       idx: getSiblingIdx(idx, 1),
       inShadowDom: true,
     });
-    setVisible(false);
+    onClose();
   };
 
   const handleAddToCollection = () => {
@@ -100,7 +78,7 @@ export function ContextMenu({ ele, idx }: { ele: HTMLElement; idx: string; }) {
 
   const handleDelete = () => {
     removeBlock(idx);
-    setVisible(false);
+    onClose();
   };
 
   const onSubmit = (values: {
@@ -113,22 +91,22 @@ export function ContextMenu({ ele, idx }: { ele: HTMLElement; idx: string; }) {
     onAddCollection?.({
       label: values.label,
       helpText: values.helpText,
-      data: focusBlockData!,
+      data: blockData,
       thumbnail: values.thumbnail,
       id: uuid,
     });
     setModalVisible(false);
-    setVisible(false);
+    onClose();
   };
 
   const isFirst = getIndexByIdx(idx) === 0;
 
-  return createPortal(
-    <div style={{ display: visible ? undefined : 'none' }}>
+  return (
+    <div ref={ref}>
       <div
         style={{
-          left: position.left,
-          top: position.top,
+          left: left,
+          top: top,
         }}
         className={styles.wrap}
         onClick={(e) => e.stopPropagation()}
@@ -193,7 +171,6 @@ export function ContextMenu({ ele, idx }: { ele: HTMLElement; idx: string; }) {
         </Form>
       </div>
       <div className={styles.contextmenuMark} onClick={onClose} />
-    </div>,
-    document.getElementById(FIXED_CONTAINER_ID)!
+    </div>
   );
 }

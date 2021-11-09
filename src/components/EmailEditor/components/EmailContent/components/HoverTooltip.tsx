@@ -79,7 +79,7 @@ function TipNode(props: TipNodeProps) {
 
   const color = useMemo(() => {
     if (type === 'drag') {
-      return 'var(--dragover-color)';
+      return 'var(--hover-color)';
     } else {
       return 'var(--hover-color)';
     }
@@ -127,7 +127,7 @@ function TipNode(props: TipNodeProps) {
                 padding: '1px 5px',
                 boxSizing: 'border-box',
                 whiteSpace: 'nowrap',
-                transform: 'translateX(0)',
+                transform: 'translateY(-100%)',
               }}
             >
               {title}
@@ -164,7 +164,7 @@ function TipNode(props: TipNodeProps) {
             style={{
               position: 'absolute',
               color: '#ffffff',
-              backgroundColor: '#1890ff',
+              backgroundColor: color,
               lineHeight: '22px',
               display: 'inline-flex',
               maxWidth: '100%',
@@ -221,28 +221,28 @@ const directionImage = {
   top: {
     backgroundImage: `linear-gradient(
       to bottom,
-      var(--dragover-color) 3px ,
+      var(--hover-color) 3px ,
       transparent 3px
     )`,
   },
   bottom: {
     backgroundImage: `linear-gradient(
       to top,
-      var(--dragover-color) 3px ,
+      var(--hover-color) 3px ,
       transparent 3px
     )`,
   },
   left: {
     backgroundImage: `linear-gradient(
       to right,
-      var(--dragover-color) 3px ,
+      var(--hover-color) 3px ,
       transparent 3px
     )`,
   },
   right: {
     backgroundImage: `linear-gradient(
       to left,
-      var(--dragover-color) 3px ,
+      var(--hover-color) 3px ,
       transparent 3px
     )`,
   },

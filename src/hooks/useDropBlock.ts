@@ -1,8 +1,15 @@
 import { useEffect, useMemo, useState, useContext, useRef } from 'react';
 
-import { getNodeIdxFromClassName, getNodeTypeFromClassName } from '@/utils/block';
+import {
+  getNodeIdxFromClassName,
+  getNodeTypeFromClassName,
+} from '@/utils/block';
 import { findBlockNode } from '@/utils/findBlockNode';
-import { BasicType, BLOCK_HOVER_CLASSNAME, DRAG_HOVER_CLASSNAME } from '@/constants';
+import {
+  BasicType,
+  BLOCK_HOVER_CLASSNAME,
+  DRAG_HOVER_CLASSNAME,
+} from '@/constants';
 import { useBlock } from '@/hooks/useBlock';
 import { getDirectionPosition } from '@/utils/getDirectionPosition';
 import { findBlockNodeByIdx, getBlockNodes } from '@/utils/findBlockNodeByIdx';
@@ -16,7 +23,7 @@ import { getEditNode } from '@/utils/getEditNode';
 
 export function useDropBlock() {
   const [ref, setRef] = useState<HTMLElement | null>(null);
-  const { values, addBlock, moveBlock, focusBlock } = useBlock();
+  const { values, focusBlock } = useBlock();
   const { autoComplete } = useContext(EditorPropsContext);
   const { dataTransfer, setDataTransfer } = useDataTransfer();
   const cacheValues = useRef(values);
@@ -36,13 +43,8 @@ export function useDropBlock() {
   );
 
   const { setFocusIdx, focusIdx } = useFocusIdx();
-  const {
-    setHoverIdx,
-    setDirection,
-    isDragging,
-    hoverIdx,
-    direction,
-  } = useHoverIdx();
+  const { setHoverIdx, setDirection, isDragging, hoverIdx, direction } =
+    useHoverIdx();
 
   useEffect(() => {
     if (focusBlock?.type === BasicType.TEXT) {
@@ -53,7 +55,6 @@ export function useDropBlock() {
         editNode?.focus();
       }
     }
-
   }, [focusBlock?.type, focusIdx]);
 
   useEffect(() => {
@@ -84,7 +85,6 @@ export function useDropBlock() {
 
   useEffect(() => {
     if (ref) {
-
       let lastHoverTarget: EventTarget | null = null;
 
       let lastDragover: {
@@ -111,7 +111,6 @@ export function useDropBlock() {
       };
 
       const onDragOver = (ev: DragEvent) => {
-
         if (!cacheDataTransfer.current) return;
 
         if (ev.target === lastDragover.target) {
@@ -146,7 +145,7 @@ export function useDropBlock() {
               return {
                 ...dataTransfer,
                 parentIdx: positionData.parentIdx,
-                positionIndex: positionData.insertIndex
+                positionIndex: positionData.insertIndex,
               };
             });
             setDirection(positionData.endDirection);
@@ -163,7 +162,6 @@ export function useDropBlock() {
             };
           });
         }
-
       };
 
       ref.addEventListener('mouseover', onMouseover);

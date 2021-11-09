@@ -29,9 +29,15 @@ export function FocusTooltip() {
   }, [focusIdx, focusBlock]);
 
   useEffect(() => {
+    if (focusBlock && focusBlock.type === BasicType.RAW) {
+      setBlockNode(null);
+      return;
+    }
+
     if (blockNode && focusBlock) {
       blockNode.classList.add(BLOCK_SELECTED_CLASSNAME);
       return () => {
+
         blockNode.classList.remove(BLOCK_SELECTED_CLASSNAME);
       };
     }

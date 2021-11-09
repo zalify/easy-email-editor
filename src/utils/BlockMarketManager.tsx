@@ -188,7 +188,7 @@ export class BlockMarketManager {
   private static category: BlockMarketCategory[] = [...defaultCategories];
 
   public static getCategory(name: string) {
-    return this.category.find(item => item.name === name);
+    return this.category.find((item) => item.name === name);
   }
 
   public static getCategories() {
@@ -205,7 +205,7 @@ export class BlockMarketManager {
       ExampleComponent: () => JSX.Element;
     }[]
   ) {
-    const index = this.category.findIndex(item => item.name === name);
+    const index = this.category.findIndex((item) => item.name === name);
     if (index !== -1) {
       this.category.splice(index, 1);
     }
@@ -218,6 +218,6 @@ export class BlockMarketManager {
   }
 
   public static removeCategory(name: string) {
-    this.category = this.category.filter(item => item.name !== name);
+    this.category = this.category.filter((item) => item.name !== name);
   }
 }

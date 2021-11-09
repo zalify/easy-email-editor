@@ -12,3 +12,26 @@
   -webkit-text-stroke-width: 0.2px;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.no-scrollbar {
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 0px !important;
+  }
+
+}
+
+.small-scrollbar {
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 8px !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+    -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+  }
+}

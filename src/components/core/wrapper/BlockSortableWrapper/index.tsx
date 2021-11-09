@@ -3,17 +3,12 @@ import { BlockType } from '@/constants';
 import { IBlockData, RecursivePartial } from '@/typings';
 import { ReactSortable } from 'react-sortablejs';
 import { useHoverIdx } from '@/hooks/useHoverIdx';
-import {
-  getChildIdx,
-  getIndexByIdx,
-  getNodeIdxFromClassName,
-  getParentIdx,
-} from '@/utils/block';
+import { getChildIdx, getIndexByIdx, getParentIdx } from '@/utils/block';
 import { BlocksMap } from '../../blocks';
 import { useBlock } from '@/hooks/useBlock';
-import { findBlockNode } from '@/utils/findBlockNode';
 import { useDataTransfer } from '@/hooks/useDataTransfer';
-import { isUndefined } from 'lodash';
+import { get, isUndefined } from 'lodash';
+import { DATA_ATTRIBUTE_ID } from '@/components/EmailEditor/components/ConfigurationPanel/components/BlockLayerManager/components/BlockTree/components/BlockTreeItem';
 
 type BlockSortableWrapperProps = {
   action: 'add' | 'move';
@@ -44,7 +39,7 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
     ...restProps
   } = props;
   const { setIsDragging, setHoverIdx, setDirection } = useHoverIdx();
-  const { addBlock, moveBlock } = useBlock();
+  const { addBlock, moveBlock, values } = useBlock();
   const { setDataTransfer, dataTransfer } = useDataTransfer();
   const cacheDataTransfer = useRef(dataTransfer);
 
@@ -52,59 +47,43 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
     cacheDataTransfer.current = dataTransfer;
   }, [dataTransfer]);
 
-  const onDragEnd = useCallback(
-    (
-      evt: {
-        originalEvent: { dataTransfer: DataTransfer; };
-        from: HTMLElement;
-        to: HTMLElement;
-        newIndex: number;
-        oldIndex: number;
-      },
-      sortable: any,
-      store: any
-    ) => {
-      setIsDragging(false);
-      setHoverIdx('');
-      onEnd?.();
-      const transferData = cacheDataTransfer.current;
-      if (!transferData) return;
-      if (action === 'add' && !isUndefined(transferData.parentIdx)) {
-        addBlock({
-          type,
-          parentIdx: transferData.parentIdx,
-          positionIndex: transferData.positionIndex,
-          payload,
-        });
-      } else {
-        if (
-          idx &&
-          !isUndefined(transferData.sourceIdx) &&
-          !isUndefined(transferData.parentIdx) &&
-          !isUndefined(transferData.positionIndex)
-        ) {
-          moveBlock({
-            sourceIdx: transferData.sourceIdx,
-            destinationIdx: getChildIdx(
-              transferData.parentIdx,
-              transferData.positionIndex
-            ),
-          });
-        }
+  const onDragEnd = useCallback(() => {
+    setIsDragging(false);
+    setHoverIdx('');
+    onEnd?.();
+    const transferData = cacheDataTransfer.current;
+    if (!transferData) return;
+    if (action === 'add' && !isUndefined(transferData.parentIdx)) {
+      addBlock({
+        type,
+        parentIdx: transferData.parentIdx,
+        positionIndex: transferData.positionIndex,
+        payload,
+      });
+    } else {
+      if (
+        idx &&
+        !isUndefined(transferData.sourceIdx) &&
+        !isUndefined(transferData.parentIdx) &&
+        !isUndefined(transferData.positionIndex)
+      ) {
+        moveBlock(
+          transferData.sourceIdx,
+          getChildIdx(transferData.parentIdx, transferData.positionIndex)
+        );
       }
-    },
-    [
-      action,
-      addBlock,
-      idx,
-      moveBlock,
-      onEnd,
-      payload,
-      setHoverIdx,
-      setIsDragging,
-      type,
-    ]
-  );
+    }
+  }, [
+    action,
+    addBlock,
+    idx,
+    moveBlock,
+    onEnd,
+    payload,
+    setHoverIdx,
+    setIsDragging,
+    type,
+  ]);
 
   const onDragStart = useCallback(
     (evt: { originalEvent: DragEvent; }) => {
@@ -129,50 +108,78 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
   );
 
   const onSpill = useCallback(
-    (evt: { originalEvent: { dataTransfer: DataTransfer; }; }) => { },
+    (evt: { originalEvent: { dataTransfer: DataTransfer; }; }) => {
+      // cacheDataTransfer.current = null;
+    },
     []
   );
 
   const onChoose = useCallback(() => { }, []);
 
+  const allowDrop = useCallback(
+    (evt: {
+      dragged: HTMLElement;
+      related: HTMLElement;
+      willInsertAfter: boolean;
+    }) => {
+      const dragBlock = BlocksMap.findBlockByType(type);
+
+      if (!type) return false;
+      const dropIdx = evt.related.getAttribute(DATA_ATTRIBUTE_ID);
+      if (!dropIdx) return false;
+
+      const dropBlockData = get(values, dropIdx);
+
+      if (
+        dragBlock.validParentType.includes(dropBlockData.type) &&
+        evt.willInsertAfter
+      ) {
+        return true;
+      }
+
+      const parentIdx = getParentIdx(dropIdx);
+      if (parentIdx) {
+        const dropParentBlock = get(values, parentIdx);
+        if (
+          dropParentBlock &&
+          dragBlock.validParentType.includes(dropParentBlock.type)
+        ) {
+          return true;
+        }
+      }
+
+      return false;
+    },
+    [type, values]
+  );
+
   const onMove = useCallback(
-    (
-      evt: {
-        dragged: HTMLElement;
-        related: HTMLElement;
-        willInsertAfter: boolean;
-      },
-      sortable: any,
-      store: any
-    ) => {
-
-      const dragoverType = evt.related.getAttribute(
-        'data-parent-type'
-      ) as BlockType;
-      if (!type || !dragoverType) return false;
-
-      const block = BlocksMap.findBlockByType(type);
-      const isValid = block.validParentType.includes(dragoverType);
-      const targetIdx = evt.related.getAttribute('data-idx')!;
-
-      if (isValid) {
-        setHoverIdx(targetIdx);
+    (evt: {
+      dragged: HTMLElement;
+      related: HTMLElement;
+      willInsertAfter: boolean;
+    }) => {
+      const dropIdx = evt.related.getAttribute(DATA_ATTRIBUTE_ID);
+      if (dropIdx && allowDrop(evt)) {
+        setHoverIdx(dropIdx);
         setDirection(evt.willInsertAfter ? 'bottom' : 'top');
         setDataTransfer((dataTransfer: any) => {
           return {
             ...dataTransfer,
-            parentIdx: getParentIdx(targetIdx),
+            parentIdx: getParentIdx(dropIdx),
             positionIndex:
-              getIndexByIdx(targetIdx) + (evt.willInsertAfter ? 1 : 0),
+              getIndexByIdx(dropIdx) + (evt.willInsertAfter ? 1 : 0),
           };
         });
-      } else {
-        setHoverIdx('');
-        setDirection('');
+        return true;
       }
-      return isValid;
+
+      setHoverIdx('');
+      setDirection('');
+
+      return false;
     },
-    [type, setHoverIdx, setDirection, setDataTransfer]
+    [allowDrop, setHoverIdx, setDirection, setDataTransfer]
   );
 
   return (
@@ -190,10 +197,16 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
       onStart={onDragStart}
       {...{
         animation: 150,
+        removeCloneOnHide: true,
         fallbackOnBody: true,
         swapThreshold: 0.65,
         ghostClass: 'ghost',
-        group: 'shared',
+        group: {
+          name: 'shared',
+          pull: 'clone',
+          put: true,
+          revertClone: false,
+        },
       }}
     >
       {children}

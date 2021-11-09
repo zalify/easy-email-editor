@@ -25,7 +25,7 @@ export function ToolsBar({ block }: { block: IBlock }) {
   const [modalVisible, setModalVisible] = useState(false);
   const { onAddCollection } = useContext(EditorPropsContext);
   const {
-    moveByIdx,
+    moveBlock,
     copyBlock,
     removeBlock,
     focusBlock: focusBlockData,
@@ -43,11 +43,11 @@ export function ToolsBar({ block }: { block: IBlock }) {
   );
 
   const handleMoveUp = () => {
-    moveByIdx(focusIdx, getSiblingIdx(focusIdx, -1));
+    moveBlock(focusIdx, getSiblingIdx(focusIdx, -1));
   };
 
   const handleMoveDown = () => {
-    moveByIdx(focusIdx, getSiblingIdx(focusIdx, 1));
+    moveBlock(focusIdx, getSiblingIdx(focusIdx, 1));
   };
 
   const handleCopy: React.MouseEventHandler<HTMLDivElement> = (ev) => {

@@ -4,7 +4,6 @@ import styles from './index.module.scss';
 import { Button, Card, Collapse, Empty } from 'antd';
 import { BlockIcon } from './components/BlockIcon';
 import { ColumnBlockIconPanel } from './components/ColumnBlockIcon';
-import { Stack } from '@/components/UI/Stack';
 import { EditorPropsContext } from '@/components/Provider/PropsProvider';
 import { LayoutBlockIcon } from './components/LayoutBlockIcon';
 import { BlockMarketManager, CategoryName } from '@/utils/BlockMarketManager';

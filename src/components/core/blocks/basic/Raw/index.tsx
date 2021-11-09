@@ -14,12 +14,14 @@ export const Raw = createBlock<IRaw>({
     const defaultData: IRaw = {
       type: BasicType.RAW,
       data: {
-        value: {},
+        value: {
+          content: '<% if (user) { %>'
+        },
       },
       attributes: {},
       children: [],
     };
     return merge(defaultData, payload);
   },
-  validParentType: [],
+  validParentType: [BasicType.PAGE, BasicType.WRAPPER, BasicType.SECTION, BasicType.GROUP, BasicType.COLUMN, BasicType.HERO],
 });

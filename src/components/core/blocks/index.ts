@@ -20,7 +20,7 @@ import { Hero } from './basic/Hero';
 import { Navbar } from './basic/Navbar';
 import { Social } from './basic/Social';
 import { IBlock } from '@/typings';
-import { BlockType } from '@/constants';
+import { BasicType, BlockType } from '@/constants';
 
 const basicBlocks = {
   Page,
@@ -48,8 +48,8 @@ const basicBlocks = {
 
 export class BlocksMap {
   static basicBlocksMap = basicBlocks;
-  static externalBlocksMap: { [key: string]: IBlock } = {};
-  private static autoCompletePath: { [key: string]: Array<BlockType[]> } = {};
+  static externalBlocksMap: { [key: string]: IBlock; } = {};
+  private static autoCompletePath: { [key: string]: Array<BlockType[]>; } = {};
 
   static getBlocks() {
     return [
@@ -58,7 +58,7 @@ export class BlocksMap {
     ];
   }
 
-  static registerBlocks(blocksMap: { [key: string]: IBlock }) {
+  static registerBlocks(blocksMap: { [key: string]: IBlock; }) {
     Object.assign(this.externalBlocksMap, blocksMap);
     this.autoCompletePath = this.setAutoCompletePath();
   }
@@ -82,7 +82,7 @@ export class BlocksMap {
   }
 
   static getBlock<
-    E extends { [key: string]: IBlock },
+    E extends { [key: string]: IBlock; },
     B extends typeof BlocksMap.basicBlocksMap,
     A extends B & E,
     T extends keyof A
@@ -92,7 +92,7 @@ export class BlocksMap {
   }
 
   static setAutoCompletePath() {
-    const paths: { [key: string]: Array<BlockType[]> } = {};
+    const paths: { [key: string]: Array<BlockType[]>; } = {};
 
     const renderFullPath = (
       type: BlockType,
@@ -124,6 +124,10 @@ export class BlocksMap {
   }
 
   static getAutoCompletePath(type: BlockType, targetType: BlockType) {
+    const block = BlocksMap.findBlockByType(type);
+    if (block.validParentType.includes(targetType)) {
+      return [];
+    }
     const paths = this.getAutoCompleteFullPath()[type].find((item) =>
       item.filter((_, index) => index !== 0).includes(targetType)
     );
