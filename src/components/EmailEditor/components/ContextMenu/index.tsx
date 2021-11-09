@@ -170,7 +170,12 @@ export function ContextMenu({
           )}
         </Form>
       </div>
-      <div className={styles.contextmenuMark} onClick={onClose} />
+      <div className={styles.contextmenuMark} onClick={onClose}
+        onContextMenu={(e) => {
+          e.preventDefault();
+          onClose(e);
+        }}
+      />
     </div>
   );
 }

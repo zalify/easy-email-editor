@@ -27,7 +27,6 @@ export function InlineText({
   const [textContainer, setTextContainer] = useState<HTMLElement | null>(null);
 
   useField(idx); // setFieldTouched will be work while register field,
-  const { focusBlock } = useBlock();
 
   useEffect(() => {
     const promiseObj = awaitForElement<HTMLDivElement>(idx);
@@ -38,7 +37,7 @@ export function InlineText({
     return () => {
       promiseObj.cancel();
     };
-  }, [idx, focusBlock]);
+  }, [idx]);
 
   const onTextChange = useCallback(
     (text: string) => {

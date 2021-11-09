@@ -35,38 +35,40 @@ const RichTextFieldItem = (
   const container = findBlockNodeByIdx(idx);
 
   useEffect(() => {
-    const fixContainer = getEditorRoot();
-    if (fixContainer && idx) {
-      const { left, top } = fixContainer.getBoundingClientRect();
+    if (!locationState) {
+      const fixContainer = getEditorRoot();
+      if (fixContainer) {
+        const { left, top } = fixContainer.getBoundingClientRect();
 
-      setPosition({
-        left: locationState?.left || left,
-        top: locationState?.top || top - 46,
-      });
+        setPosition({
+          left: left,
+          top: top - 46,
+        });
+      }
     }
-  }, [idx, locationState?.left, locationState?.top]);
 
-  const onChange = useCallback(() => { }, []);
+  }, [locationState]);
 
   const editorContainer = container && getEditNode(container);
 
+  const onMoveTextToolbar = useCallback((event: React.MouseEvent) => {
+    onDrag({
+      event: event as any,
+      onMove(x, y) {
+        setPosition({
+          left: position.left + x,
+          top: position.top + y,
+        });
+        setLocationState({
+          left: position.left + x,
+          top: position.top + y,
+        });
+      },
+      onEnd() { },
+    });
+  }, [position.left, position.top, setLocationState]);
+
   const textToolbar = useMemo(() => {
-    const onMoveTextToolbar = (event: React.MouseEvent) => {
-      onDrag({
-        event: event as any,
-        onMove(x, y) {
-          setPosition({
-            left: position.left + x,
-            top: position.top + y,
-          });
-          setLocationState({
-            left: position.left + x,
-            top: position.top + y,
-          });
-        },
-        onEnd() { },
-      });
-    };
 
     return createPortal(
       <div
@@ -96,12 +98,12 @@ const RichTextFieldItem = (
           onMouseDown={onMoveTextToolbar}
         />
         <div style={{ position: 'relative', zIndex: 1 }}>
-          <TextToolbar container={editorContainer} onChange={onChange} />
+          <TextToolbar container={editorContainer} onChange={() => { }} />
         </div>
       </div>,
       document.getElementById(FIXED_CONTAINER_ID) as HTMLDivElement
     );
-  }, [idx, position, isActive, editorContainer, onChange, setLocationState]);
+  }, [idx, position, isActive, onMoveTextToolbar, editorContainer]);
 
   return (
     <>

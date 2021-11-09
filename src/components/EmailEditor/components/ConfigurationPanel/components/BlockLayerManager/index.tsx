@@ -15,6 +15,7 @@ import { TextStyle } from '@/components/UI/TextStyle';
 import { BlocksMap } from '@/components/core/blocks';
 import { ContextMenu } from '../../../ContextMenu';
 import { EditorPropsContext } from '@/components/Provider/PropsProvider';
+import styles from './index.module.scss';
 
 export interface IBlockDataWithId extends IBlockData {
   id: string;
@@ -48,17 +49,11 @@ export function BlockLayerManager() {
       const block = BlocksMap.findBlockByType(data.type);
       return (
         <div
-          style={{
-            padding: 4,
-            display: 'flex',
-            justifyContent: 'space-between',
-            paddingRight: 8,
-          }}
+          className={styles.title}
         >
           <TextStyle size='smallest'>{block.name}</TextStyle>
-          <div>
+          <div className={styles.eyeIcon}>
             <EyeIcon blockData={data} onToggleVisible={onToggleVisible} />
-            {/* <ContextMenu idx={data.id} /> */}
           </div>
         </div>
       );

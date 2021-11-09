@@ -1,6 +1,16 @@
-.blockList {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
+.title {
+  padding: 4px;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 8px;
+  :global(.icon-eye) {
+    opacity: 0;
+    &:hover {
+      opacity: 1;
+    }
+  }
 
+  :global(.icon-eye-invisible) {
+    opacity: 1 !important;
+  }
+}
