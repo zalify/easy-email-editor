@@ -21,14 +21,16 @@ export interface BlockTreeItemProps<T> {
   defaultExpandAll: boolean;
   onSelect: (id: string) => void;
   onMouseEnter?: (id: string, event: React.MouseEvent) => void;
-  onContextMenu?: (id: string, event: React.MouseEvent) => void;
+  onContextMenu?: (nodeData: T, event: React.MouseEvent) => void;
   onDragStart: ReactSortableProps<T>['onStart'];
   onDragMove: ReactSortableProps<T>['onMove'];
   onDragEnd: ReactSortableProps<T>['onEnd'];
   onSpill: ReactSortableProps<T>['onSpill'];
 }
 
-export function BlockTreeItem<T extends TreeNode<T>>(props: BlockTreeItemProps<T>) {
+export function BlockTreeItem<T extends TreeNode<T>>(
+  props: BlockTreeItemProps<T>
+) {
   const {
     nodeData,
     renderTitle,
@@ -73,7 +75,6 @@ export function BlockTreeItem<T extends TreeNode<T>>(props: BlockTreeItemProps<T
         ulEle.style.setProperty('transition', 'all .3s ease-out');
         ulEle.style.setProperty('max-height', maxHeight + 'px');
       });
-
     } else {
       ulEle.style.setProperty('transition', 'none');
       const maxHeight = ulEle.getBoundingClientRect().height;
@@ -82,37 +83,47 @@ export function BlockTreeItem<T extends TreeNode<T>>(props: BlockTreeItemProps<T
         ulEle.style.setProperty('transition', 'all .3s ease-out');
         ulEle.style.setProperty('max-height', '0px');
       });
-
     }
   }, [expand]);
 
-  const onStart: ReactSortableProps<T>['onStart'] = useCallback((evt, sortable, store) => {
-    if (onDragStart) {
-      onDragStart(evt, sortable, store);
-    }
-    setExpand(false);
-  }, [onDragStart]);
+  const onStart: ReactSortableProps<T>['onStart'] = useCallback(
+    (evt, sortable, store) => {
+      if (onDragStart) {
+        onDragStart(evt, sortable, store);
+      }
+      setExpand(false);
+    },
+    [onDragStart]
+  );
 
-  const onSelect = useCallback((ev: React.MouseEvent) => {
-    ev.stopPropagation();
-    handleSelect(nodeData.id);
-  }, [nodeData.id, handleSelect]);
+  const onSelect = useCallback(
+    (ev: React.MouseEvent) => {
+      ev.stopPropagation();
+      handleSelect(nodeData.id);
+    },
+    [nodeData.id, handleSelect]
+  );
 
-  const onMouseEnter = useCallback((ev: React.MouseEvent) => {
-    handleMouseEnter && handleMouseEnter(nodeData.id, ev);
-  }, [nodeData.id, handleMouseEnter]);
+  const onMouseEnter = useCallback(
+    (ev: React.MouseEvent) => {
+      handleMouseEnter && handleMouseEnter(nodeData.id, ev);
+    },
+    [nodeData.id, handleMouseEnter]
+  );
 
-  const onContextMenu = useCallback((ev: React.MouseEvent) => {
-    handleContextMenu && handleContextMenu(nodeData.id, ev);
-  }, [nodeData.id, handleContextMenu]);
+  const onContextMenu = useCallback(
+    (ev: React.MouseEvent) => {
+      handleContextMenu && handleContextMenu(nodeData, ev);
+    },
+    [handleContextMenu, nodeData]
+  );
 
   return (
     <li className={styles.treeNodeWrapper}>
       <ReactSortable
         revertOnSpill
         list={[{ id: nodeData.id }]}
-        setList={() => { }}
-
+        setList={() => {}}
         onMove={onDragMove}
         onEnd={onDragEnd}
         onStart={onStart}
@@ -129,19 +140,22 @@ export function BlockTreeItem<T extends TreeNode<T>>(props: BlockTreeItemProps<T
           onMouseEnter={onMouseEnter}
           onContextMenu={onContextMenu}
           className={classnames(styles.treeNode)}
-          {
-          ...{
+          {...{
             [DATA_ATTRIBUTE_ID]: nodeData.id,
             [DATA_ATTRIBUTE_INDEX]: index,
-          }
-          }
-
+          }}
         >
           <div style={{ width: indent * 18 }} />
-          <TreeCollapse hasChildren={Boolean(nodeData.children?.length)} expand={expand} setExpand={setExpand} />
-          <div className={styles.treeNodeTitle} onClick={onSelect}>{renderTitle(nodeData)}</div>
+          <TreeCollapse
+            hasChildren={Boolean(nodeData.children?.length)}
+            expand={expand}
+            setExpand={setExpand}
+          />
+          <div className={styles.treeNodeTitle} onClick={onSelect}>
+            {renderTitle(nodeData)}
+          </div>
           <IconFont
-            iconName="icon-drag"
+            iconName='icon-drag'
             style={{ cursor: 'grab', fontSize: 12 }}
           />
         </div>

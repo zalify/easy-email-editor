@@ -1,5 +1,11 @@
 import { ReactSortableProps } from 'react-sortablejs';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import styles from './index.module.scss';
 import {
   BlockTreeItem,
@@ -12,7 +18,7 @@ export interface BlockTreeProps<T extends TreeNode<T>> {
   treeData: T[];
   selectedId?: string;
   onSelect: (selectedId: string) => void;
-  onContextMenu?: (id: string) => void;
+  onContextMenu?: (nodeData: T, ev: React.MouseEvent) => void;
   onMouseLeave?: () => void;
   onMouseEnter?: (id: string, event: React.MouseEvent) => void;
   renderTitle: (data: T) => React.ReactNode;
@@ -57,10 +63,18 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
     willInsertAfter: boolean;
   }>(null);
 
-  const { treeData, allowDrop, onDrop, onSelect, onMouseEnter, onMouseLeave, onContextMenu } = props;
+  const {
+    treeData,
+    allowDrop,
+    onDrop,
+    onSelect,
+    onMouseEnter,
+    onMouseLeave,
+    onContextMenu,
+  } = props;
 
   const treeDataMap = useMemo(() => {
-    const map: { [key: string]: T; } = {};
+    const map: { [key: string]: T } = {};
 
     const loop = (node: T) => {
       if (map[node.id]) {
@@ -103,11 +117,8 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
   }, [eleRef, selectedId]);
 
   const onDragStart: ReactSortableProps<T>['onStart'] = useCallback(
-    (evt, sortable, store) => {
-      if (!eleRef) return;
-      eleRef.setAttribute('data-tree-dragging', 'true');
-    },
-    [eleRef]
+    (evt, sortable, store) => {},
+    []
   );
 
   const onDragMove: ReactSortableProps<T>['onMove'] = useCallback(
@@ -119,7 +130,6 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
       },
       originalEvent
     ) => {
-
       const dragEle = getCurrenTreeNode(evt.dragged);
       const dropEle = getCurrenTreeNode(evt.related);
 
@@ -151,49 +161,62 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
 
   const onDragEnd: ReactSortableProps<T>['onEnd'] = useCallback(
     (evt: {
-      originalEvent: { dataTransfer: DataTransfer; };
+      originalEvent: { dataTransfer: DataTransfer };
       from: HTMLElement;
       to: HTMLElement;
       newIndex: number;
       oldIndex: number;
     }) => {
-
       if (dropDataRef.current) {
         onDrop(dropDataRef.current);
       }
       dropDataRef.current = null;
-      if (!eleRef) return;
     },
-    [dropDataRef, eleRef, onDrop]
+    [dropDataRef, , onDrop]
   );
 
   const onSpill = useCallback(
-    (evt: { originalEvent: { dataTransfer: DataTransfer; }; }) => {
+    (evt: { originalEvent: { dataTransfer: DataTransfer } }) => {
       dropDataRef.current = null;
     },
     []
   );
 
-  return useMemo(() => (
-    <div ref={setEleRef} className={styles.tree} onMouseLeave={onMouseLeave}>
-      {props.treeData.map((item) => (
-        <ul key={item.id} className={styles.treeNodeList}>
-          <BlockTreeItem<T>
-            nodeData={item}
-            renderTitle={props.renderTitle}
-            indent={0}
-            index={0}
-            onSelect={onSelect}
-            onMouseEnter={onMouseEnter}
-            onContextMenu={onContextMenu}
-            defaultExpandAll={Boolean(props.defaultExpandAll)}
-            onDragStart={onDragStart}
-            onDragMove={onDragMove}
-            onDragEnd={onDragEnd}
-            onSpill={onSpill}
-          />
-        </ul>
-      ))}
-    </div>
-  ), [onContextMenu, onDragEnd, onDragMove, onDragStart, onMouseEnter, onMouseLeave, onSelect, onSpill, props.defaultExpandAll, props.renderTitle, props.treeData]);
+  return useMemo(
+    () => (
+      <div ref={setEleRef} className={styles.tree} onMouseLeave={onMouseLeave}>
+        {props.treeData.map((item) => (
+          <ul key={item.id} className={styles.treeNodeList}>
+            <BlockTreeItem<T>
+              nodeData={item}
+              renderTitle={props.renderTitle}
+              indent={0}
+              index={0}
+              onSelect={onSelect}
+              onMouseEnter={onMouseEnter}
+              onContextMenu={onContextMenu}
+              defaultExpandAll={Boolean(props.defaultExpandAll)}
+              onDragStart={onDragStart}
+              onDragMove={onDragMove}
+              onDragEnd={onDragEnd}
+              onSpill={onSpill}
+            />
+          </ul>
+        ))}
+      </div>
+    ),
+    [
+      onContextMenu,
+      onDragEnd,
+      onDragMove,
+      onDragStart,
+      onMouseEnter,
+      onMouseLeave,
+      onSelect,
+      onSpill,
+      props.defaultExpandAll,
+      props.renderTitle,
+      props.treeData,
+    ]
+  );
 }

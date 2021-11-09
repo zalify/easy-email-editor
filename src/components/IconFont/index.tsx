@@ -7,9 +7,11 @@ export function IconFont(props: {
   onClickCapture?: React.MouseEventHandler<HTMLDivElement>;
   size?: number;
   style?: React.CSSProperties;
+  title?: string;
 }) {
   return (
     <div
+      title={props.title}
       onClick={props.onClick}
       onClickCapture={props.onClickCapture}
       style={{

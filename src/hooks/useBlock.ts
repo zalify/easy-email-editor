@@ -39,6 +39,8 @@ export function useBlock() {
       payload?: any;
       canReplace?: boolean;
     }) => {
+      const start = console.time();
+
       let { type, parentIdx, positionIndex, payload } = params;
       let nextFocusIdx: string;
       const values = cloneDeep(getState().values) as IEmailTemplate;
@@ -86,19 +88,22 @@ export function useBlock() {
       const fixedBlock = findBlockByType(child.type);
       if (!fixedBlock.validParentType.includes(parent.type)) {
         message.warning(
-          `${block.type} cannot be used inside ${parentBlock.type
+          `${block.type} cannot be used inside ${
+            parentBlock.type
           }, only inside: ${block.validParentType.join(', ')}`
         );
         return;
       }
 
       parent.children.splice(positionIndex, 0, child);
-      change(parentIdx, { ...parent }); // listeners not notified
+      console.timeLog();
+      change(parentIdx, parent); // listeners not notified
       setFocusIdx(nextFocusIdx);
       scrollFocusBlockIntoView({
         idx: nextFocusIdx,
         inShadowDom: true,
       });
+      console.timeEnd();
     },
     [autoComplete, change, getState, setFocusIdx]
   );
@@ -180,7 +185,7 @@ export function useBlock() {
       const index = getIndexByIdx(idx) + 1;
 
       parent.children.splice(index, 0, copyBlock);
-      change(parentIdx, { ...parent });
+      change(parentIdx, parent);
       nextFocusIdx = `${parentIdx}.children.[${index}]`;
 
       setFocusIdx(nextFocusIdx);
@@ -216,7 +221,7 @@ export function useBlock() {
       }
 
       parent.children.splice(blockIndex, 1);
-      change(parentIdx, { ...parent });
+      change(parentIdx, parent);
       setFocusIdx(nextFocusIdx);
     },
     [change, getState, setFocusIdx]

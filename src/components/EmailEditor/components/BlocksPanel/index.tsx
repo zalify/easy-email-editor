@@ -20,7 +20,7 @@ import {
 import { EditorPropsContext } from '@/components/Provider/PropsProvider';
 import { isString } from 'lodash';
 
-export const BlocksPanel: React.FC<{ height: string | number; }> = (props) => {
+export const BlocksPanel: React.FC<{ height: string | number }> = (props) => {
   const { isDragging } = useHoverIdx();
   const [visible, setVisible] = useState(false);
   const [ele, setEle] = useState<HTMLElement | null>(null);
@@ -43,7 +43,9 @@ export const BlocksPanel: React.FC<{ height: string | number; }> = (props) => {
     ].filter((item) => item.blocks.length > 0);
   }, [extraBlocks]);
 
-  const height = isString(props.height) ? `calc(${props.height} - 80px)` : `calc(${props.height}px - 80px)`;
+  const height = isString(props.height)
+    ? `calc(${props.height} - 80px)`
+    : `calc(${props.height}px - 80px)`;
   return useMemo(
     () => (
       <>
@@ -59,7 +61,7 @@ export const BlocksPanel: React.FC<{ height: string | number; }> = (props) => {
                   position: 'absolute',
                   width: isDragging ? 0 : 650,
                   zIndex: 200,
-                  top: -160,
+                  top: -210,
                   left: 47,
                   transition: 'width .5s',
                   boxShadow:
@@ -75,15 +77,15 @@ export const BlocksPanel: React.FC<{ height: string | number; }> = (props) => {
                     </div>
                   }
                 >
-                  <Tabs
-
-                    tabBarStyle={{ padding: 0 }}
-                    tabPosition='left'
-                  >
+                  <Tabs tabBarStyle={{ padding: 0 }} tabPosition='left'>
                     {categories.map((category) => (
                       <Tabs.TabPane
-                        className="no-scrollbar"
-                        style={{ padding: 0, maxHeight: height, overflow: 'auto' }}
+                        className='no-scrollbar'
+                        style={{
+                          padding: 0,
+                          maxHeight: height,
+                          overflow: 'auto',
+                        }}
                         key={category.title}
                         tab={category.title}
                       >
@@ -98,7 +100,15 @@ export const BlocksPanel: React.FC<{ height: string | number; }> = (props) => {
         </div>
       </>
     ),
-    [categories, ele, height, isDragging, props.children, toggleVisible, visible]
+    [
+      categories,
+      ele,
+      height,
+      isDragging,
+      props.children,
+      toggleVisible,
+      visible,
+    ]
   );
 };
 
@@ -111,8 +121,7 @@ const BlockPanelItem: React.FC<{
       {props.category.blocks.map((block, index) => {
         return (
           <Tabs.TabPane
-
-            style={{ padding: 0, }}
+            style={{ padding: 0 }}
             key={block.title}
             tab={
               <Stack alignment='center' spacing='extraTight'>
@@ -122,7 +131,7 @@ const BlockPanelItem: React.FC<{
             }
           >
             <div
-              className="small-scrollbar"
+              className='small-scrollbar'
               style={{
                 maxHeight: props.height,
                 overflow: 'auto',

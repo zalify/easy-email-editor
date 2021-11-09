@@ -5,19 +5,58 @@ import { BasicType } from 'easy-email-editor';
 import React from 'react';
 import { BlocksPanel } from '../BlocksPanel';
 
-export function ShortcutToolbar({ height }: { height: string | number; }) {
+export function ShortcutToolbar({ height }: { height: string | number }) {
   return (
     <Stack vertical alignment='center' distribution='center'>
       <Stack.Item />
 
       <BlockAvatarWrapper type={BasicType.TEXT}>
-        <IconFont iconName="icon-text-rounded" style={{ fontSize: 18, color: '#6ED787' }} />
+        <IconFont
+          title='Text'
+          iconName='icon-text-rounded'
+          style={{
+            fontSize: 18,
+            textAlign: 'center',
+            cursor: 'move',
+            color: '#6ED787',
+          }}
+        />
       </BlockAvatarWrapper>
       <BlockAvatarWrapper type={BasicType.IMAGE}>
-        <IconFont iconName="icon-img" style={{ fontSize: 20, color: '#FAD061' }} />
+        <IconFont
+          title='Image'
+          iconName='icon-img'
+          style={{
+            fontSize: 20,
+            textAlign: 'center',
+            cursor: 'move',
+            color: '#FAD061',
+          }}
+        />
       </BlockAvatarWrapper>
       <BlockAvatarWrapper type={BasicType.BUTTON}>
-        <IconFont iconName="icon-button" style={{ fontSize: 22, color: '#59BEF8' }} />
+        <IconFont
+          title='Button'
+          iconName='icon-button'
+          style={{
+            fontSize: 22,
+            textAlign: 'center',
+            cursor: 'move',
+            color: '#59BEF8',
+          }}
+        />
+      </BlockAvatarWrapper>
+      <BlockAvatarWrapper type={BasicType.SECTION}>
+        <IconFont
+          title='Section'
+          iconName='icon-section'
+          style={{
+            fontSize: 22,
+            textAlign: 'center',
+            cursor: 'move',
+            color: '#e5afe5',
+          }}
+        />
       </BlockAvatarWrapper>
 
       <BlocksPanel height={height}>
@@ -37,7 +76,6 @@ export function ShortcutToolbar({ height }: { height: string | number; }) {
           }}
         />
       </BlocksPanel>
-
     </Stack>
   );
 }

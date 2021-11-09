@@ -15,7 +15,6 @@ import {
   WrapperBlockItem,
   BasicType,
 } from '@/components/EmailEditor/components/BlocksPanel/presetTemplate';
-import { RawBlockItem } from '@/components/EmailEditor/components/BlocksPanel/presetTemplate/RawBlockItem';
 import { Stack } from '@/components/UI/Stack';
 import { TextStyle } from '@/components/UI/TextStyle';
 import { BlockType } from '@/constants';
@@ -110,12 +109,6 @@ const defaultCategories = [
         their associated logo.`,
         ExampleComponent: SocialBlockItem,
       },
-      {
-        type: BasicType.RAW,
-        title: 'Raw',
-        description: 'Displays raw HTML that is not going to be parsed by the MJML engine. Anything left inside this tag should be raw, responsive HTML.',
-        ExampleComponent: RawBlockItem,
-      },
     ],
   },
   {
@@ -195,7 +188,7 @@ export class BlockMarketManager {
   private static category: BlockMarketCategory[] = [...defaultCategories];
 
   public static getCategory(name: string) {
-    return this.category.find(item => item.name === name);
+    return this.category.find((item) => item.name === name);
   }
 
   public static getCategories() {
@@ -212,7 +205,7 @@ export class BlockMarketManager {
       ExampleComponent: () => JSX.Element;
     }[]
   ) {
-    const index = this.category.findIndex(item => item.name === name);
+    const index = this.category.findIndex((item) => item.name === name);
     if (index !== -1) {
       this.category.splice(index, 1);
     }
@@ -225,6 +218,6 @@ export class BlockMarketManager {
   }
 
   public static removeCategory(name: string) {
-    this.category = this.category.filter(item => item.name !== name);
+    this.category = this.category.filter((item) => item.name !== name);
   }
 }
