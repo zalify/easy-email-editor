@@ -136,7 +136,6 @@ function SocialElement({
         name={`${focusIdx}.data.value.elements.[${index}].src`}
         helpText='The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.'
         uploadHandler={onUploadImage}
-        inline
       />
 
       <TextField

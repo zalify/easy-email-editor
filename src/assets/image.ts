@@ -71,4 +71,5 @@ export enum IMAGE_LIST {
   IMAGE_68 = 'https://assets.maocanhua.cn/Fm68ZvFvWSfAQXG2CatVDGykHUhv',
   IMAGE_69 = 'https://assets.maocanhua.cn/FmfbOoulGj13LGxYKPVm0noVLodV',
   IMAGE_70 = 'https://assets.maocanhua.cn/Foz01zhkb0U_LVKi8c4NhBFPqLDe',
+  IMAGE_71 = 'https://assets.maocanhua.cn/df955b43-7862-4439-b366-4a71ab19f1f3-image.png',
 }

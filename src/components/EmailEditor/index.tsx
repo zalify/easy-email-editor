@@ -63,20 +63,26 @@ export const EmailEditor = (props: EmailEditorProps) => {
             <ShortcutToolbar height={containerHeight} />
           </Layout.Sider>
           <Layout.Sider
-            style={{ borderLeft: 'none', height: containerHeight, overflow: 'auto', }}
+            style={{
+              borderLeft: 'none',
+              height: containerHeight,
+              overflow: 'auto',
+            }}
             className={styles.customScrollBar}
             theme='light'
             width={300}
           >
-            <Card bodyStyle={{ padding: 0, paddingBottom: 50, }} style={{ borderBottom: 'none' }}>
+            <Card
+              bodyStyle={{ padding: 0, paddingBottom: 50 }}
+              style={{ borderBottom: 'none' }}
+            >
               <Tabs
                 tabBarStyle={{
                   paddingLeft: 20,
                   marginBottom: 0,
                   backgroundColor: '#fff',
                 }}
-
-                style={{ borderLeft: 'none', }}
+                style={{ borderLeft: 'none' }}
                 defaultActiveKey='Layout'
               >
                 <TabPane style={{ paddingTop: 10 }} key='Layout' tab='Layout'>
@@ -99,6 +105,7 @@ export const EmailEditor = (props: EmailEditorProps) => {
                 style={{
                   backgroundColor: backgroundColor,
                   height: containerHeight,
+                  paddingBottom: 40,
                 }}
               >
                 <Tabs
@@ -112,12 +119,12 @@ export const EmailEditor = (props: EmailEditorProps) => {
                   tabBarExtraContent={<ToolsPanel />}
                 >
                   <TabPane
-                    tab={(
+                    tab={
                       <Stack spacing='none'>
                         <EditOutlined />
                         <TextStyle>Edit</TextStyle>
                       </Stack>
-                    )}
+                    }
                     key={ActiveTabKeys.EDIT}
                   >
                     <div
@@ -131,24 +138,24 @@ export const EmailEditor = (props: EmailEditorProps) => {
                     </div>
                   </TabPane>
                   <TabPane
-                    tab={(
+                    tab={
                       <Stack spacing='none'>
                         <DesktopOutlined />
                         <TextStyle>Preview</TextStyle>
                       </Stack>
-                    )}
+                    }
                     key={ActiveTabKeys.PC}
                     style={{ backgroundColor: 'transparent' }}
                   >
                     <DesktopEmailPreview />
                   </TabPane>
                   <TabPane
-                    tab={(
+                    tab={
                       <Stack spacing='none'>
                         <TabletOutlined />
                         <TextStyle>Preview</TextStyle>
                       </Stack>
-                    )}
+                    }
                     key={ActiveTabKeys.MOBILE}
                     style={{ backgroundColor: 'transparent' }}
                   >

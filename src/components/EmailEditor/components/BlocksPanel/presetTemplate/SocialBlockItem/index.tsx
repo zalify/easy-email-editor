@@ -55,6 +55,54 @@ const list = [
       children: [],
     },
   },
+  {
+    thumbnail: IMAGE_LIST.IMAGE_71,
+    payload: {
+      type: BasicType.SOCIAL,
+      data: {
+        value: {
+          elements: [
+            {
+              href: '#',
+              'icon-size': '20px',
+              target: '_blank',
+              src: IMAGE_LIST.IMAGE_53,
+              content: '',
+            },
+            {
+              href: '#',
+              'icon-size': '20px',
+              target: '_blank',
+              src: IMAGE_LIST.IMAGE_54,
+              content: '',
+            },
+            {
+              href: '',
+              'icon-size': '20px',
+              target: '_blank',
+              src: IMAGE_LIST.IMAGE_55,
+              content: '',
+            },
+          ],
+        },
+      },
+      attributes: {
+        align: 'center',
+        color: '#333333',
+        mode: 'horizontal',
+        'font-size': '13px',
+        'font-weight': 'normal',
+        'border-radius': '3px',
+        padding: '10px 25px 10px 25px',
+        'inner-padding': '4px 4px 4px 4px',
+        'line-height': '22px',
+        'text-padding': '4px 4px 4px 0px',
+        'icon-padding': '0px',
+        'icon-size': '20px',
+      },
+      children: [],
+    },
+  },
 ];
 
 export function SocialBlockItem() {
