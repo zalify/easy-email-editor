@@ -6,7 +6,7 @@ import { getChildIdx, getPageIdx, getSiblingIdx } from '@/utils/block';
 import { BlockInteractiveStyle } from '../../../BlockInteractiveStyle';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import { BlockTree, BlockTreeProps } from './components/BlockTree';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, get } from 'lodash';
 import { useBlock } from '@/hooks/useBlock';
 import { scrollFocusBlockIntoView } from '@/utils/scrollFocusBlockIntoView';
 import { EyeIcon } from './components/EyeIcon';
@@ -24,7 +24,7 @@ export interface IBlockDataWithId extends IBlockData {
 }
 
 export function BlockLayerManager() {
-  const { pageData } = useEditorContext();
+  const { pageData, values } = useEditorContext();
   const { onUploadImage, onAddCollection } = useContext(EditorPropsContext);
   const { focusIdx, setFocusIdx } = useFocusIdx();
   const { setHoverIdx } = useHoverIdx();
@@ -36,21 +36,23 @@ export function BlockLayerManager() {
   } | null>(null);
 
   const onToggleVisible = useCallback(
-    (blockData: IBlockDataWithId, e: React.MouseEvent) => {
+    ({ id }: IBlockDataWithId, e: React.MouseEvent) => {
       e.stopPropagation();
-      blockData.data.hidden = !blockData.data.hidden;
-      setValueByIdx(blockData.id, blockData);
+      const blockData = get(values, id) as IBlockData | null;
+
+      if (blockData) {
+        blockData.data.hidden = !blockData.data.hidden;
+        setValueByIdx(id, blockData);
+      }
     },
-    [setValueByIdx]
+    [setValueByIdx, values]
   );
 
   const renderTitle = useCallback(
     (data: IBlockDataWithId) => {
       const block = BlocksMap.findBlockByType(data.type);
       return (
-        <div
-          className={styles.title}
-        >
+        <div className={styles.title}>
           <TextStyle size='smallest'>{block.name}</TextStyle>
           <div className={styles.eyeIcon}>
             <EyeIcon blockData={data} onToggleVisible={onToggleVisible} />
