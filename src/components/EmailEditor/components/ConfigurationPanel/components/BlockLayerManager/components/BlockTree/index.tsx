@@ -74,7 +74,7 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
   } = props;
 
   const treeDataMap = useMemo(() => {
-    const map: { [key: string]: T } = {};
+    const map: { [key: string]: T; } = {};
 
     const loop = (node: T) => {
       if (map[node.id]) {
@@ -112,12 +112,16 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
       );
       if (selectedNode) {
         selectedNode.classList.add(styles.treeNodeSelected);
+        selectedNode.scrollIntoView({
+          block: 'center',
+          behavior: 'smooth',
+        });
       }
     }
   }, [eleRef, selectedId]);
 
   const onDragStart: ReactSortableProps<T>['onStart'] = useCallback(
-    (evt, sortable, store) => {},
+    (evt, sortable, store) => { },
     []
   );
 
@@ -161,7 +165,7 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
 
   const onDragEnd: ReactSortableProps<T>['onEnd'] = useCallback(
     (evt: {
-      originalEvent: { dataTransfer: DataTransfer };
+      originalEvent: { dataTransfer: DataTransfer; };
       from: HTMLElement;
       to: HTMLElement;
       newIndex: number;
@@ -176,7 +180,7 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
   );
 
   const onSpill = useCallback(
-    (evt: { originalEvent: { dataTransfer: DataTransfer } }) => {
+    (evt: { originalEvent: { dataTransfer: DataTransfer; }; }) => {
       dropDataRef.current = null;
     },
     []

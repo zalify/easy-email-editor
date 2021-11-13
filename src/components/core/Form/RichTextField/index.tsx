@@ -25,11 +25,13 @@ const RichTextFieldItem = (
   const { activeTab } = useActiveTab();
   const isActive = activeTab === ActiveTabKeys.EDIT;
 
-  const [position, setPosition] = useState({ top: 0, left: 0 });
-  const [locationState, setLocationState] = useLocalStorage(
+  const [locationState, setLocationState] = useLocalStorage<{ left: number; top: number; } | null>(
     TEXT_BAR_LOCATION_KEY,
-    { left: 0, top: 0 }
+    null
   );
+
+  const [position, setPosition] = useState(locationState || { top: 0, left: 0 });
+
   const { idx } = props;
 
   const container = findBlockNodeByIdx(idx);
@@ -55,13 +57,15 @@ const RichTextFieldItem = (
     onDrag({
       event: event as any,
       onMove(x, y) {
+        const nextX = position.left + x;
+        const nextY = position.top + y;
         setPosition({
-          left: position.left + x,
-          top: position.top + y,
+          left: nextX,
+          top: nextY,
         });
         setLocationState({
-          left: position.left + x,
-          top: position.top + y,
+          left: nextX,
+          top: nextY,
         });
       },
       onEnd() { },

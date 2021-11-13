@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { getShadowRoot } from '@/utils/findBlockNodeByIdx';
 import React, { useEffect, useState } from 'react';
 
@@ -15,7 +16,7 @@ export const SelectionRangeProvider: React.FC<{}> = (props) => {
   useEffect(() => {
     const onSelectionChange = () => {
       try {
-        const range = getShadowRoot().getSelection()?.getRangeAt(0);
+        const range = (getShadowRoot() as any).getSelection().getRangeAt(0);
         if (range) {
           setSelectionRange(range);
         }

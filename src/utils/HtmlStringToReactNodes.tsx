@@ -158,6 +158,7 @@ function createElement(
     class?: string;
     role?: string;
     src?: string;
+    dangerouslySetInnerHTML?: any;
   }
 ) {
   if (type === 'img' && props?.src && /{{([\s\S]+?)}}/g.test(props.src)) {

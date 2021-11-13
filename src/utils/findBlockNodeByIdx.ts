@@ -2,7 +2,7 @@ import { getNodeIdxClassName } from './block';
 
 export const getEditorRoot = () =>
   document.getElementById('VisualEditorEditMode');
-export const getShadowRoot = () => getEditorRoot()?.shadowRoot!;
+export const getShadowRoot = () => getEditorRoot()?.shadowRoot as ShadowRoot;
 export const getBlockNodes = (inShadowDom: boolean = true) =>
   Array.from(
     (inShadowDom ? getShadowRoot() : document)?.querySelectorAll(

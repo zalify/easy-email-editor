@@ -1,11 +1,11 @@
 import { BlockAvatarWrapper } from '@/components/core/wrapper/BlockAvatarWrapper';
 import { IconFont } from '@/components/IconFont';
 import { Stack } from '@/components/UI/Stack';
-import { BasicType } from 'easy-email-editor';
+import { BasicType } from '@/constants';
 import React from 'react';
 import { BlocksPanel } from '../BlocksPanel';
 
-export function ShortcutToolbar({ height }: { height: string | number }) {
+export function ShortcutToolbar({ height }: { height: string | number; }) {
   return (
     <Stack vertical alignment='center' distribution='center'>
       <Stack.Item />

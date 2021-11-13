@@ -75,7 +75,7 @@ export function ImageUploader(props: ImageUploaderProps) {
             await previewLoadImage(picture);
             props.onChange(picture);
             setIsUploading(false);
-          } catch (error) {
+          } catch (error: any) {
             message.error(error?.message || error || 'Upload failed');
             setIsUploading(false);
           }
