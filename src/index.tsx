@@ -21,6 +21,8 @@ export { useEditorContext } from './hooks/useEditorContext';
 export * from './hooks/useFocusIdx';
 export * from './hooks/useHoverIdx';
 
+export { IMAGE_LIST } from './assets/image';
+
 // export methods
 export { transformToMjml } from './utils/transformToMjml';
 export { MjmlToJson } from './utils/MjmlToJson';

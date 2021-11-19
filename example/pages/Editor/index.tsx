@@ -23,6 +23,7 @@ import {
   EmailEditorProviderProps,
   IEmailTemplate,
   transformToMjml,
+  IMAGE_LIST
 } from 'easy-email-editor';
 import 'easy-email-editor/lib/style.css';
 import { Stack } from '@example/components/Stack';
@@ -34,6 +35,9 @@ import './components/CustomBlocks';
 import { useCollection } from './components/useCollection';
 import { customBlocks } from './components/CustomBlocks';
 import mustache from 'mustache';
+
+// overwrite default image
+(IMAGE_LIST as any).IMAGE_01 = 'http://5vph.mj.am/img/5vph/b/1g8pi/068ys.png';
 
 const fontList = [
   'Arial',
