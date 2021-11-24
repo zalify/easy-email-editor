@@ -9,7 +9,7 @@ import {
 } from '@extensions/components/Form';
 import { LinkOutlined } from '@ant-design/icons';
 import { Collapse } from 'antd';
-import { EditorPropsContext, Stack, useFocusIdx } from 'easy-email-editor';
+import { Stack, useEditorProps, useFocusIdx } from 'easy-email-editor';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
 import { Align } from '@extensions/AttributePanel/components/attributes/Align';
 import { ICarousel } from 'easy-email-core';

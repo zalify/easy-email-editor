@@ -57,7 +57,7 @@ export function BlockLayer() {
       const block = BlockManager.getBlockByType(data.type);
       return (
         <div className={styles.title}>
-          <TextStyle size='smallest'>{block.name}</TextStyle>
+          <TextStyle size='smallest'>{block?.name}</TextStyle>
           <div className={styles.eyeIcon}>
             <EyeIcon blockData={data} onToggleVisible={onToggleVisible} />
           </div>
@@ -121,6 +121,8 @@ export function BlockLayer() {
     (params) => {
       const { dragNode, dropNode, willInsertAfter } = params;
       const dragBlock = BlockManager.getBlockByType(dragNode.type);
+      if (!dragBlock) return false;
+
       if (
         dragBlock.validParentType.includes(dropNode.type) &&
         willInsertAfter
@@ -143,6 +145,7 @@ export function BlockLayer() {
     (params) => {
       const { dragNode, dropNode, willInsertAfter } = params;
       const dragBlock = BlockManager.getBlockByType(dragNode.type);
+      if (!dragBlock) return;
 
       if (
         dragBlock.validParentType.includes(dropNode.type) &&

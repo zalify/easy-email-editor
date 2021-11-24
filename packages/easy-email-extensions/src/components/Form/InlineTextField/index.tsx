@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { getEditContent, getEditNode, } from '@extensions/AttributePanel/utils/getEditNode';
 import { FIXED_CONTAINER_ID, useBlock, getShadowRoot, getEditorRoot } from 'easy-email-editor';
 import { useField } from 'react-final-form';
 import { awaitForElement } from '@extensions/AttributePanel/utils/awaitForElement';
+import { getEditContent, getEditNode } from '@extensions/AttributePanel/utils/getEditNode';
 
 export interface InlineTextProps {
   idx: string;
@@ -68,8 +68,6 @@ export function InlineText({
       const onPaste = (e: ClipboardEvent) => {
         e.preventDefault();
         const text = e.clipboardData?.getData('text/plain') || '';
-        console.log(text);
-        debugger;
         document.execCommand('insertHTML', false, text);
       };
       const stopDrag = (e: Event) => {

@@ -1,5 +1,4 @@
 import { IBlockData, IPage } from 'easy-email-core';
-import { BlockMarketCategory } from '@/utils/BlockMarketManager';
 import React, { useMemo } from 'react';
 export interface CollectedBlock {
   label: string;
@@ -16,7 +15,6 @@ export interface BlockGroup {
 
 export interface PropsProviderProps {
   height: string;
-  extraBlocks?: BlockMarketCategory[];
   fontList?: { value: string; label: string; }[];
   onAddCollection?: (payload: CollectedBlock) => void;
   onRemoveCollection?: (payload: { id: string; }) => void;
@@ -38,7 +36,6 @@ export interface PropsProviderProps {
 
 export const EditorPropsContext = React.createContext<PropsProviderProps>({
   height: '100vh',
-  extraBlocks: [],
   fontList: [],
   onAddCollection: undefined,
   onRemoveCollection: undefined,

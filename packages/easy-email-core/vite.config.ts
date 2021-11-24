@@ -11,7 +11,7 @@ export default defineConfig({
   define: {},
   build: {
     emptyOutDir: false,
-    minify: false,
+    minify: true,
     manifest: false,
     sourcemap: false,
     target: 'es2015',

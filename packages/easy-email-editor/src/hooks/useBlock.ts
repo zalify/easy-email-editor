@@ -45,7 +45,7 @@ export function useBlock() {
       const values = cloneDeep(getState().values) as IEmailTemplate;
       const parent = get(values, parentIdx) as IBlockData | null;
       if (!parent) {
-        console.error('Invalid block');
+        console.error(`Invalid ${type} block`);
         return;
       }
 
@@ -56,7 +56,11 @@ export function useBlock() {
       }
       nextFocusIdx = `${parentIdx}.children.[${positionIndex}]`;
       const block = BlockManager.getBlockByType(type);
-      const parentBlock = BlockManager.getBlockByType(parent.type);
+      if (!block) {
+        console.error(`Invalid ${type} block`);
+        return;
+      }
+      const parentBlock = BlockManager.getBlockByType(parent.type)!;
 
       if (autoComplete) {
         const autoCompletePaths = BlockManager.getAutoCompletePath(
@@ -85,10 +89,9 @@ export function useBlock() {
       }
 
       const fixedBlock = BlockManager.getBlockByType(child.type);
-      if (!fixedBlock.validParentType.includes(parent.type)) {
+      if (!fixedBlock?.validParentType.includes(parent.type)) {
         console.error(
-          `${block.type} cannot be used inside ${
-            parentBlock.type
+          `${block.type} cannot be used inside ${parentBlock.type
           }, only inside: ${block.validParentType.join(', ')}`
         );
         return;

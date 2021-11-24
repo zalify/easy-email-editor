@@ -91,7 +91,7 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
   ]);
 
   const onDragStart = useCallback(
-    (evt: { originalEvent: DragEvent }) => {
+    (evt: { originalEvent: DragEvent; }) => {
       if (action === 'add') {
         setDataTransfer({
           type: type,
@@ -113,13 +113,13 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
   );
 
   const onSpill = useCallback(
-    (evt: { originalEvent: { dataTransfer: DataTransfer } }) => {
+    (evt: { originalEvent: { dataTransfer: DataTransfer; }; }) => {
       // cacheDataTransfer.current = null;
     },
     []
   );
 
-  const onChoose = useCallback(() => {}, []);
+  const onChoose = useCallback(() => { }, []);
 
   const allowDrop = useCallback(
     (evt: {
@@ -129,7 +129,7 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
     }) => {
       const dragBlock = BlockManager.getBlockByType(type);
 
-      if (!type) return false;
+      if (!type || !dragBlock) return false;
       const dropIdx = evt.related.getAttribute(DATA_ATTRIBUTE_ID);
       if (!dropIdx) return false;
 
@@ -194,7 +194,7 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
       revertOnSpill
       disabled={disabled}
       list={[{}] as any}
-      setList={() => {}}
+      setList={() => { }}
       onMove={onMove}
       onEnd={onDragEnd}
       onSpill={onSpill}

@@ -1,9 +1,8 @@
-import { BlockType } from '@core/constants';
 import { IBlockData, RecursivePartial } from '@core/typings';
 import { BlockManager } from './BlockManager';
 
 export function createBlockDataByType<T extends IBlockData>(
-  type: BlockType,
+  type: string,
   payload?: RecursivePartial<T>
 ): IBlockData {
   const component = BlockManager.getBlockByType(type);

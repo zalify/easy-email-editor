@@ -16,7 +16,7 @@ export default defineConfig({
       lodash: 'lodash-es',
       '@': path.resolve(__dirname, './src'),
       react: path.resolve('../easy-email-core/node_modules/react'),
-      'easy-email-core': path.resolve('../easy-email-core/lib'),
+      'easy-email-core': path.resolve('../easy-email-core'),
     },
   },
   define: {},

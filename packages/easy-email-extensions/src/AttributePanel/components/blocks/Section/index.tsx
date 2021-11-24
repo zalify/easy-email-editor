@@ -30,7 +30,7 @@ export function Section() {
           }
         }
         focusBlock.children = [
-          BlockManager.getBlockByType(BasicType.GROUP).create({
+          BlockManager.getBlockByType(BasicType.GROUP)!.create({
             children: children,
           }),
         ];
