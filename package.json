@@ -97,6 +97,7 @@
   "dependencies": {
     "@types/mustache": "^4.1.2",
     "antd": "^4.15.5",
+    "browser-image-compression": "^1.0.17",
     "codemirror": "^5.63.1",
     "final-form": "^4.20.2",
     "final-form-arrays": "^3.0.2",

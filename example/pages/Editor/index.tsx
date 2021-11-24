@@ -23,21 +23,22 @@ import {
   EmailEditorProviderProps,
   IEmailTemplate,
   transformToMjml,
-  IMAGE_LIST
+  IMAGE_LIST,
 } from 'easy-email-editor';
 import 'easy-email-editor/lib/style.css';
 import { Stack } from '@example/components/Stack';
 import { pushEvent } from '@example/util/pushEvent';
 import { FormApi } from 'final-form';
 import { UserStorage } from '@example/util/user-storage';
-
+import imageCompression from 'browser-image-compression';
 import './components/CustomBlocks';
 import { useCollection } from './components/useCollection';
 import { customBlocks } from './components/CustomBlocks';
 import mustache from 'mustache';
 
 // overwrite default image
-(IMAGE_LIST as any).IMAGE_01 = 'http://5vph.mj.am/img/5vph/b/1g8pi/068ys.png';
+(IMAGE_LIST as any).IMAGE_01 =
+  'https://assets.maocanhua.cn/b722a64d-aa3d-4694-8315-cdc32cec2f67-image.png';
 
 const fontList = [
   'Arial',
@@ -62,7 +63,8 @@ export default function Editor() {
   const dispatch = useDispatch();
   const history = useHistory();
   const templateData = useAppSelector('template');
-  const { addCollection, removeCollection, collectionCategory } = useCollection();
+  const { addCollection, removeCollection, collectionCategory } =
+    useCollection();
   const { openModal, modal } = useEmailModal();
   const { id, userId } = useQuery();
   const loading = useLoading(template.loadings.fetchById);
@@ -101,7 +103,8 @@ export default function Editor() {
     return {
       user: {
         name: 'Ryan',
-        avatar: 'https://assets.maocanhua.cn/bbb041da-62c3-4e6a-9648-60a06738836b-image.png'
+        avatar:
+          'https://assets.maocanhua.cn/bbb041da-62c3-4e6a-9648-60a06738836b-image.png',
       },
       company: {
         name: 'Easy email',
@@ -112,7 +115,7 @@ export default function Editor() {
       condition: {
         isHidden: true,
         isNotHidden: false,
-      }
+      },
     };
   }, []);
 
@@ -149,6 +152,13 @@ export default function Editor() {
     [dispatch, history, id]
   );
 
+  const onUploadImage = async (blob: Blob) => {
+    const compressionFile = await imageCompression(blob as File, {
+      maxWidthOrHeight: 1440,
+    });
+    return services.common.uploadByQiniu(compressionFile);
+  };
+
   const onExportHtml = (values: IEmailTemplate) => {
     pushEvent({ name: 'ExportHtml' });
     const html = mjml(
@@ -175,9 +185,10 @@ export default function Editor() {
     };
   }, [templateData]);
 
-  const onBeforePreview: EmailEditorProviderProps['onBeforePreview'] = useCallback((data, mergeTags) => {
-    return JSON.parse(mustache.render(JSON.stringify(data), mergeTags));
-  }, []);
+  const onBeforePreview: EmailEditorProviderProps['onBeforePreview'] =
+    useCallback((data, mergeTags) => {
+      return JSON.parse(mustache.render(JSON.stringify(data), mergeTags));
+    }, []);
 
   if (!templateData && loading) {
     return (
@@ -197,7 +208,7 @@ export default function Editor() {
         extraBlocks={extraBlocks}
         onAddCollection={addCollection}
         onRemoveCollection={({ id }) => removeCollection(id)}
-        onUploadImage={services.common.uploadByQiniu}
+        onUploadImage={onUploadImage}
         interactiveStyle={{
           hoverColor: '#78A349',
           selectedColor: '#1890ff',
@@ -206,7 +217,6 @@ export default function Editor() {
         onSubmit={onSubmit}
         autoComplete
         dashed={false}
-
         mergeTags={mergeTags}
         onBeforePreview={onBeforePreview}
       >
