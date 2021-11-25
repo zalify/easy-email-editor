@@ -10,7 +10,7 @@ import styles from './index.module.scss';
 
 const { TabPane } = Tabs;
 
-export const SimpleFrame: React.FC = (props) => {
+export const SimpleLayout: React.FC = (props) => {
   const { height: containerHeight } = useEditorProps();
   return (
     <Layout>

@@ -17,25 +17,33 @@ $ yarn add easy-email-extensions
 ```
 
 ```js
-import React from "react";
-import { BlocksMap, EmailEditor, EmailEditorProvider } from "easy-email-editor";
-import "easy-email-editor/lib/style.css";
-import "antd/dist/antd.css";
+import React from 'react';
+import { BlockManager, BasicType } from 'easy-email-core';
+import { EmailEditor, EmailEditorProvider } from 'easy-email-editor';
+import { SimpleLayout } from 'easy-email-extensions';
+
+import 'easy-email-editor/lib/style.css';
+import 'easy-email-extensions/lib/style.css';
 
 const initialValues = {
-  subject: "Welcome to Easy-email",
-  subTitle: "Nice to meet you!",
-  content: BlocksMap.getBlock("Page").create({}),
+  subject: 'Welcome to Easy-email',
+  subTitle: 'Nice to meet you!',
+  content: BlockManager.getBlockByType(BasicType.PAGE)!.create({}),
 };
 
 export function App() {
   return (
-    <EmailEditorProvider data={initialValues} height={"calc(100vh - 72px)"}>
+    <EmailEditorProvider
+      data={initialValues}
+      height={'calc(100vh - 72px)'}
+      autoComplete
+      dashed={false}
+    >
       {({ values }) => {
         return (
-          <SimpleFrame>
+          <SimpleLayout>
             <EmailEditor />
-          </SimpleFrame>
+          </SimpleLayout>
         );
       }}
     </EmailEditorProvider>
@@ -125,6 +133,6 @@ export function App() {
     ]);
     ```
 
-- `SimpleFrame`
+- `SimpleLayout`
 
   - All in one extension, provide basic and complete layout example. Refer to the above extension for configuration items.

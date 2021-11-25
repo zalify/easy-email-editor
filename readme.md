@@ -32,9 +32,9 @@ Easy email is developed based on the [MJML](https://mjml.io/) and has very good 
 
 - Drag and drop editor
 - Can be converted into `MJML`, or generated through `MJML`
-- Collect blocks and reuse them at other times
 - Defined custom block
 - Dynamic rendering
+- Easily customize UI when you need
 
 
 |                                                                                  Video Overview                                                                                  |
@@ -49,41 +49,50 @@ Check out the live demo here: <a href="http://easy-email-m-ryan.vercel.app" targ
 ## Getting started
 
 ```sh
-$ npm install --save easy-email-editor antd mjml-browser react-final-form
+$ npm install --save easy-email-core easy-email-editor easy-email-extensions
 ```
 
 or
 
 ```sh
-$ yarn add easy-email-editor antd mjml-browser react-final-form
+$ yarn add easy-email-core easy-email-editor easy-email-extensions
 ```
 
 ```js
-import React from "react";
-import { BlocksMap, EmailEditor, EmailEditorProvider } from "easy-email-editor";
-import "easy-email-editor/lib/style.css";
-import "antd/dist/antd.css";
+import React from 'react';
+import { BlockManager, BasicType } from 'easy-email-core';
+import { EmailEditor, EmailEditorProvider } from 'easy-email-editor';
+import { SimpleLayout } from 'easy-email-extensions';
+
+import 'easy-email-editor/lib/style.css';
+import 'easy-email-extensions/lib/style.css';
 
 const initialValues = {
-  subject: "Welcome to Easy-email",
-  subTitle: "Nice to meet you!",
-  content: BlocksMap.getBlock("Page").create({}),
+  subject: 'Welcome to Easy-email',
+  subTitle: 'Nice to meet you!',
+  content: BlockManager.getBlockByType(BasicType.PAGE)!.create({}),
 };
 
 export function App() {
   return (
-    <EmailEditorProvider data={initialValues}>
+    <EmailEditorProvider
+      data={initialValues}
+      height={'calc(100vh - 72px)'}
+      autoComplete
+      dashed={false}
+    >
       {({ values }) => {
-        return <EmailEditor height={"calc(100vh - 72px)"} />;
+        return (
+          <SimpleLayout>
+            <EmailEditor />
+          </SimpleLayout>
+        );
       }}
     </EmailEditorProvider>
   );
 }
+
 ```
-
-## Docs
-
-Check out [documentation](https://docs-easy-email.vercel.app/) for guides and a full API reference.
 
 ## Examples
 
@@ -94,16 +103,12 @@ Check out [documentation](https://docs-easy-email.vercel.app/) for guides and a 
 ```sh
 $ git clone git@github.com:m-Ryan/easy-email.git
 $ cd easy-email
-$ yarn install
+$ yarn install-all
+$ yarn dev
 
 ```
 
 ## Start the dev server
-
-```sh
-$ yarn dev
-
-```
 
 ## License
 

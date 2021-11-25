@@ -7,25 +7,26 @@ Email render and preview container.
 ## usage
 
 ```sh
-$ npm install --save easy-email-editor mjml-browser react-final-form
+$ npm install --save easy-email-editor
 ```
 
 or
 
 ```sh
-$ yarn add easy-email-editor mjml-browser react-final-form
+$ yarn add easy-email-editor
 ```
 
 ```js
 import React from "react";
-import { BlocksMap, EmailEditor, EmailEditorProvider } from "easy-email-editor";
+import { BlockManager } from "easy-email-core";
+import { EmailEditor, EmailEditorProvider } from "easy-email-editor";
 import "easy-email-editor/lib/style.css";
 import "antd/dist/antd.css";
 
 const initialValues = {
   subject: "Welcome to Easy-email",
   subTitle: "Nice to meet you!",
-  content: BlocksMap.getBlock("Page").create({}),
+  content: BlockManager.getBlockByType(BasicType.PAGE).create({}),
 };
 
 export function App() {
@@ -38,10 +39,6 @@ export function App() {
   );
 }
 ```
-
-## Docs
-
-Check out [documentation](https://docs-easy-email.vercel.app/) for guides and a full API reference.
 
 ## customize
 

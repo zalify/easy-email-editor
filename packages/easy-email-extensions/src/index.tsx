@@ -5,6 +5,6 @@ export * from './SourceCodePanel';
 export * from './InteractivePrompt';
 
 //
-export * from './SimpleFrame';
+export * from './SimpleLayout';
 
 export * from './components/Form';

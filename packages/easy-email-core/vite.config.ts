@@ -4,7 +4,6 @@ import path from 'path';
 export default defineConfig({
   resolve: {
     alias: {
-      lodash: 'lodash-es',
       '@core': path.resolve(__dirname, './src'),
     },
   },
@@ -19,14 +18,18 @@ export default defineConfig({
       entry: path.resolve(__dirname, 'src/index.tsx'),
       name: 'easy-email-core',
       formats: ['es', 'cjs'],
-      fileName: (mod) => `index.${mod}.js`
+      fileName: (mod) => `index.${mod}.js`,
     },
     rollupOptions: {
       plugins: [],
-      external: ['react', 'react-dom', 'mjml-browser', 'lodash'],
-      output: {
-
-      },
+      external: [
+        'react',
+        'react-dom',
+        'react-dom/server',
+        'mjml-browser',
+        'lodash',
+      ],
+      output: {},
     },
     outDir: 'lib',
   },

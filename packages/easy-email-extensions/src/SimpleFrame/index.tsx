@@ -1,1 +1,0 @@
-export { SimpleFrame } from './SimpleFrame'

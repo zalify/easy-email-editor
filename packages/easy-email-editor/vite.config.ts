@@ -1,21 +1,11 @@
 import { defineConfig } from 'vite';
 import path from 'path';
-import visualizer from 'rollup-plugin-visualizer';
 
 export default defineConfig({
-  plugins: [
-    process.env.ANALYZE === 'true' &&
-    visualizer({
-      open: true,
-      gzipSize: true,
-      brotliSize: true,
-    }),
-  ].filter(Boolean) as any,
+  plugins: [],
   resolve: {
     alias: {
-      lodash: 'lodash-es',
       '@': path.resolve(__dirname, './src'),
-      react: path.resolve('../easy-email-core/node_modules/react'),
       'easy-email-core': path.resolve('../easy-email-core'),
     },
   },
@@ -30,7 +20,7 @@ export default defineConfig({
       entry: path.resolve(__dirname, 'src/index.tsx'),
       name: 'easy-email-editor',
       formats: ['es'],
-      fileName: () => 'index.js'
+      fileName: () => 'index.js',
     },
     rollupOptions: {
       plugins: [],
@@ -42,8 +32,7 @@ export default defineConfig({
         'react-final-form',
         'easy-email-core',
       ],
-      output: {
-      },
+      output: {},
     },
     outDir: 'lib',
   },
@@ -56,9 +45,6 @@ export default defineConfig({
     },
     preprocessorOptions: {
       scss: {},
-      less: {
-        javascriptEnabled: true,
-      },
     },
   },
 });

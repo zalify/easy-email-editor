@@ -25,8 +25,6 @@ export default defineConfig({
   resolve: {
     alias: {
       '@extensions': path.resolve('./src'),
-      lodash: 'lodash-es',
-      react: path.resolve('../easy-email-core/node_modules/react'),
       'easy-email-core': path.resolve('../easy-email-core/lib'),
       'easy-email-editor': path.resolve('../easy-email-editor/lib'),
     },
