@@ -2,15 +2,17 @@ import React, { useEffect, useMemo, useState } from 'react';
 
 import { BlockManager, BasicType } from 'easy-email-core';
 import { createPortal } from 'react-dom';
-import { IconFont, useBlock, useFocusIdx, BlockAvatarWrapper } from 'easy-email-editor';
+import { IconFont, useBlock, useFocusIdx, BlockAvatarWrapper, getShadowRoot, getEditorRoot } from 'easy-email-editor';
 import { awaitForElement } from '@extensions/utils/awaitForElement';
 import { BLOCK_SELECTED_CLASSNAME, styleZIndex } from '../constants';
 import { Toolbar } from './Toolbar';
 
+const TOOLBAR_HEIGHT = 22;
 export function FocusTooltip() {
   const [blockNode, setBlockNode] = useState<HTMLDivElement | null>(null);
   const { focusBlock } = useBlock();
   const { focusIdx } = useFocusIdx();
+  const [direction, setDirection] = useState<'top' | 'bottom'>('top');
 
   const isPage = focusBlock?.type === BasicType.PAGE;
 
@@ -39,12 +41,46 @@ export function FocusTooltip() {
     }
   }, [blockNode, focusBlock]);
 
+
+  useEffect(() => {
+    if (!blockNode) {
+      setDirection('top');
+    } else {
+      const options = {
+        root: getEditorRoot(),
+        // FIXME
+        // rootMargin: '0px',
+        threshold: 1.0
+      };
+
+
+
+      const checkDirection: IntersectionObserverCallback = (ev) => {
+        const [current] = ev;
+        if (current.isIntersecting) {
+          setDirection('top');
+        } else {
+          setDirection('bottom');
+        }
+
+
+      };
+      const observer = new IntersectionObserver(checkDirection, options);
+      observer.observe(blockNode);
+      return () => {
+        observer.unobserve(blockNode);
+      };
+    }
+
+  }, [blockNode]);
+
   const block = useMemo(() => {
     if (!focusBlock) return null;
     return BlockManager.getBlockByType(focusBlock.type);
   }, [focusBlock]);
 
-  if (isPage || !block || !blockNode) return null;
+
+  if (!block || !blockNode) return null;
 
   return (
     <>
@@ -98,7 +134,7 @@ export function FocusTooltip() {
             </BlockAvatarWrapper>
           </div>
 
-          <Toolbar block={block} />
+          <Toolbar direction={direction} block={block} />
           {/* outline */}
           <div
             style={{

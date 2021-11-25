@@ -11,7 +11,7 @@ import { useBlock, useFocusIdx } from 'easy-email-editor';
 import { classnames } from '@extensions/utils/classnames';
 import { useAddToCollection } from '@extensions/hooks/useAddToCollection';
 
-export function Toolbar({ block }: { block: IBlock; }) {
+export function Toolbar({ block, direction }: { block: IBlock; direction: 'top' | 'bottom'; }) {
   const {
     moveBlock,
     copyBlock,
@@ -54,7 +54,7 @@ export function Toolbar({ block }: { block: IBlock; }) {
         style={{
           position: 'absolute',
           left: 0,
-          top: 0,
+          top: direction === 'top' ? 0 : '100%',
           fontSize: 14,
           zIndex: 3,
           color: '#000',
@@ -66,7 +66,7 @@ export function Toolbar({ block }: { block: IBlock; }) {
         <div
           style={{
             color: '#ffffff',
-            transform: 'translateY(-100%)',
+            transform: direction === 'top' ? 'translateY(-100%)' : undefined,
             display: 'flex',
             // justifyContent: 'space-between',
           }}

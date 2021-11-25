@@ -192,8 +192,6 @@ export default function Editor() {
     };
   }, [templateData]);
 
-  console.log('templateData.content', templateData?.content);
-
   const onBeforePreview: EmailEditorProviderProps['onBeforePreview'] =
     useCallback((data, mergeTags) => {
       return JSON.parse(mustache.render(JSON.stringify(data), mergeTags));
