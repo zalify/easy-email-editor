@@ -2,7 +2,7 @@
   "name": "easy-email-core",
   "license": "MIT",
   "description": "Email editor",
-  "version": "2.5.2-beta.0",
+  "version": "2.5.2-beta.1",
   "author": "m-Ryan",
   "repository": {
     "type": "git",
@@ -48,13 +48,13 @@
     "babel-jest": "^27.0.6",
     "jest": "^27.0.6",
     "jsdom": "^17.0.0",
+    "mjml-browser": "^4.10.4",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "rimraf": "^3.0.2",
     "ts-node": "^10.4.0",
     "tsc-alias": "^1.4.1",
     "tsconfig-paths": "^3.11.0",
-    "mjml-browser": "^4.10.4",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
     "vite": "^2.5.6"
   },
   "dependencies": {

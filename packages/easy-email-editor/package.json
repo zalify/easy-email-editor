@@ -2,7 +2,7 @@
   "name": "easy-email-editor",
   "license": "MIT",
   "description": "Email editor",
-  "version": "2.5.2-beta.0",
+  "version": "2.5.2-beta.1",
   "author": "m-Ryan",
   "repository": {
     "type": "git",
@@ -46,16 +46,16 @@
     "@types/node": "^16.11.7",
     "@types/react": "17.0.2",
     "@types/react-dom": "^17.0.11",
-    "rimraf": "^3.0.2",
-    "sass": "^1.43.4",
-    "tsc-alias": "^1.4.1",
-    "typescript": "^4.4.4",
-    "vite": "^2.6.14",
     "mjml-browser": "^4.10.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-final-form": "^6.5.7",
-    "sortablejs": "^1.14.0"
+    "rimraf": "^3.0.2",
+    "sass": "^1.43.4",
+    "sortablejs": "^1.14.0",
+    "tsc-alias": "^1.4.1",
+    "typescript": "^4.4.4",
+    "vite": "^2.6.14"
   },
   "peerDependencies": {
     "easy-email-core": "^2.5.2",
