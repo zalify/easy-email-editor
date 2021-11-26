@@ -3,7 +3,6 @@ import {
   BlockManager,
   BasicType,
   IBlock,
-  getIndexByIdx,
   getParentIdx,
   getSiblingIdx,
 } from 'easy-email-core';
@@ -11,12 +10,14 @@ import { useBlock, useFocusIdx } from 'easy-email-editor';
 import { classnames } from '@extensions/utils/classnames';
 import { useAddToCollection } from '@extensions/hooks/useAddToCollection';
 
-export function Toolbar({ block, direction }: { block: IBlock; direction: 'top' | 'bottom'; }) {
-  const {
-    moveBlock,
-    copyBlock,
-    removeBlock,
-  } = useBlock();
+export function Toolbar({
+  block,
+  direction,
+}: {
+  block: IBlock;
+  direction: 'top' | 'bottom';
+}) {
+  const { moveBlock, copyBlock, removeBlock } = useBlock();
   const { focusIdx, setFocusIdx } = useFocusIdx();
 
   const { modal, setModalVisible } = useAddToCollection();
@@ -34,7 +35,6 @@ export function Toolbar({ block, direction }: { block: IBlock; direction: 'top' 
   const handleAddToCollection = () => {
     setModalVisible(true);
   };
-
 
   const handleCopy: React.MouseEventHandler<HTMLDivElement> = (ev) => {
     copyBlock(focusIdx);

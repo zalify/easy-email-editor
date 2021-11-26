@@ -8,6 +8,8 @@ export enum ActiveTabKeys {
 }
 
 export const BlocksContext = React.createContext<{
+  initialized: boolean;
+  setInitialized: React.Dispatch<React.SetStateAction<boolean>>;
   focusIdx: string;
   setFocusIdx: React.Dispatch<React.SetStateAction<string>>;
   dragEnabled: boolean;
@@ -17,6 +19,8 @@ export const BlocksContext = React.createContext<{
   activeTab: ActiveTabKeys;
   setActiveTab: React.Dispatch<React.SetStateAction<ActiveTabKeys>>;
 }>({
+  initialized: false,
+  setInitialized: () => {},
   focusIdx: getPageIdx(),
   setFocusIdx: () => {},
   dragEnabled: false,
@@ -30,12 +34,15 @@ export const BlocksContext = React.createContext<{
 export const BlocksProvider: React.FC<{}> = (props) => {
   const [focusIdx, setFocusIdx] = useState(getPageIdx());
   const [dragEnabled, setDragEnabled] = useState(false);
+  const [initialized, setInitialized] = useState(false);
   const [collapsed, setCollapsed] = useState(true);
   const [activeTab, setActiveTab] = useState(ActiveTabKeys.EDIT);
 
   return (
     <BlocksContext.Provider
       value={{
+        initialized,
+        setInitialized,
         focusIdx,
         setFocusIdx,
         dragEnabled,

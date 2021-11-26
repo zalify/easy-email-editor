@@ -2,12 +2,17 @@ import React, { useEffect, useMemo, useState } from 'react';
 
 import { BlockManager, BasicType } from 'easy-email-core';
 import { createPortal } from 'react-dom';
-import { IconFont, useBlock, useFocusIdx, BlockAvatarWrapper, getShadowRoot, getEditorRoot } from 'easy-email-editor';
+import {
+  IconFont,
+  useBlock,
+  useFocusIdx,
+  BlockAvatarWrapper,
+  getShadowRoot,
+} from 'easy-email-editor';
 import { awaitForElement } from '@extensions/utils/awaitForElement';
 import { BLOCK_SELECTED_CLASSNAME, styleZIndex } from '../constants';
 import { Toolbar } from './Toolbar';
 
-const TOOLBAR_HEIGHT = 22;
 export function FocusTooltip() {
   const [blockNode, setBlockNode] = useState<HTMLDivElement | null>(null);
   const { focusBlock } = useBlock();
@@ -41,29 +46,24 @@ export function FocusTooltip() {
     }
   }, [blockNode, focusBlock]);
 
-
   useEffect(() => {
-    if (!blockNode) {
-      setDirection('top');
-    } else {
+    if (blockNode) {
       const options = {
-        root: getEditorRoot(),
-        // FIXME
-        // rootMargin: '0px',
-        threshold: 1.0
+        root: getShadowRoot().host,
+        threshold: [0, 0.001, 0.999, 1],
       };
-
-
-
       const checkDirection: IntersectionObserverCallback = (ev) => {
         const [current] = ev;
-        if (current.isIntersecting) {
+        const { top, height, bottom } = current.intersectionRect;
+        const rootBounds = current.rootBounds;
+        if (!rootBounds) return;
+        if (rootBounds.bottom === bottom) {
           setDirection('top');
-        } else {
+        } else if (rootBounds.top === top) {
           setDirection('bottom');
+        } else {
+          setDirection('top');
         }
-
-
       };
       const observer = new IntersectionObserver(checkDirection, options);
       observer.observe(blockNode);
@@ -71,7 +71,6 @@ export function FocusTooltip() {
         observer.unobserve(blockNode);
       };
     }
-
   }, [blockNode]);
 
   const block = useMemo(() => {
@@ -79,8 +78,7 @@ export function FocusTooltip() {
     return BlockManager.getBlockByType(focusBlock.type);
   }, [focusBlock]);
 
-
-  if (!block || !blockNode) return null;
+  if (isPage || !block || !blockNode) return null;
 
   return (
     <>
@@ -157,13 +155,10 @@ export function FocusTooltip() {
   );
 }
 
-
-
-
 const FocusStyle = () => {
-  return <style>
-    {
-      `
+  return (
+    <style>
+      {`
       .block-selected {
         position: relative;
         z-index: 1;
@@ -173,7 +168,7 @@ const FocusStyle = () => {
         z-index: 2;
       }
 
-      `
-    }
-  </style>;
+      `}
+    </style>
+  );
 };

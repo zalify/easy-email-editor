@@ -6,6 +6,7 @@ import { useDomScrollHeight } from '@/hooks/useDomScrollHeight';
 import { useHotKeys } from '@/hooks/useHotKeys';
 import { ShadowDom } from '@/components/UI/ShadowDom';
 import { ShadowStyle } from './components/ShadowStyle';
+import { useEditorContext } from '@/hooks/useEditorContext';
 
 export function EditEmailPreview() {
   useHotKeys();
@@ -13,16 +14,21 @@ export function EditEmailPreview() {
   const [containerRef, setContainerRef] = useState<HTMLDivElement | null>(null);
   const { setRef } = useDropBlock();
   const { scrollHeight } = useDomScrollHeight();
-
+  const { setInitialized } = useEditorContext();
 
   useEffect(() => {
     setRef(containerRef);
   }, [containerRef, setRef]);
 
   useEffect(() => {
+    if (containerRef) {
+      setInitialized(true);
+    }
+  }, [containerRef]);
+
+  useEffect(() => {
     const container = containerRef;
     if (container) {
-
       container.scrollTo(0, scrollHeight.current);
     }
   }, [activeTab, containerRef, scrollHeight]);

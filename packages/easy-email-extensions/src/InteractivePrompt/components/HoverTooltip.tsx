@@ -1,6 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { getNodeTypeFromClassName, BlockManager, getNodeIdxFromClassName } from 'easy-email-core';
+import {
+  getNodeTypeFromClassName,
+  BlockManager,
+  getNodeIdxFromClassName,
+} from 'easy-email-core';
 import { createPortal } from 'react-dom';
 import { getBlockNodes, useFocusIdx, useHoverIdx } from 'easy-email-editor';
 import { awaitForElement } from '@extensions/utils/awaitForElement';
@@ -11,8 +15,6 @@ export function HoverTooltip() {
   const { focusIdx } = useFocusIdx();
 
   const [blockNode, setBlockNode] = useState<HTMLDivElement | null>(null);
-
-
 
   useEffect(() => {
     if (hoverIdx) {
@@ -37,14 +39,13 @@ export function HoverTooltip() {
         blockNode.classList.add(BLOCK_HOVER_CLASSNAME);
       }
     });
-
   }, [hoverIdx]);
 
   const block = useMemo(() => {
     return blockNode
       ? BlockManager.getBlockByType(
-        getNodeTypeFromClassName(blockNode.classList)!
-      )
+          getNodeTypeFromClassName(blockNode.classList)!
+        )
       : null;
   }, [blockNode]);
 
@@ -139,22 +140,11 @@ function TipNode(props: TipNodeProps) {
                 padding: '1px 5px',
                 boxSizing: 'border-box',
                 whiteSpace: 'nowrap',
-                transform: 'translateY(-100%)',
+                transform: 'translateX(-100%)',
               }}
             >
               {title}
             </div>
-            {/* <div
-              style={{
-                position: 'absolute',
-                left: 0,
-                top: 0,
-                width: '100%',
-                height: '100%',
-                backgroundColor: color,
-                opacity: 0.1,
-              }}
-            /> */}
           </>
         )}
       </div>
@@ -169,7 +159,6 @@ function TipNode(props: TipNodeProps) {
             width: '100%',
             height: '100%',
             ...directionImage[props.direction || 'none'],
-            // overflow: 'hidden',
           }}
         >
           <div
@@ -196,9 +185,9 @@ function TipNode(props: TipNodeProps) {
 }
 
 const HoverStyle = () => {
-  return <style>
-    {
-      `
+  return (
+    <style>
+      {`
       .block-hover {
         position: relative;
         z-index: 1;
@@ -216,9 +205,9 @@ const HoverStyle = () => {
       .block-dragover .email-block {
         z-index: 3;
       }
-      `
-    }
-  </style>;
+      `}
+    </style>
+  );
 };
 
 const positionStyleMap = {

@@ -20,7 +20,10 @@ import { useEditorProps } from './useEditorProps';
 import { scrollBlockEleIntoView } from '@/utils';
 
 export function useBlock() {
-  const { values, getState, change } = useEditorContext();
+  const {
+    formState: { values },
+    formHelpers: { getState, change },
+  } = useEditorContext();
 
   const { focusIdx, setFocusIdx } = useFocusIdx();
 
@@ -91,7 +94,8 @@ export function useBlock() {
       const fixedBlock = BlockManager.getBlockByType(child.type);
       if (!fixedBlock?.validParentType.includes(parent.type)) {
         console.error(
-          `${block.type} cannot be used inside ${parentBlock.type
+          `${block.type} cannot be used inside ${
+            parentBlock.type
           }, only inside: ${block.validParentType.join(', ')}`
         );
         return;
