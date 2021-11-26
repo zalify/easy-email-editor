@@ -8,8 +8,6 @@ import {
 } from 'easy-email-editor';
 import { getValueByIdx } from 'easy-email-core';
 import { RichTextField } from '../components/Form/RichTextField';
-
-import { SelectionRangeProvider } from './components/provider/SelectionRangeProvider';
 import { PresetColorsProvider } from './components/provider/PresetColorsProvider';
 import ReactDOM from 'react-dom';
 import { BlockAttributeConfigurationManager } from './utils/BlockAttributeConfigurationManager';
@@ -33,37 +31,35 @@ export function AttributePanel() {
 
   return (
     <PresetColorsProvider>
-      <SelectionRangeProvider>
-        {Com ? (
-          <Com />
-        ) : (
-          <div style={{ marginTop: 200, padding: '0 50px' }}>
-            <TextStyle size='extraLarge'>No matching components</TextStyle>
-          </div>
-        )}
-
-        <div style={{ position: 'absolute' }}>
-          <RichTextField
-            idx={focusIdx}
-            name={`${focusIdx}.data.value.content`}
-            label=''
-            labelHidden
-          />
+      {Com ? (
+        <Com />
+      ) : (
+        <div style={{ marginTop: 200, padding: '0 50px' }}>
+          <TextStyle size='extraLarge'>No matching components</TextStyle>
         </div>
-        {shadowRoot &&
-          ReactDOM.createPortal(
-            <style>
-              {`
+      )}
+
+      <div style={{ position: 'absolute' }}>
+        <RichTextField
+          idx={focusIdx}
+          name={`${focusIdx}.data.value.content`}
+          label=''
+          labelHidden
+        />
+      </div>
+      {shadowRoot &&
+        ReactDOM.createPortal(
+          <style>
+            {`
               .email-block [contentEditable="true"],
               .email-block [contentEditable="true"] * {
                 outline: none;
                 cursor: text;
               }
               `}
-            </style>,
-            shadowRoot as any
-          )}
-      </SelectionRangeProvider>
+          </style>,
+          shadowRoot as any
+        )}
     </PresetColorsProvider>
   );
 }

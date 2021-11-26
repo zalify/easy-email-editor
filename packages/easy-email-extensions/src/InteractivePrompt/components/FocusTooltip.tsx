@@ -31,21 +31,6 @@ export function FocusTooltip() {
       promiseObj.cancel();
     };
   }, [focusIdx, focusBlock]);
-
-  useEffect(() => {
-    if (focusBlock && focusBlock.type === BasicType.RAW) {
-      setBlockNode(null);
-      return;
-    }
-
-    if (blockNode && focusBlock) {
-      blockNode.classList.add(BLOCK_SELECTED_CLASSNAME);
-      return () => {
-        blockNode.classList.remove(BLOCK_SELECTED_CLASSNAME);
-      };
-    }
-  }, [blockNode, focusBlock]);
-
   useEffect(() => {
     if (blockNode) {
       const options = {
@@ -91,10 +76,17 @@ export function FocusTooltip() {
             pointerEvents: 'none',
             left: 0,
             top: 0,
-            zIndex: styleZIndex.SELECT_BLOCK_TOOLTIP,
+            zIndex: 1,
           }}
         >
-          <FocusStyle />
+          <style>
+            {`
+                .email-block {
+                  position: relative;
+                }
+
+            `}
+          </style>
           <div
             style={{
               position: 'absolute',
@@ -142,7 +134,6 @@ export function FocusTooltip() {
               left: 0,
               top: 0,
               width: '100%',
-
               height: '100%',
               outlineOffset: '-2px',
               outline: '2px solid var(--selected-color)',
@@ -154,21 +145,3 @@ export function FocusTooltip() {
     </>
   );
 }
-
-const FocusStyle = () => {
-  return (
-    <style>
-      {`
-      .block-selected {
-        position: relative;
-        z-index: 1;
-      }
-
-      .block-selected .email-block {
-        z-index: 2;
-      }
-
-      `}
-    </style>
-  );
-};

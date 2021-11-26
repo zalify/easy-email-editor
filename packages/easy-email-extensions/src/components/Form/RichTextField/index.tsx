@@ -1,5 +1,11 @@
-
-import { useActiveTab, FIXED_CONTAINER_ID, useBlock, useFocusIdx, getBlockNodeByIdx, getEditorRoot } from 'easy-email-editor';
+import {
+  useActiveTab,
+  FIXED_CONTAINER_ID,
+  useBlock,
+  useFocusIdx,
+  getBlockNodeByIdx,
+  getEditorRoot,
+} from 'easy-email-editor';
 import { onDrag } from '@extensions/AttributePanel/utils/onDrag';
 import React, { useCallback, useMemo } from 'react';
 import { useState } from 'react';
@@ -41,13 +47,12 @@ const RichTextFieldItem = (
     }
   }, [idx, locationState?.left, locationState?.top]);
 
-  const onChange = useCallback(() => { }, []);
+  const onChange = useCallback(() => {}, []);
 
   const editorContainer = container && getEditNode(container);
 
   const textToolbar = useMemo(() => {
     const onMoveTextToolbar = (event: React.MouseEvent) => {
-
       onDrag({
         event: event as any,
         onMove(x, y) {
@@ -60,9 +65,7 @@ const RichTextFieldItem = (
             top: position.top + y,
           });
         },
-        onEnd() {
-
-        },
+        onEnd() {},
       });
     };
 

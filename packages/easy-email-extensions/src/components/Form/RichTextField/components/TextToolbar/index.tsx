@@ -1,20 +1,4 @@
-import React from 'react';
-import {
-  BoldOutlined,
-  ItalicOutlined,
-  UnderlineOutlined,
-  StrikethroughOutlined,
-  FontSizeOutlined,
-  FontColorsOutlined,
-  BgColorsOutlined,
-  OrderedListOutlined,
-  UnorderedListOutlined,
-  MinusOutlined,
-  AlignRightOutlined,
-  AlignLeftOutlined,
-  AlignCenterOutlined,
-  CloseOutlined,
-} from '@ant-design/icons';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Tooltip } from 'antd';
 import { ToolItem } from '../ToolItem';
 import { Link, LinkParams } from '../Link';
@@ -28,7 +12,6 @@ import {
 } from 'easy-email-editor';
 import { ColorPicker } from '../../../ColorPicker';
 import { FontFamily } from '../FontFamily';
-import { useSelectionRange } from '@extensions/AttributePanel/hooks/useSelectionRange';
 import { MergeTags } from './MergeTags';
 
 export interface TextToolbarProps {
@@ -38,26 +21,54 @@ export interface TextToolbarProps {
 
 export function TextToolbar(props: TextToolbarProps) {
   const { container } = props;
-  const { selectionRange: currentRange, restoreRange } = useSelectionRange();
   const { mergeTags } = useEditorProps();
+  const [selectionRange, setSelectionRange] = useState<Range | null>(null);
+
+  useEffect(() => {
+    const onSelectionChange = () => {
+      try {
+        const range = (getShadowRoot() as any).getSelection().getRangeAt(0);
+        if (range) {
+          setSelectionRange(range);
+        }
+      } catch (error) {}
+    };
+
+    document.addEventListener('selectionchange', onSelectionChange);
+
+    return () => {
+      document.removeEventListener('selectionchange', onSelectionChange);
+    };
+  }, []);
+
+  const restoreRange = useCallback((range: Range) => {
+    const selection = (getShadowRoot() as any).getSelection();
+    selection.removeAllRanges();
+    const newRange = document.createRange();
+    newRange.setStart(range.startContainer, range.startOffset);
+    newRange.setEnd(range.endContainer, range.endOffset);
+
+    selection.addRange(newRange);
+  }, []);
+
   const execCommand = (cmd: string, val?: any) => {
     if (!container) {
       console.error('No container');
       return;
     }
-    if (!currentRange) {
-      console.error('No currentRange');
+    if (!selectionRange) {
+      console.error('No selectionRange');
       return;
     }
     if (
-      !container?.contains(currentRange?.commonAncestorContainer) &&
-      container !== currentRange?.commonAncestorContainer
+      !container?.contains(selectionRange?.commonAncestorContainer) &&
+      container !== selectionRange?.commonAncestorContainer
     ) {
       console.error('Not commonAncestorContainer');
       return;
     }
 
-    restoreRange(currentRange);
+    restoreRange(selectionRange);
 
     if (cmd === 'createLink') {
       const linkData = val as LinkParams;
@@ -88,7 +99,6 @@ export function TextToolbar(props: TextToolbarProps) {
     props.onChange(html);
   };
 
-  const getMountNode = () => getShadowRoot().getElementById('TextToolbar')!;
   const getPopoverMountNode = () =>
     document.getElementById(FIXED_CONTAINER_ID)!;
 
@@ -156,7 +166,7 @@ export function TextToolbar(props: TextToolbarProps) {
             />
           </ColorPicker>
           <Link
-            currentRange={currentRange}
+            currentRange={selectionRange}
             onChange={(values) => execCommand('createLink', values)}
             getPopupContainer={getPopoverMountNode}
           />
@@ -165,7 +175,7 @@ export function TextToolbar(props: TextToolbarProps) {
               icon={<StopOutlined />}
               title='Unlink'
             /> */}
-          {/* {mergeTags && (
+          {mergeTags && (
             <Tooltip
               color='#fff'
               placement='bottom'
@@ -183,7 +193,7 @@ export function TextToolbar(props: TextToolbarProps) {
                 icon={<IconFont iconName='icon-merge-tags' />}
               />
             </Tooltip>
-          )} */}
+          )}
 
           <ToolItem
             onClick={() => execCommand('removeFormat')}

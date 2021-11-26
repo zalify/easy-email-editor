@@ -31,16 +31,6 @@ export function HoverTooltip() {
     }
   }, [hoverIdx]);
 
-  useEffect(() => {
-    getBlockNodes().forEach((blockNode) => {
-      if (getNodeIdxFromClassName(blockNode.classList) !== hoverIdx) {
-        blockNode.classList.remove(BLOCK_HOVER_CLASSNAME);
-      } else {
-        blockNode.classList.add(BLOCK_HOVER_CLASSNAME);
-      }
-    });
-  }, [hoverIdx]);
-
   const block = useMemo(() => {
     return blockNode
       ? BlockManager.getBlockByType(
@@ -55,13 +45,25 @@ export function HoverTooltip() {
   return (
     <>
       {createPortal(
-        <TipNode
-          type={isDragging ? 'drag' : 'hover'}
-          lineWidth={1}
-          title={block.name}
-          direction={direction}
-          isDragging={isDragging}
-        />,
+        <div
+          style={{
+            position: 'absolute',
+            height: '100%',
+            width: '100%',
+            top: 0,
+            left: 0,
+            zIndex: 2,
+            pointerEvents: 'none',
+          }}
+        >
+          <TipNode
+            type={isDragging ? 'drag' : 'hover'}
+            lineWidth={1}
+            title={block.name}
+            direction={direction}
+            isDragging={isDragging}
+          />
+        </div>,
         blockNode
       )}
     </>
@@ -112,7 +114,14 @@ function TipNode(props: TipNodeProps) {
         textAlign: 'left',
       }}
     >
-      <HoverStyle />
+      <style>
+        {`
+        .email-block {
+          position: relative;
+        }
+
+      `}
+      </style>
       {/* outline */}
       <div
         style={{
@@ -183,32 +192,6 @@ function TipNode(props: TipNodeProps) {
     </div>
   );
 }
-
-const HoverStyle = () => {
-  return (
-    <style>
-      {`
-      .block-hover {
-        position: relative;
-        z-index: 1;
-      }
-      .block-hover .email-block {
-        z-index: 2;
-      }
-
-      .block-dragover {
-        position: relative;
-        z-index: 2;
-      }
-
-
-      .block-dragover .email-block {
-        z-index: 3;
-      }
-      `}
-    </style>
-  );
-};
 
 const positionStyleMap = {
   top: {
