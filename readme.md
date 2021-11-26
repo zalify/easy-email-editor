@@ -118,10 +118,15 @@ export default App;
   | onRemoveCollection | (payload: { id: string; }) => void;                                                                | Remove from collection list                                                                                                                                                                                       |
   | dashed             | boolean                                                                                            | Show dashed                                                                                                                                                                                                       |
   | autoComplete       | boolean                                                                                            | Automatically complete missing blocks. For example, Text => Section, will generate Text=>Column=>Section                                                                                                          |
-  | mergeTags          | Object                                                                                             | A merge tag is a bit of specific code that allows you to insert dynamic data into emails.Like {{user.name}}, example see https://github.com/m-Ryan/easy-email/blob/master/example/pages/Editor/index.tsx#L96-L114 |
-  | onBeforePreview    | (data: IPage, mergeTags: PropsProviderProps['mergeTags']) => IPage                                 | You can replace mergeTags when previewing. Example see https://github.com/m-Ryan/easy-email/blob/master/example/pages/Editor/index.tsx#L173-L177                                                                  |
+  | mergeTags          | Object                                                                                             | A merge tag is a bit of specific code that allows you to insert dynamic data into emails. Like `{{user.name}}` |
+  | onBeforePreview    | (data: IPage, mergeTags: PropsProviderProps['mergeTags']) => IPage                                 | You can replace mergeTags when previewing.                                                                |
 
+## Packages
+  * [easy-email-core](./packages/easy-email-core/readme.md)
+  * [easy-email-editor](./packages/easy-email-editor/readme.md)
+  * [easy-email-extensions](./packages/easy-email-extensions/readme.md)
 
+  * <img alt="" src="./layout.png">
 
 ## Development
 

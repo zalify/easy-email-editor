@@ -21,7 +21,6 @@ import React from "react";
 import { BlockManager } from "easy-email-core";
 import { EmailEditor, EmailEditorProvider } from "easy-email-editor";
 import "easy-email-editor/lib/style.css";
-import "antd/dist/antd.css";
 
 const initialValues = {
   subject: "Welcome to Easy-email",

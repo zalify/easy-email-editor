@@ -20,11 +20,11 @@ export default defineConfig({
         __dirname,
         'package.json'
       ), // 没有用的，只是防止css 404报错
+      react: path.resolve('./node_modules/react'),
       'react-final-form': path.resolve(
         __dirname,
         './node_modules/react-final-form'
       ),
-      react: path.resolve('../node_modules/react'),
       '@demo': path.resolve(__dirname, './src'),
       '@extensions': path.resolve('../packages/easy-email-extensions/src'),
       '@core': path.resolve('../packages/easy-email-core/src'),
