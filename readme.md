@@ -73,7 +73,7 @@ const initialValues = {
   content: BlockManager.getBlockByType(BasicType.PAGE)!.create({}),
 };
 
-export function App() {
+function App() {
   return (
     <EmailEditorProvider
       data={initialValues}
@@ -92,6 +92,8 @@ export function App() {
   );
 }
 
+export default App;
+
 ```
 
 ## Examples
@@ -99,11 +101,9 @@ export function App() {
 > Please see <a href="https://github.com/m-Ryan/easy-email-demo" target="_blank" alt="https://github.com/m-Ryan/easy-email-demo">https://github.com/m-Ryan/easy-email-demo</a>
 
 
+</br>
 
-
-# Configuration
-
-- ## EmailEditorProvider
+## Configuration
 
   | property           | Type                                                                                               | Description                                                                                                                                                                                                       |
   | ------------------ | -------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -120,7 +120,6 @@ export function App() {
   | autoComplete       | boolean                                                                                            | Automatically complete missing blocks. For example, Text => Section, will generate Text=>Column=>Section                                                                                                          |
   | mergeTags          | Object                                                                                             | A merge tag is a bit of specific code that allows you to insert dynamic data into emails.Like {{user.name}}, example see https://github.com/m-Ryan/easy-email/blob/master/example/pages/Editor/index.tsx#L96-L114 |
   | onBeforePreview    | (data: IPage, mergeTags: PropsProviderProps['mergeTags']) => IPage                                 | You can replace mergeTags when previewing. Example see https://github.com/m-Ryan/easy-email/blob/master/example/pages/Editor/index.tsx#L173-L177                                                                  |
-
 
 
 

@@ -24,11 +24,11 @@ export default defineConfig({
         __dirname,
         './node_modules/react-final-form'
       ),
+      react: path.resolve('../node_modules/react'),
       '@demo': path.resolve(__dirname, './src'),
       '@extensions': path.resolve('../packages/easy-email-extensions/src'),
       '@core': path.resolve('../packages/easy-email-core/src'),
       '@': path.resolve('../packages/easy-email-editor/src'),
-      react: path.resolve('../packages/easy-email-core/node_modules/react'),
       'easy-email-core': path.resolve(
         '../packages/easy-email-core/src/index.tsx'
       ),

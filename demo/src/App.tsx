@@ -12,7 +12,7 @@ const Home = React.lazy(() => HomePromise);
 
 const Editor = React.lazy(() => EditorPromise);
 
-export default function App() {
+function App() {
   return (
     <Provider store={store}>
       <Page>
@@ -54,3 +54,5 @@ export default function App() {
     </Provider>
   );
 }
+
+export default App;
