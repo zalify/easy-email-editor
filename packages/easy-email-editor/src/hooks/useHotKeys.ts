@@ -33,7 +33,9 @@ function isContentEditFocus() {
 export function useHotKeys() {
   const { redo, undo, removeBlock } = useBlock();
   const { focusIdx, setFocusIdx } = useFocusIdx();
-  const { values } = useEditorContext();
+  const {
+    formState: { values },
+  } = useEditorContext();
 
   const root = getShadowRoot();
   // redo/undo

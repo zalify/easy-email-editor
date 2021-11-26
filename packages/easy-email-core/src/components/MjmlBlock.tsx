@@ -1,7 +1,7 @@
 import React, { ReactElement, useMemo } from 'react';
 import { BlockManager } from '@core/utils';
 import { IBlockData, RecursivePartial } from '@core/typings';
-import { parseMjmlBlockToBlockData } from '@core/utils/parseMjmlBlockToBlockData';
+import { parseReactBlockToBlockData } from '@core/utils/parseReactBlockToBlockData';
 import { set } from 'lodash';
 
 export interface MjmlBlockProps<T extends IBlockData> {
@@ -46,9 +46,9 @@ export default function MjmlBlock<T extends IBlockData>({
       typeof children === 'string'
         ? []
         : React.Children.map(
-          children,
-          (child) => child && parseMjmlBlockToBlockData(child)
-        )?.filter(Boolean) || [],
+            children,
+            (child) => child && parseReactBlockToBlockData(child)
+          )?.filter(Boolean) || [],
   });
 
   return <>{JSON.stringify(instance)}</>;

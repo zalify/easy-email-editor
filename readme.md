@@ -98,6 +98,32 @@ export function App() {
 
 > Please see <a href="https://github.com/m-Ryan/easy-email-demo" target="_blank" alt="https://github.com/m-Ryan/easy-email-demo">https://github.com/m-Ryan/easy-email-demo</a>
 
+
+
+
+# Configuration
+
+- ## EmailEditorProvider
+
+  | property           | Type                                                                                               | Description                                                                                                                                                                                                       |
+  | ------------------ | -------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  | height             | string / number                                                                                    | Set the height of the container                                                                                                                                                                                   |
+  | data               | interface IEmailTemplate { content: IPage; subject: string; subTitle: string; }                    | Source data                                                                                                                                                                                                       |
+  | children           | ( props: FormState<T>,helper: FormApi<IEmailTemplate, Partial<IEmailTemplate>>) => React.ReactNode | ReactNode                                                                                                                                                                                                         |
+  | onSubmit           | Config<IEmailTemplate, Partial<IEmailTemplate>>['onSubmit'];                                       | Called when the commit is triggered manually                                                                                                                                                                      |
+  | fontList           | { value: string; label: string; }[];                                                               | Default font list.                                                                                                                                                                                                |
+  | interactiveStyle   | { hoverColor?: string; selectedColor?: string;}                                                    | Interactive prompt color                                                                                                                                                                                          |
+  | onUploadImage      | (data: Blob) => Promise<string>;                                                                   | Triggered when an image is pasted or uploaded                                                                                                                                                                     |
+  | onAddCollection    | (payload: CollectedBlock) => void;                                                                 | Add to collection list                                                                                                                                                                                            |
+  | onRemoveCollection | (payload: { id: string; }) => void;                                                                | Remove from collection list                                                                                                                                                                                       |
+  | dashed             | boolean                                                                                            | Show dashed                                                                                                                                                                                                       |
+  | autoComplete       | boolean                                                                                            | Automatically complete missing blocks. For example, Text => Section, will generate Text=>Column=>Section                                                                                                          |
+  | mergeTags          | Object                                                                                             | A merge tag is a bit of specific code that allows you to insert dynamic data into emails.Like {{user.name}}, example see https://github.com/m-Ryan/easy-email/blob/master/example/pages/Editor/index.tsx#L96-L114 |
+  | onBeforePreview    | (data: IPage, mergeTags: PropsProviderProps['mergeTags']) => IPage                                 | You can replace mergeTags when previewing. Example see https://github.com/m-Ryan/easy-email/blob/master/example/pages/Editor/index.tsx#L173-L177                                                                  |
+
+
+
+
 ## Development
 
 ```sh
@@ -107,8 +133,6 @@ $ yarn install-all
 $ yarn dev
 
 ```
-
-## Start the dev server
 
 ## License
 

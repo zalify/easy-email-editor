@@ -1,5 +1,6 @@
 export { JsonToMjml } from './JsonToMjml';
 export { MjmlToJson } from './MjmlToJson';
+export { parseReactBlockToBlockData } from './parseReactBlockToBlockData';
 export { createCustomBlock } from './createCustomBlock';
 export { createBlockDataByType } from './createBlockDataByType';
 export { ancestorOf } from './ancestorOf';

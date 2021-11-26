@@ -28,7 +28,10 @@ export interface IBlockDataWithId extends IBlockData {
 }
 
 export function BlockLayer() {
-  const { pageData, values } = useEditorContext();
+  const {
+    pageData,
+    formState: { values },
+  } = useEditorContext();
   const { onUploadImage, onAddCollection } = useEditorProps();
   const { focusIdx, setFocusIdx } = useFocusIdx();
   const { setHoverIdx } = useHoverIdx();

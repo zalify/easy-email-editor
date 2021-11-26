@@ -10,7 +10,8 @@ This is the core easy-email library, composed by the following parts
   - MjmlToJson
   - BlockManager
   - createCustomBlock
-  - BlockManager (add or overwrite image)
+  - parseReactBlockToBlockData
+  - ImageManager (add or overwrite image)
 
 - blocks
 
@@ -143,7 +144,6 @@ console.log(json);
   ]
 }
 ```
-
 ## transform json to mjml
 
 ```ts
@@ -250,6 +250,253 @@ console.log(xml);
     </mj-hero>
   </mj-body>
 </mjml>
+```
+
+## parseReactBlockToBlockData
+
+```tsx
+import {
+  JsonToMjml,
+  components,
+  parseReactBlockToBlockData,
+} from 'easy-email-core';
+
+const { Page, Section, Column, Text, Button } = components;
+
+const blockData = parseReactBlockToBlockData(
+  <Page>
+    <Section>
+      <Column>
+        <Text
+          padding='20px'
+          color='#ffffff'
+          font-family='Helvetica'
+          align='center'
+          font-size='45px'
+          line-height='45px'
+          font-weight='900'
+        >
+          GO TO SPACE
+        </Text>
+        <Button href='https://mjml.io/' align='center'>
+          ORDER YOUR TICKET NOW
+        </Button>
+      </Column>
+    </Section>
+  </Page>
+);
+
+console.log(blockData);
+
+```
+
+// output
+
+```json
+{
+    "type": "page",
+    "data": {
+        "value": {
+            "breakpoint": "480px",
+            "headAttributes": "",
+            "font-size": "14px",
+            "line-height": "1.7",
+            "headStyles": [],
+            "fonts": [],
+            "responsive": true,
+            "font-family": "lucida Grande,Verdana,Microsoft YaHei",
+            "text-color": "#000000"
+        }
+    },
+    "attributes": {
+        "background-color": "#efeeea",
+        "width": "600px"
+    },
+    "children": [
+        {
+            "type": "section",
+            "data": {
+                "value": {
+                    "noWrap": false
+                }
+            },
+            "attributes": {
+                "padding": "20px 0px 20px 0px",
+                "border": "none",
+                "direction": "ltr",
+                "text-align": "center",
+                "background-repeat": "repeat",
+                "background-size": "auto",
+                "background-position": "top center"
+            },
+            "children": [
+                {
+                    "type": "column",
+                    "data": {
+                        "value": {}
+                    },
+                    "attributes": {
+                        "padding": "0px 0px 0px 0px",
+                        "border": "none",
+                        "vertical-align": "top"
+                    },
+                    "children": [
+                        {
+                            "type": "text",
+                            "data": {
+                                "value": {
+                                    "content": "GO TO SPACE"
+                                }
+                            },
+                            "attributes": {
+                                "padding": "20px",
+                                "align": "center",
+                                "color": "#ffffff",
+                                "font-family": "Helvetica",
+                                "font-size": "45px",
+                                "line-height": "45px",
+                                "font-weight": "900"
+                            },
+                            "children": []
+                        },
+                        {
+                            "type": "button",
+                            "data": {
+                                "value": {
+                                    "content": "ORDER YOUR TICKET NOW"
+                                }
+                            },
+                            "attributes": {
+                                "align": "center",
+                                "background-color": "#414141",
+                                "color": "#ffffff",
+                                "font-weight": "normal",
+                                "border-radius": "3px",
+                                "padding": "10px 25px 10px 25px",
+                                "inner-padding": "10px 25px 10px 25px",
+                                "line-height": "120%",
+                                "target": "_blank",
+                                "vertical-align": "middle",
+                                "border": "none",
+                                "text-align": "center",
+                                "href": "https://mjml.io/"
+                            },
+                            "children": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+
+```
+
+
+```tsx
+// Then transform to mjml
+console.log(
+  JsonToMjml({
+    data: blockData,
+    mode: 'production',
+  })
+);
+
+```
+
+// output
+
+```html
+
+<mjml>
+  <mj-head>
+    <mj-html-attributes>
+      <mj-html-attribute
+        class="easy-email"
+        multiple-attributes="false"
+        attribute-name="text-color"
+        text-color="#000000"
+      ></mj-html-attribute>
+      <mj-html-attribute
+        class="easy-email"
+        multiple-attributes="false"
+        attribute-name="font-family"
+        font-family="lucida Grande,Verdana,Microsoft YaHei"
+      ></mj-html-attribute>
+      <mj-html-attribute
+        class="easy-email"
+        multiple-attributes="false"
+        attribute-name="font-size"
+        font-size="14px"
+      ></mj-html-attribute>
+      <mj-html-attribute
+        class="easy-email"
+        multiple-attributes="false"
+        attribute-name="line-height"
+        line-height="1.7"
+      ></mj-html-attribute>
+      <mj-html-attribute
+        class="easy-email"
+        multiple-attributes="false"
+        attribute-name="responsive"
+        responsive="true"
+      ></mj-html-attribute>
+    </mj-html-attributes>
+
+    <mj-breakpoint width="480px" />
+    <mj-attributes>
+      <mj-all font-family="lucida Grande,Verdana,Microsoft YaHei" />
+      <mj-text font-size="14px" />
+      <mj-text color="#000000" />
+      <mj-text line-height="1.7" />
+    </mj-attributes>
+  </mj-head>
+  <mj-body background-color="#efeeea" width="600px" css-class="mjml-body">
+    <mj-section
+      padding="20px 0px 20px 0px"
+      border="none"
+      direction="ltr"
+      text-align="center"
+      background-repeat="repeat"
+      background-size="auto"
+      background-position="top center"
+    >
+      <mj-column padding="0px 0px 0px 0px" border="none" vertical-align="top">
+        <mj-text
+          padding="20px"
+          align="center"
+          color="#ffffff"
+          font-family="Helvetica"
+          font-size="45px"
+          line-height="45px"
+          font-weight="900"
+        >
+          GO TO SPACE
+        </mj-text>
+
+        <mj-button
+          align="center"
+          background-color="#414141"
+          color="#ffffff"
+          font-weight="normal"
+          border-radius="3px"
+          padding="10px 25px 10px 25px"
+          inner-padding="10px 25px 10px 25px"
+          line-height="120%"
+          target="_blank"
+          vertical-align="middle"
+          border="none"
+          text-align="center"
+          href="https://mjml.io/"
+        >
+          ORDER YOUR TICKET NOW
+        </mj-button>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
+
+
 ```
 
 ## Customize your block

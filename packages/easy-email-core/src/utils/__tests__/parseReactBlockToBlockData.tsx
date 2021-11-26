@@ -1,5 +1,5 @@
 import React from 'react';
-import { parseMjmlBlockToBlockData } from '../parseMjmlBlockToBlockData';
+import { parseReactBlockToBlockData } from '../parseReactBlockToBlockData';
 import * as componentsMap from '../../components';
 import { BlockManager } from '../BlockManager';
 import { BasicType } from '@core/constants';
@@ -12,7 +12,7 @@ describe('Test parseXml', () => {
     const type = snakeCase(kebabCase(componentName)).toUpperCase();
     const block = BlockManager.getBlockByType(BasicType[type]);
 
-    expect(parseMjmlBlockToBlockData(<Com />)).toEqual(block?.create());
+    expect(parseReactBlockToBlockData(<Com />)).toEqual(block?.create());
   });
 });
 
@@ -34,7 +34,7 @@ describe('Test parseXml2', () => {
       </Column>
     </Section>
   );
-  const instance = parseMjmlBlockToBlockData(reactNode);
+  const instance = parseReactBlockToBlockData(reactNode);
 
   it('should as expected', () => {
     expect(instance).toEqual({
@@ -85,6 +85,6 @@ describe('Test parseXml2', () => {
   it('should be error when component is not basic block', () => {
     const reactNode = <div />;
 
-    expect(() => parseMjmlBlockToBlockData(reactNode)).toThrowError();
+    expect(() => parseReactBlockToBlockData(reactNode)).toThrowError();
   });
 });

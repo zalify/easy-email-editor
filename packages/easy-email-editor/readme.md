@@ -50,6 +50,7 @@ If you customize the UI yourself,maybe you need to know
   - useBlock // includes addBlock、moveBlock、removeBlock、undo, redo, etc.
   - useHoverIdx // hover block related, dragging status related, dragging direction related
   - useEditorProps // get props from EmailEditorProvider
+  - useEditorContext // get form state and initialized status
   - useFocusIdx // focus block related
 
 - utils (These are some very simple methods, it is best to look at the implementation)

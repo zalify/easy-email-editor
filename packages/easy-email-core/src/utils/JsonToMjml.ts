@@ -1,4 +1,4 @@
-import { parseMjmlBlockToBlockData } from '@core/utils/parseMjmlBlockToBlockData';
+import { parseReactBlockToBlockData } from '@core/utils/parseReactBlockToBlockData';
 import { isValidElement } from 'react';
 
 import { BasicType, BlockType } from '@core/constants';
@@ -84,7 +84,7 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
   if (block.render) {
     const transformBlockData = block.render(data, idx, context);
     const transformData = isValidElement(transformBlockData)
-      ? parseMjmlBlockToBlockData(transformBlockData)
+      ? parseReactBlockToBlockData(transformBlockData)
       : transformBlockData;
     att['css-class'] = classnames(att['css-class'], transformData['css-class']);
     return JsonToMjml({
