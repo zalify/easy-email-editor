@@ -7,6 +7,7 @@ import { useHotKeys } from '@/hooks/useHotKeys';
 import { ShadowDom } from '@/components/UI/ShadowDom';
 import { ShadowStyle } from './components/ShadowStyle';
 import { useEditorContext } from '@/hooks/useEditorContext';
+import { DATA_ATTRIBUTE_DROP_CONTAINER } from '@/constants';
 
 export function EditEmailPreview() {
   useHotKeys();
@@ -45,6 +46,11 @@ export function EditEmailPreview() {
     () => (
       <ShadowDom
         id='VisualEditorEditMode'
+        {
+        ...{
+          [DATA_ATTRIBUTE_DROP_CONTAINER]: "true"
+        }
+        }
         style={{
           height: '100%',
           zIndex: 10,

@@ -16,6 +16,7 @@ import { scrollBlockEleIntoView } from '@/utils/scrollBlockEleIntoView';
 import { getEditNode } from '@/utils/getEditNode';
 import { useEditorProps } from './useEditorProps';
 import { getBlockNodeByIdx } from '@/utils';
+import { DATA_ATTRIBUTE_DROP_CONTAINER } from '@/constants';
 
 export function useDropBlock() {
   const [ref, setRef] = useState<HTMLElement | null>(null);
@@ -154,16 +155,35 @@ export function useDropBlock() {
         }
       };
 
+      const onCheckDragLeave = (ev: DragEvent) => {
+        const dropEleList = [...document.querySelectorAll(`[${DATA_ATTRIBUTE_DROP_CONTAINER}="true"]`)];
+        const target = ev.target as HTMLElement;
+        const isDropContainer = dropEleList.some(ele => ele.contains(target));
+
+        if (!isDropContainer) {
+          setDirection('');
+          setHoverIdx('');
+          setDataTransfer((dataTransfer: any) => {
+            return {
+              ...dataTransfer,
+              parentIdx: undefined,
+            };
+          });
+        }
+      };
+
       ref.addEventListener('mouseover', onMouseover);
       // ref.addEventListener('mouseout', onMouseOut);
       ref.addEventListener('drop', onDrop);
       ref.addEventListener('dragover', onDragOver);
+      window.addEventListener('dragover', onCheckDragLeave);
 
       return () => {
         ref.removeEventListener('mouseover', onMouseover);
         // ref.removeEventListener('mouseout', onMouseOut);
         ref.removeEventListener('drop', onDrop);
         ref.removeEventListener('dragover', onDragOver);
+        window.removeEventListener('dragover', onCheckDragLeave);
       };
     }
   }, [

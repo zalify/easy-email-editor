@@ -10,7 +10,6 @@ import {
   getShadowRoot,
 } from 'easy-email-editor';
 import { awaitForElement } from '@extensions/utils/awaitForElement';
-import { BLOCK_SELECTED_CLASSNAME, styleZIndex } from '../constants';
 import { Toolbar } from './Toolbar';
 
 export function FocusTooltip() {
@@ -33,14 +32,17 @@ export function FocusTooltip() {
   }, [focusIdx, focusBlock]);
   useEffect(() => {
     if (blockNode) {
-      const options = {
+      const options: IntersectionObserverInit = {
+        rootMargin: '-24px 0px -24px 0px',
         root: getShadowRoot().host,
-        threshold: [0, 0.001, 0.999, 1],
+        threshold: [0, 0.001, 0.1, 0.999, 0.9, 1],
       };
       const checkDirection: IntersectionObserverCallback = (ev) => {
         const [current] = ev;
-        const { top, height, bottom } = current.intersectionRect;
+        const { top, bottom } = current.intersectionRect;
         const rootBounds = current.rootBounds;
+
+
         if (!rootBounds) return;
         if (rootBounds.bottom === bottom) {
           setDirection('top');

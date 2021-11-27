@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import {
+  DATA_ATTRIBUTE_DROP_CONTAINER,
   scrollBlockEleIntoView,
   TextStyle,
   useBlock,
@@ -170,7 +171,13 @@ export function BlockLayer() {
   return useMemo(() => {
     if (!hasFocus) return null;
     return (
-      <div id='BlockLayerManager'>
+      <div
+        id='BlockLayerManager'
+        {
+        ...{
+          [DATA_ATTRIBUTE_DROP_CONTAINER]: "true"
+        }
+        }>
         <BlockTree<IBlockDataWithId>
           selectedId={focusIdx}
           defaultExpandAll

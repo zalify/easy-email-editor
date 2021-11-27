@@ -1,25 +1,39 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 import {
   getNodeTypeFromClassName,
   BlockManager,
-  getNodeIdxFromClassName,
 } from 'easy-email-core';
 import { createPortal } from 'react-dom';
-import { getBlockNodes, useFocusIdx, useHoverIdx } from 'easy-email-editor';
+import { getEditorRoot, useEditorContext, useFocusIdx, useHoverIdx } from 'easy-email-editor';
 import { awaitForElement } from '@extensions/utils/awaitForElement';
-import { BLOCK_HOVER_CLASSNAME, styleZIndex } from '../constants';
 
 export function HoverTooltip() {
   const { hoverIdx, direction, isDragging } = useHoverIdx();
   const { focusIdx } = useFocusIdx();
+  const [isTop, setIsTop] = useState(false);
+  const { initialized } = useEditorContext();
 
   const [blockNode, setBlockNode] = useState<HTMLDivElement | null>(null);
+  const rootRef = useRef<DOMRect | null>(null);
+
 
   useEffect(() => {
+    if (initialized) {
+      rootRef.current = getEditorRoot()!.getBoundingClientRect();
+    }
+  }, [initialized]);
+
+  useEffect(() => {
+    const rootBounds = rootRef.current;
+    if (!initialized || !rootBounds) return;
+
     if (hoverIdx) {
+
       const promiseObj = awaitForElement<HTMLDivElement>(hoverIdx);
       promiseObj.promise.then((blockNode) => {
+        const { top } = blockNode.getBoundingClientRect();
+        setIsTop(rootBounds.top === top);
         setBlockNode(blockNode);
       });
 
@@ -29,13 +43,14 @@ export function HoverTooltip() {
     } else {
       setBlockNode(null);
     }
-  }, [hoverIdx]);
+  }, [hoverIdx, initialized]);
+
 
   const block = useMemo(() => {
     return blockNode
       ? BlockManager.getBlockByType(
-          getNodeTypeFromClassName(blockNode.classList)!
-        )
+        getNodeTypeFromClassName(blockNode.classList)!
+      )
       : null;
   }, [blockNode]);
 
@@ -60,7 +75,7 @@ export function HoverTooltip() {
             type={isDragging ? 'drag' : 'hover'}
             lineWidth={1}
             title={block.name}
-            direction={direction}
+            direction={isTop ? 'noEnoughTop' : direction}
             isDragging={isDragging}
           />
         </div>,
@@ -106,7 +121,7 @@ function TipNode(props: TipNodeProps) {
         left: 0,
         top: 0,
         fontSize: 14,
-        zIndex: styleZIndex.HOVER_BLOCK_TOOLTIP,
+        zIndex: 1,
         color: '#000',
         width: '100%',
         height: '100%',
@@ -194,6 +209,12 @@ function TipNode(props: TipNodeProps) {
 }
 
 const positionStyleMap = {
+  noEnoughTop: {
+    top: '0%',
+    left: '50%',
+    padding: '1px 5px',
+    transform: 'translate(-50%, 0%)',
+  },
   top: {
     top: '0%',
     left: '50%',
