@@ -1,0 +1,70 @@
+{
+  "name": "easy-email-core",
+  "license": "MIT",
+  "description": "Email editor",
+  "version": "2.5.2",
+  "author": "m-Ryan",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:m-Ryan/easy-email.git"
+  },
+  "keywords": [
+    "email editor core"
+  ],
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.cjs.js",
+  "module": "lib/index.es.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "dev": "yarn build --watch",
+    "typings": "tsc --declaration --emitDeclarationOnly --project tsconfig.json",
+    "build": "rimraf lib  && npm run typings && tsc-alias  && vite build --config vite.config.ts",
+    "block": "ts-node -r tsconfig-paths/register scripts/generateBlockJSX.ts",
+    "test": "jest  --coverage"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn test && yarn lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/*.{js,jsx,ts,tsx}, example/*.{js,jsx,ts,tsx}": [
+      "yarn lint"
+    ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "@babel/preset-react": "^7.14.5",
+    "@babel/preset-typescript": "^7.15.0",
+    "@types/jest": "^26.0.24",
+    "@types/jsdom": "^16.2.13",
+    "@types/lodash": "^4.14.177",
+    "@types/node": "^16.11.7",
+    "@types/react": "17.0.2",
+    "@types/react-dom": "^17.0.11",
+    "babel-jest": "^27.0.6",
+    "jest": "^27.0.6",
+    "jsdom": "^17.0.0",
+    "mjml-browser": "^4.10.4",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "rimraf": "^3.0.2",
+    "ts-node": "^10.4.0",
+    "tsc-alias": "^1.4.1",
+    "tsconfig-paths": "^3.11.0",
+    "vite": "^2.5.6"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "typescript": "^4.4.4"
+  },
+  "peerDependencies": {
+    "mjml-browser": "^4.10.4",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "gitHead": "a90e22b7e59688cc41194c1e7b52a494e94125c7"
+}

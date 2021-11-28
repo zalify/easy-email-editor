@@ -1,0 +1,6 @@
+.container {
+  height: 100%;
+}
+.container :global(.CodeMirror) {
+  height: 100%;
+}

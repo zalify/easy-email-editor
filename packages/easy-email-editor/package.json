@@ -1,0 +1,69 @@
+{
+  "name": "easy-email-editor",
+  "license": "MIT",
+  "description": "Email editor",
+  "version": "2.5.2",
+  "author": "m-Ryan",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:m-Ryan/easy-email.git"
+  },
+  "keywords": [
+    "email editor core"
+  ],
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "dev": "vite",
+    "typings": "tsc --declaration --emitDeclarationOnly --project tsconfig.lib.json",
+    "build": "rimraf lib && npm run typings  && vite build --config vite.config.ts"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn test && yarn lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/*.{js,jsx,ts,tsx}, example/*.{js,jsx,ts,tsx}": [
+      "yarn lint"
+    ]
+  },
+  "dependencies": {
+    "final-form": "^4.20.4",
+    "final-form-arrays": "^3.0.2",
+    "final-form-set-field-touched": "^1.0.1",
+    "is-hotkey": "^0.2.0",
+    "lodash": "^4.17.21",
+    "react-final-form-arrays": "^3.1.3",
+    "react-sortablejs": "^6.0.0",
+    "react-use": "^17.3.1"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.177",
+    "@types/node": "^16.11.7",
+    "@types/react": "17.0.2",
+    "@types/react-dom": "^17.0.11",
+    "mjml-browser": "^4.10.4",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-final-form": "^6.5.7",
+    "rimraf": "^3.0.2",
+    "sass": "^1.43.4",
+    "sortablejs": "^1.14.0",
+    "tsc-alias": "^1.4.1",
+    "typescript": "^4.4.4",
+    "vite": "^2.6.14"
+  },
+  "peerDependencies": {
+    "easy-email-core": "^2.5.2",
+    "mjml-browser": "^4.10.4",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-final-form": "^6.5.7",
+    "sortablejs": "^1.14.0"
+  },
+  "gitHead": "a90e22b7e59688cc41194c1e7b52a494e94125c7"
+}

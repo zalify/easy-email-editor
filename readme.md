@@ -32,9 +32,9 @@ Easy email is developed based on the [MJML](https://mjml.io/) and has very good 
 
 - Drag and drop editor
 - Can be converted into `MJML`, or generated through `MJML`
-- Collect blocks and reuse them at other times
 - Defined custom block
 - Dynamic rendering
+- Easily customize UI when you need
 
 
 |                                                                                  Video Overview                                                                                  |
@@ -49,58 +49,91 @@ Check out the live demo here: <a href="http://easy-email-m-ryan.vercel.app" targ
 ## Getting started
 
 ```sh
-$ npm install --save easy-email-editor antd mjml-browser react-final-form
+$ npm install --save easy-email-core easy-email-editor easy-email-extensions
 ```
 
 or
 
 ```sh
-$ yarn add easy-email-editor antd mjml-browser react-final-form
+$ yarn add easy-email-core easy-email-editor easy-email-extensions
 ```
 
 ```js
-import React from "react";
-import { BlocksMap, EmailEditor, EmailEditorProvider } from "easy-email-editor";
-import "easy-email-editor/lib/style.css";
-import "antd/dist/antd.css";
+import React from 'react';
+import { BlockManager, BasicType } from 'easy-email-core';
+import { EmailEditor, EmailEditorProvider } from 'easy-email-editor';
+import { SimpleLayout } from 'easy-email-extensions';
+
+import 'easy-email-editor/lib/style.css';
+import 'easy-email-extensions/lib/style.css';
 
 const initialValues = {
-  subject: "Welcome to Easy-email",
-  subTitle: "Nice to meet you!",
-  content: BlocksMap.getBlock("Page").create({}),
+  subject: 'Welcome to Easy-email',
+  subTitle: 'Nice to meet you!',
+  content: BlockManager.getBlockByType(BasicType.PAGE)!.create({}),
 };
 
-export function App() {
+function App() {
   return (
-    <EmailEditorProvider data={initialValues}>
+    <EmailEditorProvider
+      data={initialValues}
+      height={'calc(100vh - 72px)'}
+      autoComplete
+      dashed={false}
+    >
       {({ values }) => {
-        return <EmailEditor height={"calc(100vh - 72px)"} />;
+        return (
+          <SimpleLayout>
+            <EmailEditor />
+          </SimpleLayout>
+        );
       }}
     </EmailEditorProvider>
   );
 }
+
+export default App;
+
 ```
-
-## Docs
-
-Check out [documentation](https://docs-easy-email.vercel.app/) for guides and a full API reference.
 
 ## Examples
 
 > Please see <a href="https://github.com/m-Ryan/easy-email-demo" target="_blank" alt="https://github.com/m-Ryan/easy-email-demo">https://github.com/m-Ryan/easy-email-demo</a>
+
+
+</br>
+
+## Configuration
+
+  | property           | Type                                                                                               | Description                                                                                                                                                                                                       |
+  | ------------------ | -------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  | height             | string / number                                                                                    | Set the height of the container                                                                                                                                                                                   |
+  | data               | interface IEmailTemplate { content: IPage; subject: string; subTitle: string; }                    | Source data                                                                                                                                                                                                       |
+  | children           | ( props: FormState<T>,helper: FormApi<IEmailTemplate, Partial<IEmailTemplate>>) => React.ReactNode | ReactNode                                                                                                                                                                                                         |
+  | onSubmit           | Config<IEmailTemplate, Partial<IEmailTemplate>>['onSubmit'];                                       | Called when the commit is triggered manually                                                                                                                                                                      |
+  | fontList           | { value: string; label: string; }[];                                                               | Default font list.                                                                                                                                                                                                |
+  | interactiveStyle   | { hoverColor?: string; selectedColor?: string;}                                                    | Interactive prompt color                                                                                                                                                                                          |
+  | onUploadImage      | (data: Blob) => Promise<string>;                                                                   | Triggered when an image is pasted or uploaded                                                                                                                                                                     |
+  | onAddCollection    | (payload: CollectedBlock) => void;                                                                 | Add to collection list                                                                                                                                                                                            |
+  | onRemoveCollection | (payload: { id: string; }) => void;                                                                | Remove from collection list                                                                                                                                                                                       |
+  | dashed             | boolean                                                                                            | Show dashed                                                                                                                                                                                                       |
+  | autoComplete       | boolean                                                                                            | Automatically complete missing blocks. For example, Text => Section, will generate Text=>Column=>Section                                                                                                          |
+  | mergeTags          | Object                                                                                             | A merge tag is a bit of specific code that allows you to insert dynamic data into emails. Like `{{user.name}}` |
+  | onBeforePreview    | (data: IPage, mergeTags: PropsProviderProps['mergeTags']) => IPage                                 | You can replace mergeTags when previewing.                                                                |
+
+## Packages
+  * [easy-email-core](./packages/easy-email-core/readme.md)
+  * [easy-email-editor](./packages/easy-email-editor/readme.md)
+  * [easy-email-extensions](./packages/easy-email-extensions/readme.md)
+
+  * <img alt="" src="./layout.png">
 
 ## Development
 
 ```sh
 $ git clone git@github.com:m-Ryan/easy-email.git
 $ cd easy-email
-$ yarn install
-
-```
-
-## Start the dev server
-
-```sh
+$ yarn install-all
 $ yarn dev
 
 ```
