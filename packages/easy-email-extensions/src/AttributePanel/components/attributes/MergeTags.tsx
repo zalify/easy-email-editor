@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { Tree, TreeSelect } from 'antd';
+import { Tree, TreeSelect } from '@arco-design/web-react';
 import { isObject } from 'lodash';
 import { useEditorProps } from 'easy-email-editor';
 
@@ -52,10 +52,10 @@ export const MergeTags: React.FC<{
           value={props.value}
           size='small'
           style={{ width: 120 }}
-          dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+          dropdownMenuStyle={{ maxHeight: 400, overflow: 'auto' }}
           placeholder='Please select'
           treeData={treeOptions}
-          onSelect={(val) => onSelect(val)}
+          onChange={(val) => onSelect(val)}
         />
       ) : (
         <Tree

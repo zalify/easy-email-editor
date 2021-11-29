@@ -1,40 +1,38 @@
 import {
   InputNumber,
-  Input as AntdInput,
+  Input as ArcoInput,
   Switch,
   DatePicker,
   Slider,
-} from 'antd';
-import { SearchProps, TextAreaProps } from 'antd/lib/input';
-import { InputNumberProps } from 'antd/lib/input-number';
-import { CheckboxGroupProps } from 'antd/lib/checkbox';
+  SliderProps,
+  InputNumberProps,
+  SwitchProps,
+  DatePickerProps,
+  TextAreaProps,
+  CheckboxGroupProps,
+} from '@arco-design/web-react';
 import { ImageUploaderProps, ImageUploader } from './ImageUploader';
 import { UploadField as Uploader, UploadFieldProps } from './UploadField';
 import { ColorPicker, ColorPickerProps } from './ColorPicker';
 import { Select, SelectProps } from './Select';
 import { RadioGroup, RadioGroupProps } from './RadioGroup';
 import enhancer from './enhancer';
-import { RadioChangeEvent } from 'antd/lib/radio';
-import { TreeSelect, TreeSelectProps } from './TreeSelect';
 import { Input, InputProps } from './Input';
-import { SwitchProps } from 'antd/lib/switch';
 import { ChexkBoxGroup } from './ChexkBoxGroup';
 import { EditTab, EditTabProps } from './EditTab';
-import { DatePickerProps } from 'antd/lib/date-picker';
 import { Dayjs } from 'dayjs';
 import { InlineText, InlineTextProps } from './InlineTextField';
 import { AutoCompleteProps, AutoComplete } from './AutoComplete';
-import { SliderBaseProps } from 'antd/lib/slider';
 export { RichTextField } from './RichTextField';
 
 export const TextField = enhancer<InputProps>(Input, (value) => value);
-export const SearchField = enhancer<SearchProps>(
-  AntdInput.Search,
+export const SearchField = enhancer<InputProps>(
+  ArcoInput.Search,
   (e: React.ChangeEvent<HTMLTextAreaElement>) => e.target.value
 );
 
 export const TextAreaField = enhancer<TextAreaProps>(
-  AntdInput.TextArea,
+  ArcoInput.TextArea,
   (e: React.ChangeEvent<HTMLTextAreaElement>) => e.target.value
 );
 
@@ -42,7 +40,7 @@ export const NumberField = enhancer<InputNumberProps>(
   InputNumber,
   (e: number | string | undefined | null) => e
 );
-export const SliderField = enhancer<SliderBaseProps>(Slider, (e: number) => e);
+export const SliderField = enhancer<SliderProps>(Slider, (e: number) => e);
 
 export const ColorPickerField = enhancer<ColorPickerProps>(
   ColorPicker,
@@ -68,12 +66,7 @@ export const AutoCompleteField = enhancer<AutoCompleteProps>(
 
 export const RadioGroupField = enhancer<RadioGroupProps>(
   RadioGroup,
-  (e: RadioChangeEvent) => e.target.value
-);
-
-export const TreeSelectField = enhancer<TreeSelectProps>(
-  TreeSelect,
-  (e: string) => e
+  (value) => value
 );
 
 export const SwitchField = enhancer<SwitchProps>(Switch, (e: boolean) => e);
@@ -83,7 +76,7 @@ export const DatePickerField = enhancer<DatePickerProps>(
   (date: Dayjs) => date
 );
 
-export const CheckboxField = enhancer<CheckboxGroupProps>(
+export const CheckboxField = enhancer<CheckboxGroupProps<any>>(
   ChexkBoxGroup,
   (e: any[]) => e
 );

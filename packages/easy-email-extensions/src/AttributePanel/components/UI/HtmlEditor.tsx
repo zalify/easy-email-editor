@@ -1,4 +1,4 @@
-import { Button, Drawer } from 'antd';
+import { Button, Drawer } from '@arco-design/web-react';
 import React, { Suspense, useEffect, useMemo, useState } from 'react';
 import { BasicType, IText } from 'easy-email-core';
 import {
@@ -11,7 +11,7 @@ import {
 import { ShadowDom } from '@extensions/components/ShadowDom';
 
 const CodeMirrorEditorPromise = import(
-  '../../../../components/Form/CodemirrorEditor'
+  '../../../components/Form/CodemirrorEditor'
 );
 const CodeMirrorEditor = React.lazy(() => CodeMirrorEditorPromise);
 
@@ -59,26 +59,27 @@ export const HtmlEditor: React.FC<{
     };
   }, [focusBlock, pageData.data.value]);
 
-  if (!visible) return null;
   return (
     <Drawer
+      placement='left'
+      headerStyle={{ display: 'block', lineHeight: '48px' }}
       title={
         <Stack distribution='equalSpacing'>
           <TextStyle variation='strong' size='large'>
             Html
           </TextStyle>
           <Stack>
-            {/* <Button onClick={onClose}>Cancel</Button> */}
             <Button type='primary' onClick={onSave}>
               Save
             </Button>
           </Stack>
         </Stack>
       }
-      closeIcon={null}
+      closable={false}
+      escToExit={false}
       width='100vw'
-      onClose={onClose}
       visible={visible}
+      footer={null}
       bodyStyle={{ padding: 0, overflow: 'hidden' }}
     >
       <div style={{ display: 'flex', height: '100%' }}>

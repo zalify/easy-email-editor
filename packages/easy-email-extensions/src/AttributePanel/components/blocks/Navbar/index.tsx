@@ -6,9 +6,9 @@ import {
   TextField,
 } from '@extensions/components/Form';
 import { Align } from '@extensions/AttributePanel/components/attributes/Align';
-import { LinkOutlined } from '@ant-design/icons';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
-import { Collapse } from 'antd';
+import { Collapse } from '@arco-design/web-react';
+import { IconLink } from '@arco-design/web-react/icon';
 import { NavbarLinkPadding } from '@extensions/AttributePanel/components/attributes/NavbarLinkPadding';
 import { useFocusIdx, Stack } from 'easy-email-editor';
 import { INavbar } from 'easy-email-core';
@@ -18,19 +18,25 @@ export function Navbar() {
   return (
     <AttributesPanelWrapper style={{ padding: 0 }}>
       <Collapse defaultActiveKey={['0', '1', '2']}>
-
-        <Collapse.Panel key="0" header="Layout">
-          <Stack vertical spacing="tight">
+        <Collapse.Item name='0' header='Layout'>
+          <Stack vertical spacing='tight'>
             <Align />
           </Stack>
-        </Collapse.Panel>
+        </Collapse.Item>
 
-        <Collapse.Panel key="1" header="Navbar links">
+        <Collapse.Item
+          contentStyle={{ padding: 0 }}
+          name='1'
+          header='Navbar links'
+        >
           <EditTabField
-            tabPosition="left"
+            tabPosition='top'
             name={`${focusIdx}.data.value.links`}
             label='Links'
-            renderItem={(item, index) => <NavbarLink item={item} index={index} />}
+            labelHidden
+            renderItem={(item, index) => (
+              <NavbarLink item={item} index={index} />
+            )}
             additionItem={{
               src: 'https://www.mailjet.com/wp-content/uploads/2016/11/ecommerce-guide.jpg',
               target: '_blank',
@@ -39,10 +45,8 @@ export function Navbar() {
               'font-size': '13px',
             }}
           />
-        </Collapse.Panel>
-
+        </Collapse.Item>
       </Collapse>
-
     </AttributesPanelWrapper>
   );
 }
@@ -56,13 +60,12 @@ function NavbarLink({
 }) {
   const { focusIdx } = useFocusIdx();
   return (
-    <Stack vertical spacing="tight">
+    <Stack vertical spacing='tight'>
       <TextField
         label='Content'
         name={`${focusIdx}.data.value.links.[${index}].content`}
       />
       <Stack wrap={false}>
-
         <div style={{ width: 65 }}>
           <TextField
             label='Font size'
@@ -77,13 +80,12 @@ function NavbarLink({
             alignment='center'
           />
         </Stack.Item>
-
       </Stack>
 
       <Stack wrap={false}>
         <Stack.Item fill>
           <TextField
-            prefix={<LinkOutlined />}
+            prefix={<IconLink />}
             label={<span>Href</span>}
             name={`${focusIdx}.data.value.links.[${index}].href`}
           />
@@ -104,7 +106,6 @@ function NavbarLink({
             },
           ]}
         />
-
       </Stack>
 
       <NavbarLinkPadding

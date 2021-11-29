@@ -1,20 +1,9 @@
 import { defineConfig } from 'vite';
 import path from 'path';
 import visualizer from 'rollup-plugin-visualizer';
-import styleImport from 'vite-plugin-style-import';
 
 export default defineConfig({
   plugins: [
-    styleImport({
-      libs: [
-        // Dynamic import antd styles
-        {
-          libraryName: 'antd',
-          esModule: true,
-          resolveStyle: (name) => `antd/es/${name}/style/index`,
-        },
-      ],
-    }),
     process.env.ANALYZE === 'true' &&
       visualizer({
         open: true,

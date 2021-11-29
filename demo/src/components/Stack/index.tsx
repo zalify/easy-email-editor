@@ -49,7 +49,7 @@ export const Stack = memo(function Stack({
     spacing && styles[variationName('spacing', spacing)],
     distribution && styles[variationName('distribution', distribution)],
     alignment && styles[variationName('alignment', alignment)],
-    wrap === false && styles.noWrap,
+    wrap === false && styles.noWrap
   );
   const itemMarkup = elementChildren(children).map((child, index) => {
     const props = { key: index };

@@ -13,9 +13,10 @@ import { LineHeight } from '@extensions/AttributePanel/components/attributes/Lin
 import { LetterSpacing } from '@extensions/AttributePanel/components/attributes/LetterSpacing';
 
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
-import { Button, Collapse, Tooltip } from 'antd';
+import { Collapse, Tooltip } from '@arco-design/web-react';
+import { Button } from '@arco-design/web-react';
 import { IconFont, Stack } from 'easy-email-editor';
-import { HtmlEditor } from '../../UI/Help/HtmlEditor';
+import { HtmlEditor } from '../../UI/HtmlEditor';
 
 export function Text() {
   const [visible, setVisible] = useState(false);
@@ -23,7 +24,7 @@ export function Text() {
   return (
     <AttributesPanelWrapper
       extra={
-        <Tooltip title='Html mode'>
+        <Tooltip content='Html mode'>
           <Button
             onClick={() => setVisible(true)}
             icon={<IconFont iconName='icon-html' />}
@@ -32,19 +33,19 @@ export function Text() {
       }
     >
       <Collapse defaultActiveKey={['0', '1', '2']}>
-        <Collapse.Panel key='0' header='Dimension'>
+        <Collapse.Item name='0' header='Dimension'>
           <Stack vertical spacing='tight'>
             <Height inline />
             <Padding />
           </Stack>
-        </Collapse.Panel>
-        <Collapse.Panel key='1' header='Color'>
+        </Collapse.Item>
+        <Collapse.Item name='1' header='Color'>
           <Stack vertical spacing='tight'>
             <Color />
             <ContainerBackgroundColor title='Background color' />
           </Stack>
-        </Collapse.Panel>
-        <Collapse.Panel key='2' header='Typography'>
+        </Collapse.Item>
+        <Collapse.Item name='2' header='Typography'>
           <Stack vertical spacing='tight'>
             <Stack wrap={false}>
               <FontFamily />
@@ -71,7 +72,7 @@ export function Text() {
 
             <FontStyle />
           </Stack>
-        </Collapse.Panel>
+        </Collapse.Item>
       </Collapse>
       <HtmlEditor visible={visible} setVisible={setVisible} />
     </AttributesPanelWrapper>

@@ -52,9 +52,6 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (/\/node_modules\/antd\/.*\.js/.test(id)) {
-            return 'antd';
-          }
           if (/\/node_modules\/html2canvas\/.*/.test(id)) {
             return 'html2canvas';
           }
@@ -84,16 +81,6 @@ export default defineConfig({
   },
   plugins: [
     reactRefresh(),
-    styleImport({
-      libs: [
-        // Dynamic import antd styles
-        {
-          libraryName: 'antd',
-          esModule: true,
-          resolveStyle: (name) => `antd/es/${name}/style/index`,
-        },
-      ],
-    }),
     injectHtml({
       data: {
         analysis:

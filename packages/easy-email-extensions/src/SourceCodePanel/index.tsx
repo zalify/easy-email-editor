@@ -1,4 +1,4 @@
-import { Collapse, Input, message } from 'antd';
+import { Collapse, Input, Message } from '@arco-design/web-react';
 import {
   BasicType,
   BlockManager,
@@ -10,6 +10,7 @@ import {
 } from 'easy-email-core';
 import { useBlock, useFocusIdx, useEditorContext } from 'easy-email-editor';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import styles from './index.module.scss';
 
 export function SourceCodePanel() {
   const { setValueByIdx, focusBlock, values } = useBlock();
@@ -44,7 +45,7 @@ export function SourceCodePanel() {
         }
         setValueByIdx(focusIdx, parseValue);
       } catch (error: any) {
-        message.error(error?.message || error);
+        Message.error(error?.message || error);
       }
     },
     [focusIdx, setValueByIdx]
@@ -67,18 +68,15 @@ export function SourceCodePanel() {
 
         setValueByIdx(focusIdx, parseValue);
       } catch (error) {
-        message.error('Invalid content');
+        Message.error('Invalid content');
       }
     },
     [focusIdx, setValueByIdx, values]
   );
 
-  const onChangeMjmlText = useCallback(
-    (event: React.FocusEvent<HTMLTextAreaElement>) => {
-      setMjmlText(event.target.value);
-    },
-    []
-  );
+  const onChangeMjmlText = useCallback((value: string) => {
+    setMjmlText(value);
+  }, []);
 
   useEffect(() => {
     focusBlock &&
@@ -95,16 +93,24 @@ export function SourceCodePanel() {
   if (!focusBlock) return null;
 
   return (
-    <Collapse>
-      <Collapse.Panel key='json' header='Json source'>
+    <Collapse className={styles.wrapper}>
+      <Collapse.Item
+        name='json'
+        header='Json source'
+        contentStyle={{ padding: '8px 13px' }}
+      >
         <Input.TextArea
           key={code}
           defaultValue={code}
           autoSize={{ maxRows: 25 }}
           onBlur={onChaneCode}
         />
-      </Collapse.Panel>
-      <Collapse.Panel key='mjml' header='MJML source'>
+      </Collapse.Item>
+      <Collapse.Item
+        name='mjml'
+        header='MJML source'
+        contentStyle={{ padding: '8px 13px' }}
+      >
         <Input.TextArea
           key={code}
           value={mjmlText}
@@ -112,7 +118,7 @@ export function SourceCodePanel() {
           onChange={onChangeMjmlText}
           onBlur={onMjmlChange}
         />
-      </Collapse.Panel>
+      </Collapse.Item>
     </Collapse>
   );
 }

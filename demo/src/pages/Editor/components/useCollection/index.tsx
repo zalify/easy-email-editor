@@ -1,6 +1,5 @@
-
 import { Picture } from '@demo/components/Picture';
-import { message } from 'antd';
+import { Message } from '@arco-design/web-react';
 import { IBlockData } from 'easy-email-core';
 import { CollectedBlock, IconFont } from 'easy-email-editor';
 import { BlockMarketCategory, BlockMaskWrapper } from 'easy-email-extensions';
@@ -42,21 +41,20 @@ export function useCollection() {
         data: payload.data,
       });
       setCollection([...collection]);
-      message.success('Added to collection!');
+      Message.success('Added to collection!');
     },
     [collection, setCollection]
   );
 
   const removeCollection = useCallback(
     (id: string) => {
-
       if (!collection) return;
 
       collection[0].blocks = collection[0].blocks.filter(
         (item) => item.id !== id
       );
       setCollection([...collection]);
-      message.success('Remove collection');
+      Message.success('Remove collection');
     },
     [collection, setCollection]
   );

@@ -1,4 +1,4 @@
-import { Menu } from 'antd';
+import { Menu } from '@arco-design/web-react';
 import { useEditorProps } from 'easy-email-editor';
 import React from 'react';
 
@@ -14,8 +14,8 @@ export function FontFamily(props: { onChange: (val: string) => void }) {
       }}
     >
       <Menu
-        onClick={(item) => {
-          props.onChange(item.key);
+        onClickMenuItem={(item) => {
+          props.onChange(item);
         }}
         selectedKeys={[]}
         style={{ border: 'none' }}

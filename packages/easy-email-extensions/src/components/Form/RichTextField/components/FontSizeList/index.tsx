@@ -1,7 +1,7 @@
-import { Menu } from 'antd';
+import { Menu } from '@arco-design/web-react';
 import React from 'react';
 
-export function FontSizeList(props: { onChange: (val: string) => void; }) {
+export function FontSizeList(props: { onChange: (val: string) => void }) {
   const list = [
     {
       value: '1',
@@ -34,8 +34,8 @@ export function FontSizeList(props: { onChange: (val: string) => void; }) {
   ];
   return (
     <Menu
-      onClick={(item) => {
-        props.onChange(item.key );
+      onClickMenuItem={(item) => {
+        props.onChange(item);
       }}
       selectedKeys={[]}
       style={{ width: 100, border: 'none' }}

@@ -1,8 +1,8 @@
 import { FieldArray } from 'react-final-form-arrays';
 import React from 'react';
-import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import { IconDelete, IconPlus } from '@arco-design/web-react/icon';
 import { TextField } from '.';
-import { Button } from 'antd';
+import { Button } from '@arco-design/web-react';
 import { Stack, TextStyle, useBlock, useFocusIdx } from 'easy-email-editor';
 import { Help } from '@extensions/AttributePanel/components/UI/Help';
 import { IPage } from 'easy-email-core';
@@ -25,7 +25,7 @@ export function AddFont() {
                 <Stack>
                   <Button
                     size='small'
-                    icon={<PlusOutlined />}
+                    icon={<IconPlus />}
                     onClick={() =>
                       arrayHelpers.fields.push({ name: '', href: '' })
                     }
@@ -53,7 +53,7 @@ export function AddFont() {
                           />
                         </Stack.Item>
                         <Button
-                          icon={<DeleteOutlined />}
+                          icon={<IconDelete />}
                           onClick={() => arrayHelpers.fields.remove(index)}
                         />
                       </Stack>

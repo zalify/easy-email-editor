@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useLoading } from '@demo/hooks/useLoading';
 import Frame from '@demo/components/Frame';
 import templateList from '@demo/store/templateList';
-import { Button } from 'antd';
+import { Button } from '@arco-design/web-react';
 import { CardItem } from './components/CardItem';
 import { Stack } from '@demo/components/Stack';
 import { Loading } from '@demo/components/loading';

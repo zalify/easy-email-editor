@@ -1,8 +1,9 @@
-import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
+import { IconEye, IconEyeInvisible } from '@arco-design/web-react/icon';
 import React, { useCallback } from 'react';
 import { Stack, TextStyle, useBlock, useEditorProps } from 'easy-email-editor';
-import { MergeTags } from './MergeTags';
+import { MergeTags } from '../MergeTags';
 import { BasicType, BlockManager } from 'easy-email-core';
+import styles from './index.module.scss';
 
 export interface AttributesPanelWrapper {
   style?: React.CSSProperties;
@@ -27,7 +28,7 @@ export const AttributesPanelWrapper: React.FC<AttributesPanelWrapper> = (
   if (!focusBlock || !block) return null;
 
   return (
-    <>
+    <div className={styles.wrapper}>
       <div
         style={{
           border: '1px solid #f0f0f0',
@@ -60,7 +61,7 @@ export const AttributesPanelWrapper: React.FC<AttributesPanelWrapper> = (
       </div>
 
       <div style={{ padding: '0px', ...props.style }}>{props.children}</div>
-    </>
+    </div>
   );
 };
 
@@ -87,8 +88,8 @@ function EyeIcon() {
   if (focusBlock.type === BasicType.PAGE) return null;
 
   return focusBlock.data.hidden ? (
-    <EyeInvisibleOutlined onClick={onToggleVisible} />
+    <IconEyeInvisible onClick={onToggleVisible} />
   ) : (
-    <EyeOutlined onClick={onToggleVisible} />
+    <IconEye onClick={onToggleVisible} />
   );
 }

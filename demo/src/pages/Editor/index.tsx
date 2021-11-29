@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import template from '@demo/store/template';
 import { useAppSelector } from '@demo/hooks/useAppSelector';
 import { useLoading } from '@demo/hooks/useLoading';
-import { Button, message, PageHeader } from 'antd';
+import { Button, Message, PageHeader } from '@arco-design/web-react';
 import { useQuery } from '@demo/hooks/useQuery';
 import { useHistory } from 'react-router-dom';
 import { cloneDeep } from 'lodash';
@@ -13,7 +13,7 @@ import mjml from 'mjml-browser';
 import { copy } from '@demo/utils/clipboard';
 import { useEmailModal } from './components/useEmailModal';
 import services from '@demo/services';
-import { GithubOutlined } from '@ant-design/icons';
+import { IconGithub } from '@arco-design/web-react/icon';
 
 import {
   EmailEditor,
@@ -145,7 +145,7 @@ export default function Editor() {
             id: +id,
             template: values,
             success() {
-              message.success('Updated success!');
+              Message.success('Updated success!');
               form.restart(values);
             },
           })
@@ -155,7 +155,7 @@ export default function Editor() {
           template.actions.create({
             template: values,
             success(id, newTemplate) {
-              message.success('Saved success!');
+              Message.success('Saved success!');
               form.restart(newTemplate);
               history.replace(`/editor?id=${id}`);
             },
@@ -181,7 +181,7 @@ export default function Editor() {
     ).html;
 
     copy(html);
-    message.success('Copied to pasteboard!');
+    Message.success('Copied to pasteboard!');
   };
 
   const initialValues: IEmailTemplate | null = useMemo(() => {
@@ -231,6 +231,7 @@ export default function Editor() {
           return (
             <>
               <PageHeader
+                backIcon
                 title='Edit'
                 onBack={() => history.push('/')}
                 extra={
@@ -257,7 +258,7 @@ export default function Editor() {
                       }}
                       onClick={() => pushEvent({ name: 'Github' })}
                     >
-                      <GithubOutlined />
+                      <IconGithub />
                     </a>
                   </Stack>
                 }

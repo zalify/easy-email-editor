@@ -11,7 +11,7 @@ import { Link } from '@extensions/AttributePanel/components/attributes/Link';
 import { Align } from '@extensions/AttributePanel/components/attributes/Align';
 
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
-import { Collapse } from 'antd';
+import { Collapse } from '@arco-design/web-react';
 import { Border } from '@extensions/AttributePanel/components/attributes/Border';
 import { Stack, useEditorProps, useFocusIdx } from 'easy-email-editor';
 
@@ -22,7 +22,7 @@ export function Image() {
   return (
     <AttributesPanelWrapper style={{ padding: 0 }}>
       <Collapse defaultActiveKey={['0', '1', '2', '3', '4']}>
-        <Collapse.Panel key='1' header='Setting'>
+        <Collapse.Item name='1' header='Setting'>
           <Stack vertical spacing='tight'>
             <ImageUploaderField
               label='src'
@@ -38,9 +38,9 @@ export function Image() {
               alignment='center'
             />
           </Stack>
-        </Collapse.Panel>
+        </Collapse.Item>
 
-        <Collapse.Panel key='0' header='Dimension'>
+        <Collapse.Item name='0' header='Dimension'>
           <Stack vertical spacing='tight'>
             <Stack wrap={false}>
               <Stack.Item fill>
@@ -53,26 +53,26 @@ export function Image() {
             <Padding />
             <Align />
           </Stack>
-        </Collapse.Panel>
+        </Collapse.Item>
 
-        <Collapse.Panel key='2' header='Link'>
+        <Collapse.Item name='2' header='Link'>
           <Stack vertical spacing='tight'>
             <Link />
           </Stack>
-        </Collapse.Panel>
+        </Collapse.Item>
 
-        <Collapse.Panel key='3' header='Border'>
+        <Collapse.Item name='3' header='Border'>
           <Border />
-        </Collapse.Panel>
+        </Collapse.Item>
 
-        <Collapse.Panel key='4' header='Extra'>
+        <Collapse.Item name='4' header='Extra'>
           <TextField
             label='title'
             name={`${focusIdx}.attributes.title`}
             inline
           />
           <TextField label='alt' name={`${focusIdx}.attributes.alt`} inline />
-        </Collapse.Panel>
+        </Collapse.Item>
       </Collapse>
     </AttributesPanelWrapper>
   );

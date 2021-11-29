@@ -7,8 +7,8 @@ import {
   SelectField,
   TextField,
 } from '@extensions/components/Form';
-import { LinkOutlined } from '@ant-design/icons';
-import { Collapse } from 'antd';
+import { IconLink } from '@arco-design/web-react/icon';
+import { Collapse } from '@arco-design/web-react';
 import { Stack, useEditorProps, useFocusIdx } from 'easy-email-editor';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
 import { Align } from '@extensions/AttributePanel/components/attributes/Align';
@@ -30,7 +30,7 @@ export function Carousel() {
   return (
     <AttributesPanelWrapper style={{ padding: 0 }}>
       <Collapse defaultActiveKey={['0', '1', '2', '3', '4']}>
-        <Collapse.Panel key='0' header='Dimension'>
+        <Collapse.Item name='0' header='Dimension'>
           <Stack vertical spacing='tight'>
             <Stack vertical>
               <TextField
@@ -48,11 +48,11 @@ export function Carousel() {
               <Align />
             </Stack>
           </Stack>
-        </Collapse.Panel>
-        <Collapse.Panel key='4' header='Images'>
+        </Collapse.Item>
+        <Collapse.Item name='4' contentStyle={{ padding: 0 }} header='Images'>
           <Stack vertical spacing='tight'>
             <EditTabField
-              tabPosition='left'
+              tabPosition='top'
               name={`${focusIdx}.data.value.images`}
               label=''
               labelHidden
@@ -65,8 +65,8 @@ export function Carousel() {
               }}
             />
           </Stack>
-        </Collapse.Panel>
-        <Collapse.Panel key='3' header='Icon'>
+        </Collapse.Item>
+        <Collapse.Item name='3' header='Icon'>
           <Stack vertical spacing='tight'>
             <TextField
               label='Icon width'
@@ -85,9 +85,9 @@ export function Carousel() {
               inline
             />
           </Stack>
-        </Collapse.Panel>
+        </Collapse.Item>
 
-        <Collapse.Panel key='1' header='Border'>
+        <Collapse.Item name='1' header='Border'>
           <Stack vertical spacing='tight'>
             <ColorPickerField
               label='Hovered border color'
@@ -112,7 +112,7 @@ export function Carousel() {
               inline
             />
           </Stack>
-        </Collapse.Panel>
+        </Collapse.Item>
       </Collapse>
     </AttributesPanelWrapper>
   );
@@ -139,7 +139,7 @@ function CarouselImage({
       <Stack wrap={false}>
         <Stack.Item fill>
           <TextField
-            prefix={<LinkOutlined />}
+            prefix={<IconLink />}
             label={<span>Href&nbsp;&nbsp;&nbsp;</span>}
             name={`${focusIdx}.data.value.images.[${index}].href`}
           />

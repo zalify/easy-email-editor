@@ -1,3 +1,5 @@
+import '@arco-design/web-react/dist/css/arco.css';
+
 export * from './BlockLayer';
 export * from './AttributePanel';
 export * from './ShortcutToolbar';

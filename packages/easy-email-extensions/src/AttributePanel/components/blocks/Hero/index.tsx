@@ -9,7 +9,7 @@ import { Width } from '@extensions/AttributePanel/components/attributes/Width';
 import { Height } from '@extensions/AttributePanel/components/attributes/Height';
 import { VerticalAlign } from '@extensions/AttributePanel/components/attributes/VerticalAlign';
 import { Padding } from '@extensions/AttributePanel/components/attributes/Padding';
-import { Collapse } from 'antd';
+import { Collapse } from '@arco-design/web-react';
 import { Stack, useEditorProps, useFocusIdx } from 'easy-email-editor';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
 
@@ -31,7 +31,7 @@ export function Hero() {
   return (
     <AttributesPanelWrapper>
       <Collapse defaultActiveKey={['0', '1', '2']}>
-        <Collapse.Panel key='0' header='Dimension'>
+        <Collapse.Item name='0' header='Dimension'>
           <Stack vertical spacing='tight'>
             <RadioGroupField
               label='Mode'
@@ -51,8 +51,8 @@ export function Hero() {
             <Padding />
             <VerticalAlign />
           </Stack>
-        </Collapse.Panel>
-        <Collapse.Panel key='1' header='Background'>
+        </Collapse.Item>
+        <Collapse.Item name='1' header='Background'>
           <Stack vertical spacing='tight'>
             <TextField
               label='Background width'
@@ -86,7 +86,7 @@ export function Hero() {
 
             <BackgroundColor />
           </Stack>
-        </Collapse.Panel>
+        </Collapse.Item>
       </Collapse>
     </AttributesPanelWrapper>
   );

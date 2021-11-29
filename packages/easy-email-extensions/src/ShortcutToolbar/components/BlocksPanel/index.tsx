@@ -1,18 +1,14 @@
-/* eslint-disable react/jsx-wrap-multilines */
-import { Card, Tabs, Tooltip } from 'antd';
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { Card, Tabs } from '@arco-design/web-react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styles from './index.module.scss';
-import { QuestionCircleOutlined } from '@ant-design/icons';
-import { TooltipProps } from 'antd/lib/tooltip';
 import { createPortal } from 'react-dom';
 import { IconFont, Stack, useHoverIdx } from 'easy-email-editor';
-import { BlockMarketCategory, BlockMarketManager } from '../../utils/BlockMarketManager';
+import {
+  BlockMarketCategory,
+  BlockMarketManager,
+} from '../../utils/BlockMarketManager';
 import { defaultCategories } from './presetTemplate';
+import { Help } from '@extensions/AttributePanel/components/UI/Help';
 
 BlockMarketManager.addCategories(defaultCategories);
 
@@ -20,7 +16,9 @@ export const BlocksPanel: React.FC = (props) => {
   const { isDragging } = useHoverIdx();
   const [visible, setVisible] = useState(false);
   const [ele, setEle] = useState<HTMLElement | null>(null);
-  const [categories, setCategories] = useState<BlockMarketCategory[]>(BlockMarketManager.getCategories());
+  const [categories, setCategories] = useState<BlockMarketCategory[]>(
+    BlockMarketManager.getCategories()
+  );
 
   useEffect(() => {
     if (!isDragging) {
@@ -48,7 +46,6 @@ export const BlocksPanel: React.FC = (props) => {
 
   return useMemo(
     () => (
-
       <div ref={setEle} style={{ position: 'relative' }}>
         <div onClick={toggleVisible}>{props.children}</div>
 
@@ -63,7 +60,7 @@ export const BlocksPanel: React.FC = (props) => {
                 width: isDragging ? 0 : 650,
                 zIndex: 200,
                 top: 0,
-                left: 47,
+                left: 60,
                 maxHeight: '85vh',
                 transition: 'width .5s',
                 boxShadow:
@@ -79,17 +76,25 @@ export const BlocksPanel: React.FC = (props) => {
                   </div>
                 }
               >
-                <Tabs tabBarStyle={{ padding: 0 }} tabPosition='left'>
-                  {filterCategories.map((category) => (
+                <Tabs tabPosition='left' size='large'>
+                  {filterCategories.map((category, index) => (
                     <Tabs.TabPane
                       className='no-scrollbar'
                       style={{
                         padding: 0,
-
                         overflow: 'auto',
                       }}
                       key={category.title}
-                      tab={category.title}
+                      title={
+                        <div
+                          style={{
+                            paddingTop: index === 0 ? 5 : undefined,
+                            paddingBottom: 10,
+                          }}
+                        >
+                          {category.title}
+                        </div>
+                      }
                     >
                       <BlockPanelItem category={category} />
                     </Tabs.TabPane>
@@ -100,16 +105,8 @@ export const BlocksPanel: React.FC = (props) => {
             ele
           )}
       </div>
-
     ),
-    [
-      filterCategories,
-      ele,
-      isDragging,
-      props.children,
-      toggleVisible,
-      visible,
-    ]
+    [filterCategories, ele, isDragging, props.children, toggleVisible, visible]
   );
 };
 
@@ -117,13 +114,13 @@ const BlockPanelItem: React.FC<{
   category: BlockMarketCategory;
 }> = React.memo((props) => {
   return (
-    <Tabs tabBarStyle={{ padding: '20px 0' }} tabPosition='left'>
+    <Tabs style={{ padding: '20px 0' }} tabPosition='left'>
       {props.category.blocks.map((block, index) => {
         return (
           <Tabs.TabPane
             style={{ padding: 0 }}
             key={block.title}
-            tab={
+            title={
               <Stack alignment='center' spacing='extraTight'>
                 <div className={styles.blockItem}>{block.title}</div>
                 {block.description && <Help title={block.description} />}
@@ -148,14 +145,3 @@ const BlockPanelItem: React.FC<{
     </Tabs>
   );
 });
-
-
-export function Help(props: TooltipProps & Partial<{ style: Partial<React.CSSProperties>; }>) {
-  return (
-    <Tooltip {...{ ...props, style: undefined }}>
-      <span style={{ cursor: 'pointer' }}>
-        <QuestionCircleOutlined style={props.style} />
-      </span>
-    </Tooltip>
-  );
-}
