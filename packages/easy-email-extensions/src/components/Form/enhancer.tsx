@@ -41,7 +41,7 @@ export default function enhancer<P>(
       distribution,
       validate,
       required,
-      size = 'normal',
+      size,
       wrapper = true,
       debounceTime = 0,
       ...rest
