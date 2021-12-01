@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { Border } from '../../attributes/Border';
 import { Color } from '../../attributes/Color';
 import { ContainerBackgroundColor } from '../../attributes/ContainerBackgroundColor';
-import { FontFamily } from '../../attributes/FontFamliy';
+import { FontFamily } from '../../attributes/FontFamily';
 import { FontSize } from '../../attributes/FontSize';
 import { FontStyle } from '../../attributes/FontStyle';
 import { Padding } from '../../attributes/Padding';

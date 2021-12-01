@@ -10,7 +10,7 @@ import { AddFont } from '@extensions/components/Form/AddFont';
 import { Collapse } from '@arco-design/web-react';
 import { Stack, TextStyle, useFocusIdx } from 'easy-email-editor';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
-import { FontFamily } from '../../attributes/FontFamliy';
+import { FontFamily } from '../../attributes/FontFamily';
 
 export function Page() {
   const { focusIdx } = useFocusIdx();

@@ -11,7 +11,7 @@ import { Align } from '@extensions/AttributePanel/components/attributes/Align';
 import { IconLink } from '@arco-design/web-react/icon';
 import { Color } from '@extensions/AttributePanel/components/attributes/Color';
 import { ContainerBackgroundColor } from '@extensions/AttributePanel/components/attributes/ContainerBackgroundColor';
-import { FontFamily } from '@extensions/AttributePanel/components/attributes/FontFamliy';
+import { FontFamily } from '@extensions/AttributePanel/components/attributes/FontFamily';
 import { FontSize } from '@extensions/AttributePanel/components/attributes/FontSize';
 import { FontStyle } from '@extensions/AttributePanel/components/attributes/FontStyle';
 import { FontWeight } from '@extensions/AttributePanel/components/attributes/FontWeight';

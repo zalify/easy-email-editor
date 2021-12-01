@@ -3,7 +3,7 @@ import { Padding } from '@extensions/AttributePanel/components/attributes/Paddin
 import { TextDecoration } from '@extensions/AttributePanel/components/attributes/TextDecoration';
 import { FontWeight } from '@extensions/AttributePanel/components/attributes/FontWeight';
 import { FontStyle } from '@extensions/AttributePanel/components/attributes/FontStyle';
-import { FontFamily } from '@extensions/AttributePanel/components/attributes/FontFamliy';
+import { FontFamily } from '@extensions/AttributePanel/components/attributes/FontFamily';
 import { Height } from '@extensions/AttributePanel/components/attributes/Height';
 import { ContainerBackgroundColor } from '@extensions/AttributePanel/components/attributes/ContainerBackgroundColor';
 import { FontSize } from '@extensions/AttributePanel/components/attributes/FontSize';

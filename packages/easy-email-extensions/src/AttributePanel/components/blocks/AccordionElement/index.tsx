@@ -12,7 +12,7 @@ import { Align } from '../../attributes/Align';
 import { FontSize } from '../../attributes/FontSize';
 import { FontStyle } from '../../attributes/FontStyle';
 import { FontWeight } from '../../attributes/FontWeight';
-import { FontFamily } from '../../attributes/FontFamliy';
+import { FontFamily } from '../../attributes/FontFamily';
 import { TextDecoration } from '../../attributes/TextDecoration';
 import { TextTransform } from '../../attributes/TextTransform';
 import { LineHeight } from '../../attributes/LineHeight';
