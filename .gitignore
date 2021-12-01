@@ -8,3 +8,4 @@ lib
 
 coverage
 stats.html
+.npmrc
