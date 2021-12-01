@@ -1,11 +1,13 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
-import {
-  getNodeTypeFromClassName,
-  BlockManager,
-} from 'easy-email-core';
+import { getNodeTypeFromClassName, BlockManager } from 'easy-email-core';
 import { createPortal } from 'react-dom';
-import { getEditorRoot, useEditorContext, useFocusIdx, useHoverIdx } from 'easy-email-editor';
+import {
+  getEditorRoot,
+  useEditorContext,
+  useFocusIdx,
+  useHoverIdx,
+} from 'easy-email-editor';
 import { awaitForElement } from '@extensions/utils/awaitForElement';
 
 export function HoverTooltip() {
@@ -17,7 +19,6 @@ export function HoverTooltip() {
   const [blockNode, setBlockNode] = useState<HTMLDivElement | null>(null);
   const rootRef = useRef<DOMRect | null>(null);
 
-
   useEffect(() => {
     if (initialized) {
       rootRef.current = getEditorRoot()!.getBoundingClientRect();
@@ -26,14 +27,16 @@ export function HoverTooltip() {
 
   useEffect(() => {
     const rootBounds = rootRef.current;
-    if (!initialized || !rootBounds) return;
+    if (!initialized) return;
 
     if (hoverIdx) {
-
       const promiseObj = awaitForElement<HTMLDivElement>(hoverIdx);
       promiseObj.promise.then((blockNode) => {
-        const { top } = blockNode.getBoundingClientRect();
-        setIsTop(rootBounds.top === top);
+        if (rootBounds) {
+          const { top } = blockNode.getBoundingClientRect();
+          setIsTop(rootBounds.top === top);
+        }
+
         setBlockNode(blockNode);
       });
 
@@ -45,12 +48,11 @@ export function HoverTooltip() {
     }
   }, [hoverIdx, initialized]);
 
-
   const block = useMemo(() => {
     return blockNode
       ? BlockManager.getBlockByType(
-        getNodeTypeFromClassName(blockNode.classList)!
-      )
+          getNodeTypeFromClassName(blockNode.classList)!
+        )
       : null;
   }, [blockNode]);
 
