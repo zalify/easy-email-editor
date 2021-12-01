@@ -1,6 +1,5 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
-  AutoCompleteField,
   ColorPickerField,
   SwitchField,
   TextAreaField,
@@ -8,9 +7,10 @@ import {
 } from '@extensions/components/Form';
 import { Help } from '@extensions/AttributePanel/components/UI/Help';
 import { AddFont } from '@extensions/components/Form/AddFont';
-import { Collapse } from 'antd';
+import { Collapse } from '@arco-design/web-react';
 import { Stack, TextStyle, useFocusIdx } from 'easy-email-editor';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
+import { FontFamily } from '../../attributes/FontFamily';
 
 export function Page() {
   const { focusIdx } = useFocusIdx();
@@ -20,7 +20,7 @@ export function Page() {
     <AttributesPanelWrapper style={{ padding: 0 }}>
       <Stack.Item fill>
         <Collapse defaultActiveKey={['0', '1']}>
-          <Collapse.Panel key='0' header='Email Setting'>
+          <Collapse.Item name='0' header='Email Setting'>
             <Stack vertical spacing='tight'>
               <TextField label='Subject' name={'subject'} inline />
               <TextField label='SubTitle' name={'subTitle'} inline />
@@ -31,12 +31,12 @@ export function Page() {
               />
               <Stack alignment='center'>
                 <TextField
-                  label={(
+                  label={
                     <Stack spacing='extraTight'>
                       <TextStyle>Breakpoint</TextStyle>
                       <Help title='Allows you to control on which breakpoint the layout should go desktop/mobile.' />
                     </Stack>
-                  )}
+                  }
                   quickchange
                   name={`${focusIdx}.data.value.breakpoint`}
                   inline
@@ -46,20 +46,16 @@ export function Page() {
                 inline
                 label='Responsive'
                 name={`${focusIdx}.data.value.responsive`}
-                checkedChildren='True'
-                unCheckedChildren='False'
+                checkedText='True'
+                uncheckedText='False'
               />
             </Stack>
-          </Collapse.Panel>
-          <Collapse.Panel key='1' header='Theme Setting'>
+          </Collapse.Item>
+          <Collapse.Item name='1' header='Theme Setting'>
             <Stack vertical spacing='tight'>
               <Stack wrap={false}>
                 <Stack.Item fill>
-                  <TextField
-                    label='Font family'
-                    quickchange
-                    name={`${focusIdx}.data.value.font-family`}
-                  />
+                  <FontFamily />
                 </Stack.Item>
                 <Stack.Item fill>
                   <TextField
@@ -101,7 +97,7 @@ export function Page() {
               />
               <AddFont />
             </Stack>
-          </Collapse.Panel>
+          </Collapse.Item>
         </Collapse>
       </Stack.Item>
     </AttributesPanelWrapper>

@@ -2,9 +2,8 @@ import React from 'react';
 import { Padding } from '@extensions/AttributePanel/components/attributes//Padding';
 import { Background } from '@extensions/AttributePanel/components/attributes//Background';
 import { TextField } from '@extensions/components/Form';
-;
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
-import { Collapse } from 'antd';
+import { Collapse } from '@arco-design/web-react';
 import { Stack, useFocusIdx } from 'easy-email-editor';
 
 export function Wrapper() {
@@ -12,18 +11,18 @@ export function Wrapper() {
   return (
     <AttributesPanelWrapper style={{ padding: 0 }}>
       <Collapse defaultActiveKey={['0', '1', '2']}>
-        <Collapse.Panel key="0" header="Dimension">
-          <Stack vertical spacing="tight">
+        <Collapse.Item name='0' header='Dimension'>
+          <Stack vertical spacing='tight'>
             <Padding />
           </Stack>
-        </Collapse.Panel>
-        <Collapse.Panel key="1" header="Background">
-          <Stack vertical spacing="tight">
+        </Collapse.Item>
+        <Collapse.Item name='1' header='Background'>
+          <Stack vertical spacing='tight'>
             <Background />
           </Stack>
-        </Collapse.Panel>
-        <Collapse.Panel key="2" header="Border">
-          <Stack vertical spacing="tight">
+        </Collapse.Item>
+        <Collapse.Item name='2' header='Border'>
+          <Stack vertical spacing='tight'>
             <TextField
               label='Border'
               name={`${focusIdx}.attributes.border`}
@@ -35,9 +34,8 @@ export function Wrapper() {
               inline
             />
           </Stack>
-        </Collapse.Panel>
+        </Collapse.Item>
       </Collapse>
-
     </AttributesPanelWrapper>
   );
 }

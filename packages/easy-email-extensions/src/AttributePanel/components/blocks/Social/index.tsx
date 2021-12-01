@@ -8,23 +8,19 @@ import {
   TextField,
 } from '@extensions/components/Form';
 import { Align } from '@extensions/AttributePanel/components/attributes/Align';
-import { LinkOutlined } from '@ant-design/icons';
+import { IconLink } from '@arco-design/web-react/icon';
 import { Color } from '@extensions/AttributePanel/components/attributes/Color';
 import { ContainerBackgroundColor } from '@extensions/AttributePanel/components/attributes/ContainerBackgroundColor';
-import { FontFamily } from '@extensions/AttributePanel/components/attributes/FontFamliy';
+import { FontFamily } from '@extensions/AttributePanel/components/attributes/FontFamily';
 import { FontSize } from '@extensions/AttributePanel/components/attributes/FontSize';
 import { FontStyle } from '@extensions/AttributePanel/components/attributes/FontStyle';
 import { FontWeight } from '@extensions/AttributePanel/components/attributes/FontWeight';
 
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
-import { Collapse } from 'antd';
+import { Collapse } from '@arco-design/web-react';
 import { TextDecoration } from '@extensions/AttributePanel/components/attributes/TextDecoration';
 import { LineHeight } from '@extensions/AttributePanel/components/attributes/LineHeight';
-import {
-  Stack,
-  useEditorProps,
-  useFocusIdx,
-} from 'easy-email-editor';
+import { Stack, useEditorProps, useFocusIdx } from 'easy-email-editor';
 import { ISocial } from 'easy-email-core';
 import { getImg } from '@extensions/AttributePanel/utils/getImg';
 
@@ -44,7 +40,7 @@ export function Social() {
   return (
     <AttributesPanelWrapper style={{ padding: 0 }}>
       <Collapse defaultActiveKey={['0', '1', '2']}>
-        <Collapse.Panel key='1' header='Setting'>
+        <Collapse.Item name='1' header='Setting'>
           <Stack vertical spacing='tight'>
             <RadioGroupField
               label='Mode'
@@ -54,9 +50,9 @@ export function Social() {
             />
             <ContainerBackgroundColor title='Background color' />
           </Stack>
-        </Collapse.Panel>
+        </Collapse.Item>
 
-        <Collapse.Panel key='3' header='Typography'>
+        <Collapse.Item name='3' header='Typography'>
           <Stack vertical spacing='tight'>
             <Stack wrap={false}>
               <FontFamily />
@@ -81,13 +77,18 @@ export function Social() {
 
             <FontStyle />
           </Stack>
-        </Collapse.Panel>
+        </Collapse.Item>
 
-        <Collapse.Panel key='2' header='Social element'>
+        <Collapse.Item
+          name='2'
+          header='Social element'
+          contentStyle={{ padding: 0 }}
+        >
           <EditTabField
-            tabPosition='left'
+            tabPosition='top'
             name={`${focusIdx}.data.value.elements`}
-            label='Elements'
+            label=''
+            labelHidden
             renderItem={(item, index) => (
               <SocialElement item={item} index={index} />
             )}
@@ -99,9 +100,9 @@ export function Social() {
               content: 'Google',
             }}
           />
-        </Collapse.Panel>
+        </Collapse.Item>
 
-        <Collapse.Panel key='0' header='Dimension'>
+        <Collapse.Item name='0' header='Dimension'>
           <Stack vertical spacing='tight'>
             <Align />
             <TextField
@@ -113,7 +114,7 @@ export function Social() {
             <Padding attributeName='inner-padding' title='Inner padding' />
             <Padding attributeName='text-padding' title='Text padding' />
           </Stack>
-        </Collapse.Panel>
+        </Collapse.Item>
       </Collapse>
     </AttributesPanelWrapper>
   );
@@ -161,7 +162,7 @@ function SocialElement({
       <Stack wrap={false}>
         <Stack.Item fill>
           <TextField
-            prefix={<LinkOutlined />}
+            prefix={<IconLink />}
             label={<span>Href</span>}
             name={`${focusIdx}.data.value.elements.[${index}].href`}
           />

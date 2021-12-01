@@ -1,10 +1,5 @@
-import { Input, Popover, PopoverProps } from 'antd';
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { Input, Popover, PopoverProps } from '@arco-design/web-react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { ColorResult, SketchPicker } from 'react-color';
 import { Stack } from 'easy-email-editor';
 import { PresetColorsContext } from '../../AttributePanel/components/provider/PresetColorsProvider';
@@ -41,10 +36,10 @@ export function ColorPicker(props: ColorPickerProps) {
   );
 
   const onInputChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setColor(event.target.value);
-      onChange?.(event.target.value);
-      addCurrentColor(event.target.value);
+    (value: string) => {
+      setColor(value);
+      onChange?.(value);
+      addCurrentColor(value);
     },
     [addCurrentColor, onChange]
   );
@@ -54,14 +49,14 @@ export function ColorPicker(props: ColorPickerProps) {
         title={props.label}
         trigger='click'
         {...props}
-        content={(
+        content={
           <SketchPicker
             presetColors={presetColors}
             color={color}
             disableAlpha
             onChangeComplete={onChangeComplete}
           />
-        )}
+        }
       >
         {children || (
           <div

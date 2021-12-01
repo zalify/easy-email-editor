@@ -1,15 +1,15 @@
-import { Modal } from 'antd';
+import { Modal } from '@arco-design/web-react';
 import { Stack, useBlock, useEditorProps } from 'easy-email-editor';
 import React from 'react';
 import { Form } from 'react-final-form';
 import { v4 as uuidv4 } from 'uuid';
 import { ImageUploaderField, TextAreaField, TextField } from '../Form';
 
-
-export const AddToCollection: React.FC<{ visible: boolean; setVisible: (v: boolean) => void; }> = ({ visible, setVisible }) => {
-  const {
-    focusBlock: focusBlockData,
-  } = useBlock();
+export const AddToCollection: React.FC<{
+  visible: boolean;
+  setVisible: (v: boolean) => void;
+}> = ({ visible, setVisible }) => {
+  const { focusBlock: focusBlockData } = useBlock();
   const { onAddCollection, onUploadImage } = useEditorProps();
 
   const onSubmit = (values: {
@@ -29,7 +29,6 @@ export const AddToCollection: React.FC<{ visible: boolean; setVisible: (v: boole
     setVisible(false);
   };
 
-
   return (
     <Form
       initialValues={{ label: '', helpText: '', thumbnail: '' }}
@@ -37,7 +36,8 @@ export const AddToCollection: React.FC<{ visible: boolean; setVisible: (v: boole
     >
       {({ handleSubmit }) => (
         <Modal
-          zIndex={2000}
+          maskClosable={false}
+          style={{ zIndex: 2000 }}
           visible={visible}
           title='Add to collection'
           onOk={() => handleSubmit()}

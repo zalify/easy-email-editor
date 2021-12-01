@@ -1,8 +1,10 @@
-import { Input as AntdInput, message } from 'antd';
-import { InputProps as AntdInputProps } from 'antd/lib/input';
+import {
+  Input as ArcoInput,
+  InputProps as ArcoInputProps,
+} from '@arco-design/web-react';
 import React, { useCallback } from 'react';
 
-export interface InputProps extends Omit<AntdInputProps, 'onChange'> {
+export interface InputProps extends Omit<ArcoInputProps, 'onChange'> {
   quickchange?: boolean;
   value: string;
   onChange: (val: string) => void;
@@ -45,9 +47,9 @@ export function Input(props: InputProps) {
   );
 
   return (
-    <AntdInput
+    <ArcoInput
       {...{ ...props, quickchange: undefined }}
-      onChange={(e) => onChange(e.target.value)}
+      onChange={(value) => onChange(value)}
       onKeyDown={onKeyDown}
     />
   );

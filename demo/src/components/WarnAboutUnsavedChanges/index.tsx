@@ -3,7 +3,7 @@ import { Prompt } from 'react-router-dom';
 import { useFormState } from 'react-final-form';
 import { getIsFormTouched } from '@demo/utils/getIsFormTouched';
 import { ConfirmBeforeLeavePage } from '@demo/utils/ConfirmBeforeLeavePage';
-import { Modal } from 'antd';
+import { Modal } from '@arco-design/web-react';
 
 interface WarnAboutUnsavedChangesProps {
   dirty?: boolean;
@@ -70,10 +70,9 @@ export function WarnAboutUnsavedChanges(props: WarnAboutUnsavedChangesProps) {
         title='Discard changes?'
         visible={visible}
         onCancel={onCancel}
-        okType='danger'
         onOk={onOk}
         okText='Discard'
-        zIndex={10000}
+        style={{ zIndex: 10000 }}
       >
         <p>Are you sure you want to discard all unsaved changes?</p>
       </Modal>

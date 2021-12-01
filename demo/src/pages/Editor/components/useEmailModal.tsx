@@ -1,20 +1,19 @@
 import { JsonToMjml, IBlockData } from 'easy-email-core';
 import { IEmailTemplate } from 'easy-email-editor';
-import { message, Modal } from 'antd';
+import { Message, Modal } from '@arco-design/web-react';
 import React, { useMemo, useState } from 'react';
 import mjml from 'mjml-browser';
 import { useDispatch } from 'react-redux';
 import email from '@demo/store/email';
 import * as Yup from 'yup';
 import { Form } from 'react-final-form';
-import { TextField } from '@demo/components/Form';
 import { useLoading } from '@demo/hooks/useLoading';
 import { useCallback } from 'react';
 import { pushEvent } from '@demo/utils/pushEvent';
-import { TextAreaField } from '@demo/components/Form';
 import mustache from 'mustache';
 import { CustomBlocksType } from './CustomBlocks/constants';
 import { cloneDeep, merge } from 'lodash';
+import { TextAreaField, TextField } from 'easy-email-extensions';
 
 const schema = Yup.object().shape({
   toEmail: Yup.string().email('Unvalid email').required('Email required'),
@@ -28,14 +27,14 @@ export function useEmailModal() {
   const emailSendLoading = useLoading(email.loadings.send);
 
   const onSendEmail = useCallback(
-    async (values: { toEmail: string; mergeTags: string; }) => {
+    async (values: { toEmail: string; mergeTags: string }) => {
       if (!emailData) return null;
       pushEvent({ name: 'SendTestEmail' });
       let mergeTagsPayload = {};
       try {
         mergeTagsPayload = JSON.parse(values.mergeTags);
       } catch (error) {
-        message.error('invalid JSON');
+        Message.error('invalid JSON');
         return;
       }
       const content = JSON.parse(
@@ -65,7 +64,7 @@ export function useEmailModal() {
           },
           success: () => {
             closeModal();
-            message.success('Email send!');
+            Message.success('Email send!');
           },
         })
       );
@@ -96,7 +95,7 @@ export function useEmailModal() {
       >
         {({ handleSubmit }) => (
           <Modal
-            zIndex={9999}
+            style={{ zIndex: 9999 }}
             title='Send test email'
             okText='Send'
             visible={visible}

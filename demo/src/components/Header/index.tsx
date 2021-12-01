@@ -1,5 +1,4 @@
-import { PageHeader, } from 'antd';
-import { PageHeaderProps } from 'antd/lib/page-header';
+import { PageHeader, PageHeaderProps } from '@arco-design/web-react';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 export interface HeaderProps extends Omit<PageHeaderProps, 'onBack'> {

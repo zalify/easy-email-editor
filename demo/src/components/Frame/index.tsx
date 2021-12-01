@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout, Menu, Breadcrumb } from '@arco-design/web-react';
 import { Stack } from '../Stack';
 import { pushEvent } from '@demo/utils/pushEvent';
 import { githubButtonGenerate } from '@demo/utils/githubButtonGenerate';
@@ -26,9 +26,9 @@ export default function Frame({
 
   return (
     <Layout>
-      <Header style={{ padding: '0 20px' }}>
-        <Stack distribution='equalSpacing'>
-          <h1 style={{ color: 'white' }}>Easy-email</h1>
+      <Header style={{ padding: '0 20px', backgroundColor: '#001529' }}>
+        <Stack distribution='equalSpacing' alignment='center'>
+          <h1 style={{ color: 'white', margin: '15px 0' }}>Easy-email</h1>
 
           <div style={{ marginTop: 10 }}>
             <Stack>
@@ -75,7 +75,6 @@ export default function Frame({
       <Layout>
         <Sider width={200}>
           <Menu
-            mode='inline'
             defaultSelectedKeys={['1']}
             defaultOpenKeys={['sub1']}
             style={{ height: '100%', borderRight: 0 }}

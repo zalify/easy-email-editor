@@ -1,12 +1,9 @@
-/* eslint-disable react/jsx-wrap-multilines */
-import { Button, PopoverProps, Tooltip } from 'antd';
+import { PopoverProps, Tooltip } from '@arco-design/web-react';
+import { Button } from '@arco-design/web-react';
 import React, { useCallback, useMemo } from 'react';
 import { Form } from 'react-final-form';
 import { IconFont, Stack } from 'easy-email-editor';
-import {
-  SearchField,
-  SwitchField,
-} from '@extensions/components/Form';
+import { SearchField, SwitchField } from '@extensions/components/Form';
 
 export interface LinkParams {
   link: string;
@@ -99,9 +96,8 @@ export function Link(props: LinkProps) {
             {...props}
             trigger='click'
             color='#fff'
-            placement='topLeft'
-            overlayInnerStyle={{ color: '#333', width: 300 }}
-            title={
+            position='tl'
+            content={
               <Stack vertical spacing='tight'>
                 <Stack.Item />
                 <SearchField
@@ -116,15 +112,15 @@ export function Link(props: LinkProps) {
                   <SwitchField
                     label='Target'
                     name='blank'
-                    checkedChildren='blank'
-                    unCheckedChildren='self'
+                    checkedText='blank'
+                    uncheckedText='self'
                     inline
                   />
                   <SwitchField
                     label='Underline'
                     name='underline'
-                    checkedChildren='off'
-                    unCheckedChildren='on'
+                    checkedText='off'
+                    uncheckedText='on'
                     inline
                   />
                 </Stack>
@@ -133,7 +129,7 @@ export function Link(props: LinkProps) {
           >
             <Button
               title='Link'
-              size='small'
+              size='mini'
               icon={<IconFont iconName='icon-link' />}
             />
           </Tooltip>

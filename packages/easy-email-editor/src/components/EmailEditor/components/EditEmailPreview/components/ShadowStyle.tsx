@@ -27,6 +27,10 @@ export function ShadowStyle() {
               --tangent-color: ${tangentColor};
             }
 
+            :host(*){
+              all: initial;
+            }
+
             ${styles}
 
             `,

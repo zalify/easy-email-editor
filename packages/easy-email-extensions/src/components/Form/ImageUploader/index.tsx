@@ -1,13 +1,11 @@
-import React, {
-  useState,
-  useCallback,
-  useRef,
-  useMemo,
-} from 'react';
-import { Input, message, Modal } from 'antd';
-import { PlusOutlined, EyeOutlined, DeleteOutlined } from '@ant-design/icons';
+import React, { useState, useCallback, useRef, useMemo } from 'react';
+import { Input, Message, Modal } from '@arco-design/web-react';
+import { IconPlus, IconEye, IconDelete } from '@arco-design/web-react/icon';
 import styles from './index.module.scss';
-import { Uploader, UploaderServer } from '@extensions/AttributePanel/utils/Uploader';
+import {
+  Uploader,
+  UploaderServer,
+} from '@extensions/AttributePanel/utils/Uploader';
 import { classnames } from '@extensions/AttributePanel/utils/classnames';
 import { previewLoadImage } from '@extensions/AttributePanel/utils/previewLoadImage';
 import { getImg } from '@extensions/AttributePanel/utils/getImg';
@@ -30,7 +28,7 @@ export function ImageUploader(props: ImageUploaderProps) {
 
   const onUpload = useCallback(() => {
     if (isUploading) {
-      return message.warning('Uploading...');
+      return Message.warning('Uploading...');
     }
     if (!uploadHandlerRef.current) return;
 
@@ -74,7 +72,7 @@ export function ImageUploader(props: ImageUploaderProps) {
             props.onChange(picture);
             setIsUploading(false);
           } catch (error: any) {
-            message.error(error?.message || error || 'Upload failed');
+            Message.error(error?.message || error || 'Upload failed');
             setIsUploading(false);
           }
         }
@@ -102,8 +100,8 @@ export function ImageUploader(props: ImageUploaderProps) {
     if (!props.value) {
       return (
         <div className={styles['upload']} onClick={onUpload}>
-          <PlusOutlined />
-          <div className='ant-upload-text'>Upload</div>
+          <IconPlus />
+          <div>Upload</div>
         </div>
       );
     }
@@ -114,10 +112,10 @@ export function ImageUploader(props: ImageUploaderProps) {
           <img src={props.value} />
           <div className={styles['btn-wrap']}>
             <a title='Preview' onClick={() => setPreview(true)}>
-              <EyeOutlined />
+              <IconEye />
             </a>
             <a title='Remove' onClick={() => onRemove()}>
-              <DeleteOutlined />
+              <IconDelete />
             </a>
           </div>
         </div>
@@ -126,9 +124,7 @@ export function ImageUploader(props: ImageUploaderProps) {
   }, [isUploading, onRemove, onUpload, props.value]);
 
   if (!props.uploadHandler) {
-    return (
-      <Input value={props.value} onChange={(e) => onChange(e.target.value)} />
-    );
+    return <Input value={props.value} onChange={onChange} />;
   }
 
   return (
@@ -138,7 +134,7 @@ export function ImageUploader(props: ImageUploaderProps) {
         <Input
           onPaste={onPaste}
           value={props.value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={onChange}
           disabled={isUploading}
         />
       </div>

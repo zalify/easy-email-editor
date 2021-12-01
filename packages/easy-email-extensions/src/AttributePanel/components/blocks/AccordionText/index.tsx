@@ -7,7 +7,7 @@ import { Color } from '../../attributes/Color';
 import { TextAreaField } from '../../../../components/Form';
 import { FontSize } from '../../attributes/FontSize';
 import { FontWeight } from '../../attributes/FontWeight';
-import { FontFamily } from '../../attributes/FontFamliy';
+import { FontFamily } from '../../attributes/FontFamily';
 import { LineHeight } from '../../attributes/LineHeight';
 import { AttributesPanelWrapper } from '../../attributes/AttributesPanelWrapper';
 

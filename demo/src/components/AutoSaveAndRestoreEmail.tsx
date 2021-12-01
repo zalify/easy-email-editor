@@ -3,14 +3,14 @@ import { useForm, useFormState } from 'react-final-form';
 import { useInterval, useLocalStorage } from 'react-use';
 import { WarnAboutUnsavedChanges } from './WarnAboutUnsavedChanges';
 import { IEmailTemplate } from 'easy-email-editor';
-import { Modal } from 'antd';
+import { Modal } from '@arco-design/web-react';
 import { getIsFormTouched } from '@demo/utils/getIsFormTouched';
 import { useQuery } from '@demo/hooks/useQuery';
 
 export function AutoSaveAndRestoreEmail() {
   const formState = useFormState<any>();
   const { reset, mutators } = useForm();
-  const { id = 'new' } = useQuery<{ id: string; }>();
+  const { id = 'new' } = useQuery<{ id: string }>();
 
   const [currentEmail, setCurrentEmail] =
     useLocalStorage<IEmailTemplate | null>(id, null);
@@ -57,7 +57,7 @@ export function AutoSaveAndRestoreEmail() {
         okText='Restore'
         cancelText='Discard'
         onCancel={onDiscard}
-        zIndex={10000}
+        style={{ zIndex: 10000 }}
       >
         <p>Are you want to restore unsaved email?</p>
       </Modal>

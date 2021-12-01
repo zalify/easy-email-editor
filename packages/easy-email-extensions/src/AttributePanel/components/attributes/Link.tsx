@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useFocusIdx, Stack } from 'easy-email-editor';
-import { LinkOutlined } from '@ant-design/icons';
+import { IconLink } from '@arco-design/web-react/icon';
 import { SelectField, TextField } from '../../../components/Form';
 
 export function Link() {
@@ -11,7 +11,7 @@ export function Link() {
       <Stack wrap={false}>
         <Stack.Item fill>
           <TextField
-            prefix={<LinkOutlined />}
+            prefix={<IconLink />}
             label={<span>Href&nbsp;&nbsp;&nbsp;</span>}
             name={`${focusIdx}.attributes.href`}
           />

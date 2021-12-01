@@ -10,11 +10,11 @@ import { Align } from '../../attributes/Align';
 import { FontSize } from '../../attributes/FontSize';
 import { FontStyle } from '../../attributes/FontStyle';
 import { FontWeight } from '../../attributes/FontWeight';
-import { FontFamily } from '../../attributes/FontFamliy';
+import { FontFamily } from '../../attributes/FontFamily';
 import { TextDecoration } from '../../attributes/TextDecoration';
 import { LineHeight } from '../../attributes/LineHeight';
 import { LetterSpacing } from '../../attributes/LetterSpacing';
-import { Collapse } from 'antd';
+import { Collapse } from '@arco-design/web-react';
 import { TextField } from '../../../../components/Form';
 import { Stack, useFocusIdx } from 'easy-email-editor';
 import { AttributesPanelWrapper } from '../../attributes/AttributesPanelWrapper';
@@ -25,7 +25,7 @@ export function Button() {
   return (
     <AttributesPanelWrapper>
       <Collapse defaultActiveKey={['-1', '0', '1', '2', '3']}>
-        <Collapse.Panel key='-1' header='Setting'>
+        <Collapse.Item name='-1' header='Setting'>
           <Stack vertical>
             <TextField
               label='Content'
@@ -34,9 +34,9 @@ export function Button() {
             />
             <Link />
           </Stack>
-        </Collapse.Panel>
+        </Collapse.Item>
 
-        <Collapse.Panel key='0' header='Dimension'>
+        <Collapse.Item name='0' header='Dimension'>
           <Stack vertical spacing='tight'>
             <Stack vertical>
               <Width />
@@ -44,17 +44,17 @@ export function Button() {
               <Padding title='Inner padding' attributeName='inner-padding' />
             </Stack>
           </Stack>
-        </Collapse.Panel>
+        </Collapse.Item>
 
-        <Collapse.Panel key='1' header='Color'>
+        <Collapse.Item name='1' header='Color'>
           <Stack vertical spacing='tight'>
             <Color title='Text color' />
             <BackgroundColor title='Button color' />
             <ContainerBackgroundColor title='Background color' />
           </Stack>
-        </Collapse.Panel>
+        </Collapse.Item>
 
-        <Collapse.Panel key='2' header='Typography'>
+        <Collapse.Item name='2' header='Typography'>
           <Stack vertical spacing='tight'>
             <Stack wrap={false}>
               <FontFamily />
@@ -81,11 +81,11 @@ export function Button() {
 
             <FontStyle />
           </Stack>
-        </Collapse.Panel>
+        </Collapse.Item>
 
-        <Collapse.Panel key='3' header='Border'>
+        <Collapse.Item name='3' header='Border'>
           <Border />
-        </Collapse.Panel>
+        </Collapse.Item>
       </Collapse>
     </AttributesPanelWrapper>
   );

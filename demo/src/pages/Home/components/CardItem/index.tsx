@@ -1,10 +1,9 @@
-import { Picture } from '@demo/components/Picture';
 import { IArticle } from '@demo/services/article';
-import React, { useCallback, useEffect } from 'react';
-import { CopyOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import React, { useCallback } from 'react';
+import { IconEdit, IconDelete } from '@arco-design/web-react/icon';
 import dayjs from 'dayjs';
 import styles from './index.module.scss';
-import { Popconfirm } from 'antd';
+import { Popconfirm } from '@arco-design/web-react';
 import { Link, useHistory } from 'react-router-dom';
 import template from '@demo/store/template';
 import { useDispatch } from 'react-redux';
@@ -81,7 +80,7 @@ export function CardItem(props: CardItemProps) {
                 okText='Ok'
                 cancelText='Cancel'
               >
-                <DeleteOutlined />
+                <IconDelete />
                 &nbsp;Delete
               </Popconfirm>
             </div>
@@ -92,7 +91,7 @@ export function CardItem(props: CardItemProps) {
                   pushEvent({ name: 'Edit', label: data.article_id.toString() })
                 }
               >
-                <EditOutlined />
+                <IconEdit />
                 &nbsp;Edit
               </Link>
             </div>

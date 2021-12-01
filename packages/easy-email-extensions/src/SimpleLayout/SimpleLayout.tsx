@@ -1,5 +1,5 @@
 import { ShortcutToolbar } from '../ShortcutToolbar';
-import { Card, Layout, Tabs } from 'antd';
+import { Card, Layout, Tabs } from '@arco-design/web-react';
 import { useEditorProps } from 'easy-email-editor';
 import React from 'react';
 import { SourceCodePanel } from '../SourceCodePanel';
@@ -44,15 +44,15 @@ export const SimpleLayout: React.FC = (props) => {
             style={{ borderBottom: 'none' }}
           >
             <Tabs
-              tabBarStyle={{
-                paddingLeft: 20,
-                marginBottom: 0,
-                backgroundColor: '#fff',
-              }}
+              // tabBarStyle={{
+              //   paddingLeft: 20,
+              //   marginBottom: 0,
+              //   backgroundColor: '#fff',
+              // }}
               style={{ borderLeft: 'none' }}
-              defaultActiveKey='Layout'
+              defaultActiveTab='Layout'
             >
-              <TabPane style={{ paddingTop: 10 }} key='Layout' tab='Layout'>
+              <TabPane style={{ paddingTop: 10 }} key='Layout' title='Layout'>
                 <BlockLayer />
               </TabPane>
             </Tabs>
@@ -76,11 +76,15 @@ export const SimpleLayout: React.FC = (props) => {
             bodyStyle={{ padding: 0 }}
             className={styles.customScrollBar}
           >
-            <Tabs tabBarStyle={{ paddingLeft: 20, marginBottom: 0 }}>
-              <Tabs.TabPane key='Configuration' tab='Configuration'>
+            <Tabs>
+              <Tabs.TabPane
+                style={{ marginTop: 0 }}
+                key='Configuration'
+                title='Configuration'
+              >
                 <AttributePanel />
               </Tabs.TabPane>
-              <Tabs.TabPane key='Source code' tab='Source code'>
+              <Tabs.TabPane key='Source code' title='Source code'>
                 <SourceCodePanel />
               </Tabs.TabPane>
             </Tabs>

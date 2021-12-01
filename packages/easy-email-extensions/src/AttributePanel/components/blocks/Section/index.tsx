@@ -6,7 +6,7 @@ import { SwitchField } from '@extensions/components/Form';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
-import { Collapse } from 'antd';
+import { Collapse } from '@arco-design/web-react';
 import { Stack, TextStyle, useBlock, useFocusIdx } from 'easy-email-editor';
 import { BasicType, BlockManager } from 'easy-email-core';
 
@@ -53,15 +53,13 @@ export function Section() {
   }, [noWrap]);
 
   return (
-
     <AttributesPanelWrapper style={{ padding: 0 }}>
       <Collapse defaultActiveKey={['0', '1', '2']}>
-
-        <Collapse.Panel key="0" header="Dimension">
+        <Collapse.Item name='0' header='Dimension'>
           <Stack vertical>
-            <Stack vertical spacing="none">
-              <TextStyle variation="strong">Group</TextStyle>
-              <Stack wrap={false} alignment="trailing">
+            <Stack vertical spacing='none'>
+              <TextStyle variation='strong'>Group</TextStyle>
+              <Stack wrap={false} alignment='trailing'>
                 <Stack.Item fill>
                   <TextStyle>
                     Prevent columns from stacking on mobile.
@@ -71,25 +69,24 @@ export function Section() {
                   label=''
                   labelHidden
                   name={`${focusIdx}.data.value.noWrap`}
-                  checkedChildren='True'
-                  unCheckedChildren='False'
+                  checkedText='True'
+                  uncheckedText='False'
                   inline
                 />
               </Stack>
             </Stack>
             <Padding />
           </Stack>
-        </Collapse.Panel>
-        <Collapse.Panel key="1" header="Background">
-          <Stack vertical spacing="tight">
+        </Collapse.Item>
+        <Collapse.Item name='1' header='Background'>
+          <Stack vertical spacing='tight'>
             <Background />
           </Stack>
-        </Collapse.Panel>
-        <Collapse.Panel key="2" header="Border">
+        </Collapse.Item>
+        <Collapse.Item name='2' header='Border'>
           <Border />
-        </Collapse.Panel>
+        </Collapse.Item>
       </Collapse>
-
     </AttributesPanelWrapper>
   );
 }

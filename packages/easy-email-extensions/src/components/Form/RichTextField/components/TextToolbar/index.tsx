@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Button, Tooltip } from 'antd';
+import { Tooltip } from '@arco-design/web-react';
+import { Button } from '@arco-design/web-react';
 import { ToolItem } from '../ToolItem';
 import { Link, LinkParams } from '../Link';
 import { FontSizeList } from '../FontSizeList';
@@ -108,26 +109,26 @@ export function TextToolbar(props: TextToolbarProps) {
         <Stack spacing='extraTight'>
           <Tooltip
             color='#fff'
-            title={
+            content={
               <FontFamily onChange={(val) => execCommand('fontName', val)} />
             }
             getPopupContainer={getPopoverMountNode}
           >
             <Button
-              size='small'
+              size='mini'
               icon={<IconFont iconName='icon-font-family' />}
             />
           </Tooltip>
 
           <Tooltip
             color='#fff'
-            title={
+            content={
               <FontSizeList onChange={(val) => execCommand('fontSize', val)} />
             }
             getPopupContainer={getPopoverMountNode}
           >
             <Button
-              size='small'
+              size='mini'
               icon={<IconFont iconName='icon-line-height' />}
             />
           </Tooltip>
@@ -143,7 +144,7 @@ export function TextToolbar(props: TextToolbarProps) {
           />
           <ColorPicker
             label=''
-            placement='topLeft'
+            position='tl'
             onChange={(color) => execCommand('foreColor', color)}
             getPopupContainer={getPopoverMountNode}
             showInput={false}
@@ -156,7 +157,7 @@ export function TextToolbar(props: TextToolbarProps) {
           <ColorPicker
             label=''
             showInput={false}
-            placement='topLeft'
+            position='tl'
             onChange={(color) => execCommand('hiliteColor', color)}
             getPopupContainer={getPopoverMountNode}
           >
@@ -170,16 +171,11 @@ export function TextToolbar(props: TextToolbarProps) {
             onChange={(values) => execCommand('createLink', values)}
             getPopupContainer={getPopoverMountNode}
           />
-          {/* <ToolItem
-              onClick={() => execCommand('unlink')}
-              icon={<StopOutlined />}
-              title='Unlink'
-            /> */}
           {mergeTags && (
             <Tooltip
               color='#fff'
-              placement='bottom'
-              title={
+              position='bottom'
+              content={
                 <MergeTags
                   value=''
                   onChange={(val) => execCommand('insertHTML', val)}
@@ -188,7 +184,7 @@ export function TextToolbar(props: TextToolbarProps) {
               getPopupContainer={getPopoverMountNode}
             >
               <Button
-                size='small'
+                size='mini'
                 title='Merge tag'
                 icon={<IconFont iconName='icon-merge-tags' />}
               />

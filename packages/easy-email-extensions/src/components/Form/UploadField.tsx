@@ -1,7 +1,7 @@
 import { Uploader } from '@extensions/AttributePanel/utils/Uploader';
-import { Input } from 'antd';
+import { Input } from '@arco-design/web-react';
 import React, { useEffect, useRef, useState } from 'react';
-import { UploadOutlined, LoadingOutlined } from '@ant-design/icons';
+import { IconUpload, IconLoading } from '@arco-design/web-react/icon';
 
 export interface UploadFieldProps {
   onChange: (val: string) => void;
@@ -14,20 +14,25 @@ export interface UploadFieldProps {
 export function UploadField(props: UploadFieldProps) {
   const { onChange, inputDisabled = false, accept, uploadHandler } = props;
   const [loading, setLoading] = useState(false);
-  const { current: uploader } = useRef(new Uploader(uploadHandler, {
-    limit: 1,
-    accept
-  }));
+  const { current: uploader } = useRef(
+    new Uploader(uploadHandler, {
+      limit: 1,
+      accept,
+    })
+  );
 
   useEffect(() => {
     uploader.on('start', () => {
       setLoading(true);
       uploader.on('end', (photos) => {
         setLoading(false);
-        onChange(photos.filter(item => item.status === 'done').map(item => item.url)[0] || '');
+        onChange(
+          photos
+            .filter((item) => item.status === 'done')
+            .map((item) => item.url)[0] || ''
+        );
       });
     });
-
   }, [onChange, uploader]);
 
   const onClick = () => {
@@ -36,7 +41,10 @@ export function UploadField(props: UploadFieldProps) {
   };
 
   return (
-    <Input prefix={loading ? <LoadingOutlined /> : <UploadOutlined onClick={onClick} />} value={props.value} onChange={inputDisabled ? undefined : (e) => onChange(e.target.value)} />
-
+    <Input
+      prefix={loading ? <IconLoading /> : <IconUpload onClick={onClick} />}
+      value={props.value}
+      onChange={inputDisabled ? undefined : (value) => onChange(value)}
+    />
   );
 }

@@ -1,10 +1,12 @@
-import { Tabs } from 'antd';
-import { TabsProps } from 'rc-tabs';
+import { Tabs, TabsProps } from '@arco-design/web-react';
+import { classnames } from '@extensions/utils/classnames';
 import React from 'react';
-import { useCallback } from 'react';
+import styles from './index.module.scss';
+
 const { TabPane } = Tabs;
 
-export interface EditTabProps<T extends any = any> extends Omit<TabsProps, 'onChange'> {
+export interface EditTabProps<T extends any = any>
+  extends Omit<TabsProps, 'onChange'> {
   value: Array<T>;
   renderItem: (item: T, index: number) => React.ReactNode;
   onChange: (vals: Array<T>) => any;
@@ -14,21 +16,30 @@ export interface EditTabProps<T extends any = any> extends Omit<TabsProps, 'onCh
 export function EditTab<T extends any = any>(props: EditTabProps<T>) {
   const { value, additionItem } = props;
 
-  const onEdit = useCallback(
-    (index, action: 'add' | 'remove') => {
-      if (action === 'remove') {
-        props.onChange(value.filter((_, vIndex) => Number(index) !== vIndex));
-      } else {
-        props.onChange([...value, additionItem]);
-      }
-    },
-    [additionItem, props, value]
-  );
+  const onAddTab = () => {
+    props.onChange([...value, additionItem]);
+  };
+
+  const onDeleteTab = (index: string) => {
+    props.onChange(value.filter((_, vIndex) => Number(index) !== vIndex));
+  };
 
   return (
-    <Tabs tabPosition={props.tabPosition} type='editable-card' onEdit={onEdit}>
-      {value.map((item, index) => (
-        <TabPane style={{ paddingLeft: 12 }} tab={`${props.label || 'Tab'} ${index + 1}`} key={index}>
+    <Tabs
+      className={classnames(styles.editTab)}
+      style={{ border: 'none' }}
+      type='card'
+      tabPosition={props.tabPosition}
+      editable
+      onAddTab={onAddTab}
+      onDeleteTab={onDeleteTab}
+    >
+      {(Array.isArray(value) ? value : []).map((item, index) => (
+        <TabPane
+          style={{ paddingLeft: 12 }}
+          title={`${props.label || 'Tab'} ${index + 1}`}
+          key={index}
+        >
           {props.renderItem(item, index)}
         </TabPane>
       ))}

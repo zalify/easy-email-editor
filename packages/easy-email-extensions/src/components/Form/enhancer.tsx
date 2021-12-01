@@ -1,5 +1,5 @@
 import { TextStyle, Stack, StackProps } from 'easy-email-editor';
-import { Form } from 'antd';
+import { Form } from '@arco-design/web-react';
 import { FieldProps, useField, useForm } from 'react-final-form';
 import React, { useCallback, useMemo } from 'react';
 import { debounce } from 'lodash';
@@ -8,7 +8,7 @@ import { InputProps } from './Input';
 
 export interface EnhancerProps<T> extends Partial<FieldProps<T, any>> {
   name: string;
-  label: React.ReactNode;
+  label: React.ReactNode | null;
   labelHidden?: boolean;
   alignment?: StackProps['alignment'];
   distribution?: StackProps['distribution'];
@@ -21,7 +21,6 @@ export interface EnhancerProps<T> extends Partial<FieldProps<T, any>> {
   wrapper?: boolean;
   size?: InputProps['size'];
 }
-
 let primaryId = 0;
 export default function enhancer<P>(
   Component: any,
@@ -42,7 +41,7 @@ export default function enhancer<P>(
       distribution,
       validate,
       required,
-      size = 'normal',
+      size,
       wrapper = true,
       debounceTime = 0,
       ...rest
@@ -84,7 +83,7 @@ export default function enhancer<P>(
 
     return (
       <Form.Item
-        style={{ margin: 0 }}
+        noStyle
         validateStatus={touched && error ? 'error' : undefined}
         help={touched && error}
       >

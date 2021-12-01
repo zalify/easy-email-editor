@@ -1,7 +1,7 @@
 import { parseReactBlockToBlockData } from '@core/utils/parseReactBlockToBlockData';
 import { isValidElement } from 'react';
 
-import { BasicType, BlockType } from '@core/constants';
+import { BasicType } from '@core/constants';
 import { IBlockData } from '@core/typings';
 import { pickBy, identity, isObject, isBoolean, isString } from 'lodash';
 import {

@@ -1,6 +1,6 @@
 import { article, IArticle } from '@demo/services/article';
 import createSliceState from './common/createSliceState';
-import { message } from 'antd';
+import { Message } from '@arco-design/web-react';
 import { history } from '@demo/utils/history';
 import { emailToImage } from '@demo/utils/emailToImage';
 import { IBlockData, BlockManager, BasicType } from 'easy-email-core';
@@ -114,11 +114,11 @@ export default createSliceState({
         }
       }
     },
-    removeById: async (state, payload: { id: number; success: () => void; }) => {
+    removeById: async (state, payload: { id: number; success: () => void }) => {
       try {
         await article.deleteArticle(payload.id);
         payload.success();
-        message.success('Removed success.');
+        Message.success('Removed success.');
       } catch (error: any) {
         if (error?.response?.status === 404) {
           throw {
