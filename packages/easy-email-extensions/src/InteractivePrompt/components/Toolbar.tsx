@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  BlockManager,
   BasicType,
   IBlock,
   getParentIdx,
@@ -54,7 +53,7 @@ export function Toolbar({
         style={{
           position: 'absolute',
           left: 0,
-          top: direction === 'top' ? 0 : '100%',
+          top: direction === 'top' || isPage ? 0 : '100%',
           fontSize: 14,
           zIndex: 3,
           color: '#000',
@@ -66,7 +65,8 @@ export function Toolbar({
         <div
           style={{
             color: '#ffffff',
-            transform: direction === 'top' ? 'translateY(-100%)' : undefined,
+            transform:
+              direction !== 'top' || isPage ? undefined : 'translateY(-100%)',
             display: 'flex',
             // justifyContent: 'space-between',
           }}
