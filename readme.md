@@ -121,6 +121,18 @@ export default App;
   | mergeTags          | Object                                                                                             | A merge tag is a bit of specific code that allows you to insert dynamic data into emails. Like `{{user.name}}` |
   | onBeforePreview    | (data: IPage, mergeTags: PropsProviderProps['mergeTags']) => IPage                                 | You can replace mergeTags when previewing.                                                                |
 
+
+
+## Hotkeys
+
+| hotkey            | Description       |
+| ----------------- | ----------------- |
+| mod+z             | undo              |
+| mod+y             | redo              |
+| delete/backspace  | delete block      |
+| tab / shift + tab | fast select block, if block is focusing,`tab` select next block & `shift + tab` select prev block|
+
+
 ## Packages
   * [easy-email-core](./packages/easy-email-core/readme.md)
   * [easy-email-editor](./packages/easy-email-editor/readme.md)
