@@ -31,6 +31,7 @@ export default defineConfig({
         'mjml-browser',
         'react-final-form',
         'easy-email-core',
+        'react-sortablejs',
       ],
       output: {},
     },

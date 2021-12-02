@@ -49,13 +49,13 @@ Check out the live demo here: <a href="http://easy-email-m-ryan.vercel.app" targ
 ## Getting started
 
 ```sh
-$ npm install --save easy-email-core easy-email-editor easy-email-extensions
+$ npm install --save easy-email-core easy-email-editor easy-email-extensions react-final-form react-sortablejs
 ```
 
 or
 
 ```sh
-$ yarn add easy-email-core easy-email-editor easy-email-extensions
+$ yarn add easy-email-core easy-email-editor easy-email-extensions react-final-form react-sortablejs
 ```
 
 ```js
@@ -131,7 +131,7 @@ export default App;
 ## Development
 
 ```sh
-$ git clone git@github.com:m-Ryan/easy-email.git
+$ git clone git@github.com:arco-design/easy-email.git
 $ cd easy-email
 $ yarn install-all
 $ yarn dev

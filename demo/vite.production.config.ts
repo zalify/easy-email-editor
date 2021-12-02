@@ -17,6 +17,10 @@ export default defineConfig({
         __dirname,
         './node_modules/react-final-form'
       ),
+      'react-sortablejs': path.resolve(
+        __dirname,
+        '../packages/easy-email-editor/node_modules/react-sortablejs'
+      ),
       'easy-email-core': path.resolve('../packages/easy-email-core'),
       'easy-email-editor': path.resolve('../packages/easy-email-editor'),
       'easy-email-extensions': path.resolve(

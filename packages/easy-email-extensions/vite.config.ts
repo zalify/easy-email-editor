@@ -41,6 +41,7 @@ export default defineConfig({
         'react-final-form',
         'easy-email-core',
         'easy-email-editor',
+        'react-sortablejs',
       ],
       output: {},
     },
