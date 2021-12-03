@@ -1,8 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { FIXED_CONTAINER_ID, useBlock, getShadowRoot, getEditorRoot } from 'easy-email-editor';
+import {
+  FIXED_CONTAINER_ID,
+  useBlock,
+  getShadowRoot,
+  getEditorRoot,
+} from 'easy-email-editor';
 import { useField } from 'react-final-form';
 import { awaitForElement } from '@extensions/AttributePanel/utils/awaitForElement';
-import { getEditContent, getEditNode } from '@extensions/AttributePanel/utils/getEditNode';
+import { getEditContent, getEditNode } from 'easy-email-editor';
 
 export interface InlineTextProps {
   idx: string;
