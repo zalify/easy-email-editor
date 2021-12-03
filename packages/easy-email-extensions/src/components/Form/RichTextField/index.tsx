@@ -5,6 +5,7 @@ import {
   useFocusIdx,
   getBlockNodeByIdx,
   getEditorRoot,
+  getEditNode,
 } from 'easy-email-editor';
 import { onDrag } from '@extensions/AttributePanel/utils/onDrag';
 import React, { useCallback, useMemo } from 'react';
@@ -17,7 +18,6 @@ import { InlineTextField } from '../index';
 import { InlineTextProps } from '../InlineTextField';
 import { TextToolbar } from './components/TextToolbar';
 import { BasicType } from 'easy-email-core';
-import { getEditNode } from '@extensions/AttributePanel/utils/getEditNode';
 
 const TEXT_BAR_LOCATION_KEY = 'TEXT_BAR_LOCATION_KEY';
 const RichTextFieldItem = (

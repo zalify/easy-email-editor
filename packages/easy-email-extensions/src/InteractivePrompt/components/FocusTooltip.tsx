@@ -30,6 +30,7 @@ export function FocusTooltip() {
       promiseObj.cancel();
     };
   }, [focusIdx, focusBlock]);
+
   useEffect(() => {
     if (blockNode) {
       const options: IntersectionObserverInit = {
@@ -41,7 +42,6 @@ export function FocusTooltip() {
         const [current] = ev;
         const { top, bottom } = current.intersectionRect;
         const rootBounds = current.rootBounds;
-
 
         if (!rootBounds) return;
         if (rootBounds.bottom === bottom) {
@@ -65,7 +65,7 @@ export function FocusTooltip() {
     return BlockManager.getBlockByType(focusBlock.type);
   }, [focusBlock]);
 
-  if (isPage || !block || !blockNode) return null;
+  if (!block || !blockNode) return null;
 
   return (
     <>
