@@ -34,7 +34,7 @@ export default function Frame({
             <Stack>
               <a
                 className='github-button'
-                href='https://github.com/m-Ryan/easy-email'
+                href='https://github.com/arco-design/easy-email'
                 data-size='large'
                 data-icon='octicon-star'
                 data-show-count='true'
@@ -47,7 +47,7 @@ export default function Frame({
 
               <a
                 className='github-button'
-                href='https://github.com/m-Ryan/easy-email/fork'
+                href='https://github.com/arco-design/easy-email/fork'
                 data-size='large'
                 data-show-count='true'
                 aria-label='Fork m-Ryan/easy-email on GitHub'
@@ -59,7 +59,7 @@ export default function Frame({
 
               <a
                 className='github-button'
-                href='https://github.com/m-Ryan/easy-email/issues'
+                href='https://github.com/arco-design/easy-email/issues'
                 data-size='large'
                 data-show-count='true'
                 aria-label='Issue m-Ryan/easy-email on GitHub'
