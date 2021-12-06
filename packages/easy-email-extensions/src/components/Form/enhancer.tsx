@@ -21,10 +21,11 @@ export interface EnhancerProps<T> extends Partial<FieldProps<T, any>> {
   wrapper?: boolean;
   size?: InputProps['size'];
 }
+
 let primaryId = 0;
-export default function enhancer<P>(
+export default function enhancer<P, C extends (...rest: any[]) => any = any>(
   Component: any,
-  changeAdapter: (e: any) => any
+  changeAdapter: C
 ) {
   return (
     props: EnhancerProps<P> & Omit<P, 'value' | 'onChange' | 'mutators'>

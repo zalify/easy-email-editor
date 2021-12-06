@@ -98,33 +98,35 @@ export function Link(props: LinkProps) {
             color='#fff'
             position='tl'
             content={
-              <Stack vertical spacing='tight'>
-                <Stack.Item />
-                <SearchField
-                  name='link'
-                  label='Link'
-                  labelHidden
-                  enterButton='Apply'
-                  placeholder='https://www.example.com'
-                  onSearch={() => handleSubmit()}
-                />
-                <Stack>
-                  <SwitchField
-                    label='Target'
-                    name='blank'
-                    checkedText='blank'
-                    uncheckedText='self'
-                    inline
+              <div style={{ color: '#333' }}>
+                <Stack vertical spacing='tight'>
+                  <Stack.Item />
+                  <SearchField
+                    name='link'
+                    label='Link'
+                    labelHidden
+                    searchButton='Apply'
+                    placeholder='https://www.example.com'
+                    onSearch={() => handleSubmit()}
                   />
-                  <SwitchField
-                    label='Underline'
-                    name='underline'
-                    checkedText='off'
-                    uncheckedText='on'
-                    inline
-                  />
+                  <Stack>
+                    <SwitchField
+                      label='Target'
+                      name='blank'
+                      checkedText='blank'
+                      uncheckedText='self'
+                      inline
+                    />
+                    <SwitchField
+                      label='Underline'
+                      name='underline'
+                      checkedText='off'
+                      uncheckedText='on'
+                      inline
+                    />
+                  </Stack>
                 </Stack>
-              </Stack>
+              </div>
             }
           >
             <Button

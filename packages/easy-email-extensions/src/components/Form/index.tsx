@@ -1,6 +1,7 @@
 import {
   InputNumber,
   Input as ArcoInput,
+  InputProps as ArcoInputProps,
   Switch,
   DatePicker,
   Slider,
@@ -18,29 +19,30 @@ import { Select, SelectProps } from './Select';
 import { RadioGroup, RadioGroupProps } from './RadioGroup';
 import enhancer from './enhancer';
 import { Input, InputProps } from './Input';
-import { ChexkBoxGroup } from './ChexkBoxGroup';
+import { CheckBoxGroup } from './CheckBoxGroup';
 import { EditTab, EditTabProps } from './EditTab';
 import { Dayjs } from 'dayjs';
 import { InlineText, InlineTextProps } from './InlineTextField';
 import { AutoCompleteProps, AutoComplete } from './AutoComplete';
+import { InputSearchProps } from '@arco-design/web-react/es/Input';
 export { RichTextField } from './RichTextField';
 
-export const TextField = enhancer<InputProps>(Input, (value) => value);
-export const SearchField = enhancer<InputProps>(
+export const TextField = enhancer<InputProps, Required<ArcoInputProps>['onChange']>(Input, (value) => value);
+export const SearchField = enhancer<InputProps, Required<InputSearchProps>['onChange']>(
   ArcoInput.Search,
-  (e: React.ChangeEvent<HTMLTextAreaElement>) => e.target.value
+  (val) => val
 );
 
-export const TextAreaField = enhancer<TextAreaProps>(
+export const TextAreaField = enhancer<TextAreaProps, Required<ArcoInputProps>['onChange']>(
   ArcoInput.TextArea,
-  (e: React.ChangeEvent<HTMLTextAreaElement>) => e.target.value
+  (val) => val
 );
 
-export const NumberField = enhancer<InputNumberProps>(
+export const NumberField = enhancer<InputNumberProps, Required<InputNumberProps>['onChange']>(
   InputNumber,
   (e: number | string | undefined | null) => e
 );
-export const SliderField = enhancer<SliderProps>(Slider, (e: number) => e);
+export const SliderField = enhancer<SliderProps, Required<SliderProps>['onChange']>(Slider, (e) => e);
 
 export const ColorPickerField = enhancer<ColorPickerProps>(
   ColorPicker,
@@ -64,26 +66,26 @@ export const AutoCompleteField = enhancer<AutoCompleteProps>(
   (e: string) => e
 );
 
-export const RadioGroupField = enhancer<RadioGroupProps>(
+export const RadioGroupField = enhancer<RadioGroupProps, Required<RadioGroupProps>['onChange']>(
   RadioGroup,
   (value) => value
 );
 
-export const SwitchField = enhancer<SwitchProps>(Switch, (e: boolean) => e);
+export const SwitchField = enhancer<SwitchProps, Required<SwitchProps>['onChange']>(Switch, (e) => e);
 
 export const DatePickerField = enhancer<DatePickerProps>(
   DatePicker,
   (date: Dayjs) => date
 );
 
-export const CheckboxField = enhancer<CheckboxGroupProps<any>>(
-  ChexkBoxGroup,
-  (e: any[]) => e
+export const CheckboxField = enhancer<CheckboxGroupProps<any>, Required<CheckboxGroupProps<any>>['onChange']>(
+  CheckBoxGroup,
+  (e) => e
 );
 
 export const EditTabField = enhancer<EditTabProps>(EditTab, (e: any[]) => e);
 
-export const InlineTextField = enhancer<InlineTextProps>(
+export const InlineTextField = enhancer<InlineTextProps, Required<InlineTextProps>['onChange']>(
   InlineText,
   (value) => value
 );

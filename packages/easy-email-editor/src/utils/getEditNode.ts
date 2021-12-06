@@ -1,7 +1,7 @@
 export function getEditNode(node: HTMLElement): null | HTMLElement {
   if (!node.classList) return null;
   if (node.classList.contains('node-type-text')) {
-    return node.querySelector('[contenteditable="true"]');
+    return node.querySelector('[contenteditable="true"]') || node.querySelector('div');
   }
   if (node.classList.contains('node-type-button')) {
     return node.querySelector('a') || node.querySelector('p');
