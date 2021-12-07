@@ -1,10 +1,10 @@
 import { TextStyle, Stack, StackProps } from 'easy-email-editor';
 import { Form } from '@arco-design/web-react';
 import { FieldProps, useField, useForm } from 'react-final-form';
-import React, { useCallback, useMemo } from 'react';
-import { debounce } from 'lodash';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styles from './index.module.scss';
 import { InputProps } from './Input';
+import { debounce } from 'lodash';
 
 export interface EnhancerProps<T> extends Partial<FieldProps<T, any>> {
   name: string;
@@ -47,10 +47,7 @@ export default function enhancer<P, C extends (...rest: any[]) => any = any>(
       debounceTime = 0,
       ...rest
     } = props;
-    const id = useMemo(() => {
-      return `enhancer-${primaryId++}`;
-    }, []);
-    const { change, mutators } = useForm();
+
     const {
       input: { value, onBlur },
       meta: { touched, error },
@@ -58,15 +55,41 @@ export default function enhancer<P, C extends (...rest: any[]) => any = any>(
       validate,
     });
 
+    const [currentValue, setCurrentValue] = useState(value);
+
+    const id = useMemo(() => {
+      return `enhancer-${primaryId++}`;
+    }, []);
+
+    const { change, mutators } = useForm();
+
+    const debounceCallbackChange = useCallback(
+      debounce(
+        (val) => {
+          change(name, val);
+        },
+        60,
+        {
+          maxWait: 60,
+        }
+      ),
+      [change, name]
+    );
+
+    useEffect(() => {
+      setCurrentValue(value);
+    }, [value]);
+
     const onFieldChange = useCallback(
-      debounce((e: any) => {
+      (e: any) => {
         const newVal = onChangeAdapter
           ? onChangeAdapter(changeAdapter(e))
           : changeAdapter(e);
-        change(name, newVal);
+        setCurrentValue(newVal);
+        debounceCallbackChange(newVal);
         onBlur();
-      }),
-      [change, name, onBlur, onChangeAdapter]
+      },
+      [onBlur, onChangeAdapter, debounceCallbackChange]
     );
 
     if (!wrapper)
@@ -76,8 +99,8 @@ export default function enhancer<P, C extends (...rest: any[]) => any = any>(
           mutators={mutators}
           id={id}
           name={name}
-          checked={valueAdapter ? valueAdapter(value) : value}
-          value={valueAdapter ? valueAdapter(value) : value}
+          checked={valueAdapter ? valueAdapter(currentValue) : currentValue}
+          value={valueAdapter ? valueAdapter(currentValue) : currentValue}
           onChange={onFieldChange}
         />
       );
@@ -116,8 +139,10 @@ export default function enhancer<P, C extends (...rest: any[]) => any = any>(
                 mutators={mutators}
                 id={id}
                 name={name}
-                checked={valueAdapter ? valueAdapter(value) : value}
-                value={valueAdapter ? valueAdapter(value) : value}
+                checked={
+                  valueAdapter ? valueAdapter(currentValue) : currentValue
+                }
+                value={valueAdapter ? valueAdapter(currentValue) : currentValue}
                 onChange={onFieldChange}
               />
             </Stack.Item>
