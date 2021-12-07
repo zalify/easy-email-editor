@@ -79,7 +79,6 @@ export const BlocksPanel: React.FC = (props) => {
                 <Tabs tabPosition='left' size='large'>
                   {filterCategories.map((category, index) => (
                     <Tabs.TabPane
-                      className='no-scrollbar'
                       style={{
                         padding: 0,
                         overflow: 'auto',

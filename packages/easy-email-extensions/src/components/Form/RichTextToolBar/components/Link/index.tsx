@@ -4,6 +4,7 @@ import React, { useCallback, useMemo } from 'react';
 import { Form } from 'react-final-form';
 import { IconFont, Stack } from 'easy-email-editor';
 import { SearchField, SwitchField } from '@extensions/components/Form';
+import { ToolItem } from '../ToolItem';
 
 export interface LinkParams {
   link: string;
@@ -61,7 +62,7 @@ export function Link(props: LinkProps) {
   const initialValues = useMemo((): LinkParams => {
     let link = '';
     let blank = true;
-    let underline = false;
+    let underline = true;
     let linkNode: HTMLAnchorElement | null = getLinkNode(props.currentRange);
     if (linkNode) {
       link = linkNode.href;
@@ -129,11 +130,7 @@ export function Link(props: LinkProps) {
               </div>
             }
           >
-            <Button
-              title='Link'
-              size='mini'
-              icon={<IconFont iconName='icon-link' />}
-            />
+            <ToolItem title='Link' icon={<IconFont iconName='icon-link' />} />
           </Tooltip>
         );
       }}
