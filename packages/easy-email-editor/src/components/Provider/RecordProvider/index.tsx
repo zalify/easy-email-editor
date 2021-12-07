@@ -87,9 +87,9 @@ export const RecordProvider: React.FC<{}> = (props) => {
         const newData = [...oldData, cloneDeep(formState.values)].slice(
           -MAX_RECORD_SIZE
         );
-        setIndex((i) => Math.min(i + 1, MAX_RECORD_SIZE - 1));
         return newData;
       });
+      setIndex((i) => Math.min(i + 1, MAX_RECORD_SIZE - 1));
     }
   }, [formState]);
 

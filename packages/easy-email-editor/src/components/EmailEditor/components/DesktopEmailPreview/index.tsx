@@ -10,7 +10,6 @@ export function DesktopEmailPreview() {
   const [scrollEle, setScrollEle] = useState<HTMLDivElement | null>(null);
 
   useEffect(() => {
-
     if (!scrollEle) return;
 
     if (scrollEle) {
@@ -20,7 +19,6 @@ export function DesktopEmailPreview() {
 
   const onScroll = useCallback(
     (event: React.UIEvent<HTMLDivElement, UIEvent>) => {
-
       const target = event.target as HTMLDivElement;
       scrollHeight.current = target.scrollTop;
     },
@@ -32,7 +30,6 @@ export function DesktopEmailPreview() {
       style={{
         height: '100%',
       }}
-
     >
       <IframeComponent
         height='100%'
@@ -46,12 +43,11 @@ export function DesktopEmailPreview() {
             height: '100vh',
             overflow: 'auto',
             margin: 'auto',
-            boxSizing: 'border-box'
+            boxSizing: 'border-box',
           }}
         >
           <PreviewEmail />
         </div>
-
       </IframeComponent>
     </div>
   );

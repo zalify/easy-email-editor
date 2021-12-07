@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import mjml from 'mjml-browser';
 import { getPageIdx, IPage, JsonToMjml } from 'easy-email-core';
-import { cloneDeep, isEqual } from 'lodash';
+import { cloneDeep, isEqual, debounce } from 'lodash';
 import { useEditorContext } from '@/hooks/useEditorContext';
 import { HtmlStringToReactNodes } from '@/utils/HtmlStringToReactNodes';
 import { createPortal } from 'react-dom';
 import { useEditorProps } from '@/hooks/useEditorProps';
+import { useCallback } from 'react';
 
 export function MjmlDomRender() {
   const { pageData: content } = useEditorContext();
@@ -13,9 +14,22 @@ export function MjmlDomRender() {
   const [ref, setRef] = useState<HTMLDivElement | null>(null);
   const { dashed } = useEditorProps();
 
+  const debounceCallback = useCallback(
+    debounce(
+      (con: IPage) => {
+        setPageData(cloneDeep(con));
+      },
+      100,
+      {
+        maxWait: 200,
+      }
+    ),
+    []
+  );
+
   useEffect(() => {
     if (!isEqual(content, pageData)) {
-      setPageData(cloneDeep(content));
+      debounceCallback(content);
     }
   }, [content, pageData]);
 

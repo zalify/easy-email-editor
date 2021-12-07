@@ -5,7 +5,7 @@ import {
   getShadowRoot,
   getEditorRoot,
 } from 'easy-email-editor';
-import { useField } from 'react-final-form';
+import { useField, useForm } from 'react-final-form';
 import { awaitForElement } from '@extensions/AttributePanel/utils/awaitForElement';
 import { getEditContent, getEditNode } from 'easy-email-editor';
 
@@ -13,15 +13,12 @@ export interface InlineTextProps {
   idx: string;
   children?: React.ReactNode;
   onChange: (content: string) => void;
-  mutators: Record<string, (...args: any[]) => any>;
 }
 
-export function InlineText({
-  idx,
-  onChange,
-  children,
-  mutators: { setFieldTouched },
-}: InlineTextProps) {
+export function InlineText({ idx, onChange, children }: InlineTextProps) {
+  const {
+    mutators: { setFieldTouched },
+  } = useForm();
   const [isFocus, setIsFocus] = useState(false);
   const [textContainer, setTextContainer] = useState<HTMLElement | null>(null);
 

@@ -72,6 +72,7 @@ export function WarnAboutUnsavedChanges(props: WarnAboutUnsavedChangesProps) {
         onCancel={onCancel}
         onOk={onOk}
         okText='Discard'
+        cancelText='Cancel'
         style={{ zIndex: 10000 }}
       >
         <p>Are you sure you want to discard all unsaved changes?</p>
