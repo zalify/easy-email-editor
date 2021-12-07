@@ -1,4 +1,3 @@
-import { Button } from '@arco-design/web-react';
 import React from 'react';
 
 export const ToolItem: React.FC<{
@@ -8,11 +7,12 @@ export const ToolItem: React.FC<{
   trigger?: string;
 }> = (props) => {
   return (
-    <Button
+    <button
+      className="easy-email-extensions-emailToolItem"
       title={props.title}
-      size='mini'
-      icon={props.icon}
       onClick={props.onClick}
-    />
+    >
+      {props.icon}
+    </button>
   );
 };

@@ -1,0 +1,1 @@
+export { MergeTags } from './MergeTags';
