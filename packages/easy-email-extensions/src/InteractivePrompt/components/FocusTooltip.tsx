@@ -34,22 +34,27 @@ export function FocusTooltip() {
   useEffect(() => {
     if (blockNode) {
       const options: IntersectionObserverInit = {
-        rootMargin: '-24px 0px -24px 0px',
-        root: getShadowRoot().host,
-        threshold: [0, 0.001, 0.1, 0.999, 0.9, 1],
+        rootMargin: '-24px 0px 0px 0px',
+        root: getShadowRoot().firstChild as HTMLElement,
+        threshold: [0, 0.001, 0.1, 0.5, 0.999, 1],
       };
       const checkDirection: IntersectionObserverCallback = (ev) => {
         const [current] = ev;
-        const { top, bottom } = current.intersectionRect;
+        const { top } = current.intersectionRect;
         const rootBounds = current.rootBounds;
-
+        const intersectionRatio = current.intersectionRatio;
         if (!rootBounds) return;
-        if (rootBounds.bottom === bottom) {
+
+        if (intersectionRatio === 1) {
           setDirection('top');
-        } else if (rootBounds.top === top) {
-          setDirection('bottom');
         } else {
-          setDirection('top');
+          if (top) {
+            if (top > rootBounds.top) {
+              setDirection('top');
+            } else {
+              setDirection('bottom');
+            }
+          }
         }
       };
       const observer = new IntersectionObserver(checkDirection, options);
