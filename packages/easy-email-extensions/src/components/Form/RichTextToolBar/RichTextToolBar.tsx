@@ -78,7 +78,7 @@ export function RichTextToolBar() {
     <>
       {createPortal(
         <>
-          <style dangerouslySetInnerHTML={{ __html: styleText }}></style>
+          <style dangerouslySetInnerHTML={{ __html: styleText }} />
           <div
             style={{
               transform: direction === 'top' ? 'translate(0,-100%)' : undefined,

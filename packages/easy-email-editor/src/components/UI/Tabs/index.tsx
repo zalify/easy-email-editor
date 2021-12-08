@@ -58,7 +58,7 @@ const Tabs: React.FC<TabsProps> = (props) => {
         (item: { props: { tab: TabPaneProps; }; key: string; }, index) => {
           const visible = (!activeTab && index === 0) || item.key === activeTab;
           return (
-            <div style={{ display: visible ? undefined : 'none', height: `calc(100% - 50px)` }}>{item}</div>
+            <div style={{ display: visible ? undefined : 'none', height: 'calc(100% - 50px)' }}>{item}</div>
           );
         }
       )}

@@ -175,9 +175,10 @@ export function BlockLayer() {
         id='BlockLayerManager'
         {
         ...{
-          [DATA_ATTRIBUTE_DROP_CONTAINER]: "true"
+          [DATA_ATTRIBUTE_DROP_CONTAINER]: 'true'
         }
-        }>
+        }
+      >
         <BlockTree<IBlockDataWithId>
           selectedId={focusIdx}
           defaultExpandAll

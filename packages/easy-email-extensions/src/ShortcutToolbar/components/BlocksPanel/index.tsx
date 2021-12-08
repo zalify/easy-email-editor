@@ -70,11 +70,11 @@ export const BlocksPanel: React.FC = (props) => {
               <Card
                 bodyStyle={{ padding: 0 }}
                 title='Drag block'
-                extra={
+                extra={(
                   <div className={styles.closeBtn}>
                     <IconFont iconName='icon-close' onClick={toggleVisible} />
                   </div>
-                }
+                )}
               >
                 <Tabs tabPosition='left' size='large'>
                   {filterCategories.map((category, index) => (
@@ -84,7 +84,7 @@ export const BlocksPanel: React.FC = (props) => {
                         overflow: 'auto',
                       }}
                       key={category.title}
-                      title={
+                      title={(
                         <div
                           style={{
                             paddingTop: index === 0 ? 5 : undefined,
@@ -93,7 +93,7 @@ export const BlocksPanel: React.FC = (props) => {
                         >
                           {category.title}
                         </div>
-                      }
+                      )}
                     >
                       <BlockPanelItem category={category} />
                     </Tabs.TabPane>
@@ -119,12 +119,12 @@ const BlockPanelItem: React.FC<{
           <Tabs.TabPane
             style={{ padding: 0 }}
             key={block.title}
-            title={
+            title={(
               <Stack alignment='center' spacing='extraTight'>
                 <div className={styles.blockItem}>{block.title}</div>
                 {block.description && <Help title={block.description} />}
               </Stack>
-            }
+            )}
           >
             <div
               className='small-scrollbar'

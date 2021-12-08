@@ -1,5 +1,4 @@
 
-
 import React from 'react';
 import { Stack, TextStyle, } from 'easy-email-editor';
 import { BasicType, IDivider, RecursivePartial } from 'easy-email-core';

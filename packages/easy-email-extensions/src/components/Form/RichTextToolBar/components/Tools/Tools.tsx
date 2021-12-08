@@ -83,7 +83,7 @@ export function Tools(props: ToolsProps) {
 
         link = getShadowRoot().querySelector(
           `a[href="${uuid}"`
-        )! as HTMLAnchorElement;
+        )! ;
       }
 
       if (target) {
@@ -111,19 +111,18 @@ export function Tools(props: ToolsProps) {
           alignItems: 'center',
         }}
       >
-        <div className='easy-email-extensions-divider'></div>
+        <div className='easy-email-extensions-divider' />
         <Popover
           className="easy-email-extensions-Tools-Popover"
           trigger="click"
-          content={
+          content={(
             <>
               <style>
                 {styleText}
               </style>
               <FontFamily onChange={(val) => execCommand('fontName', val)} />
             </>
-
-          }
+          )}
           getPopupContainer={getPopoverMountNode}
         >
           <ToolItem
@@ -131,20 +130,19 @@ export function Tools(props: ToolsProps) {
             icon={<IconFont iconName='icon-font-family' />}
           />
         </Popover>
-        <div className='easy-email-extensions-divider'></div>
+        <div className='easy-email-extensions-divider' />
         <Popover
           className="easy-email-extensions-Tools-Popover"
           color='#fff'
           trigger="click"
-          content={
+          content={(
             <>
               <style>
                 {styleText}
               </style>
               <FontSizeList onChange={(val) => execCommand('fontSize', val)} />
             </>
-
-          }
+          )}
           getPopupContainer={getPopoverMountNode}
         >
           <ToolItem
@@ -152,19 +150,19 @@ export function Tools(props: ToolsProps) {
             icon={<IconFont iconName='icon-line-height' />}
           />
         </Popover>
-        <div className='easy-email-extensions-divider'></div>
+        <div className='easy-email-extensions-divider' />
         <ToolItem
           onClick={() => execCommand('bold')}
           icon={<IconFont iconName='icon-bold' />}
           title='Bold'
         />
-        <div className='easy-email-extensions-divider'></div>
+        <div className='easy-email-extensions-divider' />
         <ToolItem
           onClick={() => execCommand('italic')}
           icon={<IconFont iconName='icon-italic' />}
           title='Italic'
         />
-        <div className='easy-email-extensions-divider'></div>
+        <div className='easy-email-extensions-divider' />
         <ColorPicker
           label=''
           position='tl'
@@ -177,7 +175,7 @@ export function Tools(props: ToolsProps) {
             title='Text color'
           />
         </ColorPicker>
-        <div className='easy-email-extensions-divider'></div>
+        <div className='easy-email-extensions-divider' />
         <ColorPicker
           label=''
           showInput={false}
@@ -190,23 +188,23 @@ export function Tools(props: ToolsProps) {
             title='Background color'
           />
         </ColorPicker>
-        <div className='easy-email-extensions-divider'></div>
+        <div className='easy-email-extensions-divider' />
         <Link
           currentRange={selectionRange}
           onChange={(values) => execCommand('createLink', values)}
           getPopupContainer={getPopoverMountNode}
         />
-        <div className='easy-email-extensions-divider'></div>
+        <div className='easy-email-extensions-divider' />
         {mergeTags && (
           <Tooltip
             color='#fff'
             position='bottom'
-            content={
+            content={(
               <MergeTags
                 value=''
                 onChange={(val) => execCommand('insertHTML', val)}
               />
-            }
+            )}
             getPopupContainer={getPopoverMountNode}
           >
             <ToolItem
@@ -215,7 +213,7 @@ export function Tools(props: ToolsProps) {
             />
           </Tooltip>
         )}
-        <div className='easy-email-extensions-divider'></div>
+        <div className='easy-email-extensions-divider' />
 
         <ToolItem
           onClick={() => execCommand('justifyLeft')}
@@ -232,7 +230,7 @@ export function Tools(props: ToolsProps) {
           icon={<IconFont iconName='icon-align-right' />}
           title='Align right'
         />
-        <div className='easy-email-extensions-divider'></div>
+        <div className='easy-email-extensions-divider' />
         <ToolItem
           onClick={() => execCommand('insertOrderedList')}
           icon={<IconFont iconName='icon-list-ol' />}
@@ -243,7 +241,7 @@ export function Tools(props: ToolsProps) {
           icon={<IconFont iconName='icon-list-ul' />}
           title='Unorderlist'
         />
-        <div className='easy-email-extensions-divider'></div>
+        <div className='easy-email-extensions-divider' />
         <ToolItem
           onClick={() => execCommand('strikeThrough')}
           icon={<IconFont iconName='icon-strikethrough' />}
@@ -260,13 +258,13 @@ export function Tools(props: ToolsProps) {
           icon={<IconFont iconName='icon-line' />}
           title='Line'
         />
-        <div className='easy-email-extensions-divider'></div>
+        <div className='easy-email-extensions-divider' />
         <ToolItem
           onClick={() => execCommand('removeFormat')}
           icon={<IconFont iconName='icon-close' />}
           title='Remove format'
         />
-        <div className='easy-email-extensions-divider'></div>
+        <div className='easy-email-extensions-divider' />
       </div>
     </div>
   );

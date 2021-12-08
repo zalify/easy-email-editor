@@ -13,7 +13,6 @@ export interface BlockMarketCategory {
   }[];
 }
 
-
 export class BlockMarketManager {
   private static category: BlockMarketCategory[] = [];
   private static subscriptHandles: Array<(category: BlockMarketCategory[]) => void> = [];
@@ -80,7 +79,6 @@ export class BlockMarketManager {
     });
     this.notify();
   }
-
 
   public static removeCategory(name: string) {
     this.category = this.category.filter((item) => item.name !== name);

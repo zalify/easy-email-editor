@@ -61,7 +61,7 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
     if (action === 'add' && !isUndefined(transferData.parentIdx)) {
       addBlock({
         type,
-        parentIdx: transferData.parentIdx!,
+        parentIdx: transferData.parentIdx,
         positionIndex: transferData.positionIndex,
         payload,
       });
@@ -73,8 +73,8 @@ export const BlockSortableWrapper: React.FC<BlockSortableWrapperProps> = (
         !isUndefined(transferData.positionIndex)
       ) {
         moveBlock(
-          transferData.sourceIdx!,
-          getChildIdx(transferData.parentIdx!, transferData.positionIndex!)
+          transferData.sourceIdx,
+          getChildIdx(transferData.parentIdx, transferData.positionIndex)
         );
       }
     }

@@ -31,7 +31,7 @@ export function MjmlDomRender() {
     if (!isEqual(content, pageData)) {
       debounceCallback(content);
     }
-  }, [content, pageData]);
+  }, [content, pageData, debounceCallback]);
 
   const html = useMemo(() => {
     if (!pageData) return '';

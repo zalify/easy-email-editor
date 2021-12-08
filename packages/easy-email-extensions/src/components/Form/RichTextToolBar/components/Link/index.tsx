@@ -98,7 +98,7 @@ export function Link(props: LinkProps) {
             trigger='click'
             color='#fff'
             position='tl'
-            content={
+            content={(
               <div style={{ color: '#333' }}>
                 <Stack vertical spacing='tight'>
                   <Stack.Item />
@@ -128,7 +128,7 @@ export function Link(props: LinkProps) {
                   </Stack>
                 </Stack>
               </div>
-            }
+            )}
           >
             <ToolItem title='Link' icon={<IconFont iconName='icon-link' />} />
           </Tooltip>

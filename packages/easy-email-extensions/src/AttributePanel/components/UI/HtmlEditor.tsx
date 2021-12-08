@@ -63,7 +63,7 @@ export const HtmlEditor: React.FC<{
     <Drawer
       placement='left'
       headerStyle={{ display: 'block', lineHeight: '48px' }}
-      title={
+      title={(
         <Stack distribution='equalSpacing'>
           <TextStyle variation='strong' size='large'>
             Html
@@ -74,7 +74,7 @@ export const HtmlEditor: React.FC<{
             </Button>
           </Stack>
         </Stack>
-      }
+      )}
       closable={false}
       escToExit={false}
       width='100vw'
@@ -85,7 +85,7 @@ export const HtmlEditor: React.FC<{
       <div style={{ display: 'flex', height: '100%' }}>
         <div style={{ flex: 1, height: '100%' }}>
           <Suspense
-            fallback={
+            fallback={(
               <div
                 style={{
                   height: '100%',
@@ -100,7 +100,7 @@ export const HtmlEditor: React.FC<{
               >
                 Editor Loading...
               </div>
-            }
+            )}
           >
             <CodeMirrorEditor value={content} onChange={setContent} />
           </Suspense>
@@ -117,7 +117,7 @@ export const HtmlEditor: React.FC<{
           >
             {isTable ? (
               <table>
-                <tbody dangerouslySetInnerHTML={{ __html: content }}></tbody>
+                <tbody dangerouslySetInnerHTML={{ __html: content }} />
               </table>
             ) : (
               <div dangerouslySetInnerHTML={{ __html: content }} />
