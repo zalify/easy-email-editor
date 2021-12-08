@@ -46,7 +46,7 @@ export function useHotKeys() {
         ev.preventDefault();
         undo();
       }
-      if (isHotkey('mod+y', ev)) {
+      if (isHotkey('mod+y', ev) || isHotkey('mod+shift+z', ev)) {
         ev.preventDefault();
         redo();
       }

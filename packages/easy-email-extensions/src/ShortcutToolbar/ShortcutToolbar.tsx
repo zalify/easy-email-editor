@@ -3,7 +3,6 @@ import { IconFont, Stack, BlockAvatarWrapper } from 'easy-email-editor';
 import React from 'react';
 import { BlocksPanel } from './components/BlocksPanel';
 
-
 export function ShortcutToolbar() {
   return (
     <Stack vertical alignment='center' distribution='center'>
@@ -58,7 +57,7 @@ export function ShortcutToolbar() {
         />
       </BlockAvatarWrapper>
 
-      <BlocksPanel >
+      <BlocksPanel>
         <IconFont
           iconName='icon-more'
           style={{

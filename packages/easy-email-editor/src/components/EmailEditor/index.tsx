@@ -46,33 +46,33 @@ export const EmailEditor = () => {
         >
           <TabPane
             style={{ height: 'calc(100% - 50px)' }}
-            tab={
+            tab={(
               <Stack spacing='tight'>
                 <IconFont iconName='icon-editor' />
               </Stack>
-            }
+            )}
             key={ActiveTabKeys.EDIT}
           >
             <EditEmailPreview />
           </TabPane>
           <TabPane
             style={{ height: 'calc(100% - 50px)' }}
-            tab={
+            tab={(
               <Stack spacing='tight'>
                 <IconFont iconName='icon-desktop' />
               </Stack>
-            }
+            )}
             key={ActiveTabKeys.PC}
           >
             <DesktopEmailPreview />
           </TabPane>
           <TabPane
             style={{ height: 'calc(100% - 50px)' }}
-            tab={
+            tab={(
               <Stack spacing='tight'>
                 <IconFont iconName='icon-mobile' />
               </Stack>
-            }
+            )}
             key={ActiveTabKeys.MOBILE}
           >
             <MobileEmailPreview />
@@ -82,6 +82,6 @@ export const EmailEditor = () => {
         {fixedContainer}
       </div>
     ),
-    [activeTab, backgroundColor, containerHeight, fixedContainer, setActiveTab]
+    [containerHeight, fixedContainer, setActiveTab]
   );
 };

@@ -1,5 +1,4 @@
 
-
 // spacial dom id
 export const FIXED_CONTAINER_ID = 'FIXED_CONTAINER_ID';
 

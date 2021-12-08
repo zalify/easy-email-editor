@@ -1,0 +1,23 @@
+.easy-email-extensions-emailToolItem {
+  display: inline-flex;
+  position: relative;
+  outline: none;
+  font-weight: 400;
+  appearance: none;
+  cursor: pointer !important;
+  white-space: nowrap;
+  transition: all 0.1s linear;
+  box-sizing: border-box;
+  line-height: 1.5715;
+  border: none;
+  background-color: transparent;
+  color: #fff;
+}
+
+.easy-email-extensions-divider {
+  position: relative;
+  display: inline-flex;
+  width: 1px;
+  height: 16px;
+  background-color: rgba(128, 128, 128, 0.9);
+}

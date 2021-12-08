@@ -4,11 +4,6 @@ import path from 'path';
 import { injectHtml } from 'vite-plugin-html';
 
 export default defineConfig({
-  server: {
-    fs: {
-      strict: false,
-    },
-  },
   resolve: {
     alias: {
       '@demo': path.resolve(__dirname, './src'),
@@ -46,9 +41,6 @@ export default defineConfig({
           }
           if (/\/node_modules\/mjml-browser\/.*/.test(id)) {
             return 'mjml-browser';
-          }
-          if (/easy-email.*/.test(id)) {
-            return 'easy-email-editor';
           }
         },
       },

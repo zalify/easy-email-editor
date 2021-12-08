@@ -15,13 +15,14 @@ export interface AutoCompleteProps
 
 export function AutoComplete(props: AutoCompleteProps) {
   const options = useMemo(() => {
+    const selectedValue = (props.value || '').toLowerCase();
     return props.options
       .filter((item) => {
         return (
           (isString(item.value) &&
-            item.value.toLowerCase().startsWith(props.value.toLowerCase())) ||
+            item.value.toLowerCase().startsWith(selectedValue)) ||
           (isString(item.label) &&
-            item.label.toLowerCase().startsWith(props.value.toLowerCase()))
+            item.label.toLowerCase().startsWith(selectedValue))
         );
       })
       .map((item) => ({ ...item, name: item.label }));

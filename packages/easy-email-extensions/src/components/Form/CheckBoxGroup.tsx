@@ -7,7 +7,7 @@ import {
 } from '@arco-design/web-react';
 
 export interface CheckboxGroupProps extends ArcoCheckboxGroupProps<any> {
-  options: Array<{ value: string; label: React.ReactNode }>;
+  options: Array<{ value: string; label: React.ReactNode; }>;
   onChange?: (e: any[]) => void;
   value?: ArcoCheckboxGroupProps<any>['value'];
   style?: Partial<React.CSSProperties>;
@@ -15,7 +15,7 @@ export interface CheckboxGroupProps extends ArcoCheckboxGroupProps<any> {
   vertical?: boolean;
 }
 
-export function ChexkBoxGroup(props: CheckboxGroupProps) {
+export function CheckBoxGroup(props: CheckboxGroupProps) {
   const { vertical = false, ...rest } = props;
   return (
     <Checkbox.Group

@@ -48,7 +48,7 @@ export function EditEmailPreview() {
         id='VisualEditorEditMode'
         {
         ...{
-          [DATA_ATTRIBUTE_DROP_CONTAINER]: "true"
+          [DATA_ATTRIBUTE_DROP_CONTAINER]: 'true'
         }
         }
         style={{

@@ -17,12 +17,15 @@ export function Input(props: InputProps) {
     (val: string) => {
       props.onChange(val);
     },
-    [props]
+    [props.onChange]
   );
 
   const onKeyDown = useCallback(
     (ev: React.KeyboardEvent<HTMLInputElement>) => {
-      onPropsKeyDown?.(ev);
+      if (onPropsKeyDown) {
+        onPropsKeyDown?.(ev);
+      }
+
       if (quickchange) {
         let step = 0;
         if (ev.key === 'ArrowUp') {
@@ -34,6 +37,7 @@ export function Input(props: InputProps) {
 
         if (step) {
           if (/^\d+/.test(value)) {
+            ev.preventDefault();
             onChange(
               String(value).replace(/^(\d+)/, (_, match) => {
                 return (Number(match) + step).toString();

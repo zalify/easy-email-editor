@@ -23,14 +23,14 @@ export function Text() {
 
   return (
     <AttributesPanelWrapper
-      extra={
+      extra={(
         <Tooltip content='Html mode'>
           <Button
             onClick={() => setVisible(true)}
             icon={<IconFont iconName='icon-html' />}
           />
         </Tooltip>
-      }
+      )}
     >
       <Collapse defaultActiveKey={['0', '1', '2']}>
         <Collapse.Item name='0' header='Dimension'>
