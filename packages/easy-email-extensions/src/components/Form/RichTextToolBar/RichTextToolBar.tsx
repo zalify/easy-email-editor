@@ -88,7 +88,7 @@ export function RichTextToolBar() {
               zIndex: 100,
               top: direction === 'top' ? -40 : 'calc(100% + 40px)',
               left: offsetX,
-              width: pageWidth
+              width: pageWidth,
             }}
           >
             <div
@@ -99,12 +99,10 @@ export function RichTextToolBar() {
                 width: '100%',
                 left: 0,
                 top: 0,
-                cursor: 'move',
               }}
             />
 
-            <Tools container={editorContainer} onChange={() => { }} />
-
+            <Tools container={editorContainer} onChange={() => {}} />
           </div>
         </>,
         blockNode
