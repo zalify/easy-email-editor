@@ -22,14 +22,31 @@ export function InlineText({ idx, onChange, children }: InlineTextProps) {
   const { focusBlock } = useBlock();
 
   useEffect(() => {
-    const promiseObj = awaitForElement<HTMLDivElement>(idx);
-    promiseObj.promise.then((blockNode) => {
-      setTextContainer(blockNode);
-    });
+
+    let promiseObj: ReturnType<typeof awaitForElement>;
+
+    const getTextBlock = () => {
+
+      promiseObj = awaitForElement<HTMLDivElement>(idx);
+      promiseObj.promise.then((blockNode) => {
+        if (blockNode.querySelector('[contenteditable="true"]')) {
+          setTextContainer(blockNode);
+        } else {
+          setTimeout(() => {
+            getTextBlock();
+          }, 50);
+        }
+      });
+
+    };
+
+    getTextBlock();
 
     return () => {
       promiseObj.cancel();
     };
+
+
   }, [idx, focusBlock]);
 
   useEffect(() => {
@@ -38,18 +55,15 @@ export function InlineText({ idx, onChange, children }: InlineTextProps) {
     const container = getEditNode(textContainer);
 
     if (container) {
-      container.focus();
 
       const onPaste = (e: ClipboardEvent) => {
         e.preventDefault();
         const text = e.clipboardData?.getData('text/plain') || '';
         document.execCommand('insertHTML', false, text);
-        setFieldTouched(idx, true);
         onChange(getEditContent(textContainer));
       };
 
       const onInput = () => {
-        setFieldTouched(idx, true);
         onChange(getEditContent(textContainer));
       };
 
@@ -61,7 +75,7 @@ export function InlineText({ idx, onChange, children }: InlineTextProps) {
         container.removeEventListener('input', onInput);
       };
     }
-  }, [idx, onChange, setFieldTouched, textContainer]);
+  }, [onChange, setFieldTouched, textContainer]);
 
   return <>{children}</>;
 }
