@@ -10,7 +10,7 @@ export interface DragPosition {
   top: number;
 }
 export interface DataTransfer {
-  type: BlockType;
+  type: string;
   payload?: any;
   action: 'add' | 'move';
   positionIndex?: number;

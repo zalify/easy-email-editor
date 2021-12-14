@@ -3,7 +3,6 @@ import React, { useCallback } from 'react';
 import { Stack, TextStyle, useBlock, useEditorProps } from 'easy-email-editor';
 import { MergeTags } from '../MergeTags';
 import { BasicType, BlockManager } from 'easy-email-core';
-import styles from './index.module.scss';
 
 export interface AttributesPanelWrapper {
   style?: React.CSSProperties;
@@ -28,10 +27,10 @@ export const AttributesPanelWrapper: React.FC<AttributesPanelWrapper> = (
   if (!focusBlock || !block) return null;
 
   return (
-    <div className={styles.wrapper}>
+    <div>
       <div
         style={{
-          border: '1px solid #f0f0f0',
+          border: '1px solid var(--color-neutral-3, rgb(229, 230, 235))',
           borderBottom: 'none',
           padding: '12px 24px',
         }}
@@ -41,7 +40,10 @@ export const AttributesPanelWrapper: React.FC<AttributesPanelWrapper> = (
             <Stack wrap={false} distribution='equalSpacing' alignment='center'>
               <Stack spacing='extraTight' alignment='center'>
                 <EyeIcon />
-                <TextStyle>{`${block.name} attributes`}</TextStyle>
+                <TextStyle
+                  variation='strong'
+                  size='large'
+                >{`${block.name} attributes`}</TextStyle>
               </Stack>
               <Stack.Item>{props.extra}</Stack.Item>
             </Stack>
@@ -88,8 +90,14 @@ function EyeIcon() {
   if (focusBlock.type === BasicType.PAGE) return null;
 
   return focusBlock.data.hidden ? (
-    <IconEyeInvisible onClick={onToggleVisible} />
+    <IconEyeInvisible
+      style={{ cursor: 'pointer', fontSize: 18 }}
+      onClick={onToggleVisible}
+    />
   ) : (
-    <IconEye onClick={onToggleVisible} />
+    <IconEye
+      style={{ cursor: 'pointer', fontSize: 18 }}
+      onClick={onToggleVisible}
+    />
   );
 }

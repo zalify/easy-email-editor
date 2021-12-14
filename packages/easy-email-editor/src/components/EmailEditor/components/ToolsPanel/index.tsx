@@ -14,7 +14,7 @@ export function ToolsPanel() {
           iconName='icon-undo'
           style={{
             cursor: 'inherit',
-            color: undoable ? 'rgba(0, 0, 0, 0.75)' : 'rgba(0, 0, 0, 0.25)',
+            opacity: undoable ? 1 : 0.75,
           }}
         />
       </Button>
@@ -24,7 +24,7 @@ export function ToolsPanel() {
           iconName='icon-redo'
           style={{
             cursor: 'inherit',
-            color: redoable ? 'rgba(0, 0, 0, 0.75)' : 'rgba(0, 0, 0, 0.25)',
+            opacity: redoable ? 1 : 0.75,
           }}
         />
       </Button>

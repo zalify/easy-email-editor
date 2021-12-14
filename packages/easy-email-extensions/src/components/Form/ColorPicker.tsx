@@ -49,14 +49,14 @@ export function ColorPicker(props: ColorPickerProps) {
         title={props.label}
         trigger='click'
         {...props}
-        content={(
+        content={
           <SketchPicker
             presetColors={presetColors}
             color={color}
             disableAlpha
             onChangeComplete={onChangeComplete}
           />
-        )}
+        }
       >
         {children || (
           <div
@@ -65,7 +65,7 @@ export function ColorPicker(props: ColorPickerProps) {
               height: 32,
               width: 32,
               padding: 4,
-              border: '1px solid #e6e6e6',
+              border: '1px solid var(--color-neutral-3, rgb(229, 230, 235))',
               borderRadius: showInput ? undefined : 4,
               fontSize: 0,
               borderRight: showInput ? 'none' : undefined,
@@ -78,7 +78,9 @@ export function ColorPicker(props: ColorPickerProps) {
                 style={{
                   position: 'relative',
                   display: 'block',
-                  border: '1px solid #999',
+                  border:
+                    '1px solid var(--color-neutral-3, rgb(229, 230, 235))',
+
                   borderRadius: 2,
                   width: '100%',
                   height: '100%',

@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import { BlockType } from 'easy-email-core';
-import { BlockSortableWrapper } from '../BlockSortableWrapper';
+import { BlockType, getChildIdx } from 'easy-email-core';
 import { useHoverIdx } from '@/hooks/useHoverIdx';
+import { useDataTransfer } from '@/hooks/useDataTransfer';
+import { isUndefined } from 'lodash';
+import { useBlock } from '@/hooks/useBlock';
 
 export type BlockAvatarWrapperProps = {
   type: BlockType | string;
@@ -10,19 +12,32 @@ export type BlockAvatarWrapperProps = {
   hideIcon?: boolean;
   idx?: string;
 };
-const img = new Image();
-img.src =
-  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAAAXNSR0IArs4c6QAAAVRJREFUWEftl6GOhEAMhrvBIjAI3oAnwGHWAgnJKgwvgMHhMJsQHMHgcaBQJGtwaPS+wgaHwAEbJjl33AwMgks6tn/L34+mA7dlWRa48LmhQc63gwQ5AQISRIK8BHjzT5vBcRzB932YpgnSNAVRFHm9kfzTDNZ1DaZpkqJVVYFt29cyWBQFOI5DTOV5Dq7rosFdBJDgLly/iJHgvyY4DAOUZQmfz2ezj67ryP5bj2VZoGnaplZRFHg8HiBJEpUL06IOwxCezye12B5BEAQQxzE1hclglmXgeR612B5BkiTkaqQdJoNrkff7DX3fb9Z7vV4QRRGJr3QMw9jUyrIMqqrSvJ17F+OaYeL9hwgJIsGDBJjXDK3+5WewbVvQdZ300TQN3O93Wk9M8dMIzvNM7uv1p2n99BcEgckATXSaQdqDjsbR4FFyP3lIEAnyEuDNxxnkJfgFyvA4mF2a5hwAAAAASUVORK5CYII=';
 
 export const BlockAvatarWrapper: React.FC<BlockAvatarWrapperProps> = (
   props
 ) => {
   const { type, children, payload, action = 'add', idx } = props;
+  const { addBlock, moveBlock, values } = useBlock();
   const { setIsDragging, setHoverIdx } = useHoverIdx();
+  const { setDataTransfer, dataTransfer } = useDataTransfer();
   const ref = useRef<HTMLDivElement>(null);
 
   const onDragStart = useCallback(
     (ev: React.DragEvent) => {
+      if (action === 'add') {
+        setDataTransfer({
+          type: type,
+          action,
+          payload,
+        });
+      } else {
+        setDataTransfer({
+          type: type,
+          action,
+          sourceIdx: idx,
+        });
+      }
+
       setIsDragging(true);
     },
     [setIsDragging]
@@ -31,7 +46,38 @@ export const BlockAvatarWrapper: React.FC<BlockAvatarWrapperProps> = (
   const onDragEnd = useCallback(() => {
     setIsDragging(false);
     setHoverIdx('');
-  }, [setHoverIdx, setIsDragging]);
+    if (!dataTransfer) return;
+    if (action === 'add' && !isUndefined(dataTransfer.parentIdx)) {
+      addBlock({
+        type,
+        parentIdx: dataTransfer.parentIdx,
+        positionIndex: dataTransfer.positionIndex,
+        payload,
+      });
+    } else {
+      if (
+        idx &&
+        !isUndefined(dataTransfer.sourceIdx) &&
+        !isUndefined(dataTransfer.parentIdx) &&
+        !isUndefined(dataTransfer.positionIndex)
+      ) {
+        moveBlock(
+          dataTransfer.sourceIdx,
+          getChildIdx(dataTransfer.parentIdx, dataTransfer.positionIndex)
+        );
+      }
+    }
+  }, [
+    action,
+    addBlock,
+    idx,
+    moveBlock,
+    dataTransfer,
+    payload,
+    setHoverIdx,
+    setIsDragging,
+    type,
+  ]);
 
   useEffect(() => {
     const ele = ref.current;
@@ -44,24 +90,17 @@ export const BlockAvatarWrapper: React.FC<BlockAvatarWrapperProps> = (
   }, [onDragEnd]);
 
   return (
-    <BlockSortableWrapper
-      payload={payload}
-      action={action}
-      type={type as any}
-      idx={idx}
+    <div
+      style={{ cursor: 'grab' }}
+      ref={ref}
+      onMouseDown={() => {
+        window.getSelection()?.removeAllRanges();
+      }}
+      data-type={type}
+      onDragStart={onDragStart}
+      draggable
     >
-      <div
-        style={{ cursor: 'grab' }}
-        ref={ref}
-        onMouseDown={() => {
-          window.getSelection()?.removeAllRanges();
-        }}
-        data-type={type}
-        onDragStart={onDragStart}
-        draggable
-      >
-        {children}
-      </div>
-    </BlockSortableWrapper>
+      {children}
+    </div>
   );
 };

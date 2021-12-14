@@ -1,4 +1,3 @@
-import { ReactSortableProps } from 'react-sortablejs';
 import React, {
   useCallback,
   useEffect,
@@ -6,225 +5,221 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import styles from './index.module.scss';
+import { Tree } from '@arco-design/web-react';
 import {
-  BlockTreeItem,
-  DATA_ATTRIBUTE_ID,
-  DATA_ATTRIBUTE_INDEX,
-  TreeNode,
-} from './components/BlockTreeItem';
+  AllowDrop,
+  NodeInstance,
+  TreeProps,
+} from '@arco-design/web-react/es/Tree/interface';
+import { debounce } from 'lodash';
+import { transparentImage } from './transparentImage';
+
+interface TreeNode<T> {
+  id: string;
+  children?: T[];
+}
 
 export interface BlockTreeProps<T extends TreeNode<T>> {
   treeData: T[];
   selectedId?: string;
   onSelect: (selectedId: string) => void;
   onContextMenu?: (nodeData: T, ev: React.MouseEvent) => void;
+  onDragStart?: () => void;
+  onDragEnd?: () => void;
   onMouseLeave?: () => void;
-  onMouseEnter?: (id: string, event: React.MouseEvent) => void;
+  onMouseEnter?: (id: string) => void;
   renderTitle: (data: T) => React.ReactNode;
   defaultExpandAll?: boolean;
-  allowDrop: (params: {
-    dragNode: T;
-    dropNode: T;
-    event: DragEvent;
-    dragIndex: number;
-    dropIndex: number;
-    willInsertAfter: boolean;
-  }) => boolean;
-  onDrop: (params: {
-    dragNode: T;
-    dropNode: T;
-    event: DragEvent;
-    dragIndex: number;
-    dropIndex: number;
-    willInsertAfter: boolean;
+  allowDrop: (o: {
+    dragNode: { type: string } | { key: string };
+    dropNode: { dataRef: T; parent: T; key: string };
+    dropPosition: number;
+  }) =>
+    | false
+    | {
+        key: string;
+        position: number;
+      };
+
+  onDrop: (o: {
+    dragNode: { dataRef: T; parent: T; key: string; parentKey: string };
+    dropNode: { dataRef: T; parent: T; key: string; parentKey: string };
+    dropPosition: number;
   }) => void;
 }
 
-const getCurrenTreeNode = (
-  ele: HTMLElement,
-  rootEle?: HTMLElement
-): HTMLElement | null => {
-  if (ele.classList.contains(styles.treeNode)) return ele;
-  if (ele.parentElement && rootEle && rootEle.contains(ele.parentElement))
-    return getCurrenTreeNode(ele.parentElement, rootEle);
-  return null;
-};
+const img = new Image();
+img.width = 0;
+img.height = 0;
+img.src = transparentImage;
 
 export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
-  const [eleRef, setEleRef] = useState<HTMLElement | null>(null);
+  const [blockTreeRef, setBlockTreeRef] = useState<HTMLElement | null>(null);
   const [selectedId, setSelectedId] = useState(props.selectedId);
-  const dropDataRef = useRef<null | {
-    dragNode: T;
-    dropNode: T;
-    event: DragEvent;
-    dragIndex: number;
-    dropIndex: number;
-    willInsertAfter: boolean;
-  }>(null);
+  const dragNode = useRef<{
+    dataRef: T;
+    parent: T;
+    key: string;
+    parentKey: string;
+  } | null>(null);
 
-  const {
-    treeData,
-    allowDrop,
-    onDrop,
-    onSelect,
-    onMouseEnter,
-    onMouseLeave,
-    onContextMenu,
-  } = props;
-
-  const treeDataMap = useMemo(() => {
-    const map: { [key: string]: T } = {};
-
-    const loop = (node: T) => {
-      if (map[node.id]) {
-        console.warn(`have same id ${node.id}`);
-      }
-
-      map[node.id] = node;
-      if (node.children) {
-        node.children.forEach((item) => {
-          loop(item);
-        });
-      }
-    };
-
-    treeData.forEach((item) => {
-      loop(item);
-    });
-
-    return map;
-  }, [treeData]);
+  const { treeData, allowDrop, onContextMenu } = props;
 
   useEffect(() => {
     setSelectedId(props.selectedId);
   }, [props.selectedId]);
 
-  useEffect(() => {
-    if (!eleRef) return;
-    if (selectedId) {
-      const node = eleRef.querySelector('.' + styles.treeNodeSelected);
-      if (node) {
-        node.classList.remove(styles.treeNodeSelected);
-      }
-
-      // after dom updated
-      setTimeout(() => {
-        const selectedNode = eleRef.querySelector(
-          `[${DATA_ATTRIBUTE_ID}="${selectedId}"]`
-        );
-        if (selectedNode) {
-          selectedNode.classList.add(styles.treeNodeSelected);
-          selectedNode.scrollIntoView({
-            block: 'center',
-            behavior: 'smooth',
-          });
-        }
-      }, 50);
-    }
-  }, [eleRef, selectedId]);
-
-  const onDragStart: ReactSortableProps<T>['onStart'] = useCallback(
-    (evt, sortable, store) => {},
-    []
+  const onDragStart = useCallback(
+    (e: React.DragEvent<HTMLSpanElement>, node: NodeInstance) => {
+      e.dataTransfer.dropEffect = 'none';
+      // e.dataTransfer.setDragImage(img, 0, 0);
+      const dragNodeData = (node.props as any).dataRef as T;
+      dragNode.current = {
+        dataRef: dragNodeData,
+        parent: (node.props as any).parent,
+        key: node.props._key as string,
+        parentKey: node.props.parentKey as string,
+      };
+      props.onDragStart?.();
+    },
+    [props.onDragStart]
   );
 
-  const onDragMove: ReactSortableProps<T>['onMove'] = useCallback(
-    (
-      evt: {
-        dragged: HTMLElement;
-        related: HTMLElement;
-        willInsertAfter: boolean;
-      },
-      originalEvent
-    ) => {
-      const dragEle = getCurrenTreeNode(evt.dragged);
-      const dropEle = getCurrenTreeNode(evt.related);
+  const onDragMove: AllowDrop = useCallback(
+    (option) => {
+      if (!dragNode.current) return false;
+      const dropData = (option.dropNode.props as any).dataRef as T;
+      const dropId = option.dropNode.props._key!;
+      const currentDropData: Parameters<BlockTreeProps<T>['allowDrop']>[0] = {
+        dragNode: { key: dragNode.current.key },
+        dropNode: {
+          dataRef: dropData,
+          parent: (option.dropNode.props as any).parent,
+          key: dropId,
+        },
+        dropPosition: option.dropPosition,
+      };
+      const isAllowDrop = allowDrop(currentDropData);
 
-      if (dropEle && dragEle) {
-        const dragId = dragEle.getAttribute(DATA_ATTRIBUTE_ID)!;
-        const dragIndex = dragEle.getAttribute(DATA_ATTRIBUTE_INDEX)!;
-        const dropId = dropEle.getAttribute(DATA_ATTRIBUTE_ID)!;
-        const dropIndex = dropEle.getAttribute(DATA_ATTRIBUTE_INDEX)!;
-        const currentDropData = {
-          dragNode: treeDataMap[dragId],
-          dragIndex: Number(dragIndex),
-          dropIndex: Number(dropIndex),
-          dropNode: treeDataMap[dropId],
-          willInsertAfter: evt.willInsertAfter,
-          event: originalEvent,
-        };
-        const isAllowDrop = allowDrop(currentDropData);
-
-        if (isAllowDrop) {
-          dropEle.classList.add(styles.treeNodeDrop);
-          dropDataRef.current = currentDropData;
-          return true;
-        }
+      if (isAllowDrop) {
+        return true;
       }
+
       return false;
     },
-    [allowDrop, treeDataMap]
+    [dragNode]
   );
 
-  const onDragEnd: ReactSortableProps<T>['onEnd'] = useCallback(
-    (evt: {
-      originalEvent: { dataTransfer: DataTransfer };
-      from: HTMLElement;
-      to: HTMLElement;
-      newIndex: number;
-      oldIndex: number;
+  const onDrop = useCallback(
+    (info: {
+      e: React.DragEvent<HTMLSpanElement>;
+      dragNode: NodeInstance | null;
+      dropNode: NodeInstance | null;
+      dropPosition: number;
     }) => {
-      if (dropDataRef.current) {
-        onDrop(dropDataRef.current);
-      }
-      dropDataRef.current = null;
-    },
-    [dropDataRef, , onDrop]
-  );
+      const { dropNode, dropPosition, e } = info;
+      e.dataTransfer.dropEffect = 'move';
+      if (!dragNode.current || !dropNode) return;
 
-  const onSpill = useCallback(
-    (evt: { originalEvent: { dataTransfer: DataTransfer } }) => {
-      dropDataRef.current = null;
+      const dropData = (dropNode.props as any).dataRef as T;
+      const currentDropData: Parameters<BlockTreeProps<T>['onDrop']>[0] = {
+        dragNode: dragNode.current,
+        dropNode: {
+          dataRef: dropData,
+          parent: (dropNode.props as any).parent,
+          key: dropNode.props._key as string,
+          parentKey: dropNode.props.parentKey as string,
+        },
+        dropPosition,
+      };
+      props.onDrop(currentDropData);
     },
     []
   );
 
-  return useMemo(
-    () => (
-      <div ref={setEleRef} className={styles.tree} onMouseLeave={onMouseLeave}>
-        {props.treeData.map((item) => (
-          <ul key={item.id} className={styles.treeNodeList}>
-            <BlockTreeItem<T>
-              nodeData={item}
-              renderTitle={props.renderTitle}
-              indent={0}
-              index={0}
-              onSelect={onSelect}
-              onMouseEnter={onMouseEnter}
-              onContextMenu={onContextMenu}
-              defaultExpandAll={Boolean(props.defaultExpandAll)}
-              onDragStart={onDragStart}
-              onDragMove={onDragMove}
-              onDragEnd={onDragEnd}
-              onSpill={onSpill}
-            />
-          </ul>
-        ))}
-      </div>
-    ),
-    [
-      onContextMenu,
-      onDragEnd,
-      onDragMove,
-      onDragStart,
-      onMouseEnter,
-      onMouseLeave,
-      onSelect,
-      onSpill,
-      props.defaultExpandAll,
-      props.renderTitle,
-      props.treeData,
-    ]
+  const renderTitle: TreeProps['renderTitle'] = useCallback(
+    (nodeData) => {
+      return (
+        <div
+          style={{ display: 'inline-flex', width: '100%' }}
+          onContextMenu={(ev) => onContextMenu && onContextMenu(nodeData, ev)}
+        >
+          {props.renderTitle(nodeData)}
+        </div>
+      );
+    },
+    [onContextMenu]
   );
+
+  const onDragEnd = useCallback(() => {
+    dragNode.current = null;
+    props.onDragEnd?.();
+  }, [props.onDragEnd]);
+
+  const onSelect: TreeProps['onSelect'] = useCallback(
+    (selectedKeys) => {
+      props.onSelect(selectedKeys[0]);
+    },
+    [props.onSelect]
+  );
+
+  useEffect(() => {
+    if (blockTreeRef) {
+      blockTreeRef.addEventListener('dragover', (e) => {
+        if (e.dataTransfer) {
+          e.dataTransfer.dropEffect = 'move';
+        }
+      });
+    }
+  }, [blockTreeRef]);
+
+  const selectedKeys = useMemo(
+    () => (selectedId ? [selectedId] : []),
+    [selectedId]
+  );
+
+  return (
+    <div ref={setBlockTreeRef} onMouseLeave={props.onMouseLeave}>
+      <CacheTree
+        selectedKeys={selectedKeys}
+        draggable
+        size='small'
+        treeData={treeData}
+        blockNode
+        fieldNames={{
+          key: 'id',
+        }}
+        onDragEnd={onDragEnd}
+        onDragStart={onDragStart}
+        onDrop={onDrop}
+        allowDrop={onDragMove}
+        onSelect={onSelect}
+        renderTitle={renderTitle}
+      />
+    </div>
+  );
+}
+
+function CacheTree(props: TreeProps) {
+  const [cacheProps, setCacheProps] = useState(props);
+  const lastProps = useRef(props);
+
+  const debounceCallback = useCallback(
+    debounce((data) => {
+      setCacheProps(data);
+    }, 300),
+    []
+  );
+
+  useEffect(() => {
+    if (lastProps.current.treeData !== props.treeData) {
+      lastProps.current = props;
+      debounceCallback(props);
+    } else {
+      lastProps.current = props;
+      setCacheProps(props);
+    }
+  }, [props]);
+
+  return useMemo(() => <Tree {...cacheProps} />, [cacheProps]);
 }

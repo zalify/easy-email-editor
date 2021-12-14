@@ -46,6 +46,9 @@
   },
   "dependencies": {
     "@arco-design/web-react": "^2.25.1",
+    "@arco-themes/react-easy-email-theme": "^0.0.2",
+    "@arco-themes/react-easy-email-theme-green": "^0.0.1",
+    "@arco-themes/react-easy-email-theme-purple": "^0.0.3",
     "@reduxjs/toolkit": "^1.6.2",
     "@types/react-router-dom": "^5.1.9",
     "axios": "^0.24.0",

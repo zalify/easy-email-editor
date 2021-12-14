@@ -1,19 +1,18 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Popover, Tooltip } from '@arco-design/web-react';
+import { Popover } from '@arco-design/web-react';
 import { ToolItem } from '../ToolItem';
 import { Link, LinkParams } from '../Link';
 import { FontSizeList } from '../FontSizeList';
 import {
   FIXED_CONTAINER_ID,
   getShadowRoot,
-  Stack,
   IconFont,
   useEditorProps,
 } from 'easy-email-editor';
 import { FontFamily } from '../FontFamily';
-import { MergeTags } from '../MergeTags/MergeTags';
 import { ColorPicker } from '../../../ColorPicker';
 import styleText from './index.scss?inline';
+import { MergeTags } from '@extensions/AttributePanel';
 
 export interface ToolsProps {
   onChange: (content: string) => any;
@@ -32,7 +31,7 @@ export function Tools(props: ToolsProps) {
         if (range) {
           setSelectionRange(range);
         }
-      } catch (error) { }
+      } catch (error) {}
     };
 
     document.addEventListener('selectionchange', onSelectionChange);
@@ -81,9 +80,7 @@ export function Tools(props: ToolsProps) {
         const uuid = (+new Date()).toString();
         document.execCommand(cmd, false, uuid);
 
-        link = getShadowRoot().querySelector(
-          `a[href="${uuid}"`
-        )! ;
+        link = getShadowRoot().querySelector(`a[href="${uuid}"`)!;
       }
 
       if (target) {
@@ -113,16 +110,14 @@ export function Tools(props: ToolsProps) {
       >
         <div className='easy-email-extensions-divider' />
         <Popover
-          className="easy-email-extensions-Tools-Popover"
-          trigger="click"
-          content={(
+          className='easy-email-extensions-Tools-Popover'
+          trigger='click'
+          content={
             <>
-              <style>
-                {styleText}
-              </style>
+              <style>{styleText}</style>
               <FontFamily onChange={(val) => execCommand('fontName', val)} />
             </>
-          )}
+          }
           getPopupContainer={getPopoverMountNode}
         >
           <ToolItem
@@ -132,17 +127,15 @@ export function Tools(props: ToolsProps) {
         </Popover>
         <div className='easy-email-extensions-divider' />
         <Popover
-          className="easy-email-extensions-Tools-Popover"
+          className='easy-email-extensions-Tools-Popover'
           color='#fff'
-          trigger="click"
-          content={(
+          trigger='click'
+          content={
             <>
-              <style>
-                {styleText}
-              </style>
+              <style>{styleText}</style>
               <FontSizeList onChange={(val) => execCommand('fontSize', val)} />
             </>
-          )}
+          }
           getPopupContainer={getPopoverMountNode}
         >
           <ToolItem
@@ -196,22 +189,23 @@ export function Tools(props: ToolsProps) {
         />
         <div className='easy-email-extensions-divider' />
         {mergeTags && (
-          <Tooltip
+          <Popover
+            trigger='click'
             color='#fff'
             position='bottom'
-            content={(
+            content={
               <MergeTags
                 value=''
                 onChange={(val) => execCommand('insertHTML', val)}
               />
-            )}
+            }
             getPopupContainer={getPopoverMountNode}
           >
             <ToolItem
               title='Merge tag'
               icon={<IconFont iconName='icon-merge-tags' />}
             />
-          </Tooltip>
+          </Popover>
         )}
         <div className='easy-email-extensions-divider' />
 

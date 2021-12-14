@@ -74,7 +74,7 @@ export function Toolbar({
           <div
             style={{
               color: '#ffffff',
-              backgroundColor: '#1890ff',
+              backgroundColor: 'var(--selected-color)',
               height: '22px',
 
               display: 'inline-flex',
@@ -128,7 +128,7 @@ function ToolItem(props: {
       onClick={props.onClick}
       style={{
         color: '#ffffff',
-        backgroundColor: '#1890ff',
+        backgroundColor: 'var(--selected-color)',
         height: 22,
         fontSize: props.width || 14,
         lineHeight: '22px',

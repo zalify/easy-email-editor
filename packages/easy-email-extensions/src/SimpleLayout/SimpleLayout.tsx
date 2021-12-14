@@ -8,89 +8,72 @@ import { BlockLayer } from '../BlockLayer';
 import { InteractivePrompt } from '../InteractivePrompt';
 import styles from './index.module.scss';
 
-const { TabPane } = Tabs;
-
 export const SimpleLayout: React.FC = (props) => {
   const { height: containerHeight } = useEditorProps();
   return (
-    <Layout>
-      <div
+    <Layout
+      style={{
+        display: 'flex',
+        width: '100vw',
+        overflow: 'hidden',
+        minWidth: 1400,
+      }}
+    >
+      <Layout.Sider
         style={{
-          display: 'flex',
-          width: '100vw',
-          overflow: 'hidden',
-          minWidth: 1400,
+          width: 360,
         }}
       >
-        <Layout.Sider
-          theme='light'
-          width={60}
-          style={{ border: '1px solid #f0f0f0' }}
-        >
-          <ShortcutToolbar />
-        </Layout.Sider>
-        <Layout.Sider
-          style={{
-            borderLeft: 'none',
-            height: containerHeight,
-            overflow: 'auto',
-          }}
-          className={styles.customScrollBar}
-          theme='light'
-          width={300}
-        >
-          <Card
-            bodyStyle={{ padding: 0, paddingBottom: 50 }}
-            style={{ borderBottom: 'none' }}
-          >
-            <Tabs
-              // tabBarStyle={{
-              //   paddingLeft: 20,
-              //   marginBottom: 0,
-              //   backgroundColor: '#fff',
-              // }}
-              style={{ borderLeft: 'none' }}
-              defaultActiveTab='Layout'
-            >
-              <TabPane style={{ paddingTop: 10 }} key='Layout' title='Layout'>
-                <BlockLayer />
-              </TabPane>
-            </Tabs>
-          </Card>
-        </Layout.Sider>
-
-        <Layout style={{ height: containerHeight }}>{props.children}</Layout>
-
-        <Layout.Sider
-          style={{ height: containerHeight }}
-          theme='light'
-          width={350}
-        >
-          <Card
-            size='small'
-            id='rightSide'
-            style={{
-              maxHeight: '100%',
-              height: '100%',
-            }}
-            bodyStyle={{ padding: 0 }}
+        <Card bodyStyle={{ padding: 0 }} style={{ border: 'none' }}>
+          <Card.Grid style={{ width: 60 }}>
+            <ShortcutToolbar />
+          </Card.Grid>
+          <Card.Grid
             className={styles.customScrollBar}
+            style={{
+              width: 300,
+              paddingBottom: 50,
+              border: 'none',
+              height: containerHeight,
+              overflow: 'auto',
+            }}
           >
-            <Tabs>
-              <Tabs.TabPane
-                style={{ marginTop: 0 }}
-                key='Configuration'
-                title='Configuration'
-              >
-                <AttributePanel />
-              </Tabs.TabPane>
-              <Tabs.TabPane key='Source code' title='Source code'>
-                <SourceCodePanel />
-              </Tabs.TabPane>
-            </Tabs>
-          </Card>
-        </Layout.Sider>
-      </div>
+            <Card title='Layout' style={{ border: 'none' }}>
+              <BlockLayer />
+            </Card>
+          </Card.Grid>
+        </Card>
+      </Layout.Sider>
+
+      <Layout style={{ height: containerHeight }}>{props.children}</Layout>
+
+      <Layout.Sider style={{ height: containerHeight }} width={350}>
+        <Card
+          size='small'
+          id='rightSide'
+          style={{
+            maxHeight: '100%',
+            height: '100%',
+            borderLeft: 'none',
+          }}
+          bodyStyle={{ padding: 0 }}
+          className={styles.customScrollBar}
+        >
+          <Tabs>
+            <Tabs.TabPane
+              style={{ marginTop: 0 }}
+              key='Configuration'
+              title='Configuration'
+            >
+              <AttributePanel />
+            </Tabs.TabPane>
+            <Tabs.TabPane key='Source code' title='Source code'>
+              <SourceCodePanel />
+            </Tabs.TabPane>
+          </Tabs>
+        </Card>
+      </Layout.Sider>
+
       <InteractivePrompt />
     </Layout>
   );
