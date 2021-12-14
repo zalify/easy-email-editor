@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite';
-import reactRefresh from '@vitejs/plugin-react-refresh';
+import styleImport from 'vite-plugin-style-import';
 import path from 'path';
 import { injectHtml } from 'vite-plugin-html';
 
@@ -54,7 +54,26 @@ export default defineConfig({
     },
   },
   plugins: [
-    reactRefresh(),
+    styleImport({
+      libs: [
+        // Dynamic import @arco-design styles
+        {
+          libraryName: '@arco-design/web-react',
+          libraryNameChangeCase: 'pascalCase',
+          esModule: true,
+          resolveStyle: (name) =>
+            `@arco-design/web-react/es/${name}/style/index`,
+        },
+        {
+          libraryName: '@arco-design/web-react/icon',
+          libraryNameChangeCase: 'pascalCase',
+          resolveStyle: (name) =>
+            `@arco-design/web-react/icon/react-icon/${name}`,
+          resolveComponent: (name) =>
+            `@arco-design/web-react/icon/react-icon/${name}`,
+        },
+      ],
+    }),
     injectHtml({
       data: {
         analysis:

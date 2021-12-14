@@ -254,6 +254,7 @@ export default function Editor() {
         autoComplete
         dashed={false}
         mergeTags={mergeTags}
+        mergeTagGenerate={(tag) => `{{${tag}}}`}
         onBeforePreview={onBeforePreview}
       >
         {({ values }, { submit }) => {
