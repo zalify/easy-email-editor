@@ -1,12 +1,15 @@
 import { BasicType } from 'easy-email-core';
 import { IconFont, Stack, BlockAvatarWrapper } from 'easy-email-editor';
-import React from 'react';
+import React, { useRef } from 'react';
 import { BlocksPanel } from './components/BlocksPanel';
 
 export function ShortcutToolbar() {
+  const blocksPanelRef = useRef<HTMLDivElement>(null);
   return (
     <Stack vertical alignment='center' distribution='center'>
-      <Stack.Item />
+      <BlocksPanel>
+        <div ref={blocksPanelRef}></div>
+      </BlocksPanel>
 
       <BlockAvatarWrapper type={BasicType.TEXT}>
         <IconFont
@@ -57,23 +60,21 @@ export function ShortcutToolbar() {
         />
       </BlockAvatarWrapper>
 
-      <BlocksPanel>
-        <IconFont
-          iconName='icon-more'
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: '#000',
-            width: 30,
-            height: 30,
-            borderRadius: '50%',
-            boxShadow:
-              '0 0 12px -3px rgb(0 0 0 / 20%), 0 2px 7px -1px rgb(0 0 0 / 14%), 0 2px 4px -1px rgb(0 0 0 / 20%)',
-            fontSize: 18,
-          }}
-        />
-      </BlocksPanel>
+      <IconFont
+        onClick={() => blocksPanelRef.current?.click()}
+        iconName='icon-more'
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: 30,
+          height: 30,
+          borderRadius: '50%',
+          color: 'var(--color-text-2)',
+          boxShadow: '0 0 12px -3px var(--color-text-2)',
+          fontSize: 18,
+        }}
+      />
     </Stack>
   );
 }

@@ -153,7 +153,7 @@ export function useBlock() {
         nextFocusIdx =
           destinationParentIdx +
           `.children.[${destinationParent.children.findIndex(
-            (item: string) => item === removed
+            (item: IBlockData) => item === removed
           )}]`;
       } else {
         destinationParent.children.splice(positionIndex, 0, removed);
@@ -218,11 +218,7 @@ export function useBlock() {
         console.error('Invalid block');
         return;
       }
-      if (blockIndex !== parent.children.length - 1) {
-        nextFocusIdx = idx;
-      } else {
-        nextFocusIdx = parentIdx;
-      }
+      nextFocusIdx = parentIdx;
 
       parent.children.splice(blockIndex, 1);
       change(parentIdx, parent);

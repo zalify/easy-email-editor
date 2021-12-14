@@ -1,6 +1,6 @@
 import { classnames } from '@/utils/classnames';
 import React from 'react';
-import styles from './index.module.scss';
+import './index.scss';
 
 export interface ButtonProps {
   disabled?: boolean;
@@ -13,8 +13,8 @@ export const Button: React.FC<ButtonProps> = (props) => {
     <button
       onClick={props.onClick}
       className={classnames(
-        styles.easyEmailButton,
-        props.noBorder && styles.noBorder
+        'easy-email-editor-button',
+        props.noBorder && 'easy-email-editor-noBorder'
       )}
       title={props.title}
       disabled={props.disabled}

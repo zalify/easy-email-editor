@@ -1,6 +1,5 @@
 import { getBlockNodeByChildEle } from './getBlockNodeByChildEle';
 
-export const deviation = 10;
 export type DirectionPosition = {
   horizontal: {
     direction: string;
@@ -12,11 +11,14 @@ export type DirectionPosition = {
   };
 };
 
-export function getDirectionPosition(ev: {
-  target: EventTarget | null;
-  clientY: number;
-  clientX: number;
-}): DirectionPosition {
+export function getDirectionPosition(
+  ev: {
+    target: EventTarget | null;
+    clientY: number;
+    clientX: number;
+  },
+  deviation = 10
+): DirectionPosition {
   const target = ev.target as HTMLElement;
   const blockNode = getBlockNodeByChildEle(target);
   const position = {

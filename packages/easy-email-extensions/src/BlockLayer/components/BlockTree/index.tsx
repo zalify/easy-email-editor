@@ -6,7 +6,6 @@ import React, {
   useState,
 } from 'react';
 import { Tree } from '@arco-design/web-react';
-import { DATA_ATTRIBUTE_ID } from 'easy-email-editor';
 import {
   AllowDrop,
   NodeInstance,
@@ -32,10 +31,15 @@ export interface BlockTreeProps<T extends TreeNode<T>> {
   renderTitle: (data: T) => React.ReactNode;
   defaultExpandAll?: boolean;
   allowDrop: (o: {
-    dragNode: { dataRef: T; parent: T; key: string; parentKey: string };
-    dropNode: { dataRef: T; parent: T; key: string; parentKey: string };
+    dragNode: { type: string } | { key: string };
+    dropNode: { dataRef: T; parent: T; key: string };
     dropPosition: number;
-  }) => boolean;
+  }) =>
+    | false
+    | {
+        key: string;
+        position: number;
+      };
 
   onDrop: (o: {
     dragNode: { dataRef: T; parent: T; key: string; parentKey: string };
@@ -65,24 +69,6 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
     setSelectedId(props.selectedId);
   }, [props.selectedId]);
 
-  useEffect(() => {
-    if (!blockTreeRef) return;
-    if (selectedId) {
-      // after dom updated
-      setTimeout(() => {
-        const selectedNode = blockTreeRef.querySelector(
-          `[${DATA_ATTRIBUTE_ID}="${selectedId}"]`
-        );
-        if (selectedNode) {
-          selectedNode.scrollIntoView({
-            block: 'center',
-            behavior: 'smooth',
-          });
-        }
-      }, 50);
-    }
-  }, [blockTreeRef, selectedId]);
-
   const onDragStart = useCallback(
     (e: React.DragEvent<HTMLSpanElement>, node: NodeInstance) => {
       e.dataTransfer.dropEffect = 'none';
@@ -105,12 +91,11 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
       const dropData = (option.dropNode.props as any).dataRef as T;
       const dropId = option.dropNode.props._key!;
       const currentDropData: Parameters<BlockTreeProps<T>['allowDrop']>[0] = {
-        dragNode: dragNode.current,
+        dragNode: { key: dragNode.current.key },
         dropNode: {
           dataRef: dropData,
           parent: (option.dropNode.props as any).parent,
           key: dropId,
-          parentKey: option.dropNode.props.parentKey as string,
         },
         dropPosition: option.dropPosition,
       };
@@ -156,8 +141,6 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
     (nodeData) => {
       return (
         <div
-          {...{ [DATA_ATTRIBUTE_ID]: nodeData.id }}
-          data-tree-idx={nodeData.id}
           style={{ display: 'inline-flex', width: '100%' }}
           onContextMenu={(ev) => onContextMenu && onContextMenu(nodeData, ev)}
         >
@@ -219,6 +202,7 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
 
 function CacheTree(props: TreeProps) {
   const [cacheProps, setCacheProps] = useState(props);
+  const lastProps = useRef(props);
 
   const debounceCallback = useCallback(
     debounce((data) => {
@@ -228,7 +212,13 @@ function CacheTree(props: TreeProps) {
   );
 
   useEffect(() => {
-    debounceCallback(props);
+    if (lastProps.current.treeData !== props.treeData) {
+      lastProps.current = props;
+      debounceCallback(props);
+    } else {
+      lastProps.current = props;
+      setCacheProps(props);
+    }
   }, [props]);
 
   return useMemo(() => <Tree {...cacheProps} />, [cacheProps]);

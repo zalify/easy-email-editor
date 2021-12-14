@@ -28,6 +28,7 @@ export default defineConfig({
       '@demo': path.resolve(__dirname, './src'),
       '@extensions': path.resolve('../packages/easy-email-extensions/src'),
       '@core': path.resolve('../packages/easy-email-core/src'),
+      '@arco-themes': path.resolve('./node_modules/@arco-themes'),
       '@': path.resolve('../packages/easy-email-editor/src'),
       'easy-email-core': path.resolve(
         '../packages/easy-email-core/src/index.tsx'

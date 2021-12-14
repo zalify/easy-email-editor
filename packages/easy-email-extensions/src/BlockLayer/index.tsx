@@ -1,6 +1,7 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   DATA_ATTRIBUTE_DROP_CONTAINER,
+  DATA_ATTRIBUTE_ID,
   scrollBlockEleIntoView,
   TextStyle,
   useBlock,
@@ -10,6 +11,7 @@ import {
   useHoverIdx,
 } from 'easy-email-editor';
 import {
+  BasicType,
   BlockManager,
   getChildIdx,
   getIndexByIdx,
@@ -23,6 +25,10 @@ import { EyeIcon } from './components/EyeIcon';
 import { BlockTree, BlockTreeProps } from './components/BlockTree';
 import { ContextMenu } from './components/ContextMenu';
 import { classnames } from '@extensions/utils/classnames';
+import {
+  getDirectionFormDropPosition,
+  useAvatarWrapperDrop,
+} from './hooks/useAvatarWrapperDrop';
 
 export interface IBlockDataWithId extends IBlockData {
   id: string;
@@ -36,10 +42,19 @@ export function BlockLayer() {
     pageData,
     formState: { values },
   } = useEditorContext();
+
   const { onUploadImage, onAddCollection } = useEditorProps();
   const { focusIdx, setFocusIdx } = useFocusIdx();
   const { setHoverIdx, setIsDragging, setDirection } = useHoverIdx();
   const { moveBlock, setValueByIdx, copyBlock, removeBlock } = useBlock();
+
+  const {
+    setBlockLayerRef,
+    allowDrop,
+    blockLayerRef,
+    removeHightLightClassName,
+  } = useAvatarWrapperDrop();
+
   const [contextMenuData, setContextMenuData] = useState<{
     blockData: IBlockDataWithId;
     left: number;
@@ -62,8 +77,16 @@ export function BlockLayer() {
   const renderTitle = useCallback(
     (data: IBlockDataWithId) => {
       const block = BlockManager.getBlockByType(data.type);
+      const isPage = data.type === BasicType.PAGE;
       return (
-        <div data-tree-idx={data.id} className={styles.title}>
+        <div
+          data-tree-idx={data.id}
+          className={classnames(
+            styles.title,
+            !isPage && getNodeIdxClassName(data.id),
+            !isPage && 'email-block'
+          )}
+        >
           <TextStyle size='smallest'>{block?.name}</TextStyle>
           <div className={styles.eyeIcon}>
             <EyeIcon blockData={data} onToggleVisible={onToggleVisible} />
@@ -82,7 +105,6 @@ export function BlockLayer() {
       parent: IBlockDataWithId | null
     ) => {
       item.id = id;
-      item.className = classnames(getNodeIdxClassName(id), 'email-block');
       item.parent = parent;
       item.children.map((child, index) =>
         loop(child, getChildIdx(id, index), item)
@@ -125,51 +147,6 @@ export function BlockLayer() {
     setHoverIdx('');
   }, [setHoverIdx]);
 
-  const allowDrop: BlockTreeProps<IBlockDataWithId>['allowDrop'] = useCallback(
-    (params) => {
-      const { dragNode, dropNode, dropPosition } = params;
-      const dragBlock = BlockManager.getBlockByType(dragNode.dataRef.type);
-      if (!dragBlock) return false;
-
-      if (dropPosition === 0) {
-        if (
-          dragBlock.validParentType.includes(dropNode.dataRef.type) &&
-          dropNode.dataRef.children.length === 0
-        ) {
-          setHoverIdx(dropNode.key);
-          return true;
-        } else if (
-          dropNode.parent &&
-          dragBlock.validParentType.includes(dropNode.parent.type)
-        ) {
-          const node = document.querySelector(
-            `[data-tree-idx="${dropNode.key}"]`
-          )?.parentNode?.parentNode;
-          if (node instanceof HTMLElement) {
-            node.classList.remove('arco-tree-node-title-highlight');
-            node.classList.add('arco-tree-node-title-gap-bottom');
-          }
-          setHoverIdx(dropNode.key);
-          setDirection('bottom');
-          // drop to next sibling
-          return true;
-        }
-      } else {
-        if (
-          dropNode.parent &&
-          dragBlock.validParentType.includes(dropNode.parent.type)
-        ) {
-          setHoverIdx(dropNode.key);
-          setDirection(dropPosition > 0 ? 'bottom' : 'top');
-          return true;
-        }
-      }
-      setDirection('');
-      return false;
-    },
-    [setDirection, setHoverIdx]
-  );
-
   const onDragStart = useCallback(() => {
     setIsDragging(true);
   }, [setIsDragging]);
@@ -181,7 +158,6 @@ export function BlockLayer() {
   const onDrop: BlockTreeProps<IBlockDataWithId>['onDrop'] = useCallback(
     (params) => {
       const { dragNode, dropNode, dropPosition } = params;
-
       const dragBlock = BlockManager.getBlockByType(dragNode.dataRef.type);
       if (!dragBlock) return false;
       const dropIndex = getIndexByIdx(dropNode.key);
@@ -212,12 +188,52 @@ export function BlockLayer() {
     [moveBlock]
   );
 
+  useEffect(() => {
+    if (!blockLayerRef) return;
+    if (focusIdx) {
+      // after dom updated
+      setTimeout(() => {
+        const selectedNode = blockLayerRef.querySelector(
+          `[${DATA_ATTRIBUTE_ID}="${focusIdx}"]`
+        );
+        if (selectedNode) {
+          selectedNode.scrollIntoView({
+            block: 'center',
+            behavior: 'smooth',
+          });
+        }
+      }, 50);
+    }
+  }, [blockLayerRef, focusIdx]);
+
+  const blockTreeAllowDrop: BlockTreeProps<IBlockDataWithId>['allowDrop'] =
+    useCallback(
+      (data) => {
+        const dropResult = allowDrop(data);
+        if (dropResult) {
+          const node = document.querySelector(
+            `[data-tree-idx="${dropResult.key}"]`
+          )?.parentNode?.parentNode;
+          if (node instanceof HTMLElement) {
+            removeHightLightClassName();
+            node.classList.add('arco-tree-node-title-gap-bottom');
+          }
+          setDirection(getDirectionFormDropPosition(dropResult.position));
+          setHoverIdx(dropResult.key);
+        }
+
+        return dropResult;
+      },
+      [allowDrop]
+    );
+
   const hasFocus = Boolean(focusIdx);
 
   return useMemo(() => {
     if (!hasFocus) return null;
     return (
       <div
+        ref={setBlockLayerRef}
         id='BlockLayerManager'
         {...{
           [DATA_ATTRIBUTE_DROP_CONTAINER]: 'true',
@@ -228,7 +244,7 @@ export function BlockLayer() {
           defaultExpandAll
           treeData={treeData}
           renderTitle={renderTitle}
-          allowDrop={allowDrop}
+          allowDrop={blockTreeAllowDrop}
           onContextMenu={onContextMenu}
           onDrop={onDrop}
           onDragStart={onDragStart}

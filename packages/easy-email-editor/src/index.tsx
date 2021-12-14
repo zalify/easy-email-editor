@@ -13,6 +13,7 @@ export { useActiveTab } from './hooks/useActiveTab';
 export { useEditorProps } from './hooks/useEditorProps';
 export { useBlock } from './hooks/useBlock';
 export { useEditorContext } from './hooks/useEditorContext';
+export * from './hooks/useDataTransfer';
 export * from './hooks/useFocusIdx';
 export * from './hooks/useHoverIdx';
 
