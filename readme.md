@@ -67,6 +67,7 @@ import { SimpleLayout } from 'easy-email-extensions';
 
 import 'easy-email-editor/lib/style.css';
 import 'easy-email-extensions/lib/style.css';
+import '@arco-themes/react-easy-email-theme/css/arco.css'; // theme, If you need to change the theme, you can make a duplicate in https://arco.design/themes/design/1799/setting/base/Color
 
 const initialValues = {
   subject: 'Welcome to Easy-email',
