@@ -12,7 +12,7 @@ export class BlockManager {
       type: string,
       pathObj: Array<string[]>,
       prevPaths: string[]
-    ) => {
+    ): any => {
       const block = this.getBlockByType(type);
       if (!block) {
         throw new Error(`Can you register ${type} block`);

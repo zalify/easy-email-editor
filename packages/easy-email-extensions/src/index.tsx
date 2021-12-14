@@ -1,4 +1,5 @@
 import '@arco-design/web-react/dist/css/arco.css';
+import '@arco-themes/react-easy-email/css/arco.css';
 
 export * from './BlockLayer';
 export * from './AttributePanel';

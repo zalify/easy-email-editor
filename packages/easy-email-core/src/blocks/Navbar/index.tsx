@@ -83,5 +83,5 @@ export const Navbar: IBlock<INavbar> = createBlock({
     };
     return merge(defaultData, payload);
   },
-  validParentType: [BasicType.COLUMN],
+  validParentType: [BasicType.COLUMN, BasicType.HERO],
 });

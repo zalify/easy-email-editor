@@ -185,7 +185,7 @@ function formatPadding(
       const formatKey = new RegExp(`^${attributeName}(.*)`).exec(key)?.[0];
 
       if (formatKey) {
-        ele.style[formatKey] = attributes[key];
+        ele.style[formatKey as any] = attributes[key];
         delete attributes[key];
       }
     }

@@ -10,6 +10,7 @@
     "demo": "cd demo && yarn build"
   },
   "dependencies": {
+    "@arco-design/web-react": "^2.26.1",
     "browser-image-compression": "^1.0.17",
     "lerna": "^4.0.0",
     "vite": "^2.6.14"

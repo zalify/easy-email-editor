@@ -120,7 +120,6 @@ export function useDropBlock() {
         if (blockNode) {
           const directionPosition = getDirectionPosition(ev);
           const idx = getNodeIdxFromClassName(blockNode.classList)!;
-
           const positionData = getInsertPosition({
             context: cacheValues.current,
             idx,
@@ -156,9 +155,13 @@ export function useDropBlock() {
       };
 
       const onCheckDragLeave = (ev: DragEvent) => {
-        const dropEleList = [...document.querySelectorAll(`[${DATA_ATTRIBUTE_DROP_CONTAINER}="true"]`)];
+        const dropEleList = [
+          ...document.querySelectorAll(
+            `[${DATA_ATTRIBUTE_DROP_CONTAINER}="true"]`
+          ),
+        ];
         const target = ev.target as HTMLElement;
-        const isDropContainer = dropEleList.some(ele => ele.contains(target));
+        const isDropContainer = dropEleList.some((ele) => ele.contains(target));
 
         if (!isDropContainer) {
           setDirection('');

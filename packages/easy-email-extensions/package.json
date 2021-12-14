@@ -63,6 +63,7 @@
   },
   "dependencies": {
     "@arco-design/web-react": "^2.25.1",
+    "@arco-themes/react-easy-email": "^0.0.6",
     "codemirror": "^5.63.3",
     "final-form": "^4.20.4",
     "final-form-arrays": "^3.0.2",

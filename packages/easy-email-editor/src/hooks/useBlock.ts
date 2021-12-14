@@ -1,4 +1,4 @@
-import { BlockType, BasicType } from 'easy-email-core';
+import { BasicType } from 'easy-email-core';
 import { cloneDeep, debounce, get } from 'lodash';
 import { useCallback, useContext } from 'react';
 import {
@@ -35,7 +35,7 @@ export function useBlock() {
 
   const addBlock = useCallback(
     (params: {
-      type: BlockType;
+      type: string;
       parentIdx: string;
       positionIndex?: number;
       payload?: any;
@@ -153,7 +153,7 @@ export function useBlock() {
         nextFocusIdx =
           destinationParentIdx +
           `.children.[${destinationParent.children.findIndex(
-            (item) => item === removed
+            (item: string) => item === removed
           )}]`;
       } else {
         destinationParent.children.splice(positionIndex, 0, removed);

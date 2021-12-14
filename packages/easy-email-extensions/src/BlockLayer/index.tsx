@@ -12,8 +12,9 @@ import {
 import {
   BlockManager,
   getChildIdx,
+  getIndexByIdx,
+  getNodeIdxClassName,
   getPageIdx,
-  getSiblingIdx,
   IBlockData,
 } from 'easy-email-core';
 import styles from './index.module.scss';
@@ -21,11 +22,13 @@ import { cloneDeep, get } from 'lodash';
 import { EyeIcon } from './components/EyeIcon';
 import { BlockTree, BlockTreeProps } from './components/BlockTree';
 import { ContextMenu } from './components/ContextMenu';
+import { classnames } from '@extensions/utils/classnames';
 
 export interface IBlockDataWithId extends IBlockData {
   id: string;
   parent: IBlockDataWithId | null;
   children: IBlockDataWithId[];
+  className?: string;
 }
 
 export function BlockLayer() {
@@ -35,7 +38,7 @@ export function BlockLayer() {
   } = useEditorContext();
   const { onUploadImage, onAddCollection } = useEditorProps();
   const { focusIdx, setFocusIdx } = useFocusIdx();
-  const { setHoverIdx } = useHoverIdx();
+  const { setHoverIdx, setIsDragging, setDirection } = useHoverIdx();
   const { moveBlock, setValueByIdx, copyBlock, removeBlock } = useBlock();
   const [contextMenuData, setContextMenuData] = useState<{
     blockData: IBlockDataWithId;
@@ -60,7 +63,7 @@ export function BlockLayer() {
     (data: IBlockDataWithId) => {
       const block = BlockManager.getBlockByType(data.type);
       return (
-        <div className={styles.title}>
+        <div data-tree-idx={data.id} className={styles.title}>
           <TextStyle size='smallest'>{block?.name}</TextStyle>
           <div className={styles.eyeIcon}>
             <EyeIcon blockData={data} onToggleVisible={onToggleVisible} />
@@ -79,6 +82,7 @@ export function BlockLayer() {
       parent: IBlockDataWithId | null
     ) => {
       item.id = id;
+      item.className = classnames(getNodeIdxClassName(id), 'email-block');
       item.parent = parent;
       item.children.map((child, index) =>
         loop(child, getChildIdx(id, index), item)
@@ -123,43 +127,85 @@ export function BlockLayer() {
 
   const allowDrop: BlockTreeProps<IBlockDataWithId>['allowDrop'] = useCallback(
     (params) => {
-      const { dragNode, dropNode, willInsertAfter } = params;
-      const dragBlock = BlockManager.getBlockByType(dragNode.type);
+      const { dragNode, dropNode, dropPosition } = params;
+      const dragBlock = BlockManager.getBlockByType(dragNode.dataRef.type);
       if (!dragBlock) return false;
 
-      if (
-        dragBlock.validParentType.includes(dropNode.type) &&
-        willInsertAfter
-      ) {
-        return true;
+      if (dropPosition === 0) {
+        if (
+          dragBlock.validParentType.includes(dropNode.dataRef.type) &&
+          dropNode.dataRef.children.length === 0
+        ) {
+          setHoverIdx(dropNode.key);
+          return true;
+        } else if (
+          dropNode.parent &&
+          dragBlock.validParentType.includes(dropNode.parent.type)
+        ) {
+          const node = document.querySelector(
+            `[data-tree-idx="${dropNode.key}"]`
+          )?.parentNode?.parentNode;
+          if (node instanceof HTMLElement) {
+            node.classList.remove('arco-tree-node-title-highlight');
+            node.classList.add('arco-tree-node-title-gap-bottom');
+          }
+          setHoverIdx(dropNode.key);
+          setDirection('bottom');
+          // drop to next sibling
+          return true;
+        }
+      } else {
+        if (
+          dropNode.parent &&
+          dragBlock.validParentType.includes(dropNode.parent.type)
+        ) {
+          setHoverIdx(dropNode.key);
+          setDirection(dropPosition > 0 ? 'bottom' : 'top');
+          return true;
+        }
       }
-      if (
-        dropNode.parent &&
-        dragBlock.validParentType.includes(dropNode.parent.type)
-      ) {
-        return true;
-      }
-
+      setDirection('');
       return false;
     },
-    []
+    [setDirection, setHoverIdx]
   );
+
+  const onDragStart = useCallback(() => {
+    setIsDragging(true);
+  }, [setIsDragging]);
+
+  const onDragEnd = useCallback(() => {
+    setIsDragging(false);
+  }, [setIsDragging]);
 
   const onDrop: BlockTreeProps<IBlockDataWithId>['onDrop'] = useCallback(
     (params) => {
-      const { dragNode, dropNode, willInsertAfter } = params;
-      const dragBlock = BlockManager.getBlockByType(dragNode.type);
-      if (!dragBlock) return;
+      const { dragNode, dropNode, dropPosition } = params;
 
-      if (
-        dragBlock.validParentType.includes(dropNode.type) &&
-        willInsertAfter
-      ) {
-        moveBlock(dragNode.id, getChildIdx(dropNode.id, 0));
+      const dragBlock = BlockManager.getBlockByType(dragNode.dataRef.type);
+      if (!dragBlock) return false;
+      const dropIndex = getIndexByIdx(dropNode.key);
+
+      if (dropPosition === 0) {
+        if (
+          dragBlock.validParentType.includes(dropNode.dataRef.type) &&
+          dropNode.dataRef.children.length === 0
+        ) {
+          moveBlock(dragNode.key, getChildIdx(dropNode.key, 0));
+        } else if (
+          dropNode.parent &&
+          dragBlock.validParentType.includes(dropNode.parent.type)
+        ) {
+          // drop to parent
+          moveBlock(dragNode.key, getChildIdx(dropNode.parentKey, dropIndex));
+        }
       } else {
         moveBlock(
-          dragNode.id,
-          willInsertAfter ? getSiblingIdx(dropNode.id, 1) : dropNode.id
+          dragNode.key,
+          getChildIdx(
+            dropNode.parentKey,
+            dropPosition > 0 ? dropIndex + 1 : dropIndex
+          )
         );
       }
     },
@@ -173,11 +219,9 @@ export function BlockLayer() {
     return (
       <div
         id='BlockLayerManager'
-        {
-        ...{
-          [DATA_ATTRIBUTE_DROP_CONTAINER]: 'true'
-        }
-        }
+        {...{
+          [DATA_ATTRIBUTE_DROP_CONTAINER]: 'true',
+        }}
       >
         <BlockTree<IBlockDataWithId>
           selectedId={focusIdx}
@@ -187,6 +231,8 @@ export function BlockLayer() {
           allowDrop={allowDrop}
           onContextMenu={onContextMenu}
           onDrop={onDrop}
+          onDragStart={onDragStart}
+          onDragEnd={onDragEnd}
           onSelect={onSelect}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
@@ -220,5 +266,7 @@ export function BlockLayer() {
     moveBlock,
     copyBlock,
     removeBlock,
+    onDragEnd,
+    onDragStart,
   ]);
 }

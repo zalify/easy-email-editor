@@ -1,16 +1,29 @@
 .title {
-  padding: 4px;
   display: flex;
+  flex: 1;
   justify-content: space-between;
-  padding-right: 8px;
-  :global(.icon-eye) {
-    opacity: 0;
-    &:hover {
-      opacity: 1;
-    }
-  }
+  align-items: center;
+  position: relative;
 
-  :global(.icon-eye-invisible) {
-    opacity: 1 !important;
+  :global {
+    .icon-eye {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 30px;
+      opacity: 0;
+      font-size: 14px;
+      &:hover {
+        opacity: 1;
+      }
+    }
+    .icon-eye-invisible {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      right: 30px;
+      opacity: 1 !important;
+    }
   }
 }
