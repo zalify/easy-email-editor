@@ -2,7 +2,7 @@
   "name": "easy-email-extensions",
   "license": "MIT",
   "description": "Email editor",
-  "version": "3.0.13",
+  "version": "3.0.14",
   "author": "m-Ryan",
   "repository": {
     "type": "git",
@@ -85,5 +85,5 @@
     "react-sortablejs": "^6.0.0",
     "sortablejs": "^1.14.0"
   },
-  "gitHead": "a90e22b7e59688cc41194c1e7b52a494e94125c7"
+  "gitHead": "801465cc126f6fc227b7d938c67d3b9487878cd4"
 }
