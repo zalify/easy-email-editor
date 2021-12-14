@@ -53,7 +53,7 @@ export function useDropBlock() {
       const onClick = (ev: MouseEvent) => {
         ev.preventDefault(); // prevent link
 
-        if (ev.target instanceof HTMLElement) {
+        if (ev.target instanceof Element) {
           const target = getBlockNodeByChildEle(ev.target);
           if (!target) return;
           const blockType = getNodeTypeFromClassName(target.classList);
