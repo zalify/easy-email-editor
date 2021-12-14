@@ -7,6 +7,7 @@ import { HtmlStringToReactNodes } from '@/utils/HtmlStringToReactNodes';
 import { createPortal } from 'react-dom';
 import { useEditorProps } from '@/hooks/useEditorProps';
 import { useCallback } from 'react';
+import { getEditorRoot, getShadowRoot } from '@/utils';
 
 export function MjmlDomRender() {
   const { pageData: content } = useEditorContext();
@@ -14,24 +15,15 @@ export function MjmlDomRender() {
   const [ref, setRef] = useState<HTMLDivElement | null>(null);
   const { dashed } = useEditorProps();
 
-  const debounceCallback = useCallback(
-    debounce(
-      (con: IPage) => {
-        setPageData(cloneDeep(con));
-      },
-      100,
-      {
-        maxWait: 200,
-      }
-    ),
-    []
-  );
+  const isTextFocus =
+    document.activeElement === getEditorRoot() &&
+    getShadowRoot().activeElement?.getAttribute('contenteditable') === 'true';
 
   useEffect(() => {
-    if (!isEqual(content, pageData)) {
-      debounceCallback(content);
+    if (!isTextFocus && !isEqual(content, pageData)) {
+      setPageData(cloneDeep(content));
     }
-  }, [content, pageData, debounceCallback]);
+  }, [content, pageData, setPageData, isTextFocus]);
 
   const html = useMemo(() => {
     if (!pageData) return '';

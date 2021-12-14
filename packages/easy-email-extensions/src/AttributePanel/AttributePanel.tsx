@@ -40,12 +40,7 @@ export function AttributePanel() {
       )}
 
       <div style={{ position: 'absolute' }}>
-        <RichTextField
-          idx={focusIdx}
-          name={`${focusIdx}.data.value.content`}
-          label=''
-          labelHidden
-        />
+        <RichTextField idx={focusIdx} />
       </div>
       {shadowRoot &&
         ReactDOM.createPortal(

@@ -53,7 +53,7 @@ export function useDropBlock() {
       const onClick = (ev: MouseEvent) => {
         ev.preventDefault(); // prevent link
 
-        if (ev.target instanceof HTMLElement) {
+        if (ev.target instanceof Element) {
           const target = getBlockNodeByChildEle(ev.target);
           if (!target) return;
           const blockType = getNodeTypeFromClassName(target.classList);
@@ -156,9 +156,13 @@ export function useDropBlock() {
       };
 
       const onCheckDragLeave = (ev: DragEvent) => {
-        const dropEleList = [...document.querySelectorAll(`[${DATA_ATTRIBUTE_DROP_CONTAINER}="true"]`)];
+        const dropEleList = [
+          ...document.querySelectorAll(
+            `[${DATA_ATTRIBUTE_DROP_CONTAINER}="true"]`
+          ),
+        ];
         const target = ev.target as HTMLElement;
-        const isDropContainer = dropEleList.some(ele => ele.contains(target));
+        const isDropContainer = dropEleList.some((ele) => ele.contains(target));
 
         if (!isDropContainer) {
           setDirection('');
