@@ -58,10 +58,11 @@ export const BlocksPanel: React.FC = (props) => {
                 pointerEvents: isDragging ? 'none' : undefined,
                 position: 'fixed',
                 width: isDragging ? 0 : 650,
+                backgroundColor: 'var(--color-bg-2)',
                 zIndex: 200,
-                top: 0,
                 left: 60,
                 maxHeight: '85vh',
+
                 transition: 'width .5s',
                 boxShadow:
                   '0 1px 5px 0 rgb(0 0 0 / 12%), 0 2px 10px 0 rgb(0 0 0 / 8%), 0 1px 20px 0 rgb(0 0 0 / 8%)',
@@ -70,11 +71,11 @@ export const BlocksPanel: React.FC = (props) => {
               <Card
                 bodyStyle={{ padding: 0 }}
                 title='Drag block'
-                extra={(
+                extra={
                   <div className={styles.closeBtn}>
                     <IconFont iconName='icon-close' onClick={toggleVisible} />
                   </div>
-                )}
+                }
               >
                 <Tabs tabPosition='left' size='large'>
                   {filterCategories.map((category, index) => (
@@ -82,9 +83,10 @@ export const BlocksPanel: React.FC = (props) => {
                       style={{
                         padding: 0,
                         overflow: 'auto',
+                        height: 500,
                       }}
                       key={category.title}
-                      title={(
+                      title={
                         <div
                           style={{
                             paddingTop: index === 0 ? 5 : undefined,
@@ -93,7 +95,7 @@ export const BlocksPanel: React.FC = (props) => {
                         >
                           {category.title}
                         </div>
-                      )}
+                      }
                     >
                       <BlockPanelItem category={category} />
                     </Tabs.TabPane>
@@ -113,18 +115,18 @@ const BlockPanelItem: React.FC<{
   category: BlockMarketCategory;
 }> = React.memo((props) => {
   return (
-    <Tabs style={{ padding: '20px 0' }} tabPosition='left'>
+    <Tabs tabPosition='left'>
       {props.category.blocks.map((block, index) => {
         return (
           <Tabs.TabPane
-            style={{ padding: 0 }}
+            style={{ padding: 0, height: 500 }}
             key={block.title}
-            title={(
+            title={
               <Stack alignment='center' spacing='extraTight'>
                 <div className={styles.blockItem}>{block.title}</div>
                 {block.description && <Help title={block.description} />}
               </Stack>
-            )}
+            }
           >
             <div
               className='small-scrollbar'

@@ -6,16 +6,15 @@ import {
   getSameParent,
   IPage,
   BasicType,
-  BlockType,
   IBlockData,
 } from 'easy-email-core';
 import { DirectionPosition } from './getDirectionPosition';
 
 interface Params {
-  context: { content: IPage; };
+  context: { content: IPage };
   idx: string;
   directionPosition: DirectionPosition;
-  dragType: BlockType;
+  dragType: string;
   isShadowDom: boolean;
   actionType?: 'move' | 'add';
 }
@@ -61,7 +60,7 @@ export function getInsertPosition(params: Params) {
 }
 
 function getInsetParentAndIndex(
-  context: { content: IPage; },
+  context: { content: IPage },
   idx: string,
   type: string,
   directionPosition: DirectionPosition
@@ -157,7 +156,7 @@ function getInsetParentAndIndex(
 function getValidDirection(
   targetType: string,
   directionPosition: DirectionPosition
-): { valid: boolean; direction: string; isEdge: boolean; } {
+): { valid: boolean; direction: string; isEdge: boolean } {
   const isVertical =
     targetType === BasicType.SECTION || targetType === BasicType.GROUP;
 

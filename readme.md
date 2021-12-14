@@ -35,6 +35,7 @@ Easy email is developed based on the [MJML](https://mjml.io/) and has very good 
 - Defined custom block
 - Dynamic rendering
 - Easily customize UI when you need
+- Theme configuration
 
 
 |                                                                                  Video Overview                                                                                  |
@@ -49,13 +50,13 @@ Check out the live demo here: <a href="http://easy-email-m-ryan.vercel.app" targ
 ## Getting started
 
 ```sh
-$ npm install --save easy-email-core easy-email-editor easy-email-extensions react-final-form react-sortablejs
+$ npm install --save easy-email-core easy-email-editor easy-email-extensions react-final-form
 ```
 
 or
 
 ```sh
-$ yarn add easy-email-core easy-email-editor easy-email-extensions react-final-form react-sortablejs
+$ yarn add easy-email-core easy-email-editor easy-email-extensions react-final-form
 ```
 
 ```js
@@ -137,6 +138,8 @@ export default App;
   * [easy-email-core](./packages/easy-email-core/readme.md)
   * [easy-email-editor](./packages/easy-email-editor/readme.md)
   * [easy-email-extensions](./packages/easy-email-extensions/readme.md)
+
+
 
   * <img alt="" src="./layout.png">
 

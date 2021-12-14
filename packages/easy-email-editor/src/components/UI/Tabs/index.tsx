@@ -2,7 +2,7 @@ import { classnames } from '@/utils/classnames';
 import React, { useEffect, useState } from 'react';
 import { Button } from '../Button';
 import { Stack } from '../Stack';
-import styles from './index.module.scss';
+import './index.scss';
 
 export interface TabsProps {
   tabBarExtraContent?: React.ReactNode;
@@ -19,7 +19,9 @@ export interface TabPaneProps {
 }
 
 const Tabs: React.FC<TabsProps> = (props) => {
-  const [activeTab, setActiveTab] = useState<string>(props.defaultActiveTab || '');
+  const [activeTab, setActiveTab] = useState<string>(
+    props.defaultActiveTab || ''
+  );
 
   const onClick = (id: string) => {
     setActiveTab(id);
@@ -28,20 +30,23 @@ const Tabs: React.FC<TabsProps> = (props) => {
 
   return (
     <div style={props.style} className={props.className}>
-      <div className={styles.tabWrapper}>
+      <div className='easy-email-editor-tabWrapper'>
         <Stack distribution='equalSpacing' alignment='center'>
           <Stack alignment='center'>
             {React.Children.map(
               props.children as any,
-              (item: { props: { tab: TabPaneProps; }; key: string; }, index) => {
+              (item: { props: { tab: TabPaneProps }; key: string }, index) => {
                 return (
                   <div
                     key={item.key}
                     onClick={() => onClick(item.key)}
                     className={classnames(
-                      styles.tabItem,
-                      !activeTab && index === 0 && styles.tabActiveItem,
-                      activeTab === item.key && styles.tabActiveItem
+                      'easy-email-editor-tabItem',
+                      !activeTab &&
+                        index === 0 &&
+                        'easy-email-editor-tabActiveItem',
+                      activeTab === item.key &&
+                        'easy-email-editor-tabActiveItem'
                     )}
                   >
                     <Button noBorder>{item.props.tab}</Button>
@@ -55,10 +60,17 @@ const Tabs: React.FC<TabsProps> = (props) => {
       </div>
       {React.Children.map(
         props.children as any,
-        (item: { props: { tab: TabPaneProps; }; key: string; }, index) => {
+        (item: { props: { tab: TabPaneProps }; key: string }, index) => {
           const visible = (!activeTab && index === 0) || item.key === activeTab;
           return (
-            <div style={{ display: visible ? undefined : 'none', height: 'calc(100% - 50px)' }}>{item}</div>
+            <div
+              style={{
+                display: visible ? undefined : 'none',
+                height: 'calc(100% - 50px)',
+              }}
+            >
+              {item}
+            </div>
           );
         }
       )}

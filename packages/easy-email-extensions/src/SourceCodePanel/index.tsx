@@ -10,7 +10,6 @@ import {
 } from 'easy-email-core';
 import { useBlock, useFocusIdx, useEditorContext } from 'easy-email-editor';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import styles from './index.module.scss';
 
 export function SourceCodePanel() {
   const { setValueByIdx, focusBlock, values } = useBlock();
@@ -24,7 +23,7 @@ export function SourceCodePanel() {
     return JSON.stringify(focusBlock, null, 2) || '';
   }, [focusBlock]);
 
-  const onChaneCode = useCallback(
+  const onChangeCode = useCallback(
     (event: React.FocusEvent<HTMLTextAreaElement>) => {
       try {
         const parseValue = JSON.parse(
@@ -93,7 +92,7 @@ export function SourceCodePanel() {
   if (!focusBlock) return null;
 
   return (
-    <Collapse className={styles.wrapper}>
+    <Collapse>
       <Collapse.Item
         name='json'
         header='Json source'
@@ -103,7 +102,7 @@ export function SourceCodePanel() {
           key={code}
           defaultValue={code}
           autoSize={{ maxRows: 25 }}
-          onBlur={onChaneCode}
+          onBlur={onChangeCode}
         />
       </Collapse.Item>
       <Collapse.Item

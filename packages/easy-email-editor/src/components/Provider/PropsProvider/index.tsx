@@ -15,9 +15,9 @@ export interface BlockGroup {
 
 export interface PropsProviderProps {
   height: string;
-  fontList?: { value: string; label: string; }[];
+  fontList?: { value: string; label: string }[];
   onAddCollection?: (payload: CollectedBlock) => void;
-  onRemoveCollection?: (payload: { id: string; }) => void;
+  onRemoveCollection?: (payload: { id: string }) => void;
   onUploadImage?: (data: Blob) => Promise<string>;
   interactiveStyle?: {
     hoverColor?: string;
@@ -27,7 +27,8 @@ export interface PropsProviderProps {
   };
   autoComplete?: boolean;
   dashed?: boolean;
-  mergeTags?: { [key: string]: any; };
+  mergeTags?: { [key: string]: any };
+  mergeTagGenerate?: (m: string) => string;
   onBeforePreview?: (
     data: IPage,
     mergeTags: PropsProviderProps['mergeTags']
@@ -42,6 +43,7 @@ export const EditorPropsContext = React.createContext<PropsProviderProps>({
   onUploadImage: undefined,
   autoComplete: false,
   dashed: true,
+  mergeTagGenerate: (m) => `{{${m}}}`,
 });
 
 export const PropsProvider: React.FC<PropsProviderProps> = (props) => {

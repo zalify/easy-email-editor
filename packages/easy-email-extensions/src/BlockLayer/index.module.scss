@@ -1,16 +1,38 @@
 .title {
-  padding: 4px;
   display: flex;
+  flex: 1;
   justify-content: space-between;
-  padding-right: 8px;
-  :global(.icon-eye) {
-    opacity: 0;
-    &:hover {
-      opacity: 1;
+  align-items: center;
+  position: relative;
+  &:hover {
+    :global {
+      .icon-eye {
+        opacity: 1;
+      }
     }
   }
 
-  :global(.icon-eye-invisible) {
-    opacity: 1 !important;
+  :global {
+    .icon-eye {
+      transition: opacity 0.3s;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 30px;
+      opacity: 0;
+      font-size: 14px;
+    }
+    .icon-eye-invisible {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      right: 30px;
+      opacity: 1 !important;
+    }
   }
+}
+
+:global(#BlockLayerManager .arco-tree-node-selected .arco-tree-node-title) {
+  background-color: rgb(var(--primary-1));
 }

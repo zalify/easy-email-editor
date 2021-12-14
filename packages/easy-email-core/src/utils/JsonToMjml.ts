@@ -86,7 +86,10 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
     const transformData = isValidElement(transformBlockData)
       ? parseReactBlockToBlockData(transformBlockData)
       : transformBlockData;
-    att['css-class'] = classnames(att['css-class'], transformData['css-class']);
+    att['css-class'] = classnames(
+      att['css-class'],
+      transformData['attributes']['css-class']
+    );
     return JsonToMjml({
       data: {
         ...transformData,
@@ -220,7 +223,7 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
         .map((image, index) => {
           const imageAttributeStr = Object.keys(image)
             .filter((key) => key !== 'content' && att[key] !== '') // filter att=""
-            .map((key) => `${key}="${image[key]}"`)
+            .map((key) => `${key}="${image[key as keyof typeof image]}"`)
             .join(' ');
           return `
           <mj-carousel-image ${imageAttributeStr} />
@@ -238,7 +241,7 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
         .map((link, index) => {
           const linkAttributeStr = Object.keys(link)
             .filter((key) => key !== 'content' && att[key] !== '') // filter att=""
-            .map((key) => `${key}="${link[key]}"`)
+            .map((key) => `${key}="${link[key as keyof typeof link]}"`)
             .join(' ');
           return `
           <mj-navbar-link ${linkAttributeStr}>${link.content}</mj-navbar-link>
@@ -255,7 +258,7 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
         .map((element, index) => {
           const elementAttributeStr = Object.keys(element)
             .filter((key) => key !== 'content' && att[key] !== '') // filter att=""
-            .map((key) => `${key}="${element[key]}"`)
+            .map((key) => `${key}="${element[key as keyof typeof element]}"`)
             .join(' ');
           return `
           <mj-social-element ${elementAttributeStr}>${element.content}</mj-social-element>
@@ -324,14 +327,18 @@ export function generaMjmlMetaData(data: IPage) {
   return `
     <mj-html-attributes>
       ${attributes
-        .filter((key) => values[key] !== undefined)
+        .filter((key) => values[key as keyof typeof values] !== undefined)
         .map((key) => {
-          const isMultipleAttributes = isObject(values[key]);
+          const attKey = key as keyof typeof values;
+          const isMultipleAttributes = isObject(values[attKey]);
           const value = isMultipleAttributes
-            ? Object.keys(values[key])
-                .map((childKey) => `${childKey}="${values[key][childKey]}"`)
+            ? Object.keys(values[attKey]!)
+                .map(
+                  (childKey) =>
+                    `${childKey}="${(values[attKey] as any)[childKey]}"`
+                )
                 .join(' ')
-            : `${key}="${values[key]}"`;
+            : `${key}="${values[attKey]}"`;
           return `<mj-html-attribute class="easy-email" multiple-attributes="${isMultipleAttributes}" attribute-name="${key}" ${value}></mj-html-attribute>`;
         })
         .join('\n')}

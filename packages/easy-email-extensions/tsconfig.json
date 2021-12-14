@@ -8,7 +8,7 @@
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "strictNullChecks": true,
     "alwaysStrict": false,
     "forceConsistentCasingInFileNames": true,
@@ -28,5 +28,5 @@
     }
   },
   "include": ["./src"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "src/utils/__tests__"]
 }

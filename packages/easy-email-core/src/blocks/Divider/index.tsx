@@ -35,5 +35,5 @@ export const Divider = createBlock<IDivider>({
     };
     return merge(defaultData, payload);
   },
-  validParentType: [BasicType.COLUMN],
+  validParentType: [BasicType.COLUMN, BasicType.HERO],
 });

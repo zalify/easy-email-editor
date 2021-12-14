@@ -18,10 +18,7 @@ import './index.scss';
 
 export const EmailEditor = () => {
   const { height: containerHeight } = useEditorProps();
-  const { activeTab, setActiveTab } = useActiveTab();
-  const { pageData } = useEditorContext();
-
-  const backgroundColor = pageData.attributes['background-color'];
+  const { setActiveTab } = useActiveTab();
 
   const fixedContainer = useMemo(() => {
     return createPortal(<div id={FIXED_CONTAINER_ID} />, document.body);
@@ -46,33 +43,33 @@ export const EmailEditor = () => {
         >
           <TabPane
             style={{ height: 'calc(100% - 50px)' }}
-            tab={(
+            tab={
               <Stack spacing='tight'>
                 <IconFont iconName='icon-editor' />
               </Stack>
-            )}
+            }
             key={ActiveTabKeys.EDIT}
           >
             <EditEmailPreview />
           </TabPane>
           <TabPane
             style={{ height: 'calc(100% - 50px)' }}
-            tab={(
+            tab={
               <Stack spacing='tight'>
                 <IconFont iconName='icon-desktop' />
               </Stack>
-            )}
+            }
             key={ActiveTabKeys.PC}
           >
             <DesktopEmailPreview />
           </TabPane>
           <TabPane
             style={{ height: 'calc(100% - 50px)' }}
-            tab={(
+            tab={
               <Stack spacing='tight'>
                 <IconFont iconName='icon-mobile' />
               </Stack>
-            )}
+            }
             key={ActiveTabKeys.MOBILE}
           >
             <MobileEmailPreview />

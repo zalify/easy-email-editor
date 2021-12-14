@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import template from '@demo/store/template';
 import { useAppSelector } from '@demo/hooks/useAppSelector';
 import { useLoading } from '@demo/hooks/useLoading';
-import { Button, Message, PageHeader } from '@arco-design/web-react';
+import { Button, Message, PageHeader, Select } from '@arco-design/web-react';
 import { useQuery } from '@demo/hooks/useQuery';
 import { useHistory } from 'react-router-dom';
 import { cloneDeep } from 'lodash';
@@ -13,7 +13,11 @@ import mjml from 'mjml-browser';
 import { copy } from '@demo/utils/clipboard';
 import { useEmailModal } from './components/useEmailModal';
 import services from '@demo/services';
-import { IconGithub } from '@arco-design/web-react/icon';
+import {
+  IconGithub,
+  IconMoonFill,
+  IconSunFill,
+} from '@arco-design/web-react/icon';
 
 import {
   EmailEditor,
@@ -38,6 +42,10 @@ import './components/CustomBlocks';
 
 import 'easy-email-editor/lib/style.css';
 import 'easy-email-extensions/lib/style.css';
+import blueTheme from '@arco-themes/react-easy-email-theme/css/arco.css?inline';
+import purpleTheme from '@arco-themes/react-easy-email-theme-purple/css/arco.css?inline';
+import greenTheme from '@arco-themes/react-easy-email-theme-green/css/arco.css?inline';
+import { useState } from 'react';
 
 const imageCompression = import('browser-image-compression');
 
@@ -61,6 +69,8 @@ const fontList = [
 ].map((item) => ({ value: item, label: item }));
 
 export default function Editor() {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [theme, setTheme] = useState<'blue' | 'green' | 'purple'>('blue');
   const dispatch = useDispatch();
   const history = useHistory();
   const templateData = useAppSelector('template');
@@ -104,6 +114,14 @@ export default function Editor() {
     };
   }, [dispatch, id, userId]);
 
+  useEffect(() => {
+    if (isDarkMode) {
+      document.body.setAttribute('arco-theme', 'dark');
+    } else {
+      document.body.removeAttribute('arco-theme');
+    }
+  }, [isDarkMode]);
+
   const mergeTags = useMemo(() => {
     return {
       user: {
@@ -132,6 +150,10 @@ export default function Editor() {
     });
     return services.common.uploadByQiniu(compressionFile);
   };
+
+  const onChangeTheme = useCallback((t) => {
+    setTheme(t);
+  }, []);
 
   const onSubmit = useCallback(
     async (
@@ -197,6 +219,12 @@ export default function Editor() {
       return JSON.parse(mustache.render(JSON.stringify(data), mergeTags));
     }, []);
 
+  const themeStyleText = useMemo(() => {
+    if (theme === 'green') return greenTheme;
+    if (theme === 'purple') return purpleTheme;
+    return blueTheme;
+  }, [theme]);
+
   if (!templateData && loading) {
     return (
       <Loading loading={loading}>
@@ -209,33 +237,49 @@ export default function Editor() {
 
   return (
     <div>
+      <style>{themeStyleText}</style>
       <EmailEditorProvider
         key={id}
-        height={'calc(100vh - 85px)'}
+        height={'calc(100vh - 65px)'}
         data={initialValues}
+        // interactiveStyle={{
+        //   hoverColor: '#78A349',
+        //   selectedColor: '#1890ff',
+        // }}
         onAddCollection={addCollection}
         onRemoveCollection={({ id }) => removeCollection(id)}
         onUploadImage={onUploadImage}
-        interactiveStyle={{
-          hoverColor: '#78A349',
-          selectedColor: '#1890ff',
-        }}
         fontList={fontList}
         onSubmit={onSubmit}
         autoComplete
         dashed={false}
         mergeTags={mergeTags}
+        mergeTagGenerate={(tag) => `{{${tag}}}`}
         onBeforePreview={onBeforePreview}
       >
         {({ values }, { submit }) => {
           return (
             <>
               <PageHeader
+                style={{ background: 'var(--color-bg-2)' }}
                 backIcon
                 title='Edit'
                 onBack={() => history.push('/')}
                 extra={
                   <Stack alignment='center'>
+                    <Button
+                      onClick={() => setIsDarkMode((v) => !v)}
+                      shape='circle'
+                      type='text'
+                      icon={isDarkMode ? <IconMoonFill /> : <IconSunFill />}
+                    ></Button>
+
+                    <Select onChange={onChangeTheme} value={theme}>
+                      <Select.Option value='blue'>Blue</Select.Option>
+                      <Select.Option value='green'>Green</Select.Option>
+                      <Select.Option value='purple'>Purple</Select.Option>
+                    </Select>
+
                     <Button onClick={() => onExportHtml(values)}>
                       Export html
                     </Button>
@@ -255,6 +299,13 @@ export default function Editor() {
                       style={{
                         color: '#000',
                         fontSize: 28,
+                        width: 33,
+                        height: 33,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: '#fff',
+                        borderRadius: '50%',
                       }}
                       onClick={() => pushEvent({ name: 'Github' })}
                     >

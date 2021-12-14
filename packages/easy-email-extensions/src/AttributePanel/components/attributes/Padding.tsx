@@ -44,13 +44,13 @@ export function Padding(props: PaddingProps = {}) {
       bottom,
       right,
     };
-  }, [paddingList, defaultPaddingList]);
+  }, [paddingList, defaultPaddingList, defaultPaddingValue, paddingValue]);
 
   const onChancePadding = useCallback(
     (val: string) => {
       change(focusIdx + `.attributes[${attributeName}]`, val);
     },
-    [focusIdx, attributeName]
+    [focusIdx, attributeName, change]
   );
 
   return (

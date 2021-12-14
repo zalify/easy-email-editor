@@ -8,7 +8,7 @@ export const MergeTags: React.FC<{
   value: string;
   isSelect?: boolean;
 }> = React.memo((props) => {
-  const { mergeTags = {} } = useEditorProps();
+  const { mergeTags = {}, mergeTagGenerate } = useEditorProps();
 
   const treeOptions = useMemo(() => {
     const treeData = [];
@@ -19,8 +19,8 @@ export const MergeTags: React.FC<{
       mapData: Array<any> = []
     ) => {
       const currentMapData = {
-        key: `{{${key}}}`,
-        value: `{{${key}}}`,
+        key: mergeTagGenerate(key),
+        value: mergeTagGenerate(key),
         title: title,
         children: [],
       };
