@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   DATA_ATTRIBUTE_DROP_CONTAINER,
   DATA_ATTRIBUTE_ID,
@@ -38,15 +44,13 @@ export interface IBlockDataWithId extends IBlockData {
 }
 
 export function BlockLayer() {
-  const {
-    pageData,
-    formState: { values },
-  } = useEditorContext();
+  const { pageData } = useEditorContext();
 
   const { onUploadImage, onAddCollection } = useEditorProps();
   const { focusIdx, setFocusIdx } = useFocusIdx();
   const { setHoverIdx, setIsDragging, setDirection } = useHoverIdx();
-  const { moveBlock, setValueByIdx, copyBlock, removeBlock } = useBlock();
+  const { moveBlock, setValueByIdx, copyBlock, removeBlock, values } =
+    useBlock();
 
   const {
     setBlockLayerRef,
@@ -54,6 +58,12 @@ export function BlockLayer() {
     blockLayerRef,
     removeHightLightClassName,
   } = useAvatarWrapperDrop();
+
+  const valueRef = useRef(values);
+
+  useEffect(() => {
+    valueRef.current = values;
+  }, [values]);
 
   const [contextMenuData, setContextMenuData] = useState<{
     blockData: IBlockDataWithId;
@@ -64,14 +74,14 @@ export function BlockLayer() {
   const onToggleVisible = useCallback(
     ({ id }: IBlockDataWithId, e: React.MouseEvent) => {
       e.stopPropagation();
-      const blockData = get(values, id) as IBlockData | null;
+      const blockData = get(valueRef.current, id) as IBlockData | null;
 
       if (blockData) {
         blockData.data.hidden = !Boolean(blockData.data.hidden);
         setValueByIdx(id, blockData);
       }
     },
-    [setValueByIdx, values]
+    [setValueByIdx]
   );
 
   const renderTitle = useCallback(

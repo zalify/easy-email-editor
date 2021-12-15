@@ -40,9 +40,7 @@ export default defineConfig({
       ),
     },
   },
-  optimizeDeps: {
-    include: ['easy-email-core'],
-  },
+
   define: {},
   build: {
     minify: 'terser',

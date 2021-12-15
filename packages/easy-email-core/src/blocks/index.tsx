@@ -13,6 +13,7 @@ import { Hero, IHero } from './Hero';
 import { Navbar, INavbar } from './Navbar';
 import { ISocial, Social } from './Social';
 import { Raw, IRaw } from './Raw';
+import { Template, ITemplate } from './Template';
 
 import { Accordion } from './Accordion';
 import { AccordionElement } from './AccordionElement';
@@ -36,6 +37,10 @@ export const blocks = {
   Hero,
   Navbar,
   Social,
+
+  // spacial block, render string
+  Template,
+
   // TODO:
 
   Accordion,
@@ -62,4 +67,5 @@ export type {
   ISocial,
   INavbar,
   IRaw,
+  ITemplate,
 };

@@ -96,9 +96,8 @@ interface TipNodeProps {
 }
 function TipNode(props: TipNodeProps) {
   const { direction, title, lineWidth, type } = props;
-
   const dragTitle = useMemo(() => {
-    if (direction === 'top') {
+    if (direction === 'top' || direction === 'noEnoughTop') {
       return `Insert before ${title}`;
     } else if (direction === 'bottom') {
       return `Insert after ${title}`;

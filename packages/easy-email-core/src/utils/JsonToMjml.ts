@@ -98,24 +98,30 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
           'css-class': att['css-class'],
         },
       },
-      idx: data.children.length > 0 ? idx : null,
-      context,
+      idx: null,
+      context: data,
       mode,
     });
   }
 
   const children = data.children
-    .map((child, index) =>
-      JsonToMjml({
+    .map((child, index) => {
+      let childIdx = idx ? getChildIdx(idx, index) : null;
+      if (data.type === BasicType.TEMPLATE) {
+        childIdx = getChildIdx(data.data.value.idx, index);
+      }
+      return JsonToMjml({
         data: child,
-        idx: idx ? getChildIdx(idx, index) : null,
+        idx: childIdx,
         context,
         mode,
-      })
-    )
+      });
+    })
     .join('\n');
 
   switch (data.type) {
+    case BasicType.TEMPLATE:
+      return children;
     case BasicType.PAGE:
       const metaData = generaMjmlMetaData(data);
       const value: IPage['data']['value'] = data.data.value;

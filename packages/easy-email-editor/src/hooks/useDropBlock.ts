@@ -125,9 +125,8 @@ export function useDropBlock() {
             idx,
             directionPosition,
             dragType: cacheDataTransfer.current.type,
-            isShadowDom: true,
-            actionType: cacheDataTransfer.current.action,
           });
+
           if (positionData) {
             ev.preventDefault();
             lastDragover.valid = true;

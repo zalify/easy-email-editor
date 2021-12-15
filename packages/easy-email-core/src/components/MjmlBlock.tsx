@@ -1,5 +1,5 @@
 import React, { ReactElement, useMemo } from 'react';
-import { BlockManager } from '@core/utils';
+import { BlockManager, isValidBlockData } from '@core/utils';
 import { IBlockData, RecursivePartial } from '@core/typings';
 import { parseReactBlockToBlockData } from '@core/utils/parseReactBlockToBlockData';
 import { set } from 'lodash';
@@ -37,18 +37,34 @@ export default function MjmlBlock<T extends IBlockData>({
     return value;
   }, [children, value]);
 
+  const getChild = (child: any) => {
+    if (!child) return false;
+    if (isValidBlockData(child)) return child;
+    return child && parseReactBlockToBlockData(child);
+  };
+
+  const getChildren = () => {
+    if (
+      Array.isArray(children) &&
+      children.every((child) => isValidBlockData(child))
+    ) {
+      return children;
+    }
+
+    if (isValidBlockData(children)) {
+      return [children];
+    }
+
+    if (typeof children === 'string') return [];
+    return React.Children.map(children, getChild);
+  };
+
   const instance = block.create({
     data: {
       value: mergeValue,
     },
     attributes,
-    children:
-      typeof children === 'string'
-        ? []
-        : React.Children.map(
-            children,
-            (child) => child && parseReactBlockToBlockData(child)
-          )?.filter(Boolean) || [],
+    children: getChildren(),
   });
 
   return <>{JSON.stringify(instance)}</>;
