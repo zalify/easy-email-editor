@@ -50,6 +50,7 @@ export function RichTextToolBar() {
         const paddingLeft = (rootBounds.width - pageWidth) / 2;
         const offsetLeft = boundingClientRect.left - rootBounds.left;
         setOffsetX(paddingLeft - offsetLeft);
+
         if (intersectionRatio === 1) {
           setDirection('top');
         } else {
@@ -59,6 +60,8 @@ export function RichTextToolBar() {
             } else {
               setDirection('bottom');
             }
+          } else {
+            setDirection('bottom');
           }
         }
       };
