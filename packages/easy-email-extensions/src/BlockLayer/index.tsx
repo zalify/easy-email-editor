@@ -12,7 +12,6 @@ import {
   TextStyle,
   useBlock,
   useEditorContext,
-  useEditorProps,
   useFocusIdx,
   useHoverIdx,
 } from 'easy-email-editor';
@@ -23,6 +22,7 @@ import {
   getIndexByIdx,
   getNodeIdxClassName,
   getPageIdx,
+  getParentIdx,
   IBlockData,
 } from 'easy-email-core';
 import styles from './index.module.scss';
@@ -46,7 +46,6 @@ export interface IBlockDataWithId extends IBlockData {
 export function BlockLayer() {
   const { pageData } = useEditorContext();
 
-  const { onUploadImage, onAddCollection } = useEditorProps();
   const { focusIdx, setFocusIdx } = useFocusIdx();
   const { setHoverIdx, setIsDragging, setDirection } = useHoverIdx();
   const { moveBlock, setValueByIdx, copyBlock, removeBlock, values } =
@@ -237,62 +236,58 @@ export function BlockLayer() {
       [allowDrop]
     );
 
+  const selectedKeys = useMemo(() => {
+    if (!focusIdx) return [];
+
+    return [focusIdx];
+  }, [focusIdx]);
+
+  const expandedKeys = useMemo(() => {
+    if (!focusIdx) return [];
+    let currentIdx = getParentIdx(focusIdx);
+    const keys: string[] = [];
+    while (currentIdx) {
+      keys.push(currentIdx);
+      currentIdx = getParentIdx(currentIdx);
+    }
+    return keys;
+  }, [focusIdx]);
+
   const hasFocus = Boolean(focusIdx);
 
-  return useMemo(() => {
-    if (!hasFocus) return null;
-    return (
-      <div
-        ref={setBlockLayerRef}
-        id='BlockLayerManager'
-        {...{
-          [DATA_ATTRIBUTE_DROP_CONTAINER]: 'true',
-        }}
-      >
-        <BlockTree<IBlockDataWithId>
-          selectedId={focusIdx}
-          defaultExpandAll
-          treeData={treeData}
-          renderTitle={renderTitle}
-          allowDrop={blockTreeAllowDrop}
-          onContextMenu={onContextMenu}
-          onDrop={onDrop}
-          onDragStart={onDragStart}
-          onDragEnd={onDragEnd}
-          onSelect={onSelect}
-          onMouseEnter={onMouseEnter}
-          onMouseLeave={onMouseLeave}
+  if (!hasFocus) return null;
+  return (
+    <div
+      ref={setBlockLayerRef}
+      id='BlockLayerManager'
+      {...{
+        [DATA_ATTRIBUTE_DROP_CONTAINER]: 'true',
+      }}
+    >
+      <BlockTree<IBlockDataWithId>
+        selectedKeys={selectedKeys}
+        expandedKeys={expandedKeys}
+        defaultExpandAll
+        treeData={treeData}
+        renderTitle={renderTitle}
+        allowDrop={blockTreeAllowDrop}
+        onContextMenu={onContextMenu}
+        onDrop={onDrop}
+        onDragStart={onDragStart}
+        onDragEnd={onDragEnd}
+        onSelect={onSelect}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+      />
+      {contextMenuData && (
+        <ContextMenu
+          onClose={onCloseContextMenu}
+          moveBlock={moveBlock}
+          copyBlock={copyBlock}
+          removeBlock={removeBlock}
+          contextMenuData={contextMenuData}
         />
-        {contextMenuData && (
-          <ContextMenu
-            onClose={onCloseContextMenu}
-            moveBlock={moveBlock}
-            copyBlock={copyBlock}
-            removeBlock={removeBlock}
-            contextMenuData={contextMenuData}
-          />
-        )}
-      </div>
-    );
-  }, [
-    hasFocus,
-    focusIdx,
-    treeData,
-    renderTitle,
-    allowDrop,
-    onContextMenu,
-    onDrop,
-    onSelect,
-    onMouseEnter,
-    onMouseLeave,
-    contextMenuData,
-    onCloseContextMenu,
-    onUploadImage,
-    onAddCollection,
-    moveBlock,
-    copyBlock,
-    removeBlock,
-    onDragEnd,
-    onDragStart,
-  ]);
+      )}
+    </div>
+  );
 }

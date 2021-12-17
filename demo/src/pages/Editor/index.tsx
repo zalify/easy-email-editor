@@ -46,6 +46,7 @@ import blueTheme from '@arco-themes/react-easy-email-theme/css/arco.css?inline';
 import purpleTheme from '@arco-themes/react-easy-email-theme-purple/css/arco.css?inline';
 import greenTheme from '@arco-themes/react-easy-email-theme-green/css/arco.css?inline';
 import { useState } from 'react';
+import { testMergeTags as mergeTags } from './testMergeTags';
 
 const imageCompression = import('browser-image-compression');
 
@@ -122,33 +123,17 @@ export default function Editor() {
     }
   }, [isDarkMode]);
 
-  const mergeTags = useMemo(() => {
-    return {
-      user: {
-        name: 'Ryan',
-        avatar:
-          'https://assets.maocanhua.cn/bbb041da-62c3-4e6a-9648-60a06738836b-image.png',
-      },
-      company: {
-        name: 'Easy email',
-      },
-      date: {
-        today: () => new Date().toDateString(),
-      },
-      condition: {
-        isHidden: true,
-        isNotHidden: false,
-      },
-    };
-  }, []);
-
   const onUploadImage = async (blob: Blob) => {
-    const compressionFile = await (
-      await imageCompression
-    ).default(blob as File, {
-      maxWidthOrHeight: 1440,
-    });
-    return services.common.uploadByQiniu(compressionFile);
+    try {
+      const compressionFile = await (
+        await imageCompression
+      ).default(blob as File, {
+        maxWidthOrHeight: 1440,
+      });
+      return services.common.uploadByQiniu(compressionFile);
+    } catch (error) {
+      return 'https://assets.maocanhua.cn/0cd7e1fc-c482-44e5-86e5-c228fbe38bc4-image.png';
+    }
   };
 
   const onChangeTheme = useCallback((t) => {
@@ -195,6 +180,7 @@ export default function Editor() {
         data: values.content,
         mode: 'production',
         context: values.content,
+        dataSource: mergeTags,
       }),
       {
         beautify: true,
@@ -215,8 +201,8 @@ export default function Editor() {
   }, [templateData]);
 
   const onBeforePreview: EmailEditorProviderProps['onBeforePreview'] =
-    useCallback((data, mergeTags) => {
-      return JSON.parse(mustache.render(JSON.stringify(data), mergeTags));
+    useCallback((html: string, mergeTags) => {
+      return mustache.render(html, mergeTags);
     }, []);
 
   const themeStyleText = useMemo(() => {

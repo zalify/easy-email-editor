@@ -18,6 +18,7 @@ export type JsonToMjmlOption =
       data: IBlockData;
       idx: string | null; // current idx
       context?: IBlockData;
+      dataSource?: { [key: string]: any };
       mode: 'testing';
     }
   | {
@@ -25,6 +26,7 @@ export type JsonToMjmlOption =
       data: IBlockData;
       context?: IBlockData;
       mode: 'production';
+      dataSource?: { [key: string]: any };
     };
 
 export function JsonToMjml(options: JsonToMjmlOption): string {
@@ -33,6 +35,7 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
     idx = 'content',
     context = data,
     mode = 'production',
+    dataSource = {},
   } = options;
   if (
     (isBoolean(data?.data?.hidden) && data?.data?.hidden) ||
@@ -82,14 +85,17 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
   }
 
   if (block.render) {
-    const transformBlockData = block.render(data, idx, context);
+    const transformBlockData = block.render(
+      data,
+      idx,
+      mode,
+      context,
+      dataSource
+    );
     const transformData = isValidElement(transformBlockData)
       ? parseReactBlockToBlockData(transformBlockData)
       : transformBlockData;
-    att['css-class'] = classnames(
-      att['css-class'],
-      transformData['attributes']['css-class']
-    );
+    att['css-class'] = classnames(transformData?.['attributes']?.['css-class']);
     return JsonToMjml({
       data: {
         ...transformData,
@@ -100,6 +106,7 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
       },
       idx: null,
       context: data,
+      dataSource,
       mode,
     });
   }
@@ -109,10 +116,14 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
       let childIdx = idx ? getChildIdx(idx, index) : null;
       if (data.type === BasicType.TEMPLATE) {
         childIdx = getChildIdx(data.data.value.idx, index);
+        if (!data.data.value.idx) {
+          childIdx = null;
+        }
       }
       return JsonToMjml({
         data: child,
         idx: childIdx,
+        dataSource,
         context,
         mode,
       });
@@ -121,7 +132,7 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
 
   switch (data.type) {
     case BasicType.TEMPLATE:
-      return children;
+      return children || data.data.value.content;
     case BasicType.PAGE:
       const metaData = generaMjmlMetaData(data);
       const value: IPage['data']['value'] = data.data.value;

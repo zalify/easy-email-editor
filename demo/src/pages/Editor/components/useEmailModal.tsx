@@ -37,22 +37,18 @@ export function useEmailModal() {
         Message.error('invalid JSON');
         return;
       }
-      const content = JSON.parse(
-        mustache.render(JSON.stringify(emailData.content), mergeTagsPayload)
-      );
-      const customBlockData = injectData(content);
 
-      const html = mjml(
-        JsonToMjml({
-          data: customBlockData,
-          mode: 'production',
-          context: customBlockData,
-        }),
-        {
-          beautify: true,
-          validationLevel: 'soft',
-        }
-      ).html;
+      const mjmlContent = JsonToMjml({
+        data: emailData.content,
+        mode: 'production',
+        context: emailData.content,
+        dataSource: mergeTagsPayload,
+      });
+
+      const html = mjml(mustache.render(mjmlContent, mergeTagsPayload), {
+        beautify: true,
+        validationLevel: 'soft',
+      }).html;
 
       dispatch(
         email.actions.send({
@@ -120,39 +116,4 @@ export function useEmailModal() {
     modal,
     openModal,
   };
-}
-
-function injectData(data: IBlockData) {
-  const customBlockData = cloneDeep(data);
-  customBlockData.children.forEach((item) => {
-    if (item.type === (CustomBlocksType.PRODUCT_RECOMMENDATION as any)) {
-      item.data.value = merge(item.data.value, {
-        productList: [
-          {
-            image:
-              'https://assets.maocanhua.cn/da9b173d-b272-4101-aa25-4635ed95e9e3-image.png',
-            title: 'Slim Fit Printed shirt',
-            price: '$59.99 HKD',
-            url: 'https://easy-email-m-ryan.vercel.app',
-          },
-          {
-            image:
-              'https://assets.maocanhua.cn/4ef7cb65-ee1f-4b12-832c-17ab07a8b9ac-image.png',
-            title: 'Casual Collar Youth Handsome Slim Print Blazer',
-            price: '$59.99 HKD',
-            url: 'https://easy-email-m-ryan.vercel.app',
-          },
-          {
-            image:
-              'https://assets.maocanhua.cn/88fe9bfa-547f-4d5e-9ba5-ac6b91572dde-image.png',
-            title: 'Shirt Business Casual',
-            price: '$59.99 HKD',
-            url: 'https://easy-email-m-ryan.vercel.app',
-          },
-        ],
-      });
-    }
-  });
-
-  return customBlockData;
 }

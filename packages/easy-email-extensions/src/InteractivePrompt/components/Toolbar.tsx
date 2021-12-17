@@ -40,6 +40,9 @@ export function Toolbar({
   };
 
   const handleDelete = () => {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
     removeBlock(focusIdx);
   };
 
@@ -50,20 +53,21 @@ export function Toolbar({
   return (
     <>
       <div
+        id='easy-email-extensions-InteractivePrompt-Toolbar'
         style={{
           position: 'absolute',
           left: 0,
+          height: 0,
           top: direction === 'top' || isPage ? 0 : '100%',
-          fontSize: 14,
           zIndex: 3,
-          color: '#000',
           width: '100%',
-          pointerEvents: 'none',
-          lineHeight: '22px',
         }}
       >
         <div
           style={{
+            fontSize: 14,
+            lineHeight: '22px',
+            pointerEvents: 'auto',
             color: '#ffffff',
             transform:
               direction !== 'top' || isPage ? undefined : 'translateY(-100%)',

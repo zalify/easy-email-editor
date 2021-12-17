@@ -9,7 +9,9 @@ export interface IBlock<T extends IBlockData = IBlockData> {
   render?: (
     data: T,
     idx: string | null,
-    context: IPage
+    mode: 'testing' | 'production',
+    context?: IPage,
+    dataSource?: { [key: string]: any }
   ) => IBlockData | ReactElement;
 }
 

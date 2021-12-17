@@ -6,14 +6,13 @@ import { useEditorContext } from '@/hooks/useEditorContext';
 import { HtmlStringToReactNodes } from '@/utils/HtmlStringToReactNodes';
 import { createPortal } from 'react-dom';
 import { useEditorProps } from '@/hooks/useEditorProps';
-import { useCallback } from 'react';
 import { getEditorRoot, getShadowRoot } from '@/utils';
 
 export function MjmlDomRender() {
   const { pageData: content } = useEditorContext();
   const [pageData, setPageData] = useState<IPage | null>(null);
   const [ref, setRef] = useState<HTMLDivElement | null>(null);
-  const { dashed } = useEditorProps();
+  const { dashed, mergeTags } = useEditorProps();
 
   const isTextFocus =
     document.activeElement === getEditorRoot() &&
@@ -34,6 +33,7 @@ export function MjmlDomRender() {
         idx: getPageIdx(),
         context: pageData,
         mode: 'testing',
+        dataSource: mergeTags,
       })
     ).html;
     return renderHtml;

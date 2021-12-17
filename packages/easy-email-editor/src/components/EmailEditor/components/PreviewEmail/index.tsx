@@ -13,23 +13,23 @@ export function PreviewEmail() {
   const [html, setHtml] = useState('');
 
   useEffect(() => {
-    let injectData = pageData;
+    let parseHtml = mjml(
+      JsonToMjml({
+        data: pageData,
+        mode: 'production',
+        context: pageData,
+        dataSource: mergeTags,
+      })
+    ).html;
 
     if (onBeforePreview) {
       try {
-        injectData = onBeforePreview(cloneDeep(pageData), mergeTags);
+        parseHtml = onBeforePreview(parseHtml, mergeTags);
         setErrMsg('');
       } catch (error: any) {
         setErrMsg(error?.message || error);
       }
     }
-    const parseHtml = mjml(
-      JsonToMjml({
-        data: injectData,
-        mode: 'production',
-        context: injectData,
-      })
-    ).html;
     setHtml(parseHtml);
   }, [mergeTags, onBeforePreview, pageData]);
 

@@ -76,6 +76,7 @@ export function FocusTooltip() {
     <>
       {createPortal(
         <div
+          id='easy-email-extensions-InteractivePrompt-FocusTooltip'
           style={{
             position: 'absolute',
             width: '100%',

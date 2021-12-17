@@ -63,6 +63,7 @@ export function HoverTooltip() {
     <>
       {createPortal(
         <div
+          id='easy-email-extensions-InteractivePrompt-HoverTooltip'
           style={{
             position: 'absolute',
             height: '100%',
@@ -77,7 +78,7 @@ export function HoverTooltip() {
             type={isDragging ? 'drag' : 'hover'}
             lineWidth={1}
             title={block.name}
-            direction={isTop ? 'noEnoughTop' : direction}
+            direction={isTop && direction === 'top' ? 'noEnoughTop' : direction}
             isDragging={isDragging}
           />
         </div>,

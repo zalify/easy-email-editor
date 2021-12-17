@@ -1,17 +1,30 @@
 import React, { useCallback, useMemo } from 'react';
 import { Tree, TreeSelect } from '@arco-design/web-react';
 import { isObject } from 'lodash';
-import { useEditorProps } from 'easy-email-editor';
+import { useBlock, useEditorProps, useFocusIdx } from 'easy-email-editor';
+import { getContextMergeTags } from 'easy-email-core';
 
 export const MergeTags: React.FC<{
   onChange: (v: string) => void;
   value: string;
   isSelect?: boolean;
 }> = React.memo((props) => {
+  const { focusIdx } = useFocusIdx();
   const { mergeTags = {}, mergeTagGenerate } = useEditorProps();
+  const { values } = useBlock();
+
+  const contextMergeTags = useMemo(
+    () => getContextMergeTags(mergeTags, values, focusIdx),
+    [mergeTags, values, focusIdx]
+  );
 
   const treeOptions = useMemo(() => {
-    const treeData = [];
+    const treeData: Array<{
+      key: any;
+      value: any;
+      title: string;
+      children: never[];
+    }> = [];
     const deep = (
       key: string,
       title: string,
@@ -22,21 +35,24 @@ export const MergeTags: React.FC<{
         key: mergeTagGenerate(key),
         value: mergeTagGenerate(key),
         title: title,
+        disabled: isObject(parent[key]) || !parent[title],
         children: [],
       };
 
       mapData.push(currentMapData);
-      const current = parent[key];
-      if (isObject(current)) {
+      const current = parent[title];
+      if (current && typeof current === 'object') {
         Object.keys(current).map((childKey) =>
           deep(key + '.' + childKey, childKey, current, currentMapData.children)
         );
       }
     };
 
-    Object.keys(mergeTags).map((key) => deep(key, key, mergeTags, treeData));
+    Object.keys(contextMergeTags).map((key) =>
+      deep(key, key, contextMergeTags, treeData)
+    );
     return treeData;
-  }, [mergeTags]);
+  }, [contextMergeTags]);
 
   const onSelect = useCallback(
     (value: string) => {
@@ -51,7 +67,6 @@ export const MergeTags: React.FC<{
         <TreeSelect
           value={props.value}
           size='small'
-          style={{ width: 120 }}
           dropdownMenuStyle={{ maxHeight: 400, overflow: 'auto' }}
           placeholder='Please select'
           treeData={treeOptions}
@@ -59,7 +74,7 @@ export const MergeTags: React.FC<{
         />
       ) : (
         <Tree
-          style={{ width: 120 }}
+          defaultExpandedKeys={[]}
           selectedKeys={[]}
           treeData={treeOptions}
           onSelect={(vals: any[]) => onSelect(vals[0])}
