@@ -8,7 +8,9 @@ import React, {
 import {
   DATA_ATTRIBUTE_DROP_CONTAINER,
   DATA_ATTRIBUTE_ID,
+  IconFont,
   scrollBlockEleIntoView,
+  Stack,
   TextStyle,
   useBlock,
   useEditorContext,
@@ -35,9 +37,12 @@ import {
   getDirectionFormDropPosition,
   useAvatarWrapperDrop,
 } from './hooks/useAvatarWrapperDrop';
+import { getIconNameByBlockType } from '@extensions/AttributePanel/utils/getIconNameByBlockType';
+import { Space } from '@arco-design/web-react';
 
 export interface IBlockDataWithId extends IBlockData {
   id: string;
+  icon?: React.ReactElement;
   parent: IBlockDataWithId | null;
   children: IBlockDataWithId[];
   className?: string;
@@ -96,7 +101,10 @@ export function BlockLayer() {
             !isPage && 'email-block'
           )}
         >
-          <TextStyle size='smallest'>{block?.name}</TextStyle>
+          <Space align='center' size="mini">
+            <IconFont iconName={getIconNameByBlockType(data.type)} style={{ fontSize: 12, color: '#999' }} />
+            <TextStyle size='smallest'>{block?.name}</TextStyle>
+          </Space>
           <div className={styles.eyeIcon}>
             <EyeIcon blockData={data} onToggleVisible={onToggleVisible} />
           </div>
@@ -128,7 +136,9 @@ export function BlockLayer() {
   const onSelect = useCallback(
     (selectedId: string) => {
       setFocusIdx(selectedId);
-      scrollBlockEleIntoView({ idx: selectedId });
+      setTimeout(() => {
+        scrollBlockEleIntoView({ idx: selectedId });
+      }, 50);
     },
     [setFocusIdx]
   );
@@ -197,23 +207,6 @@ export function BlockLayer() {
     [moveBlock]
   );
 
-  useEffect(() => {
-    if (!blockLayerRef) return;
-    if (focusIdx) {
-      // after dom updated
-      setTimeout(() => {
-        const selectedNode = blockLayerRef.querySelector(
-          `[${DATA_ATTRIBUTE_ID}="${focusIdx}"]`
-        );
-        if (selectedNode) {
-          selectedNode.scrollIntoView({
-            block: 'center',
-            behavior: 'smooth',
-          });
-        }
-      }, 50);
-    }
-  }, [blockLayerRef, focusIdx]);
 
   const blockTreeAllowDrop: BlockTreeProps<IBlockDataWithId>['allowDrop'] =
     useCallback(

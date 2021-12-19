@@ -83,7 +83,7 @@ export const generateListBlock = (params: {
         return (
           <Template>
             <Wrapper
-              padding='0px'
+              padding={data.children.length > 0 ? '0px' : '20px 20px 20px 20px'}
               css-class={classnames(
                 'email-block',
                 getNodeIdxClassName(idx!),

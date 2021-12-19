@@ -63,7 +63,7 @@ export function useDropBlock() {
             editNode?.focus();
           }
           setFocusIdx(idx);
-          scrollBlockEleIntoView({ idx });
+          // scrollBlockEleIntoView({ idx });
         }
       };
 
