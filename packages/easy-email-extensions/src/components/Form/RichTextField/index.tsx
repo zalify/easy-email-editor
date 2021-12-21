@@ -20,10 +20,11 @@ export const RichTextField = (
 
   return (
     <>
-      <RichTextToolBar />
+
       <Field name={name} parse={v => v}>
         {
-          ({ input }) => <FieldWrapper {...props} input={input} />
+          ({ input }) => (<FieldWrapper {...props} input={input} />)
+
         }
 
       </Field>
@@ -47,5 +48,11 @@ function FieldWrapper(props: Omit<InlineTextProps, 'onChange'> & { input: FieldI
     [input]
   );
 
-  return <InlineText {...rest} onChange={debounceCallbackChange} />;
+  return (
+    <>
+      <RichTextToolBar onChange={debounceCallbackChange} />
+      <InlineText {...rest} onChange={debounceCallbackChange} />;
+    </>
+  );
+
 }

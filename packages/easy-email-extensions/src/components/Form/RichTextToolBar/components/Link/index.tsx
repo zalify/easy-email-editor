@@ -65,7 +65,7 @@ export function Link(props: LinkProps) {
     let underline = true;
     let linkNode: HTMLAnchorElement | null = getLinkNode(props.currentRange);
     if (linkNode) {
-      link = linkNode.href;
+      link = linkNode.getAttribute("href") || '';
       blank = linkNode.getAttribute('target') === '_blank';
       underline = linkNode.style.textDecoration === 'underline';
     }

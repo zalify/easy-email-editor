@@ -11,7 +11,7 @@ import {
 import { Tools } from './components/Tools';
 import styleText from './shadow-dom.scss?inline';
 
-export function RichTextToolBar() {
+export function RichTextToolBar(props: { onChange: (s: string) => void; }) {
   const [position, setPosition] = useState({ top: 0, left: 0 });
   const [blockNode, setBlockNode] = useState<HTMLDivElement | null>(null);
   const { focusBlock } = useBlock();
@@ -83,7 +83,7 @@ export function RichTextToolBar() {
               }}
             />
 
-            <Tools container={editorContainer} onChange={() => { }} />
+            <Tools container={editorContainer} onChange={props.onChange} />
           </div>
         </>,
         blockNode

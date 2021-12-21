@@ -31,7 +31,7 @@ export function Tools(props: ToolsProps) {
         if (range) {
           setSelectionRange(range);
         }
-      } catch (error) {}
+      } catch (error) { }
     };
 
     document.addEventListener('selectionchange', onSelectionChange);
