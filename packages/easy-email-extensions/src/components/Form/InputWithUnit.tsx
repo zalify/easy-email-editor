@@ -10,7 +10,7 @@ import { Input } from './Input';
 export interface InputWithUnitProps extends Omit<ArcoInputProps, 'onChange'> {
   value: string;
   onChange: (val: string) => void;
-  unitOptions?: Array<{ value: string; label: string }> | 'default' | 'percent';
+  unitOptions?: Array<{ value: string; label: string; }> | 'default' | 'percent';
 }
 
 const defaultUnitOptions = [
@@ -150,5 +150,5 @@ export function InputWithUnit(props: InputWithUnitProps) {
   //   </ArcoInput.Group>
   // );
 
-  return <Input {...props} quickchange />;
+  return <Input value={value} {...restProps} quickchange />;
 }
