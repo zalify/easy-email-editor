@@ -3,7 +3,7 @@ import { Stack } from 'easy-email-editor';
 import { Width } from '@extensions/AttributePanel/components/attributes/Width';
 import { BackgroundColor } from '@extensions/AttributePanel/components/attributes/BackgroundColor';
 import { VerticalAlign } from '@extensions/AttributePanel/components/attributes/VerticalAlign';
-import { Collapse } from '@arco-design/web-react';
+import { Collapse, Grid } from '@arco-design/web-react';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
 
 export function Group() {
@@ -11,19 +11,22 @@ export function Group() {
     <AttributesPanelWrapper>
       <Collapse defaultActiveKey={['0', '1', '2']}>
         <Collapse.Item name='0' header='Dimension'>
-          <Stack vertical spacing='tight'>
-            <Stack wrap={false}>
-              <Stack.Item fill>
-                <Width />
-              </Stack.Item>
+          <Grid.Row>
+            <Grid.Col span={11}>
+              <Width />
+            </Grid.Col>
+            <Grid.Col offset={1} span={11}>
               <VerticalAlign />
-            </Stack>
-          </Stack>
+            </Grid.Col>
+          </Grid.Row>
         </Collapse.Item>
         <Collapse.Item name='1' header='Background'>
-          <Stack vertical spacing='tight'>
-            <BackgroundColor />
-          </Stack>
+          <Grid.Row>
+            <Grid.Col span={11}>
+              <BackgroundColor />
+            </Grid.Col>
+            <Grid.Col offset={1} span={11}></Grid.Col>
+          </Grid.Row>
         </Collapse.Item>
       </Collapse>
     </AttributesPanelWrapper>

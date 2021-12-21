@@ -24,3 +24,20 @@
     }
   }
 }
+
+.inputWithUnit {
+  :global {
+    .arco-select-view {
+      padding: 0px 5px !important;
+      text-align: center;
+      .arco-select-view-value {
+        overflow: visible;
+      }
+    }
+  }
+}
+
+.inputWithUnitSelectOption {
+  padding: 0px 5px !important;
+  text-align: center !important;
+}

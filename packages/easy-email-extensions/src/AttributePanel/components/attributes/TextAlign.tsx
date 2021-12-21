@@ -27,7 +27,6 @@ export function TextAlign() {
           label='Text align'
           name={`${focusIdx}.attributes.text-align`}
           options={options}
-          inline
         />
       </Stack>
     );

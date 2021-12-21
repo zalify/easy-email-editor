@@ -37,10 +37,10 @@
   resolved "https://registry.yarnpkg.com/@arco-themes/react-easy-email-theme-purple/-/react-easy-email-theme-purple-0.0.3.tgz#add7f936ad128a92eb027acdebe615e565a2ab67"
   integrity sha512-745j2ozqhYlnun8N1gEie4m17usBaLqAzbTbcdqU8GoT7GZGONlTnN71IdDb8ztOd8yFoVruz6FccxzREbqqRA==
 
-"@arco-themes/react-easy-email-theme@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@arco-themes/react-easy-email-theme/-/react-easy-email-theme-0.0.2.tgz#df345cbceade76a5a29a2bf0e424bd5f1b63c018"
-  integrity sha512-tbc2ogoNxIoWoiH0eCjVH9IKRLscHcOVhbBP9O6I+2BLkzxl/KrWYqqchUuOA5YKkBuzJCvWjJkqECcwcILKUQ==
+"@arco-themes/react-easy-email-theme@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@arco-themes/react-easy-email-theme/-/react-easy-email-theme-0.0.3.tgz#b9cf6ad3c4aec9e1cc6f534132782f892a0403c2"
+  integrity sha512-JZXavU2v7YK38KyoK3hUQ2bxpdD5JwPzjxFNftH6Dhiuv/CppK55/uWzDpQJIohcHM9BTRcYmgUA49OE2MHWqA==
 
 "@babel/code-frame@^7.16.0":
   version "7.16.0"

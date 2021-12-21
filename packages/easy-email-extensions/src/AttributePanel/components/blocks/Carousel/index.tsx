@@ -3,12 +3,13 @@ import {
   ColorPickerField,
   EditTabField,
   ImageUploaderField,
+  InputWithUnitField,
   RadioGroupField,
   SelectField,
   TextField,
 } from '@extensions/components/Form';
 import { IconLink } from '@arco-design/web-react/icon';
-import { Collapse } from '@arco-design/web-react';
+import { Collapse, Grid, Space } from '@arco-design/web-react';
 import { Stack, useEditorProps, useFocusIdx } from 'easy-email-editor';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
 import { Align } from '@extensions/AttributePanel/components/attributes/Align';
@@ -31,23 +32,22 @@ export function Carousel() {
     <AttributesPanelWrapper style={{ padding: 0 }}>
       <Collapse defaultActiveKey={['0', '1', '2', '3', '4']}>
         <Collapse.Item name='0' header='Dimension'>
-          <Stack vertical spacing='tight'>
-            <Stack vertical>
-              <TextField
-                label='Thumbnail width'
-                name={`${focusIdx}.attributes.tb-width`}
-                quickchange
-                inline
-              />
-              <RadioGroupField
-                label='Thumbnails'
-                name={`${focusIdx}.attributes.thumbnails`}
-                options={options}
-                inline
-              />
-              <Align />
-            </Stack>
-          </Stack>
+          <Space direction='vertical'>
+            <InputWithUnitField
+              label='Thumbnail width'
+              name={`${focusIdx}.attributes.tb-width`}
+              quickchange
+              inline
+            />
+
+            <RadioGroupField
+              label='Thumbnails'
+              name={`${focusIdx}.attributes.thumbnails`}
+              options={options}
+              inline
+            />
+            <Align inline />
+          </Space>
         </Collapse.Item>
         <Collapse.Item name='4' contentStyle={{ padding: 0 }} header='Images'>
           <Stack vertical spacing='tight'>
@@ -67,51 +67,63 @@ export function Carousel() {
           </Stack>
         </Collapse.Item>
         <Collapse.Item name='3' header='Icon'>
-          <Stack vertical spacing='tight'>
-            <TextField
-              label='Icon width'
-              name={`${focusIdx}.attributes.icon-width`}
-              inline
-              quickchange
-            />
-            <TextField
-              label='Left icon'
-              name={`${focusIdx}.attributes.left-icon`}
-              inline
-            />
-            <TextField
-              label='Right icon'
-              name={`${focusIdx}.attributes.right-icon`}
-              inline
-            />
-          </Stack>
+          <Grid.Row>
+            <Grid.Col span={11}>
+              <TextField
+                label='Left icon'
+                name={`${focusIdx}.attributes.left-icon`}
+              />
+            </Grid.Col>
+            <Grid.Col offset={1} span={11}>
+              <TextField
+                label='Right icon'
+                name={`${focusIdx}.attributes.right-icon`}
+              />
+            </Grid.Col>
+          </Grid.Row>
+
+          <Grid.Row>
+            <Grid.Col span={11}>
+              <InputWithUnitField
+                label='Icon width'
+                name={`${focusIdx}.attributes.icon-width`}
+              />
+            </Grid.Col>
+            <Grid.Col offset={1} span={11}></Grid.Col>
+          </Grid.Row>
         </Collapse.Item>
 
         <Collapse.Item name='1' header='Border'>
-          <Stack vertical spacing='tight'>
-            <ColorPickerField
-              label='Hovered border color'
-              name={`${focusIdx}.attributes.tb-hover-border-color`}
-              inline
-              alignment='center'
-            />
-            <ColorPickerField
-              label='Selected Border color'
-              name={`${focusIdx}.attributes.tb-selected-border-color`}
-              inline
-              alignment='center'
-            />
-            <TextField
-              label='Border of the thumbnails'
-              name={`${focusIdx}.attributes.tb-border`}
-              inline
-            />
-            <TextField
-              label='Border radius of the thumbnails'
-              name={`${focusIdx}.attributes.tb-border-radius`}
-              inline
-            />
-          </Stack>
+          <Grid.Row>
+            <Grid.Col span={11}>
+              <ColorPickerField
+                label='Hovered border'
+                name={`${focusIdx}.attributes.tb-hover-border-color`}
+                alignment='center'
+              />
+            </Grid.Col>
+            <Grid.Col offset={1} span={11}>
+              <ColorPickerField
+                label='Selected Border'
+                name={`${focusIdx}.attributes.tb-selected-border-color`}
+                alignment='center'
+              />
+            </Grid.Col>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Col span={11}>
+              <TextField
+                label='Border of the thumbnails'
+                name={`${focusIdx}.attributes.tb-border`}
+              />
+            </Grid.Col>
+            <Grid.Col offset={1} span={11}>
+              <TextField
+                label='Border radius of the thumbnails'
+                name={`${focusIdx}.attributes.tb-border-radius`}
+              />
+            </Grid.Col>
+          </Grid.Row>
         </Collapse.Item>
       </Collapse>
     </AttributesPanelWrapper>
@@ -128,7 +140,7 @@ function CarouselImage({
   const { focusIdx } = useFocusIdx();
   const { onUploadImage } = useEditorProps();
   return (
-    <Stack vertical spacing='tight'>
+    <Space direction='vertical'>
       <ImageUploaderField
         label='Image'
         labelHidden
@@ -136,35 +148,36 @@ function CarouselImage({
         helpText='The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.'
         uploadHandler={onUploadImage}
       />
-      <Stack wrap={false}>
-        <Stack.Item fill>
+      <Grid.Row>
+        <Grid.Col span={11}>
           <TextField
             prefix={<IconLink />}
-            label={<span>Href&nbsp;&nbsp;&nbsp;</span>}
+            label='Url'
             name={`${focusIdx}.data.value.images.[${index}].href`}
           />
-        </Stack.Item>
+        </Grid.Col>
+        <Grid.Col offset={1} span={11}>
+          <SelectField
+            label='Target'
+            name={`${focusIdx}.data.value.images.[${index}].target`}
+            options={[
+              {
+                value: '',
+                label: '_self',
+              },
+              {
+                value: '_blank',
+                label: '_blank',
+              },
+            ]}
+          />
+        </Grid.Col>
+      </Grid.Row>
 
-        <SelectField
-          label='Target'
-          name={`${focusIdx}.data.value.images.[${index}].target`}
-          options={[
-            {
-              value: '',
-              label: '_self',
-            },
-            {
-              value: '_blank',
-              label: '_blank',
-            },
-          ]}
-        />
-      </Stack>
       <TextField
         label='Title'
-        helpText='tooltip & accessibility'
         name={`${focusIdx}.data.value.image.[${index}].title`}
       />
-    </Stack>
+    </Space>
   );
 }

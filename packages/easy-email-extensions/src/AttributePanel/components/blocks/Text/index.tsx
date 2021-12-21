@@ -13,7 +13,7 @@ import { LineHeight } from '@extensions/AttributePanel/components/attributes/Lin
 import { LetterSpacing } from '@extensions/AttributePanel/components/attributes/LetterSpacing';
 
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
-import { Collapse, Tooltip } from '@arco-design/web-react';
+import { Collapse, Grid, Space, Tooltip } from '@arco-design/web-react';
 import { Button } from '@arco-design/web-react';
 import { IconFont, Stack } from 'easy-email-editor';
 import { HtmlEditor } from '../../UI/HtmlEditor';
@@ -23,55 +23,70 @@ export function Text() {
 
   return (
     <AttributesPanelWrapper
-      extra={(
+      extra={
         <Tooltip content='Html mode'>
           <Button
             onClick={() => setVisible(true)}
             icon={<IconFont iconName='icon-html' />}
           />
         </Tooltip>
-      )}
+      }
     >
       <Collapse defaultActiveKey={['0', '1', '2']}>
         <Collapse.Item name='0' header='Dimension'>
-          <Stack vertical spacing='tight'>
-            <Height inline />
+          <Space direction='vertical'>
+            <Height />
             <Padding />
-          </Stack>
+          </Space>
         </Collapse.Item>
         <Collapse.Item name='1' header='Color'>
-          <Stack vertical spacing='tight'>
-            <Color />
-            <ContainerBackgroundColor title='Background color' />
-          </Stack>
+          <Grid.Row>
+            <Grid.Col span={11}>
+              <Color />
+            </Grid.Col>
+            <Grid.Col offset={1} span={11}>
+              <ContainerBackgroundColor title='Background color' />
+            </Grid.Col>
+          </Grid.Row>
         </Collapse.Item>
         <Collapse.Item name='2' header='Typography'>
-          <Stack vertical spacing='tight'>
-            <Stack wrap={false}>
-              <FontFamily />
-              <Stack.Item fill>
+          <Space direction='vertical'>
+            <Grid.Row>
+              <Grid.Col span={11}>
+                <FontFamily />
+              </Grid.Col>
+              <Grid.Col offset={1} span={11}>
                 <FontSize />
-              </Stack.Item>
-            </Stack>
+              </Grid.Col>
+            </Grid.Row>
 
-            <Stack wrap={false}>
-              <FontWeight />
-              <Stack.Item fill>
+            <Grid.Row>
+              <Grid.Col span={11}>
                 <LineHeight />
-              </Stack.Item>
-            </Stack>
-
-            <Stack wrap={false}>
-              <TextDecoration />
-              <Stack.Item fill>
+              </Grid.Col>
+              <Grid.Col offset={1} span={11}>
                 <LetterSpacing />
-              </Stack.Item>
-            </Stack>
+              </Grid.Col>
+            </Grid.Row>
+
+            <Grid.Row>
+              <Grid.Col span={11}>
+                <TextDecoration />
+              </Grid.Col>
+              <Grid.Col offset={1} span={11}>
+                <FontWeight />
+              </Grid.Col>
+            </Grid.Row>
 
             <Align />
 
             <FontStyle />
-          </Stack>
+
+            <Grid.Row>
+              <Grid.Col span={11}></Grid.Col>
+              <Grid.Col offset={1} span={11}></Grid.Col>
+            </Grid.Row>
+          </Space>
         </Collapse.Item>
       </Collapse>
       <HtmlEditor visible={visible} setVisible={setVisible} />

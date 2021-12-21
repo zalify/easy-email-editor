@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Collapse } from '@arco-design/web-react';
+import { Collapse, Grid, Space } from '@arco-design/web-react';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
 import { Stack } from 'easy-email-editor';
 import { Padding } from '@extensions/AttributePanel/components/attributes/Padding';
@@ -14,25 +14,24 @@ export function Column() {
     <AttributesPanelWrapper>
       <Collapse defaultActiveKey={['0', '1', '2']}>
         <Collapse.Item name='0' header='Dimension'>
-          <Stack vertical spacing='tight'>
-            <Padding />
-            <Stack wrap={false}>
-              <Stack.Item fill>
+          <Space direction='vertical'>
+            <Grid.Row>
+              <Grid.Col span={11}>
                 <Width />
-              </Stack.Item>
-              <VerticalAlign />
-            </Stack>
-          </Stack>
+              </Grid.Col>
+              <Grid.Col offset={1} span={11}>
+                <VerticalAlign />
+              </Grid.Col>
+            </Grid.Row>
+
+            <Padding />
+          </Space>
         </Collapse.Item>
         <Collapse.Item name='1' header='Background'>
-          <Stack vertical spacing='tight'>
-            <Background />
-          </Stack>
+          <Background />
         </Collapse.Item>
         <Collapse.Item name='2' header='Border'>
-          <Stack vertical spacing='tight'>
-            <Border />
-          </Stack>
+          <Border />
         </Collapse.Item>
       </Collapse>
     </AttributesPanelWrapper>

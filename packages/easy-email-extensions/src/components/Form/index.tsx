@@ -21,6 +21,7 @@ import { Select, SelectProps } from './Select';
 import { RadioGroup, RadioGroupProps } from './RadioGroup';
 import enhancer from './enhancer';
 import { Input, InputProps } from './Input';
+import { InputWithUnit, InputWithUnitProps } from './InputWithUnit';
 import { CheckBoxGroup } from './CheckBoxGroup';
 import { EditTab, EditTabProps } from './EditTab';
 import { Dayjs } from 'dayjs';
@@ -33,6 +34,12 @@ export const TextField = enhancer<
   InputProps,
   Required<ArcoInputProps>['onChange']
 >(Input, (value) => value);
+
+export const InputWithUnitField = enhancer<
+  InputWithUnitProps,
+  Required<InputWithUnitProps>['onChange']
+>(InputWithUnit, (value) => value);
+
 export const SearchField = enhancer<
   InputProps,
   Required<InputSearchProps>['onChange']

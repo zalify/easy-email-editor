@@ -1,13 +1,14 @@
 import React from 'react';
 import {
   ColorPickerField,
+  InputWithUnitField,
   SwitchField,
   TextAreaField,
   TextField,
 } from '@extensions/components/Form';
 import { Help } from '@extensions/AttributePanel/components/UI/Help';
 import { AddFont } from '@extensions/components/Form/AddFont';
-import { Collapse } from '@arco-design/web-react';
+import { Collapse, Grid, Space } from '@arco-design/web-react';
 import { Stack, TextStyle, useFocusIdx } from 'easy-email-editor';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
 import { FontFamily } from '../../attributes/FontFamily';
@@ -21,27 +22,20 @@ export function Page() {
       <Stack.Item fill>
         <Collapse defaultActiveKey={['0', '1']}>
           <Collapse.Item name='0' header='Email Setting'>
-            <Stack vertical spacing='tight'>
+            <Space direction='vertical'>
               <TextField label='Subject' name={'subject'} inline />
               <TextField label='SubTitle' name={'subTitle'} inline />
-              <TextField
+              <InputWithUnitField
                 label='Width'
                 name={`${focusIdx}.attributes.width`}
                 inline
               />
-              <Stack alignment='center'>
-                <TextField
-                  label={(
-                    <Stack spacing='extraTight'>
-                      <TextStyle>Breakpoint</TextStyle>
-                      <Help title='Allows you to control on which breakpoint the layout should go desktop/mobile.' />
-                    </Stack>
-                  )}
-                  quickchange
-                  name={`${focusIdx}.data.value.breakpoint`}
-                  inline
-                />
-              </Stack>
+              <InputWithUnitField
+                label='Breakpoint'
+                helpText='Allows you to control on which breakpoint the layout should go desktop/mobile.'
+                name={`${focusIdx}.data.value.breakpoint`}
+                inline
+              />
               <SwitchField
                 inline
                 label='Responsive'
@@ -49,52 +43,57 @@ export function Page() {
                 checkedText='True'
                 uncheckedText='False'
               />
-            </Stack>
+            </Space>
           </Collapse.Item>
           <Collapse.Item name='1' header='Theme Setting'>
             <Stack vertical spacing='tight'>
-              <Stack wrap={false}>
-                <Stack.Item fill>
+              <Grid.Row>
+                <Grid.Col span={11}>
                   <FontFamily />
-                </Stack.Item>
-                <Stack.Item fill>
-                  <TextField
+                </Grid.Col>
+                <Grid.Col offset={1} span={11}>
+                  <InputWithUnitField
                     label='Font size'
-                    quickchange
                     name={`${focusIdx}.data.value.font-size`}
                   />
-                </Stack.Item>
-              </Stack>
-              <Stack wrap={false}>
-                <Stack.Item fill>
+                </Grid.Col>
+              </Grid.Row>
+
+              <Grid.Row>
+                <Grid.Col span={11}>
                   <ColorPickerField
                     label='Text color'
                     name={`${focusIdx}.data.value.text-color`}
                   />
-                </Stack.Item>
-                <Stack.Item fill>
-                  <TextField
+                </Grid.Col>
+                <Grid.Col offset={1} span={11}>
+                  <InputWithUnitField
                     label='Line height'
-                    quickchange
+                    unitOptions='percent'
                     name={`${focusIdx}.data.value.line-height`}
                   />
-                </Stack.Item>
-              </Stack>
+                </Grid.Col>
+              </Grid.Row>
 
-              <Stack wrap={false}>
-                <ColorPickerField
-                  label='Background color'
-                  name={`${focusIdx}.attributes.background-color`}
-                />
-                <ColorPickerField
-                  label='Content background color'
-                  name={`${focusIdx}.data.value.content-background-color`}
-                />
-              </Stack>
+              <Grid.Row>
+                <Grid.Col span={11}>
+                  <ColorPickerField
+                    label='Background'
+                    name={`${focusIdx}.attributes.background-color`}
+                  />
+                </Grid.Col>
+                <Grid.Col offset={1} span={11}>
+                  <ColorPickerField
+                    label='Content background'
+                    name={`${focusIdx}.data.value.content-background-color`}
+                  />
+                </Grid.Col>
+              </Grid.Row>
+              {/*
               <TextAreaField
                 label='User style'
                 name={`${focusIdx}.data.value.user-style.content`}
-              />
+              /> */}
               <AddFont />
             </Stack>
           </Collapse.Item>
