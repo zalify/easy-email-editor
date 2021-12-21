@@ -1,5 +1,5 @@
 import { TextStyle, Stack, StackProps } from 'easy-email-editor';
-import { Form } from '@arco-design/web-react';
+import { Form, Grid, Space } from '@arco-design/web-react';
 import { Field, FieldProps, useField } from 'react-final-form';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styles from './index.module.scss';
@@ -105,42 +105,81 @@ export default function enhancer<P, C extends (...rest: any[]) => any = any>(
                 onChange={onFieldChange}
               />
             );
+
+          const wrapperStyle: {
+            label: {
+              span: number;
+              offset: number;
+            };
+            value: {
+              span: number;
+              offset: number;
+            };
+            textAlign: 'right' | 'left';
+          } = inline
+            ? {
+                label: {
+                  span: 7,
+                  offset: 0,
+                },
+                value: {
+                  span: 16,
+                  offset: 1,
+                },
+                textAlign: 'right',
+              }
+            : {
+                label: {
+                  span: 24,
+                  offset: 0,
+                },
+                value: {
+                  span: 24,
+                  offset: 0,
+                },
+                textAlign: 'left',
+              };
+
           return (
             <Form.Item
               noStyle
               validateStatus={touched && error ? 'error' : undefined}
               help={touched && error}
             >
-              <Stack vertical spacing='extraTight'>
-                <Stack
-                  spacing={inline ? undefined : 'extraTight'}
-                  wrap={false}
-                  vertical={!inline}
-                  alignment={
-                    alignment ? alignment : inline ? 'center' : undefined
-                  }
-                  distribution={distribution}
-                >
-                  <Stack.Item>
+              <Space direction='vertical' style={{ width: '100%' }}>
+                <Grid.Row align='center'>
+                  <Grid.Col
+                    span={wrapperStyle.label.span}
+                    offset={wrapperStyle.label.offset}
+                    style={{ textAlign: wrapperStyle.textAlign }}
+                  >
                     <label
                       className={
                         labelHidden ? styles['label-hidden'] : undefined
                       }
                       htmlFor={id}
                     >
-                      <span style={{ whiteSpace: 'pre' }}>
+                      <Space>
                         {required && (
-                          <span style={{ color: '#ff4d4f' }}>* </span>
+                          <span style={{ color: '#ff4d4f', marginRight: 4 }}>
+                            *{' '}
+                          </span>
                         )}
                         <TextStyle
                           size={size === 'small' ? 'smallest' : 'small'}
                         >
                           {label}
                         </TextStyle>
-                      </span>
+                      </Space>
                     </label>
-                  </Stack.Item>
-                  <Stack.Item fill={inline}>
+                  </Grid.Col>
+                  <Grid.Col
+                    style={{
+                      textAlign: 'left',
+                    }}
+                    offset={wrapperStyle.value.offset}
+                    span={wrapperStyle.value.span}
+                  >
                     <Component
                       size={size}
                       {...rest}
@@ -154,12 +193,12 @@ export default function enhancer<P, C extends (...rest: any[]) => any = any>(
                       }
                       onChange={onFieldChange}
                     />
-                  </Stack.Item>
-                </Stack>
+                  </Grid.Col>
+                </Grid.Row>
                 <div className={styles.helperText}>
                   <small>{helpText}</small>
                 </div>
-              </Stack>
+              </Space>
             </Form.Item>
           );
         }}

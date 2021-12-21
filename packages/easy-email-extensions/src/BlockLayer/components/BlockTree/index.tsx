@@ -21,7 +21,8 @@ interface TreeNode<T> {
 
 export interface BlockTreeProps<T extends TreeNode<T>> {
   treeData: T[];
-  selectedId?: string;
+  selectedKeys?: string[];
+  expandedKeys?: string[];
   onSelect: (selectedId: string) => void;
   onContextMenu?: (nodeData: T, ev: React.MouseEvent) => void;
   onDragStart?: () => void;
@@ -53,9 +54,12 @@ img.width = 0;
 img.height = 0;
 img.src = transparentImage;
 
+const fileNames = {
+  key: 'id',
+};
+
 export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
   const [blockTreeRef, setBlockTreeRef] = useState<HTMLElement | null>(null);
-  const [selectedId, setSelectedId] = useState(props.selectedId);
   const dragNode = useRef<{
     dataRef: T;
     parent: T;
@@ -63,11 +67,35 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
     parentKey: string;
   } | null>(null);
 
-  const { treeData, allowDrop, onContextMenu } = props;
+  const { treeData, allowDrop, onContextMenu, selectedKeys } = props;
+  const treeDataRef = useRef(treeData);
+
+  const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
+
+  const onExpand = useCallback(
+    (keys: string[]) => {
+      setExpandedKeys(keys);
+    },
+    [setExpandedKeys]
+  );
 
   useEffect(() => {
-    setSelectedId(props.selectedId);
-  }, [props.selectedId]);
+    if (props.defaultExpandAll) {
+      const keys: string[] = [];
+      const loop = (data: T) => {
+        keys.push(data.id);
+        data.children?.forEach(loop);
+      };
+      treeDataRef.current.forEach(loop);
+      setExpandedKeys(keys);
+    }
+  }, [props.defaultExpandAll]);
+
+  useEffect(() => {
+    setExpandedKeys((keys) =>
+      props.expandedKeys ? [...keys, ...props.expandedKeys] : keys
+    );
+  }, [props.expandedKeys]);
 
   const onDragStart = useCallback(
     (e: React.DragEvent<HTMLSpanElement>, node: NodeInstance) => {
@@ -173,48 +201,61 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
     }
   }, [blockTreeRef]);
 
-  const selectedKeys = useMemo(
-    () => (selectedId ? [selectedId] : []),
-    [selectedId]
-  );
-
-  return (
-    <div ref={setBlockTreeRef} onMouseLeave={props.onMouseLeave}>
-      <CacheTree
-        selectedKeys={selectedKeys}
-        draggable
-        size='small'
-        treeData={treeData}
-        blockNode
-        fieldNames={{
-          key: 'id',
-        }}
-        onDragEnd={onDragEnd}
-        onDragStart={onDragStart}
-        onDrop={onDrop}
-        allowDrop={onDragMove}
-        onSelect={onSelect}
-        renderTitle={renderTitle}
-      />
-    </div>
+  return useMemo(
+    () => (
+      <div ref={setBlockTreeRef} onMouseLeave={props.onMouseLeave}>
+        <CacheTree
+          selectedKeys={selectedKeys}
+          expandedKeys={expandedKeys}
+          onExpand={onExpand}
+          draggable
+          size='small'
+          treeData={treeData}
+          blockNode
+          fieldNames={fileNames}
+          onDragEnd={onDragEnd}
+          onDragStart={onDragStart}
+          onDrop={onDrop}
+          allowDrop={onDragMove}
+          onSelect={onSelect}
+          renderTitle={renderTitle}
+        />
+      </div>
+    ),
+    [
+      treeData,
+      props.onMouseLeave,
+      expandedKeys,
+      selectedKeys,
+      onExpand,
+      onDragEnd,
+      onDragStart,
+      onDrop,
+      onDragMove,
+      onSelect,
+      renderTitle,
+    ]
   );
 }
+
+const cacheTreeDebounceCallback = debounce(
+  (data: TreeProps, setCacheProps: (s: TreeProps) => void) => {
+    setCacheProps(data);
+  },
+  300
+);
 
 function CacheTree(props: TreeProps) {
   const [cacheProps, setCacheProps] = useState(props);
   const lastProps = useRef(props);
 
-  const debounceCallback = useCallback(
-    debounce((data) => {
-      setCacheProps(data);
-    }, 300),
-    []
-  );
-
   useEffect(() => {
     if (lastProps.current.treeData !== props.treeData) {
       lastProps.current = props;
-      debounceCallback(props);
+      cacheTreeDebounceCallback(props, setCacheProps);
+      return () => {
+        cacheTreeDebounceCallback.cancel();
+      };
     } else {
       lastProps.current = props;
       setCacheProps(props);

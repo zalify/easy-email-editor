@@ -3,7 +3,7 @@ import { Height } from '@extensions/AttributePanel/components/attributes/Height'
 import { ContainerBackgroundColor } from '@extensions/AttributePanel/components/attributes/ContainerBackgroundColor';
 import { Padding } from '@extensions/AttributePanel/components/attributes/Padding';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
-import { Collapse } from '@arco-design/web-react';
+import { Collapse, Space } from '@arco-design/web-react';
 import { Stack } from 'easy-email-editor';
 
 export function Spacer() {
@@ -11,10 +11,10 @@ export function Spacer() {
     <AttributesPanelWrapper>
       <Collapse defaultActiveKey={['-1', '0', '1', '2', '3']}>
         <Collapse.Item name='1' header='Dimension'>
-          <Stack vertical>
+          <Space direction='vertical'>
             <Height />
             <Padding />
-          </Stack>
+          </Space>
         </Collapse.Item>
 
         <Collapse.Item name='2' header='Background'>

@@ -1,4 +1,4 @@
-import { Input, Popover, PopoverProps } from '@arco-design/web-react';
+import { Input, Popover, PopoverProps, Space } from '@arco-design/web-react';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { ColorResult, SketchPicker } from 'react-color';
 import { Stack } from 'easy-email-editor';
@@ -44,7 +44,7 @@ export function ColorPicker(props: ColorPickerProps) {
     [addCurrentColor, onChange]
   );
   return (
-    <Stack spacing='none' wrap={false}>
+    <div style={{ flex: 1, display: 'flex' }}>
       <Popover
         title={props.label}
         trigger='click'
@@ -105,10 +105,10 @@ export function ColorPicker(props: ColorPickerProps) {
       {showInput && (
         <Input
           value={props.value}
-          style={{ width: '80px', outline: 'none' }}
+          style={{ outline: 'none', flex: 1 }}
           onChange={onInputChange}
         />
       )}
-    </Stack>
+    </div>
   );
 }

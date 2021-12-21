@@ -3,6 +3,7 @@ import { Padding } from '@extensions/AttributePanel/components/attributes/Paddin
 import {
   EditTabField,
   ImageUploaderField,
+  InputWithUnitField,
   RadioGroupField,
   SelectField,
   TextField,
@@ -17,7 +18,7 @@ import { FontStyle } from '@extensions/AttributePanel/components/attributes/Font
 import { FontWeight } from '@extensions/AttributePanel/components/attributes/FontWeight';
 
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
-import { Collapse } from '@arco-design/web-react';
+import { Collapse, Grid, Space } from '@arco-design/web-react';
 import { TextDecoration } from '@extensions/AttributePanel/components/attributes/TextDecoration';
 import { LineHeight } from '@extensions/AttributePanel/components/attributes/LineHeight';
 import { Stack, useEditorProps, useFocusIdx } from 'easy-email-editor';
@@ -41,47 +42,55 @@ export function Social() {
     <AttributesPanelWrapper style={{ padding: 0 }}>
       <Collapse defaultActiveKey={['0', '1', '2']}>
         <Collapse.Item name='1' header='Setting'>
-          <Stack vertical spacing='tight'>
-            <RadioGroupField
-              label='Mode'
-              name={`${focusIdx}.attributes.mode`}
-              options={options}
-              inline
-            />
-            <ContainerBackgroundColor title='Background color' />
-          </Stack>
+          <Space direction='vertical'>
+            <Grid.Row>
+              <Grid.Col span={11}>
+                <RadioGroupField
+                  label='Mode'
+                  name={`${focusIdx}.attributes.mode`}
+                  options={options}
+                />
+              </Grid.Col>
+              <Grid.Col offset={1} span={11}>
+                <ContainerBackgroundColor title='Background color' />
+              </Grid.Col>
+            </Grid.Row>
+          </Space>
         </Collapse.Item>
 
         <Collapse.Item name='3' header='Typography'>
-          <Stack vertical spacing='tight'>
-            <Stack wrap={false}>
-              <FontFamily />
-              <Stack.Item fill>
+          <Space direction='vertical'>
+            <Grid.Row>
+              <Grid.Col span={11}>
+                <FontFamily />
+              </Grid.Col>
+              <Grid.Col offset={1} span={11}>
                 <FontSize />
-              </Stack.Item>
-            </Stack>
-
-            <Stack wrap={false}>
-              <FontWeight />
-              <Stack.Item fill>
+              </Grid.Col>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Col span={11}>
+                <FontWeight />
+              </Grid.Col>
+              <Grid.Col offset={1} span={11}>
                 <LineHeight />
-              </Stack.Item>
-            </Stack>
-
-            <Stack wrap={false}>
-              <TextDecoration />
-              <Stack.Item fill>
+              </Grid.Col>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Col span={11}>
+                <TextDecoration />
+              </Grid.Col>
+              <Grid.Col offset={1} span={11}>
                 <Color inline={false} />
-              </Stack.Item>
-            </Stack>
-
+              </Grid.Col>
+            </Grid.Row>
             <FontStyle />
-          </Stack>
+          </Space>
         </Collapse.Item>
 
         <Collapse.Item
           name='2'
-          header='Social element'
+          header='Social item'
           contentStyle={{ padding: 0 }}
         >
           <EditTabField
@@ -130,60 +139,62 @@ function SocialElement({
   const { onUploadImage } = useEditorProps();
 
   return (
-    <Stack vertical spacing='tight'>
+    <Space direction='vertical'>
       <ImageUploaderField
         label='Image'
+        labelHidden
         name={`${focusIdx}.data.value.elements.[${index}].src`}
         helpText='The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.'
         uploadHandler={onUploadImage}
-        inline
       />
 
       <TextField
         label='Content'
         name={`${focusIdx}.data.value.elements.[${index}].content`}
         quickchange
-        inline
       />
 
-      <TextField
-        label='Icon width'
-        name={`${focusIdx}.data.value.elements.[${index}].icon-size`}
-        quickchange
-        inline
-      />
-      <TextField
-        label='Icon height'
-        name={`${focusIdx}.data.value.elements.[${index}].icon-height`}
-        quickchange
-        inline
-      />
+      <Grid.Row>
+        <Grid.Col span={11}>
+          <InputWithUnitField
+            label='Icon width'
+            name={`${focusIdx}.data.value.elements.[${index}].icon-size`}
+          />
+        </Grid.Col>
+        <Grid.Col offset={1} span={11}>
+          <InputWithUnitField
+            label='Icon height'
+            name={`${focusIdx}.data.value.elements.[${index}].icon-height`}
+          />
+        </Grid.Col>
+      </Grid.Row>
 
-      <Stack wrap={false}>
-        <Stack.Item fill>
+      <Grid.Row>
+        <Grid.Col span={11}>
           <TextField
             prefix={<IconLink />}
-            label={<span>Href</span>}
+            label='Url'
             name={`${focusIdx}.data.value.elements.[${index}].href`}
           />
-        </Stack.Item>
-
-        <SelectField
-          style={{ minWidth: 65 }}
-          label='Target'
-          name={`${focusIdx}.data.value.elements.[${index}].target`}
-          options={[
-            {
-              value: '_blank',
-              label: '_blank',
-            },
-            {
-              value: '_self',
-              label: '_self',
-            },
-          ]}
-        />
-      </Stack>
-    </Stack>
+        </Grid.Col>
+        <Grid.Col offset={1} span={11}>
+          <SelectField
+            style={{ minWidth: 65 }}
+            label='Target'
+            name={`${focusIdx}.data.value.elements.[${index}].target`}
+            options={[
+              {
+                value: '_blank',
+                label: '_blank',
+              },
+              {
+                value: '_self',
+                label: '_self',
+              },
+            ]}
+          />
+        </Grid.Col>
+      </Grid.Row>
+    </Space>
   );
 }

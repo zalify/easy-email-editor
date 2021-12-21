@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 import { BlockManager, BasicType } from 'easy-email-core';
 import { createPortal } from 'react-dom';
@@ -7,7 +7,6 @@ import {
   useBlock,
   useFocusIdx,
   BlockAvatarWrapper,
-  getShadowRoot,
 } from 'easy-email-editor';
 import { awaitForElement } from '@extensions/utils/awaitForElement';
 import { Toolbar } from './Toolbar';
@@ -16,7 +15,6 @@ export function FocusTooltip() {
   const [blockNode, setBlockNode] = useState<HTMLDivElement | null>(null);
   const { focusBlock } = useBlock();
   const { focusIdx } = useFocusIdx();
-  const [direction, setDirection] = useState<'top' | 'bottom'>('top');
 
   const isPage = focusBlock?.type === BasicType.PAGE;
 
@@ -31,40 +29,6 @@ export function FocusTooltip() {
     };
   }, [focusIdx, focusBlock]);
 
-  useEffect(() => {
-    if (blockNode) {
-      const options: IntersectionObserverInit = {
-        rootMargin: '-24px 0px 0px 0px',
-        root: getShadowRoot().firstChild as HTMLElement,
-        threshold: [0, 0.001, 0.1, 0.5, 0.999, 1],
-      };
-      const checkDirection: IntersectionObserverCallback = (ev) => {
-        const [current] = ev;
-        const { top } = current.intersectionRect;
-        const rootBounds = current.rootBounds;
-        const intersectionRatio = current.intersectionRatio;
-        if (!rootBounds) return;
-
-        if (intersectionRatio === 1) {
-          setDirection('top');
-        } else {
-          if (top) {
-            if (top > rootBounds.top) {
-              setDirection('top');
-            } else {
-              setDirection('bottom');
-            }
-          }
-        }
-      };
-      const observer = new IntersectionObserver(checkDirection, options);
-      observer.observe(blockNode);
-      return () => {
-        observer.unobserve(blockNode);
-      };
-    }
-  }, [blockNode]);
-
   const block = useMemo(() => {
     if (!focusBlock) return null;
     return BlockManager.getBlockByType(focusBlock.type);
@@ -76,6 +40,7 @@ export function FocusTooltip() {
     <>
       {createPortal(
         <div
+          id='easy-email-extensions-InteractivePrompt-FocusTooltip'
           style={{
             position: 'absolute',
             width: '100%',
@@ -131,7 +96,7 @@ export function FocusTooltip() {
             </BlockAvatarWrapper>
           </div>
 
-          <Toolbar direction={direction} block={block} />
+
           {/* outline */}
           <div
             style={{
@@ -146,6 +111,7 @@ export function FocusTooltip() {
               outline: '2px solid var(--selected-color)',
             }}
           />
+          <Toolbar block={block} blockNode={blockNode} />
         </div>,
         blockNode
       )}

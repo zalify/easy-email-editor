@@ -8,7 +8,7 @@ import { Width } from '@extensions/AttributePanel/components/attributes/Width';
 import { Align } from '@extensions/AttributePanel/components/attributes/Align';
 
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
-import { Collapse } from '@arco-design/web-react';
+import { Collapse, Grid, Space } from '@arco-design/web-react';
 import { Stack } from 'easy-email-editor';
 
 export function Divider() {
@@ -16,9 +16,17 @@ export function Divider() {
     <AttributesPanelWrapper>
       <Collapse defaultActiveKey={['-1', '0', '1', '2', '3']}>
         <Collapse.Item name='1' header='Dimension'>
-          <Width inline />
-          <Align />
-          <Padding />
+          <Space direction='vertical'>
+            <Grid.Row>
+              <Grid.Col span={11}>
+                <Width unitOptions='percent' />
+              </Grid.Col>
+              <Grid.Col offset={1} span={11}></Grid.Col>
+            </Grid.Row>
+
+            <Align />
+            <Padding />
+          </Space>
         </Collapse.Item>
 
         <Collapse.Item name='2' header='Border'>
@@ -36,7 +44,12 @@ export function Divider() {
         </Collapse.Item>
 
         <Collapse.Item name='3' header='Background'>
-          <ContainerBackgroundColor title='Background color' />
+          <Grid.Row>
+            <Grid.Col span={11}>
+              <ContainerBackgroundColor title='Background' />
+            </Grid.Col>
+            <Grid.Col offset={1} span={11}></Grid.Col>
+          </Grid.Row>
         </Collapse.Item>
       </Collapse>
     </AttributesPanelWrapper>

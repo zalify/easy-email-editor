@@ -11,7 +11,7 @@ import { Link } from '@extensions/AttributePanel/components/attributes/Link';
 import { Align } from '@extensions/AttributePanel/components/attributes/Align';
 
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
-import { Collapse } from '@arco-design/web-react';
+import { Collapse, Grid, Space } from '@arco-design/web-react';
 import { Border } from '@extensions/AttributePanel/components/attributes/Border';
 import { Stack, useEditorProps, useFocusIdx } from 'easy-email-editor';
 
@@ -26,10 +26,10 @@ export function Image() {
           <Stack vertical spacing='tight'>
             <ImageUploaderField
               label='src'
+              labelHidden
               name={`${focusIdx}.attributes.src`}
               helpText='The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.'
               uploadHandler={onUploadImage}
-              inline
             />
             <ColorPickerField
               label='Background color'
@@ -41,18 +41,23 @@ export function Image() {
         </Collapse.Item>
 
         <Collapse.Item name='0' header='Dimension'>
-          <Stack vertical spacing='tight'>
-            <Stack wrap={false}>
-              <Stack.Item fill>
+          <Space direction='vertical'>
+            <Grid.Row>
+              <Grid.Col span={11}>
                 <Width />
-              </Stack.Item>
-              <Stack.Item fill>
+              </Grid.Col>
+              <Grid.Col offset={1} span={11}>
                 <Height />
-              </Stack.Item>
-            </Stack>
+              </Grid.Col>
+            </Grid.Row>
+
             <Padding />
-            <Align />
-          </Stack>
+            <Grid.Row>
+              <Grid.Col span={24}>
+                <Align />
+              </Grid.Col>
+            </Grid.Row>
+          </Space>
         </Collapse.Item>
 
         <Collapse.Item name='2' header='Link'>
@@ -66,12 +71,14 @@ export function Image() {
         </Collapse.Item>
 
         <Collapse.Item name='4' header='Extra'>
-          <TextField
-            label='title'
-            name={`${focusIdx}.attributes.title`}
-            inline
-          />
-          <TextField label='alt' name={`${focusIdx}.attributes.alt`} inline />
+          <Grid.Row>
+            <Grid.Col span={11}>
+              <TextField label='title' name={`${focusIdx}.attributes.title`} />
+            </Grid.Col>
+            <Grid.Col offset={1} span={11}>
+              <TextField label='alt' name={`${focusIdx}.attributes.alt`} />
+            </Grid.Col>
+          </Grid.Row>
         </Collapse.Item>
       </Collapse>
     </AttributesPanelWrapper>

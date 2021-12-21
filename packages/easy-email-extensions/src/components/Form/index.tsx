@@ -11,6 +11,8 @@ import {
   DatePickerProps,
   TextAreaProps,
   CheckboxGroupProps,
+  TreeSelect,
+  TreeSelectProps,
 } from '@arco-design/web-react';
 import { ImageUploaderProps, ImageUploader } from './ImageUploader';
 import { UploadField as Uploader, UploadFieldProps } from './UploadField';
@@ -19,6 +21,7 @@ import { Select, SelectProps } from './Select';
 import { RadioGroup, RadioGroupProps } from './RadioGroup';
 import enhancer from './enhancer';
 import { Input, InputProps } from './Input';
+import { InputWithUnit, InputWithUnitProps } from './InputWithUnit';
 import { CheckBoxGroup } from './CheckBoxGroup';
 import { EditTab, EditTabProps } from './EditTab';
 import { Dayjs } from 'dayjs';
@@ -31,6 +34,12 @@ export const TextField = enhancer<
   InputProps,
   Required<ArcoInputProps>['onChange']
 >(Input, (value) => value);
+
+export const InputWithUnitField = enhancer<
+  InputWithUnitProps,
+  Required<InputWithUnitProps>['onChange']
+>(InputWithUnit, (value) => value);
+
 export const SearchField = enhancer<
   InputProps,
   Required<InputSearchProps>['onChange']
@@ -44,7 +53,8 @@ export const TextAreaField = enhancer<
 export const NumberField = enhancer<
   InputNumberProps,
   Required<InputNumberProps>['onChange']
->(InputNumber, (e: number | string | undefined | null) => e);
+>(InputNumber, (e) => e);
+
 export const SliderField = enhancer<
   SliderProps,
   Required<SliderProps>['onChange']
@@ -66,6 +76,11 @@ export const ImageUploaderField = enhancer<ImageUploaderProps>(
 );
 
 export const SelectField = enhancer<SelectProps>(Select, (e: string) => e);
+
+export const TreeSelectField = enhancer<TreeSelectProps>(
+  TreeSelect,
+  (e: any) => e
+);
 
 export const AutoCompleteField = enhancer<AutoCompleteProps>(
   AutoComplete,

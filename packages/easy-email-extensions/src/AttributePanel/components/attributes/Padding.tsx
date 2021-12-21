@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { TextField } from '../../../components/Form';
+import { InputWithUnitField, TextField } from '../../../components/Form';
 import { useFocusIdx, Stack, useBlock, TextStyle } from 'easy-email-editor';
 import { createBlockDataByType } from 'easy-email-core';
 import { Form, useFormState } from 'react-final-form';
+import { Grid } from '@arco-design/web-react';
 
 export interface PaddingProps {
   title?: string;
@@ -65,38 +66,24 @@ export function Padding(props: PaddingProps = {}) {
           <>
             <Stack vertical spacing='extraTight'>
               <TextStyle variation='strong'>{title}</TextStyle>
-              <Stack wrap={false}>
-                <Stack.Item fill>
-                  <TextField
-                    label={<span>Top&nbsp;</span>}
-                    quickchange
-                    name='top'
-                    inline
-                  />
-                </Stack.Item>
-                <Stack.Item fill>
-                  <TextField label='Bottom' quickchange name='bottom' inline />
-                </Stack.Item>
-              </Stack>
 
-              <Stack wrap={false}>
-                <Stack.Item fill>
-                  <TextField
-                    label={<span>Left</span>}
-                    quickchange
-                    name='left'
-                    inline
-                  />
-                </Stack.Item>
-                <Stack.Item fill>
-                  <TextField
-                    label={<span>Right&nbsp;</span>}
-                    quickchange
-                    name='right'
-                    inline
-                  />
-                </Stack.Item>
-              </Stack>
+              <Grid.Row>
+                <Grid.Col span={11}>
+                  <InputWithUnitField label='Top' name='top' />
+                </Grid.Col>
+                <Grid.Col offset={1} span={11}>
+                  <InputWithUnitField label='Left' name='left' />
+                </Grid.Col>
+              </Grid.Row>
+
+              <Grid.Row>
+                <Grid.Col span={11}>
+                  <InputWithUnitField label='Bottom' name='bottom' />
+                </Grid.Col>
+                <Grid.Col offset={1} span={11}>
+                  <InputWithUnitField label='Right' name='right' />
+                </Grid.Col>
+              </Grid.Row>
             </Stack>
             <PaddingChangeWrapper onChange={onChancePadding} />
           </>

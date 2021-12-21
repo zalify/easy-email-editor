@@ -8,7 +8,12 @@ import {
   JsonToMjml,
   MjmlToJson,
 } from 'easy-email-core';
-import { useBlock, useFocusIdx, useEditorContext } from 'easy-email-editor';
+import {
+  useBlock,
+  useFocusIdx,
+  useEditorContext,
+  useEditorProps,
+} from 'easy-email-editor';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 export function SourceCodePanel() {
@@ -17,6 +22,7 @@ export function SourceCodePanel() {
 
   const [mjmlText, setMjmlText] = useState('');
   const { pageData } = useEditorContext();
+  const { mergeTags } = useEditorProps();
 
   const code = useMemo(() => {
     if (!focusBlock) return '';
@@ -85,9 +91,10 @@ export function SourceCodePanel() {
           data: focusBlock,
           context: pageData,
           mode: 'production',
+          dataSource: mergeTags,
         })
       );
-  }, [focusBlock, focusIdx, pageData]);
+  }, [focusBlock, focusIdx, pageData, mergeTags]);
 
   if (!focusBlock) return null;
 

@@ -7,7 +7,7 @@ import {
 } from '@extensions/components/Form';
 import { Align } from '@extensions/AttributePanel/components/attributes/Align';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
-import { Collapse } from '@arco-design/web-react';
+import { Collapse, Grid, Space } from '@arco-design/web-react';
 import { IconLink } from '@arco-design/web-react/icon';
 import { NavbarLinkPadding } from '@extensions/AttributePanel/components/attributes/NavbarLinkPadding';
 import { useFocusIdx, Stack } from 'easy-email-editor';
@@ -60,58 +60,56 @@ function NavbarLink({
 }) {
   const { focusIdx } = useFocusIdx();
   return (
-    <Stack vertical spacing='tight'>
+    <Space direction='vertical'>
       <TextField
         label='Content'
         name={`${focusIdx}.data.value.links.[${index}].content`}
       />
-      <Stack wrap={false}>
-        <div style={{ width: 65 }}>
+      <Grid.Row>
+        <Grid.Col span={11}>
           <TextField
             label='Font size'
             name={`${focusIdx}.data.value.links.[${index}].font-size`}
           />
-        </div>
-
-        <Stack.Item fill>
+        </Grid.Col>
+        <Grid.Col offset={1} span={11}>
           <ColorPickerField
             label='Color'
             name={`${focusIdx}.data.value.links.[${index}].color`}
             alignment='center'
           />
-        </Stack.Item>
-      </Stack>
-
-      <Stack wrap={false}>
-        <Stack.Item fill>
+        </Grid.Col>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Col span={11}>
           <TextField
             prefix={<IconLink />}
-            label={<span>Href</span>}
+            label={<span>Url</span>}
             name={`${focusIdx}.data.value.links.[${index}].href`}
           />
-        </Stack.Item>
-
-        <SelectField
-          style={{ minWidth: 65 }}
-          label='Target'
-          name={`${focusIdx}.data.value.links.[${index}].target`}
-          options={[
-            {
-              value: '_blank',
-              label: '_blank',
-            },
-            {
-              value: '_self',
-              label: '_self',
-            },
-          ]}
-        />
-      </Stack>
-
+        </Grid.Col>
+        <Grid.Col offset={1} span={11}>
+          <SelectField
+            style={{ minWidth: 65 }}
+            label='Target'
+            name={`${focusIdx}.data.value.links.[${index}].target`}
+            options={[
+              {
+                value: '_blank',
+                label: '_blank',
+              },
+              {
+                value: '_self',
+                label: '_self',
+              },
+            ]}
+          />
+        </Grid.Col>
+      </Grid.Row>
       <NavbarLinkPadding
         key={index}
         name={`${focusIdx}.data.value.links.[${index}].padding`}
       />
-    </Stack>
+    </Space>
   );
 }

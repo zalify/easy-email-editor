@@ -1,3 +1,5 @@
+export { isValidBlockData } from './isValidBlockData';
+export { getContextMergeTags } from './getContextMergeTags';
 export { JsonToMjml } from './JsonToMjml';
 export { MjmlToJson } from './MjmlToJson';
 export { parseReactBlockToBlockData } from './parseReactBlockToBlockData';

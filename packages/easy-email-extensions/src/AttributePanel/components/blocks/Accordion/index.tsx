@@ -6,10 +6,12 @@ import { FontFamily } from '@extensions/AttributePanel/components/attributes/Fon
 import { Padding } from '@extensions/AttributePanel/components/attributes/Padding';
 import {
   ImageUploaderField,
+  InputWithUnitField,
   RadioGroupField,
   SelectField,
   TextField,
 } from '@extensions/components/Form';
+import { Collapse, Grid, Space } from '@arco-design/web-react';
 
 const positionOptions = [
   {
@@ -43,55 +45,75 @@ export function Accordion() {
 
   return (
     <AttributesPanelWrapper>
-      <Stack vertical>
-        <Padding />
-        <BackgroundColor />
-        <FontFamily />
-        <TextField
-          label='border'
-          name={`${focusIdx}.attributes.border`}
-          inline
-          quickchange
-        />
-        <TextField
-          label='Icon width'
-          quickchange
-          name={`${focusIdx}.attributes.icon-width`}
-          inline
-        />
-        <TextField
-          label='Icon height'
-          quickchange
-          name={`${focusIdx}.attributes.icon-height`}
-          inline
-        />
+      <Collapse defaultActiveKey={['0', '1', '2']}>
+        <Collapse.Item name='0' header='Setting'>
+          <Space direction='vertical'>
+            <Grid.Row>
+              <Grid.Col span={11}>
+                <BackgroundColor />
+              </Grid.Col>
+              <Grid.Col offset={1} span={11}>
+                <FontFamily />
+              </Grid.Col>
+            </Grid.Row>
 
-        <ImageUploaderField
-          label='Icon unwrapped url'
-          name={`${focusIdx}.attributes.icon-unwrapped-url`}
-          helpText='The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.'
-          uploadHandler={onUploadImage}
-        />
-        <ImageUploaderField
-          label='Icon wrapped url'
-          name={`${focusIdx}.attributes.icon-wrapped-url`}
-          helpText='The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.'
-          uploadHandler={onUploadImage}
-        />
-        <RadioGroupField
-          label='Icon position'
-          name={`${focusIdx}.attributes.icon-position`}
-          options={positionOptions}
-          inline
-        />
-        <SelectField
-          style={{ width: 120 }}
-          label='Icon align'
-          name={`${focusIdx}.attributes.icon-align`}
-          options={alignOptions}
-          inline
-        />
-      </Stack>
+            <Padding />
+
+            <Grid.Row>
+              <Grid.Col span={11}>
+                <InputWithUnitField
+                  label='Icon width'
+                  name={`${focusIdx}.attributes.icon-width`}
+                />
+              </Grid.Col>
+              <Grid.Col offset={1} span={11}>
+                <InputWithUnitField
+                  label='Icon height'
+                  name={`${focusIdx}.attributes.icon-height`}
+                />
+              </Grid.Col>
+            </Grid.Row>
+
+            <Grid.Row>
+              <Grid.Col span={11}>
+                <ImageUploaderField
+                  label='Unwrapped icon'
+                  name={`${focusIdx}.attributes.icon-unwrapped-url`}
+                  // helpText='The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.'
+                  uploadHandler={onUploadImage}
+                />
+              </Grid.Col>
+              <Grid.Col offset={1} span={11}>
+                <ImageUploaderField
+                  label='Wrapped icon'
+                  name={`${focusIdx}.attributes.icon-wrapped-url`}
+                  uploadHandler={onUploadImage}
+                />
+              </Grid.Col>
+            </Grid.Row>
+
+            <Grid.Row>
+              <Grid.Col span={11}>
+                <RadioGroupField
+                  label='Icon position'
+                  name={`${focusIdx}.attributes.icon-position`}
+                  options={positionOptions}
+                />
+              </Grid.Col>
+              <Grid.Col offset={1} span={11}>
+                <SelectField
+                  style={{ width: 120 }}
+                  label='Icon align'
+                  name={`${focusIdx}.attributes.icon-align`}
+                  options={alignOptions}
+                />
+              </Grid.Col>
+            </Grid.Row>
+
+            <TextField label='border' name={`${focusIdx}.attributes.border`} />
+          </Space>
+        </Collapse.Item>
+      </Collapse>
     </AttributesPanelWrapper>
   );
 }

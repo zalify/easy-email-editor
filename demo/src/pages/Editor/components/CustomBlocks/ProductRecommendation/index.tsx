@@ -9,7 +9,8 @@ import { CustomBlocksType } from '../constants';
 import React from 'react';
 import { merge } from 'lodash';
 
-const { Column, Section, Wrapper, Text, Button, Image, Group } = components;
+const { Column, Section, Wrapper, Text, Button, Image, Group, Template } =
+  components;
 
 export type IProductRecommendation = IBlockData<
   {
@@ -34,11 +35,11 @@ export type IProductRecommendation = IBlockData<
 
 export const ProductRecommendation = createCustomBlock<IProductRecommendation>({
   name: 'Product recommendation',
-  type: CustomBlocksType.PRODUCT_RECOMMENDATION as any,
+  type: CustomBlocksType.PRODUCT_RECOMMENDATION,
   validParentType: [BasicType.PAGE],
   create: (payload) => {
     const defaultData: IProductRecommendation = {
-      type: CustomBlocksType.PRODUCT_RECOMMENDATION as any,
+      type: CustomBlocksType.PRODUCT_RECOMMENDATION,
       data: {
         value: {
           title: 'You might also like',
@@ -76,11 +77,22 @@ export const ProductRecommendation = createCustomBlock<IProductRecommendation>({
         'product-price-color': '#414141',
         'title-color': '#222222',
       },
-      children: [],
+      children: [
+        {
+          type: BasicType.TEXT,
+          children: [],
+          data: {
+            value: {
+              content: 'custom block title',
+            },
+          },
+          attributes: {},
+        },
+      ],
     };
     return merge(defaultData, payload);
   },
-  render: (data) => {
+  render: (data: IBlockData<IProductRecommendation>, idx, context) => {
     const { title, productList, buttonText } = data.data.value;
     const attributes = data.attributes;
 
@@ -94,16 +106,7 @@ export const ProductRecommendation = createCustomBlock<IProductRecommendation>({
       >
         <Section padding='0px'>
           <Column padding='0px' border='none' vertical-align='top'>
-            <Text
-              font-size='20px'
-              padding='10px 25px 10px 25px'
-              line-height='1'
-              align='center'
-              font-weight='bold'
-              color={attributes['title-color']}
-            >
-              {title}
-            </Text>
+            <Template value={{ idx }}>{data.children}</Template>
           </Column>
         </Section>
 
@@ -204,6 +207,5 @@ export const ProductRecommendation = createCustomBlock<IProductRecommendation>({
     );
   },
 });
-
 
 export { Panel } from './Panel';

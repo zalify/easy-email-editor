@@ -13,17 +13,14 @@ const options = [
   },
 ];
 
-export function FontStyle({ inline = true }: { inline?: boolean; }) {
+export function FontStyle() {
   const { focusIdx } = useFocusIdx();
 
-  return useMemo(() => {
-    return (
-      <RadioGroupField
-        label='Font style'
-        name={`${focusIdx}.attributes.font-style`}
-        options={options}
-        inline={inline}
-      />
-    );
-  }, [focusIdx, inline]);
+  return (
+    <RadioGroupField
+      label='Font style'
+      name={`${focusIdx}.attributes.font-style`}
+      options={options}
+    />
+  );
 }

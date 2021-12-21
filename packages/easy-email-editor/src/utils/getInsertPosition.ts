@@ -15,39 +15,14 @@ interface Params {
   idx: string;
   directionPosition: DirectionPosition;
   dragType: string;
-  isShadowDom: boolean;
-  actionType?: 'move' | 'add';
 }
 
 export function getInsertPosition(params: Params) {
-  const {
-    idx,
-    dragType,
-    directionPosition,
-    context,
-    isShadowDom,
-    actionType = 'add',
-  } = params;
+  const { idx, dragType, directionPosition, context } = params;
 
   const parentData = getSameParent(context, idx, dragType);
 
   if (!parentData) return null;
-
-  if (!isShadowDom) {
-    let insertIndex = getIndexByIdx(idx);
-    if (
-      directionPosition.vertical.direction === 'bottom' &&
-      actionType === 'add'
-    ) {
-      insertIndex += 1;
-    }
-    return {
-      parentIdx: parentData.parentIdx,
-      insertIndex: insertIndex,
-      endDirection: directionPosition.vertical.direction,
-      hoverIdx: idx,
-    };
-  }
 
   const insertData = getInsetParentAndIndex(
     context,

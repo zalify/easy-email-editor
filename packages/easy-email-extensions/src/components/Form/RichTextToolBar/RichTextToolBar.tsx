@@ -12,9 +12,8 @@ import { Tools } from './components/Tools';
 import styleText from './shadow-dom.scss?inline';
 
 export function RichTextToolBar() {
-  const [direction, setDirection] = useState<'top' | 'bottom'>('top');
+  const [position, setPosition] = useState({ top: 0, left: 0 });
   const [blockNode, setBlockNode] = useState<HTMLDivElement | null>(null);
-  const [offsetX, setOffsetX] = useState(0);
   const { focusBlock } = useBlock();
   const { pageData } = useEditorContext();
   const { focusIdx } = useFocusIdx();
@@ -33,42 +32,25 @@ export function RichTextToolBar() {
   }, [focusIdx, focusBlock]);
 
   useEffect(() => {
-    if (blockNode) {
-      const options: IntersectionObserverInit = {
-        rootMargin: '-84px 0px 0px 0px',
-        root: getShadowRoot().firstChild as HTMLElement,
-        threshold: [0, 0.001, 0.1, 0.999, 0.8, 0.9, 1],
-      };
-      const checkDirection: IntersectionObserverCallback = (ev) => {
-        const [current] = ev;
-        const { top } = current.intersectionRect;
-        const boundingClientRect = current.boundingClientRect;
-        const rootBounds = current.rootBounds;
-        const intersectionRatio = current.intersectionRatio;
-        if (!rootBounds) return;
 
-        const paddingLeft = (rootBounds.width - pageWidth) / 2;
-        const offsetLeft = boundingClientRect.left - rootBounds.left;
-        setOffsetX(paddingLeft - offsetLeft);
-        if (intersectionRatio === 1) {
-          setDirection('top');
-        } else {
-          if (top) {
-            if (top > rootBounds.top) {
-              setDirection('top');
-            } else {
-              setDirection('bottom');
-            }
-          }
-        }
-      };
-      const observer = new IntersectionObserver(checkDirection, options);
-      observer.observe(blockNode);
-      return () => {
-        observer.unobserve(blockNode);
-      };
-    }
-  }, [blockNode, pageWidth]);
+    const ele = getShadowRoot().querySelector('.shadow-container');
+    if (!blockNode || !ele) return;
+
+    const check = () => {
+      const { top, left } = blockNode.getBoundingClientRect();
+      setPosition({ top, left });
+    };
+
+    const onScroll = () => {
+      check();
+    };
+    check();
+    ele.addEventListener('scroll', onScroll, true);
+    return () => {
+      ele.removeEventListener('scroll', onScroll, true);
+    };
+  }, [blockNode]);
+
 
   if (!blockNode) return null;
 
@@ -81,14 +63,13 @@ export function RichTextToolBar() {
           <style dangerouslySetInnerHTML={{ __html: styleText }} />
           <div
             style={{
-              transform: direction === 'top' ? 'translate(0,-100%)' : undefined,
+              transform: 'translate(0,-100%)',
               padding: '4px 8px',
               boxSizing: 'border-box',
-              position: 'absolute',
+              position: 'fixed',
               zIndex: 100,
-              top: direction === 'top' ? -40 : 'calc(100% + 40px)',
-              left: offsetX,
-              width: pageWidth,
+              top: position.top - 24,
+              left: position.left,
             }}
           >
             <div
@@ -102,7 +83,7 @@ export function RichTextToolBar() {
               }}
             />
 
-            <Tools container={editorContainer} onChange={() => {}} />
+            <Tools container={editorContainer} onChange={() => { }} />
           </div>
         </>,
         blockNode

@@ -1,12 +1,19 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   DATA_ATTRIBUTE_DROP_CONTAINER,
   DATA_ATTRIBUTE_ID,
+  IconFont,
   scrollBlockEleIntoView,
+  Stack,
   TextStyle,
   useBlock,
   useEditorContext,
-  useEditorProps,
   useFocusIdx,
   useHoverIdx,
 } from 'easy-email-editor';
@@ -17,6 +24,7 @@ import {
   getIndexByIdx,
   getNodeIdxClassName,
   getPageIdx,
+  getParentIdx,
   IBlockData,
 } from 'easy-email-core';
 import styles from './index.module.scss';
@@ -29,24 +37,24 @@ import {
   getDirectionFormDropPosition,
   useAvatarWrapperDrop,
 } from './hooks/useAvatarWrapperDrop';
+import { getIconNameByBlockType } from '@extensions/AttributePanel/utils/getIconNameByBlockType';
+import { Space } from '@arco-design/web-react';
 
 export interface IBlockDataWithId extends IBlockData {
   id: string;
+  icon?: React.ReactElement;
   parent: IBlockDataWithId | null;
   children: IBlockDataWithId[];
   className?: string;
 }
 
 export function BlockLayer() {
-  const {
-    pageData,
-    formState: { values },
-  } = useEditorContext();
+  const { pageData } = useEditorContext();
 
-  const { onUploadImage, onAddCollection } = useEditorProps();
   const { focusIdx, setFocusIdx } = useFocusIdx();
   const { setHoverIdx, setIsDragging, setDirection } = useHoverIdx();
-  const { moveBlock, setValueByIdx, copyBlock, removeBlock } = useBlock();
+  const { moveBlock, setValueByIdx, copyBlock, removeBlock, values } =
+    useBlock();
 
   const {
     setBlockLayerRef,
@@ -54,6 +62,12 @@ export function BlockLayer() {
     blockLayerRef,
     removeHightLightClassName,
   } = useAvatarWrapperDrop();
+
+  const valueRef = useRef(values);
+
+  useEffect(() => {
+    valueRef.current = values;
+  }, [values]);
 
   const [contextMenuData, setContextMenuData] = useState<{
     blockData: IBlockDataWithId;
@@ -64,14 +78,14 @@ export function BlockLayer() {
   const onToggleVisible = useCallback(
     ({ id }: IBlockDataWithId, e: React.MouseEvent) => {
       e.stopPropagation();
-      const blockData = get(values, id) as IBlockData | null;
+      const blockData = get(valueRef.current, id) as IBlockData | null;
 
       if (blockData) {
         blockData.data.hidden = !Boolean(blockData.data.hidden);
         setValueByIdx(id, blockData);
       }
     },
-    [setValueByIdx, values]
+    [setValueByIdx]
   );
 
   const renderTitle = useCallback(
@@ -87,7 +101,10 @@ export function BlockLayer() {
             !isPage && 'email-block'
           )}
         >
-          <TextStyle size='smallest'>{block?.name}</TextStyle>
+          <Space align='center' size="mini">
+            <IconFont iconName={getIconNameByBlockType(data.type)} style={{ fontSize: 12, color: '#999' }} />
+            <TextStyle size='smallest'>{block?.name}</TextStyle>
+          </Space>
           <div className={styles.eyeIcon}>
             <EyeIcon blockData={data} onToggleVisible={onToggleVisible} />
           </div>
@@ -119,7 +136,9 @@ export function BlockLayer() {
   const onSelect = useCallback(
     (selectedId: string) => {
       setFocusIdx(selectedId);
-      scrollBlockEleIntoView({ idx: selectedId });
+      setTimeout(() => {
+        scrollBlockEleIntoView({ idx: selectedId });
+      }, 50);
     },
     [setFocusIdx]
   );
@@ -188,23 +207,6 @@ export function BlockLayer() {
     [moveBlock]
   );
 
-  useEffect(() => {
-    if (!blockLayerRef) return;
-    if (focusIdx) {
-      // after dom updated
-      setTimeout(() => {
-        const selectedNode = blockLayerRef.querySelector(
-          `[${DATA_ATTRIBUTE_ID}="${focusIdx}"]`
-        );
-        if (selectedNode) {
-          selectedNode.scrollIntoView({
-            block: 'center',
-            behavior: 'smooth',
-          });
-        }
-      }, 50);
-    }
-  }, [blockLayerRef, focusIdx]);
 
   const blockTreeAllowDrop: BlockTreeProps<IBlockDataWithId>['allowDrop'] =
     useCallback(
@@ -227,62 +229,58 @@ export function BlockLayer() {
       [allowDrop]
     );
 
+  const selectedKeys = useMemo(() => {
+    if (!focusIdx) return [];
+
+    return [focusIdx];
+  }, [focusIdx]);
+
+  const expandedKeys = useMemo(() => {
+    if (!focusIdx) return [];
+    let currentIdx = getParentIdx(focusIdx);
+    const keys: string[] = [];
+    while (currentIdx) {
+      keys.push(currentIdx);
+      currentIdx = getParentIdx(currentIdx);
+    }
+    return keys;
+  }, [focusIdx]);
+
   const hasFocus = Boolean(focusIdx);
 
-  return useMemo(() => {
-    if (!hasFocus) return null;
-    return (
-      <div
-        ref={setBlockLayerRef}
-        id='BlockLayerManager'
-        {...{
-          [DATA_ATTRIBUTE_DROP_CONTAINER]: 'true',
-        }}
-      >
-        <BlockTree<IBlockDataWithId>
-          selectedId={focusIdx}
-          defaultExpandAll
-          treeData={treeData}
-          renderTitle={renderTitle}
-          allowDrop={blockTreeAllowDrop}
-          onContextMenu={onContextMenu}
-          onDrop={onDrop}
-          onDragStart={onDragStart}
-          onDragEnd={onDragEnd}
-          onSelect={onSelect}
-          onMouseEnter={onMouseEnter}
-          onMouseLeave={onMouseLeave}
+  if (!hasFocus) return null;
+  return (
+    <div
+      ref={setBlockLayerRef}
+      id='BlockLayerManager'
+      {...{
+        [DATA_ATTRIBUTE_DROP_CONTAINER]: 'true',
+      }}
+    >
+      <BlockTree<IBlockDataWithId>
+        selectedKeys={selectedKeys}
+        expandedKeys={expandedKeys}
+        defaultExpandAll
+        treeData={treeData}
+        renderTitle={renderTitle}
+        allowDrop={blockTreeAllowDrop}
+        onContextMenu={onContextMenu}
+        onDrop={onDrop}
+        onDragStart={onDragStart}
+        onDragEnd={onDragEnd}
+        onSelect={onSelect}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+      />
+      {contextMenuData && (
+        <ContextMenu
+          onClose={onCloseContextMenu}
+          moveBlock={moveBlock}
+          copyBlock={copyBlock}
+          removeBlock={removeBlock}
+          contextMenuData={contextMenuData}
         />
-        {contextMenuData && (
-          <ContextMenu
-            onClose={onCloseContextMenu}
-            moveBlock={moveBlock}
-            copyBlock={copyBlock}
-            removeBlock={removeBlock}
-            contextMenuData={contextMenuData}
-          />
-        )}
-      </div>
-    );
-  }, [
-    hasFocus,
-    focusIdx,
-    treeData,
-    renderTitle,
-    allowDrop,
-    onContextMenu,
-    onDrop,
-    onSelect,
-    onMouseEnter,
-    onMouseLeave,
-    contextMenuData,
-    onCloseContextMenu,
-    onUploadImage,
-    onAddCollection,
-    moveBlock,
-    copyBlock,
-    removeBlock,
-    onDragEnd,
-    onDragStart,
-  ]);
+      )}
+    </div>
+  );
 }

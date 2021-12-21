@@ -23,4 +23,6 @@ export enum BasicType {
   SOCIAL = 'social',
   // TODO
   TABLE = 'table',
+
+  TEMPLATE = 'template',
 }

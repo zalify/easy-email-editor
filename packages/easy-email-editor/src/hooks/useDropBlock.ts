@@ -63,7 +63,7 @@ export function useDropBlock() {
             editNode?.focus();
           }
           setFocusIdx(idx);
-          scrollBlockEleIntoView({ idx });
+          // scrollBlockEleIntoView({ idx });
         }
       };
 
@@ -125,9 +125,8 @@ export function useDropBlock() {
             idx,
             directionPosition,
             dragType: cacheDataTransfer.current.type,
-            isShadowDom: true,
-            actionType: cacheDataTransfer.current.action,
           });
+
           if (positionData) {
             ev.preventDefault();
             lastDragover.valid = true;

@@ -17,19 +17,14 @@ const options = [
   },
 ];
 
-export function Align() {
+export function Align({ inline }: { inline?: boolean }) {
   const { focusIdx } = useFocusIdx();
 
-  return useMemo(() => {
-    return (
-      <Stack>
-        <RadioGroupField
-          label='Align'
-          name={`${focusIdx}.attributes.align`}
-          options={options}
-          inline
-        />
-      </Stack>
-    );
-  }, [focusIdx]);
+  return (
+    <RadioGroupField
+      label='Align'
+      name={`${focusIdx}.attributes.align`}
+      options={options}
+    />
+  );
 }

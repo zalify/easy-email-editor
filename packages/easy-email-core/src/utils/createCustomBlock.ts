@@ -1,10 +1,20 @@
+import { IPage } from '@core/blocks';
 import { IBlock, IBlockData } from '@core/typings';
+import { ReactElement } from 'react';
 
 interface CreateBlockOption<T extends IBlockData>
   extends Omit<IBlock<T>, 'transform'> {}
 
 export function createCustomBlock<T extends IBlockData>(
-  block: CreateBlockOption<T> & { render: IBlock<T>['render'] }
+  block: CreateBlockOption<T> & {
+    render: (
+      data: T,
+      idx: string | null,
+      mode: 'testing' | 'production',
+      root?: IPage,
+      context?: { [key: string]: any }
+    ) => IBlockData | ReactElement;
+  }
 ): IBlock<T> {
   return {
     ...block,

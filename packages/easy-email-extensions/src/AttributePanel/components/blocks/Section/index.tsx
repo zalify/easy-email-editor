@@ -6,7 +6,7 @@ import { SwitchField } from '@extensions/components/Form';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
-import { Collapse } from '@arco-design/web-react';
+import { Collapse, Grid, Space } from '@arco-design/web-react';
 import { Stack, TextStyle, useBlock, useFocusIdx } from 'easy-email-editor';
 import { BasicType, BlockManager } from 'easy-email-core';
 
@@ -56,27 +56,23 @@ export function Section() {
     <AttributesPanelWrapper style={{ padding: 0 }}>
       <Collapse defaultActiveKey={['0', '1', '2']}>
         <Collapse.Item name='0' header='Dimension'>
-          <Stack vertical>
-            <Stack vertical spacing='none'>
-              <TextStyle variation='strong'>Group</TextStyle>
-              <Stack wrap={false} alignment='trailing'>
-                <Stack.Item fill>
-                  <TextStyle>
-                    Prevent columns from stacking on mobile.
-                  </TextStyle>
-                </Stack.Item>
+          <Space direction='vertical'>
+            <Grid.Row>
+              <Grid.Col span={12}>
                 <SwitchField
-                  label=''
-                  labelHidden
+                  label='Group'
                   name={`${focusIdx}.data.value.noWrap`}
+                  helpText='Prevent columns from stacking on mobile.'
                   checkedText='True'
                   uncheckedText='False'
                   inline
                 />
-              </Stack>
-            </Stack>
+              </Grid.Col>
+              <Grid.Col span={12}></Grid.Col>
+            </Grid.Row>
+
             <Padding />
-          </Stack>
+          </Space>
         </Collapse.Item>
         <Collapse.Item name='1' header='Background'>
           <Stack vertical spacing='tight'>

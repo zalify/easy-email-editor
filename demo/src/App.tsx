@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import Page from '@demo/components/Page';
 import store from '@demo/store';
 import '@demo/styles/common.scss';
+import '@arco-design/web-react/dist/css/arco.css';
 import { history } from './utils/history';
 
 const HomePromise = import('@demo/pages/Home');

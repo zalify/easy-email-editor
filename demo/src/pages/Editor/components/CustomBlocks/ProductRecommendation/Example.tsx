@@ -3,11 +3,10 @@ import { BlockMaskWrapper } from 'easy-email-extensions';
 import React from 'react';
 import { CustomBlocksType } from '../constants';
 
-
 export function Example() {
   return (
     <BlockMaskWrapper
-      type={CustomBlocksType.PRODUCT_RECOMMENDATION as any}
+      type={CustomBlocksType.PRODUCT_RECOMMENDATION}
       payload={{}}
     >
       <div style={{ position: 'relative' }}>

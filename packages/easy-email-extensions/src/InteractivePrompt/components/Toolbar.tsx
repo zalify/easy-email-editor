@@ -1,27 +1,50 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   BasicType,
   IBlock,
   getParentIdx,
   getSiblingIdx,
 } from 'easy-email-core';
-import { useBlock, useFocusIdx } from 'easy-email-editor';
+import { getShadowRoot, useBlock, useEditorContext, useFocusIdx } from 'easy-email-editor';
 import { classnames } from '@extensions/utils/classnames';
 import { useAddToCollection } from '@extensions/hooks/useAddToCollection';
+import { debounce } from 'lodash';
 
 export function Toolbar({
   block,
-  direction,
+  blockNode,
 }: {
   block: IBlock;
-  direction: 'top' | 'bottom';
+  blockNode: HTMLElement;
 }) {
   const { moveBlock, copyBlock, removeBlock } = useBlock();
   const { focusIdx, setFocusIdx } = useFocusIdx();
-
+  const { initialized } = useEditorContext();
   const { modal, setModalVisible } = useAddToCollection();
+  const [position, setPosition] = useState({ top: 0, left: 0 });
 
   const isPage = block.type === BasicType.PAGE;
+
+  useEffect(() => {
+    const check = () => {
+      const { top, left } = blockNode.getBoundingClientRect();
+      setPosition({ top, left });
+    };
+
+    const ele = getShadowRoot().querySelector('.shadow-container');
+
+    if (!ele || !initialized) return;
+    check();
+    const onScroll = () => {
+      check();
+    };
+
+    ele.addEventListener('scroll', onScroll, true);
+    return () => {
+      ele.removeEventListener('scroll', onScroll, true);
+    };
+  }, [blockNode, initialized]);
+
 
   const handleMoveUp = () => {
     moveBlock(focusIdx, getSiblingIdx(focusIdx, -1));
@@ -32,41 +55,52 @@ export function Toolbar({
   };
 
   const handleAddToCollection = () => {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
     setModalVisible(true);
   };
 
   const handleCopy: React.MouseEventHandler<HTMLDivElement> = (ev) => {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
     copyBlock(focusIdx);
   };
 
   const handleDelete = () => {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
     removeBlock(focusIdx);
   };
 
   const handleSelectParent = () => {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
     setFocusIdx(getParentIdx(focusIdx)!);
   };
 
   return (
     <>
       <div
+        id='easy-email-extensions-InteractivePrompt-Toolbar'
         style={{
-          position: 'absolute',
-          left: 0,
-          top: direction === 'top' || isPage ? 0 : '100%',
-          fontSize: 14,
-          zIndex: 3,
-          color: '#000',
-          width: '100%',
-          pointerEvents: 'none',
-          lineHeight: '22px',
+          position: 'fixed',
+          left: position.left,
+          height: 0,
+          top: position.top,
+          zIndex: 100,
         }}
       >
         <div
           style={{
+            fontSize: 14,
+            lineHeight: '22px',
+            pointerEvents: 'auto',
             color: '#ffffff',
-            transform:
-              direction !== 'top' || isPage ? undefined : 'translateY(-100%)',
+            transform: 'translateY(-100%)',
             display: 'flex',
             // justifyContent: 'space-between',
           }}

@@ -69,7 +69,10 @@ export function useAvatarWrapperDrop() {
 
       if (dropPosition === 0) {
         if (
-          dragBlock.validParentType.includes(dropNode.dataRef.type) &&
+          BlockManager.getAutoCompletePath(
+            dragBlock.type,
+            dropNode.dataRef.type
+          ) &&
           dropNode.dataRef.children.length === 0
         ) {
           return {
@@ -187,7 +190,7 @@ export function useAvatarWrapperDrop() {
           setDataTransfer((dataTransfer: any) => {
             return {
               ...dataTransfer,
-              parentIdx: getIndexByIdx(dropIdx),
+              parentIdx: dropIdx,
               positionIndex: 0,
             };
           });

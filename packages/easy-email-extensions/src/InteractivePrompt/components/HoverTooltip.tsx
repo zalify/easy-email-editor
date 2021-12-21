@@ -63,6 +63,7 @@ export function HoverTooltip() {
     <>
       {createPortal(
         <div
+          id='easy-email-extensions-InteractivePrompt-HoverTooltip'
           style={{
             position: 'absolute',
             height: '100%',
@@ -77,7 +78,7 @@ export function HoverTooltip() {
             type={isDragging ? 'drag' : 'hover'}
             lineWidth={1}
             title={block.name}
-            direction={isTop ? 'noEnoughTop' : direction}
+            direction={isTop && direction === 'top' ? 'noEnoughTop' : direction}
             isDragging={isDragging}
           />
         </div>,
@@ -96,9 +97,8 @@ interface TipNodeProps {
 }
 function TipNode(props: TipNodeProps) {
   const { direction, title, lineWidth, type } = props;
-
   const dragTitle = useMemo(() => {
-    if (direction === 'top') {
+    if (direction === 'top' || direction === 'noEnoughTop') {
       return `Insert before ${title}`;
     } else if (direction === 'bottom') {
       return `Insert after ${title}`;
