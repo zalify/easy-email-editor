@@ -2,12 +2,13 @@ import { Collapse } from '@arco-design/web-react';
 import { useBlock, useEditorProps, useFocusIdx } from 'easy-email-editor';
 import {
   AttributesPanelWrapper,
+  getContextMergeTags,
   NumberField,
   TreeSelectField,
 } from 'easy-email-extensions';
 import React, { useCallback, useMemo } from 'react';
 import { isObject, set } from 'lodash';
-import { getContextMergeTags, getParentIdx } from 'easy-email-core';
+import { getParentIdx } from 'easy-email-core';
 
 export function Panel() {
   const { focusIdx } = useFocusIdx();
@@ -16,8 +17,8 @@ export function Panel() {
   const { mergeTags } = useEditorProps();
 
   const filterMergeTags = useMemo(() => {
-    const data: { [key: string]: any } = {};
-    const loop = (obj: { [key: string]: any }, prefix: string) => {
+    const data: { [key: string]: any; } = {};
+    const loop = (obj: { [key: string]: any; }, prefix: string) => {
       Object.keys(obj).forEach((key) => {
         const currentKey = prefix ? prefix + '.' + key : key;
         if (Array.isArray(obj[key])) {
@@ -47,7 +48,7 @@ export function Panel() {
     const deep = (
       key: string,
       title: string,
-      parent: { [key: string]: any; children?: any[] },
+      parent: { [key: string]: any; children?: any[]; },
       mapData: Array<any> = []
     ) => {
       const currentMapData = {
@@ -73,7 +74,7 @@ export function Panel() {
   }, [filterMergeTags]);
 
   const onChangeAdapter = useCallback((selected: string) => {
-    return selected + '.0';
+    return `{{${selected.replace(/{{([^}}]+)}}/g, '$1') + '.0'}}}`;
   }, []);
 
   const valueAdapter = useCallback((value: string) => {
