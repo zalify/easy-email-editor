@@ -64,6 +64,7 @@ export function ColorPicker(props: ColorPickerProps) {
               display: 'inline-block',
               height: 32,
               width: 32,
+              boxSizing: 'border-box',
               padding: 4,
               border: '1px solid var(--color-neutral-3, rgb(229, 230, 235))',
               borderRadius: showInput ? undefined : 4,

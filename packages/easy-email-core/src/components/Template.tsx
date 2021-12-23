@@ -8,7 +8,7 @@ import MjmlBlock from '@core/components/MjmlBlock';
 export type TemplateProps = RecursivePartial<ITemplate['data']> &
   RecursivePartial<ITemplate['attributes']> & {
     children: string | React.ReactElement | React.ReactElement[];
-    idx: string;
+    idx?: string | null;
   };
 
 export function Template(props: TemplateProps) {

@@ -10,7 +10,11 @@ export const MergeTags: React.FC<{
   isSelect?: boolean;
 }> = React.memo((props) => {
   const { focusIdx } = useFocusIdx();
-  const { mergeTags = {}, mergeTagGenerate } = useEditorProps();
+  const {
+    mergeTags = {},
+    mergeTagGenerate = (m: string) => `{{${m}}}`,
+    renderMergeTagContent,
+  } = useEditorProps();
   const { values } = useBlock();
 
   const contextMergeTags = useMemo(
@@ -28,7 +32,7 @@ export const MergeTags: React.FC<{
     const deep = (
       key: string,
       title: string,
-      parent: { [key: string]: any; children?: any[]; },
+      parent: { [key: string]: any; children?: any[] },
       mapData: Array<any> = []
     ) => {
       const currentMapData = {
@@ -60,6 +64,19 @@ export const MergeTags: React.FC<{
     },
     [props]
   );
+
+  const mergeTagContent = useMemo(
+    () =>
+      renderMergeTagContent({
+        onChange: props.onChange,
+        isSelect: props.isSelect,
+      }),
+    [renderMergeTagContent, props.onChange, props.isSelect]
+  );
+
+  if (renderMergeTagContent) {
+    return mergeTagContent;
+  }
 
   return (
     <div style={{ color: '#333' }}>

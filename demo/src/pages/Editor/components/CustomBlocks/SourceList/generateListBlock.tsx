@@ -49,15 +49,13 @@ export const generateListBlock = (params: {
       return merge(defaultData, payload);
     },
     render: (data, idx, mode, context, mergeTags) => {
-      const listKey = get(
-        data.data.value.dataSource,
-        params.dataSourceTag
-      ).replace(/\.0$/, '');
-
-      const list = (get(mergeTags, listKey.replace(/{{([^}}]+)}}/g, '$1')) as Array<{}>) || [];
+      const listKey = get(data.data.value.dataSource, params.dataSourceTag)
+        .replace(/{{([^}}]+)}}/g, '$1')
+        .replace(/\.0$/, '');
+      const list = Array.isArray(get(mergeTags, listKey) as Array<{}>)
+        ? (get(mergeTags, listKey) as Array<{}>)
+        : [];
       const renderList = list.slice(0, data.data.value.maxSize);
-      //  TODO 由于 没有 {{}}， 父级没有替换掉子的 "$LIST_SECTION.product_list.0"
-
       const contentWithMergeTags = flatMap(
         renderList.map((listItem, listIndex) => {
           const stringifyWithValue = JSON.stringify(data.children).replace(
@@ -78,9 +76,6 @@ export const generateListBlock = (params: {
           return JSON.parse(stringifyWithValue);
         })
       );
-
-
-
 
       if (mode === 'testing') {
         return (
@@ -105,9 +100,6 @@ export const generateListBlock = (params: {
           </Template>
         );
       }
-      console.log('listKey', listKey);
-
-      console.log(data.type, 'contentWithMergeTags', contentWithMergeTags);
       return <Template value={{ idx }}>{contentWithMergeTags}</Template>;
     },
   });

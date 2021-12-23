@@ -28,6 +28,10 @@ export async function emailToImage(content: IBlockData) {
 
   document.body.removeChild(container);
 
-  const picture = await services.common.uploadByQiniu(blob);
-  return picture;
+  try {
+    const picture = await services.common.uploadByQiniu(blob);
+    return picture;
+  } catch (error) {
+    return 'https://assets.maocanhua.cn/0cd7e1fc-c482-44e5-86e5-c228fbe38bc4-image.png';
+  }
 }
