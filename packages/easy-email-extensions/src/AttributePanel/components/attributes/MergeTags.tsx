@@ -70,8 +70,9 @@ export const MergeTags: React.FC<{
       renderMergeTagContent({
         onChange: props.onChange,
         isSelect: props.isSelect,
+        value: props.value,
       }),
-    [renderMergeTagContent, props.onChange, props.isSelect]
+    [renderMergeTagContent, props.onChange, props.isSelect, props.value]
   );
 
   if (renderMergeTagContent) {
