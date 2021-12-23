@@ -32,6 +32,7 @@ export interface PropsProviderProps {
   renderMergeTagContent?: (props: {
     onChange: (val: string) => void;
     isSelect: boolean;
+    value: string;
   }) => React.ReactNode;
   onBeforePreview?: (
     html: string,

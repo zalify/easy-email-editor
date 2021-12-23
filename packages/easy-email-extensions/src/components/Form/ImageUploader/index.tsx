@@ -1,5 +1,12 @@
 import React, { useState, useCallback, useRef, useMemo } from 'react';
-import { Input, Message, Modal } from '@arco-design/web-react';
+import {
+  Grid,
+  Input,
+  Message,
+  Modal,
+  Popover,
+  Space,
+} from '@arco-design/web-react';
 import { IconPlus, IconEye, IconDelete } from '@arco-design/web-react/icon';
 import styles from './index.module.scss';
 import {
@@ -9,6 +16,9 @@ import {
 import { classnames } from '@extensions/AttributePanel/utils/classnames';
 import { previewLoadImage } from '@extensions/AttributePanel/utils/previewLoadImage';
 import { getImg } from '@extensions/AttributePanel/utils/getImg';
+import { MergeTags } from '@extensions';
+import { Button as ArcoButton } from '@arco-design/web-react';
+import { IconFont, useEditorProps } from 'easy-email-editor';
 
 export interface ImageUploaderProps {
   onChange: (val: string) => void;
@@ -18,6 +28,7 @@ export interface ImageUploaderProps {
 }
 
 export function ImageUploader(props: ImageUploaderProps) {
+  const { mergeTags } = useEditorProps();
   const [isUploading, setIsUploading] = useState(false);
   const [preview, setPreview] = useState(false);
   const uploadHandlerRef = useRef<UploaderServer | null | undefined>(
@@ -131,12 +142,25 @@ export function ImageUploader(props: ImageUploaderProps) {
     <div className={styles.wrap}>
       <div className={styles['container']}>
         {content}
-        <Input
-          onPaste={onPaste}
-          value={props.value}
-          onChange={onChange}
-          disabled={isUploading}
-        />
+        <Grid.Row style={{ width: '100%' }}>
+          {mergeTags && (
+            <Popover
+              trigger='click'
+              content={<MergeTags value={props.value} onChange={onChange} />}
+            >
+              <ArcoButton
+                icon={<IconFont iconName='icon-merge-tags' />}
+              ></ArcoButton>
+            </Popover>
+          )}
+          <Input
+            style={{ flex: 1 }}
+            onPaste={onPaste}
+            value={props.value}
+            onChange={onChange}
+            disabled={isUploading}
+          />
+        </Grid.Row>
       </div>
       <Modal visible={preview} footer={null} onCancel={() => setPreview(false)}>
         <img alt='Preview' style={{ width: '100%' }} src={props.value} />

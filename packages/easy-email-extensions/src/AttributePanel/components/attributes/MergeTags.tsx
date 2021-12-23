@@ -67,11 +67,15 @@ export const MergeTags: React.FC<{
 
   const mergeTagContent = useMemo(
     () =>
-      renderMergeTagContent({
-        onChange: props.onChange,
-        isSelect: props.isSelect,
-        value: props.value,
-      }),
+      renderMergeTagContent ? (
+        renderMergeTagContent({
+          onChange: props.onChange,
+          isSelect: props.isSelect,
+          value: props.value,
+        })
+      ) : (
+        <></>
+      ),
     [renderMergeTagContent, props.onChange, props.isSelect, props.value]
   );
 
