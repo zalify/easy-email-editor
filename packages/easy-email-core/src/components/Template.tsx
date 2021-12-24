@@ -1,13 +1,13 @@
 import { flatMap, isArray, omit } from 'lodash';
 import { BasicType } from '@core/constants';
-import { RecursivePartial } from '@core/typings';
+import { IBlockData, RecursivePartial } from '@core/typings';
 import React from 'react';
 import { ITemplate } from '@core/blocks/Template';
 import MjmlBlock from '@core/components/MjmlBlock';
 
 export type TemplateProps = RecursivePartial<ITemplate['data']> &
   RecursivePartial<ITemplate['attributes']> & {
-    children: string | React.ReactElement | React.ReactElement[];
+    children: string | React.ReactElement | React.ReactElement[] | IBlockData;
     idx?: string | null;
   };
 
