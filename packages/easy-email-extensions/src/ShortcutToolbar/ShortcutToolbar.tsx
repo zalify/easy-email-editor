@@ -47,7 +47,34 @@ export function ShortcutToolbar() {
           }}
         />
       </BlockAvatarWrapper>
-      <BlockAvatarWrapper type={BasicType.SECTION}>
+      <BlockAvatarWrapper payload={{
+        children: [
+          {
+            type: 'column',
+            data: {
+              value: {},
+            },
+            attributes: {
+              padding: '0px 0px 0px 0px',
+              border: 'none',
+              'vertical-align': 'top',
+
+            },
+          },
+          {
+            type: 'column',
+            data: {
+              value: {},
+            },
+            attributes: {
+              padding: '0px 0px 0px 0px',
+              border: 'none',
+              'vertical-align': 'top',
+
+            },
+          }
+        ]
+      }} type={BasicType.SECTION}>
         <IconFont
           title='Section'
           iconName='icon-section'
@@ -75,6 +102,6 @@ export function ShortcutToolbar() {
           fontSize: 18,
         }}
       />
-    </Stack>
+    </Stack >
   );
 }

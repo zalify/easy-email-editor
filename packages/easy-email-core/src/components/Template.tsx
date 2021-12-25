@@ -8,11 +8,11 @@ import MjmlBlock from '@core/components/MjmlBlock';
 export type TemplateProps = RecursivePartial<ITemplate['data']> &
   RecursivePartial<ITemplate['attributes']> & {
     children:
-      | string
-      | React.ReactElement
-      | React.ReactElement[]
-      | IBlockData
-      | IBlockData[];
+    | string
+    | React.ReactElement
+    | React.ReactElement[]
+    | IBlockData
+    | IBlockData[];
     idx?: string | null;
   };
 
