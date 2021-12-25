@@ -24,6 +24,7 @@ import {
   EmailEditorProvider,
   EmailEditorProviderProps,
   IEmailTemplate,
+  useEditorProps,
 } from 'easy-email-editor';
 
 import { Stack } from '@demo/components/Stack';
@@ -124,16 +125,12 @@ export default function Editor() {
   }, [isDarkMode]);
 
   const onUploadImage = async (blob: Blob) => {
-    try {
-      const compressionFile = await (
-        await imageCompression
-      ).default(blob as File, {
-        maxWidthOrHeight: 1440,
-      });
-      return services.common.uploadByQiniu(compressionFile);
-    } catch (error) {
-      return 'https://assets.maocanhua.cn/0cd7e1fc-c482-44e5-86e5-c228fbe38bc4-image.png';
-    }
+    const compressionFile = await (
+      await imageCompression
+    ).default(blob as File, {
+      maxWidthOrHeight: 1440,
+    });
+    return services.common.uploadByQiniu(compressionFile);
   };
 
   const onChangeTheme = useCallback((t) => {

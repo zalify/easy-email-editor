@@ -2,7 +2,7 @@ import React, { useCallback, useMemo } from 'react';
 import { Tree, TreeSelect } from '@arco-design/web-react';
 import { isObject } from 'lodash';
 import { useBlock, useEditorProps, useFocusIdx } from 'easy-email-editor';
-import { getContextMergeTags } from 'easy-email-core';
+import { getContextMergeTags } from '@extensions/utils/getContextMergeTags';
 
 export const MergeTags: React.FC<{
   onChange: (v: string) => void;
@@ -10,7 +10,11 @@ export const MergeTags: React.FC<{
   isSelect?: boolean;
 }> = React.memo((props) => {
   const { focusIdx } = useFocusIdx();
-  const { mergeTags = {}, mergeTagGenerate } = useEditorProps();
+  const {
+    mergeTags = {},
+    mergeTagGenerate = (m: string) => `{{${m}}}`,
+    renderMergeTagContent,
+  } = useEditorProps();
   const { values } = useBlock();
 
   const contextMergeTags = useMemo(
@@ -60,6 +64,24 @@ export const MergeTags: React.FC<{
     },
     [props]
   );
+
+  const mergeTagContent = useMemo(
+    () =>
+      renderMergeTagContent ? (
+        renderMergeTagContent({
+          onChange: props.onChange,
+          isSelect: props.isSelect,
+          value: props.value,
+        })
+      ) : (
+        <></>
+      ),
+    [renderMergeTagContent, props.onChange, props.isSelect, props.value]
+  );
+
+  if (renderMergeTagContent) {
+    return mergeTagContent;
+  }
 
   return (
     <div style={{ color: '#333' }}>

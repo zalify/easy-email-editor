@@ -29,6 +29,11 @@ export interface PropsProviderProps {
   dashed?: boolean;
   mergeTags?: { [key: string]: any };
   mergeTagGenerate?: (m: string) => string;
+  renderMergeTagContent?: (props: {
+    onChange: (val: string) => void;
+    isSelect: boolean;
+    value: string;
+  }) => React.ReactNode;
   onBeforePreview?: (
     html: string,
     mergeTags: PropsProviderProps['mergeTags']

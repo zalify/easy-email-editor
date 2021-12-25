@@ -157,20 +157,15 @@ export default function enhancer<P, C extends (...rest: any[]) => any = any>(
                       className={
                         labelHidden ? styles['label-hidden'] : undefined
                       }
+                      style={{ width: '100%', display: 'flex' }}
                       htmlFor={id}
                     >
-                      <Space>
-                        {required && (
-                          <span style={{ color: '#ff4d4f', marginRight: 4 }}>
-                            *{' '}
-                          </span>
-                        )}
-                        <TextStyle
-                          size={size === 'small' ? 'smallest' : 'small'}
-                        >
-                          {label}
-                        </TextStyle>
-                      </Space>
+                      {required && (
+                        <span style={{ color: '#ff4d4f', marginRight: 4 }}>
+                          *{' '}
+                        </span>
+                      )}
+                      <div style={{ flex: 1 }}> {label}</div>
                     </label>
                   </Grid.Col>
                   <Grid.Col

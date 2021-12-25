@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { Stack } from '../UI/Stack';
 import { ToolsPanel } from './components/ToolsPanel';
-import { useEditorContext } from '@/hooks/useEditorContext';
 import { createPortal } from 'react-dom';
 import { FIXED_CONTAINER_ID } from '@/constants';
 import { useActiveTab } from '@/hooks/useActiveTab';

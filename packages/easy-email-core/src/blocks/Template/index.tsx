@@ -6,7 +6,7 @@ import { merge } from 'lodash';
 export type ITemplate = IBlockData<
   {},
   {
-    idx: string;
+    idx?: string | null;
   }
 >;
 

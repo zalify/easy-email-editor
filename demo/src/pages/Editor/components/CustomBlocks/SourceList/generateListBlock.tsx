@@ -49,15 +49,13 @@ export const generateListBlock = (params: {
       return merge(defaultData, payload);
     },
     render: (data, idx, mode, context, mergeTags) => {
-      const listKey = get(
-        data.data.value.dataSource,
-        params.dataSourceTag
-      ).replace(/\.0$/, '');
-
-      const list = (get(mergeTags, listKey) as Array<{}>) || [];
-      // console.log('mergeTags', mergeTags, data.type, listKey);
+      const listKey = get(data.data.value.dataSource, params.dataSourceTag)
+        .replace(/{{([^}}]+)}}/g, '$1')
+        .replace(/\.0$/, '');
+      const list = Array.isArray(get(mergeTags, listKey) as Array<{}>)
+        ? (get(mergeTags, listKey) as Array<{}>)
+        : [];
       const renderList = list.slice(0, data.data.value.maxSize);
-
       const contentWithMergeTags = flatMap(
         renderList.map((listItem, listIndex) => {
           const stringifyWithValue = JSON.stringify(data.children).replace(
@@ -102,7 +100,6 @@ export const generateListBlock = (params: {
           </Template>
         );
       }
-
       return <Template value={{ idx }}>{contentWithMergeTags}</Template>;
     },
   });

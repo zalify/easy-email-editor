@@ -8,7 +8,7 @@ export interface MjmlBlockProps<T extends IBlockData> {
   type: T['type'];
   value?: RecursivePartial<T['data']['value']>;
   attributes?: RecursivePartial<T['attributes']>;
-  children?: ReactElement | ReactElement[] | string;
+  children?: ReactElement | ReactElement[] | string | IBlockData | IBlockData[];
 }
 
 export default function MjmlBlock<T extends IBlockData>({

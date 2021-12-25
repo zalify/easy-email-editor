@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { Padding } from '../../attributes/Padding';
 import { Border } from '../../attributes/Border';
 import { BackgroundColor } from '../../attributes/BackgroundColor';
@@ -14,13 +14,21 @@ import { FontFamily } from '../../attributes/FontFamily';
 import { TextDecoration } from '../../attributes/TextDecoration';
 import { LineHeight } from '../../attributes/LineHeight';
 import { LetterSpacing } from '../../attributes/LetterSpacing';
-import { Collapse, Grid, Space } from '@arco-design/web-react';
+import { Collapse, Grid, Popover, Space } from '@arco-design/web-react';
 import { TextField } from '../../../../components/Form';
-import { Stack, useFocusIdx } from 'easy-email-editor';
+import { IconFont, useEditorProps, useFocusIdx } from 'easy-email-editor';
 import { AttributesPanelWrapper } from '../../attributes/AttributesPanelWrapper';
+import { MergeTags } from '../../attributes';
+import { useField } from 'react-final-form';
+import { Button as ArcoButton } from '@arco-design/web-react';
 
 export function Button() {
   const { focusIdx } = useFocusIdx();
+  const { input } = useField(`${focusIdx}.data.value.content`, {
+    parse: (v) => v,
+  });
+
+  const { mergeTags } = useEditorProps();
 
   return (
     <AttributesPanelWrapper>
@@ -28,7 +36,27 @@ export function Button() {
         <Collapse.Item name='-1' header='Setting'>
           <Space direction='vertical'>
             <TextField
-              label='Content'
+              label={
+                <Space>
+                  <span>Content</span>
+                  {mergeTags && (
+                    <Popover
+                      trigger='click'
+                      content={
+                        <MergeTags
+                          value={input.value}
+                          onChange={input.onChange}
+                        />
+                      }
+                    >
+                      <ArcoButton
+                        type='text'
+                        icon={<IconFont iconName='icon-merge-tags' />}
+                      ></ArcoButton>
+                    </Popover>
+                  )}
+                </Space>
+              }
               name={`${focusIdx}.data.value.content`}
             />
             <Link />

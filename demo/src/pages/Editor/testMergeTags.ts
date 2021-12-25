@@ -1,4 +1,74 @@
 export const testMergeTags = {
+  shipments: {
+    total_items: 10,
+    remaining_items: 0,
+
+    products: [
+      {
+        product_title: 'Product title #1',
+        product_url: 'https://www.aftership.com',
+        image_urls: [
+          'https://assets.maocanhua.cn/9c44258c-0ab9-44bc-9ba7-611a7669f727-image.png',
+        ],
+        variant_title: 'S • Beige',
+        unit_price: {
+          amount: 59.99,
+          currency: 'USD',
+        },
+        paid_price: {
+          amount: 59.99,
+          currency: 'USD',
+        },
+        quantity: 1,
+        discount: {
+          amount: 20,
+          currency: 'USD',
+        },
+      },
+      {
+        product_title: 'Product title #2',
+        product_url: 'https://www.aftership.com',
+        image_urls: [
+          'https://conversions.am-usercontent.com/assets/image_placeholder.png',
+        ],
+        variant_title: 'S • Beige',
+        unit_price: {
+          amount: 99.99,
+          currency: 'USD',
+        },
+        paid_price: {
+          amount: 99.99,
+          currency: 'USD',
+        },
+        quantity: 1,
+        discount: {
+          amount: 20,
+          currency: 'USD',
+        },
+      },
+      {
+        product_title: 'Product title #3',
+        product_url: 'https://www.aftership.com',
+        image_urls: [
+          'https://conversions.am-usercontent.com/assets/image_placeholder.png',
+        ],
+        variant_title: 'S • Beige',
+        unit_price: {
+          amount: 19.99,
+          currency: 'USD',
+        },
+        paid_price: {
+          amount: 19.99,
+          currency: 'USD',
+        },
+        quantity: 1,
+        discount: {
+          amount: 20,
+          currency: 'USD',
+        },
+      },
+    ],
+  },
   user: {
     name: 'Ryan',
     avatar:
