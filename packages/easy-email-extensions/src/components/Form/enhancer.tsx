@@ -23,6 +23,7 @@ export interface EnhancerProps<T> extends Partial<FieldProps<T, any>> {
 }
 
 let primaryId = 0;
+const parse = (v: any) => v;
 export default function enhancer<P, C extends (...rest: any[]) => any = any>(
   Component: any,
   changeAdapter: C
@@ -52,6 +53,7 @@ export default function enhancer<P, C extends (...rest: any[]) => any = any>(
       input: { value, onChange },
     } = useField(name, {
       validate,
+      parse: (v) => v,
     });
 
     const [currentValue, setCurrentValue] = useState(value);
@@ -78,7 +80,7 @@ export default function enhancer<P, C extends (...rest: any[]) => any = any>(
     }, []);
 
     return (
-      <Field name={name} validate={validate}>
+      <Field name={name} validate={validate} parse={parse}>
         {({ input: { onBlur }, meta: { touched, error } }) => {
           const onFieldChange = useCallback(
             (e: any) => {
