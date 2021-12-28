@@ -76,7 +76,8 @@
     "react-use": "^17.3.1"
   },
   "peerDependencies": {
-    "easy-email-core": "^git 2.5.2",
+    "easy-email-editor": "^3.1.19",
+    "easy-email-core": "^3.1.16",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-final-form": "^6.5.7"
