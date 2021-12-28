@@ -59,7 +59,7 @@ const RenderReactNode = React.memo(function ({
   index: number;
   idx: string;
 }): React.ReactElement {
-  const attributes: { [key: string]: string; } = {};
+  const attributes: { [key: string]: string } = {};
   node.getAttributeNames?.().forEach((att) => {
     if (att) {
       attributes[att] = node.getAttribute(att) || '';
@@ -127,13 +127,13 @@ const RenderReactNode = React.memo(function ({
         node.childNodes.length === 0
           ? null
           : [...node.childNodes].map((n, i) => (
-            <RenderReactNode
-              idx={getChildIdx(idx, i)}
-              key={i}
-              node={n as any}
-              index={i}
-            />
-          )),
+              <RenderReactNode
+                idx={getChildIdx(idx, i)}
+                key={i}
+                node={n as any}
+                index={i}
+              />
+            )),
     });
 
     return <>{reactNode}</>;
@@ -165,7 +165,11 @@ function createElement(
     dangerouslySetInnerHTML?: any;
   }
 ) {
-  if (type === 'img' && props?.src && /{{([\s\S]+?)}}/g.test(props.src)) {
+  if (
+    type === 'img' &&
+    props?.src &&
+    (/{{([\s\S]+?)}}/g.test(props.src) || /\|\*([^\*\|]+)\*\|/g.test(props.src))
+  ) {
     props.src = getImg('IMAGE_59');
   }
   if (props?.class && props.class.includes('email-block')) {
