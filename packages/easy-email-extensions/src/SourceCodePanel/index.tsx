@@ -14,6 +14,7 @@ import {
   useEditorContext,
   useEditorProps,
 } from 'easy-email-editor';
+import { cloneDeep } from 'lodash';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 export function SourceCodePanel() {
@@ -91,7 +92,7 @@ export function SourceCodePanel() {
           data: focusBlock,
           context: pageData,
           mode: 'production',
-          dataSource: mergeTags,
+          dataSource: cloneDeep(mergeTags),
         })
       );
   }, [focusBlock, focusIdx, pageData, mergeTags]);

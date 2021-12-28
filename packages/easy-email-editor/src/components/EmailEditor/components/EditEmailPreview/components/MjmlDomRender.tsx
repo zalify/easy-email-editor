@@ -33,7 +33,7 @@ export function MjmlDomRender() {
         idx: getPageIdx(),
         context: pageData,
         mode: 'testing',
-        dataSource: mergeTags,
+        dataSource: cloneDeep(mergeTags),
       })
     ).html;
     return renderHtml;

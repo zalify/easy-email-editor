@@ -22,7 +22,7 @@ export function PreviewEmail() {
         data: pageData,
         mode: 'production',
         context: pageData,
-        dataSource: previewInjectData,
+        dataSource: cloneDeep(previewInjectData),
       })
     ).html;
 
