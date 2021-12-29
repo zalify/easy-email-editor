@@ -12,7 +12,7 @@ export default defineConfig({
     emptyOutDir: false,
     minify: true,
     manifest: false,
-    sourcemap: false,
+    sourcemap: true,
     target: 'es2015',
     lib: {
       entry: path.resolve(__dirname, 'src/index.tsx'),
