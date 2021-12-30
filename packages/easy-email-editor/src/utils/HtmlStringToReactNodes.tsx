@@ -168,7 +168,7 @@ function createElement(
   if (
     type === 'img' &&
     props?.src &&
-    (/{{([\s\S]+?)}}/g.test(props.src) || /\|\*([^\*\|]+)\*\|/g.test(props.src))
+    (/{{([\s\S]+?)}}/g.test(props.src) || /\*\|([^\|\*]+)\|\*/g.test(props.src))
   ) {
     props.src = getImg('IMAGE_59');
   }
