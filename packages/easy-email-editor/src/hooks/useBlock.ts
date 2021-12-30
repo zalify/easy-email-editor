@@ -247,7 +247,7 @@ export function useBlock() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const setFocusBlock = useCallback(
     debounce((val) => {
-      change(focusIdx, val);
+      change(focusIdx, { ...val });
     }),
     [focusBlock, focusIdx, change]
   );
@@ -257,7 +257,7 @@ export function useBlock() {
     debounce((val) => {
       if (!focusBlock) return;
       focusBlock.data.value = val;
-      change(focusIdx, focusBlock);
+      change(focusIdx, { ...focusBlock });
     }),
     [focusBlock, focusIdx]
   );

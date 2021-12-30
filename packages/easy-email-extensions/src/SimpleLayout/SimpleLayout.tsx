@@ -9,8 +9,11 @@ import { InteractivePrompt } from '../InteractivePrompt';
 import styles from './index.module.scss';
 import enUS from '@arco-design/web-react/es/locale/en-US';
 
-export const SimpleLayout: React.FC = (props) => {
+export const SimpleLayout: React.FC<{
+  showSourceCode?: boolean;
+}> = (props) => {
   const { height: containerHeight } = useEditorProps();
+  const { showSourceCode = true } = props;
   return (
     <ConfigProvider locale={enUS}>
       <Layout
@@ -23,8 +26,8 @@ export const SimpleLayout: React.FC = (props) => {
         }}
       >
         <Layout.Sider
-
-          resizeDirections={['right']} style={{ minWidth: 300, maxWidth: 360, width: 360, paddingRight: 0 }}
+          resizeDirections={['right']}
+          style={{ minWidth: 300, maxWidth: 360, width: 360, paddingRight: 0 }}
         >
           <Card bodyStyle={{ padding: 0 }} style={{ border: 'none' }}>
             <Card.Grid style={{ width: 60 }}>
@@ -38,7 +41,7 @@ export const SimpleLayout: React.FC = (props) => {
                 border: 'none',
                 height: containerHeight,
                 overflowY: 'auto',
-                overflowX: 'hidden'
+                overflowX: 'hidden',
               }}
             >
               <Card title='Layout' style={{ border: 'none' }}>
@@ -51,7 +54,12 @@ export const SimpleLayout: React.FC = (props) => {
         <Layout style={{ height: containerHeight }}>{props.children}</Layout>
 
         <Layout.Sider
-          style={{ height: containerHeight, minWidth: 300, maxWidth: 350, width: 350 }}
+          style={{
+            height: containerHeight,
+            minWidth: 300,
+            maxWidth: 350,
+            width: 350,
+          }}
         >
           <Card
             size='small'
@@ -72,9 +80,11 @@ export const SimpleLayout: React.FC = (props) => {
               >
                 <AttributePanel />
               </Tabs.TabPane>
-              <Tabs.TabPane key='Source code' title='Source code'>
-                <SourceCodePanel />
-              </Tabs.TabPane>
+              {showSourceCode && (
+                <Tabs.TabPane key='Source code' title='Source code'>
+                  <SourceCodePanel />
+                </Tabs.TabPane>
+              )}
             </Tabs>
           </Card>
         </Layout.Sider>

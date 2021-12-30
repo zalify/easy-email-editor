@@ -8,7 +8,11 @@ import { useEditorProps } from '@';
 
 export function PreviewEmail() {
   const { pageData } = useEditorContext();
-  const { onBeforePreview, mergeTags } = useEditorProps();
+  const {
+    onBeforePreview,
+    mergeTags = {},
+    previewInjectData = mergeTags,
+  } = useEditorProps();
   const [errMsg, setErrMsg] = useState('');
   const [html, setHtml] = useState('');
 
@@ -18,20 +22,20 @@ export function PreviewEmail() {
         data: pageData,
         mode: 'production',
         context: pageData,
-        dataSource: mergeTags,
+        dataSource: cloneDeep(previewInjectData),
       })
     ).html;
 
     if (onBeforePreview) {
       try {
-        parseHtml = onBeforePreview(parseHtml, mergeTags);
+        parseHtml = onBeforePreview(parseHtml, previewInjectData);
         setErrMsg('');
       } catch (error: any) {
         setErrMsg(error?.message || error);
       }
     }
     setHtml(parseHtml);
-  }, [mergeTags, onBeforePreview, pageData]);
+  }, [previewInjectData, onBeforePreview, pageData]);
 
   if (errMsg) {
     return (
