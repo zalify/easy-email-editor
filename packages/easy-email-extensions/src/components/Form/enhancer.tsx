@@ -68,7 +68,7 @@ export default function enhancer<P, C extends (...rest: any[]) => any = any>(
           maxWait: 500,
         }
       ),
-      []
+      [onChange]
     );
 
     useEffect(() => {
@@ -80,7 +80,7 @@ export default function enhancer<P, C extends (...rest: any[]) => any = any>(
     }, []);
 
     return (
-      <Field key={name} name={name} validate={validate} parse={parse}>
+      <Field name={name} validate={validate} parse={parse}>
         {({ input: { onBlur }, meta: { touched, error } }) => {
           const onFieldChange = useCallback(
             (e: any) => {
