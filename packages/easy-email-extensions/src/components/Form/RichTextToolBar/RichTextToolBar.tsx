@@ -1,60 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { createPortal } from 'react-dom';
-import { awaitForElement } from '@extensions/utils/awaitForElement';
-import {
-  getEditNode,
-  useBlock,
-  useFocusIdx,
-  getShadowRoot,
-  useEditorContext,
-} from 'easy-email-editor';
+import { getEditNode, useFocusBlockLayout } from 'easy-email-editor';
 import { Tools } from './components/Tools';
 import styleText from './shadow-dom.scss?inline';
 
-export function RichTextToolBar(props: { onChange: (s: string) => void; }) {
-  const [position, setPosition] = useState({ top: 0, left: 0 });
-  const [blockNode, setBlockNode] = useState<HTMLDivElement | null>(null);
-  const { focusBlock } = useBlock();
-  const { pageData } = useEditorContext();
-  const { focusIdx } = useFocusIdx();
+export function RichTextToolBar(props: { onChange: (s: string) => void }) {
+  const { focusBlockNode, focusBlockRect } = useFocusBlockLayout();
 
-  const pageWidth = +(pageData.attributes.width || '600').replace('px', '');
-
-  useEffect(() => {
-    const promiseObj = awaitForElement<HTMLDivElement>(focusIdx);
-    promiseObj.promise.then((blockNode) => {
-      setBlockNode(blockNode);
-    });
-
-    return () => {
-      promiseObj.cancel();
-    };
-  }, [focusIdx, focusBlock]);
-
-  useEffect(() => {
-
-    const ele = getShadowRoot().querySelector('.shadow-container');
-    if (!blockNode || !ele) return;
-
-    const check = () => {
-      const { top, left } = blockNode.getBoundingClientRect();
-      setPosition({ top, left });
-    };
-
-    const onScroll = () => {
-      check();
-    };
-    check();
-    ele.addEventListener('scroll', onScroll, true);
-    return () => {
-      ele.removeEventListener('scroll', onScroll, true);
-    };
-  }, [blockNode]);
-
-
-  if (!blockNode) return null;
-
-  const editorContainer = blockNode && getEditNode(blockNode);
+  if (!focusBlockNode || !focusBlockRect) return null;
+  const editorContainer = getEditNode(focusBlockNode);
 
   return (
     <>
@@ -68,8 +22,8 @@ export function RichTextToolBar(props: { onChange: (s: string) => void; }) {
               boxSizing: 'border-box',
               position: 'fixed',
               zIndex: 100,
-              top: position.top - 24,
-              left: position.left,
+              top: focusBlockRect.top - 24,
+              left: focusBlockRect.left,
             }}
           >
             <div
@@ -86,7 +40,7 @@ export function RichTextToolBar(props: { onChange: (s: string) => void; }) {
             <Tools container={editorContainer} onChange={props.onChange} />
           </div>
         </>,
-        blockNode
+        focusBlockNode
       )}
     </>
   );

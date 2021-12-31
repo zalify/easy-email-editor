@@ -6,6 +6,7 @@ import {
   useEditorContext,
   useDataTransfer,
   useHoverIdx,
+  useRefState,
 } from 'easy-email-editor';
 import { BlockManager, getNodeIdxFromClassName } from 'easy-email-core';
 import { debounce, get } from 'lodash';
@@ -21,16 +22,8 @@ export function useAvatarWrapperDrop() {
     formState: { values },
   } = useEditorContext();
 
-  const valuesRef = useRef(values);
-  const dataTransferRef = useRef(dataTransfer);
-
-  useEffect(() => {
-    valuesRef.current = values;
-  }, [values]);
-
-  useEffect(() => {
-    dataTransferRef.current = dataTransfer;
-  }, [dataTransfer]);
+  const valuesRef = useRefState(values);
+  const dataTransferRef = useRefState(dataTransfer);
 
   function isKeyObject(o: any): o is {
     key: string;

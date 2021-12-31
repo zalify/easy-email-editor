@@ -12,7 +12,7 @@ import { PresetColorsProvider } from './components/provider/PresetColorsProvider
 import ReactDOM from 'react-dom';
 import { BlockAttributeConfigurationManager } from './utils/BlockAttributeConfigurationManager';
 
-export interface AttributePanelProps { }
+export interface AttributePanelProps {}
 
 export function AttributePanel() {
   const { values, focusBlock } = useBlock();

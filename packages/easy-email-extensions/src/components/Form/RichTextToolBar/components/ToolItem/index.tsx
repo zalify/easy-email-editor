@@ -8,8 +8,9 @@ export const ToolItem: React.FC<{
   trigger?: string;
 }> = (props) => {
   return (
-    <Tooltip mini content={props.title}>
+    <Tooltip mini position='bottom' content={props.title}>
       <button
+        tabIndex={-1}
         className='easy-email-extensions-emailToolItem'
         title={props.title}
         onClick={props.onClick}
