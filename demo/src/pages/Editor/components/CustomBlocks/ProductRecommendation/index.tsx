@@ -92,7 +92,7 @@ export const ProductRecommendation = createCustomBlock<IProductRecommendation>({
     };
     return merge(defaultData, payload);
   },
-  render: (data: IBlockData<IProductRecommendation>, idx, context) => {
+  render: (data, idx, context) => {
     const { title, productList, buttonText } = data.data.value;
     const attributes = data.attributes;
 
@@ -106,7 +106,16 @@ export const ProductRecommendation = createCustomBlock<IProductRecommendation>({
       >
         <Section padding='0px'>
           <Column padding='0px' border='none' vertical-align='top'>
-            <Template value={{ idx }}>{data.children}</Template>
+            <Text
+              font-size='20px'
+              padding='10px 25px 10px 25px'
+              line-height='1'
+              align='center'
+              font-weight='bold'
+              color={attributes['title-color']}
+            >
+              {title}
+            </Text>
           </Column>
         </Section>
 

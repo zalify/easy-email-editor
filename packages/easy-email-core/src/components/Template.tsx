@@ -8,11 +8,11 @@ import MjmlBlock from '@core/components/MjmlBlock';
 export type TemplateProps = RecursivePartial<ITemplate['data']> &
   RecursivePartial<ITemplate['attributes']> & {
     children:
-    | string
-    | React.ReactElement
-    | React.ReactElement[]
-    | IBlockData
-    | IBlockData[];
+      | string
+      | React.ReactElement
+      | React.ReactElement[]
+      | IBlockData
+      | IBlockData[];
     idx?: string | null;
   };
 
@@ -27,7 +27,7 @@ export function Template(props: TemplateProps) {
     <MjmlBlock
       attributes={omit(props, ['data', 'children'])}
       type={BasicType.TEMPLATE}
-      value={props.value}
+      value={{ idx: props.idx }}
     >
       {formatChildren}
     </MjmlBlock>

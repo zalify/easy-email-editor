@@ -51,8 +51,8 @@ export function HoverTooltip() {
   const block = useMemo(() => {
     return blockNode
       ? BlockManager.getBlockByType(
-          getNodeTypeFromClassName(blockNode.classList)!
-        )
+        getNodeTypeFromClassName(blockNode.classList)!
+      )
       : null;
   }, [blockNode]);
 
@@ -155,9 +155,7 @@ function TipNode(props: TipNodeProps) {
           <>
             <div
               style={{
-                position: 'absolute',
-                left: 0,
-                top: 0,
+                position: 'fixed',
                 backgroundColor: color,
                 color: '#ffffff',
                 height: '22px',
