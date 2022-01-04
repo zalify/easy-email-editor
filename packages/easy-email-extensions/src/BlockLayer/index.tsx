@@ -16,6 +16,7 @@ import {
   useEditorContext,
   useFocusIdx,
   useHoverIdx,
+  useRefState,
 } from 'easy-email-editor';
 import {
   BasicType,
@@ -39,6 +40,7 @@ import {
 } from './hooks/useAvatarWrapperDrop';
 import { getIconNameByBlockType } from '@extensions/AttributePanel/utils/getIconNameByBlockType';
 import { Space } from '@arco-design/web-react';
+import { getBlockTitle } from '@extensions/utils/getBlockTitle';
 
 export interface IBlockDataWithId extends IBlockData {
   id: string;
@@ -56,18 +58,10 @@ export function BlockLayer() {
   const { moveBlock, setValueByIdx, copyBlock, removeBlock, values } =
     useBlock();
 
-  const {
-    setBlockLayerRef,
-    allowDrop,
-    blockLayerRef,
-    removeHightLightClassName,
-  } = useAvatarWrapperDrop();
+  const { setBlockLayerRef, allowDrop, removeHightLightClassName } =
+    useAvatarWrapperDrop();
 
-  const valueRef = useRef(values);
-
-  useEffect(() => {
-    valueRef.current = values;
-  }, [values]);
+  const valueRef = useRefState(values);
 
   const [contextMenuData, setContextMenuData] = useState<{
     blockData: IBlockDataWithId;
@@ -90,8 +84,8 @@ export function BlockLayer() {
 
   const renderTitle = useCallback(
     (data: IBlockDataWithId) => {
-      const block = BlockManager.getBlockByType(data.type);
       const isPage = data.type === BasicType.PAGE;
+      const title = getBlockTitle(data);
       return (
         <div
           data-tree-idx={data.id}
@@ -101,9 +95,17 @@ export function BlockLayer() {
             !isPage && 'email-block'
           )}
         >
-          <Space align='center' size="mini">
-            <IconFont iconName={getIconNameByBlockType(data.type)} style={{ fontSize: 12, color: '#999' }} />
-            <TextStyle size='smallest'>{block?.name}</TextStyle>
+          <Space align='center' size='mini'>
+            <IconFont
+              iconName={getIconNameByBlockType(data.type)}
+              style={{ fontSize: 12, color: '#999' }}
+            />
+            <div
+              title={title}
+              style={{ overflow: 'hidden', whiteSpace: 'nowrap', width: '5em' }}
+            >
+              <TextStyle size='smallest'>{title}</TextStyle>
+            </div>
           </Space>
           <div className={styles.eyeIcon}>
             <EyeIcon blockData={data} onToggleVisible={onToggleVisible} />
@@ -206,7 +208,6 @@ export function BlockLayer() {
     },
     [moveBlock]
   );
-
 
   const blockTreeAllowDrop: BlockTreeProps<IBlockDataWithId>['allowDrop'] =
     useCallback(

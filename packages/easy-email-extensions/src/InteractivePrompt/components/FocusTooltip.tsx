@@ -1,40 +1,23 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React from 'react';
 
-import { BlockManager, BasicType } from 'easy-email-core';
+import { BasicType } from 'easy-email-core';
 import { createPortal } from 'react-dom';
 import {
   IconFont,
   useBlock,
   useFocusIdx,
   BlockAvatarWrapper,
+  useFocusBlockLayout,
 } from 'easy-email-editor';
-import { awaitForElement } from '@extensions/utils/awaitForElement';
 import { Toolbar } from './Toolbar';
 
 export function FocusTooltip() {
-  const [blockNode, setBlockNode] = useState<HTMLDivElement | null>(null);
   const { focusBlock } = useBlock();
   const { focusIdx } = useFocusIdx();
-
+  const { focusBlockNode } = useFocusBlockLayout();
   const isPage = focusBlock?.type === BasicType.PAGE;
 
-  useEffect(() => {
-    const promiseObj = awaitForElement<HTMLDivElement>(focusIdx);
-    promiseObj.promise.then((blockNode) => {
-      setBlockNode(blockNode);
-    });
-
-    return () => {
-      promiseObj.cancel();
-    };
-  }, [focusIdx, focusBlock]);
-
-  const block = useMemo(() => {
-    if (!focusBlock) return null;
-    return BlockManager.getBlockByType(focusBlock.type);
-  }, [focusBlock]);
-
-  if (!block || !blockNode) return null;
+  if (!focusBlockNode || !focusBlock) return null;
 
   return (
     <>
@@ -68,7 +51,11 @@ export function FocusTooltip() {
               display: isPage ? 'none' : undefined,
             }}
           >
-            <BlockAvatarWrapper idx={focusIdx} type={block.type} action='move'>
+            <BlockAvatarWrapper
+              idx={focusIdx}
+              type={focusBlock.type}
+              action='move'
+            >
               <div
                 style={
                   {
@@ -96,7 +83,6 @@ export function FocusTooltip() {
             </BlockAvatarWrapper>
           </div>
 
-
           {/* outline */}
           <div
             style={{
@@ -111,9 +97,9 @@ export function FocusTooltip() {
               outline: '2px solid var(--selected-color)',
             }}
           />
-          <Toolbar block={block} blockNode={blockNode} />
+          <Toolbar />
         </div>,
-        blockNode
+        focusBlockNode
       )}
     </>
   );

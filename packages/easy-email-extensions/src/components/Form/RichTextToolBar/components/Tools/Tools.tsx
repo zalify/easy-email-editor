@@ -31,7 +31,7 @@ export function Tools(props: ToolsProps) {
         if (range) {
           setSelectionRange(range);
         }
-      } catch (error) { }
+      } catch (error) {}
     };
 
     document.addEventListener('selectionchange', onSelectionChange);
@@ -108,6 +108,26 @@ export function Tools(props: ToolsProps) {
           alignItems: 'center',
         }}
       >
+        {mergeTags && (
+          <Popover
+            trigger='click'
+            color='#fff'
+            position='left'
+            content={
+              <MergeTags
+                value=''
+                onChange={(val) => execCommand('insertHTML', val)}
+              />
+            }
+            getPopupContainer={getPopoverMountNode}
+          >
+            <ToolItem
+              title='Merge tag'
+              icon={<IconFont iconName='icon-merge-tags' />}
+            />
+          </Popover>
+        )}
+        <div className='easy-email-extensions-divider' />
         <div className='easy-email-extensions-divider' />
         <Popover
           className='easy-email-extensions-Tools-Popover'
@@ -187,26 +207,6 @@ export function Tools(props: ToolsProps) {
           onChange={(values) => execCommand('createLink', values)}
           getPopupContainer={getPopoverMountNode}
         />
-        <div className='easy-email-extensions-divider' />
-        {mergeTags && (
-          <Popover
-            trigger='click'
-            color='#fff'
-            position='bottom'
-            content={
-              <MergeTags
-                value=''
-                onChange={(val) => execCommand('insertHTML', val)}
-              />
-            }
-            getPopupContainer={getPopoverMountNode}
-          >
-            <ToolItem
-              title='Merge tag'
-              icon={<IconFont iconName='icon-merge-tags' />}
-            />
-          </Popover>
-        )}
         <div className='easy-email-extensions-divider' />
 
         <ToolItem
