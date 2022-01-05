@@ -38,7 +38,7 @@ import {
   getDirectionFormDropPosition,
   useAvatarWrapperDrop,
 } from './hooks/useAvatarWrapperDrop';
-import { getIconNameByBlockType } from '@extensions/AttributePanel/utils/getIconNameByBlockType';
+import { getIconNameByBlockType } from '@extensions/utils/getIconNameByBlockType';
 import { Space } from '@arco-design/web-react';
 import { getBlockTitle } from '@extensions/utils/getBlockTitle';
 
