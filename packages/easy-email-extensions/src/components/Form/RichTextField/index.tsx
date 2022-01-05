@@ -1,7 +1,4 @@
-import {
-  useBlock,
-  useFocusIdx,
-} from 'easy-email-editor';
+import { useBlock, useFocusIdx } from 'easy-email-editor';
 import React, { useCallback } from 'react';
 import { InlineText, InlineTextProps } from '../InlineTextField';
 import { BasicType } from 'easy-email-core';
@@ -20,31 +17,24 @@ export const RichTextField = (
 
   return (
     <>
-
-      <Field name={name} parse={v => v}>
-        {
-          ({ input }) => (<FieldWrapper {...props} input={input} />)
-
-        }
-
+      <Field name={name} parse={(v) => v}>
+        {({ input }) => <FieldWrapper {...props} input={input} />}
       </Field>
-
     </>
   );
 };
 
-
-function FieldWrapper(props: Omit<InlineTextProps, 'onChange'> & { input: FieldInputProps<any, HTMLElement>; }) {
-
+function FieldWrapper(
+  props: Omit<InlineTextProps, 'onChange'> & {
+    input: FieldInputProps<any, HTMLElement>;
+  }
+) {
   const { input, ...rest } = props;
 
   const debounceCallbackChange = useCallback(
-    debounce(
-      (val) => {
-        input.onChange(val);
-      },
-      500,
-    ),
+    debounce((val) => {
+      input.onChange(val);
+    }, 100),
     [input]
   );
 
@@ -54,5 +44,4 @@ function FieldWrapper(props: Omit<InlineTextProps, 'onChange'> & { input: FieldI
       <InlineText {...rest} onChange={debounceCallbackChange} />;
     </>
   );
-
 }
