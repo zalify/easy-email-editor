@@ -50,9 +50,14 @@ export function useDropBlock() {
 
   useEffect(() => {
     if (ref) {
+      let target: EventTarget | null = null;
+      const onMouseDown = (ev: MouseEvent) => {
+        target = ev.target;
+      };
+
       const onClick = (ev: MouseEvent) => {
         ev.preventDefault(); // prevent link
-
+        if (target !== ev.target) return;
         if (ev.target instanceof Element) {
           const target = getBlockNodeByChildEle(ev.target);
           if (!target) return;
@@ -67,8 +72,10 @@ export function useDropBlock() {
         }
       };
 
+      ref.addEventListener('mousedown', onMouseDown);
       ref.addEventListener('click', onClick);
       return () => {
+        ref.addEventListener('mousedown', onMouseDown);
         ref.removeEventListener('click', onClick);
       };
     }

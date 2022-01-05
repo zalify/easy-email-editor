@@ -1,50 +1,17 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import {
-  BasicType,
-  IBlock,
-  getParentIdx,
-  getSiblingIdx,
-} from 'easy-email-core';
-import { getShadowRoot, useBlock, useEditorContext, useFocusIdx } from 'easy-email-editor';
+import React from 'react';
+import { BasicType, getParentIdx, getSiblingIdx } from 'easy-email-core';
+import { useBlock, useFocusIdx, useFocusBlockLayout } from 'easy-email-editor';
 import { classnames } from '@extensions/utils/classnames';
 import { useAddToCollection } from '@extensions/hooks/useAddToCollection';
-import { debounce } from 'lodash';
+import { getBlockTitle } from '@extensions/utils/getBlockTitle';
 
-export function Toolbar({
-  block,
-  blockNode,
-}: {
-  block: IBlock;
-  blockNode: HTMLElement;
-}) {
-  const { moveBlock, copyBlock, removeBlock } = useBlock();
+export function Toolbar() {
+  const { moveBlock, copyBlock, removeBlock, focusBlock } = useBlock();
   const { focusIdx, setFocusIdx } = useFocusIdx();
-  const { initialized } = useEditorContext();
+  const { focusBlockRect } = useFocusBlockLayout();
   const { modal, setModalVisible } = useAddToCollection();
-  const [position, setPosition] = useState({ top: 0, left: 0 });
 
-  const isPage = block.type === BasicType.PAGE;
-
-  useEffect(() => {
-    const check = () => {
-      const { top, left } = blockNode.getBoundingClientRect();
-      setPosition({ top, left });
-    };
-
-    const ele = getShadowRoot().querySelector('.shadow-container');
-
-    if (!ele || !initialized) return;
-    check();
-    const onScroll = () => {
-      check();
-    };
-
-    ele.addEventListener('scroll', onScroll, true);
-    return () => {
-      ele.removeEventListener('scroll', onScroll, true);
-    };
-  }, [blockNode, initialized]);
-
+  const isPage = focusBlock?.type === BasicType.PAGE;
 
   const handleMoveUp = () => {
     moveBlock(focusIdx, getSiblingIdx(focusIdx, -1));
@@ -82,15 +49,17 @@ export function Toolbar({
     setFocusIdx(getParentIdx(focusIdx)!);
   };
 
+  if (!focusBlockRect) return null;
+
   return (
     <>
       <div
         id='easy-email-extensions-InteractivePrompt-Toolbar'
         style={{
           position: 'fixed',
-          left: position.left,
+          left: focusBlockRect.left,
           height: 0,
-          top: position.top,
+          top: focusBlockRect.top,
           zIndex: 100,
         }}
       >
@@ -115,9 +84,11 @@ export function Toolbar({
               padding: '1px 5px',
               boxSizing: 'border-box',
               whiteSpace: 'nowrap',
+              maxWidth: 300,
+              overflow: 'hidden',
             }}
           >
-            {block.name}
+            {focusBlock && getBlockTitle(focusBlock, false)}
           </div>
           <div
             onClick={(e) => {

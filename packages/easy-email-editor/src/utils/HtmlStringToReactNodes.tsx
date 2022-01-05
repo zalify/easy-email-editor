@@ -7,7 +7,6 @@ import {
   getPageIdx,
 } from 'easy-email-core';
 import { getEditNode } from './getEditNode';
-import { getImg } from './getImg';
 const domParser = new DOMParser();
 
 const errLog = console.error;
@@ -112,7 +111,7 @@ const RenderReactNode = React.memo(function ({
 
     if (attributes['contenteditable'] === 'true') {
       return createElement(tagName, {
-        key: index,
+        key: performance.now(),
         ...attributes,
         style: getStyle(node.getAttribute('style')),
         dangerouslySetInnerHTML: { __html: node.innerHTML },
@@ -165,20 +164,13 @@ function createElement(
     dangerouslySetInnerHTML?: any;
   }
 ) {
-  if (
-    type === 'img' &&
-    props?.src &&
-    (/{{([\s\S]+?)}}/g.test(props.src) || /\*\|([^\|\*]+)\|\*/g.test(props.src))
-  ) {
-    props.src = getImg('IMAGE_59');
-  }
   if (props?.class && props.class.includes('email-block')) {
     const blockType = getNodeTypeFromClassName(props.class);
     if (![BasicType.TEXT].includes(blockType as any)) {
       props.role = 'tab';
       props.tabIndex = '0';
     }
-    props.key = props.class;
+    props.key = props.key + props.class;
   }
 
   return React.createElement(type, props);

@@ -24,7 +24,6 @@ import {
   EmailEditorProvider,
   EmailEditorProviderProps,
   IEmailTemplate,
-  useEditorProps,
 } from 'easy-email-editor';
 
 import { Stack } from '@demo/components/Stack';
@@ -72,7 +71,7 @@ const fontList = [
 
 export default function Editor() {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [theme, setTheme] = useState<'blue' | 'green' | 'purple'>('blue');
+  const [theme, setTheme] = useState<'blue' | 'green' | 'purple'>('purple');
   const dispatch = useDispatch();
   const history = useHistory();
   const templateData = useAppSelector('template');

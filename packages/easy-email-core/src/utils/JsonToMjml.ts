@@ -13,6 +13,7 @@ import { classnames } from './classnames';
 import { BlockManager } from '@core/utils';
 import { ICarousel, INavbar, ISocial, IPage } from '@core/blocks';
 import { getPreviewClassName } from './getPreviewClassName';
+import { getImg } from './getImg';
 
 export type JsonToMjmlOption =
   | {
@@ -297,6 +298,20 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
                 ${data.data.value?.content}
               </mj-raw>
             `;
+    case BasicType.IMAGE:
+      if (mode === 'testing') {
+        const url = data.attributes.src;
+        if (
+          url === '' ||
+          /{{([\s\S]+?)}}/g.test(url) ||
+          /\*\|([^\|\*]+)\|\*/g.test(url)
+        ) {
+          return `<mj-image src="${getImg(
+            'IMAGE_59'
+          )}"  ${attributeStr}></mj-image>`;
+        }
+      }
+      return `<mj-image ${attributeStr}></mj-image>`;
     default:
       return `
           <mj-${data.type} ${attributeStr}>

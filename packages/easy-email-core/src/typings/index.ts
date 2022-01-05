@@ -19,6 +19,7 @@ export interface IBlockData<
   K extends { [key: string]: any } = any,
   T extends { [key: string]: any } = any
 > {
+  title?: string;
   type: string;
   data: {
     value: T;

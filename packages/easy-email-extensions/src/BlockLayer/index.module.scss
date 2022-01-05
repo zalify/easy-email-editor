@@ -4,23 +4,16 @@
   justify-content: space-between;
   align-items: center;
   position: relative;
-  &:hover {
-    :global {
-      .icon-eye {
-        opacity: 1;
-      }
-    }
-  }
 
   :global {
     .icon-eye {
-      transition: opacity 0.3s;
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
       right: 30px;
       opacity: 0;
       font-size: 14px;
+      color: rgb(var(--primary-6)) !important;
     }
     .icon-eye-invisible {
       position: absolute;
@@ -29,10 +22,17 @@
       font-size: 14px;
       right: 30px;
       opacity: 1 !important;
+      color: rgb(var(--primary-6)) !important;
     }
   }
+}
+:global(#BlockLayerManager .arco-tree-node-expanded) {
+  overflow: hidden;
 }
 
 :global(#BlockLayerManager .arco-tree-node-selected .arco-tree-node-title) {
   background-color: rgb(var(--primary-1));
+}
+:global(#BlockLayerManager .arco-tree-node-title:hover .icon-eye) {
+  opacity: 1;
 }

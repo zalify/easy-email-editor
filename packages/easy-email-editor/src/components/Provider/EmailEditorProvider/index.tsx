@@ -10,6 +10,7 @@ import { ScrollProvider } from '../ScrollProvider';
 import { Config, FormApi, FormState } from 'final-form';
 import { useEffect, useState } from 'react';
 import setFieldTouched from 'final-form-set-field-touched';
+import { FocusBlockLayoutProvider } from '../FocusBlockLayoutProvider';
 
 export interface EmailEditorProviderProps<T extends IEmailTemplate = any>
   extends PropsProviderProps {
@@ -56,7 +57,9 @@ export const EmailEditorProvider = <T extends any>(
               <BlocksProvider>
                 <HoverIdxProvider>
                   <ScrollProvider>
-                    <FormWrapper children={children} />
+                    <FocusBlockLayoutProvider>
+                      <FormWrapper children={children} />
+                    </FocusBlockLayoutProvider>
                   </ScrollProvider>
                 </HoverIdxProvider>
               </BlocksProvider>
