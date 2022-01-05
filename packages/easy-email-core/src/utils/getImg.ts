@@ -9,6 +9,8 @@ const defaultImagesMap = {
     'https://assets.maocanhua.cn/98520d6c-5cef-449e-bcbf-6316ccec2088-e8780361-0deb-4896-895e-e690c886cdf0.png',
   IMAGE_04:
     'https://assets.maocanhua.cn/b064f705-34ba-4400-975e-9dd0cec21c30-cc9aa158-56bd-4bf1-b532-72390d25c864.png',
+  IMAGE_59:
+    'https://assets.maocanhua.cn/8e0e07e2-3f84-4426-84c1-2add355c558b-image.png',
 };
 
 ImageManager.add(defaultImagesMap);

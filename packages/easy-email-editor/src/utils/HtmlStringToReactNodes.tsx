@@ -165,13 +165,6 @@ function createElement(
     dangerouslySetInnerHTML?: any;
   }
 ) {
-  if (
-    type === 'img' &&
-    props?.src &&
-    (/{{([\s\S]+?)}}/g.test(props.src) || /\*\|([^\|\*]+)\|\*/g.test(props.src))
-  ) {
-    props.src = getImg('IMAGE_59');
-  }
   if (props?.class && props.class.includes('email-block')) {
     const blockType = getNodeTypeFromClassName(props.class);
     if (![BasicType.TEXT].includes(blockType as any)) {

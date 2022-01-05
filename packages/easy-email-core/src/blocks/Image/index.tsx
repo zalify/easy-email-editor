@@ -5,7 +5,6 @@ import { createBlock } from '@core/utils/createBlock';
 import { merge } from 'lodash';
 import { getImg } from '@core/utils/getImg';
 
-
 export type IImage = IBlockData<{
   alt?: string;
   src?: string;
@@ -35,7 +34,7 @@ export const Image: IBlock<IImage> = createBlock({
         align: 'center',
         height: 'auto',
         padding: '10px 25px 10px 25px',
-        src: getImg('IMAGE_01'),
+        src: '',
       },
       children: [],
     };
