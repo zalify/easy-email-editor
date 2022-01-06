@@ -70,7 +70,7 @@ export const MergeTags: React.FC<{
       renderMergeTagContent ? (
         renderMergeTagContent({
           onChange: props.onChange,
-          isSelect: props.isSelect,
+          isSelect: Boolean(props.isSelect),
           value: props.value,
         })
       ) : (
@@ -80,7 +80,7 @@ export const MergeTags: React.FC<{
   );
 
   if (renderMergeTagContent) {
-    return mergeTagContent;
+    return <>{mergeTagContent}</>;
   }
 
   return (
