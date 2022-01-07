@@ -23,7 +23,7 @@
     "paths": {
       "@": ["./src"],
       "@/*": ["./src/*"],
-      "easy-email-core": ["../easy-email-core/src/index.tsx"]
+      "easy-email-core": ["../easy-email-core"]
     }
   },
   "include": ["./src"],

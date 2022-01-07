@@ -1,16 +1,8 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import {
   DATA_ATTRIBUTE_DROP_CONTAINER,
-  DATA_ATTRIBUTE_ID,
   IconFont,
   scrollBlockEleIntoView,
-  Stack,
   TextStyle,
   useBlock,
   useEditorContext,
@@ -79,7 +71,7 @@ export function BlockLayer() {
         setValueByIdx(id, blockData);
       }
     },
-    [setValueByIdx]
+    [setValueByIdx, valueRef]
   );
 
   const renderTitle = useCallback(
@@ -227,7 +219,7 @@ export function BlockLayer() {
 
         return dropResult;
       },
-      [allowDrop]
+      [allowDrop, removeHightLightClassName, setDirection, setHoverIdx]
     );
 
   const selectedKeys = useMemo(() => {

@@ -75,7 +75,7 @@ export function useDropBlock() {
       ref.addEventListener('mousedown', onMouseDown);
       ref.addEventListener('click', onClick);
       return () => {
-        ref.addEventListener('mousedown', onMouseDown);
+        ref.removeEventListener('mousedown', onMouseDown);
         ref.removeEventListener('click', onClick);
       };
     }

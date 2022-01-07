@@ -45,7 +45,7 @@ export function AccordionTitle() {
               <Grid.Col span={11}>
                 <FontWeight />
               </Grid.Col>
-              <Grid.Col offset={1} span={11}></Grid.Col>
+              <Grid.Col offset={1} span={11} />
             </Grid.Row>
 
             <Padding title='Padding' attributeName='padding' />

@@ -49,14 +49,14 @@ export function ColorPicker(props: ColorPickerProps) {
         title={props.label}
         trigger='click'
         {...props}
-        content={
+        content={(
           <SketchPicker
             presetColors={presetColors}
             color={color}
             disableAlpha
             onChangeComplete={onChangeComplete}
           />
-        }
+        )}
       >
         {children || (
           <div

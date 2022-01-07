@@ -150,7 +150,7 @@ export function ImageUploader(props: ImageUploaderProps) {
             >
               <ArcoButton
                 icon={<IconFont iconName='icon-merge-tags' />}
-              ></ArcoButton>
+              />
             </Popover>
           )}
           <Input

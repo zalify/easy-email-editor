@@ -21,7 +21,7 @@ export function Divider() {
               <Grid.Col span={11}>
                 <Width unitOptions='percent' />
               </Grid.Col>
-              <Grid.Col offset={1} span={11}></Grid.Col>
+              <Grid.Col offset={1} span={11} />
             </Grid.Row>
 
             <Align />
@@ -48,7 +48,7 @@ export function Divider() {
             <Grid.Col span={11}>
               <ContainerBackgroundColor title='Background' />
             </Grid.Col>
-            <Grid.Col offset={1} span={11}></Grid.Col>
+            <Grid.Col offset={1} span={11} />
           </Grid.Row>
         </Collapse.Item>
       </Collapse>

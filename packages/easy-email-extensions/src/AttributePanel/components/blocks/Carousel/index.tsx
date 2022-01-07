@@ -89,7 +89,7 @@ export function Carousel() {
                 name={`${focusIdx}.attributes.icon-width`}
               />
             </Grid.Col>
-            <Grid.Col offset={1} span={11}></Grid.Col>
+            <Grid.Col offset={1} span={11} />
           </Grid.Row>
         </Collapse.Item>
 

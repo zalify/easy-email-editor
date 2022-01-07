@@ -7,12 +7,10 @@
     "build:editor": "cd packages/easy-email-editor && yarn build",
     "build:extensions": "cd packages/easy-email-extensions && yarn build",
     "dev": "cd demo && yarn dev",
-    "demo": "cd demo && yarn build"
+    "demo": "cd demo && yarn build",
+    "lint": "lerna exec -- yarn format"
   },
   "dependencies": {
-    "@arco-design/web-react": "^2.26.1",
-    "browser-image-compression": "^1.0.17",
-    "lerna": "^4.0.0",
-    "vite": "^2.6.14"
+    "lerna": "^4.0.0"
   }
 }

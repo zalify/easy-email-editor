@@ -58,6 +58,7 @@ export default function enhancer<P, C extends (...rest: any[]) => any = any>(
 
     const [currentValue, setCurrentValue] = useState(value);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const debounceCallbackChange = useCallback(
       debounce(
         (val) => {
@@ -91,7 +92,7 @@ export default function enhancer<P, C extends (...rest: any[]) => any = any>(
               debounceCallbackChange(newVal);
               onBlur();
             },
-            [onBlur, onChangeAdapter, debounceCallbackChange]
+            [onBlur]
           );
 
           if (!wrapper)

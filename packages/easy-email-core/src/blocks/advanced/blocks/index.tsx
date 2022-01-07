@@ -29,7 +29,6 @@ export const AdvancedSpacer = generateAdvancedBlock<ISpacer>({
   baseType: BasicType.SPACER
 });
 
-
 export const AdvancedNavbar = generateAdvancedBlock<INavbar>({
   type: AdvancedType.NAVBAR,
   baseType: BasicType.NAVBAR
@@ -39,7 +38,6 @@ export const AdvancedAccordion = generateAdvancedBlock<IAccordion>({
   type: AdvancedType.ACCORDION,
   baseType: BasicType.ACCORDION
 });
-
 
 export const AdvancedCarousel = generateAdvancedBlock<ICarousel>({
   type: AdvancedType.CAROUSEL,
