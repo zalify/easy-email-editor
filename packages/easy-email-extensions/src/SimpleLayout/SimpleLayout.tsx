@@ -73,11 +73,7 @@ export const SimpleLayout: React.FC<{
             className={styles.customScrollBar}
           >
             <Tabs>
-              <Tabs.TabPane
-                style={{ marginTop: 0 }}
-                key='Configuration'
-                title='Configuration'
-              >
+              <Tabs.TabPane key='Configuration' title='Configuration'>
                 <AttributePanel />
               </Tabs.TabPane>
               {showSourceCode && (

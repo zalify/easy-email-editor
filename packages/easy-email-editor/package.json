@@ -2,7 +2,7 @@
   "name": "easy-email-editor",
   "license": "MIT",
   "description": "Email editor",
-  "version": "3.1.28",
+  "version": "3.1.31",
   "author": "m-Ryan",
   "repository": {
     "type": "git",
@@ -18,8 +18,8 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "dev": "vite",
-    "typings": "tsc --declaration --emitDeclarationOnly --project tsconfig.lib.json",
-    "build": "rimraf lib && npm run typings  && vite build --config vite.config.ts",
+    "typings": "tsc --declaration --emitDeclarationOnly --project tsconfig.lib.json && tsc-alias -p tsconfig.lib.json",
+    "build": "rimraf lib && npm run typings && vite build --config vite.config.ts",
     "format": "eslint --fix  --ext .tsx,.ts src/"
   },
   "husky": {
