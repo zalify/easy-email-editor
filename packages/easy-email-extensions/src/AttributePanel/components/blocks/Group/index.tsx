@@ -25,7 +25,7 @@ export function Group() {
             <Grid.Col span={11}>
               <BackgroundColor />
             </Grid.Col>
-            <Grid.Col offset={1} span={11}></Grid.Col>
+            <Grid.Col offset={1} span={11} />
           </Grid.Row>
         </Collapse.Item>
       </Collapse>

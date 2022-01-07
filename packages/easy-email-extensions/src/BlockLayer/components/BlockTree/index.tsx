@@ -69,6 +69,13 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
 
   const { treeData, allowDrop, onContextMenu, selectedKeys } = props;
   const treeDataRef = useRef(treeData);
+  const {
+    onDragStart: propsDragStart,
+    onDrop: propsDrop,
+    renderTitle: propsRenderTitle,
+    onDragEnd: propsDragEnd,
+    onSelect: propsSelect,
+  } = props;
 
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
 
@@ -108,9 +115,9 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
         key: node.props._key as string,
         parentKey: node.props.parentKey as string,
       };
-      props.onDragStart?.();
+      propsDragStart?.();
     },
-    [props.onDragStart]
+    [propsDragStart]
   );
 
   const onDragMove: AllowDrop = useCallback(
@@ -135,7 +142,7 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
 
       return false;
     },
-    [dragNode]
+    [allowDrop]
   );
 
   const onDrop = useCallback(
@@ -160,9 +167,9 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
         },
         dropPosition,
       };
-      props.onDrop(currentDropData);
+      propsDrop(currentDropData);
     },
-    []
+    [propsDrop]
   );
 
   const renderTitle: TreeProps['renderTitle'] = useCallback(
@@ -172,23 +179,23 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
           style={{ display: 'inline-flex', width: '100%' }}
           onContextMenu={(ev) => onContextMenu && onContextMenu(nodeData, ev)}
         >
-          {props.renderTitle(nodeData)}
+          {propsRenderTitle(nodeData)}
         </div>
       );
     },
-    [onContextMenu]
+    [onContextMenu, propsRenderTitle]
   );
 
   const onDragEnd = useCallback(() => {
     dragNode.current = null;
-    props.onDragEnd?.();
-  }, [props.onDragEnd]);
+    propsDragEnd?.();
+  }, [propsDragEnd]);
 
   const onSelect: TreeProps['onSelect'] = useCallback(
     (selectedKeys) => {
-      props.onSelect(selectedKeys[0]);
+      propsSelect(selectedKeys[0]);
     },
-    [props.onSelect]
+    [propsSelect]
   );
 
   useEffect(() => {

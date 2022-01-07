@@ -10,7 +10,7 @@ import { Input } from './Input';
 export interface InputWithUnitProps extends Omit<ArcoInputProps, 'onChange'> {
   value: string;
   onChange: (val: string) => void;
-  unitOptions?: Array<{ value: string; label: string; }> | 'default' | 'percent';
+  unitOptions?: Array<{ value: string; label: string }> | 'default' | 'percent';
 }
 
 const defaultUnitOptions = [
@@ -71,12 +71,12 @@ export function InputWithUnit(props: InputWithUnitProps) {
     };
   }, [value, unitOptions]);
 
-  const onChange = useCallback(
-    (val: string) => {
-      props.onChange(val);
-    },
-    [props.onChange]
-  );
+  // const onChange = useCallback(
+  //   (val: string) => {
+  //     props.onChange(val);
+  //   },
+  //   [props.onChange]
+  // );
 
   // const onChangeText = useCallback(
   //   (val: string) => {

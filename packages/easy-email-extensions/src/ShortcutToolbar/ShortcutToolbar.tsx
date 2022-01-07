@@ -8,7 +8,7 @@ export function ShortcutToolbar() {
   return (
     <Stack vertical alignment='center' distribution='center'>
       <BlocksPanel>
-        <div ref={blocksPanelRef}></div>
+        <div ref={blocksPanelRef} />
       </BlocksPanel>
 
       <BlockAvatarWrapper type={BasicType.TEXT}>

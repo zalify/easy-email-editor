@@ -10,7 +10,6 @@ import { getPreviewClassName } from '@core/utils/getPreviewClassName';
 import { merge } from 'lodash';
 import React from 'react';
 
-
 export function generateAdvancedBlock<T extends IBlockData>(option: {
   type: string;
   baseType: string;
@@ -29,15 +28,17 @@ export function generateAdvancedBlock<T extends IBlockData>(option: {
     },
     render: (data, idx, mode, context) => {
 
-      const content = <Template>{{
+      const content = (
+<Template>{{
         ...data,
         type: option.baseType,
         attributes: {
           ...data.attributes,
-          "css-class": classnames(data.attributes["css-class"], getPreviewClassName(idx, option.type))
+          'css-class': classnames(data.attributes['css-class'], getPreviewClassName(idx, option.type))
         }
-      }}</Template>;
-
+      }}
+</Template>
+);
 
       if (!idx || !context) {
         return content;

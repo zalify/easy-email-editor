@@ -25,7 +25,7 @@ export function EditEmailPreview() {
     if (containerRef) {
       setInitialized(true);
     }
-  }, [containerRef]);
+  }, [containerRef, setInitialized]);
 
   useEffect(() => {
     const container = containerRef;
@@ -39,18 +39,16 @@ export function EditEmailPreview() {
       const target = event.target as HTMLDivElement;
       scrollHeight.current = target.scrollTop;
     },
-    []
+    [scrollHeight]
   );
 
   return useMemo(
     () => (
       <ShadowDom
         id='VisualEditorEditMode'
-        {
-        ...{
-          [DATA_ATTRIBUTE_DROP_CONTAINER]: 'true'
-        }
-        }
+        {...{
+          [DATA_ATTRIBUTE_DROP_CONTAINER]: 'true',
+        }}
         style={{
           height: '100%',
           zIndex: 10,
