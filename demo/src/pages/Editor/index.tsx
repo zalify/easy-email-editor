@@ -228,7 +228,7 @@ export default function Editor() {
         //   hoverColor: '#78A349',
         //   selectedColor: '#1890ff',
         // }}
-        // onAddCollection={addCollection}
+        onAddCollection={addCollection}
         onRemoveCollection={({ id }) => removeCollection(id)}
         onUploadImage={onUploadImage}
         fontList={fontList}
