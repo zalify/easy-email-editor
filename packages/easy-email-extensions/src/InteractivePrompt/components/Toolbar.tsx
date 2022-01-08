@@ -1,6 +1,6 @@
 import React from 'react';
 import { BasicType, getParentIdx, getSiblingIdx } from 'easy-email-core';
-import { useBlock, useFocusIdx, useFocusBlockLayout } from 'easy-email-editor';
+import { useBlock, useFocusIdx, useFocusBlockLayout, useEditorProps } from 'easy-email-editor';
 import { classnames } from '@extensions/utils/classnames';
 import { useAddToCollection } from '@extensions/hooks/useAddToCollection';
 import { getBlockTitle } from '@extensions/utils/getBlockTitle';
@@ -10,6 +10,7 @@ export function Toolbar() {
   const { focusIdx, setFocusIdx } = useFocusIdx();
   const { focusBlockRect } = useFocusBlockLayout();
   const { modal, setModalVisible } = useAddToCollection();
+  const props = useEditorProps();
 
   const isPage = focusBlock?.type === BasicType.PAGE;
 
@@ -110,10 +111,12 @@ export function Toolbar() {
               onClick={handleSelectParent}
             />
             <ToolItem iconName='icon-copy' onClick={handleCopy} />
-            <ToolItem
-              iconName='icon-collection'
-              onClick={handleAddToCollection}
-            />
+            {props.onAddCollection && (
+              <ToolItem
+                iconName='icon-collection'
+                onClick={handleAddToCollection}
+              />
+            )}
             <ToolItem iconName='icon-delete' onClick={handleDelete} />
           </div>
         </div>
