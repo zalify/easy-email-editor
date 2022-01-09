@@ -56,7 +56,7 @@ export const MergeTags: React.FC<{
       deep(key, key, contextMergeTags, treeData)
     );
     return treeData;
-  }, [contextMergeTags]);
+  }, [contextMergeTags, mergeTagGenerate]);
 
   const onSelect = useCallback(
     (value: string) => {

@@ -40,7 +40,7 @@ export const BlockAvatarWrapper: React.FC<BlockAvatarWrapperProps> = (
 
       setIsDragging(true);
     },
-    [setIsDragging]
+    [action, idx, payload, setDataTransfer, setIsDragging, type]
   );
 
   const onDragEnd = useCallback(() => {

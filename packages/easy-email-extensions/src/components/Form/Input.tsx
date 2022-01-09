@@ -11,13 +11,18 @@ export interface InputProps extends Omit<ArcoInputProps, 'onChange'> {
 }
 
 export function Input(props: InputProps) {
-  const { quickchange, value = '', onKeyDown: onPropsKeyDown } = props;
+  const {
+    quickchange,
+    value = '',
+    onKeyDown: onPropsKeyDown,
+    onChange: propsOnChange,
+  } = props;
 
   const onChange = useCallback(
     (val: string) => {
-      props.onChange(val);
+      propsOnChange(val);
     },
-    [props.onChange]
+    [propsOnChange]
   );
 
   const onKeyDown = useCallback(

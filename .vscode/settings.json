@@ -4,8 +4,6 @@
   //  - auto: 推断最短的路径类型。
   //  - relative: 相对于文件位置。
   //  - non-relative: 根据 `jsconfig.json` 或 `tsconfig.json` 中配置的 `baseUrl` 。
-  "javascript.preferences.importModuleSpecifier": "auto",
-  "typescript.preferences.importModuleSpecifier": "auto",
   // 启用或禁用自动导入建议。要求工作区使用高于 2.6.1 版本的 TypeScript。
   "javascript.suggest.autoImports": true,
   "javascript.suggest.enabled": true,
@@ -47,5 +45,10 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "cSpell.words": ["Mjml"]
+  "cSpell.words": ["Mjml"],
+  "eslint.workingDirectories": [
+    "packages/easy-email-core",
+    "packages/easy-email-editor",
+    "packages/easy-email-extensions"
+  ]
 }

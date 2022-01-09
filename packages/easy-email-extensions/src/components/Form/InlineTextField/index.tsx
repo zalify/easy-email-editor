@@ -46,7 +46,6 @@ export function InlineText({ idx, onChange, children }: InlineTextProps) {
       promiseObj.cancel();
     };
 
-
   }, [idx, focusBlock]);
 
   useEffect(() => {

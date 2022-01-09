@@ -97,7 +97,7 @@ export function useAvatarWrapperDrop() {
       setHoverIdx('');
       return false;
     },
-    [setDirection, setHoverIdx, removeHightLightClassName]
+    [setDirection, setHoverIdx, valuesRef]
   );
 
   useEffect(() => {
@@ -210,7 +210,16 @@ export function useAvatarWrapperDrop() {
         blockLayerRef.removeEventListener('dragleave', onDragend);
       };
     }
-  }, [blockLayerRef, dataTransferRef, valuesRef, removeHightLightClassName]);
+  }, [
+    blockLayerRef,
+    dataTransferRef,
+    valuesRef,
+    removeHightLightClassName,
+    allowDrop,
+    setDirection,
+    setHoverIdx,
+    setDataTransfer,
+  ]);
 
   return {
     setBlockLayerRef,

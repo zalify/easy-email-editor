@@ -68,7 +68,7 @@ export function Section() {
                   inline
                 />
               </Grid.Col>
-              <Grid.Col span={12}></Grid.Col>
+              <Grid.Col span={12} />
             </Grid.Row>
 
             <Padding />

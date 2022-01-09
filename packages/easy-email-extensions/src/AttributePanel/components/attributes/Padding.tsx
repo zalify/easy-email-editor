@@ -27,9 +27,6 @@ export function Padding(props: PaddingProps = {}) {
   const defaultPaddingValue: string | undefined =
     defaultConfig?.attributes[attributeName];
 
-  const paddingList = paddingValue?.split(' ');
-  const defaultPaddingList = defaultPaddingValue?.split(' ');
-
   const paddingFormValues = useMemo(() => {
     const paddingList = paddingValue?.split(' ');
     const defaultPaddingList = defaultPaddingValue?.split(' ');
@@ -45,7 +42,7 @@ export function Padding(props: PaddingProps = {}) {
       bottom,
       right,
     };
-  }, [paddingList, defaultPaddingList, defaultPaddingValue, paddingValue]);
+  }, [defaultPaddingValue, paddingValue]);
 
   const onChancePadding = useCallback(
     (val: string) => {
@@ -99,10 +96,11 @@ const PaddingChangeWrapper: React.FC<{ onChange: (val: string) => void }> = (
   const {
     values: { top, right, bottom, left },
   } = useFormState();
+  const { onChange } = props;
 
   useEffect(() => {
-    props.onChange([top, right, bottom, left].join(' '));
-  }, [top, right, bottom, left]);
+    onChange([top, right, bottom, left].join(' '));
+  }, [top, right, bottom, left, onChange]);
 
   return <></>;
 };

@@ -27,7 +27,6 @@ export enum BasicType {
   TEMPLATE = 'template',
 }
 
-
 // 高级组件
 export enum AdvancedType {
   TEXT = 'advanced_text',
