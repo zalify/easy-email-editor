@@ -3,10 +3,10 @@ import { blocks } from '@core/blocks';
 
 export class BlockManager {
   private static blocksMap = { ...blocks };
-  private static autoCompletePath: { [key: string]: Array<string[]>; } = {};
+  private static autoCompletePath: { [key: string]: Array<string[]> } = {};
 
   private static setAutoCompletePath() {
-    const paths: { [key: string]: Array<string[]>; } = {};
+    const paths: { [key: string]: Array<string[]> } = {};
 
     const renderFullPath = (
       type: string,
@@ -37,7 +37,7 @@ export class BlockManager {
     return Object.values(this.blocksMap);
   }
 
-  public static registerBlocks(blocksMap: { [key: string]: IBlock; }) {
+  public static registerBlocks(blocksMap: { [key: string]: IBlock }) {
     this.blocksMap = {
       ...this.blocksMap,
       ...blocksMap,

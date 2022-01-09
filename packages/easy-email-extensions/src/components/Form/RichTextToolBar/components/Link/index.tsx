@@ -98,7 +98,7 @@ export function Link(props: LinkProps) {
             trigger='click'
             color='#fff'
             position='tl'
-            content={
+            content={(
               <div style={{ color: '#333' }}>
                 <Stack vertical spacing='none'>
                   <SearchField
@@ -142,7 +142,7 @@ export function Link(props: LinkProps) {
                   </Grid.Col>
                 </Grid.Row>
               </div>
-            }
+            )}
           >
             <ToolItem title='Link' icon={<IconFont iconName='icon-link' />} />
           </Tooltip>

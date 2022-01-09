@@ -37,7 +37,7 @@ export function MjmlDomRender() {
       })
     ).html;
     return renderHtml;
-  }, [pageData]);
+  }, [mergeTags, pageData]);
 
   return useMemo(() => {
     return (

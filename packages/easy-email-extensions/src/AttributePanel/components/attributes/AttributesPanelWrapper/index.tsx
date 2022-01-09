@@ -43,7 +43,8 @@ export const AttributesPanelWrapper: React.FC<AttributesPanelWrapper> = (
                 <TextStyle
                   variation='strong'
                   size='large'
-                >{`${block.name} attributes`}</TextStyle>
+                >{`${block.name} attributes`}
+                </TextStyle>
               </Stack>
               <Stack.Item>{props.extra}</Stack.Item>
             </Stack>

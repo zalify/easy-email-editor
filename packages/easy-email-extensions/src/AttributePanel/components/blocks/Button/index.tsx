@@ -36,27 +36,27 @@ export function Button() {
         <Collapse.Item name='-1' header='Setting'>
           <Space direction='vertical'>
             <TextField
-              label={
+              label={(
                 <Space>
                   <span>Content</span>
                   {mergeTags && (
                     <Popover
                       trigger='click'
-                      content={
+                      content={(
                         <MergeTags
                           value={input.value}
                           onChange={input.onChange}
                         />
-                      }
+                      )}
                     >
                       <ArcoButton
                         type='text'
                         icon={<IconFont iconName='icon-merge-tags' />}
-                      ></ArcoButton>
+                      />
                     </Popover>
                   )}
                 </Space>
-              }
+              )}
               name={`${focusIdx}.data.value.content`}
             />
             <Link />

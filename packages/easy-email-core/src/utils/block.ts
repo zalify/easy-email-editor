@@ -50,7 +50,7 @@ export const getValueByIdx = <T extends IBlockData>(
   return get(values, idx);
 };
 
-export const getParentByIdx = <T extends IBlockData>(
+export const getParentByIdx = <T extends IBlockData = IBlockData>(
   values: { content: IBlockData },
   idx: string
 ): T | null => {
