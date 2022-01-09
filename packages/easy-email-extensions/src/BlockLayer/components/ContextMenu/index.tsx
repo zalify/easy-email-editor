@@ -3,7 +3,7 @@ import {
   IconFont,
   TextStyle,
   scrollBlockEleIntoView,
-  useBlock,
+  useBlock, useEditorProps,
 } from 'easy-email-editor';
 import { getIndexByIdx, getSiblingIdx } from 'easy-email-core';
 import styles from './index.module.scss';
@@ -30,6 +30,7 @@ export function ContextMenu({
   const { blockData, left, top } = contextMenuData;
   const idx = blockData.id;
   const { modal, modalVisible, setModalVisible } = useAddToCollection();
+  const props = useEditorProps();
   const ref = useRef<HTMLDivElement>(null);
 
   const handleMoveUp = () => {
@@ -91,10 +92,12 @@ export function ContextMenu({
           <IconFont iconName='icon-copy' style={{ marginRight: 10 }} />{' '}
           <TextStyle>Copy</TextStyle>
         </div>
-        <div className={styles.listItem} onClick={handleAddToCollection}>
-          <IconFont iconName='icon-start' style={{ marginRight: 10 }} />{' '}
-          <TextStyle>Add to collection</TextStyle>
-        </div>
+        {props.onAddCollection && (
+            <div className={styles.listItem} onClick={handleAddToCollection}>
+              <IconFont iconName='icon-start' style={{ marginRight: 10 }} />{' '}
+              <TextStyle>Add to collection</TextStyle>
+            </div>
+        )}
         <div className={styles.listItem} onClick={handleDelete}>
           <IconFont iconName='icon-delete' style={{ marginRight: 10 }} />{' '}
           <TextStyle>Delete</TextStyle>
