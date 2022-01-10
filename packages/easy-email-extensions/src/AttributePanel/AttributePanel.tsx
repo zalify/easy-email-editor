@@ -32,7 +32,7 @@ export function AttributePanel() {
   return (
     <PresetColorsProvider>
       {Com ? (
-        <Com />
+        <Com key={focusIdx} />
       ) : (
         <div style={{ marginTop: 200, padding: '0 50px' }}>
           <TextStyle size='extraLarge'>No matching components</TextStyle>
