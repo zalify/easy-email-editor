@@ -36,3 +36,6 @@
 :global(#BlockLayerManager .arco-tree-node-title:hover .icon-eye) {
   opacity: 1;
 }
+:global(#BlockLayerManager .arco-tree-node-indent-block) {
+  width: 8px;
+}
