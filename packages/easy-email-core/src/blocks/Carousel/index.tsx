@@ -2,6 +2,7 @@ import { IBlockData } from '@core/typings';
 import { BasicType } from '@core/constants';
 import { createBlock } from '@core/utils/createBlock';
 import { merge } from 'lodash';
+import { getImg } from '@core/utils/getImg';
 export type ICarousel = IBlockData<
   {
     align?: string;
@@ -40,15 +41,15 @@ export const Carousel = createBlock<ICarousel>({
         value: {
           images: [
             {
-              src: 'https://www.mailjet.com/wp-content/uploads/2016/11/ecommerce-guide.jpg',
+              src: getImg('IMAGE_15'),
               target: '_blank',
             },
             {
-              src: 'https://www.mailjet.com/wp-content/uploads/2016/09/3@1x.png',
+              src: getImg('IMAGE_16'),
               target: '_blank',
             },
             {
-              src: 'https://www.mailjet.com/wp-content/uploads/2016/09/1@1x.png',
+              src: getImg('IMAGE_17'),
               target: '_blank',
             },
           ],

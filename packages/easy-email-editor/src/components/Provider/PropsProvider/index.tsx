@@ -28,7 +28,7 @@ export interface PropsProviderProps {
   autoComplete?: boolean;
   dashed?: boolean;
   previewInjectData?: Record<string, any>;
-  mergeTags?: { [key: string]: any };
+  mergeTags?: Record<string, any>;
   mergeTagGenerate?: (m: string) => string;
   renderMergeTagContent?: (props: {
     onChange: (val: string) => void;
