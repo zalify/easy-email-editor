@@ -35,6 +35,7 @@ function FieldWrapper(
   const debounceCallbackChange = useCallback(
     debounce((val) => {
       input.onChange(val);
+      input.onBlur();
     }, 100),
     [input]
   );

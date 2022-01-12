@@ -1,6 +1,6 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Tree, TreeSelect } from '@arco-design/web-react';
-import { isObject } from 'lodash';
+import { get, isObject } from 'lodash';
 import { useBlock, useEditorProps, useFocusIdx } from 'easy-email-editor';
 import { getContextMergeTags } from '@extensions/utils/getContextMergeTags';
 
@@ -9,6 +9,7 @@ export const MergeTags: React.FC<{
   value: string;
   isSelect?: boolean;
 }> = React.memo((props) => {
+  const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const { focusIdx } = useFocusIdx();
   const {
     mergeTags = {},
@@ -36,10 +37,9 @@ export const MergeTags: React.FC<{
       mapData: Array<any> = []
     ) => {
       const currentMapData = {
-        key: mergeTagGenerate(key),
-        value: mergeTagGenerate(key),
+        key: key,
+        value: key,
         title: title,
-        disabled: isObject(parent[key]) || !parent[title],
         children: [],
       };
 
@@ -56,13 +56,25 @@ export const MergeTags: React.FC<{
       deep(key, key, contextMergeTags, treeData)
     );
     return treeData;
-  }, [contextMergeTags, mergeTagGenerate]);
+  }, [contextMergeTags]);
 
   const onSelect = useCallback(
-    (value: string) => {
-      return props.onChange(value);
+    (key: string) => {
+      const value = get(contextMergeTags, key);
+      if (isObject(value)) {
+        setExpandedKeys((keys) => {
+          console.log('keys', keys, key);
+          if (keys.includes(key)) {
+            return keys.filter((k) => k !== key);
+          } else {
+            return [...keys, key];
+          }
+        });
+        return;
+      }
+      return props.onChange(mergeTagGenerate(value));
     },
-    [props]
+    [contextMergeTags, props, mergeTagGenerate]
   );
 
   const mergeTagContent = useMemo(
@@ -96,10 +108,15 @@ export const MergeTags: React.FC<{
         />
       ) : (
         <Tree
-          defaultExpandedKeys={[]}
+          expandedKeys={expandedKeys}
+          onExpand={setExpandedKeys}
           selectedKeys={[]}
           treeData={treeOptions}
           onSelect={(vals: any[]) => onSelect(vals[0])}
+          style={{
+            maxHeight: 400,
+            overflow: 'auto',
+          }}
         />
       )}
     </div>

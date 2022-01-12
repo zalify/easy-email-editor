@@ -36,13 +36,6 @@ export function Page() {
                 name={`${focusIdx}.data.value.breakpoint`}
                 inline
               />
-              <SwitchField
-                inline
-                label='Responsive'
-                name={`${focusIdx}.data.value.responsive`}
-                checkedText='True'
-                uncheckedText='False'
-              />
             </Space>
           </Collapse.Item>
           <Collapse.Item name='1' header='Theme Setting'>

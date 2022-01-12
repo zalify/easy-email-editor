@@ -33,6 +33,7 @@ import {
 import { getIconNameByBlockType } from '@extensions/utils/getIconNameByBlockType';
 import { Space } from '@arco-design/web-react';
 import { getBlockTitle } from '@extensions/utils/getBlockTitle';
+import { isEqual } from 'lodash';
 
 export interface IBlockDataWithId extends IBlockData {
   id: string;
@@ -203,22 +204,29 @@ export function BlockLayer() {
 
   const blockTreeAllowDrop: BlockTreeProps<IBlockDataWithId>['allowDrop'] =
     useCallback(
-      (data) => {
-        const dropResult = allowDrop(data);
-        if (dropResult) {
-          const node = document.querySelector(
-            `[data-tree-idx="${dropResult.key}"]`
-          )?.parentNode?.parentNode;
-          if (node instanceof HTMLElement) {
-            removeHightLightClassName();
-            node.classList.add('arco-tree-node-title-gap-bottom');
+      (() => {
+        let lastDropResult: ReturnType<typeof allowDrop> = false;
+        return (data) => {
+          const dropResult = allowDrop(data);
+          if (isEqual(lastDropResult, dropResult)) {
+            return dropResult;
           }
-          setDirection(getDirectionFormDropPosition(dropResult.position));
-          setHoverIdx(dropResult.key);
-        }
+          lastDropResult = dropResult;
+          if (dropResult) {
+            const node = document.querySelector(
+              `[data-tree-idx="${dropResult.key}"]`
+            )?.parentNode?.parentNode;
+            if (node instanceof HTMLElement) {
+              removeHightLightClassName();
+              node.classList.add('arco-tree-node-title-gap-bottom');
+            }
+            setDirection(getDirectionFormDropPosition(dropResult.position));
+            setHoverIdx(dropResult.key);
+          }
 
-        return dropResult;
-      },
+          return dropResult;
+        };
+      })(),
       [allowDrop, removeHightLightClassName, setDirection, setHoverIdx]
     );
 

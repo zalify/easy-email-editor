@@ -12,7 +12,6 @@ export const AttributesPanelWrapper: React.FC<AttributesPanelWrapper> = (
   props
 ) => {
   const { focusBlock, setFocusBlock } = useBlock();
-  const { mergeTags } = useEditorProps();
   const block = focusBlock && BlockManager.getBlockByType(focusBlock.type);
 
   const onChangeHidden = useCallback(
@@ -40,26 +39,13 @@ export const AttributesPanelWrapper: React.FC<AttributesPanelWrapper> = (
             <Stack wrap={false} distribution='equalSpacing' alignment='center'>
               <Stack spacing='extraTight' alignment='center'>
                 <EyeIcon />
-                <TextStyle
-                  variation='strong'
-                  size='large'
-                >{`${block.name} attributes`}
+                <TextStyle variation='strong' size='large'>
+                  {`${block.name} attributes`}
                 </TextStyle>
               </Stack>
               <Stack.Item>{props.extra}</Stack.Item>
             </Stack>
           </Stack.Item>
-          {/* <MergeTags /> */}
-          {Boolean(focusBlock.data.hidden) && mergeTags && (
-            <Stack spacing='extraTight'>
-              <TextStyle>Hide if</TextStyle>
-              <MergeTags
-                isSelect
-                onChange={onChangeHidden}
-                value={String(focusBlock.data.hidden)}
-              />
-            </Stack>
-          )}
         </Stack>
       </div>
 
