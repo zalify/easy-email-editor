@@ -94,6 +94,7 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
       context,
       dataSource
     );
+    if (!transformBlockData) return '';
     const transformData = isValidElement(transformBlockData)
       ? parseReactBlockToBlockData(transformBlockData)
       : transformBlockData;

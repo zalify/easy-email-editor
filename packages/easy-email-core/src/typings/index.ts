@@ -12,7 +12,7 @@ export interface IBlock<T extends IBlockData = IBlockData> {
     mode: 'testing' | 'production',
     context?: IPage,
     dataSource?: { [key: string]: any }
-  ) => IBlockData | ReactElement;
+  ) => IBlockData | ReactElement | null;
 }
 
 export interface IBlockData<
