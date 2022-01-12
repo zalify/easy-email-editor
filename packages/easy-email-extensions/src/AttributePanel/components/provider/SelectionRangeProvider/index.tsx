@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { getShadowRoot } from 'easy-email-editor';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 export const SelectionRangeContext = React.createContext<{
   selectionRange: Range | null;
   setSelectionRange: React.Dispatch<React.SetStateAction<Range | null>>;
 }>({
   selectionRange: null,
-  setSelectionRange: () => { },
+  setSelectionRange: () => {},
 });
 
 export const SelectionRangeProvider: React.FC<{}> = (props) => {
@@ -20,7 +20,7 @@ export const SelectionRangeProvider: React.FC<{}> = (props) => {
         if (range) {
           setSelectionRange(range);
         }
-      } catch (error) { }
+      } catch (error) {}
     };
 
     document.addEventListener('selectionchange', onSelectionChange);
@@ -30,14 +30,18 @@ export const SelectionRangeProvider: React.FC<{}> = (props) => {
     };
   }, []);
 
-  return (
-    <SelectionRangeContext.Provider
-      value={{
-        selectionRange,
-        setSelectionRange
-      }}
-    >
-      {props.children}
-    </SelectionRangeContext.Provider>
-  );
+  const value = useMemo(() => {
+    return {
+      selectionRange,
+      setSelectionRange,
+    };
+  }, [selectionRange]);
+
+  return useMemo(() => {
+    return (
+      <SelectionRangeContext.Provider value={value}>
+        {props.children}
+      </SelectionRangeContext.Provider>
+    );
+  }, [props.children, value]);
 };

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import { Popover } from '@arco-design/web-react';
 import { ToolItem } from '../ToolItem';
 import { Link, LinkParams } from '../Link';
@@ -13,6 +13,7 @@ import { FontFamily } from '../FontFamily';
 import { ColorPicker } from '../../../ColorPicker';
 import styleText from './index.scss?inline';
 import { MergeTags } from '@extensions/AttributePanel';
+import { useSelectionRange } from '@extensions/AttributePanel/hooks/useSelectionRange';
 
 export interface ToolsProps {
   onChange: (content: string) => any;
@@ -22,34 +23,7 @@ export interface ToolsProps {
 export function Tools(props: ToolsProps) {
   const { container } = props;
   const { mergeTags } = useEditorProps();
-  const [selectionRange, setSelectionRange] = useState<Range | null>(null);
-
-  useEffect(() => {
-    const onSelectionChange = () => {
-      try {
-        const range = (getShadowRoot() as any).getSelection().getRangeAt(0);
-        if (range) {
-          setSelectionRange(range);
-        }
-      } catch (error) {}
-    };
-
-    document.addEventListener('selectionchange', onSelectionChange);
-
-    return () => {
-      document.removeEventListener('selectionchange', onSelectionChange);
-    };
-  }, []);
-
-  const restoreRange = useCallback((range: Range) => {
-    const selection = (getShadowRoot() as any).getSelection();
-    selection.removeAllRanges();
-    const newRange = document.createRange();
-    newRange.setStart(range.startContainer, range.startOffset);
-    newRange.setEnd(range.endContainer, range.endOffset);
-
-    selection.addRange(newRange);
-  }, []);
+  const { selectionRange, restoreRange } = useSelectionRange();
 
   const execCommand = (cmd: string, val?: any) => {
     if (!container) {
@@ -113,12 +87,12 @@ export function Tools(props: ToolsProps) {
             trigger='click'
             color='#fff'
             position='left'
-            content={(
+            content={
               <MergeTags
                 value=''
                 onChange={(val) => execCommand('insertHTML', val)}
               />
-            )}
+            }
             getPopupContainer={getPopoverMountNode}
           >
             <ToolItem
@@ -132,12 +106,12 @@ export function Tools(props: ToolsProps) {
         <Popover
           className='easy-email-extensions-Tools-Popover'
           trigger='click'
-          content={(
+          content={
             <>
               <style>{styleText}</style>
               <FontFamily onChange={(val) => execCommand('fontName', val)} />
             </>
-          )}
+          }
           getPopupContainer={getPopoverMountNode}
         >
           <ToolItem
@@ -150,12 +124,12 @@ export function Tools(props: ToolsProps) {
           className='easy-email-extensions-Tools-Popover'
           color='#fff'
           trigger='click'
-          content={(
+          content={
             <>
               <style>{styleText}</style>
               <FontSizeList onChange={(val) => execCommand('fontSize', val)} />
             </>
-          )}
+          }
           getPopupContainer={getPopoverMountNode}
         >
           <ToolItem

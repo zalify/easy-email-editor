@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { useLocalStorage } from 'react-use';
 
 const defaultPresetColor: string[] = [
@@ -19,7 +19,7 @@ export const PresetColorsContext = React.createContext<{
   addCurrentColor: (color: string) => void;
 }>({
   colors: [],
-  addCurrentColor: () => { },
+  addCurrentColor: () => {},
 });
 
 export const PresetColorsProvider: React.FC<{}> = (props) => {
@@ -44,14 +44,18 @@ export const PresetColorsProvider: React.FC<{}> = (props) => {
     [currentColors, setCurrentColors]
   );
 
-  return (
-    <PresetColorsContext.Provider
-      value={{
-        colors: currentColors!,
-        addCurrentColor,
-      }}
-    >
-      {props.children}
-    </PresetColorsContext.Provider>
-  );
+  const value = useMemo(() => {
+    return {
+      colors: currentColors!,
+      addCurrentColor,
+    };
+  }, [addCurrentColor, currentColors]);
+
+  return useMemo(() => {
+    return (
+      <PresetColorsContext.Provider value={value}>
+        {props.children}
+      </PresetColorsContext.Provider>
+    );
+  }, [props.children, value]);
 };

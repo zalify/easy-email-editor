@@ -63,7 +63,6 @@ export const MergeTags: React.FC<{
       const value = get(contextMergeTags, key);
       if (isObject(value)) {
         setExpandedKeys((keys) => {
-          console.log('keys', keys, key);
           if (keys.includes(key)) {
             return keys.filter((k) => k !== key);
           } else {
@@ -72,7 +71,7 @@ export const MergeTags: React.FC<{
         });
         return;
       }
-      return props.onChange(mergeTagGenerate(value));
+      return props.onChange(mergeTagGenerate(key));
     },
     [contextMergeTags, props, mergeTagGenerate]
   );

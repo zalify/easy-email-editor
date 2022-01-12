@@ -11,6 +11,7 @@ import { RichTextField } from '../components/Form/RichTextField';
 import { PresetColorsProvider } from './components/provider/PresetColorsProvider';
 import ReactDOM from 'react-dom';
 import { BlockAttributeConfigurationManager } from './utils/BlockAttributeConfigurationManager';
+import { SelectionRangeProvider } from './components/provider/SelectionRangeProvider';
 
 export interface AttributePanelProps {}
 
@@ -30,31 +31,33 @@ export function AttributePanel() {
   if (!value || !initialized) return null;
 
   return (
-    <PresetColorsProvider>
-      {Com ? (
-        <Com key={focusIdx} />
-      ) : (
-        <div style={{ marginTop: 200, padding: '0 50px' }}>
-          <TextStyle size='extraLarge'>No matching components</TextStyle>
-        </div>
-      )}
+    <SelectionRangeProvider>
+      <PresetColorsProvider>
+        {Com ? (
+          <Com key={focusIdx} />
+        ) : (
+          <div style={{ marginTop: 200, padding: '0 50px' }}>
+            <TextStyle size='extraLarge'>No matching components</TextStyle>
+          </div>
+        )}
 
-      <div style={{ position: 'absolute' }}>
-        <RichTextField idx={focusIdx} />
-      </div>
-      {shadowRoot &&
-        ReactDOM.createPortal(
-          <style>
-            {`
+        <div style={{ position: 'absolute' }}>
+          <RichTextField idx={focusIdx} />
+        </div>
+        {shadowRoot &&
+          ReactDOM.createPortal(
+            <style>
+              {`
               .email-block [contentEditable="true"],
               .email-block [contentEditable="true"] * {
                 outline: none;
                 cursor: text;
               }
               `}
-          </style>,
-          shadowRoot as any
-        )}
-    </PresetColorsProvider>
+            </style>,
+            shadowRoot as any
+          )}
+      </PresetColorsProvider>
+    </SelectionRangeProvider>
   );
 }
