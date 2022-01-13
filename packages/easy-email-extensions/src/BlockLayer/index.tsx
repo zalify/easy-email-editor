@@ -21,7 +21,7 @@ import {
   IBlockData,
 } from 'easy-email-core';
 import styles from './index.module.scss';
-import { cloneDeep, get } from 'lodash';
+import { cloneDeep, get, isString } from 'lodash';
 import { EyeIcon } from './components/EyeIcon';
 import { BlockTree, BlockTreeProps } from './components/BlockTree';
 import { ContextMenu } from './components/ContextMenu';
@@ -42,10 +42,13 @@ export interface IBlockDataWithId extends IBlockData {
   children: IBlockDataWithId[];
   className?: string;
 }
+export interface BlockLayerProps {
+  renderTitle?: (block: IBlockDataWithId) => React.ReactNode;
+}
 
-export function BlockLayer() {
+export function BlockLayer(props: BlockLayerProps) {
   const { pageData } = useEditorContext();
-
+  const { renderTitle: propsRenderTitle } = props;
   const { focusIdx, setFocusIdx } = useFocusIdx();
   const { setHoverIdx, setIsDragging, setDirection } = useHoverIdx();
   const { moveBlock, setValueByIdx, copyBlock, removeBlock, values } =
@@ -78,7 +81,9 @@ export function BlockLayer() {
   const renderTitle = useCallback(
     (data: IBlockDataWithId) => {
       const isPage = data.type === BasicType.PAGE;
-      const title = getBlockTitle(data);
+      const title = propsRenderTitle
+        ? propsRenderTitle(data)
+        : getBlockTitle(data);
       return (
         <div
           data-tree-idx={data.id}
@@ -94,7 +99,7 @@ export function BlockLayer() {
               style={{ fontSize: 12, color: '#999' }}
             />
             <div
-              title={title}
+              title={isString(title) ? title : ''}
               style={{ overflow: 'hidden', whiteSpace: 'nowrap', width: '5em' }}
             >
               <TextStyle size='smallest'>{title}</TextStyle>
@@ -106,7 +111,7 @@ export function BlockLayer() {
         </div>
       );
     },
-    [onToggleVisible]
+    [onToggleVisible, propsRenderTitle]
   );
 
   const treeData = useMemo(() => {

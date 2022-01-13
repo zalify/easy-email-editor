@@ -4,14 +4,16 @@ import { useEditorProps } from 'easy-email-editor';
 import React from 'react';
 import { SourceCodePanel } from '../SourceCodePanel';
 import { AttributePanel } from '../AttributePanel';
-import { BlockLayer } from '../BlockLayer';
+import { BlockLayer, BlockLayerProps } from '../BlockLayer';
 import { InteractivePrompt } from '../InteractivePrompt';
 import styles from './index.module.scss';
 import enUS from '@arco-design/web-react/es/locale/en-US';
 
-export const SimpleLayout: React.FC<{
-  showSourceCode?: boolean;
-}> = (props) => {
+export const SimpleLayout: React.FC<
+  {
+    showSourceCode?: boolean;
+  } & BlockLayerProps
+> = (props) => {
   const { height: containerHeight } = useEditorProps();
   const { showSourceCode = true } = props;
   return (
@@ -45,7 +47,7 @@ export const SimpleLayout: React.FC<{
               }}
             >
               <Card title='Layout' style={{ border: 'none' }}>
-                <BlockLayer />
+                <BlockLayer renderTitle={props.renderTitle} />
               </Card>
             </Card.Grid>
           </Card>
