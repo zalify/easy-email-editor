@@ -14,7 +14,7 @@ const iconsMap = {
   [BasicType.NAVBAR]: 'icon-navbar',
   [BasicType.HERO]: 'icon-hero',
   [BasicType.SPACER]: 'icon-spacing',
-  [BasicType.SOCIAL]: 'icon-soc',
+  [BasicType.SOCIAL]: 'icon-social',
   [BasicType.CAROUSEL]: 'icon-carousel',
   [BasicType.ACCORDION]: 'icon-accordion',
 };
