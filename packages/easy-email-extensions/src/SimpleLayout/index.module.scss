@@ -3,6 +3,11 @@
     .arco-layout-sider-children {
       overflow-x: hidden;
     }
+  }
+}
+
+.rightSide {
+  :global {
     .arco-tabs-header {
       height: 48px;
     }

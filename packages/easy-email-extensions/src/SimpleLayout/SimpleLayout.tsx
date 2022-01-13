@@ -62,6 +62,7 @@ export const SimpleLayout: React.FC<
             maxWidth: 350,
             width: 350,
           }}
+          className={styles.rightSide}
         >
           <Card
             size='small'
