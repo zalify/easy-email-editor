@@ -143,7 +143,7 @@ const RenderReactNode = React.memo(function ({
 
 function getStyle(styleText: string | null) {
   if (!styleText) return undefined;
-  return styleText.split(';').reduceRight((a, b) => {
+  return styleText.split(';').reduceRight((a: any, b: any) => {
     const arr = b.split(/\:(?!\/)/);
     if (arr.length < 2) return a;
     a[camelCase(arr[0])] = arr[1];

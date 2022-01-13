@@ -51,8 +51,8 @@ export function HoverTooltip() {
   const block = useMemo(() => {
     return blockNode
       ? BlockManager.getBlockByType(
-        getNodeTypeFromClassName(blockNode.classList)!
-      )
+          getNodeTypeFromClassName(blockNode.classList)!
+        )
       : null;
   }, [blockNode]);
 
@@ -208,7 +208,7 @@ function TipNode(props: TipNodeProps) {
   );
 }
 
-const positionStyleMap = {
+const positionStyleMap: Record<string, any> = {
   noEnoughTop: {
     top: '0%',
     left: '50%',
@@ -248,7 +248,7 @@ const positionStyleMap = {
   },
 };
 
-const directionImage = {
+const directionImage: Record<string, any> = {
   top: {
     backgroundImage: `linear-gradient(
       to bottom,

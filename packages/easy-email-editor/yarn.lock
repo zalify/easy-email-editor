@@ -80,6 +80,18 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@types/final-form-set-field-touched@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/final-form-set-field-touched/-/final-form-set-field-touched-1.0.0.tgz#f8115c56b7b2c6d343ebad526cd6f01513b6504a"
+  integrity sha512-8J6vYUi5qODR+zhqiRUupBpHyIPXu/YxatSiRDfiTxTGkyZo6Qoh6w4FBIg+wDfoRepRiS8zR4dPIuhr0VL7ZQ==
+  dependencies:
+    final-form "4.x.x"
+
+"@types/is-hotkey@^0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@types/is-hotkey/-/is-hotkey-0.1.7.tgz#30ec6d4234895230b576728ef77e70a52962f3b3"
+  integrity sha512-yB5C7zcOM7idwYZZ1wKQ3pTfjA9BbvFqRWvKB46GFddxnJtHwi/b9y84ykQtxQPg5qhdpg4Q/kWU3EGoCTmLzQ==
+
 "@types/js-cookie@^2.2.6":
   version "2.2.7"
   resolved "https://registry.yarnpkg.com/@types/js-cookie/-/js-cookie-2.2.7.tgz#226a9e31680835a6188e887f3988e60c04d3f6a3"
@@ -997,6 +1009,13 @@ final-form-set-field-touched@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/final-form-set-field-touched/-/final-form-set-field-touched-1.0.1.tgz#cfbfc0c623df157a1dd0f1a120faa4e2274950f2"
   integrity sha512-yvE5AAs9U3OgJQ9YF8NhSF0I0mJEECvOpkaXNqovloxji5Q6gOZ0DCIAyLAKHluGSpsXKUGORyBm8Hq0beZIqQ==
+
+final-form@4.x.x:
+  version "4.20.6"
+  resolved "https://registry.yarnpkg.com/final-form/-/final-form-4.20.6.tgz#da42f3741db068c0c875e18950a2c4a9a148c63e"
+  integrity sha512-fCdwIj49KOaFfDRlXB57Eo+GghIMZQWrA9TakQI3C9uQxHwaFHXqZSNRlUdfnQmNNeySwGOaGPZCvjy58hyv4w==
+  dependencies:
+    "@babel/runtime" "^7.10.0"
 
 final-form@^4.20.4:
   version "4.20.4"

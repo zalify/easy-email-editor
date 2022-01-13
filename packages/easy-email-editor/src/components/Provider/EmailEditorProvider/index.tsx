@@ -47,7 +47,7 @@ export const EmailEditorProvider = <T extends any>(
       onSubmit={onSubmit}
       enableReinitialize
       validate={validationSchema}
-      mutators={{ ...arrayMutators, setFieldTouched }}
+      mutators={{ ...arrayMutators, setFieldTouched: setFieldTouched as any }}
       subscription={{ submitting: true, pristine: true }}
     >
       {() => (

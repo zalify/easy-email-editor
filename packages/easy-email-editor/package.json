@@ -18,7 +18,7 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "dev": "vite",
-    "typings": "tsc --declaration --emitDeclarationOnly --project tsconfig.lib.json && tsc-alias -p tsconfig.lib.json",
+    "typings": "tsc --declaration --emitDeclarationOnly --project tsconfig.lib.json && tsc-alias -p tsconfig.alias.json",
     "build": "rimraf lib && npm run typings && vite build --config vite.config.ts",
     "format": "eslint --fix  --ext .tsx,.ts src/"
   },
@@ -33,6 +33,8 @@
     ]
   },
   "dependencies": {
+    "@types/final-form-set-field-touched": "^1.0.0",
+    "@types/is-hotkey": "^0.1.7",
     "final-form": "^4.20.4",
     "final-form-arrays": "^3.0.2",
     "final-form-set-field-touched": "^1.0.1",

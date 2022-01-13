@@ -40,8 +40,10 @@ export const Accordion = createBlock<IAccordion>({
         'icon-width': '32px',
         'icon-align': 'middle',
         'icon-position': 'right',
-        'icon-unwrapped-url': 'https://i.imgur.com/w4uTygT.png',
-        'icon-wrapped-url': 'https://i.imgur.com/bIXv1bk.png',
+        'icon-unwrapped-url':
+          'https://easy-email-m-ryan.vercel.app/images/be34fb18-32ad-441c-84d8-3c0e9ba9f742-ad2ea5ff-5d0b-446b-bd7d-8e2ab5afdd16.png',
+        'icon-wrapped-url':
+          'https://easy-email-m-ryan.vercel.app/images/6a1e6292-469e-452a-bbae-44e4b5ff7463-05e543b6-c951-44ce-ae27-ca1282c77f52.png',
         padding: '10px 25px 10px 25px',
         border: '1px solid #d9d9d9',
       },

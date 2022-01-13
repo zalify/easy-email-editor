@@ -211,7 +211,7 @@ export function BlockLayer(props: BlockLayerProps) {
     useCallback(
       (() => {
         let lastDropResult: ReturnType<typeof allowDrop> = false;
-        return (data) => {
+        return (data: Parameters<typeof allowDrop>[0]) => {
           const dropResult = allowDrop(data);
           if (isEqual(lastDropResult, dropResult)) {
             return dropResult;
