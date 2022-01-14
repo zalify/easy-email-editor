@@ -9,26 +9,27 @@ const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`);
 (global as any).navigator = dom.window.navigator;
 (global as any).DOMParser = dom.window.DOMParser;
 
-import { BlockManager } from '../src/utils';
+import { BlockManager } from '../src/utils/BlockManager';
 const cwd = process.cwd();
 
-function capitalizeFirstLetter(string) {
+function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 let indexFileContent = ``;
 BlockManager.getBlocks().forEach((item) => {
   const fileName = capitalizeFirstLetter(camelCase(item.type));
+  const interfaceName = `I${fileName}`;
   const code = `
   import { omit } from 'lodash';
   import { BasicType } from '@core/constants';
   import { RecursivePartial } from '@core/typings';
   import React from 'react';
-  import { I${fileName} } from '@core/blocks/${fileName}';
-  import MjmlBlock from '@core/components/MjmlBlock';
+  import { ${interfaceName} } from '@core/blocks/${fileName}';
+  import MjmlBlock, { MjmlBlockProps } from '@core/components/MjmlBlock';
 
-  export type ${fileName}Props = RecursivePartial<I${fileName}['data']> &
-  RecursivePartial<I${fileName}['attributes']> & {
-    children?: JSX.Element | JSX.Element[] | string;
+  export type ${fileName}Props = RecursivePartial<${interfaceName}['data']> &
+  RecursivePartial<${interfaceName}['attributes']> & {
+    children?: MjmlBlockProps<${interfaceName}>['children'];
   };
 
   export function ${fileName}(props: ${fileName}Props) {
@@ -50,4 +51,4 @@ BlockManager.getBlocks().forEach((item) => {
   indexFileContent += `export {${fileName}} from './${fileName}'\n`;
 });
 
-fs.writeFileSync(cwd + '/src/components/index.ts', indexFileContent);
+// fs.writeFileSync(cwd + '/src/components/index.ts', indexFileContent);

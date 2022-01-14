@@ -1,14 +1,16 @@
-import React, { isValidElement, ReactElement, useMemo } from 'react';
+import React, { isValidElement, useMemo } from 'react';
 import { BlockManager, isValidBlockData } from '@core/utils';
 import { IBlockData, RecursivePartial } from '@core/typings';
 import { parseReactBlockToBlockData } from '@core/utils/parseReactBlockToBlockData';
 import { set } from 'lodash';
 
+export type MjmlBlockChild = JSX.Element | IBlockData | string | null | false;
+
 export interface MjmlBlockProps<T extends IBlockData> {
   type: T['type'];
   value?: RecursivePartial<T['data']['value']>;
   attributes?: RecursivePartial<T['attributes']>;
-  children?: ReactElement | ReactElement[] | string | IBlockData | IBlockData[];
+  children?: MjmlBlockChild | Array<MjmlBlockChild>;
 }
 
 export default function MjmlBlock<T extends IBlockData>({

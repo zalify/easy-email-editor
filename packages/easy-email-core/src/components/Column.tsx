@@ -1,23 +1,25 @@
-import { omit } from 'lodash';
-import { BasicType } from '@core/constants';
-import { RecursivePartial } from '@core/typings';
-import React from 'react';
-import { IColumn } from '@core/blocks/Column';
-import MjmlBlock from '@core/components/MjmlBlock';
 
-export type ColumnProps = RecursivePartial<IColumn['data']> &
+  import { omit } from 'lodash';
+  import { BasicType } from '@core/constants';
+  import { RecursivePartial } from '@core/typings';
+  import React from 'react';
+  import { IColumn } from '@core/blocks/Column';
+  import MjmlBlock, { MjmlBlockProps } from '@core/components/MjmlBlock';
+
+  export type ColumnProps = RecursivePartial<IColumn['data']> &
   RecursivePartial<IColumn['attributes']> & {
-    children?: JSX.Element | JSX.Element[] | string;
+    children?: MjmlBlockProps<IColumn>['children'];
   };
 
-export function Column(props: ColumnProps) {
-  return (
-    <MjmlBlock
-      attributes={omit(props, ['data', 'children'])}
-      value={props.value}
-      type={BasicType.COLUMN}
-    >
-      {props.children}
-    </MjmlBlock>
-  );
-}
+  export function Column(props: ColumnProps) {
+    return (
+      <MjmlBlock
+        attributes={omit(props, ['data', 'children'])}
+        value={props.value}
+        type={BasicType.COLUMN}
+      >
+        {props.children}
+      </MjmlBlock>
+    );
+  }
+  
