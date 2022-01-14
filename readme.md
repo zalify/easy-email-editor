@@ -121,7 +121,8 @@ export default App;
   | dashed             | boolean                                                                                            | Show dashed                                                                                                                                                                                                       |
   | autoComplete       | boolean                                                                                            | Automatically complete missing blocks. For example, Text => Section, will generate Text=>Column=>Section                                                                                                          |
   | mergeTags          | Object                                                                                             | A merge tag is a bit of specific code that allows you to insert dynamic data into emails. Like `{{user.name}}` |
-  | onBeforePreview    | (data: IPage, mergeTags: PropsProviderProps['mergeTags']) => IPage                                 | You can replace mergeTags when previewing.                                                                |
+  | previewInjectData          | Object                                                                                             | A merge tag is a bit of specific code that allows you to insert dynamic data into emails. Like `{{user.name}}` |
+  | onBeforePreview    | (html: string, mergeTags: PropsProviderProps['mergeTags']) => IPage                                 | You can replace mergeTags when previewing.                                                                |
 
 
 

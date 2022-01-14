@@ -27,17 +27,20 @@ export interface PropsProviderProps {
   };
   autoComplete?: boolean;
   dashed?: boolean;
-  previewInjectData?: Record<string, any>;
-  mergeTags?: Record<string, any>;
+
   mergeTagGenerate?: (m: string) => string;
   renderMergeTagContent?: (props: {
     onChange: (val: string) => void;
     isSelect: boolean;
     value: string;
   }) => React.ReactNode;
+  mergeTags?: Record<string, any>;
+  previewInjectData?: Record<string, any>;
   onBeforePreview?: (
     html: string,
-    mergeTags: PropsProviderProps['mergeTags']
+    mergeTags:
+      | PropsProviderProps['previewInjectData']
+      | PropsProviderProps['mergeTags']
   ) => string;
 }
 

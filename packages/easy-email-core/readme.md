@@ -547,7 +547,11 @@ const myFirstBlock = createCustomBlock({
     return merge(defaultData, payload);
   },
   validParentType: [BasicType.PAGE, BasicType.WRAPPER],
-  render(data: IMyFirstBlock) {
+  render(data: IMyFirstBlock,
+      idx: string | null,
+      mode: 'testing' | 'production',
+      context?: IPage,
+      dataSource?: { [key: string]: any }) {
     const { imageUrl, buttonText } = data.data.value;
     const attributes = data.attributes;
 
