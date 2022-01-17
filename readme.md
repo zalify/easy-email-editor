@@ -42,12 +42,6 @@ Easy email is developed based on the [MJML](https://mjml.io/) and has very good 
 | <a href="https://www.bilibili.com/video/BV1YQ4y167bb" target="_blank"><img src="https://assets.maocanhua.cn/e2ba1d5c-c944-4351-9668-c519baf67361-image.png" alt="Overview" ></a> |
 |                                                         Watch video overview:https://www.bilibili.com/video/BV1YQ4y167bb                                                         |
 
-
-## How does it work?
-
-<img alt="" src="https://assets.maocanhua.cn/416d29b9-552a-4584-b8be-cfaa7099f95d-image.png">
-
-
 ## Live Demo
 
 Check out the live demo here: <a href="http://easy-email-m-ryan.vercel.app" target="_blank" alt="http://easy-email-m-ryan.vercel.app">http://easy-email-m-ryan.vercel.app</a>
@@ -148,7 +142,16 @@ export default App;
 
 
 
-  * <img alt="" src="./layout.png">
+   <img alt="" src="./layout.png">
+
+</br>
+
+## How does it work?
+
+<img alt="" src="https://assets.maocanhua.cn/9fe59818-cf17-449e-a021-2692a3c9076c-image.png">
+
+
+</br>
 
 ## Development
 

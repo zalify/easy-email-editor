@@ -8,7 +8,7 @@ const defaultImagesMap = {
   AttributePanel_02:
     'https://easy-email-m-ryan.vercel.app/images/3e952a6e-2506-470e-b395-3e0d995157c5.png',
   AttributePanel_03:
-    'https://easy-email-m-ryan.vercel.app/images/Fi_vI4vyLhTM-Tp6ivq4dR_ieGHk',
+    'https://easy-email-m-ryan.vercel.app/images/Fi_vI4vyLhTM-Tp6ivq4dR_ieGHk.png',
 };
 
 ImageManager.add(defaultImagesMap);
