@@ -9,8 +9,7 @@ import { CustomBlocksType } from '../constants';
 import React from 'react';
 import { merge } from 'lodash';
 
-const { Column, Section, Wrapper, Text, Button, Image, Group, Template } =
-  components;
+const { Column, Section, Wrapper, Text, Button, Image, Group } = components;
 
 export type IProductRecommendation = IBlockData<
   {
@@ -24,14 +23,17 @@ export type IProductRecommendation = IBlockData<
   {
     title: string;
     buttonText: string;
-    productList: Array<{
-      image: string;
-      title: string;
-      price: string;
-      url: string;
-    }>;
+    quantity: number;
   }
 >;
+
+const productPlaceholder = {
+  image:
+    'https://assets.maocanhua.cn/8e0e07e2-3f84-4426-84c1-2add355c558b-image.png',
+  title: 'Red Flock Buckle Winter Boots',
+  price: '$59.99 HKD',
+  url: 'https://easy-email-m-ryan.vercel.app',
+};
 
 export const ProductRecommendation = createCustomBlock<IProductRecommendation>({
   name: 'Product recommendation',
@@ -44,29 +46,7 @@ export const ProductRecommendation = createCustomBlock<IProductRecommendation>({
         value: {
           title: 'You might also like',
           buttonText: 'Buy now',
-          productList: [
-            {
-              image:
-                'https://assets.maocanhua.cn/8e0e07e2-3f84-4426-84c1-2add355c558b-image.png',
-              title: 'Red Flock Buckle Winter Boots',
-              price: '$59.99 HKD',
-              url: 'https://easy-email-m-ryan.vercel.app',
-            },
-            {
-              image:
-                'https://assets.maocanhua.cn/8e0e07e2-3f84-4426-84c1-2add355c558b-image.png',
-              title: 'Thick Stretch Warm Fleece High Waist Pencil Pant',
-              price: '$69.99 HKD',
-              url: 'https://easy-email-m-ryan.vercel.app',
-            },
-            {
-              image:
-                'https://assets.maocanhua.cn/8e0e07e2-3f84-4426-84c1-2add355c558b-image.png',
-              title: 'Thick Velvet Grid Pant',
-              price: '$29.99 HKD',
-              url: 'https://easy-email-m-ryan.vercel.app',
-            },
-          ],
+          quantity: 3,
         },
       },
       attributes: {
@@ -92,9 +72,16 @@ export const ProductRecommendation = createCustomBlock<IProductRecommendation>({
     };
     return merge(defaultData, payload);
   },
-  render: (data, idx, context) => {
-    const { title, productList, buttonText } = data.data.value;
+  render: (data, idx, mode, context, dataSource) => {
+    const { title, buttonText, quantity } = data.data.value;
     const attributes = data.attributes;
+
+    const productList =
+      mode === 'testing'
+        ? new Array(quantity).fill(productPlaceholder)
+        : (dataSource?.product_list || []).slice(0, quantity);
+
+    const perWidth = quantity <= 3 ? '' : '33.33%';
 
     return (
       <Wrapper
@@ -124,6 +111,7 @@ export const ProductRecommendation = createCustomBlock<IProductRecommendation>({
             {productList.map((item, index) => (
               <Column
                 key={index}
+                width={perWidth}
                 padding='0px'
                 border='none'
                 vertical-align='top'
@@ -135,20 +123,6 @@ export const ProductRecommendation = createCustomBlock<IProductRecommendation>({
                   width='150px'
                   src={item.image}
                 />
-              </Column>
-            ))}
-          </Group>
-        </Section>
-
-        <Section padding='0px'>
-          <Group vertical-align='top' direction='ltr'>
-            {productList.map((item, index) => (
-              <Column
-                key={index}
-                padding='0px'
-                border='none'
-                vertical-align='top'
-              >
                 <Text
                   font-size='12px'
                   padding='10px 0px 10px 0px '
@@ -158,20 +132,6 @@ export const ProductRecommendation = createCustomBlock<IProductRecommendation>({
                 >
                   {item.title}
                 </Text>
-              </Column>
-            ))}
-          </Group>
-        </Section>
-
-        <Section padding='0px'>
-          <Group vertical-align='top' direction='ltr'>
-            {productList.map((item, index) => (
-              <Column
-                key={index}
-                padding='0px'
-                border='none'
-                vertical-align='top'
-              >
                 <Text
                   font-size='12px'
                   padding='0px'
@@ -181,20 +141,6 @@ export const ProductRecommendation = createCustomBlock<IProductRecommendation>({
                 >
                   {item.price}
                 </Text>
-              </Column>
-            ))}
-          </Group>
-        </Section>
-
-        <Section padding='0px'>
-          <Group vertical-align='top' direction='ltr'>
-            {productList.map((item, index) => (
-              <Column
-                key={index}
-                padding='0px'
-                border='none'
-                vertical-align='top'
-              >
                 <Button
                   align='center'
                   padding='15px 0px'

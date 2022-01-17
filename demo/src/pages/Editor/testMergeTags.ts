@@ -19,7 +19,7 @@ export const testMergeTags = {
       image:
         'https://assets.maocanhua.cn/4ef7cb65-ee1f-4b12-832c-17ab07a8b9ac-image.png',
       title: 'Casual Collar Youth Handsome',
-      price: '$59.99 HKD',
+      price: '$39.99 HKD',
       url: 'https://easy-email-m-ryan.vercel.app',
     },
     {
@@ -27,7 +27,31 @@ export const testMergeTags = {
       image:
         'https://assets.maocanhua.cn/88fe9bfa-547f-4d5e-9ba5-ac6b91572dde-image.png',
       title: 'Shirt Business Casual',
+      price: '$49.99 HKD',
+      url: 'https://easy-email-m-ryan.vercel.app',
+    },
+    {
+      id: 3,
+      image:
+        'https://assets.maocanhua.cn/da9b173d-b272-4101-aa25-4635ed95e9e3-image.png',
+      title: 'Slim Fit Printed shirt',
       price: '$59.99 HKD',
+      url: 'https://easy-email-m-ryan.vercel.app',
+    },
+    {
+      id: 4,
+      image:
+        'https://assets.maocanhua.cn/4ef7cb65-ee1f-4b12-832c-17ab07a8b9ac-image.png',
+      title: 'Casual Collar Youth Handsome',
+      price: '$39.99 HKD',
+      url: 'https://easy-email-m-ryan.vercel.app',
+    },
+    {
+      id: 5,
+      image:
+        'https://assets.maocanhua.cn/88fe9bfa-547f-4d5e-9ba5-ac6b91572dde-image.png',
+      title: 'Shirt Business Casual',
+      price: '$49.99 HKD',
       url: 'https://easy-email-m-ryan.vercel.app',
     },
   ],

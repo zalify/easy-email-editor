@@ -37,11 +37,16 @@ Easy email is developed based on the [MJML](https://mjml.io/) and has very good 
 - Easily customize UI when you need
 - Theme configuration
 
-
 |                                                                                  Video Overview                                                                                  |
 | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 | <a href="https://www.bilibili.com/video/BV1YQ4y167bb" target="_blank"><img src="https://assets.maocanhua.cn/e2ba1d5c-c944-4351-9668-c519baf67361-image.png" alt="Overview" ></a> |
 |                                                         Watch video overview:https://www.bilibili.com/video/BV1YQ4y167bb                                                         |
+
+
+## How does it work?
+
+<img alt="" src="https://assets.maocanhua.cn/416d29b9-552a-4584-b8be-cfaa7099f95d-image.png">
+
 
 ## Live Demo
 
