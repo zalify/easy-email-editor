@@ -82,13 +82,13 @@ const defaultImagesMap = {
   IMAGE_47:
     'https://easy-email-m-ryan.vercel.app/images/0e3ae071-247a-4e69-8b60-8009477180b9-197205c2-2ae7-420f-94aa-78440226beaa.png',
   IMAGE_48:
-    'https://easy-email-m-ryan.vercel.app/images/0ec46619-4dd0-4293-88fb-14656ac7d33c-0936deed-a88c-4e3d-90bf-4fe67b295659',
+    'https://easy-email-m-ryan.vercel.app/images/0ec46619-4dd0-4293-88fb-14656ac7d33c-0936deed-a88c-4e3d-90bf-4fe67b295659.png',
   IMAGE_49:
-    'https://easy-email-m-ryan.vercel.app/images/01830aec-d044-4d2a-9519-aac2901f4760-776602f7-021b-4142-a2d0-446aca5e0418',
+    'https://easy-email-m-ryan.vercel.app/images/01830aec-d044-4d2a-9519-aac2901f4760-776602f7-021b-4142-a2d0-446aca5e0418.png',
   IMAGE_50:
-    'https://easy-email-m-ryan.vercel.app/images/9f1cee25-f9b4-4539-b4ea-3109584c0a54-0692c4fb-46ce-452c-8573-fcce74852cba',
+    'https://easy-email-m-ryan.vercel.app/images/9f1cee25-f9b4-4539-b4ea-3109584c0a54-0692c4fb-46ce-452c-8573-fcce74852cba.png',
   IMAGE_51:
-    'https://easy-email-m-ryan.vercel.app/images/e138143f-7071-44bc-8470-7d56850e527c-f515254e-67b8-4b68-b86f-7993e960d893',
+    'https://easy-email-m-ryan.vercel.app/images/e138143f-7071-44bc-8470-7d56850e527c-f515254e-67b8-4b68-b86f-7993e960d893.png',
   IMAGE_52:
     'https://easy-email-m-ryan.vercel.app/images/ac75b655-b57d-40b9-a201-8163eeb6a579-1f894e6f-18ac-42c4-9227-7488433586bc.png',
   IMAGE_53:
@@ -106,27 +106,27 @@ const defaultImagesMap = {
   IMAGE_59:
     'https://easy-email-m-ryan.vercel.app/images/06ca521d-9728-4de6-a709-1b75a828bfc3-2a9b1224-3d71-43b8-b52f-e7cdcdc9107b.png',
   IMAGE_60:
-    'https://easy-email-m-ryan.vercel.app/images/199eacfa-daf8-4dd1-a356-225a265a88a4-e8432435-a2bb-4ec2-a3e9-ee1757d8b44b',
+    'https://easy-email-m-ryan.vercel.app/images/199eacfa-daf8-4dd1-a356-225a265a88a4-e8432435-a2bb-4ec2-a3e9-ee1757d8b44b.png',
   IMAGE_61:
-    'https://easy-email-m-ryan.vercel.app/images/f43b67dc-cc30-4533-b2ca-4689292aab4d-40bc844d-5362-451f-a839-69e86f7a3113',
+    'https://easy-email-m-ryan.vercel.app/images/f43b67dc-cc30-4533-b2ca-4689292aab4d-40bc844d-5362-451f-a839-69e86f7a3113.png',
   IMAGE_62:
-    'https://easy-email-m-ryan.vercel.app/images/318e911c-a57b-4768-9c79-0e49c2953e7a-dbe0eb3c-0b4b-495a-a469-a15b46c5a0cc',
+    'https://easy-email-m-ryan.vercel.app/images/318e911c-a57b-4768-9c79-0e49c2953e7a-dbe0eb3c-0b4b-495a-a469-a15b46c5a0cc.png',
   IMAGE_63:
-    'https://easy-email-m-ryan.vercel.app/images/ed70ddb1-1344-4245-ab1e-beae36ed44b4-21a80cb3-a928-4857-973b-98992fdec74f',
+    'https://easy-email-m-ryan.vercel.app/images/ed70ddb1-1344-4245-ab1e-beae36ed44b4-21a80cb3-a928-4857-973b-98992fdec74f.png',
   IMAGE_64:
-    'https://easy-email-m-ryan.vercel.app/images/fb7dd6fa-12c1-41e1-8744-91d0f861ec57-0fee9bda-2381-4c54-a24d-bd644384b9aa',
+    'https://easy-email-m-ryan.vercel.app/images/fb7dd6fa-12c1-41e1-8744-91d0f861ec57-0fee9bda-2381-4c54-a24d-bd644384b9aa.png',
   IMAGE_65:
-    'https://easy-email-m-ryan.vercel.app/images/7bf8c363-17bd-472d-8cca-96f5d4b64292-9ab34957-15d3-4068-8e83-cc283d8e400d',
+    'https://easy-email-m-ryan.vercel.app/images/7bf8c363-17bd-472d-8cca-96f5d4b64292-9ab34957-15d3-4068-8e83-cc283d8e400d.png',
   IMAGE_66:
-    'https://easy-email-m-ryan.vercel.app/images/0330a1e9-e814-4be8-83f0-ee1dbabf44a0-6e35a585-92ec-4570-875b-866b59927583',
+    'https://easy-email-m-ryan.vercel.app/images/0330a1e9-e814-4be8-83f0-ee1dbabf44a0-6e35a585-92ec-4570-875b-866b59927583.png',
   IMAGE_67:
-    'https://easy-email-m-ryan.vercel.app/images/a7deb6bc-db2b-4273-bf25-002bb148bf5a-ed5e9b17-15a9-4e0f-9874-c3219d48b2b4',
+    'https://easy-email-m-ryan.vercel.app/images/a7deb6bc-db2b-4273-bf25-002bb148bf5a-ed5e9b17-15a9-4e0f-9874-c3219d48b2b4.png',
   IMAGE_68:
-    'https://easy-email-m-ryan.vercel.app/images/52c50319-e3a9-401b-9057-bd6531870f10-aa79ec5d-76d2-4d48-a99e-2ccd9d9c285b',
+    'https://easy-email-m-ryan.vercel.app/images/52c50319-e3a9-401b-9057-bd6531870f10-aa79ec5d-76d2-4d48-a99e-2ccd9d9c285b.png',
   IMAGE_69:
-    'https://easy-email-m-ryan.vercel.app/images/9994cef3-6205-4013-8993-b037d067df64-f5d03db4-6bb4-4af4-b35a-0b6d512eaff4',
+    'https://easy-email-m-ryan.vercel.app/images/9994cef3-6205-4013-8993-b037d067df64-f5d03db4-6bb4-4af4-b35a-0b6d512eaff4.png',
   IMAGE_70:
-    'https://easy-email-m-ryan.vercel.app/images/e5dd7a7e-70d7-483f-80cc-0c5b41107101-75dcedc7-4a34-4d03-97ee-bf32163afa0a',
+    'https://easy-email-m-ryan.vercel.app/images/e5dd7a7e-70d7-483f-80cc-0c5b41107101-75dcedc7-4a34-4d03-97ee-bf32163afa0a.png',
   IMAGE_71:
     'https://easy-email-m-ryan.vercel.app/images/53277265-8e54-43d0-b9d0-d34cd1639861-adb7a48a-8382-43a1-ad59-7c84764a3b21.png',
 };
