@@ -1,5 +1,5 @@
 import React from 'react';
-import iconfontText from '@/styles/icon-font.css';
+import iconfontText from '@/assets/font/iconfont.css';
 import styles from '@/styles/block-shadowDom-interactive.css?inline';
 import { useEditorProps } from '@/hooks/useEditorProps';
 
