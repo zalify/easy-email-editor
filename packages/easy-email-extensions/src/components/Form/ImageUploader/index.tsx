@@ -6,6 +6,7 @@ import {
   Modal,
   Popover,
   Space,
+  Spin,
 } from '@arco-design/web-react';
 import { IconPlus, IconEye, IconDelete } from '@arco-design/web-react/icon';
 import styles from './index.module.scss';
@@ -101,7 +102,7 @@ export function ImageUploader(props: ImageUploaderProps) {
       return (
         <div className={styles['item']}>
           <div className={classnames(styles['info'])}>
-            <img src={getImg('AttributePanel_03')} alt='Loading...' />
+            <Spin />
             <div className={styles['btn-wrap']} />
           </div>
         </div>
@@ -148,9 +149,7 @@ export function ImageUploader(props: ImageUploaderProps) {
               trigger='click'
               content={<MergeTags value={props.value} onChange={onChange} />}
             >
-              <ArcoButton
-                icon={<IconFont iconName='icon-merge-tags' />}
-              />
+              <ArcoButton icon={<IconFont iconName='icon-merge-tags' />} />
             </Popover>
           )}
           <Input

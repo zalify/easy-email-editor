@@ -2,6 +2,7 @@ import { IBlockData } from '@core/typings';
 import { BasicType } from '@core/constants';
 import { merge } from 'lodash';
 import { createBlock } from '@core/utils/createBlock';
+import { getImg } from '@core/utils/getImg';
 export type IHero = IBlockData<
   {
     'background-color'?: string;
@@ -34,8 +35,7 @@ export const Hero = createBlock<IHero>({
         mode: 'fluid-height',
         padding: '100px 0px 100px 0px',
         'vertical-align': 'top',
-        'background-url':
-          'https://easy-email-m-ryan.vercel.app/images/dd1584fb-cb60-42c9-80c7-5545e16130ca-226ba72b-ce9e-4948-ad0d-347381fb96c5.png',
+        'background-url': getImg('IMAGE_31'),
       },
       children: [
         {
