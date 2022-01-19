@@ -100,7 +100,12 @@ export function BlockLayer(props: BlockLayerProps) {
             />
             <div
               title={isString(title) ? title : ''}
-              style={{ overflow: 'hidden', whiteSpace: 'nowrap', width: '5em' }}
+              style={{
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                width: '5em',
+                textOverflow: 'ellipsis',
+              }}
             >
               <TextStyle size='smallest'>{title}</TextStyle>
             </div>

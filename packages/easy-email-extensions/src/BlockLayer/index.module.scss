@@ -39,3 +39,6 @@
 :global(#BlockLayerManager .arco-tree-node-indent-block) {
   width: 8px;
 }
+:global(#BlockLayerManager .arco-tree-node-drag-icon) {
+  cursor: grab;
+}
