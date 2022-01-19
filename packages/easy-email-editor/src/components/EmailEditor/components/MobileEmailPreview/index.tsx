@@ -1,58 +1,53 @@
 import { IframeComponent } from '@/components/UI/IframeComponent';
-import { useEditorContext } from '@/hooks/useEditorContext';
 import React from 'react';
 import { PreviewEmail } from '../PreviewEmail';
 
-const MOBILE_WIDTH = 375;
-const MOBILE_Height = (MOBILE_WIDTH / 375) * 667;
+import iphoneFrame from '@/assets/images/iphone.png';
 
-const responsiveScale = 320 / MOBILE_WIDTH;
+const MOBILE_WIDTH = 320;
+const MOBILE_Height = 640;
 
 export function MobileEmailPreview() {
-  const { pageData } = useEditorContext();
-  const pageMaxWidth = pageData.attributes.width || '600px';
-  const isResponsive = pageData.data.value.responsive;
   return (
     <div
       style={{
-        width: isResponsive ? MOBILE_WIDTH : pageMaxWidth,
-        padding: '40px 0px',
-        margin: 'auto',
         height: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        overflow: 'auto',
+        padding: '10px 0px',
       }}
     >
-      <IframeComponent
-        height={
-          isResponsive
-            ? '100%'
-            : MOBILE_Height / (MOBILE_WIDTH / parseFloat(pageMaxWidth))
-        }
-        width='100%'
+      <div
         style={{
-          padding: 10,
-          border: '10px solid rgb(64 61 61)',
-          boxSizing: 'content-box',
-          boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.699)',
-          borderRadius: '25px',
-          maxHeight: isResponsive
-            ? MOBILE_Height
-            : MOBILE_Height / (MOBILE_WIDTH / parseFloat(pageMaxWidth)),
-          transform: isResponsive
-            ? `scale(${responsiveScale})`
-            : `scale(${MOBILE_WIDTH / parseFloat(pageMaxWidth)})`,
-          transformOrigin: `center ${isResponsive ? 'center' : 'top'}`,
+          margin: 'auto',
+          padding: '6px 6.8px 2px 6.8px',
+          backgroundImage: `url(${iphoneFrame})`,
+          backgroundSize: '100% 100%',
         }}
       >
-        <style>
-          {`
+        <IframeComponent
+          height={MOBILE_Height}
+          width='100%'
+          style={{
+            width: MOBILE_WIDTH,
+            boxSizing: 'content-box',
+            borderRadius: 30,
+            border: 'none',
+          }}
+        >
+          <style>
+            {`
             *::-webkit-scrollbar {
               width: 0px;
               background-color: transparent;
             }
           `}
-        </style>
-        <PreviewEmail />
-      </IframeComponent>
+          </style>
+          <PreviewEmail />
+        </IframeComponent>
+      </div>
     </div>
   );
 }
