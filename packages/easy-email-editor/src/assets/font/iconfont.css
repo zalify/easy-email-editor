@@ -13,6 +13,14 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-undo:before {
+  content: '\e6f0';
+}
+
+.icon-redo:before {
+  content: '\e6f1';
+}
+
 .icon-merge-tags:before {
   content: '\e608';
 }
@@ -39,10 +47,6 @@
 
 .icon-layer:before {
   content: '\e649';
-}
-
-.icon-Undo:before {
-  content: '\e8a0';
 }
 
 .icon-unlink:before {
@@ -103,14 +107,6 @@
 
 .icon-editor:before {
   content: '\e6e8';
-}
-
-.icon-undo:before {
-  content: '\e787';
-}
-
-.icon-redo:before {
-  content: '\e788';
 }
 
 .icon-mobile:before {

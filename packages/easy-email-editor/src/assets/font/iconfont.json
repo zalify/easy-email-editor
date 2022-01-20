@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "13478464",
+      "name": "undo",
+      "font_class": "undo",
+      "unicode": "e6f0",
+      "unicode_decimal": 59120
+    },
+    {
+      "icon_id": "13478475",
+      "name": "redo",
+      "font_class": "redo",
+      "unicode": "e6f1",
+      "unicode_decimal": 59121
+    },
+    {
       "icon_id": "27153176",
       "name": "merge tag",
       "font_class": "merge-tags",
@@ -53,13 +67,6 @@
       "font_class": "layer",
       "unicode": "e649",
       "unicode_decimal": 58953
-    },
-    {
-      "icon_id": "18126095",
-      "name": "Undo",
-      "font_class": "Undo",
-      "unicode": "e8a0",
-      "unicode_decimal": 59552
     },
     {
       "icon_id": "19761636",
@@ -165,20 +172,6 @@
       "font_class": "editor",
       "unicode": "e6e8",
       "unicode_decimal": 59112
-    },
-    {
-      "icon_id": "4765837",
-      "name": "undo",
-      "font_class": "undo",
-      "unicode": "e787",
-      "unicode_decimal": 59271
-    },
-    {
-      "icon_id": "4765838",
-      "name": "redo",
-      "font_class": "redo",
-      "unicode": "e788",
-      "unicode_decimal": 59272
     },
     {
       "icon_id": "312411",
