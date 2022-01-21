@@ -1,6 +1,6 @@
 import React from 'react';
 import { BasicType, getParentIdx, getSiblingIdx } from 'easy-email-core';
-import { useBlock, useFocusIdx, useFocusBlockLayout, useEditorProps } from 'easy-email-editor';
+import { useBlock, useFocusIdx, useEditorProps } from 'easy-email-editor';
 import { classnames } from '@extensions/utils/classnames';
 import { useAddToCollection } from '@extensions/hooks/useAddToCollection';
 import { getBlockTitle } from '@extensions/utils/getBlockTitle';
@@ -8,7 +8,6 @@ import { getBlockTitle } from '@extensions/utils/getBlockTitle';
 export function Toolbar() {
   const { moveBlock, copyBlock, removeBlock, focusBlock } = useBlock();
   const { focusIdx, setFocusIdx } = useFocusIdx();
-  const { focusBlockRect } = useFocusBlockLayout();
   const { modal, setModalVisible } = useAddToCollection();
   const props = useEditorProps();
 
@@ -50,17 +49,13 @@ export function Toolbar() {
     setFocusIdx(getParentIdx(focusIdx)!);
   };
 
-  if (!focusBlockRect) return null;
-
   return (
     <>
       <div
         id='easy-email-extensions-InteractivePrompt-Toolbar'
         style={{
-          position: 'fixed',
-          left: focusBlockRect.left,
           height: 0,
-          top: focusBlockRect.top,
+
           zIndex: 100,
         }}
       >

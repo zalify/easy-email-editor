@@ -95,6 +95,7 @@ interface TipNodeProps {
   lineWidth: number;
   type: 'drag' | 'hover';
 }
+
 function TipNode(props: TipNodeProps) {
   const { direction, title, lineWidth, type } = props;
   const dragTitle = useMemo(() => {

@@ -34,7 +34,11 @@ import { UserStorage } from '@demo/utils/user-storage';
 import { useCollection } from './components/useCollection';
 import mustache from 'mustache';
 import { JsonToMjml } from 'easy-email-core';
-import { BlockMarketManager, SimpleLayout } from 'easy-email-extensions';
+import {
+  BlockMarketManager,
+  RenderEmailBlockNode,
+  SimpleLayout,
+} from 'easy-email-extensions';
 import { AutoSaveAndRestoreEmail } from '@demo/components/AutoSaveAndRestoreEmail';
 
 // Register external blocks
@@ -231,6 +235,7 @@ export default function Editor() {
         onAddCollection={addCollection}
         onRemoveCollection={({ id }) => removeCollection(id)}
         onUploadImage={onUploadImage}
+        renderEmailBlockNode={RenderEmailBlockNode}
         fontList={fontList}
         onSubmit={onSubmit}
         autoComplete

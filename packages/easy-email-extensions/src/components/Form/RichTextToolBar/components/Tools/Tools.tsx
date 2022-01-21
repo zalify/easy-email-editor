@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Popover } from '@arco-design/web-react';
 import { ToolItem } from '../ToolItem';
 import { Link, LinkParams } from '../Link';
 import { FontSizeList } from '../FontSizeList';
 import {
   FIXED_CONTAINER_ID,
+  getBlockNodeByChildEle,
+  getEditNode,
   getShadowRoot,
   IconFont,
   useEditorProps,
@@ -17,15 +19,15 @@ import { useSelectionRange } from '@extensions/AttributePanel/hooks/useSelection
 
 export interface ToolsProps {
   onChange: (content: string) => any;
-  container: HTMLElement | null;
 }
 
 export function Tools(props: ToolsProps) {
-  const { container } = props;
+  const eleRef = useRef<HTMLDivElement | null>(null);
   const { mergeTags } = useEditorProps();
   const { selectionRange, restoreRange } = useSelectionRange();
 
   const execCommand = (cmd: string, val?: any) => {
+    const container = getEditNode(getBlockNodeByChildEle(eleRef.current));
     if (!container) {
       console.error('No container');
       return;
@@ -75,7 +77,11 @@ export function Tools(props: ToolsProps) {
     document.getElementById(FIXED_CONTAINER_ID)!;
 
   return (
-    <div id='Tools' style={{ display: 'flex', flexWrap: 'nowrap' }}>
+    <div
+      ref={eleRef}
+      id='Tools'
+      style={{ display: 'flex', flexWrap: 'nowrap' }}
+    >
       <div
         style={{
           display: 'flex',

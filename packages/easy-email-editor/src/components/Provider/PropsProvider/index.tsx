@@ -42,6 +42,14 @@ export interface PropsProviderProps {
       | PropsProviderProps['previewInjectData']
       | PropsProviderProps['mergeTags']
   ) => string;
+  renderEmailBlockNode?: React.FC<{
+    node: ChildNode;
+    idx: string;
+    RenderReactNode: React.FC<{
+      node: ChildNode;
+      renderEmailBlockNode?: PropsProviderProps['renderEmailBlockNode'];
+    }>;
+  }>;
 }
 
 export const EditorPropsContext = React.createContext<PropsProviderProps>({

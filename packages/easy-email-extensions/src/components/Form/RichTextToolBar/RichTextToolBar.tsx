@@ -1,14 +1,20 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
-import { getEditNode, useFocusBlockLayout } from 'easy-email-editor';
+import {
+  ActiveTabKeys,
+  getEditNode,
+  useActiveTab,
+  useFocusBlockLayout,
+} from 'easy-email-editor';
 import { Tools } from './components/Tools';
 import styleText from './shadow-dom.scss?inline';
 
 export function RichTextToolBar(props: { onChange: (s: string) => void }) {
   const { focusBlockNode, focusBlockRect } = useFocusBlockLayout();
+  const { activeTab } = useActiveTab();
 
-  if (!focusBlockNode || !focusBlockRect) return null;
-  const editorContainer = getEditNode(focusBlockNode);
+  if (!focusBlockNode || !focusBlockRect || activeTab !== ActiveTabKeys.EDIT)
+    return null;
 
   return (
     <>
@@ -37,7 +43,7 @@ export function RichTextToolBar(props: { onChange: (s: string) => void }) {
               }}
             />
 
-            <Tools container={editorContainer} onChange={props.onChange} />
+            <Tools onChange={props.onChange} />
           </div>
         </>,
         focusBlockNode

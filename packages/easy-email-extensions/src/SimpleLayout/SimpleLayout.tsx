@@ -88,7 +88,7 @@ export const SimpleLayout: React.FC<
           </Card>
         </Layout.Sider>
 
-        <InteractivePrompt />
+        {/* <InteractivePrompt /> */}
       </Layout>
     </ConfigProvider>
   );

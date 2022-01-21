@@ -36,7 +36,7 @@ function FieldWrapper(
     debounce((val) => {
       input.onChange(val);
       input.onBlur();
-    }, 100),
+    }, 200),
     [input]
   );
 

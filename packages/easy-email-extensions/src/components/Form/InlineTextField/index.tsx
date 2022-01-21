@@ -1,10 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import {
-  useBlock,
-} from 'easy-email-editor';
+import React, { useEffect } from 'react';
+import { getShadowRoot } from 'easy-email-editor';
 import { useField, useForm } from 'react-final-form';
-import { awaitForElement } from '@extensions/AttributePanel/utils/awaitForElement';
-import { getEditContent, getEditNode } from 'easy-email-editor';
 
 export interface InlineTextProps {
   idx: string;
@@ -16,65 +12,35 @@ export function InlineText({ idx, onChange, children }: InlineTextProps) {
   const {
     mutators: { setFieldTouched },
   } = useForm();
-  const [textContainer, setTextContainer] = useState<HTMLElement | null>(null);
 
   useField(idx); // setFieldTouched will be work while register field,
-  const { focusBlock } = useBlock();
 
   useEffect(() => {
+    const shadowRoot = getShadowRoot();
 
-    let promiseObj: ReturnType<typeof awaitForElement>;
+    const onPaste = (e: ClipboardEvent) => {
+      if (!(e.target instanceof Element)) return;
+      e.preventDefault();
 
-    const getTextBlock = () => {
-
-      promiseObj = awaitForElement<HTMLDivElement>(idx);
-      promiseObj.promise.then((blockNode) => {
-        if (blockNode.querySelector('[contenteditable="true"]')) {
-          setTextContainer(blockNode);
-        } else {
-          setTimeout(() => {
-            getTextBlock();
-          }, 50);
-        }
-      });
-
+      const text = e.clipboardData?.getData('text/plain') || '';
+      document.execCommand('insertHTML', false, text);
+      onChange(e.target.innerHTML || '');
     };
 
-    getTextBlock();
+    const onInput = (e: Event) => {
+      if (e.target instanceof Element) {
+        onChange(e.target.innerHTML || '');
+      }
+    };
+
+    shadowRoot.addEventListener('paste', onPaste as any, true);
+    shadowRoot.addEventListener('input', onInput);
 
     return () => {
-      promiseObj.cancel();
+      shadowRoot.removeEventListener('paste', onPaste as any, true);
+      shadowRoot.removeEventListener('input', onInput);
     };
-
-  }, [idx, focusBlock]);
-
-  useEffect(() => {
-    if (!textContainer) return;
-
-    const container = getEditNode(textContainer);
-
-    if (container) {
-
-      const onPaste = (e: ClipboardEvent) => {
-        e.preventDefault();
-        const text = e.clipboardData?.getData('text/plain') || '';
-        document.execCommand('insertHTML', false, text);
-        onChange(getEditContent(textContainer));
-      };
-
-      const onInput = () => {
-        onChange(getEditContent(textContainer));
-      };
-
-      container.addEventListener('paste', onPaste as any, true);
-      container.addEventListener('input', onInput);
-
-      return () => {
-        container.removeEventListener('paste', onPaste as any, true);
-        container.removeEventListener('input', onInput);
-      };
-    }
-  }, [onChange, setFieldTouched, textContainer]);
+  }, [onChange, setFieldTouched]);
 
   return <>{children}</>;
 }

@@ -1,7 +1,11 @@
-export function getEditNode(node: HTMLElement): null | HTMLElement {
+export function getEditNode(node: Element | null): null | HTMLElement {
+  if (!node) return null;
   if (!node.classList) return null;
   if (node.classList.contains('node-type-text')) {
-    return node.querySelector('[contenteditable="true"]') || node.querySelector('div');
+    return (
+      node.querySelector('[contenteditable="true"]') ||
+      node.querySelector('div')
+    );
   }
   if (node.classList.contains('node-type-button')) {
     return node.querySelector('a') || node.querySelector('p');
