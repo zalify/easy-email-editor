@@ -1,10 +1,11 @@
 import React, { useMemo } from 'react';
-import { useEditorProps, useFocusIdx } from 'easy-email-editor';
+import { useFocusIdx } from 'easy-email-editor';
 import { AutoCompleteField } from '../../../components/Form';
+import { useFontFamily } from '@extensions/hooks/useFontFamily';
 
 export function FontFamily() {
-  const { fontList = [] } = useEditorProps();
   const { focusIdx } = useFocusIdx();
+  const { fontList } = useFontFamily();
 
   return useMemo(() => {
     return (

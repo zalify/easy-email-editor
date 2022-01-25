@@ -1,8 +1,15 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "types": ["vite/client", "node"],
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
+    "types": [
+      "vite/client",
+      "node"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": false,
@@ -21,12 +28,37 @@
     "baseUrl": ".",
     "outDir": "lib",
     "paths": {
-      "@extensions": ["./src"],
-      "@extensions/*": ["./src/*"],
-      "easy-email-core": ["../easy-email-core/src/index.tsx"],
-      "easy-email-editor": ["../easy-email-editor/src/index.tsx"]
+      "@core": [
+        "../easy-email-core/src"
+      ],
+      "@core/*": [
+        "../easy-email-core/src/*"
+      ],
+      "@": [
+        "../easy-email-editor/src"
+      ],
+      "@/*": [
+        "../easy-email-editor/src/*"
+      ],
+      "@extensions": [
+        "./src"
+      ],
+      "@extensions/*": [
+        "./src/*"
+      ],
+      "easy-email-core": [
+        "../easy-email-core/src/index.tsx"
+      ],
+      "easy-email-editor": [
+        "../easy-email-editor/src/index.tsx"
+      ]
     }
   },
-  "include": ["./src"],
-  "exclude": ["node_modules", "src/utils/__tests__"]
+  "include": [
+    "./src"
+  ],
+  "exclude": [
+    "node_modules",
+    "src/utils/__tests__"
+  ]
 }

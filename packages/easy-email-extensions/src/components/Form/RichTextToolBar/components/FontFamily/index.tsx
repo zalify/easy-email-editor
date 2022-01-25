@@ -1,9 +1,9 @@
 import { Menu } from '@arco-design/web-react';
-import { useEditorProps } from 'easy-email-editor';
+import { useFontFamily } from '@extensions/hooks/useFontFamily';
 import React from 'react';
 
 export function FontFamily(props: { onChange: (val: string) => void; }) {
-  const { fontList = [] } = useEditorProps();
+  const { fontList } = useFontFamily();
   return (
     <div
       style={{
