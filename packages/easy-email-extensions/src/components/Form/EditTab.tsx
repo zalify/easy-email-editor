@@ -1,6 +1,6 @@
 import { Tabs, TabsProps } from '@arco-design/web-react';
 import { classnames } from '@extensions/utils/classnames';
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './index.module.scss';
 
 const { TabPane } = Tabs;
@@ -15,12 +15,20 @@ export interface EditTabProps<T extends any = any>
 }
 export function EditTab<T extends any = any>(props: EditTabProps<T>) {
   const { value, additionItem } = props;
+  const [activeTab, setActiveTab] = useState('0');
 
   const onAddTab = () => {
+    setActiveTab((value.length).toString());
     props.onChange([...value, additionItem]);
   };
 
   const onDeleteTab = (index: string) => {
+    if (index < activeTab) {
+      setActiveTab((Number(activeTab) - 1).toString());
+    }
+    if (index === activeTab) {
+      setActiveTab(Number(index) > 0 ? `${Number(index) - 1}` : '0');
+    }
     props.onChange(value.filter((_, vIndex) => Number(index) !== vIndex));
   };
 
@@ -29,10 +37,12 @@ export function EditTab<T extends any = any>(props: EditTabProps<T>) {
       className={classnames(styles.editTab)}
       style={{ border: 'none' }}
       type='card'
+      activeTab={activeTab}
       tabPosition={props.tabPosition}
       editable
       onAddTab={onAddTab}
       onDeleteTab={onDeleteTab}
+      onChange={setActiveTab}
     >
       {(Array.isArray(value) ? value : []).map((item, index) => (
         <TabPane
