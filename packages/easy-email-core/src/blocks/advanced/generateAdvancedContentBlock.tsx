@@ -3,22 +3,26 @@ import { Column, Section, Template } from '@core/components';
 import { BasicType } from '@core/constants';
 import { IBlockData } from '@core/typings';
 import { getParentByIdx } from '@core/utils';
-import { BlockManager } from '@core/utils/BlockManager';
 import { classnames } from '@core/utils/classnames';
 import { createCustomBlock } from '@core/utils/createCustomBlock';
 import { getPreviewClassName } from '@core/utils/getPreviewClassName';
 import { merge } from 'lodash';
 import React from 'react';
+import { standardBlocks } from '../standard';
 
-export function generateAdvancedBlock<T extends IBlockData>(option: {
+export function generateAdvancedContentBlock<T extends IBlockData>(option: {
   type: string;
-  baseType: string;
+  baseType: BasicType;
 }) {
-  const baseBlock = BlockManager.getBlockByType(option.baseType)!;
+  const baseBlock = Object.values(standardBlocks).find(b => b.type === option.baseType as any as keyof typeof standardBlocks);
+  if (!baseBlock) {
+    throw new Error(`Can not find ${option.baseType}`);
+  }
+
   return createCustomBlock<T>({
     name: baseBlock.name,
     type: option.type,
-    validParentType: [BasicType.PAGE, BasicType.WRAPPER, BasicType.SECTION, BasicType.GROUP, BasicType.COLUMN],
+    validParentType: [BasicType.PAGE, BasicType.WRAPPER, BasicType.COLUMN, BasicType.GROUP],
     create: (payload) => {
       const defaultData = {
         ...baseBlock.create(),
@@ -29,16 +33,16 @@ export function generateAdvancedBlock<T extends IBlockData>(option: {
     render: (data, idx, mode, context) => {
 
       const content = (
-<Template>{{
-        ...data,
-        type: option.baseType,
-        attributes: {
-          ...data.attributes,
-          'css-class': classnames(data.attributes['css-class'], getPreviewClassName(idx, option.type))
-        }
-      }}
-</Template>
-);
+        <Template>{{
+          ...data,
+          type: option.baseType,
+          attributes: {
+            ...data.attributes,
+            'css-class': classnames(data.attributes['css-class'], getPreviewClassName(idx, option.type))
+          }
+        }}
+        </Template>
+      );
 
       if (!idx || !context) {
         return content;
@@ -50,9 +54,6 @@ export function generateAdvancedBlock<T extends IBlockData>(option: {
       }
       if (parentBlockData.type === BasicType.PAGE || parentBlockData.type === BasicType.WRAPPER) {
         return <Section padding="0px"><Column>{content}</Column></Section>;
-      }
-      if (parentBlockData.type === BasicType.SECTION) {
-        return <Column>{content}</Column>;
       }
 
       return content;

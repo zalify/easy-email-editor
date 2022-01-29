@@ -15,13 +15,13 @@ import { ISocial, Social } from './Social';
 import { Raw, IRaw } from './Raw';
 import { Template, ITemplate } from './Template';
 
-import { Accordion } from './Accordion';
-import { AccordionElement } from './AccordionElement';
-import { AccordionTitle } from './AccordionTitle';
-import { AccordionText } from './AccordionText';
+import { Accordion, IAccordion } from './Accordion';
+import { AccordionElement, IAccordionElement } from './AccordionElement';
+import { AccordionTitle, IAccordionTitle } from './AccordionTitle';
+import { AccordionText, IAccordionText } from './AccordionText';
 import { Table } from './Table';
 
-export const blocks = {
+export const standardBlocks = {
   Page,
   Section,
   Column,
@@ -67,5 +67,9 @@ export type {
   ISocial,
   INavbar,
   IRaw,
+  IAccordion,
+  IAccordionElement,
+  IAccordionTitle,
+  IAccordionText,
   ITemplate,
 };

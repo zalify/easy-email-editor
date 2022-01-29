@@ -1,4 +1,4 @@
-import { BasicType } from 'easy-email-core';
+import { AdvancedType, BasicType } from 'easy-email-core';
 import { IconFont, Stack, BlockAvatarWrapper } from 'easy-email-editor';
 import React, { useRef } from 'react';
 import { BlocksPanel } from './components/BlocksPanel';
@@ -11,7 +11,7 @@ export function ShortcutToolbar() {
         <div ref={blocksPanelRef} />
       </BlocksPanel>
 
-      <BlockAvatarWrapper type={BasicType.TEXT}>
+      <BlockAvatarWrapper type={AdvancedType.TEXT}>
         <IconFont
           title='Text'
           iconName='icon-text-rounded'
@@ -23,7 +23,7 @@ export function ShortcutToolbar() {
           }}
         />
       </BlockAvatarWrapper>
-      <BlockAvatarWrapper type={BasicType.IMAGE}>
+      <BlockAvatarWrapper type={AdvancedType.IMAGE}>
         <IconFont
           title='Image'
           iconName='icon-img'
@@ -35,7 +35,7 @@ export function ShortcutToolbar() {
           }}
         />
       </BlockAvatarWrapper>
-      <BlockAvatarWrapper type={BasicType.BUTTON}>
+      <BlockAvatarWrapper type={AdvancedType.BUTTON}>
         <IconFont
           title='Button'
           iconName='icon-button'

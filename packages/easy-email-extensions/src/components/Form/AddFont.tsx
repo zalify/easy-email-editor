@@ -40,14 +40,12 @@ export function AddFont() {
                       <Stack alignment='center' wrap={false}>
                         <Stack.Item fill>
                           <TextField
-                            inline
                             name={`${focusIdx}.data.value.fonts.${index}.name`}
                             label='Name'
                           />
                         </Stack.Item>
                         <Stack.Item fill>
                           <TextField
-                            inline
                             name={`${focusIdx}.data.value.fonts.${index}.href`}
                             label='Href'
                           />
