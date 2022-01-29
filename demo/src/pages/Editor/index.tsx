@@ -33,7 +33,7 @@ import { UserStorage } from '@demo/utils/user-storage';
 
 import { useCollection } from './components/useCollection';
 import mustache from 'mustache';
-import { JsonToMjml } from 'easy-email-core';
+import { BlockManager, JsonToMjml } from 'easy-email-core';
 import { BlockMarketManager, SimpleLayout } from 'easy-email-extensions';
 import { AutoSaveAndRestoreEmail } from '@demo/components/AutoSaveAndRestoreEmail';
 
@@ -68,6 +68,9 @@ const fontList = [
   '宋体',
   '微软雅黑',
 ].map((item) => ({ value: item, label: item }));
+
+console.log(BlockManager.getAutoCompleteFullPath());
+
 
 export default function Editor() {
   const [isDarkMode, setIsDarkMode] = useState(false);

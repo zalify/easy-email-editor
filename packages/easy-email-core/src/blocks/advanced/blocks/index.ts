@@ -1,5 +1,5 @@
 
-import { IButton, ICarousel, IDivider, IImage, INavbar, ISpacer, IText, IAccordion } from 'easy-email-core';
+import { IButton, ICarousel, IDivider, IImage, INavbar, ISpacer, IText, IAccordion } from '../../standard';
 import { AdvancedType, BasicType } from '@core/constants';
 import { generateAdvancedContentBlock } from '../generateAdvancedContentBlock';
 
@@ -42,5 +42,3 @@ export const AdvancedCarousel = generateAdvancedContentBlock<ICarousel>({
   type: AdvancedType.CAROUSEL,
   baseType: BasicType.CAROUSEL
 });
-
-export { Row as AdvancedRow } from './Row';

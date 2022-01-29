@@ -12,6 +12,5 @@ export enum AdvancedType {
   ACCORDION = 'advanced_accordion',
   CAROUSEL = 'advanced_carousel',
 
-  ROW = 'advanced_row',
   COLUMN = 'advanced_column',
 }

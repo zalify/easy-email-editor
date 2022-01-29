@@ -8,13 +8,17 @@ import { createCustomBlock } from '@core/utils/createCustomBlock';
 import { getPreviewClassName } from '@core/utils/getPreviewClassName';
 import { merge } from 'lodash';
 import React from 'react';
-import { blocks } from 'easy-email-core';
+import { standardBlocks } from '../standard';
 
 export function generateAdvancedContentBlock<T extends IBlockData>(option: {
   type: string;
   baseType: BasicType;
 }) {
-  const baseBlock = blocks[option.baseType as any as keyof typeof blocks];
+  const baseBlock = Object.values(standardBlocks).find(b => b.type === option.baseType as any as keyof typeof standardBlocks);
+  if (!baseBlock) {
+    throw new Error(`Can not find ${option.baseType}`);
+  }
+
   return createCustomBlock<T>({
     name: baseBlock.name,
     type: option.type,

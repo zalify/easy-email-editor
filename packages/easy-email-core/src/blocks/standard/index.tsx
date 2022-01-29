@@ -21,7 +21,7 @@ import { AccordionTitle, IAccordionTitle } from './AccordionTitle';
 import { AccordionText, IAccordionText } from './AccordionText';
 import { Table } from './Table';
 
-export const blocks = {
+export const standardBlocks = {
   Page,
   Section,
   Column,
