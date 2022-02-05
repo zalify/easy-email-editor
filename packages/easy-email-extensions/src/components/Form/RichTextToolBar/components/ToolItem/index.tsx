@@ -6,6 +6,7 @@ export const ToolItem: React.FC<{
   icon: React.ReactNode;
   onClick?: () => void;
   trigger?: string;
+  style?: React.CSSProperties;
 }> = (props) => {
   return (
     <Tooltip mini position='bottom' content={props.title}>
@@ -14,6 +15,7 @@ export const ToolItem: React.FC<{
         className='easy-email-extensions-emailToolItem'
         title={props.title}
         onClick={props.onClick}
+        style={props.style}
       >
         {props.icon}
       </button>

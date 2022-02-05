@@ -16,6 +16,8 @@ import { ColorPicker } from '../../../ColorPicker';
 import styleText from './index.scss?inline';
 import { MergeTags } from '@extensions/AttributePanel';
 import { useSelectionRange } from '@extensions/AttributePanel/hooks/useSelectionRange';
+import { IconBgColor } from './IconBgColor';
+import { IconFontColor } from './IconFontColor';
 
 export interface ToolsProps {
   onChange: (content: string) => any;
@@ -93,12 +95,12 @@ export function Tools(props: ToolsProps) {
             trigger='click'
             color='#fff'
             position='left'
-            content={
+            content={(
               <MergeTags
                 value=''
                 onChange={(val) => execCommand('insertHTML', val)}
               />
-            }
+            )}
             getPopupContainer={getPopoverMountNode}
           >
             <ToolItem
@@ -112,12 +114,12 @@ export function Tools(props: ToolsProps) {
         <Popover
           className='easy-email-extensions-Tools-Popover'
           trigger='click'
-          content={
+          content={(
             <>
               <style>{styleText}</style>
               <FontFamily onChange={(val) => execCommand('fontName', val)} />
             </>
-          }
+          )}
           getPopupContainer={getPopoverMountNode}
         >
           <ToolItem
@@ -130,12 +132,12 @@ export function Tools(props: ToolsProps) {
           className='easy-email-extensions-Tools-Popover'
           color='#fff'
           trigger='click'
-          content={
+          content={(
             <>
               <style>{styleText}</style>
               <FontSizeList onChange={(val) => execCommand('fontSize', val)} />
             </>
-          }
+          )}
           getPopupContainer={getPopoverMountNode}
         >
           <ToolItem
@@ -156,31 +158,11 @@ export function Tools(props: ToolsProps) {
           title='Italic'
         />
         <div className='easy-email-extensions-divider' />
-        <ColorPicker
-          label=''
-          position='tl'
-          onChange={(color) => execCommand('foreColor', color)}
-          getPopupContainer={getPopoverMountNode}
-          showInput={false}
-        >
-          <ToolItem
-            icon={<IconFont iconName='icon-font-color' />}
-            title='Text color'
-          />
-        </ColorPicker>
+
+        <IconFontColor selectionRange={selectionRange} execCommand={execCommand} getPopoverMountNode={getPopoverMountNode} />
         <div className='easy-email-extensions-divider' />
-        <ColorPicker
-          label=''
-          showInput={false}
-          position='tl'
-          onChange={(color) => execCommand('hiliteColor', color)}
-          getPopupContainer={getPopoverMountNode}
-        >
-          <ToolItem
-            icon={<IconFont iconName='icon-bg-colors' />}
-            title='Background color'
-          />
-        </ColorPicker>
+        <IconBgColor selectionRange={selectionRange} execCommand={execCommand} getPopoverMountNode={getPopoverMountNode} />
+
         <div className='easy-email-extensions-divider' />
         <Link
           currentRange={selectionRange}

@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "3681539",
+      "name": "bg-color",
+      "font_class": "bg-color",
+      "unicode": "e9de",
+      "unicode_decimal": 59870
+    },
+    {
+      "icon_id": "27363508",
+      "name": "font",
+      "font_class": "font-color",
+      "unicode": "eb34",
+      "unicode_decimal": 60212
+    },
+    {
       "icon_id": "13478464",
       "name": "undo",
       "font_class": "undo",
@@ -102,13 +116,6 @@
       "font_class": "italic",
       "unicode": "e7cf",
       "unicode_decimal": 59343
-    },
-    {
-      "icon_id": "20452220",
-      "name": "font-color",
-      "font_class": "font-color",
-      "unicode": "e900",
-      "unicode_decimal": 59648
     },
     {
       "icon_id": "4767098",
@@ -249,13 +256,6 @@
       "font_class": "link",
       "unicode": "e7e2",
       "unicode_decimal": 59362
-    },
-    {
-      "icon_id": "4767106",
-      "name": "bg-colors",
-      "font_class": "bg-colors",
-      "unicode": "e801",
-      "unicode_decimal": 59393
     },
     {
       "icon_id": "19665054",
