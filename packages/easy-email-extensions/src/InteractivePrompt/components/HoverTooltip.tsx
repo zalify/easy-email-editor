@@ -63,7 +63,7 @@ export function HoverTooltip() {
     <>
       {createPortal(
         <div
-          id='easy-email-extensions-InteractivePrompt-HoverTooltip'
+          id="easy-email-extensions-InteractivePrompt-HoverTooltip"
           style={{
             position: 'absolute',
             height: '100%',
@@ -155,7 +155,6 @@ function TipNode(props: TipNodeProps) {
           <>
             <div
               style={{
-                position: 'fixed',
                 backgroundColor: color,
                 color: '#ffffff',
                 height: '22px',
@@ -165,6 +164,7 @@ function TipNode(props: TipNodeProps) {
                 boxSizing: 'border-box',
                 whiteSpace: 'nowrap',
                 transform: 'translateX(-100%)',
+                fontFamily: 'sans-serif',
               }}
             >
               {title}
