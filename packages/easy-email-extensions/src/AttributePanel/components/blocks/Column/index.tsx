@@ -8,6 +8,7 @@ import { Width } from '@extensions/AttributePanel/components/attributes/Width';
 import { VerticalAlign } from '@extensions/AttributePanel/components/attributes/VerticalAlign';
 import { Background } from '@extensions/AttributePanel/components/attributes/Background';
 import { Border } from '@extensions/AttributePanel/components/attributes/Border';
+import { ClassName } from '../../attributes/ClassName';
 
 export function Column() {
   return (
@@ -32,6 +33,11 @@ export function Column() {
         </Collapse.Item>
         <Collapse.Item name='2' header='Border'>
           <Border />
+        </Collapse.Item>
+        <Collapse.Item name='4' header='Extra'>
+          <Grid.Col span={24}>
+            <ClassName />
+          </Grid.Col>
         </Collapse.Item>
       </Collapse>
     </AttributesPanelWrapper>

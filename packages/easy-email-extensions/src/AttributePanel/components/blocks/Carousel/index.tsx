@@ -14,6 +14,7 @@ import { Stack, useEditorProps, useFocusIdx } from 'easy-email-editor';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
 import { Align } from '@extensions/AttributePanel/components/attributes/Align';
 import { ICarousel } from 'easy-email-core';
+import { ClassName } from '../../attributes/ClassName';
 
 const options = [
   {
@@ -124,6 +125,11 @@ export function Carousel() {
               />
             </Grid.Col>
           </Grid.Row>
+        </Collapse.Item>
+        <Collapse.Item name='4' header='Extra'>
+          <Grid.Col span={24}>
+            <ClassName />
+          </Grid.Col>
         </Collapse.Item>
       </Collapse>
     </AttributesPanelWrapper>

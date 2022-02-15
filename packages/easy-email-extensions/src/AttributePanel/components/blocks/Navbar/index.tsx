@@ -12,6 +12,7 @@ import { IconLink } from '@arco-design/web-react/icon';
 import { NavbarLinkPadding } from '@extensions/AttributePanel/components/attributes/NavbarLinkPadding';
 import { useFocusIdx, Stack } from 'easy-email-editor';
 import { INavbar } from 'easy-email-core';
+import { ClassName } from '../../attributes/ClassName';
 
 export function Navbar() {
   const { focusIdx } = useFocusIdx();
@@ -45,6 +46,11 @@ export function Navbar() {
               'font-size': '13px',
             }}
           />
+        </Collapse.Item>
+        <Collapse.Item name='4' header='Extra'>
+          <Grid.Col span={24}>
+            <ClassName />
+          </Grid.Col>
         </Collapse.Item>
       </Collapse>
     </AttributesPanelWrapper>

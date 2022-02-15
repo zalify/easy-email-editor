@@ -10,6 +10,7 @@ import { Align } from '@extensions/AttributePanel/components/attributes/Align';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
 import { Collapse, Grid, Space } from '@arco-design/web-react';
 import { Stack } from 'easy-email-editor';
+import { ClassName } from '../../attributes/ClassName';
 
 export function Divider() {
   return (
@@ -50,6 +51,11 @@ export function Divider() {
             </Grid.Col>
             <Grid.Col offset={1} span={11} />
           </Grid.Row>
+        </Collapse.Item>
+        <Collapse.Item name='4' header='Extra'>
+          <Grid.Col span={24}>
+            <ClassName />
+          </Grid.Col>
         </Collapse.Item>
       </Collapse>
     </AttributesPanelWrapper>

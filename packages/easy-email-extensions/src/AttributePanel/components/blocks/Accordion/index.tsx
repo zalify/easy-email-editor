@@ -12,6 +12,7 @@ import {
   TextField,
 } from '@extensions/components/Form';
 import { Collapse, Grid, Space } from '@arco-design/web-react';
+import { ClassName } from '../../attributes/ClassName';
 
 const positionOptions = [
   {
@@ -112,6 +113,11 @@ export function Accordion() {
 
             <TextField label='border' name={`${focusIdx}.attributes.border`} />
           </Space>
+        </Collapse.Item>
+        <Collapse.Item name='4' header='Extra'>
+          <Grid.Col span={24}>
+            <ClassName />
+          </Grid.Col>
         </Collapse.Item>
       </Collapse>
     </AttributesPanelWrapper>

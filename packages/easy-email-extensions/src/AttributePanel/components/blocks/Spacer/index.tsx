@@ -3,8 +3,9 @@ import { Height } from '@extensions/AttributePanel/components/attributes/Height'
 import { ContainerBackgroundColor } from '@extensions/AttributePanel/components/attributes/ContainerBackgroundColor';
 import { Padding } from '@extensions/AttributePanel/components/attributes/Padding';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
-import { Collapse, Space } from '@arco-design/web-react';
+import { Collapse, Grid, Space } from '@arco-design/web-react';
 import { Stack } from 'easy-email-editor';
+import { ClassName } from '../../attributes/ClassName';
 
 export function Spacer() {
   return (
@@ -19,6 +20,12 @@ export function Spacer() {
 
         <Collapse.Item name='2' header='Background'>
           <ContainerBackgroundColor title='Background color' />
+        </Collapse.Item>
+
+        <Collapse.Item name='4' header='Extra'>
+          <Grid.Col span={24}>
+            <ClassName />
+          </Grid.Col>
         </Collapse.Item>
       </Collapse>
     </AttributesPanelWrapper>
