@@ -24,6 +24,7 @@ import { LineHeight } from '@extensions/AttributePanel/components/attributes/Lin
 import { Stack, useEditorProps, useFocusIdx } from 'easy-email-editor';
 import { ISocial } from 'easy-email-core';
 import { getImg } from '@extensions/AttributePanel/utils/getImg';
+import { ClassName } from '../../attributes/ClassName';
 
 const options = [
   {
@@ -123,6 +124,11 @@ export function Social() {
             <Padding attributeName='inner-padding' title='Inner padding' />
             <Padding attributeName='text-padding' title='Text padding' />
           </Stack>
+        </Collapse.Item>
+        <Collapse.Item name='4' header='Extra'>
+          <Grid.Col span={24}>
+            <ClassName />
+          </Grid.Col>
         </Collapse.Item>
       </Collapse>
     </AttributesPanelWrapper>

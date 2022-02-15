@@ -17,20 +17,21 @@ import { Collapse, Grid, Space, Tooltip } from '@arco-design/web-react';
 import { Button } from '@arco-design/web-react';
 import { IconFont, Stack } from 'easy-email-editor';
 import { HtmlEditor } from '../../UI/HtmlEditor';
+import { ClassName } from '../../attributes/ClassName';
 
 export function Text() {
   const [visible, setVisible] = useState(false);
 
   return (
     <AttributesPanelWrapper
-      extra={(
+      extra={
         <Tooltip content='Html mode'>
           <Button
             onClick={() => setVisible(true)}
             icon={<IconFont iconName='icon-html' />}
           />
         </Tooltip>
-      )}
+      }
     >
       <Collapse defaultActiveKey={['0', '1', '2']}>
         <Collapse.Item name='0' header='Dimension'>
@@ -87,6 +88,11 @@ export function Text() {
               <Grid.Col offset={1} span={11} />
             </Grid.Row>
           </Space>
+        </Collapse.Item>
+        <Collapse.Item name='4' header='Extra'>
+          <Grid.Col span={24}>
+            <ClassName />
+          </Grid.Col>
         </Collapse.Item>
       </Collapse>
       <HtmlEditor visible={visible} setVisible={setVisible} />

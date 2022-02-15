@@ -9,6 +9,7 @@ import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/at
 import { Collapse, Grid, Space } from '@arco-design/web-react';
 import { Stack, TextStyle, useBlock, useFocusIdx } from 'easy-email-editor';
 import { BasicType, BlockManager } from 'easy-email-core';
+import { ClassName } from '../../attributes/ClassName';
 
 export function Section() {
   const { focusIdx } = useFocusIdx();
@@ -81,6 +82,11 @@ export function Section() {
         </Collapse.Item>
         <Collapse.Item name='2' header='Border'>
           <Border />
+        </Collapse.Item>
+        <Collapse.Item name='4' header='Extra'>
+          <Grid.Col span={24}>
+            <ClassName />
+          </Grid.Col>
         </Collapse.Item>
       </Collapse>
     </AttributesPanelWrapper>
