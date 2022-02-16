@@ -34,7 +34,6 @@ export enum AdvancedType {
   DIVIDER = 'advanced_divider',
   SPACER = 'advanced_spacer',
   BUTTON = 'advanced_button',
-  WRAPPER = 'advanced_wrapper',
   NAVBAR = 'advanced_navbar',
   SOCIAL = 'advanced_social',
   ACCORDION = 'advanced_accordion',

@@ -1,5 +1,5 @@
 import { AdvancedType } from '@core/constants';
-import { AdvancedText, AdvancedButton, AdvancedImage, AdvancedDivider, AdvancedSpacer, AdvancedNavbar, AdvancedAccordion, AdvancedCarousel } from './blocks';
+import { AdvancedText, AdvancedButton, AdvancedImage, AdvancedDivider, AdvancedSpacer, AdvancedNavbar, AdvancedAccordion, AdvancedCarousel, AdvancedSocial } from './blocks';
 
 export const advancedBlocks = {
   [AdvancedType.TEXT]: AdvancedText,
@@ -10,5 +10,5 @@ export const advancedBlocks = {
   [AdvancedType.NAVBAR]: AdvancedNavbar,
   [AdvancedType.ACCORDION]: AdvancedAccordion,
   [AdvancedType.CAROUSEL]: AdvancedCarousel,
-  [AdvancedType.CAROUSEL]: AdvancedCarousel,
+  [AdvancedType.SOCIAL]: AdvancedSocial,
 };

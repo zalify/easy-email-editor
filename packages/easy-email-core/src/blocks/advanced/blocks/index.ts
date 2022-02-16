@@ -1,5 +1,5 @@
 
-import { IButton, ICarousel, IDivider, IImage, INavbar, ISpacer, IText, IAccordion } from '../../standard';
+import { IButton, ICarousel, IDivider, IImage, INavbar, ISpacer, IText, IAccordion, ISocial } from '../../standard';
 import { AdvancedType, BasicType } from '@core/constants';
 import { generateAdvancedContentBlock } from '../generateAdvancedContentBlock';
 
@@ -41,4 +41,9 @@ export const AdvancedAccordion = generateAdvancedContentBlock<IAccordion>({
 export const AdvancedCarousel = generateAdvancedContentBlock<ICarousel>({
   type: AdvancedType.CAROUSEL,
   baseType: BasicType.CAROUSEL
+});
+
+export const AdvancedSocial = generateAdvancedContentBlock<ISocial>({
+  type: AdvancedType.SOCIAL,
+  baseType: BasicType.SOCIAL
 });

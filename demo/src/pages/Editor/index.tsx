@@ -33,7 +33,7 @@ import { UserStorage } from '@demo/utils/user-storage';
 
 import { useCollection } from './components/useCollection';
 import mustache from 'mustache';
-import { JsonToMjml } from 'easy-email-core';
+import { AdvancedType, BasicType, IBlockData, JsonToMjml } from 'easy-email-core';
 import {
   BlockMarketManager,
   RenderEmailBlockNode,
@@ -196,9 +196,10 @@ export default function Editor() {
 
   const initialValues: IEmailTemplate | null = useMemo(() => {
     if (!templateData) return null;
+    const sourceData = cloneDeep(templateData.content) as IBlockData;
     return {
       ...templateData,
-      content: cloneDeep(templateData.content), // because redux object is not extensible
+      content: replaceStandardBlockToAdvancedBlock(sourceData), // replace standard block
     };
   }, [templateData]);
 
@@ -314,4 +315,26 @@ export default function Editor() {
       {modal}
     </div>
   );
+}
+
+
+function replaceStandardBlockToAdvancedBlock(blockData: IBlockData) {
+  const map = {
+    [BasicType.TEXT]: AdvancedType.TEXT,
+    [BasicType.BUTTON]: AdvancedType.BUTTON,
+    [BasicType.IMAGE]: AdvancedType.IMAGE,
+    [BasicType.DIVIDER]: AdvancedType.DIVIDER,
+    [BasicType.SPACER]: AdvancedType.SPACER,
+    [BasicType.SOCIAL]: AdvancedType.SOCIAL,
+    [BasicType.ACCORDION]: AdvancedType.ACCORDION,
+    [BasicType.CAROUSEL]: AdvancedType.CAROUSEL,
+    [BasicType.NAVBAR]: AdvancedType.NAVBAR,
+  };
+
+  if (map[blockData.type]) {
+    blockData.type = map[blockData.type];
+  }
+  blockData.children.forEach(replaceStandardBlockToAdvancedBlock);
+  return blockData;
+
 }

@@ -48,7 +48,6 @@ export const blocks = {
   [AdvancedType.IMAGE]: Image,
   [AdvancedType.BUTTON]: Button,
   [AdvancedType.DIVIDER]: Divider,
-  [AdvancedType.WRAPPER]: Wrapper,
   [AdvancedType.SPACER]: Spacer,
   [AdvancedType.ACCORDION]: Accordion,
   [AdvancedType.CAROUSEL]: Carousel,

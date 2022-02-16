@@ -22,7 +22,6 @@ const iconsMap = {
   [AdvancedType.DIVIDER]: 'icon-divider',
   [AdvancedType.IMAGE]: 'icon-img',
   [AdvancedType.BUTTON]: 'icon-button',
-  [AdvancedType.WRAPPER]: 'icon-wrapper',
   [AdvancedType.NAVBAR]: 'icon-navbar',
   [AdvancedType.SPACER]: 'icon-spacing',
   [AdvancedType.SOCIAL]: 'icon-social',
