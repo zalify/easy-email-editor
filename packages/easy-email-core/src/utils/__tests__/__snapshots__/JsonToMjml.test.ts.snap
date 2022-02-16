@@ -16,6 +16,7 @@ exports[`Test JsonToMjml when mode is "production" should render as expected 1`]
   
               
               
+              
               <mj-breakpoint width=\\"480px\\" />
             <mj-attributes>
               
@@ -60,6 +61,7 @@ exports[`Test JsonToMjml when mode is "testing" should render as expected 1`] = 
 
     </mj-html-attributes>
   
+              
               
               
               <mj-breakpoint width=\\"480px\\" />
