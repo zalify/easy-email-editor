@@ -19,7 +19,7 @@ import { Accordion, IAccordion } from './Accordion';
 import { AccordionElement, IAccordionElement } from './AccordionElement';
 import { AccordionTitle, IAccordionTitle } from './AccordionTitle';
 import { AccordionText, IAccordionText } from './AccordionText';
-import { Table } from './Table';
+import { Table, ITable } from './Table';
 
 export const standardBlocks = {
   Page,
@@ -58,6 +58,7 @@ export type {
   IColumn,
   IGroup,
   IText,
+  ITable,
   IImage,
   IButton,
   IDivider,

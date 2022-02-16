@@ -1,5 +1,5 @@
 import { BlockManager } from '@core/utils';
-import { IPage } from '@core/blocks/Page';
+import { IPage } from '@core/blocks';
 import { BasicType } from '@core/constants';
 import { IBlockData } from '@core/typings';
 import { identity, isString, pickBy } from 'lodash';
@@ -46,7 +46,7 @@ export function MjmlToJson(data: MjmlBlockItem | string): IPage {
                 const isContentColor =
                   ['mj-wrapper', 'mj-section'].includes(item.tagName) &&
                   item.attributes['background-color'] ===
-                    metaData['content-background-color'];
+                  metaData['content-background-color'];
                 return !isFontFamily && !isTextColor && !isContentColor;
               })
               .map(
@@ -152,7 +152,7 @@ export function getMetaDataFromMjml(data?: IChildrenItem): {
     .map((item) => item.children)
     .flat()
     .filter((item) => item && item.attributes.class === 'easy-email')
-    .reduce((obj: { [key: string]: any }, item) => {
+    .reduce((obj: { [key: string]: any; }, item) => {
       if (!item) return obj;
       const name = item.attributes['attribute-name'];
       const isMultipleAttributes = Boolean(
@@ -160,14 +160,14 @@ export function getMetaDataFromMjml(data?: IChildrenItem): {
       );
       obj[name] = isMultipleAttributes
         ? pickBy(
-            {
-              ...item.attributes,
-              'attribute-name': undefined,
-              'multiple-attributes': undefined,
-              class: undefined,
-            },
-            identity
-          )
+          {
+            ...item.attributes,
+            'attribute-name': undefined,
+            'multiple-attributes': undefined,
+            class: undefined,
+          },
+          identity
+        )
         : item.attributes[name];
       return obj;
     }, {});

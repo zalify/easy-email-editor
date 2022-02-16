@@ -13,7 +13,7 @@ const HoverBlock = (props: HoverBlockProps) => {
   const { direction, isDragging } = useHoverIdx();
 
   const block = useMemo(() => {
-    return BlockManager.getBlockByType(blockType);
+    return BlockManager.getBlockByType(blockType)!;
   }, [blockType]);
 
   const dragTitle = useMemo(() => {
