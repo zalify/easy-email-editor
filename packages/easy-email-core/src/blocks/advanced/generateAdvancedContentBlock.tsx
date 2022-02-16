@@ -53,7 +53,7 @@ export function generateAdvancedContentBlock<T extends IBlockData>(option: {
         return content;
       }
       if (parentBlockData.type === BasicType.PAGE || parentBlockData.type === BasicType.WRAPPER) {
-        return <Section padding="0px"><Column>{content}</Column></Section>;
+        return <Template><Section padding="0px"><Column>{content}</Column></Section></Template>;
       }
 
       return content;

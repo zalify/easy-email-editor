@@ -21,7 +21,7 @@ export const RenderReactNode = React.memo(function ({
 
     if (isEmailBlock && idx) {
       const Com = renderEmailBlockNode;
-      return <Com node={node} idx={idx} RenderReactNode={RenderElementNode} />;
+      return <Com node={node} idx={idx} RenderReactNode={RenderReactNode} />;
     }
     return (
       <RenderElementNode
@@ -51,7 +51,7 @@ const RenderElementNode = React.memo(
     if (!(node instanceof Element)) return <></>;
 
     const tagName = node.tagName.toLowerCase();
-    const attributes: { [key: string]: string } = {};
+    const attributes: { [key: string]: string; } = {};
     node.getAttributeNames?.().forEach((att) => {
       if (att) {
         attributes[att] = node.getAttribute(att) || '';
@@ -103,12 +103,12 @@ const RenderElementNode = React.memo(
         node.childNodes.length === 0
           ? null
           : [...node.childNodes].map((n, i) => (
-              <RenderReactNode
-                key={i}
-                node={n as any}
-                renderEmailBlockNode={renderEmailBlockNode}
-              />
-            )),
+            <RenderReactNode
+              key={i}
+              node={n as any}
+              renderEmailBlockNode={renderEmailBlockNode}
+            />
+          )),
     });
 
     return <>{reactNode}</>;

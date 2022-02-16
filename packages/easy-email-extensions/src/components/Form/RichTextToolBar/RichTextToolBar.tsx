@@ -9,7 +9,7 @@ import {
 import { Tools } from './components/Tools';
 import styleText from './shadow-dom.scss?inline';
 
-export function RichTextToolBar(props: { onChange: (s: string) => void }) {
+export function RichTextToolBar(props: { onChange: (s: string) => void; }) {
   const { focusBlockNode, focusBlockRect } = useFocusBlockLayout();
   const { activeTab } = useActiveTab();
 

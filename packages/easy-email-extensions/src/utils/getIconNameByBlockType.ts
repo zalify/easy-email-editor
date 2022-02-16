@@ -1,4 +1,4 @@
-import { BasicType } from 'easy-email-core';
+import { BasicType, AdvancedType } from 'easy-email-core';
 import { get } from 'lodash';
 
 const iconsMap = {
@@ -17,6 +17,17 @@ const iconsMap = {
   [BasicType.SOCIAL]: 'icon-social',
   [BasicType.CAROUSEL]: 'icon-carousel',
   [BasicType.ACCORDION]: 'icon-accordion',
+
+  [AdvancedType.TEXT]: 'icon-text',
+  [AdvancedType.DIVIDER]: 'icon-divider',
+  [AdvancedType.IMAGE]: 'icon-img',
+  [AdvancedType.BUTTON]: 'icon-button',
+  [AdvancedType.WRAPPER]: 'icon-wrapper',
+  [AdvancedType.NAVBAR]: 'icon-navbar',
+  [AdvancedType.SPACER]: 'icon-spacing',
+  [AdvancedType.SOCIAL]: 'icon-social',
+  [AdvancedType.CAROUSEL]: 'icon-carousel',
+  [AdvancedType.ACCORDION]: 'icon-accordion',
 };
 
 export function getIconNameByBlockType(type: string) {

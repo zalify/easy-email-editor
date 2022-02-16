@@ -66,7 +66,7 @@ export function Toolbar() {
             pointerEvents: 'auto',
             color: '#ffffff',
             transform: 'translateY(-100%)',
-            display: 'flex',
+            display: 'inline-flex',
             // justifyContent: 'space-between',
           }}
         >

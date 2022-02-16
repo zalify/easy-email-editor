@@ -58,7 +58,14 @@ export function EditEmailPreview() {
       >
         <div
           className='shadow-container'
-          style={{ height: '100%', overflowY: 'auto', zIndex: 10 }}
+          style={{
+            height: '100%',
+            overflowY: 'auto',
+            zIndex: 10,
+            paddingTop: 60,
+            paddingLeft: 40,
+            paddingRight: 40,
+          }}
           ref={setContainerRef}
           onScroll={onScroll}
         >

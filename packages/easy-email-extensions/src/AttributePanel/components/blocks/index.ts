@@ -19,7 +19,7 @@ import { Hero } from './Hero';
 import { Navbar } from './Navbar';
 import { Social } from './Social';
 import { Table } from './Table';
-import { BasicType } from 'easy-email-core';
+import { BasicType, AdvancedType } from 'easy-email-core';
 
 export const blocks = {
   [BasicType.PAGE]: Page,
@@ -42,4 +42,16 @@ export const blocks = {
   [BasicType.NAVBAR]: Navbar,
   [BasicType.SOCIAL]: Social,
   [BasicType.TABLE]: Table,
+
+  [BasicType.SECTION]: Section,
+  [AdvancedType.TEXT]: Text,
+  [AdvancedType.IMAGE]: Image,
+  [AdvancedType.BUTTON]: Button,
+  [AdvancedType.DIVIDER]: Divider,
+  [AdvancedType.WRAPPER]: Wrapper,
+  [AdvancedType.SPACER]: Spacer,
+  [AdvancedType.ACCORDION]: Accordion,
+  [AdvancedType.CAROUSEL]: Carousel,
+  [AdvancedType.NAVBAR]: Navbar,
+  [AdvancedType.SOCIAL]: Social,
 };

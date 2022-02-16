@@ -1,7 +1,11 @@
+import { getNodeTypeFromClassName } from 'easy-email-core';
+import { isTextBlock } from './isTextBlock';
+
 export function getEditNode(node: Element | null): null | HTMLElement {
   if (!node) return null;
   if (!node.classList) return null;
-  if (node.classList.contains('node-type-text')) {
+  const blockType = getNodeTypeFromClassName(node.classList);
+  if (isTextBlock(blockType)) {
     return (
       node.querySelector('[contenteditable="true"]') ||
       node.querySelector('div')
@@ -14,7 +18,8 @@ export function getEditNode(node: Element | null): null | HTMLElement {
 }
 
 export function getEditContent(node: HTMLElement) {
-  if (node.classList.contains('node-type-text')) {
+  const blockType = getNodeTypeFromClassName(node.classList);
+  if (isTextBlock(blockType)) {
     return getEditNode(node)?.innerHTML || '';
   }
   if (node.classList.contains('node-type-button')) {

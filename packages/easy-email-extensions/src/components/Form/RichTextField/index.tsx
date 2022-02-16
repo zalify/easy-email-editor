@@ -1,7 +1,6 @@
-import { useBlock, useFocusIdx } from 'easy-email-editor';
+import { isTextBlock, useBlock, useFocusIdx } from 'easy-email-editor';
 import React, { useCallback } from 'react';
 import { InlineText, InlineTextProps } from '../InlineTextField';
-import { BasicType } from 'easy-email-core';
 import { RichTextToolBar } from '../RichTextToolBar';
 import { Field, FieldInputProps } from 'react-final-form';
 import { debounce } from 'lodash';
@@ -11,7 +10,7 @@ export const RichTextField = (
 ) => {
   const { focusBlock } = useBlock();
   const { focusIdx } = useFocusIdx();
-  if (focusBlock?.type !== BasicType.TEXT) return null;
+  if (!isTextBlock(focusBlock?.type)) return null;
 
   const name = `${focusIdx}.data.value.content`;
 

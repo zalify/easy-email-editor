@@ -15,7 +15,7 @@ import { getInsertPosition } from '@/utils/getInsertPosition';
 import { scrollBlockEleIntoView } from '@/utils/scrollBlockEleIntoView';
 import { getEditNode } from '@/utils/getEditNode';
 import { useEditorProps } from './useEditorProps';
-import { getBlockNodeByIdx } from '@/utils';
+import { getBlockNodeByIdx, isTextBlock } from '@/utils';
 import { DATA_ATTRIBUTE_DROP_CONTAINER } from '@/constants';
 
 export function useDropBlock() {
@@ -63,7 +63,7 @@ export function useDropBlock() {
           if (!target) return;
           const blockType = getNodeTypeFromClassName(target.classList);
           const idx = getNodeIdxFromClassName(target.classList)!;
-          if (blockType === BasicType.TEXT) {
+          if (isTextBlock(blockType)) {
             const editNode = getEditNode(target);
             editNode?.focus();
           }

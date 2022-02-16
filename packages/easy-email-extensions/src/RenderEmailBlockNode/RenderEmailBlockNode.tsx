@@ -2,6 +2,7 @@ import { BasicType, getNodeTypeFromClassName } from 'easy-email-core';
 import {
   EmailEditorProviderProps,
   getEditNode,
+  isTextBlock,
   useFocusIdx,
   useHoverIdx,
 } from 'easy-email-editor';
@@ -24,7 +25,7 @@ const RenderEmailBlockNode: EmailEditorProviderProps['renderEmailBlockNode'] = (
 
   const attributes = useMemo(() => {
     if (!(node instanceof Element)) return {};
-    const temp: { [key: string]: string } = {};
+    const temp: { [key: string]: string; } = {};
     node.getAttributeNames?.().forEach((att) => {
       if (att) {
         temp[att] = node.getAttribute(att) || '';
@@ -69,7 +70,8 @@ const RenderEmailBlockNode: EmailEditorProviderProps['renderEmailBlockNode'] = (
 
   return useMemo(() => {
     if (node instanceof Element) {
-      if (blockType === BasicType.TEXT) {
+
+      if (isTextBlock(blockType)) {
         const editNode = getEditNode(node);
         if (editNode) {
           editNode.contentEditable = 'true';
