@@ -10,10 +10,10 @@ import { Tools } from './components/Tools';
 import styleText from './shadow-dom.scss?inline';
 
 export function RichTextToolBar(props: { onChange: (s: string) => void; }) {
-  const { focusBlockNode, focusBlockRect } = useFocusBlockLayout();
+  const { focusBlockNode } = useFocusBlockLayout();
   const { activeTab } = useActiveTab();
 
-  if (!focusBlockNode || !focusBlockRect || activeTab !== ActiveTabKeys.EDIT)
+  if (!focusBlockNode || activeTab !== ActiveTabKeys.EDIT)
     return null;
 
   return (
@@ -26,10 +26,10 @@ export function RichTextToolBar(props: { onChange: (s: string) => void; }) {
               transform: 'translate(0,-100%)',
               padding: '4px 8px',
               boxSizing: 'border-box',
-              position: 'fixed',
+              position: 'absolute',
+              left: 0,
+              top: -24,
               zIndex: 100,
-              top: focusBlockRect.top - 24,
-              left: focusBlockRect.left,
             }}
           >
             <div
