@@ -165,12 +165,19 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
           )
           .join('\n') || '';
 
+      const userStyle = value['user-style']
+        ? `<mj-style ${value['user-style'].inline ? 'inline="inline"' : ''}>${
+            value['user-style'].content
+          }</mj-style>`
+        : '';
+
       return `
         <mjml>
           <mj-head>
               ${metaData}
               ${nonResponsive}
               ${styles}
+              ${userStyle}
               ${breakpoint}
             <mj-attributes>
               ${value.headAttributes}

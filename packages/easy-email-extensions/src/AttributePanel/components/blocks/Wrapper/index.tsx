@@ -3,8 +3,9 @@ import { Padding } from '@extensions/AttributePanel/components/attributes//Paddi
 import { Background } from '@extensions/AttributePanel/components/attributes//Background';
 import { TextField } from '@extensions/components/Form';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
-import { Collapse } from '@arco-design/web-react';
+import { Collapse, Grid } from '@arco-design/web-react';
 import { Stack, useFocusIdx } from 'easy-email-editor';
+import { ClassName } from '../../attributes/ClassName';
 
 export function Wrapper() {
   const { focusIdx } = useFocusIdx();
@@ -34,6 +35,11 @@ export function Wrapper() {
               inline
             />
           </Stack>
+        </Collapse.Item>
+        <Collapse.Item name='4' header='Extra'>
+          <Grid.Col span={24}>
+            <ClassName />
+          </Grid.Col>
         </Collapse.Item>
       </Collapse>
     </AttributesPanelWrapper>

@@ -82,11 +82,11 @@ export function Page() {
                   />
                 </Grid.Col>
               </Grid.Row>
-              {/*
+
               <TextAreaField
-                label='User style'
+                label='Style'
                 name={`${focusIdx}.data.value.user-style.content`}
-              /> */}
+              />
               <AddFont />
             </Stack>
           </Collapse.Item>

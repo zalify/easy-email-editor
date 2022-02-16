@@ -5,6 +5,7 @@ import { BackgroundColor } from '@extensions/AttributePanel/components/attribute
 import { VerticalAlign } from '@extensions/AttributePanel/components/attributes/VerticalAlign';
 import { Collapse, Grid } from '@arco-design/web-react';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
+import { ClassName } from '../../attributes/ClassName';
 
 export function Group() {
   return (
@@ -27,6 +28,11 @@ export function Group() {
             </Grid.Col>
             <Grid.Col offset={1} span={11} />
           </Grid.Row>
+        </Collapse.Item>
+        <Collapse.Item name='4' header='Extra'>
+          <Grid.Col span={24}>
+            <ClassName />
+          </Grid.Col>
         </Collapse.Item>
       </Collapse>
     </AttributesPanelWrapper>

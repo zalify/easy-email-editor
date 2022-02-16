@@ -79,6 +79,12 @@ export function Image() {
               <TextField label='alt' name={`${focusIdx}.attributes.alt`} />
             </Grid.Col>
           </Grid.Row>
+          <Grid.Col span={24}>
+            <TextField
+              label='class name'
+              name={`${focusIdx}.attributes.css-class`}
+            />
+          </Grid.Col>
         </Collapse.Item>
       </Collapse>
     </AttributesPanelWrapper>

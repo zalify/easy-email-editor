@@ -13,6 +13,7 @@ import { Padding } from '@extensions/AttributePanel/components/attributes/Paddin
 import { Collapse, Grid, Space } from '@arco-design/web-react';
 import { Stack, useEditorProps, useFocusIdx } from 'easy-email-editor';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
+import { ClassName } from '../../attributes/ClassName';
 
 const options = [
   {
@@ -95,6 +96,11 @@ export function Hero() {
               </Grid.Col>
             </Grid.Row>
           </Space>
+        </Collapse.Item>
+        <Collapse.Item name='4' header='Extra'>
+          <Grid.Col span={24}>
+            <ClassName />
+          </Grid.Col>
         </Collapse.Item>
       </Collapse>
     </AttributesPanelWrapper>
