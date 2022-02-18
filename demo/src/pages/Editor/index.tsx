@@ -33,12 +33,13 @@ import { UserStorage } from '@demo/utils/user-storage';
 
 import { useCollection } from './components/useCollection';
 import mustache from 'mustache';
-import { AdvancedType, BasicType, IBlockData, JsonToMjml } from 'easy-email-core';
 import {
-  BlockMarketManager,
-  RenderEmailBlockNode,
-  SimpleLayout,
-} from 'easy-email-extensions';
+  AdvancedType,
+  BasicType,
+  IBlockData,
+  JsonToMjml,
+} from 'easy-email-core';
+import { BlockMarketManager, SimpleLayout } from 'easy-email-extensions';
 import { AutoSaveAndRestoreEmail } from '@demo/components/AutoSaveAndRestoreEmail';
 
 // Register external blocks
@@ -72,8 +73,6 @@ const fontList = [
   '宋体',
   '微软雅黑',
 ].map((item) => ({ value: item, label: item }));
-
-
 
 export default function Editor() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -238,7 +237,6 @@ export default function Editor() {
         onAddCollection={addCollection}
         onRemoveCollection={({ id }) => removeCollection(id)}
         onUploadImage={onUploadImage}
-        renderEmailBlockNode={RenderEmailBlockNode}
         fontList={fontList}
         onSubmit={onSubmit}
         autoComplete
@@ -317,7 +315,6 @@ export default function Editor() {
   );
 }
 
-
 function replaceStandardBlockToAdvancedBlock(blockData: IBlockData) {
   const map = {
     [BasicType.TEXT]: AdvancedType.TEXT,
@@ -336,5 +333,4 @@ function replaceStandardBlockToAdvancedBlock(blockData: IBlockData) {
   }
   blockData.children.forEach(replaceStandardBlockToAdvancedBlock);
   return blockData;
-
 }

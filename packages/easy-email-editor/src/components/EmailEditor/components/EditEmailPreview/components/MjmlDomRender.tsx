@@ -3,16 +3,16 @@ import mjml from 'mjml-browser';
 import { getPageIdx, IPage, JsonToMjml } from 'easy-email-core';
 import { cloneDeep, isEqual } from 'lodash';
 import { useEditorContext } from '@/hooks/useEditorContext';
+import { HtmlStringToReactNodes } from '@/utils/HtmlStringToReactNodes';
 import { createPortal } from 'react-dom';
 import { useEditorProps } from '@/hooks/useEditorProps';
 import { getEditorRoot, getShadowRoot } from '@/utils';
-import { HtmlStringToReactNodes } from '../../HtmlStringToReactNodes';
 
 export function MjmlDomRender() {
   const { pageData: content } = useEditorContext();
   const [pageData, setPageData] = useState<IPage | null>(null);
   const [ref, setRef] = useState<HTMLDivElement | null>(null);
-  const { dashed, mergeTags, renderEmailBlockNode } = useEditorProps();
+  const { dashed, mergeTags } = useEditorProps();
 
   const isTextFocus =
     document.activeElement === getEditorRoot() &&
@@ -51,15 +51,8 @@ export function MjmlDomRender() {
         role='tabpanel'
         tabIndex={0}
       >
-        {ref &&
-          createPortal(
-            <HtmlStringToReactNodes
-              content={html}
-              renderEmailBlockNode={renderEmailBlockNode}
-            />,
-            ref
-          )}
+        {ref && createPortal(HtmlStringToReactNodes(html), ref)}
       </div>
     );
-  }, [dashed, ref, html, renderEmailBlockNode]);
+  }, [dashed, ref, html]);
 }

@@ -6,7 +6,6 @@ export * from './ShortcutToolbar';
 export * from './SourceCodePanel';
 export * from './InteractivePrompt';
 export * from './SimpleLayout';
-export * from './RenderEmailBlockNode';
 
 export * from './components/Form';
 
