@@ -28,7 +28,7 @@ export interface PropsProviderProps {
   autoComplete?: boolean;
   dashed?: boolean;
 
-  mergeTagGenerate?: (m: string) => string;
+  mergeTagGenerate: (m: string) => string;
   renderMergeTagContent?: (props: {
     onChange: (val: string) => void;
     isSelect: boolean;
@@ -56,13 +56,14 @@ export const EditorPropsContext = React.createContext<PropsProviderProps>({
 });
 
 export const PropsProvider: React.FC<PropsProviderProps> = (props) => {
-  const { dashed = true } = props;
+  const { dashed = true, mergeTagGenerate = (m) => `{{${m}}}` } = props;
   const formatProps = useMemo(() => {
     return {
       ...props,
+      mergeTagGenerate,
       dashed,
     };
-  }, [props, dashed]);
+  }, [mergeTagGenerate, props, dashed]);
 
   return (
     <EditorPropsContext.Provider value={formatProps}>

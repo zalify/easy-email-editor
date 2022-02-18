@@ -13,7 +13,7 @@ export const MergeTags: React.FC<{
   const { focusIdx } = useFocusIdx();
   const {
     mergeTags = {},
-    mergeTagGenerate = (m: string) => `{{${m}}}`,
+    mergeTagGenerate,
     renderMergeTagContent,
   } = useEditorProps();
   const { values } = useBlock();
