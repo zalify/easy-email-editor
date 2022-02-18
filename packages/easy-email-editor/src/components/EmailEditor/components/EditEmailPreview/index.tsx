@@ -62,9 +62,11 @@ export function EditEmailPreview() {
             height: '100%',
             overflowY: 'auto',
             zIndex: 10,
+            paddingLeft: 10,
+            paddingRight: 10,
             paddingTop: 60,
-            paddingLeft: 40,
-            paddingRight: 40,
+            paddingBottom: 60,
+            boxSizing: 'border-box',
           }}
           ref={setContainerRef}
           onScroll={onScroll}

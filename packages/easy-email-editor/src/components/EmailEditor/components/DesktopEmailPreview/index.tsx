@@ -40,13 +40,14 @@ export function DesktopEmailPreview() {
           onScroll={onScroll}
           ref={setScrollEle}
           style={{
+            paddingLeft: 10,
+            paddingRight: 10,
             paddingTop: 60,
-            paddingLeft: 40,
-            paddingRight: 40,
+            paddingBottom: 60,
+            boxSizing: 'border-box',
             height: '100vh',
             overflow: 'auto',
             margin: 'auto',
-            boxSizing: 'border-box',
           }}
         >
           <PreviewEmail />
