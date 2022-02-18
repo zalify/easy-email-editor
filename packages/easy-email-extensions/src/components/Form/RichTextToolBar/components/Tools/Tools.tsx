@@ -18,6 +18,7 @@ import { MergeTags } from '@extensions/AttributePanel';
 import { useSelectionRange } from '@extensions/AttributePanel/hooks/useSelectionRange';
 import { IconBgColor } from './IconBgColor';
 import { IconFontColor } from './IconFontColor';
+import { MergeTagBadge } from '@/utils/MergeTagBadge';
 
 export interface ToolsProps {
   onChange: (content: string) => any;
@@ -69,6 +70,7 @@ export function Tools(props: ToolsProps) {
       link.setAttribute('href', linkData.link);
     } else {
       document.execCommand(cmd, false, val);
+      // merge tag 尝试 带上个id，execCommand之后  根据这个id获取element，再focus
     }
 
     const html = container.innerHTML;
@@ -98,7 +100,7 @@ export function Tools(props: ToolsProps) {
             content={(
               <MergeTags
                 value=''
-                onChange={(val) => execCommand('insertHTML', val)}
+                onChange={(val) => execCommand('insertHTML', MergeTagBadge.transform(val))}
               />
             )}
             getPopupContainer={getPopoverMountNode}

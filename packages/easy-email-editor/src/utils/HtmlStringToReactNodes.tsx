@@ -43,7 +43,6 @@ export function HtmlStringToReactNodes(content: string) {
 
       if (editNode) {
         editNode.contentEditable = 'true';
-        console.log('editNode.innerHTML', editNode.innerHTML);
         editNode.innerHTML = MergeTagBadge.transform(editNode.innerHTML);
       }
     });
@@ -64,7 +63,7 @@ const RenderReactNode = React.memo(function ({
   index: number;
   idx: string;
 }): React.ReactElement {
-  const attributes: { [key: string]: string } = {};
+  const attributes: { [key: string]: string; } = {};
   node.getAttributeNames?.().forEach((att) => {
     if (att) {
       attributes[att] = node.getAttribute(att) || '';
@@ -132,13 +131,13 @@ const RenderReactNode = React.memo(function ({
         node.childNodes.length === 0
           ? null
           : [...node.childNodes].map((n, i) => (
-              <RenderReactNode
-                idx={getChildIdx(idx, i)}
-                key={i}
-                node={n as any}
-                index={i}
-              />
-            )),
+            <RenderReactNode
+              idx={getChildIdx(idx, i)}
+              key={i}
+              node={n as any}
+              index={i}
+            />
+          )),
     });
 
     return <>{reactNode}</>;
