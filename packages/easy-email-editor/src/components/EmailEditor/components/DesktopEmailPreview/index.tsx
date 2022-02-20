@@ -42,8 +42,8 @@ export function DesktopEmailPreview() {
           style={{
             paddingLeft: 10,
             paddingRight: 10,
-            paddingTop: 60,
-            paddingBottom: 60,
+            paddingTop: 40,
+            paddingBottom: 40,
             boxSizing: 'border-box',
             height: '100vh',
             overflow: 'auto',

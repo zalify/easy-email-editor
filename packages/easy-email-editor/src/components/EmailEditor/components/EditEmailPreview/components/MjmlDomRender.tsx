@@ -12,7 +12,7 @@ export function MjmlDomRender() {
   const { pageData: content } = useEditorContext();
   const [pageData, setPageData] = useState<IPage | null>(null);
   const [ref, setRef] = useState<HTMLDivElement | null>(null);
-  const { dashed, mergeTags } = useEditorProps();
+  const { dashed, mergeTags, enabledMergeTagsBadge } = useEditorProps();
 
   const isTextFocus =
     document.activeElement === getEditorRoot() &&
@@ -51,8 +51,12 @@ export function MjmlDomRender() {
         role='tabpanel'
         tabIndex={0}
       >
-        {ref && createPortal(HtmlStringToReactNodes(html), ref)}
+        {ref &&
+          createPortal(
+            HtmlStringToReactNodes(html, { enabledMergeTagsBadge }),
+            ref
+          )}
       </div>
     );
-  }, [dashed, ref, html]);
+  }, [dashed, ref, html, enabledMergeTagsBadge]);
 }

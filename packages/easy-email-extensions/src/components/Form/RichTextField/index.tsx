@@ -4,7 +4,7 @@ import {
   useEditorProps,
   useFocusIdx,
 } from 'easy-email-editor';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { InlineText, InlineTextProps } from '../InlineTextField';
 import { RichTextToolBar } from '../RichTextToolBar';
 import { Field, FieldInputProps } from 'react-final-form';
@@ -16,10 +16,6 @@ export const RichTextField = (
 ) => {
   const { focusBlock } = useBlock();
   const { focusIdx } = useFocusIdx();
-
-  useEffect(() => {
-    MergeTagBadge.init();
-  }, []);
 
   if (!isTextBlock(focusBlock?.type)) return null;
 
@@ -40,12 +36,16 @@ function FieldWrapper(
   }
 ) {
   const { input, ...rest } = props;
-  const { mergeTagGenerate } = useEditorProps();
+  const { mergeTagGenerate, enabledMergeTagsBadge } = useEditorProps();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debounceCallbackChange = useCallback(
     debounce((val) => {
-      input.onChange(MergeTagBadge.revert(val, mergeTagGenerate));
+      if (enabledMergeTagsBadge) {
+        input.onChange(MergeTagBadge.revert(val, mergeTagGenerate));
+      } else {
+        input.onChange(val);
+      }
 
       input.onBlur();
     }, 200),

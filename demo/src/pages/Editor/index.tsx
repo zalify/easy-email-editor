@@ -7,7 +7,7 @@ import { useLoading } from '@demo/hooks/useLoading';
 import { Button, Message, PageHeader, Select } from '@arco-design/web-react';
 import { useQuery } from '@demo/hooks/useQuery';
 import { useHistory } from 'react-router-dom';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, set } from 'lodash';
 import { Loading } from '@demo/components/loading';
 import mjml from 'mjml-browser';
 import { copy } from '@demo/utils/clipboard';
@@ -51,7 +51,7 @@ import blueTheme from '@arco-themes/react-easy-email-theme/css/arco.css?inline';
 import purpleTheme from '@arco-themes/react-easy-email-theme-purple/css/arco.css?inline';
 import greenTheme from '@arco-themes/react-easy-email-theme-green/css/arco.css?inline';
 import { useState } from 'react';
-import { testMergeTags as mergeTags } from './testMergeTags';
+import { testMergeTags } from './testMergeTags';
 
 const imageCompression = import('browser-image-compression');
 
@@ -79,6 +79,7 @@ export default function Editor() {
   const [theme, setTheme] = useState<'blue' | 'green' | 'purple'>('purple');
   const dispatch = useDispatch();
   const history = useHistory();
+  const [mergeTags, setMergeTags] = useState(testMergeTags);
   const templateData = useAppSelector('template');
   const { addCollection, removeCollection, collectionCategory } =
     useCollection();
@@ -139,6 +140,14 @@ export default function Editor() {
 
   const onChangeTheme = useCallback((t) => {
     setTheme(t);
+  }, []);
+
+  const onChangeMergeTag = useCallback((path: string, val: any) => {
+    setMergeTags((old) => {
+      const newObj = cloneDeep(old);
+      set(newObj, path, val);
+      return newObj;
+    });
   }, []);
 
   const onSubmit = useCallback(
@@ -239,6 +248,8 @@ export default function Editor() {
         onUploadImage={onUploadImage}
         fontList={fontList}
         onSubmit={onSubmit}
+        enabledMergeTagsBadge
+        onChangeMergeTag={onChangeMergeTag}
         autoComplete
         dashed={false}
         mergeTags={mergeTags}

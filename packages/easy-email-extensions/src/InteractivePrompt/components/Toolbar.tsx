@@ -1,6 +1,11 @@
 import React from 'react';
 import { BasicType, getParentIdx, getSiblingIdx } from 'easy-email-core';
-import { useBlock, useFocusIdx, useEditorProps } from 'easy-email-editor';
+import {
+  useBlock,
+  useFocusIdx,
+  useEditorProps,
+  isTextBlock,
+} from 'easy-email-editor';
 import { classnames } from '@extensions/utils/classnames';
 import { useAddToCollection } from '@extensions/hooks/useAddToCollection';
 import { getBlockTitle } from '@extensions/utils/getBlockTitle';
@@ -12,6 +17,7 @@ export function Toolbar() {
   const props = useEditorProps();
 
   const isPage = focusBlock?.type === BasicType.PAGE;
+  const isText = isTextBlock(focusBlock?.type);
 
   const handleMoveUp = () => {
     moveBlock(focusIdx, getSiblingIdx(focusIdx, -1));
@@ -49,6 +55,7 @@ export function Toolbar() {
     setFocusIdx(getParentIdx(focusIdx)!);
   };
 
+  if (isText) return null;
   return (
     <>
       <div

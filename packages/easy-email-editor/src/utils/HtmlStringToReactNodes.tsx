@@ -31,10 +31,13 @@ console.error = (message?: any, ...optionalParams: any[]) => {
 };
 
 export interface HtmlStringToReactNodesOptions {
-  focusIdx: string;
+  enabledMergeTagsBadge: boolean;
 }
 
-export function HtmlStringToReactNodes(content: string) {
+export function HtmlStringToReactNodes(
+  content: string,
+  option: HtmlStringToReactNodesOptions
+) {
   let doc = domParser.parseFromString(content, 'text/html'); // The average time is about 1.4 ms
   [...doc.querySelectorAll('.email-block')]
     .filter((item) => isTextBlock(getNodeTypeFromClassName(item.classList)))
@@ -43,7 +46,9 @@ export function HtmlStringToReactNodes(content: string) {
 
       if (editNode) {
         editNode.contentEditable = 'true';
-        editNode.innerHTML = MergeTagBadge.transform(editNode.innerHTML);
+        if (option.enabledMergeTagsBadge) {
+          editNode.innerHTML = MergeTagBadge.transform(editNode.innerHTML);
+        }
       }
     });
 
@@ -63,7 +68,7 @@ const RenderReactNode = React.memo(function ({
   index: number;
   idx: string;
 }): React.ReactElement {
-  const attributes: { [key: string]: string; } = {};
+  const attributes: { [key: string]: string } = {};
   node.getAttributeNames?.().forEach((att) => {
     if (att) {
       attributes[att] = node.getAttribute(att) || '';
@@ -131,13 +136,13 @@ const RenderReactNode = React.memo(function ({
         node.childNodes.length === 0
           ? null
           : [...node.childNodes].map((n, i) => (
-            <RenderReactNode
-              idx={getChildIdx(idx, i)}
-              key={i}
-              node={n as any}
-              index={i}
-            />
-          )),
+              <RenderReactNode
+                idx={getChildIdx(idx, i)}
+                key={i}
+                node={n as any}
+                index={i}
+              />
+            )),
     });
 
     return <>{reactNode}</>;
