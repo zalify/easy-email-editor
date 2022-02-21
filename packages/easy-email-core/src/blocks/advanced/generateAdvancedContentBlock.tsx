@@ -99,6 +99,7 @@ export function generateAdvancedContentBlock<T extends AdvancedBlock>(option: {
 // {% for product in collection.products %}
 //   {{ product.title }}
 // {% endfor %}
+
 export interface AdvancedBlock extends IBlockData {
   data: {
     value: {
@@ -106,9 +107,11 @@ export interface AdvancedBlock extends IBlockData {
         groups: [
           {
             symbol: 'and' | 'or';
-            path: string;
-            operator: '==' | '!=' | '>' | '<' | '>=' | '<=';
-            value: string | number;
+            groups: Array<{
+              path: string;
+              operator: Operator;
+              value: string | number;
+            }>;
           }
         ];
         symbol: 'and' | 'or';
@@ -121,4 +124,13 @@ export interface AdvancedBlock extends IBlockData {
       };
     };
   };
+}
+
+export enum Operator {
+  EQUAL = '==',
+  NOT_EQUAL = '!=',
+  GREATER = '>',
+  GREATER_OR_EQUAL = '>=',
+  LESS = '<',
+  LESS_OR_EQUAL = '<='
 }

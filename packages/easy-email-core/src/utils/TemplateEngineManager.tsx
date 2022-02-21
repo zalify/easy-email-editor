@@ -1,6 +1,8 @@
-import { AdvancedBlock } from '@core/blocks/advanced/generateAdvancedContentBlock';
+import { AdvancedBlock, Operator } from '@core/blocks/advanced/generateAdvancedContentBlock';
 import { Template, Raw } from '@core/components';
+import { isNumber } from 'lodash';
 import React from 'react';
+import { v4 } from 'uuid';
 
 function generateIterationTemplate(
   option: AdvancedBlock['data']['value']['iteration'],
@@ -8,11 +10,11 @@ function generateIterationTemplate(
 ) {
   return (
     <Template>
-      <Raw>{`{% for ${option.itemName} in ${option.dataSource} ${
-        option.limit ? `limit:${option.limit}` : ''
-      } %}`}</Raw>
+      <Raw>{`{% for ${option.itemName} in ${option.dataSource} ${option.limit ? `limit:${option.limit}` : ''
+        } %}`}
+      </Raw>
       {content}
-      <Raw>{`{% endfor %}`}</Raw>
+      <Raw>{'{% endfor %}'}</Raw>
     </Template>
   );
 }
@@ -21,11 +23,35 @@ function generateConditionTemplate(
   option: AdvancedBlock['data']['value']['condition'],
   content: React.ReactElement
 ) {
+  const { symbol, groups } = option;
+
+  const generateExpression = (condition: { path: string, operator: Operator, value: any; }) => {
+    return condition.path + ' ' + condition.operator + ' ' + (isNumber(condition.value) ? condition.value : `"${condition.value}"`);
+  };
+  const uuid = v4().replace(/-/g, '');
+  const variables = groups.map((_, index) => `con_${index}_${uuid}`);
+
+  const assignExpression = groups.map((item, index) => {
+    return `{% assign ${variables[index]} = ${item.groups.map(generateExpression).join(` ${item.symbol} `)} %}`;
+  }).join('\n');
+  const conditionExpression = variables.join(` ${symbol} `);
+
   return (
     <Template>
-      <Raw>{`{% if ${option} %}`}</Raw>
+      <Raw>{`
+        <!-- htmlmin:ignore -->
+        ${assignExpression}
+        {% if ${conditionExpression} %}
+        <!-- htmlmin:ignore -->
+        `}
+      </Raw>
       {content}
-      <Raw>{`{% endif %}`}</Raw>
+      <Raw>{`
+        <!-- htmlmin:ignore -->
+        {% endif %}
+        <!-- htmlmin:ignore -->
+        `}
+      </Raw>
     </Template>
   );
 }
