@@ -38,7 +38,7 @@ export function generateAdvancedContentBlock<T extends AdvancedBlock>(option: {
       return merge(defaultData, payload);
     },
     render: (data, idx, mode, context) => {
-      const { iteration } = data.data.value;
+      const { iteration, condition } = data.data.value;
 
       let content = (
         <Template>
@@ -76,10 +76,20 @@ export function generateAdvancedContentBlock<T extends AdvancedBlock>(option: {
         );
       }
 
+      if (condition) {
+        content = TemplateEngineManager.generateTagTemplate('condition')(
+          condition,
+          content
+        );
+      }
+
       if (!iteration) return content;
 
       return TemplateEngineManager.generateTagTemplate('iteration')(
-        iteration,
+        {
+          ...iteration,
+          limit: mode === 'testing' ? iteration.mockQuantity : iteration.limit,
+        },
         <Template>{content}</Template>
       );
     },
@@ -92,11 +102,22 @@ export function generateAdvancedContentBlock<T extends AdvancedBlock>(option: {
 export interface AdvancedBlock extends IBlockData {
   data: {
     value: {
-      condition: '';
+      condition: {
+        groups: [
+          {
+            symbol: 'and' | 'or';
+            path: string;
+            operator: '==' | '!=' | '>' | '<' | '>=' | '<=';
+            value: string | number;
+          }
+        ];
+        symbol: 'and' | 'or';
+      };
       iteration: {
         dataSource: string; // -> collection.products
         itemName: string; // -> product
         limit: number;
+        mockQuantity: number;
       };
     };
   };

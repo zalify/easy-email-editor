@@ -36,23 +36,23 @@ interface IterationTemplate {
 }
 
 interface ConditionTemplate {
-  name: 'iteration';
-  templateGenerateFn: typeof generateIterationTemplate;
+  name: 'condition';
+  templateGenerateFn: typeof generateConditionTemplate;
 }
 
 export class TemplateEngineManager {
   private static tags = {
     iteration: generateIterationTemplate,
-    condition: generateIterationTemplate,
+    condition: generateConditionTemplate,
   };
 
   public static setTag(option: IterationTemplate | ConditionTemplate) {
-    this.tags[option.name] = option.templateGenerateFn;
+    this.tags[option.name] = option.templateGenerateFn as any;
   }
 
-  public static generateTagTemplate(
-    name: keyof typeof TemplateEngineManager['tags']
-  ) {
+  public static generateTagTemplate<
+    T extends keyof typeof TemplateEngineManager['tags']
+  >(name: T): typeof TemplateEngineManager['tags'][T] {
     return this.tags[name];
   }
 }
