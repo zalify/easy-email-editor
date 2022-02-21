@@ -18,7 +18,7 @@ import {
   IconMoonFill,
   IconSunFill,
 } from '@arco-design/web-react/icon';
-
+import { Liquid } from 'liquidjs';
 import {
   EmailEditor,
   EmailEditorProvider,
@@ -213,7 +213,9 @@ export default function Editor() {
 
   const onBeforePreview: EmailEditorProviderProps['onBeforePreview'] =
     useCallback((html: string, mergeTags) => {
-      return mustache.render(html, mergeTags);
+      const engine = new Liquid();
+      const tpl = engine.parse(html);
+      return engine.renderSync(tpl, mergeTags);
     }, []);
 
   const themeStyleText = useMemo(() => {
