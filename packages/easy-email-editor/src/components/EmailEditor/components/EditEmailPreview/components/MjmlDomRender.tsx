@@ -53,7 +53,9 @@ export function MjmlDomRender() {
       >
         {ref &&
           createPortal(
-            HtmlStringToReactNodes(html, { enabledMergeTagsBadge }),
+            HtmlStringToReactNodes(html, {
+              enabledMergeTagsBadge: Boolean(enabledMergeTagsBadge),
+            }),
             ref
           )}
       </div>

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { JsonToMjml } from 'easy-email-core';
 import mjml from 'mjml-browser';
 import { useEditorContext } from '@/hooks/useEditorContext';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, isString } from 'lodash';
 import { useEditorProps } from '@/hooks/useEditorProps';
 import { useMemo } from 'react';
 
@@ -33,7 +33,15 @@ export function useGetPreviewEmailHtml() {
 
     if (onBeforePreview) {
       try {
-        parseHtml = onBeforePreview(parseHtml, injectData);
+        const result = onBeforePreview(parseHtml, injectData);
+        if (isString(result)) {
+          parseHtml = result;
+        } else {
+          result.then((resHtml) => {
+            parseHtml = resHtml;
+          });
+        }
+
         setErrMsg('');
       } catch (error: any) {
         setErrMsg(error?.message || error);
@@ -44,6 +52,6 @@ export function useGetPreviewEmailHtml() {
 
   return {
     errMsg,
-    html
+    html,
   };
 }

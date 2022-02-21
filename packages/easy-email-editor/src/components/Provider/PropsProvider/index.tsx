@@ -43,7 +43,7 @@ export interface PropsProviderProps {
     mergeTags:
       | PropsProviderProps['previewInjectData']
       | PropsProviderProps['mergeTags']
-  ) => string;
+  ) => string | Promise<string>;
 }
 
 export const EditorPropsContext = React.createContext<PropsProviderProps>({

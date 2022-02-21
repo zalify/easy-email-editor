@@ -35,11 +35,11 @@ export default function MergeTagBadge() {
       removeAllActiveBadge();
       const target = e.target;
       if (
-        target instanceof HTMLElement &&
+        target instanceof HTMLInputElement &&
         target.classList.contains('easy-email-merge-tag')
       ) {
         target.classList.add('easy-email-merge-tag-focus');
-        const namePath = target.innerText;
+        const namePath = target.value;
         setText(get(mergeTags, namePath, ''));
         setTarget(target);
       }
@@ -74,8 +74,8 @@ export default function MergeTagBadge() {
   };
 
   const onSave = () => {
-    if (!target) return;
-    onChangeMergeTag?.(target.innerText, text);
+    if (!(target instanceof HTMLInputElement)) return;
+    onChangeMergeTag?.(target.value, text);
     onClose();
   };
 

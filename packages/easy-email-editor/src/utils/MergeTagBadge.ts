@@ -1,22 +1,29 @@
 export class MergeTagBadge {
   static transform(content: string, id?: string) {
-    return decodeURIComponent(content).replace(/{{([\s\S]+?)}}/g, (_, $1) => {
-      return `<span class="easy-email-merge-tag" contenteditable="false"${
-        id ? ` id=${id}` : ''
-      }>${$1}</span>`;
+    const data = content.replace(/{{([\s\S]+?)}}/g, (_, $1) => {
+      const input = document.createElement('input');
+      input.className = 'easy-email-merge-tag';
+      input.value = $1;
+      input.type = 'button';
+      if (id) {
+        input.id = id;
+      }
+
+      return input.outerHTML;
     });
+    return data;
   }
 
   static revert(content: string, generateMergeTag: (s: string) => string) {
     const container = document.createElement('div');
     container.innerHTML = content;
-    container.querySelectorAll('.easy-email-merge-tag').forEach((item) => {
+    container.querySelectorAll('.easy-email-merge-tag').forEach((item: any) => {
       item.parentNode?.replaceChild(
-        document.createTextNode(generateMergeTag(item.innerHTML)),
+        document.createTextNode(generateMergeTag(item.value)),
         item
       );
     });
 
-    return container.textContent;
+    return container.innerHTML;
   }
 }
