@@ -1,7 +1,7 @@
 import {
   AdvancedBlock,
   Operator,
-} from '@core/blocks/advanced/generateAdvancedContentBlock';
+} from '@core/blocks/advanced/generateAdvancedBlock';
 import { Template, Raw } from '@core/components';
 import { isNumber } from 'lodash';
 import React from 'react';
@@ -14,9 +14,8 @@ function generateIterationTemplate(
   return (
     <Template>
       <Raw>
-        {`{% for ${option.itemName} in ${option.dataSource} ${
-          option.limit ? `limit:${option.limit}` : ''
-        } %}`}
+        {`{% for ${option.itemName} in ${option.dataSource} ${option.limit ? `limit:${option.limit}` : ''
+          } %}`}
       </Raw>
       {content}
       <Raw>{'{% endfor %}'}</Raw>

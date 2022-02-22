@@ -36,6 +36,7 @@ import mustache from 'mustache';
 import {
   AdvancedType,
   BasicType,
+  getPageIdx,
   IBlockData,
   JsonToMjml,
 } from 'easy-email-core';
@@ -233,7 +234,7 @@ export default function Editor() {
   }
 
   if (!initialValues) return null;
-
+  return null;
   return (
     <div>
       <style>{themeStyleText}</style>
@@ -437,7 +438,8 @@ const b = {
 };
 
 const a = JsonToMjml({
-  mode: 'production',
+  idx: getPageIdx(),
+  mode: 'testing',
   context: b,
   dataSource: testMergeTags,
   data: b,

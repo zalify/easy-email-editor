@@ -1,3 +1,4 @@
+import { AdvancedType } from '@core';
 import { Template, Raw } from '@core/components';
 import { BasicType } from '@core/constants';
 import { IBlock, IBlockData } from '@core/typings';
@@ -36,33 +37,22 @@ export function generateAdvancedBlock<T extends AdvancedBlock>(option: {
     render: (data, idx, mode, context, dataSource) => {
       const { iteration, condition } = data.data.value;
 
-      if (!idx || !context) {
+      if (!context) {
         return null;
       }
 
-      const parentBlockData = getParentByIdx({ content: context }, idx);
-      if (!parentBlockData) {
-        return null;
-      }
-
-      const baseContent = option.getContent(
+      const getBaseContent = (bIdx: string | null) => option.getContent(
         data,
-        idx,
+        bIdx,
         mode,
         context,
         dataSource
       ) as any;
 
-      let children = baseContent;
+      let children = getBaseContent(idx);
       if (mode === 'testing') {
         return (
-          <Template>
-            {new Array(iteration?.mockQuantity || 1)
-              .fill(true)
-              .map((_, index) => (
-                <Template key={index}>{baseContent}</Template>
-              ))}
-          </Template>
+          getBaseContent(idx)
         );
       }
 
@@ -75,7 +65,7 @@ export function generateAdvancedBlock<T extends AdvancedBlock>(option: {
           ...iteration,
           limit: iteration.limit,
         },
-        <Template>{baseContent}</Template>
+        <Template>{getBaseContent(idx)}</Template>
       );
 
       if (condition) {
@@ -135,7 +125,7 @@ function wrapTable(content: any, classname: string) {
     <Template>
       <Raw>{`<table class="${classname}" width="100%"><tbody><tr><td>`}</Raw>
       {content}
-      <Raw>{`</td></tr></tbody></table>`}</Raw>
+      <Raw>{'</td></tr></tbody></table>'}</Raw>
     </Template>
   );
 }

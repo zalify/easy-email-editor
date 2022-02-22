@@ -1,10 +1,11 @@
-import { Column, Section } from '@core/components';
+import { Column, Section, Template } from '@core/components';
 import { BasicType, AdvancedType } from '@core/constants';
 import { getParentByIdx } from '@core/utils';
 import { classnames } from '@core/utils/classnames';
 import { MERGE_TAG_CLASS_NAME } from '@core/constants';
 import React from 'react';
 import { AdvancedBlock, generateAdvancedBlock } from './generateAdvancedBlock';
+import { getPreviewClassName } from '@core/utils/getPreviewClassName';
 
 export function generateAdvancedContentBlock<T extends AdvancedBlock>(option: {
   type: string;
@@ -24,17 +25,24 @@ export function generateAdvancedContentBlock<T extends AdvancedBlock>(option: {
       AdvancedType.GROUP,
     ],
     getContent: (data, idx, mode, context, dataSource) => {
+      console.log('content', idx, data.type);
+
       const parentBlockData = getParentByIdx({ content: context! }, idx!);
-      if (!parentBlockData) return null;
+      if (!parentBlockData) {
+        return null;
+      }
+
       const blockData = {
         ...data,
         type: option.baseType,
         attributes: {
           ...data.attributes,
           'css-class': classnames(
+            data.attributes['css-class'],
+
             option.type === AdvancedType.TEXT &&
-              mode === 'testing' &&
-              MERGE_TAG_CLASS_NAME
+            mode === 'testing' &&
+            MERGE_TAG_CLASS_NAME
           ),
         },
       };
