@@ -5,6 +5,7 @@ import {
   getChildIdx,
   getNodeTypeFromClassName,
   getPageIdx,
+  MERGE_TAG_CLASS_NAME,
 } from 'easy-email-core';
 import { getEditNode } from './getEditNode';
 import { isTextBlock } from './isTextBlock';
@@ -39,18 +40,14 @@ export function HtmlStringToReactNodes(
   option: HtmlStringToReactNodesOptions
 ) {
   let doc = domParser.parseFromString(content, 'text/html'); // The average time is about 1.4 ms
-  [...doc.querySelectorAll('.email-block')]
-    .filter((item) => isTextBlock(getNodeTypeFromClassName(item.classList)))
-    .forEach((child) => {
-      const editNode = getEditNode(child as HTMLElement);
-
-      if (editNode) {
-        editNode.contentEditable = 'true';
-        if (option.enabledMergeTagsBadge) {
-          editNode.innerHTML = MergeTagBadge.transform(editNode.innerHTML);
-        }
+  [...doc.querySelectorAll(`.${MERGE_TAG_CLASS_NAME}`)].forEach((child) => {
+    const editNode = child.querySelector('div');
+    if (editNode) {
+      if (option.enabledMergeTagsBadge) {
+        editNode.innerHTML = MergeTagBadge.transform(editNode.innerHTML);
       }
-    });
+    }
+  });
 
   const reactNode = (
     <RenderReactNode idx={getPageIdx()} node={doc.documentElement} index={0} />
@@ -97,6 +94,7 @@ const RenderReactNode = React.memo(function ({
     const isTextBlockNode = isTextBlock(blockType);
     const isButtonBlockNode = blockType === BasicType.BUTTON;
     const isNavbarBlockNode = blockType === BasicType.NAVBAR;
+
     if (isTextBlockNode) {
       const editNode = getEditNode(node);
 

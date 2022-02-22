@@ -9,6 +9,7 @@ import { VerticalAlign } from '@extensions/AttributePanel/components/attributes/
 import { Background } from '@extensions/AttributePanel/components/attributes/Background';
 import { Border } from '@extensions/AttributePanel/components/attributes/Border';
 import { ClassName } from '../../attributes/ClassName';
+import { Iteration } from '../../attributes/Iteration';
 
 export function Column() {
   return (
@@ -39,6 +40,7 @@ export function Column() {
             <ClassName />
           </Grid.Col>
         </Collapse.Item>
+        <Iteration />
       </Collapse>
     </AttributesPanelWrapper>
   );

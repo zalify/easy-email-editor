@@ -43,7 +43,6 @@ export const blocks = {
   [BasicType.SOCIAL]: Social,
   [BasicType.TABLE]: Table,
 
-  [BasicType.SECTION]: Section,
   [AdvancedType.TEXT]: Text,
   [AdvancedType.IMAGE]: Image,
   [AdvancedType.BUTTON]: Button,
@@ -53,4 +52,9 @@ export const blocks = {
   [AdvancedType.CAROUSEL]: Carousel,
   [AdvancedType.NAVBAR]: Navbar,
   [AdvancedType.SOCIAL]: Social,
+
+  [AdvancedType.WRAPPER]: Wrapper,
+  [AdvancedType.SECTION]: Section,
+  [AdvancedType.GROUP]: Group,
+  [AdvancedType.COLUMN]: Column,
 };

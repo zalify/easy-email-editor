@@ -339,6 +339,10 @@ function replaceStandardBlockToAdvancedBlock(blockData: IBlockData) {
     [BasicType.ACCORDION]: AdvancedType.ACCORDION,
     [BasicType.CAROUSEL]: AdvancedType.CAROUSEL,
     [BasicType.NAVBAR]: AdvancedType.NAVBAR,
+    [BasicType.WRAPPER]: AdvancedType.WRAPPER,
+    [BasicType.SECTION]: AdvancedType.SECTION,
+    [BasicType.GROUP]: AdvancedType.GROUP,
+    [BasicType.COLUMN]: AdvancedType.COLUMN,
   };
 
   if (map[blockData.type]) {
@@ -347,3 +351,96 @@ function replaceStandardBlockToAdvancedBlock(blockData: IBlockData) {
   blockData.children.forEach(replaceStandardBlockToAdvancedBlock);
   return blockData;
 }
+
+const b = {
+  type: 'page',
+  data: {
+    value: {
+      breakpoint: '480px',
+      headAttributes: '',
+      'font-size': '14px',
+      'line-height': '1.7',
+      headStyles: [],
+      fonts: [],
+      responsive: true,
+      'font-family': 'lucida Grande,Verdana,Microsoft YaHei',
+      'text-color': '#000000',
+    },
+  },
+  attributes: {
+    'background-color': '#efeeea',
+    width: '600px',
+  },
+  children: [
+    {
+      type: 'advanced_section',
+      data: {
+        value: {
+          noWrap: false,
+        },
+      },
+      attributes: {
+        padding: '20px 0px 20px 0px',
+        'background-repeat': 'repeat',
+        'background-size': 'auto',
+        'background-position': 'top center',
+        border: 'none',
+        direction: 'ltr',
+        'text-align': 'center',
+      },
+      children: [
+        {
+          type: 'advanced_column',
+          data: {
+            value: {
+              iteration: {
+                enabled: true,
+                dataSource: 'product_list',
+                itemName: 'item',
+                limit: 9999,
+                mockQuantity: 2,
+              },
+            },
+          },
+          attributes: {
+            padding: '0px 0px 0px 0px',
+            border: 'none',
+            'vertical-align': 'top',
+            width: '50%',
+          },
+          children: [
+            {
+              type: 'advanced_text',
+              data: {
+                value: {
+                  content: 'Hello, {{item.title}}',
+                  iteration: {
+                    dataSource: 'product_list',
+                    itemName: 'item',
+                    limit: 2,
+                    enabled: false,
+                    mockQuantity: 3,
+                  },
+                },
+              },
+              attributes: {
+                padding: '10px 25px 10px 25px',
+                align: 'left',
+              },
+              children: [],
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+const a = JsonToMjml({
+  mode: 'production',
+  context: b,
+  dataSource: testMergeTags,
+  data: b,
+});
+
+console.log('a', a);

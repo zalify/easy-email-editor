@@ -39,4 +39,11 @@ export enum AdvancedType {
   ACCORDION = 'advanced_accordion',
   CAROUSEL = 'advanced_carousel',
 
+  WRAPPER = 'advanced_wrapper',
+  SECTION = 'advanced_section',
+  COLUMN = 'advanced_column',
+  GROUP = 'advanced_group',
+  HERO = 'advanced_hero',
 }
+
+export const MERGE_TAG_CLASS_NAME = 'easy-email-merge-tag-container';

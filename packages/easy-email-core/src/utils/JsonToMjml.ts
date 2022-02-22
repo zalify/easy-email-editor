@@ -1,7 +1,7 @@
 import { parseReactBlockToBlockData } from '@core/utils/parseReactBlockToBlockData';
 import { isValidElement } from 'react';
 
-import { BasicType } from '@core/constants';
+import { BasicType, AdvancedType } from '@core/constants';
 import { IBlockData } from '@core/typings';
 import { pickBy, identity, isObject, isBoolean, isString } from 'lodash';
 import {
@@ -95,13 +95,19 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
       dataSource
     );
     if (!transformBlockData) return '';
+
     const transformData = isValidElement(transformBlockData)
       ? parseReactBlockToBlockData(transformBlockData)
       : transformBlockData;
-    att['css-class'] = classnames(
-      isTest && getPreviewClassName(idx, data.type),
-      transformData?.['attributes']?.['css-class']
-    );
+
+    att['css-class'] = [
+      ...new Set(
+        classnames(
+          isTest && getPreviewClassName(idx, data.type),
+          transformData?.['attributes']?.['css-class']
+        ).split(' ')
+      ),
+    ].join(' ');
     return JsonToMjml({
       data: {
         ...transformData,
@@ -111,7 +117,7 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
         },
       },
       idx: null,
-      context: data,
+      context: context,
       dataSource,
       mode,
     });
@@ -121,7 +127,15 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
     .map((child, index) => {
       let childIdx = idx ? getChildIdx(idx, index) : null;
       if (data.type === BasicType.TEMPLATE) {
-        childIdx = getChildIdx(data.data.value.idx, index);
+        if (data.data.value.penetrate) {
+          if (data.children.length > 1) {
+            throw new Error('penetrate error');
+          }
+          childIdx = data.data.value.idx;
+        } else {
+          childIdx = getChildIdx(data.data.value.idx, index);
+        }
+
         if (!data.data.value.idx) {
           childIdx = null;
         }
