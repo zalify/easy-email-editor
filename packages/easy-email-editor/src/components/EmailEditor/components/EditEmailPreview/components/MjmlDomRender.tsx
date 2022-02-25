@@ -7,6 +7,7 @@ import { HtmlStringToReactNodes } from '@/utils/HtmlStringToReactNodes';
 import { createPortal } from 'react-dom';
 import { useEditorProps } from '@/hooks/useEditorProps';
 import { getEditorRoot, getShadowRoot } from '@/utils';
+import { FIXED_CONTAINER_ID } from '@/constants';
 
 export function MjmlDomRender() {
   const { pageData: content } = useEditorContext();
@@ -32,6 +33,10 @@ export function MjmlDomRender() {
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
       if (getEditorRoot()?.contains(e.target as Node)) {
+        return;
+      }
+      const fixedContainer = document.getElementById(FIXED_CONTAINER_ID);
+      if (fixedContainer?.contains(e.target as Node)) {
         return;
       }
       setIsTextFocus(false);

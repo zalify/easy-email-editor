@@ -25,6 +25,7 @@ import { Stack, useEditorProps, useFocusIdx } from 'easy-email-editor';
 import { ISocial } from 'easy-email-core';
 import { getImg } from '@extensions/AttributePanel/utils/getImg';
 import { ClassName } from '../../attributes/ClassName';
+import { CollapseWrapper } from '../../attributes/CollapseWrapper';
 
 const options = [
   {
@@ -41,7 +42,7 @@ export function Social() {
   const { focusIdx } = useFocusIdx();
   return (
     <AttributesPanelWrapper style={{ padding: 0 }}>
-      <Collapse defaultActiveKey={['0', '1', '2']}>
+      <CollapseWrapper defaultActiveKey={['0', '1', '2']}>
         <Collapse.Item name='1' header='Setting'>
           <Space direction='vertical'>
             <Grid.Row>
@@ -130,7 +131,7 @@ export function Social() {
             <ClassName />
           </Grid.Col>
         </Collapse.Item>
-      </Collapse>
+      </CollapseWrapper>
     </AttributesPanelWrapper>
   );
 }

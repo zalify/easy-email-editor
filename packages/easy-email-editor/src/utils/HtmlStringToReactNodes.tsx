@@ -1,4 +1,4 @@
-import { BasicType } from 'easy-email-core';
+import { BasicType, getNodeIdxClassName, getNodeIdxFromClassName } from 'easy-email-core';
 import { camelCase } from 'lodash';
 import React from 'react';
 import {
@@ -65,7 +65,7 @@ const RenderReactNode = React.memo(function ({
   index: number;
   idx: string;
 }): React.ReactElement {
-  const attributes: { [key: string]: string } = {};
+  const attributes: { [key: string]: string; } = {};
   node.getAttributeNames?.().forEach((att) => {
     if (att) {
       attributes[att] = node.getAttribute(att) || '';
@@ -91,11 +91,12 @@ const RenderReactNode = React.memo(function ({
     }
 
     const blockType = getNodeTypeFromClassName(node.classList);
-    const isTextBlockNode = isTextBlock(blockType);
+    const isTextBlockNode = isTextBlock(blockType) && getNodeIdxFromClassName(node.classList);
     const isButtonBlockNode = blockType === BasicType.BUTTON;
     const isNavbarBlockNode = blockType === BasicType.NAVBAR;
 
     if (isTextBlockNode) {
+
       const editNode = getEditNode(node);
 
       if (editNode) {
@@ -134,13 +135,13 @@ const RenderReactNode = React.memo(function ({
         node.childNodes.length === 0
           ? null
           : [...node.childNodes].map((n, i) => (
-              <RenderReactNode
-                idx={getChildIdx(idx, i)}
-                key={i}
-                node={n as any}
-                index={i}
-              />
-            )),
+            <RenderReactNode
+              idx={getChildIdx(idx, i)}
+              key={i}
+              node={n as any}
+              index={i}
+            />
+          )),
     });
 
     return <>{reactNode}</>;

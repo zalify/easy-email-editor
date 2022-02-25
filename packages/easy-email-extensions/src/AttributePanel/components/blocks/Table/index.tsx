@@ -13,6 +13,7 @@ import { Padding } from '../../attributes/Padding';
 import { TextAlign } from '../../attributes/TextAlign';
 import { Width } from '../../attributes/Width';
 import { HtmlEditor } from '../../UI/HtmlEditor';
+import { CollapseWrapper } from '../../attributes/CollapseWrapper';
 
 export function Table() {
   const [visible, setVisible] = useState(false);
@@ -28,7 +29,7 @@ export function Table() {
         </Tooltip>
       )}
     >
-      <Collapse defaultActiveKey={['-1', '0', '1', '2', '3']}>
+      <CollapseWrapper defaultActiveKey={['-1', '0', '1', '2', '3']}>
         <Collapse.Item name='1' header='Dimension'>
           <Stack>
             <Width />
@@ -53,7 +54,7 @@ export function Table() {
           <FontStyle />
           <TextAlign />
         </Collapse.Item>
-      </Collapse>
+      </CollapseWrapper>
       <HtmlEditor visible={visible} setVisible={setVisible} />
     </AttributesPanelWrapper>
   );

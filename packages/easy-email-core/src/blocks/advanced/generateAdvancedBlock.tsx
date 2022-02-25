@@ -2,7 +2,7 @@ import { Template } from '@core/components';
 import { BasicType } from '@core/constants';
 import { IBlock, IBlockData } from '@core/typings';
 import { createCustomBlock } from '@core/utils/createCustomBlock';
-import { TemplateEngineManager } from '@core/utils/TemplateEngineManager';
+import { TemplateEngineManager } from '@core/utils';
 import { merge } from 'lodash';
 import React from 'react';
 import { IPage, standardBlocks } from '../standard';
@@ -16,7 +16,7 @@ export function generateAdvancedBlock<T extends AdvancedBlock>(option: {
     idx: string | null;
     mode: 'testing' | 'production';
     context?: IPage;
-    dataSource?: { [key: string]: any };
+    dataSource?: { [key: string]: any; };
   }) => ReturnType<NonNullable<IBlock['render']>>;
   validParentType: string[];
 }) {
@@ -60,8 +60,6 @@ export function generateAdvancedBlock<T extends AdvancedBlock>(option: {
       if (!iteration || !iteration.enabled) {
         return children;
       }
-
-      // mode === 'production'
 
       if (mode === 'testing') {
         return (

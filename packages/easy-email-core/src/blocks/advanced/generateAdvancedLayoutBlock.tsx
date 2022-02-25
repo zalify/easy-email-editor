@@ -1,4 +1,4 @@
-import { BasicType } from '@core/constants';
+import { AdvancedType, BasicType } from '@core/constants';
 import React from 'react';
 import { Template } from '@core/components';
 import MjmlBlock from '@core/components/MjmlBlock';
@@ -6,7 +6,6 @@ import MjmlBlock from '@core/components/MjmlBlock';
 import { AdvancedBlock, generateAdvancedBlock } from './generateAdvancedBlock';
 import { getPreviewClassName } from '@core/utils/getPreviewClassName';
 import { classnames } from '@core/utils/classnames';
-import { AdvancedType } from '@core';
 
 export function generateAdvancedLayoutBlock<T extends AdvancedBlock>(option: {
   type: string;
@@ -17,6 +16,7 @@ export function generateAdvancedLayoutBlock<T extends AdvancedBlock>(option: {
     ...option,
     getContent: (params) => {
       const { data, idx, mode, context, dataSource, index } = params;
+
       const blockData = {
         ...data,
         type: option.baseType,
@@ -44,7 +44,7 @@ export function generateAdvancedLayoutBlock<T extends AdvancedBlock>(option: {
           }}
           value={blockData.data.value}
         >
-          <Template idx={idx}>{data.children}</Template>
+          <Template idx={index === 0 ? idx : null}>{data.children}</Template>
         </MjmlBlock>
       );
     },

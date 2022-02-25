@@ -28,7 +28,7 @@ export function Iteration() {
       }
       change(`${focusIdx}.data.value.iteration.enabled`, enabled);
     },
-    [iteration, enabled, focusIdx]
+    [change, focusIdx, iteration]
   );
 
   if (
@@ -45,11 +45,11 @@ export function Iteration() {
       destroyOnHide
       name='Iteration'
       header='Iteration'
-      extra={
+      extra={(
         <div style={{ marginRight: 10 }}>
           <Switch checked={iteration?.enabled} onChange={onIterationToggle} />
         </div>
-      }
+      )}
     >
       {iteration?.enabled && (
         <Grid.Col span={24}>

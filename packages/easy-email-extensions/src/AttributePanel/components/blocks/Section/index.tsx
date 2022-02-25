@@ -10,6 +10,7 @@ import { Collapse, Grid, Space } from '@arco-design/web-react';
 import { Stack, TextStyle, useBlock, useFocusIdx } from 'easy-email-editor';
 import { BasicType, BlockManager } from 'easy-email-core';
 import { ClassName } from '../../attributes/ClassName';
+import { CollapseWrapper } from '../../attributes/CollapseWrapper';
 
 export function Section() {
   const { focusIdx } = useFocusIdx();
@@ -55,7 +56,7 @@ export function Section() {
 
   return (
     <AttributesPanelWrapper style={{ padding: 0 }}>
-      <Collapse defaultActiveKey={['0', '1', '2']}>
+      <CollapseWrapper defaultActiveKey={['0', '1', '2']}>
         <Collapse.Item name='0' header='Dimension'>
           <Space direction='vertical'>
             <Grid.Row>
@@ -88,7 +89,7 @@ export function Section() {
             <ClassName />
           </Grid.Col>
         </Collapse.Item>
-      </Collapse>
+      </CollapseWrapper>
     </AttributesPanelWrapper>
   );
 }

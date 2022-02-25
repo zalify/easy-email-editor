@@ -14,6 +14,7 @@ import { Collapse, Grid, Space } from '@arco-design/web-react';
 import { Stack, useEditorProps, useFocusIdx } from 'easy-email-editor';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
 import { ClassName } from '../../attributes/ClassName';
+import { CollapseWrapper } from '../../attributes/CollapseWrapper';
 
 const options = [
   {
@@ -32,7 +33,7 @@ export function Hero() {
 
   return (
     <AttributesPanelWrapper>
-      <Collapse defaultActiveKey={['0', '1', '2']}>
+      <CollapseWrapper defaultActiveKey={['0', '1', '2']}>
         <Collapse.Item name='0' header='Dimension'>
           <Space direction='vertical'>
             <RadioGroupField
@@ -102,7 +103,7 @@ export function Hero() {
             <ClassName />
           </Grid.Col>
         </Collapse.Item>
-      </Collapse>
+      </CollapseWrapper>
     </AttributesPanelWrapper>
   );
 }

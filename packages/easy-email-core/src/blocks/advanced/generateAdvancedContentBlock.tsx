@@ -31,9 +31,9 @@ export function generateAdvancedContentBlock<T extends IBlockData>(option: {
       const previewClassName =
         mode === 'testing'
           ? classnames(
-              index === 0 && getPreviewClassName(idx, data.type),
-              option.type === AdvancedType.TEXT && MERGE_TAG_CLASS_NAME
-            )
+            index === 0 && idx && getPreviewClassName(idx, data.type),
+            option.type === AdvancedType.TEXT && MERGE_TAG_CLASS_NAME
+          )
           : '';
 
       const blockData = {
@@ -49,7 +49,7 @@ export function generateAdvancedContentBlock<T extends IBlockData>(option: {
       };
       const parentBlockData = getParentByIdx({ content: context! }, idx!);
       if (!parentBlockData) {
-        return blockData;
+        return <Template>{blockData}</Template>;
       }
 
       if (

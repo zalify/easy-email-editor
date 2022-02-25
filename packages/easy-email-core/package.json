@@ -19,7 +19,7 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "dev": "yarn build --watch",
-    "typings": "tsc --declaration --emitDeclarationOnly --project tsconfig.json",
+    "typings": "tsc --declaration --emitDeclarationOnly --project tsconfig.lib.json",
     "build": "rimraf lib  && npm run typings && tsc-alias  && vite build --config vite.config.ts",
     "block": "ts-node -r tsconfig-paths/register scripts/generateBlockJSX.ts",
     "format": "eslint --fix  --ext .tsx,.ts src/",

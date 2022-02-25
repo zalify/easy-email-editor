@@ -19,7 +19,7 @@ export function InlineText({ idx, onChange, children }: InlineTextProps) {
     const shadowRoot = getShadowRoot();
 
     const onPaste = (e: ClipboardEvent) => {
-      if (!(e.target instanceof Element)) return;
+      if (!(e.target instanceof Element) || !e.target.getAttribute('contenteditable')) return;
       e.preventDefault();
 
       const text = e.clipboardData?.getData('text/plain') || '';
@@ -28,7 +28,7 @@ export function InlineText({ idx, onChange, children }: InlineTextProps) {
     };
 
     const onInput = (e: Event) => {
-      if (e.target instanceof Element) {
+      if (e.target instanceof Element && e.target.getAttribute('contenteditable')) {
         onChange(e.target.innerHTML || '');
       }
     };

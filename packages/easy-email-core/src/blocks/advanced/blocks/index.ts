@@ -12,6 +12,7 @@ import {
   ISection,
   IGroup,
   IColumn,
+  IHero,
 } from '../../standard';
 import { AdvancedType, BasicType } from '@core/constants';
 import { generateAdvancedContentBlock } from '../generateAdvancedContentBlock';
@@ -90,5 +91,15 @@ export const AdvancedColumn = generateAdvancedLayoutBlock<IColumn>({
     AdvancedType.SECTION,
     BasicType.GROUP,
     AdvancedType.GROUP,
+  ],
+});
+
+export const AdvancedHero = generateAdvancedLayoutBlock<IHero>({
+  type: AdvancedType.HERO,
+  baseType: BasicType.HERO,
+  validParentType: [
+    BasicType.WRAPPER,
+    AdvancedType.WRAPPER,
+    BasicType.PAGE,
   ],
 });

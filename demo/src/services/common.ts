@@ -3,7 +3,7 @@ import { getCookie } from '../utils/utils';
 import { v4 as uuidv4 } from 'uuid';
 const QI_NIUI_KEY = 'qiniuConfig';
 
-type QiniuConfig = { origin: string; token: string };
+type QiniuConfig = { origin: string; token: string; };
 
 export const common = {
   async uploadByQiniu(file: File | Blob): Promise<string> {
@@ -25,8 +25,8 @@ export const common = {
     data.append('file', file);
     data.append('token', token);
     data.append('key', uuidv4() + `-${(file as any)?.name || ''}`);
-    const res = await request.post<{ key: string }>(
-      'https://upload.qiniu.com',
+    const res = await request.post<{ key: string; }>(
+      'https://up.qiniu.com',
       data
     );
     return origin + '/' + res.key;

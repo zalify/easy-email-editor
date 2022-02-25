@@ -18,6 +18,7 @@ import {
   AdvancedSection,
   AdvancedGroup,
   AdvancedColumn,
+  AdvancedHero
 } from './blocks';
 
 export const advancedBlocks = {
@@ -35,6 +36,7 @@ export const advancedBlocks = {
   [AdvancedType.SECTION]: AdvancedSection,
   [AdvancedType.GROUP]: AdvancedGroup,
   [AdvancedType.COLUMN]: AdvancedColumn,
+  [AdvancedType.HERO]: AdvancedHero,
 };
 
 export { Operator, OperatorSymbol };
