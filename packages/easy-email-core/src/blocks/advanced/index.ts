@@ -1,3 +1,8 @@
+import {
+  AdvancedBlock,
+  Operator,
+  OperatorSymbol,
+} from './generateAdvancedBlock';
 import { AdvancedType } from '@core/constants';
 import {
   AdvancedText,
@@ -31,3 +36,6 @@ export const advancedBlocks = {
   [AdvancedType.GROUP]: AdvancedGroup,
   [AdvancedType.COLUMN]: AdvancedColumn,
 };
+
+export { Operator, OperatorSymbol };
+export type { AdvancedBlock };

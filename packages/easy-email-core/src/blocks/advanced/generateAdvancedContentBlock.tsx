@@ -4,10 +4,11 @@ import { getParentByIdx } from '@core/utils';
 import { classnames } from '@core/utils/classnames';
 import { MERGE_TAG_CLASS_NAME } from '@core/constants';
 import React from 'react';
-import { AdvancedBlock, generateAdvancedBlock } from './generateAdvancedBlock';
+import { generateAdvancedBlock } from './generateAdvancedBlock';
 import { getPreviewClassName } from '@core/utils/getPreviewClassName';
+import { IBlockData } from '@core';
 
-export function generateAdvancedContentBlock<T extends AdvancedBlock>(option: {
+export function generateAdvancedContentBlock<T extends IBlockData>(option: {
   type: string;
   baseType: BasicType;
 }) {
@@ -24,13 +25,16 @@ export function generateAdvancedContentBlock<T extends AdvancedBlock>(option: {
       AdvancedType.COLUMN,
       AdvancedType.GROUP,
     ],
-    getContent: (data, idx, mode, context, dataSource) => {
-      console.log('content', idx, data.type);
+    getContent: (params) => {
+      const { data, idx, mode, context, dataSource, index } = params;
 
-      const parentBlockData = getParentByIdx({ content: context! }, idx!);
-      if (!parentBlockData) {
-        return null;
-      }
+      const previewClassName =
+        mode === 'testing'
+          ? classnames(
+              index === 0 && getPreviewClassName(idx, data.type),
+              option.type === AdvancedType.TEXT && MERGE_TAG_CLASS_NAME
+            )
+          : '';
 
       const blockData = {
         ...data,
@@ -39,13 +43,14 @@ export function generateAdvancedContentBlock<T extends AdvancedBlock>(option: {
           ...data.attributes,
           'css-class': classnames(
             data.attributes['css-class'],
-
-            option.type === AdvancedType.TEXT &&
-            mode === 'testing' &&
-            MERGE_TAG_CLASS_NAME
+            previewClassName
           ),
         },
       };
+      const parentBlockData = getParentByIdx({ content: context! }, idx!);
+      if (!parentBlockData) {
+        return blockData;
+      }
 
       if (
         parentBlockData.type === BasicType.PAGE ||

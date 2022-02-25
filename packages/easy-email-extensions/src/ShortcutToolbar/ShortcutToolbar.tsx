@@ -24,7 +24,7 @@ export function ShortcutToolbar() {
         payload={{
           children: [
             {
-              type: 'column',
+              type: AdvancedType.COLUMN,
               data: {
                 value: {},
               },
@@ -36,7 +36,7 @@ export function ShortcutToolbar() {
               children: [],
             },
             {
-              type: 'column',
+              type: AdvancedType.COLUMN,
               data: {
                 value: {},
               },

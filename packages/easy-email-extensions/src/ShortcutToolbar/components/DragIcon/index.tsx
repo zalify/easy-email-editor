@@ -1,5 +1,4 @@
-import { IconFont } from '@/components/IconFont';
-import { BlockAvatarWrapper } from '@/components/wrapper';
+import { IconFont, BlockAvatarWrapper } from 'easy-email-editor';
 import { Button } from '@arco-design/web-react';
 import { getIconNameByBlockType } from '@extensions';
 import React from 'react';

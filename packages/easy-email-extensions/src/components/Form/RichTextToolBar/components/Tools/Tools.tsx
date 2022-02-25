@@ -17,7 +17,7 @@ import { MergeTags } from '../MergeTags';
 import { useSelectionRange } from '@extensions/AttributePanel/hooks/useSelectionRange';
 import { IconBgColor } from './IconBgColor';
 import { IconFontColor } from './IconFontColor';
-import { MergeTagBadge } from '@/utils/MergeTagBadge';
+import { MergeTagBadge } from 'easy-email-editor';
 import { BasicTools } from '../BasicTools';
 
 export interface ToolsProps {

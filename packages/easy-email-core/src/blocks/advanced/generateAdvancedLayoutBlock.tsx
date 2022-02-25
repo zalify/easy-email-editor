@@ -1,12 +1,12 @@
 import { BasicType } from '@core/constants';
 import React from 'react';
 import { Template } from '@core/components';
-import MjmlBlock, { MjmlBlockProps } from '@core/components/MjmlBlock';
+import MjmlBlock from '@core/components/MjmlBlock';
 
 import { AdvancedBlock, generateAdvancedBlock } from './generateAdvancedBlock';
-import { AdvancedType, getChildIdx, IBlockData } from '@core';
-import { classnames } from '@core/utils/classnames';
 import { getPreviewClassName } from '@core/utils/getPreviewClassName';
+import { classnames } from '@core/utils/classnames';
+import { AdvancedType } from '@core';
 
 export function generateAdvancedLayoutBlock<T extends AdvancedBlock>(option: {
   type: string;
@@ -15,47 +15,38 @@ export function generateAdvancedLayoutBlock<T extends AdvancedBlock>(option: {
 }) {
   return generateAdvancedBlock<T>({
     ...option,
-    getContent: (data, idx, mode, context, dataSource) => {
+    getContent: (params) => {
+      const { data, idx, mode, context, dataSource, index } = params;
       const blockData = {
         ...data,
         type: option.baseType,
       };
 
-      return <LoopBlock blockData={blockData} idx={idx!} />;
+      // Column 必须设置宽度
+      if (data.type === AdvancedType.COLUMN) {
+        data.attributes.width = data.attributes.width || '100%';
+      }
+
+      const previewClassName =
+        mode === 'testing'
+          ? classnames(index === 0 && getPreviewClassName(idx, data.type))
+          : '';
+
+      return (
+        <MjmlBlock
+          type={blockData.type}
+          attributes={{
+            ...blockData.attributes,
+            'css-class': classnames(
+              data.attributes['css-class'],
+              previewClassName
+            ),
+          }}
+          value={blockData.data.value}
+        >
+          <Template idx={idx}>{data.children}</Template>
+        </MjmlBlock>
+      );
     },
   });
-}
-
-function LoopBlock(props: { blockData: IBlockData; idx: string; }) {
-  const { blockData, idx } = props;
-
-  return (
-    <Template idx={idx} penetrate>
-      <MjmlBlock
-        type={blockData.type}
-        attributes={{
-          ...blockData.attributes,
-          'css-class': classnames(getPreviewClassName(idx, blockData.type))
-        }}
-        value={blockData.data.value}
-      >
-        {blockData.children.map((child, index) => {
-          if (blockData.type === BasicType.TEMPLATE) {
-            <LoopBlock
-              key={index}
-              blockData={child}
-              idx={idx}
-            />;
-          }
-          return (
-            <LoopBlock
-              key={index}
-              blockData={child}
-              idx={getChildIdx(idx, index)}
-            />
-          );
-        })}
-      </MjmlBlock>
-    </Template>
-  );
 }

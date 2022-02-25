@@ -1,19 +1,23 @@
-import { AdvancedType } from '@core';
-import { Template, Raw } from '@core/components';
+import { Template } from '@core/components';
 import { BasicType } from '@core/constants';
 import { IBlock, IBlockData } from '@core/typings';
-import { getParentByIdx } from '@core/utils';
 import { createCustomBlock } from '@core/utils/createCustomBlock';
-import { getPreviewClassName } from '@core/utils/getPreviewClassName';
 import { TemplateEngineManager } from '@core/utils/TemplateEngineManager';
 import { merge } from 'lodash';
 import React from 'react';
-import { standardBlocks } from '../standard';
+import { IPage, standardBlocks } from '../standard';
 
 export function generateAdvancedBlock<T extends AdvancedBlock>(option: {
   type: string;
   baseType: BasicType;
-  getContent: NonNullable<IBlock['render']>;
+  getContent: (params: {
+    index: number;
+    data: T;
+    idx: string | null;
+    mode: 'testing' | 'production';
+    context?: IPage;
+    dataSource?: { [key: string]: any };
+  }) => ReturnType<NonNullable<IBlock['render']>>;
   validParentType: string[];
 }) {
   const baseBlock = Object.values(standardBlocks).find(
@@ -37,35 +41,48 @@ export function generateAdvancedBlock<T extends AdvancedBlock>(option: {
     render: (data, idx, mode, context, dataSource) => {
       const { iteration, condition } = data.data.value;
 
-      if (!context) {
-        return null;
+      const getBaseContent = (bIdx: string | null, index: number) =>
+        option.getContent({
+          index,
+          data,
+          idx: bIdx,
+          mode,
+          context,
+          dataSource,
+        }) as any;
+
+      let children = getBaseContent(idx, 0);
+
+      if (!context || !idx) {
+        return children;
       }
 
-      const getBaseContent = (bIdx: string | null) => option.getContent(
-        data,
-        bIdx,
-        mode,
-        context,
-        dataSource
-      ) as any;
-
-      let children = getBaseContent(idx);
-      if (mode === 'testing') {
-        return (
-          getBaseContent(idx)
-        );
+      if (!iteration || !iteration.enabled) {
+        return children;
       }
-
-      if (!iteration || !iteration.enabled) return children;
 
       // mode === 'production'
 
+      if (mode === 'testing') {
+        return (
+          <Template>
+            {children}
+            <Template>
+              {new Array((iteration?.mockQuantity || 1) - 1)
+                .fill(true)
+                .map((_, index) => (
+                  <Template key={index}>
+                    <Template>{getBaseContent(idx, index + 1)}</Template>
+                  </Template>
+                ))}
+            </Template>
+          </Template>
+        );
+      }
+
       children = TemplateEngineManager.generateTagTemplate('iteration')(
-        {
-          ...iteration,
-          limit: iteration.limit,
-        },
-        <Template>{getBaseContent(idx)}</Template>
+        iteration,
+        <Template>{children}</Template>
       );
 
       if (condition) {
@@ -90,7 +107,7 @@ export interface AdvancedBlock extends IBlockData {
       condition?: {
         groups: [
           {
-            symbol: 'and' | 'or';
+            symbol: OperatorSymbol;
             groups: Array<{
               path: string;
               operator: Operator;
@@ -98,7 +115,8 @@ export interface AdvancedBlock extends IBlockData {
             }>;
           }
         ];
-        symbol: 'and' | 'or';
+        symbol: OperatorSymbol;
+        enabled: boolean;
       };
       iteration?: {
         enabled: boolean;
@@ -120,12 +138,7 @@ export enum Operator {
   LESS_OR_EQUAL = '<=',
 }
 
-function wrapTable(content: any, classname: string) {
-  return (
-    <Template>
-      <Raw>{`<table class="${classname}" width="100%"><tbody><tr><td>`}</Raw>
-      {content}
-      <Raw>{'</td></tr></tbody></table>'}</Raw>
-    </Template>
-  );
+export enum OperatorSymbol {
+  AND = 'and',
+  OR = 'or',
 }

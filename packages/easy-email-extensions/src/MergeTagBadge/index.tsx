@@ -1,5 +1,8 @@
-import { useEditorContext, useEditorProps } from '@';
-import { getShadowRoot } from '@/utils';
+import {
+  useEditorContext,
+  useEditorProps,
+  getShadowRoot,
+} from 'easy-email-editor';
 import { Input, Modal } from '@arco-design/web-react';
 import { get } from 'lodash';
 import React, { useEffect, useState } from 'react';

@@ -7,4 +7,5 @@ export { createBlockDataByType } from './createBlockDataByType';
 export { ancestorOf } from './ancestorOf';
 export { BlockManager } from './BlockManager';
 export { ImageManager } from './ImageManager';
+export { isAdvancedBlock } from './isAdvancedBlock';
 export * from './block';

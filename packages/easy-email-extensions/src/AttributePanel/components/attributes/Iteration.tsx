@@ -1,49 +1,57 @@
-import { useBlock } from '@';
-import { useFocusIdx } from '@/hooks/useFocusIdx';
+import { useBlock, useFocusIdx } from 'easy-email-editor';
 import { Collapse, Grid, Switch } from '@arco-design/web-react';
-import { AdvancedBlock } from '@core/blocks/advanced/generateAdvancedContentBlock';
+import { AdvancedBlock, AdvancedType } from 'easy-email-core';
 import { TextField } from '@extensions/components/Form';
 import React, { useCallback } from 'react';
 
 export function Iteration() {
   const { focusIdx } = useFocusIdx();
   const { focusBlock, change } = useBlock();
+  const iteration = focusBlock?.data.value?.iteration as
+    | undefined
+    | AdvancedBlock['data']['value']['iteration'];
 
-  const value = focusBlock?.data.value as AdvancedBlock['data']['value'];
+  const enabled = Boolean(iteration && iteration.enabled);
 
   const onIterationToggle = useCallback(
     (enabled: boolean) => {
       if (enabled) {
-        if (!value.iteration) {
+        if (!iteration) {
           change(`${focusIdx}.data.value.iteration`, {
             enabled: true,
             dataSource: '',
             itemName: 'item',
             limit: 9999,
             mockQuantity: 1,
-          });
+          } as AdvancedBlock['data']['value']['iteration']);
         }
       }
       change(`${focusIdx}.data.value.iteration.enabled`, enabled);
     },
-    [value]
+    [iteration, enabled, focusIdx]
   );
+
+  if (
+    !focusBlock?.type ||
+    !Object.values(AdvancedType).includes(focusBlock?.type as any)
+  ) {
+    return null;
+  }
 
   return (
     <Collapse.Item
+      disabled={!enabled}
+      className='iteration'
       destroyOnHide
-      name='5'
+      name='Iteration'
       header='Iteration'
       extra={
         <div style={{ marginRight: 10 }}>
-          <Switch
-            checked={value.iteration?.enabled}
-            onChange={onIterationToggle}
-          />
+          <Switch checked={iteration?.enabled} onChange={onIterationToggle} />
         </div>
       }
     >
-      {value.iteration?.enabled && (
+      {iteration?.enabled && (
         <Grid.Col span={24}>
           <div>
             <Grid.Row>
@@ -73,7 +81,7 @@ export function Iteration() {
               <Grid.Col offset={1} span={11}>
                 <TextField
                   label='Mock quantity'
-                  max={value.iteration?.limit}
+                  max={iteration?.limit}
                   name={`${focusIdx}.data.value.iteration.mockQuantity`}
                   type='number'
                   onChangeAdapter={(v) => Number(v)}

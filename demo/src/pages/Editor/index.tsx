@@ -234,7 +234,7 @@ export default function Editor() {
   }
 
   if (!initialValues) return null;
-  return null;
+
   return (
     <div>
       <style>{themeStyleText}</style>
@@ -437,12 +437,12 @@ const b = {
   ],
 };
 
-const a = JsonToMjml({
-  idx: getPageIdx(),
-  mode: 'testing',
-  context: b,
-  dataSource: testMergeTags,
-  data: b,
-});
+// const a = JsonToMjml({
+//   idx: getPageIdx(),
+//   mode: 'testing',
+//   context: b,
+//   dataSource: testMergeTags,
+//   data: b,
+// });
 
-console.log('a', a);
+// console.log('a', a);

@@ -18,7 +18,6 @@ import { Button } from '@arco-design/web-react';
 import { IconFont } from 'easy-email-editor';
 import { HtmlEditor } from '../../UI/HtmlEditor';
 import { ClassName } from '../../attributes/ClassName';
-import { Iteration } from '../../attributes/Iteration';
 
 export function Text() {
   const [visible, setVisible] = useState(false);
@@ -95,7 +94,6 @@ export function Text() {
             <ClassName />
           </Grid.Col>
         </Collapse.Item>
-        <Iteration />
       </Collapse>
       <HtmlEditor visible={visible} setVisible={setVisible} />
     </AttributesPanelWrapper>

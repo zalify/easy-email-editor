@@ -30,7 +30,6 @@ export function useGetPreviewEmailHtml() {
         dataSource: cloneDeep(injectData),
       })
     ).html;
-
     if (onBeforePreview) {
       try {
         const result = onBeforePreview(parseHtml, injectData);

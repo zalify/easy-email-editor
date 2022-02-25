@@ -3,13 +3,13 @@ import {
   useBlock,
   useEditorProps,
   useFocusIdx,
+  MergeTagBadge,
 } from 'easy-email-editor';
 import React, { useCallback } from 'react';
 import { InlineText, InlineTextProps } from '../InlineTextField';
 import { RichTextToolBar } from '../RichTextToolBar';
 import { Field, FieldInputProps } from 'react-final-form';
 import { debounce } from 'lodash';
-import { MergeTagBadge } from '@/utils/MergeTagBadge';
 
 export const RichTextField = (
   props: Omit<InlineTextProps, 'onChange' | 'mutators'>

@@ -14,11 +14,18 @@ function generateIterationTemplate(
   return (
     <Template>
       <Raw>
-        {`{% for ${option.itemName} in ${option.dataSource} ${option.limit ? `limit:${option.limit}` : ''
-          } %}`}
+        {`
+        <!-- htmlmin:ignore -->
+        {% for ${option.itemName} in ${option.dataSource} ${
+          option.limit ? `limit:${option.limit}` : ''
+        } %}
+        <!-- htmlmin:ignore -->
+        `}
       </Raw>
       {content}
-      <Raw>{'{% endfor %}'}</Raw>
+      <Raw>
+        {' <!-- htmlmin:ignore -->{% endfor %}  <!-- htmlmin:ignore -->'}
+      </Raw>
     </Template>
   );
 }

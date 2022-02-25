@@ -3,11 +3,11 @@ import React, { useEffect } from 'react';
 import { MergeTags as MergeTagsOptions } from '@extensions/AttributePanel';
 import { Popover } from '@arco-design/web-react';
 import { ToolItem } from '../ToolItem';
-import { IconFont } from '@/components/IconFont';
+import { IconFont } from 'easy-email-editor';
 
 export interface MergeTagsProps {
   execCommand: (cmd: string, value: any) => void;
-  getPopoverMountNode: () => HTMLElement;
+  getPopupContainer: () => HTMLElement;
 }
 
 export function MergeTags(props: MergeTagsProps) {
@@ -24,7 +24,7 @@ export function MergeTags(props: MergeTagsProps) {
           onChange={(val) => props.execCommand('insertHTML', val)}
         />
       }
-      getPopupContainer={props.getPopoverMountNode}
+      getPopupContainer={props.getPopupContainer}
     >
       <ToolItem
         title='Merge tag'
