@@ -145,18 +145,6 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
 
   switch (data.type) {
     case BasicType.TEMPLATE:
-      if (data.data.value.penetrate) {
-        if (data.children.length > 1) {
-          throw new Error('penetrate error');
-        }
-        return JsonToMjml({
-          data: data.children[0],
-          idx: data.data.value.idx,
-          dataSource,
-          context,
-          mode,
-        });
-      }
       return children || data.data.value.content;
     case BasicType.PAGE:
       const metaData = generaMjmlMetaData(data);

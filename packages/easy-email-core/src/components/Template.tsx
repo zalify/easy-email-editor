@@ -14,7 +14,6 @@ export type TemplateProps = RecursivePartial<ITemplate['data']> &
       | IBlockData
       | IBlockData[];
     idx?: string | null;
-    penetrate?: boolean;
   };
 
 export function Template(props: TemplateProps) {
@@ -28,7 +27,7 @@ export function Template(props: TemplateProps) {
     <MjmlBlock
       attributes={omit(props, ['data', 'children'])}
       type={BasicType.TEMPLATE}
-      value={{ idx: props.idx, penetrate: props.penetrate }}
+      value={{ idx: props.idx }}
     >
       {formatChildren}
     </MjmlBlock>
