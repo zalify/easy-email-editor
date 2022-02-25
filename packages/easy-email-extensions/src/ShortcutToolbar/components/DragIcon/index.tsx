@@ -2,6 +2,7 @@ import { IconFont, BlockAvatarWrapper } from 'easy-email-editor';
 import { Button } from '@arco-design/web-react';
 import { getIconNameByBlockType } from '@extensions';
 import React from 'react';
+import { BlockManager } from 'easy-email-core';
 
 export interface DragIconProps {
   type: string;
@@ -10,13 +11,14 @@ export interface DragIconProps {
 }
 
 export function DragIcon(props: DragIconProps) {
+  const block = BlockManager.getBlockByType(props.type);
   return (
     <BlockAvatarWrapper type={props.type} payload={props.payload}>
       <Button
         type='text'
+        title={block?.name}
         icon={
           <IconFont
-            title='Text'
             iconName={getIconNameByBlockType(props.type)}
             style={{
               fontSize: 16,
