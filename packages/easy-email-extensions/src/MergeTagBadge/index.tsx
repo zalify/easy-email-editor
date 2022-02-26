@@ -12,6 +12,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import stylesText from './MergeTagBadge.scss?inline';
 import { classnames } from '@extensions/utils/classnames';
+import { useSelectionRange } from '@extensions/AttributePanel/hooks/useSelectionRange';
 
 const removeAllActiveBadge = () => {
   getShadowRoot()
@@ -32,6 +33,7 @@ export default function MergeTagBadge() {
   const popoverRef = useRef<HTMLDivElement | null>(null);
   const { onChangeMergeTag, mergeTags } = useEditorProps();
   const [text, setText] = useState('');
+  const { setRangeByElement } = useSelectionRange();
 
   const root = initialized && getShadowRoot();
   const [target, setTarget] = React.useState<HTMLElement | null>(null);
@@ -41,22 +43,9 @@ export default function MergeTagBadge() {
 
   const focusMergeTag = useCallback((ele: HTMLElement) => {
     if (!ele) return;
-    const next = ele.nextSibling;
 
-    const range = document.createRange();
-    if (next) {
-      range.setStart(next, 0);
-      range.collapse(false);
-    } else {
-      if (!ele.parentNode) return;
-      range.selectNodeContents(ele.parentNode);
-      range.collapse(false);
-    }
-    const selection = (root as any).getSelection();
-    if (!selection) return;
-    selection.removeAllRanges();
-    selection.addRange(range);
-  }, [root]);
+    setRangeByElement(ele);
+  }, [setRangeByElement]);
 
   useEffect(() => {
 
@@ -126,9 +115,9 @@ export default function MergeTagBadge() {
   }, []);
 
   useEffect(() => {
-    const onKeyDown = (ev: KeyboardEvent) => {
+    const onKeyDown = (e: KeyboardEvent) => {
 
-      if (ev.code.toLocaleLowerCase() === 'escape') {
+      if (e.code?.toLocaleLowerCase() === 'escape') {
         onClose();
       }
 

@@ -1,5 +1,7 @@
 .easy-email-extensions-emailToolItem {
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   outline: none;
   font-weight: 400;
@@ -8,10 +10,20 @@
   white-space: nowrap;
   transition: all 0.1s linear;
   box-sizing: border-box;
-  line-height: 1.5715;
+  border-radius: 2px;
   border: none;
   background-color: transparent;
   color: #fff;
+  width: 28px;
+  height: 27px;
+  &:hover {
+    background-color: rgba(242, 243, 245, 1);
+    color: rgb(78, 89, 105);
+  }
+}
+.easy-email-extensions-emailToolItem-active {
+  background-color: rgba(242, 243, 245, 1);
+  color: rgb(78, 89, 105);
 }
 
 .easy-email-extensions-divider {

@@ -1,10 +1,10 @@
 import { Grid, PopoverProps, Space, Tooltip } from '@arco-design/web-react';
-import { Button } from '@arco-design/web-react';
 import React, { useCallback, useMemo } from 'react';
 import { Form } from 'react-final-form';
 import { IconFont, Stack, TextStyle } from 'easy-email-editor';
 import { SearchField, SwitchField } from '@extensions/components/Form';
 import { ToolItem } from '../ToolItem';
+import { EMAIL_BLOCK_CLASS_NAME } from 'easy-email-core';
 
 export interface LinkParams {
   link: string;
@@ -19,46 +19,28 @@ export interface LinkProps extends PopoverProps {
 }
 
 function getAnchorElement(
-  node: Node,
-  matchLength: number
+  node: Node | null,
 ): HTMLAnchorElement | null {
-  if (!node || !node.parentNode) return null;
-  const isMatchLength =
-    Number(node.parentNode?.textContent?.length) === matchLength;
-
-  if (isMatchLength) {
-    if (node.parentNode instanceof HTMLAnchorElement) {
-      return node.parentNode;
-    } else {
-      return getAnchorElement(node.parentNode, matchLength);
-    }
+  if (!node) return null;
+  if (node instanceof HTMLAnchorElement) {
+    return node;
   }
-  return null;
+  if (node instanceof Element && node.classList.contains(EMAIL_BLOCK_CLASS_NAME)) return null;
+
+  return getAnchorElement(node.parentNode);
 }
 
 function getLinkNode(
   currentRange: Range | null | undefined
 ): HTMLAnchorElement | null {
   let linkNode: HTMLAnchorElement | null = null;
-  if (
-    currentRange &&
-    currentRange.startContainer === currentRange.endContainer
-  ) {
-    if (currentRange.startContainer instanceof HTMLAnchorElement) {
-      linkNode = currentRange.startContainer;
-    } else {
-      if (currentRange.startContainer.nodeType === 3) {
-        linkNode = getAnchorElement(
-          currentRange.startContainer,
-          currentRange.endOffset - currentRange.startOffset
-        );
-      }
-    }
-  }
+  if (!currentRange) return null;
+  linkNode = getAnchorElement(currentRange.startContainer);
   return linkNode;
 }
 
 export function Link(props: LinkProps) {
+
   const initialValues = useMemo((): LinkParams => {
     let link = '';
     let blank = true;
@@ -144,7 +126,7 @@ export function Link(props: LinkProps) {
               </div>
             )}
           >
-            <ToolItem title='Link' icon={<IconFont iconName='icon-link' />} />
+            <ToolItem isActive={Boolean(initialValues.link)} title='Link' icon={<IconFont iconName='icon-link' />} />
           </Tooltip>
         );
       }}

@@ -19,16 +19,17 @@ export function useSelectionRange() {
   }, []);
 
   const setRangeByElement = useCallback(
-    (element: ChildNode, collapse = false) => {
+    (element: ChildNode) => {
       const selection = (getShadowRoot() as any).getSelection();
+
       selection.removeAllRanges();
       const newRange = document.createRange();
-      newRange.setStart(element, 0);
-      newRange.collapse(collapse);
-
+      newRange.selectNode(element);
+      setSelectionRange(newRange);
       selection.addRange(newRange);
+
     },
-    []
+    [setSelectionRange]
   );
 
   return {

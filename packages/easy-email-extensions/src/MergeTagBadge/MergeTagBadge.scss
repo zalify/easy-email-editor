@@ -7,7 +7,8 @@
   cursor: default !important;
   transition: all 0.1s linear;
   border: none;
-
+  font-weight: inherit;
+  font-style: inherit;
   outline-color: rgb(0 160 172) !important;
   color: inherit;
   background-color: rgb(235 249 252);
@@ -35,11 +36,12 @@
 .easy-email-merge-tag-popover {
   background-color: #fff;
   width: 360px;
+  border: 1px solid rgb(229 230 235);
   border-radius: 8px;
   position: absolute;
-  top: 100%;
-  left: 0;
-  transform: translate(0, 0%);
+  top: calc(100% + 20px);
+  left: 50%;
+  transform: translate(-50%, 0%);
   z-index: 10;
   padding: 20px;
   font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI,

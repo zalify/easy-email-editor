@@ -27,6 +27,12 @@ const iconsMap = {
   [AdvancedType.SOCIAL]: 'icon-social',
   [AdvancedType.CAROUSEL]: 'icon-carousel',
   [AdvancedType.ACCORDION]: 'icon-accordion',
+
+  [AdvancedType.WRAPPER]: 'icon-wrapper',
+  [AdvancedType.SECTION]: 'icon-section',
+  [AdvancedType.COLUMN]: 'icon-column',
+  [AdvancedType.GROUP]: 'icon-group',
+  [AdvancedType.HERO]: 'icon-hero',
 };
 
 export function getIconNameByBlockType(type: string) {

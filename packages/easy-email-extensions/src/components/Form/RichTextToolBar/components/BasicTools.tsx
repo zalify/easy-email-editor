@@ -39,7 +39,7 @@ export function BasicTools() {
 
   return (
     <div style={{ marginRight: 40 }}>
-      <ToolItem icon={<span>Text</span>} />
+      <span style={{ position: 'relative', marginRight: 10, color: '#fff', fontFamily: '-apple-system, BlinkMacSystemFont, San Francisco, Segoe UI' }}>Text</span>
       <ToolItem
         onClick={handleSelectParent}
         title='Select parent block'

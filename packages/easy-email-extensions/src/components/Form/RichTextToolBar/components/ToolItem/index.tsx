@@ -1,3 +1,4 @@
+import { classnames } from '@/utils/classnames';
 import { Tooltip } from '@arco-design/web-react';
 import React from 'react';
 
@@ -7,6 +8,7 @@ export const ToolItem: React.FC<{
   onClick?: React.MouseEventHandler<any>;
   trigger?: string;
   style?: React.CSSProperties;
+  isActive?: boolean;
 }> = (props) => {
   if (!props.title) {
     return (
@@ -25,7 +27,7 @@ export const ToolItem: React.FC<{
     <Tooltip mini position='bottom' content={props.title}>
       <button
         tabIndex={-1}
-        className='easy-email-extensions-emailToolItem'
+        className={classnames('easy-email-extensions-emailToolItem', props.isActive && 'easy-email-extensions-emailToolItem-active')}
         title={props.title}
         onClick={props.onClick}
         style={props.style}

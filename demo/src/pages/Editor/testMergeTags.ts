@@ -159,13 +159,5 @@ export const testMergeTags = {
         ],
       },
     ],
-  },
-
-  date: {
-    today: () => new Date().toDateString(),
-  },
-  condition: {
-    isHidden: true,
-    isNotHidden: false,
-  },
+  }
 };

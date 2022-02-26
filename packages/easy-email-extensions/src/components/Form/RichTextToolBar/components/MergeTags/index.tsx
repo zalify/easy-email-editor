@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 import { MergeTags as MergeTagsOptions } from '@extensions/AttributePanel';
 import { Popover } from '@arco-design/web-react';
@@ -11,19 +11,34 @@ export interface MergeTagsProps {
 }
 
 export function MergeTags(props: MergeTagsProps) {
-  useEffect(() => {}, []);
+  const { execCommand } = props;
+  const [visible, setVisible] = React.useState(false);
+
+  const onChange = useCallback((val: string) => {
+    execCommand('insertHTML', val);
+    setVisible(false);
+  }, [execCommand]);
+
+  const onVisibleChange = useCallback((v: boolean) => {
+    setVisible(v);
+  }, []);
 
   return (
     <Popover
       trigger='click'
       color='#fff'
       position='left'
-      content={
-        <MergeTagsOptions
-          value=''
-          onChange={(val) => props.execCommand('insertHTML', val)}
-        />
-      }
+      popupVisible={visible}
+      onVisibleChange={onVisibleChange}
+      content={(
+        <>
+          <MergeTagsOptions
+            value=''
+            onChange={onChange}
+          />
+        </>
+
+      )}
       getPopupContainer={props.getPopupContainer}
     >
       <ToolItem

@@ -47,3 +47,4 @@ export enum AdvancedType {
 }
 
 export const MERGE_TAG_CLASS_NAME = 'easy-email-merge-tag-container';
+export const EMAIL_BLOCK_CLASS_NAME = 'email-block';
