@@ -8,13 +8,14 @@ import { ShadowDom } from '@/components/UI/ShadowDom';
 import { ShadowStyle } from './components/ShadowStyle';
 import { useEditorContext } from '@/hooks/useEditorContext';
 import { DATA_ATTRIBUTE_DROP_CONTAINER } from '@/constants';
+import { ActiveTabKeys } from '@';
 
 export function EditEmailPreview() {
   useHotKeys();
   const { activeTab } = useActiveTab();
   const [containerRef, setContainerRef] = useState<HTMLDivElement | null>(null);
   const { setRef } = useDropBlock();
-  const { scrollHeight } = useDomScrollHeight();
+  const { scrollHeight, viewElementRef } = useDomScrollHeight();
   const { setInitialized } = useEditorContext();
 
   useEffect(() => {
@@ -41,6 +42,12 @@ export function EditEmailPreview() {
     },
     [scrollHeight]
   );
+
+  useEffect(() => {
+    if (activeTab === ActiveTabKeys.EDIT) {
+      viewElementRef.current = null;
+    }
+  }, [activeTab, viewElementRef]);
 
   return useMemo(
     () => (

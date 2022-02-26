@@ -3,7 +3,7 @@ import React from 'react';
 import { useGetPreviewEmailHtml } from '@/hooks/useGetPreviewEmailHtml';
 
 export function PreviewEmail() {
-  const { errMsg, html } = useGetPreviewEmailHtml();
+  const { errMsg, htmlNode } = useGetPreviewEmailHtml();
 
   if (errMsg) {
     return (
@@ -13,5 +13,5 @@ export function PreviewEmail() {
     );
   }
 
-  return <div dangerouslySetInnerHTML={{ __html: html }} />;
+  return htmlNode;
 }

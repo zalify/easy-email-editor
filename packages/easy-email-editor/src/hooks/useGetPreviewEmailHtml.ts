@@ -6,6 +6,7 @@ import { useEditorContext } from '@/hooks/useEditorContext';
 import { cloneDeep, isString } from 'lodash';
 import { useEditorProps } from '@/hooks/useEditorProps';
 import { useMemo } from 'react';
+import { HtmlStringToPreviewReactNodes } from '@/utils/HtmlStringToPreviewReactNodes';
 
 export function useGetPreviewEmailHtml() {
   const { pageData } = useEditorContext();
@@ -49,8 +50,11 @@ export function useGetPreviewEmailHtml() {
     setHtml(parseHtml);
   }, [injectData, onBeforePreview, pageData]);
 
+  const htmlNode = useMemo(() => HtmlStringToPreviewReactNodes(html), [html]);
+
   return {
     errMsg,
     html,
+    htmlNode
   };
 }
