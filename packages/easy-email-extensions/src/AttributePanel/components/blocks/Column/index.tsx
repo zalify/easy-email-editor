@@ -2,18 +2,18 @@ import React from 'react';
 
 import { Collapse, Grid, Space } from '@arco-design/web-react';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
-import { Stack } from 'easy-email-editor';
 import { Padding } from '@extensions/AttributePanel/components/attributes/Padding';
 import { Width } from '@extensions/AttributePanel/components/attributes/Width';
 import { VerticalAlign } from '@extensions/AttributePanel/components/attributes/VerticalAlign';
 import { Background } from '@extensions/AttributePanel/components/attributes/Background';
 import { Border } from '@extensions/AttributePanel/components/attributes/Border';
 import { ClassName } from '../../attributes/ClassName';
+import { CollapseWrapper } from '../../attributes/CollapseWrapper';
 
 export function Column() {
   return (
     <AttributesPanelWrapper>
-      <Collapse defaultActiveKey={['0', '1', '2']}>
+      <CollapseWrapper defaultActiveKey={['0', '1', '2']}>
         <Collapse.Item name='0' header='Dimension'>
           <Space direction='vertical'>
             <Grid.Row>
@@ -39,7 +39,7 @@ export function Column() {
             <ClassName />
           </Grid.Col>
         </Collapse.Item>
-      </Collapse>
+      </CollapseWrapper>
     </AttributesPanelWrapper>
   );
 }

@@ -2,7 +2,7 @@ import { flatMap, isArray, omit } from 'lodash';
 import { BasicType } from '@core/constants';
 import { IBlockData, RecursivePartial } from '@core/typings';
 import React from 'react';
-import { ITemplate } from '@core/blocks/Template';
+import { ITemplate } from '@core/blocks';
 import MjmlBlock from '@core/components/MjmlBlock';
 
 export type TemplateProps = RecursivePartial<ITemplate['data']> &

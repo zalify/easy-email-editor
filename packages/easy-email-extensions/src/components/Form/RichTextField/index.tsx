@@ -1,7 +1,12 @@
-import { useBlock, useFocusIdx } from 'easy-email-editor';
+import {
+  isTextBlock,
+  useBlock,
+  useEditorProps,
+  useFocusIdx,
+  MergeTagBadge,
+} from 'easy-email-editor';
 import React, { useCallback } from 'react';
 import { InlineText, InlineTextProps } from '../InlineTextField';
-import { BasicType } from 'easy-email-core';
 import { RichTextToolBar } from '../RichTextToolBar';
 import { Field, FieldInputProps } from 'react-final-form';
 import { debounce } from 'lodash';
@@ -11,7 +16,8 @@ export const RichTextField = (
 ) => {
   const { focusBlock } = useBlock();
   const { focusIdx } = useFocusIdx();
-  if (focusBlock?.type !== BasicType.TEXT) return null;
+
+  if (!isTextBlock(focusBlock?.type)) return null;
 
   const name = `${focusIdx}.data.value.content`;
 
@@ -30,13 +36,19 @@ function FieldWrapper(
   }
 ) {
   const { input, ...rest } = props;
+  const { mergeTagGenerate, enabledMergeTagsBadge } = useEditorProps();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debounceCallbackChange = useCallback(
     debounce((val) => {
-      input.onChange(val);
+      if (enabledMergeTagsBadge) {
+        input.onChange(MergeTagBadge.revert(val, mergeTagGenerate));
+      } else {
+        input.onChange(val);
+      }
+
       input.onBlur();
-    }, 100),
+    }, 200),
     [input]
   );
 

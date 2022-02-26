@@ -63,7 +63,7 @@ export function HoverTooltip() {
     <>
       {createPortal(
         <div
-          id="easy-email-extensions-InteractivePrompt-HoverTooltip"
+          id='easy-email-extensions-InteractivePrompt-HoverTooltip'
           style={{
             position: 'absolute',
             height: '100%',
@@ -95,6 +95,7 @@ interface TipNodeProps {
   lineWidth: number;
   type: 'drag' | 'hover';
 }
+
 function TipNode(props: TipNodeProps) {
   const { direction, title, lineWidth, type } = props;
   const dragTitle = useMemo(() => {
@@ -152,7 +153,13 @@ function TipNode(props: TipNodeProps) {
         }}
       >
         {type === 'hover' && (
-          <>
+          <div
+            style={{
+              position: 'absolute',
+              left: 0,
+              bottom: 0,
+            }}
+          >
             <div
               style={{
                 backgroundColor: color,
@@ -163,13 +170,13 @@ function TipNode(props: TipNodeProps) {
                 padding: '1px 5px',
                 boxSizing: 'border-box',
                 whiteSpace: 'nowrap',
-                transform: 'translateX(-100%)',
                 fontFamily: 'sans-serif',
+                transform: 'translateY(100%)',
               }}
             >
               {title}
             </div>
-          </>
+          </div>
         )}
       </div>
 

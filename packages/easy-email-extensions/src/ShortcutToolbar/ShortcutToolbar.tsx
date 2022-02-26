@@ -1,7 +1,10 @@
-import { BasicType } from 'easy-email-core';
+/* eslint-disable react/jsx-wrap-multilines */
+import { Button } from '@arco-design/web-react';
+import { AdvancedType, BasicType } from 'easy-email-core';
 import { IconFont, Stack, BlockAvatarWrapper } from 'easy-email-editor';
 import React, { useRef } from 'react';
 import { BlocksPanel } from './components/BlocksPanel';
+import { DragIcon } from './components/DragIcon';
 
 export function ShortcutToolbar() {
   const blocksPanelRef = useRef<HTMLDivElement>(null);
@@ -10,48 +13,18 @@ export function ShortcutToolbar() {
       <BlocksPanel>
         <div ref={blocksPanelRef} />
       </BlocksPanel>
-
-      <BlockAvatarWrapper type={BasicType.TEXT}>
-        <IconFont
-          title='Text'
-          iconName='icon-text-rounded'
-          style={{
-            fontSize: 18,
-            textAlign: 'center',
-            cursor: 'move',
-            color: '#6ED787',
-          }}
-        />
-      </BlockAvatarWrapper>
-      <BlockAvatarWrapper type={BasicType.IMAGE}>
-        <IconFont
-          title='Image'
-          iconName='icon-img'
-          style={{
-            fontSize: 20,
-            textAlign: 'center',
-            cursor: 'move',
-            color: '#FAD061',
-          }}
-        />
-      </BlockAvatarWrapper>
-      <BlockAvatarWrapper type={BasicType.BUTTON}>
-        <IconFont
-          title='Button'
-          iconName='icon-button'
-          style={{
-            fontSize: 22,
-            textAlign: 'center',
-            cursor: 'move',
-            color: '#59BEF8',
-          }}
-        />
-      </BlockAvatarWrapper>
-      <BlockAvatarWrapper
+      <DragIcon type={AdvancedType.TEXT} color='rgb(110, 215, 135)' />
+      <DragIcon type={AdvancedType.IMAGE} color='rgb(250, 208, 97)' />
+      <DragIcon type={AdvancedType.BUTTON} color='rgb(238,144,172)' />
+      <DragIcon type={AdvancedType.SOCIAL} color='rgb(111,206,236) ' />
+      <DragIcon type={AdvancedType.NAVBAR} color='rgb(191,24,84)' />
+      <DragIcon type={AdvancedType.DIVIDER} color='rgb(71,67,239)' />
+      <DragIcon
+        color='rgb(24,201,137)'
         payload={{
           children: [
             {
-              type: 'column',
+              type: AdvancedType.COLUMN,
               data: {
                 value: {},
               },
@@ -63,7 +36,7 @@ export function ShortcutToolbar() {
               children: [],
             },
             {
-              type: 'column',
+              type: AdvancedType.COLUMN,
               data: {
                 value: {},
               },
@@ -77,18 +50,7 @@ export function ShortcutToolbar() {
           ],
         }}
         type={BasicType.SECTION}
-      >
-        <IconFont
-          title='Section'
-          iconName='icon-section'
-          style={{
-            fontSize: 22,
-            textAlign: 'center',
-            cursor: 'move',
-            color: '#e5afe5',
-          }}
-        />
-      </BlockAvatarWrapper>
+      />
 
       <IconFont
         onClick={() => blocksPanelRef.current?.click()}

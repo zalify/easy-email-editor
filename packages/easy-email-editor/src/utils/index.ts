@@ -4,5 +4,8 @@ export { getDirectionPosition } from './getDirectionPosition';
 export { getBlockNodes } from './getBlockNodes';
 export { getEditorRoot } from './getEditorRoot';
 export { getShadowRoot } from './getShadowRoot';
+export { getPluginElement } from './getPluginElement';
 export { scrollBlockEleIntoView } from './scrollBlockEleIntoView';
 export { getEditNode, getEditContent } from './getEditNode';
+export { isTextBlock } from './isTextBlock';
+export { MergeTagBadge } from './MergeTagBadge';

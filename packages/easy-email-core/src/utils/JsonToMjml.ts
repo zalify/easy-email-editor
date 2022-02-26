@@ -1,7 +1,7 @@
 import { parseReactBlockToBlockData } from '@core/utils/parseReactBlockToBlockData';
 import { isValidElement } from 'react';
 
-import { BasicType } from '@core/constants';
+import { BasicType, AdvancedType } from '@core/constants';
 import { IBlockData } from '@core/typings';
 import { pickBy, identity, isObject, isBoolean, isString } from 'lodash';
 import {
@@ -54,7 +54,7 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
   );
 
   const isTest = mode === 'testing';
-  const placeholder = isTest && idx ? renderPlaceholder(data.type) : '';
+  const placeholder = isTest ? renderPlaceholder(data.type) : '';
 
   if (isTest && idx) {
     att['css-class'] = classnames(
@@ -94,14 +94,21 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
       context,
       dataSource
     );
+
     if (!transformBlockData) return '';
+
     const transformData = isValidElement(transformBlockData)
       ? parseReactBlockToBlockData(transformBlockData)
       : transformBlockData;
-    att['css-class'] = classnames(
-      isTest && getPreviewClassName(idx, data.type),
-      transformData?.['attributes']?.['css-class']
-    );
+
+    att['css-class'] = [
+      ...new Set(
+        classnames(
+          isTest && getPreviewClassName(idx, data.type),
+          transformData?.['attributes']?.['css-class']
+        ).split(' ')
+      ),
+    ].join(' ');
     return JsonToMjml({
       data: {
         ...transformData,
@@ -111,7 +118,7 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
         },
       },
       idx: null,
-      context: data,
+      context: context,
       dataSource,
       mode,
     });
@@ -333,11 +340,16 @@ export function renderPlaceholder(type: string) {
   let text = '';
   if (type === BasicType.PAGE) {
     text = 'Drop a Wrapper block here';
-  } else if (type === BasicType.WRAPPER) {
+  } else if (type === BasicType.WRAPPER || type === AdvancedType.WRAPPER) {
     text = 'Drop a Section block here';
-  } else if (type === BasicType.SECTION || type === BasicType.GROUP) {
+  } else if (
+    type === BasicType.SECTION ||
+    type === BasicType.GROUP ||
+    type === AdvancedType.SECTION ||
+    type === AdvancedType.GROUP
+  ) {
     text = 'Drop a Column block here';
-  } else if (type === BasicType.COLUMN) {
+  } else if (type === BasicType.COLUMN || type === AdvancedType.COLUMN) {
     text = 'Drop a content block here';
   }
 

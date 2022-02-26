@@ -12,8 +12,8 @@ import { IconFont } from '../IconFont';
 import { TabPane, Tabs } from '@/components/UI/Tabs';
 import { useEditorProps } from '@/hooks/useEditorProps';
 import './index.scss';
-
-(window as any).global = window;
+import '@/assets/font/iconfont.css';
+(window as any).global = window; // react-codemirror
 
 export const EmailEditor = () => {
   const { height: containerHeight } = useEditorProps();

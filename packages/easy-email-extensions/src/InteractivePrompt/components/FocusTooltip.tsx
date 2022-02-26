@@ -97,8 +97,21 @@ export function FocusTooltip() {
               outline: '2px solid var(--selected-color)',
             }}
           />
-          <Toolbar />
+          <div
+            style={{
+              position: 'absolute',
+              fontSize: 14,
+              zIndex: 3,
+              left: 0,
+              top: 0,
+              width: '0%',
+              height: '100%',
+            }}
+          >
+            <Toolbar />
+          </div>
         </div>,
+
         focusBlockNode
       )}
     </>

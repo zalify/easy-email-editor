@@ -57,8 +57,23 @@ export function EditEmailPreview() {
         }}
       >
         <div
+          id='easy-email-plugins'
+          style={{
+            position: 'relative',
+          }}
+        />
+        <div
           className='shadow-container'
-          style={{ height: '100%', overflowY: 'auto', zIndex: 10 }}
+          style={{
+            height: '100%',
+            overflowY: 'auto',
+            zIndex: 10,
+            paddingLeft: 10,
+            paddingRight: 10,
+            paddingTop: 40,
+            paddingBottom: 40,
+            boxSizing: 'border-box',
+          }}
           ref={setContainerRef}
           onScroll={onScroll}
         >

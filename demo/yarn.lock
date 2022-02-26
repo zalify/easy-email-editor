@@ -552,11 +552,6 @@ change-case@^4.1.2:
   optionalDependencies:
     fsevents "~2.3.2"
 
-classnames@^2.2.6:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.1.tgz#dfcfa3891e306ec1dad105d0e88f4417b8535e8e"
-  integrity sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA==
-
 clean-css@^4.2.3:
   version "4.2.4"
   resolved "https://registry.yarnpkg.com/clean-css/-/clean-css-4.2.4.tgz#733bf46eba4e607c6891ea57c24a989356831178"
@@ -1612,14 +1607,6 @@ react-router@5.2.0:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
-react-sortablejs@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/react-sortablejs/-/react-sortablejs-6.0.0.tgz#ba75ded6dce3fa1b5b3b52c70d1928fcdee2003d"
-  integrity sha512-vzi+TWOnofcYg+dYnC/Iz/ZZkBGG76uM6KaLwuAqBk0349JQxIy3PZizbK0TJdLlK6NnLt4CiEyyQXSSnVYvEw==
-  dependencies:
-    classnames "^2.2.6"
-    tiny-invariant "^1.1.0"
-
 react-transition-group@^4.3.0:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.4.2.tgz#8b59a56f09ced7b55cbd53c36768b922890d5470"
@@ -1945,7 +1932,7 @@ throttle-debounce@^3.0.1:
   resolved "https://registry.yarnpkg.com/throttle-debounce/-/throttle-debounce-3.0.1.tgz#32f94d84dfa894f786c9a1f290e7a645b6a19abb"
   integrity sha512-dTEWWNu6JmeVXY0ZYoPuH5cRIwc0MeGbJwah9KUNYSJwommQpCzTySTpEe8Gs1J23aeWEuAobe4Ag7EHVt/LOg==
 
-tiny-invariant@^1.0.2, tiny-invariant@^1.1.0:
+tiny-invariant@^1.0.2:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.2.0.tgz#a1141f86b672a9148c72e978a19a73b9b94a15a9"
   integrity sha512-1Uhn/aqw5C6RI4KejVeTg6mIS7IqxnLJ8Mv2tV5rTc0qWobay7pDUz6Wi392Cnc8ak1H0F2cjoRzb2/AW4+Fvg==

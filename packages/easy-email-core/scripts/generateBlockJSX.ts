@@ -24,7 +24,7 @@ BlockManager.getBlocks().forEach((item) => {
   import { BasicType } from '@core/constants';
   import { RecursivePartial } from '@core/typings';
   import React from 'react';
-  import { ${interfaceName} } from '@core/blocks/${fileName}';
+  import { ${interfaceName} } from '@core/blocks';
   import MjmlBlock, { MjmlBlockProps } from '@core/components/MjmlBlock';
 
   export type ${fileName}Props = RecursivePartial<${interfaceName}['data']> &
@@ -46,7 +46,7 @@ BlockManager.getBlocks().forEach((item) => {
   `;
   try {
     fs.mkdirSync(cwd + '/src/components');
-  } catch (error) {}
+  } catch (error) { }
   fs.writeFileSync(cwd + '/src/components/' + fileName + '.tsx', code);
   indexFileContent += `export {${fileName}} from './${fileName}'\n`;
 });

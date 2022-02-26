@@ -13,12 +13,13 @@ import { NavbarLinkPadding } from '@extensions/AttributePanel/components/attribu
 import { useFocusIdx, Stack } from 'easy-email-editor';
 import { INavbar } from 'easy-email-core';
 import { ClassName } from '../../attributes/ClassName';
+import { CollapseWrapper } from '../../attributes/CollapseWrapper';
 
 export function Navbar() {
   const { focusIdx } = useFocusIdx();
   return (
     <AttributesPanelWrapper style={{ padding: 0 }}>
-      <Collapse defaultActiveKey={['0', '1', '2']}>
+      <CollapseWrapper defaultActiveKey={['0', '1', '2']}>
         <Collapse.Item name='0' header='Layout'>
           <Stack vertical spacing='tight'>
             <Align />
@@ -52,7 +53,7 @@ export function Navbar() {
             <ClassName />
           </Grid.Col>
         </Collapse.Item>
-      </Collapse>
+      </CollapseWrapper>
     </AttributesPanelWrapper>
   );
 }

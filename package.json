@@ -11,6 +11,7 @@
     "lint": "lerna exec -- yarn format"
   },
   "dependencies": {
-    "lerna": "^4.0.0"
+    "lerna": "^4.0.0",
+    "liquidjs": "^9.34.1"
   }
 }

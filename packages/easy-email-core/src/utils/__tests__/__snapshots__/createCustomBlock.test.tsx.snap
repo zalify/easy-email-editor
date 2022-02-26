@@ -16,6 +16,7 @@ exports[`Test createCustomBlock should render as expected 1`] = `
   
               
               
+              
               <mj-breakpoint width=\\"480px\\" />
             <mj-attributes>
               
@@ -32,11 +33,7 @@ exports[`Test createCustomBlock should render as expected 1`] = `
               <mj-section padding=\\"20px\\" background-repeat=\\"repeat\\" background-size=\\"auto\\" background-position=\\"top center\\" border=\\"none\\" direction=\\"ltr\\" text-align=\\"center\\">
                
               <mj-column padding=\\"0px 0px 0px 0px\\" border=\\"none\\" vertical-align=\\"top\\">
-               
-          <mj-image align=\\"center\\" height=\\"auto\\" padding=\\"0px 0px 0px 0px\\" src=\\"https://assets.maocanhua.cn/10dada65-c4fb-4b1f-837e-59a1005bbea6-image.png\\" width=\\"100px\\">
-           
-          </mj-image>
-        
+               <mj-image align=\\"center\\" height=\\"auto\\" padding=\\"0px 0px 0px 0px\\" src=\\"https://assets.maocanhua.cn/10dada65-c4fb-4b1f-837e-59a1005bbea6-image.png\\" width=\\"100px\\"></mj-image>
 
           <mj-button align=\\"center\\" background-color=\\"#4A90E2\\" color=\\"#ffffff\\" font-weight=\\"normal\\" border-radius=\\"3px\\" padding=\\"10px 25px 10px 25px\\" inner-padding=\\"10px 25px 10px 25px\\" line-height=\\"120%\\" target=\\"_blank\\" vertical-align=\\"middle\\" border=\\"none\\" text-align=\\"center\\" href=\\"#\\">
            Got it

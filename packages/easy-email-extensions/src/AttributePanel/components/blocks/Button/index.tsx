@@ -22,6 +22,7 @@ import { MergeTags } from '../../attributes';
 import { useField } from 'react-final-form';
 import { Button as ArcoButton } from '@arco-design/web-react';
 import { ClassName } from '../../attributes/ClassName';
+import { CollapseWrapper } from '../../attributes/CollapseWrapper';
 
 export function Button() {
   const { focusIdx } = useFocusIdx();
@@ -33,22 +34,22 @@ export function Button() {
 
   return (
     <AttributesPanelWrapper>
-      <Collapse defaultActiveKey={['-1', '0', '1', '2', '3']}>
+      <CollapseWrapper defaultActiveKey={['-1', '0', '1', '2', '3']}>
         <Collapse.Item name='-1' header='Setting'>
           <Space direction='vertical'>
             <TextField
-              label={
+              label={(
                 <Space>
                   <span>Content</span>
                   {mergeTags && (
                     <Popover
                       trigger='click'
-                      content={
+                      content={(
                         <MergeTags
                           value={input.value}
                           onChange={input.onChange}
                         />
-                      }
+                      )}
                     >
                       <ArcoButton
                         type='text'
@@ -57,7 +58,7 @@ export function Button() {
                     </Popover>
                   )}
                 </Space>
-              }
+              )}
               name={`${focusIdx}.data.value.content`}
             />
             <Link />
@@ -138,7 +139,7 @@ export function Button() {
             <ClassName />
           </Grid.Col>
         </Collapse.Item>
-      </Collapse>
+      </CollapseWrapper>
     </AttributesPanelWrapper>
   );
 }
