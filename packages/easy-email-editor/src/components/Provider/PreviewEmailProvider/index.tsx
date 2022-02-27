@@ -1,18 +1,30 @@
-import { useEffect, useState } from 'react';
 
-import { JsonToMjml } from 'easy-email-core';
-import mjml from 'mjml-browser';
 import { useEditorContext } from '@/hooks/useEditorContext';
-import { cloneDeep, isString } from 'lodash';
 import { useEditorProps } from '@/hooks/useEditorProps';
-import { useMemo } from 'react';
+import { useLazyState } from '@/hooks/useLazyState';
 import { HtmlStringToPreviewReactNodes } from '@/utils/HtmlStringToPreviewReactNodes';
+import { JsonToMjml } from 'easy-email-core';
+import { cloneDeep, isString } from 'lodash';
+import mjml from 'mjml-browser';
+import React, { useEffect, useMemo, useState } from 'react';
 
-export function useGetPreviewEmailHtml() {
+export const PreviewEmailContext = React.createContext<{
+  html: string;
+  reactNode: React.ReactNode | null;
+  errMsg: React.ReactNode;
+}>({
+  html: '',
+  reactNode: null,
+  errMsg: ''
+});
+
+export const PreviewEmailProvider: React.FC<{}> = (props) => {
+
   const { pageData } = useEditorContext();
   const { onBeforePreview, mergeTags, previewInjectData } = useEditorProps();
-  const [errMsg, setErrMsg] = useState('');
+  const [errMsg, setErrMsg] = useState<React.ReactNode>('');
   const [html, setHtml] = useState('');
+  const lazyPageData = useLazyState(pageData, 0);
 
   const injectData = useMemo(() => {
     if (previewInjectData) {
@@ -25,9 +37,9 @@ export function useGetPreviewEmailHtml() {
   useEffect(() => {
     let parseHtml = mjml(
       JsonToMjml({
-        data: pageData,
+        data: lazyPageData,
         mode: 'production',
-        context: pageData,
+        context: lazyPageData,
         dataSource: cloneDeep(injectData),
       })
     ).html;
@@ -48,13 +60,23 @@ export function useGetPreviewEmailHtml() {
       }
     }
     setHtml(parseHtml);
-  }, [injectData, onBeforePreview, pageData]);
+  }, [injectData, onBeforePreview, lazyPageData]);
 
   const htmlNode = useMemo(() => HtmlStringToPreviewReactNodes(html), [html]);
 
-  return {
-    errMsg,
-    html,
-    htmlNode
-  };
-}
+  const value = useMemo(() => {
+    return {
+      reactNode: htmlNode,
+      html,
+      errMsg
+    };
+  }, [errMsg, html, htmlNode]);
+
+  return (
+    <PreviewEmailContext.Provider
+      value={value}
+    >
+      {props.children}
+    </PreviewEmailContext.Provider>
+  );
+};

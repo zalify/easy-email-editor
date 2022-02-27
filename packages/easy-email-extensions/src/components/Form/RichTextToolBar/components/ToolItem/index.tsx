@@ -1,5 +1,6 @@
-import { classnames } from '@/utils/classnames';
+
 import { Tooltip } from '@arco-design/web-react';
+import { classnames } from '@extensions/utils/classnames';
 import React from 'react';
 
 export const ToolItem: React.FC<{

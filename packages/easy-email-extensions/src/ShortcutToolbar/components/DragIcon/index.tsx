@@ -17,7 +17,7 @@ export function DragIcon(props: DragIconProps) {
       <Button
         type='text'
         title={block?.name}
-        icon={
+        icon={(
           <IconFont
             iconName={getIconNameByBlockType(props.type)}
             style={{
@@ -27,7 +27,7 @@ export function DragIcon(props: DragIconProps) {
               color: props.color,
             }}
           />
-        }
+        )}
       />
     </BlockAvatarWrapper>
   );
