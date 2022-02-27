@@ -27,6 +27,9 @@ export function ShadowStyle() {
               all: initial;
             }
 
+            .shadow-container {
+              overflow: overlay !important;
+            }
             .shadow-container::-webkit-scrollbar {
               -webkit-appearance: none;
               width: 8px;

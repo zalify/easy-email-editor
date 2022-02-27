@@ -1,19 +1,17 @@
-import { IframeComponent } from '@/components/UI/IframeComponent';
 import React from 'react';
 import { PreviewEmail } from '../PreviewEmail';
 
 import iphoneFrame from '@/assets/images/iphone.png';
 import { useMobileScale } from '@/hooks/useMobileScale';
-
 const MOBILE_WIDTH = 320;
 const MOBILE_Height = 640;
 
 export function MobileEmailPreview() {
-
   const { mobileWidth } = useMobileScale();
 
   return (
     <div
+      className='easy-email-overlay'
       style={{
         height: '100%',
         display: 'flex',
@@ -49,29 +47,20 @@ export function MobileEmailPreview() {
           height: MOBILE_Height
         }}
         >
-          <IframeComponent
-            height={MOBILE_Height / (MOBILE_WIDTH / mobileWidth)}
-            width='100%'
+          <div
             style={{
-
+              height: MOBILE_Height / (MOBILE_WIDTH / mobileWidth),
               width: mobileWidth,
               boxSizing: 'content-box',
               borderRadius: 30,
               border: 'none',
               transform: `scale(${MOBILE_WIDTH / mobileWidth})`,
               transformOrigin: 'left top',
+              overflow: 'hidden'
             }}
           >
-            <style>
-              {`
-            *::-webkit-scrollbar {
-              width: 0px;
-              background-color: transparent;
-            }
-          `}
-            </style>
             <PreviewEmail />
-          </IframeComponent>
+          </div>
         </div>
 
       </div>

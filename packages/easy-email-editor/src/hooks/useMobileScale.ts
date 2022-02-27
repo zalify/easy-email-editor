@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
 import { useEffect, useRef } from 'react';;
-import { useGetPreviewEmailHtml } from './useGetPreviewEmailHtml';
+import { usePreviewEmail } from '@/hooks/usePreviewEmail';
 
 export function useMobileScale() {
-  const { html, errMsg } = useGetPreviewEmailHtml();
+  const { html, errMsg } = usePreviewEmail();
   const { current: iframe } = useRef(document.createElement('iframe'));
   const contentWindowRef = useRef<Window | null>(null);
 

@@ -1,10 +1,8 @@
-import { BasicType, getNodeIdxClassName, getNodeIdxFromClassName } from 'easy-email-core';
+import { BasicType, getNodeIdxFromClassName } from 'easy-email-core';
 import { camelCase } from 'lodash';
 import React from 'react';
 import {
-  getChildIdx,
   getNodeTypeFromClassName,
-  getPageIdx,
   MERGE_TAG_CLASS_NAME,
 } from 'easy-email-core';
 import { getEditNode } from './getEditNode';
@@ -13,6 +11,10 @@ import { MergeTagBadge } from './MergeTagBadge';
 const domParser = new DOMParser();
 
 const errLog = console.error;
+
+export function getChildSelector(selector: string, index: number) {
+  return `${selector}-${index}`;
+}
 
 console.error = (message?: any, ...optionalParams: any[]) => {
   // ignore validateDOMNesting
@@ -50,7 +52,7 @@ export function HtmlStringToReactNodes(
   });
 
   const reactNode = (
-    <RenderReactNode idx={getPageIdx()} node={doc.documentElement} index={0} />
+    <RenderReactNode selector={'0'} node={doc.documentElement} index={0} />
   );
 
   return reactNode;
@@ -59,13 +61,15 @@ export function HtmlStringToReactNodes(
 const RenderReactNode = React.memo(function ({
   node,
   index,
-  idx,
+  selector,
 }: {
   node: HTMLElement;
   index: number;
-  idx: string;
+  selector: string;
 }): React.ReactElement {
-  const attributes: { [key: string]: string; } = {};
+  const attributes: { [key: string]: string; } = {
+    'data-selector': selector,
+  };
   node.getAttributeNames?.().forEach((att) => {
     if (att) {
       attributes[att] = node.getAttribute(att) || '';
@@ -100,7 +104,6 @@ const RenderReactNode = React.memo(function ({
       const editNode = getEditNode(node);
 
       if (editNode) {
-        editNode.id = idx;
         editNode.contentEditable = 'true';
       }
     }
@@ -136,7 +139,7 @@ const RenderReactNode = React.memo(function ({
           ? null
           : [...node.childNodes].map((n, i) => (
             <RenderReactNode
-              idx={getChildIdx(idx, i)}
+              selector={getChildSelector(selector, i)}
               key={i}
               node={n as any}
               index={i}

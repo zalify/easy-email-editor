@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { Stack } from '../UI/Stack';
 import { ToolsPanel } from './components/ToolsPanel';
 import { createPortal } from 'react-dom';
-import { FIXED_CONTAINER_ID } from '@/constants';
+import { EASY_EMAIL_EDITOR_ID, FIXED_CONTAINER_ID } from '@/constants';
 import { useActiveTab } from '@/hooks/useActiveTab';
 import { ActiveTabKeys } from '../Provider/BlocksProvider';
 import { DesktopEmailPreview } from './components/DesktopEmailPreview';
@@ -26,6 +26,7 @@ export const EmailEditor = () => {
   return useMemo(
     () => (
       <div
+        id={EASY_EMAIL_EDITOR_ID}
         style={{
           display: 'flex',
           flex: '1',

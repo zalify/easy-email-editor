@@ -20,10 +20,12 @@ export function generateAdvancedContentBlock<T extends IBlockData>(option: {
       BasicType.WRAPPER,
       BasicType.COLUMN,
       BasicType.GROUP,
+      BasicType.HERO,
 
       AdvancedType.WRAPPER,
       AdvancedType.COLUMN,
       AdvancedType.GROUP,
+      AdvancedType.HERO
     ],
     getContent: (params) => {
       const { data, idx, mode, context, dataSource, index } = params;
