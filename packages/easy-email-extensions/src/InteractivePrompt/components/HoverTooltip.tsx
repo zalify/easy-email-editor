@@ -9,9 +9,11 @@ import {
   useHoverIdx,
 } from 'easy-email-editor';
 import { awaitForElement } from '@extensions/utils/awaitForElement';
+import { useLazyState } from '@/hooks/useLazyState';
 
 export function HoverTooltip() {
   const { hoverIdx, direction, isDragging } = useHoverIdx();
+  const lazyHoverIdx = useLazyState(hoverIdx, 60);
   const { focusIdx } = useFocusIdx();
   const [isTop, setIsTop] = useState(false);
   const { initialized } = useEditorContext();
@@ -29,8 +31,8 @@ export function HoverTooltip() {
     const rootBounds = rootRef.current;
     if (!initialized) return;
 
-    if (hoverIdx) {
-      const promiseObj = awaitForElement<HTMLDivElement>(hoverIdx);
+    if (lazyHoverIdx) {
+      const promiseObj = awaitForElement<HTMLDivElement>(lazyHoverIdx);
       promiseObj.promise.then((blockNode) => {
         if (rootBounds) {
           const { top } = blockNode.getBoundingClientRect();
@@ -44,15 +46,16 @@ export function HoverTooltip() {
         promiseObj.cancel();
       };
     } else {
+
       setBlockNode(null);
     }
-  }, [hoverIdx, initialized]);
+  }, [lazyHoverIdx, initialized]);
 
   const block = useMemo(() => {
     return blockNode
       ? BlockManager.getBlockByType(
-          getNodeTypeFromClassName(blockNode.classList)!
-        )
+        getNodeTypeFromClassName(blockNode.classList)!
+      )
       : null;
   }, [blockNode]);
 

@@ -44,6 +44,7 @@ export interface PropsProviderProps {
       | PropsProviderProps['previewInjectData']
       | PropsProviderProps['mergeTags']
   ) => string | Promise<string>;
+  enabledLogic?: boolean;
 }
 
 const defaultMergeTagGenerate = (m: string) => `{{${m}}}`;
@@ -57,6 +58,7 @@ export const EditorPropsContext = React.createContext<PropsProviderProps>({
   autoComplete: false,
   dashed: true,
   mergeTagGenerate: defaultMergeTagGenerate,
+  enabledLogic: false
 });
 
 export const PropsProvider: React.FC<PropsProviderProps> = (props) => {

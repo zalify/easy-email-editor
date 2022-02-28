@@ -4,6 +4,7 @@ import { awaitForElement } from '@/utils/awaitForElement';
 import { IBlockData } from 'easy-email-core';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import React from 'react';
+import { useLazyState } from '@/hooks/useLazyState';
 
 export const FocusBlockLayoutContext = React.createContext<{
   focusBlockNode: HTMLDivElement | null;
@@ -16,6 +17,7 @@ export const FocusBlockLayoutProvider: React.FC = (props) => {
     null
   );
   const { focusIdx } = useFocusIdx();
+  const lazyFocusIdx = useLazyState(focusIdx, 60);
   const { focusBlock } = useBlock();
   const lastFocusBlock = useRef<IBlockData | null>(null);
 
@@ -28,7 +30,7 @@ export const FocusBlockLayoutProvider: React.FC = (props) => {
   useEffect(() => {
     if (isBlockEqual) return;
 
-    const promiseObj = awaitForElement<HTMLDivElement>(focusIdx);
+    const promiseObj = awaitForElement<HTMLDivElement>(lazyFocusIdx);
     promiseObj.promise.then((focusBlockNode) => {
       setFocusBlockNode(focusBlockNode);
     });
@@ -36,7 +38,7 @@ export const FocusBlockLayoutProvider: React.FC = (props) => {
     return () => {
       promiseObj.cancel();
     };
-  }, [focusIdx, isBlockEqual]);
+  }, [lazyFocusIdx, isBlockEqual]);
 
   const value = useMemo(() => {
     return {

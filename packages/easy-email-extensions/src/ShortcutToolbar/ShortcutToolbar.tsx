@@ -49,7 +49,7 @@ export function ShortcutToolbar() {
             },
           ],
         }}
-        type={BasicType.SECTION}
+        type={AdvancedType.SECTION}
       />
 
       <IconFont

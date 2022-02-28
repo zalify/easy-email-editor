@@ -16,6 +16,7 @@ export function generateAdvancedLayoutBlock<T extends AdvancedBlock>(option: {
     ...option,
     getContent: (params) => {
       const { data, idx, mode, context, dataSource, index } = params;
+      const { iteration } = data.data.value;
 
       const blockData = {
         ...data,
@@ -23,7 +24,7 @@ export function generateAdvancedLayoutBlock<T extends AdvancedBlock>(option: {
       };
 
       // Column 必须设置宽度
-      if (data.type === AdvancedType.COLUMN) {
+      if (data.type === AdvancedType.COLUMN && iteration?.enabled) {
         data.attributes.width = data.attributes.width || '100%';
       }
 

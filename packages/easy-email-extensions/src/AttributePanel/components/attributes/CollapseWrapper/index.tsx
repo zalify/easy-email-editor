@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Collapse, Space } from '@arco-design/web-react';
-import { useBlock } from 'easy-email-editor';
+import { useBlock, useEditorProps } from 'easy-email-editor';
 import { isAdvancedBlock } from 'easy-email-core';
 import { Iteration } from '../Iteration';
 import { Condition } from '../Condition';
@@ -10,6 +10,7 @@ export interface CollapseWrapperProps {
 }
 
 export const CollapseWrapper: React.FC<CollapseWrapperProps> = (props) => {
+  const { enabledLogic } = useEditorProps();
   const [activeKeys, setActiveKeys] = useState<string[]>(
     props.defaultActiveKey
   );
@@ -31,7 +32,7 @@ export const CollapseWrapper: React.FC<CollapseWrapperProps> = (props) => {
     (key: string, keys: string[]) => {
       setActiveKeys(keys);
     },
-    [iterationEnabled]
+    []
   );
 
   useEffect(() => {
@@ -58,8 +59,15 @@ export const CollapseWrapper: React.FC<CollapseWrapperProps> = (props) => {
     <Space size='large' direction='vertical'>
       <Collapse onChange={onChange} activeKey={activeKeys}>
         {props.children}
-        <Iteration />
-        <Condition />
+        {
+          enabledLogic && (
+            <>
+              <Iteration />
+              <Condition />
+            </>
+          )
+        }
+
       </Collapse>
       <div />
       <div />
