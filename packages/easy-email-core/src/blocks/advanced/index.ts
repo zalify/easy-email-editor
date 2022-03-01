@@ -1,5 +1,8 @@
 import {
   AdvancedBlock,
+  ICondition,
+  IConditionGroup,
+  IConditionGroupItem,
   Operator,
   OperatorSymbol,
 } from './generateAdvancedBlock';
@@ -40,4 +43,4 @@ export const advancedBlocks = {
 };
 
 export { Operator, OperatorSymbol };
-export type { AdvancedBlock };
+export type { AdvancedBlock, ICondition, IConditionGroup, IConditionGroupItem };

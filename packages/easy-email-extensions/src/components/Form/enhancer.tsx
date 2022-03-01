@@ -120,7 +120,7 @@ export default function enhancer<P, C extends (...rest: any[]) => any = any>(
             };
             textAlign: 'right' | 'left';
           } = inline
-            ? {
+              ? {
                 label: {
                   span: 7,
                   offset: 0,
@@ -131,7 +131,7 @@ export default function enhancer<P, C extends (...rest: any[]) => any = any>(
                 },
                 textAlign: 'right',
               }
-            : {
+              : {
                 label: {
                   span: 24,
                   offset: 0,
@@ -193,9 +193,11 @@ export default function enhancer<P, C extends (...rest: any[]) => any = any>(
                     />
                   </Grid.Col>
                 </Grid.Row>
-                <div className={styles.helperText}>
-                  <small>{helpText}</small>
-                </div>
+                {helpText && (
+                  <div className={styles.helperText}>
+                    <small>{helpText}</small>
+                  </div>
+                )}
               </Space>
             </Form.Item>
           );

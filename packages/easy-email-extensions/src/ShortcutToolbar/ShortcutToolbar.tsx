@@ -1,13 +1,14 @@
 /* eslint-disable react/jsx-wrap-multilines */
-import { Button } from '@arco-design/web-react';
-import { AdvancedType, BasicType } from 'easy-email-core';
-import { IconFont, Stack, BlockAvatarWrapper } from 'easy-email-editor';
+
+import { AdvancedType } from 'easy-email-core';
+import { IconFont, Stack } from 'easy-email-editor';
 import React, { useRef } from 'react';
 import { BlocksPanel } from './components/BlocksPanel';
 import { DragIcon } from './components/DragIcon';
 
 export function ShortcutToolbar() {
   const blocksPanelRef = useRef<HTMLDivElement>(null);
+
   return (
     <Stack vertical alignment='center' distribution='center'>
       <BlocksPanel>

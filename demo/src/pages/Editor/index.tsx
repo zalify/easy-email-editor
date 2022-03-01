@@ -32,7 +32,6 @@ import { FormApi } from 'final-form';
 import { UserStorage } from '@demo/utils/user-storage';
 
 import { useCollection } from './components/useCollection';
-import mustache from 'mustache';
 import {
   AdvancedType,
   BasicType,

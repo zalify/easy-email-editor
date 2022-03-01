@@ -17,7 +17,7 @@ import '@/assets/font/iconfont.css';
 
 export const EmailEditor = () => {
   const { height: containerHeight } = useEditorProps();
-  const { setActiveTab } = useActiveTab();
+  const { setActiveTab, activeTab } = useActiveTab();
 
   const fixedContainer = useMemo(() => {
     return createPortal(<div id={FIXED_CONTAINER_ID} />, document.body);
@@ -37,6 +37,7 @@ export const EmailEditor = () => {
         }}
       >
         <Tabs
+          activeTab={activeTab}
           onChange={(id) => setActiveTab(id as any)}
           style={{ height: '100%', width: '100%' }}
           tabBarExtraContent={<ToolsPanel />}
@@ -79,6 +80,6 @@ export const EmailEditor = () => {
         {fixedContainer}
       </div>
     ),
-    [containerHeight, fixedContainer, setActiveTab]
+    [activeTab, containerHeight, fixedContainer, setActiveTab]
   );
 };

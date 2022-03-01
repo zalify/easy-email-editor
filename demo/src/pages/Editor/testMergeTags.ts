@@ -1,12 +1,14 @@
 export const testMergeTags = {
   user: {
     name: 'Ryan',
-    age: 33,
-    money: 8888,
-    job: 'backend',
+    age: 26,
     avatar:
       'https://assets.maocanhua.cn/bbb041da-62c3-4e6a-9648-60a06738836b-image.png',
     email: 'easy-email@gmail.com',
+    project: 'Easy email',
+  },
+  date: {
+    today: new Date().toDateString()
   },
   emptyList: [],
   product_list: [

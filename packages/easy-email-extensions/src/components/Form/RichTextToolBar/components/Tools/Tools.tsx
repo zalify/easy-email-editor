@@ -21,7 +21,7 @@ import { StrikeThrough } from '../StrikeThrough';
 import { Underline } from '../Underline';
 import { Italic } from '../Italic';
 import { Bold } from '../Bold';
-import { LineHeight } from '../LineHeight';
+import { FontSize } from '../FontSize';
 
 export interface ToolsProps {
   onChange: (content: string) => any;
@@ -124,7 +124,7 @@ export function Tools(props: ToolsProps) {
           getPopupContainer={getPopoverMountNode}
         />
         <div className='easy-email-extensions-divider' />
-        <LineHeight
+        <FontSize
           execCommand={execCommand}
           getPopupContainer={getPopoverMountNode}
         />

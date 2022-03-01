@@ -9,7 +9,7 @@ import {
   useHoverIdx,
 } from 'easy-email-editor';
 import { awaitForElement } from '@extensions/utils/awaitForElement';
-import { useLazyState } from '@/hooks/useLazyState';
+import { useLazyState } from 'easy-email-editor';
 
 export function HoverTooltip() {
   const { hoverIdx, direction, isDragging } = useHoverIdx();

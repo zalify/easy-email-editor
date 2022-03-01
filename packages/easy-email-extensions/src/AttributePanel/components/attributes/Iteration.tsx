@@ -40,7 +40,6 @@ export function Iteration() {
 
   return (
     <Collapse.Item
-      disabled={!enabled}
       className='iteration'
       destroyOnHide
       name='Iteration'

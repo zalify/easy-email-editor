@@ -5,7 +5,7 @@ import {
 import { Template, Raw } from '@core/components';
 import { isNumber } from 'lodash';
 import React from 'react';
-import { v4 } from 'uuid';
+import { nanoid } from 'nanoid';
 
 function generateIterationTemplate(
   option: NonNullable<AdvancedBlock['data']['value']['iteration']>,
@@ -16,9 +16,8 @@ function generateIterationTemplate(
       <Raw>
         {`
         <!-- htmlmin:ignore -->
-        {% for ${option.itemName} in ${option.dataSource} ${
-          option.limit ? `limit:${option.limit}` : ''
-        } %}
+        {% for ${option.itemName} in ${option.dataSource} ${option.limit ? `limit:${option.limit}` : ''
+          } %}
         <!-- htmlmin:ignore -->
         `}
       </Raw>
@@ -37,19 +36,19 @@ function generateConditionTemplate(
   const { symbol, groups } = option;
 
   const generateExpression = (condition: {
-    path: string;
+    left: string | number;
     operator: Operator;
-    value: any;
+    right: string | number;
   }) => {
     return (
-      condition.path +
+      condition.left +
       ' ' +
       condition.operator +
       ' ' +
-      (isNumber(condition.value) ? condition.value : `"${condition.value}"`)
+      (isNumber(condition.right) ? condition.right : `"${condition.right}"`)
     );
   };
-  const uuid = v4().replace(/-/g, '');
+  const uuid = nanoid(5);
   const variables = groups.map((_, index) => `con_${index}_${uuid}`);
 
   const assignExpression = groups

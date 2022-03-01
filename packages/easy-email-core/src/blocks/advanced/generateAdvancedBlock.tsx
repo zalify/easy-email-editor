@@ -57,10 +57,6 @@ export function generateAdvancedBlock<T extends AdvancedBlock>(option: {
         return children;
       }
 
-      if (!iteration || !iteration.enabled) {
-        return children;
-      }
-
       if (mode === 'testing') {
         return (
           <Template>
@@ -78,15 +74,17 @@ export function generateAdvancedBlock<T extends AdvancedBlock>(option: {
         );
       }
 
-      children = TemplateEngineManager.generateTagTemplate('iteration')(
-        iteration,
-        <Template>{children}</Template>
-      );
-
-      if (condition) {
+      if (condition && condition.enabled) {
         children = TemplateEngineManager.generateTagTemplate('condition')(
           condition,
           children
+        );
+      }
+
+      if (iteration && iteration.enabled) {
+        children = TemplateEngineManager.generateTagTemplate('iteration')(
+          iteration,
+          <Template>{children}</Template>
         );
       }
 
@@ -102,20 +100,7 @@ export function generateAdvancedBlock<T extends AdvancedBlock>(option: {
 export interface AdvancedBlock extends IBlockData {
   data: {
     value: {
-      condition?: {
-        groups: [
-          {
-            symbol: OperatorSymbol;
-            groups: Array<{
-              path: string;
-              operator: Operator;
-              value: string | number;
-            }>;
-          }
-        ];
-        symbol: OperatorSymbol;
-        enabled: boolean;
-      };
+      condition?: ICondition;
       iteration?: {
         enabled: boolean;
         dataSource: string; // -> collection.products
@@ -125,6 +110,23 @@ export interface AdvancedBlock extends IBlockData {
       };
     };
   };
+}
+
+export interface ICondition {
+  groups: Array<IConditionGroup>;
+  symbol: OperatorSymbol;
+  enabled: boolean;
+}
+
+export interface IConditionGroup {
+  symbol: OperatorSymbol;
+  groups: Array<IConditionGroupItem>;
+}
+
+export interface IConditionGroupItem {
+  left: string;
+  operator: Operator;
+  right: string | number;
 }
 
 export enum Operator {
