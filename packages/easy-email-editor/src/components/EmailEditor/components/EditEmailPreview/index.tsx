@@ -7,11 +7,14 @@ import { ShadowStyle } from './components/ShadowStyle';
 import { useEditorContext } from '@/hooks/useEditorContext';
 import { DATA_ATTRIBUTE_DROP_CONTAINER, SYNC_SCROLL_ELEMENT_CLASS_NAME } from '@/constants';
 import { classnames } from '@/utils/classnames';
+import { ActiveTabKeys } from '@/components/Provider/BlocksProvider';
+import { useActiveTab } from '@/hooks/useActiveTab';
 
 export function EditEmailPreview() {
   useHotKeys();
   const [containerRef, setContainerRef] = useState<HTMLDivElement | null>(null);
   const { setRef } = useDropBlock();
+  const { activeTab } = useActiveTab();
 
   const { setInitialized } = useEditorContext();
 
@@ -28,6 +31,7 @@ export function EditEmailPreview() {
   return useMemo(
     () => (
       <SyncScrollShadowDom
+        isActive={activeTab === ActiveTabKeys.EDIT}
         id='VisualEditorEditMode'
         {...{
           [DATA_ATTRIBUTE_DROP_CONTAINER]: 'true',
