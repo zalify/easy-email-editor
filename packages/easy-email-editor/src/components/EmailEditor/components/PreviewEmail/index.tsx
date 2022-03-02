@@ -9,6 +9,7 @@ import { SYNC_SCROLL_ELEMENT_CLASS_NAME } from '@/constants';
 
 export interface PreviewEmailProps {
   style?: React.CSSProperties;
+  isActive: boolean;
 }
 export function PreviewEmail(props: PreviewEmailProps) {
 
@@ -28,6 +29,7 @@ export function PreviewEmail(props: PreviewEmailProps) {
 
   return (
     <SyncScrollShadowDom
+      isActive={props.isActive}
       style={{
         border: 'none',
         height: '100%',

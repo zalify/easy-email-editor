@@ -10,6 +10,7 @@ export interface TabsProps {
   style?: React.CSSProperties;
   className?: string;
   onChange?: (id: string) => void;
+  onBeforeChange?: (current: string, next: string) => boolean;
   defaultActiveTab?: string;
   activeTab?: string;
 }
@@ -25,12 +26,20 @@ const Tabs: React.FC<TabsProps> = (props) => {
     props.defaultActiveTab || ''
   );
 
-  const onClick = useCallback((id: string) => {
-    if (!props.activeTab) {
-      setActiveTab(id);
+  const onClick = useCallback((nextTab: string) => {
+    if (!props.onBeforeChange) {
+      setActiveTab(nextTab);
+      props.onChange?.(nextTab);
     }
-    props.onChange?.(id);
-  }, [props]);
+    if (props.onBeforeChange) {
+      const next = props.onBeforeChange(activeTab, nextTab);
+      if (next) {
+        setActiveTab(nextTab);
+        props.onChange?.(nextTab);
+      }
+    }
+
+  }, [activeTab, props]);
 
   useEffect(() => {
     if (props.activeTab) {

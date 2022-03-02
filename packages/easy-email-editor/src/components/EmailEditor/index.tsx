@@ -13,6 +13,8 @@ import { TabPane, Tabs } from '@/components/UI/Tabs';
 import { useEditorProps } from '@/hooks/useEditorProps';
 import './index.scss';
 import '@/assets/font/iconfont.css';
+import { useCallback } from 'react';
+import { EventManager, EventType } from '@/utils/EventManager';
 (window as any).global = window; // react-codemirror
 
 export const EmailEditor = () => {
@@ -22,6 +24,14 @@ export const EmailEditor = () => {
   const fixedContainer = useMemo(() => {
     return createPortal(<div id={FIXED_CONTAINER_ID} />, document.body);
   }, []);
+
+  const onBeforeChangeTab = useCallback((currentTab: any, nextTab: any) => {
+    return EventManager.exec(EventType.ACTIVE_TAB_CHANGE, { currentTab, nextTab });
+  }, []);
+
+  const onChangeTab = useCallback((nextTab: string) => {
+    setActiveTab(nextTab as any);
+  }, [setActiveTab]);
 
   return useMemo(
     () => (
@@ -38,7 +48,8 @@ export const EmailEditor = () => {
       >
         <Tabs
           activeTab={activeTab}
-          onChange={(id) => setActiveTab(id as any)}
+          onBeforeChange={onBeforeChangeTab}
+          onChange={onChangeTab}
           style={{ height: '100%', width: '100%' }}
           tabBarExtraContent={<ToolsPanel />}
         >
@@ -80,6 +91,6 @@ export const EmailEditor = () => {
         {fixedContainer}
       </div>
     ),
-    [activeTab, containerHeight, fixedContainer, setActiveTab]
+    [activeTab, containerHeight, fixedContainer, onBeforeChangeTab, onChangeTab]
   );
 };

@@ -3,12 +3,14 @@ import { PreviewEmail } from '../PreviewEmail';
 
 import iphoneFrame from '@/assets/images/iphone.png';
 import { useMobileScale } from '@/hooks/useMobileScale';
+import { ActiveTabKeys } from '@/components/Provider/BlocksProvider';
+import { useActiveTab } from '@';
 const MOBILE_WIDTH = 320;
 const MOBILE_Height = 640;
 
 export function MobileEmailPreview() {
   const { mobileWidth } = useMobileScale();
-
+  const { activeTab } = useActiveTab();
   return (
     <div
       className='easy-email-overlay'
@@ -59,7 +61,7 @@ export function MobileEmailPreview() {
               overflow: 'hidden'
             }}
           >
-            <PreviewEmail />
+            <PreviewEmail isActive={activeTab === ActiveTabKeys.MOBILE} />
           </div>
         </div>
 

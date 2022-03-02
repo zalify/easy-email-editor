@@ -3,7 +3,7 @@ import { ActiveTabKeys } from '@/components/Provider/BlocksProvider';
 export class EventManager {
   private static events: { [key: string]: ((...args: any[]) => any)[]; } = {};
 
-  public static on(type: EventType.ACTIVE_TAB_CHANGE, callback: (payload: { currentTab: ActiveTabKeys, nextTab: ActiveTabKeys; }) => Boolean): void;
+  public static on(type: EventType.ACTIVE_TAB_CHANGE, callback: (payload: { currentTab: ActiveTabKeys, nextTab: ActiveTabKeys; }) => boolean): void;
   public static on(type: EventType, handler: (...args: any[]) => any) {
     const event = this.events[type];
     if (!event) {
@@ -17,8 +17,8 @@ export class EventManager {
     this.events[type] = this.events[type].filter(h => h !== handler);
   }
 
-  public static exec(type: EventType.ACTIVE_TAB_CHANGE, payload: { currentTab: ActiveTabKeys, nextTab: ActiveTabKeys; }): Boolean;
-  public static exec(type: EventType, ...args: any[]): Boolean {
+  public static exec(type: EventType.ACTIVE_TAB_CHANGE, payload: { currentTab: ActiveTabKeys, nextTab: ActiveTabKeys; }): boolean;
+  public static exec(type: EventType, ...args: any[]): boolean {
     const event = this.events[type];
 
     if (!event) {

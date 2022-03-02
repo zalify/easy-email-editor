@@ -2,9 +2,10 @@
 import React from 'react';
 import { useActiveTab } from '@/hooks/useActiveTab';
 import { PreviewEmail } from '../PreviewEmail';
+import { ActiveTabKeys } from '@/components/Provider/BlocksProvider';
 
 export function DesktopEmailPreview() {
-
+  const { activeTab } = useActiveTab();
   return (
     <div
       style={{
@@ -12,13 +13,15 @@ export function DesktopEmailPreview() {
 
       }}
     >
-      <PreviewEmail style={{
-        paddingLeft: 10,
-        paddingRight: 10,
-        paddingTop: 40,
-        paddingBottom: 40,
-        boxSizing: 'border-box',
-      }}
+      <PreviewEmail
+        isActive={activeTab === ActiveTabKeys.PC}
+        style={{
+          paddingLeft: 10,
+          paddingRight: 10,
+          paddingTop: 40,
+          paddingBottom: 40,
+          boxSizing: 'border-box',
+        }}
       />
     </div>
   );
