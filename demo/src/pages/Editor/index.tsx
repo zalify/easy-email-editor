@@ -207,7 +207,7 @@ export default function Editor() {
     const sourceData = cloneDeep(templateData.content) as IBlockData;
     return {
       ...templateData,
-      content: replaceStandardBlockToAdvancedBlock(sourceData), // replace standard block
+      content: sourceData, // replace standard block
     };
   }, [templateData]);
 
@@ -250,10 +250,10 @@ export default function Editor() {
         onUploadImage={onUploadImage}
         fontList={fontList}
         onSubmit={onSubmit}
-        enabledMergeTagsBadge
         onChangeMergeTag={onChangeMergeTag}
         autoComplete
         enabledLogic
+        enabledMergeTagsBadge
         dashed={false}
         mergeTags={mergeTags}
         mergeTagGenerate={(tag) => `{{${tag}}}`}

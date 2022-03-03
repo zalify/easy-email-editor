@@ -28,7 +28,7 @@ export interface ToolsProps {
 }
 
 export function Tools(props: ToolsProps) {
-  const { mergeTags } = useEditorProps();
+  const { mergeTags, enabledMergeTagsBadge } = useEditorProps();
   const { focusBlockNode } = useFocusBlockLayout();
   const { selectionRange, restoreRange, setRangeByElement } =
     useSelectionRange();
@@ -72,7 +72,11 @@ export function Tools(props: ToolsProps) {
       link.style.textDecoration = linkData.underline ? 'underline' : 'none';
       link.setAttribute('href', linkData.link);
     } else if (cmd === 'insertHTML') {
-      const newContent = MergeTagBadge.transform(val, uuid);
+      let newContent = val;
+      if (enabledMergeTagsBadge) {
+        newContent = MergeTagBadge.transform(val, uuid);
+      }
+
       document.execCommand(cmd, false, newContent);
       const insertMergeTagEle = getShadowRoot().getElementById(uuid);
       if (insertMergeTagEle) {

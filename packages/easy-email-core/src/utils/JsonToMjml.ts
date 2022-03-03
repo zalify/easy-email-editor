@@ -1,7 +1,7 @@
 import { parseReactBlockToBlockData } from '@core/utils/parseReactBlockToBlockData';
 import { isValidElement } from 'react';
 
-import { BasicType, AdvancedType } from '@core/constants';
+import { BasicType, AdvancedType, MERGE_TAG_CLASS_NAME } from '@core/constants';
 import { IBlockData } from '@core/typings';
 import { pickBy, identity, isObject, isBoolean, isString } from 'lodash';
 import {
@@ -17,19 +17,19 @@ import { getImg } from './getImg';
 
 export type JsonToMjmlOption =
   | {
-      data: IBlockData;
-      idx: string | null; // current idx
-      context?: IBlockData;
-      dataSource?: { [key: string]: any };
-      mode: 'testing';
-    }
+    data: IBlockData;
+    idx: string | null; // current idx
+    context?: IBlockData;
+    dataSource?: { [key: string]: any; };
+    mode: 'testing';
+  }
   | {
-      idx?: string | null; // current idx, default page idx
-      data: IBlockData;
-      context?: IBlockData;
-      mode: 'production';
-      dataSource?: { [key: string]: any };
-    };
+    idx?: string | null; // current idx, default page idx
+    data: IBlockData;
+    context?: IBlockData;
+    mode: 'production';
+    dataSource?: { [key: string]: any; };
+  };
 
 export function JsonToMjml(options: JsonToMjmlOption): string {
   const {
@@ -63,6 +63,10 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
       getNodeIdxClassName(idx),
       getNodeTypeClassName(data.type)
     );
+  }
+
+  if (isTest && data.type === BasicType.TEXT) {
+    att['css-class'] = classnames(att['css-class'], MERGE_TAG_CLASS_NAME);
   }
 
   if (data.type === BasicType.PAGE) {
@@ -158,24 +162,21 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
         ? `<mj-raw>
             <meta name="viewport" />
            </mj-raw>
-           <mj-style inline="inline">.mjml-body { width: ${
-             data.attributes.width || '600px'
-           }; margin: 0px auto; }</mj-style>`
+           <mj-style inline="inline">.mjml-body { width: ${data.attributes.width || '600px'
+        }; margin: 0px auto; }</mj-style>`
         : '';
       const styles =
         value.headStyles
           ?.map(
             (style) =>
-              `<mj-style ${style.inline ? 'inline="inline"' : ''}>${
-                style.content
+              `<mj-style ${style.inline ? 'inline="inline"' : ''}>${style.content
               }</mj-style>`
           )
           .join('\n') || '';
 
       const userStyle = value['user-style']
-        ? `<mj-style ${value['user-style'].inline ? 'inline="inline"' : ''}>${
-            value['user-style'].content
-          }</mj-style>`
+        ? `<mj-style ${value['user-style'].inline ? 'inline="inline"' : ''}>${value['user-style'].content
+        }</mj-style>`
         : '';
 
       return `
@@ -188,39 +189,34 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
               ${breakpoint}
             <mj-attributes>
               ${value.headAttributes}
-              ${
-                value['font-family']
-                  ? `<mj-all font-family="${value['font-family']}" />`
-                  : ''
-              }
-              ${
-                value['font-size']
-                  ? `<mj-text font-size="${value['font-size']}" />`
-                  : ''
-              }
-              ${
-                value['text-color']
-                  ? `<mj-text color="${value['text-color']}" />`
-                  : ''
-              }
-              ${
-                value['line-height']
-                  ? `<mj-text line-height="${value['line-height']}" />`
-                  : ''
-              }
-              ${
-                value['content-background-color']
-                  ? `<mj-wrapper background-color="${value['content-background-color']}" />
+              ${value['font-family']
+          ? `<mj-all font-family="${value['font-family']}" />`
+          : ''
+        }
+              ${value['font-size']
+          ? `<mj-text font-size="${value['font-size']}" />`
+          : ''
+        }
+              ${value['text-color']
+          ? `<mj-text color="${value['text-color']}" />`
+          : ''
+        }
+              ${value['line-height']
+          ? `<mj-text line-height="${value['line-height']}" />`
+          : ''
+        }
+              ${value['content-background-color']
+          ? `<mj-wrapper background-color="${value['content-background-color']}" />
                      <mj-section background-color="${value['content-background-color']}" />
                     `
-                  : ''
-              }
+          : ''
+        }
               ${value.fonts
-                ?.filter(Boolean)
-                .map(
-                  (item) =>
-                    `<mj-font name="${item.name}" href="${item.href}" />`
-                )}
+          ?.filter(Boolean)
+          .map(
+            (item) =>
+              `<mj-font name="${item.name}" href="${item.href}" />`
+          )}
             </mj-attributes>
           </mj-head>
           <mj-body ${attributeStr}>
@@ -249,10 +245,9 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
     case BasicType.WRAPPER:
       return `
               <mj-wrapper ${attributeStr}>
-               ${
-                 children ||
-                 `<mj-section><mj-column>${placeholder}</mj-column></mj-section>`
-               }
+               ${children ||
+        `<mj-section><mj-column>${placeholder}</mj-column></mj-section>`
+        }
               </mj-wrapper>
             `;
     case BasicType.CAROUSEL:
@@ -383,21 +378,21 @@ export function generaMjmlMetaData(data: IPage) {
   return `
     <mj-html-attributes>
       ${attributes
-        .filter((key) => values[key as keyof typeof values] !== undefined)
-        .map((key) => {
-          const attKey = key as keyof typeof values;
-          const isMultipleAttributes = isObject(values[attKey]);
-          const value = isMultipleAttributes
-            ? Object.keys(values[attKey]!)
-                .map(
-                  (childKey) =>
-                    `${childKey}="${(values[attKey] as any)[childKey]}"`
-                )
-                .join(' ')
-            : `${key}="${values[attKey]}"`;
-          return `<mj-html-attribute class="easy-email" multiple-attributes="${isMultipleAttributes}" attribute-name="${key}" ${value}></mj-html-attribute>`;
-        })
-        .join('\n')}
+      .filter((key) => values[key as keyof typeof values] !== undefined)
+      .map((key) => {
+        const attKey = key as keyof typeof values;
+        const isMultipleAttributes = isObject(values[attKey]);
+        const value = isMultipleAttributes
+          ? Object.keys(values[attKey]!)
+            .map(
+              (childKey) =>
+                `${childKey}="${(values[attKey] as any)[childKey]}"`
+            )
+            .join(' ')
+          : `${key}="${values[attKey]}"`;
+        return `<mj-html-attribute class="easy-email" multiple-attributes="${isMultipleAttributes}" attribute-name="${key}" ${value}></mj-html-attribute>`;
+      })
+      .join('\n')}
 
     </mj-html-attributes>
   `;
