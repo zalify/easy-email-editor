@@ -95,11 +95,11 @@ export const SimpleLayout: React.FC<
             className={styles.customScrollBar}
           >
             <Tabs>
-              <Tabs.TabPane key='Configuration' title='Configuration'>
+              <Tabs.TabPane destroyOnHide key='Configuration' title='Configuration'>
                 <AttributePanel />
               </Tabs.TabPane>
               {showSourceCode && (
-                <Tabs.TabPane key='Source code' title='Source code'>
+                <Tabs.TabPane destroyOnHide key='Source code' title='Source code'>
                   <SourceCodePanel />
                 </Tabs.TabPane>
               )}

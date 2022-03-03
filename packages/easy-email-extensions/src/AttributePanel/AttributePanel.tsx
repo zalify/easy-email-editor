@@ -21,14 +21,12 @@ export function AttributePanel() {
 
   const { focusIdx } = useFocusIdx();
 
-  const value = getValueByIdx(values, focusIdx);
-
   const Com =
     focusBlock && BlockAttributeConfigurationManager.get(focusBlock.type);
 
   const shadowRoot = getShadowRoot();
 
-  if (!value || !initialized) return null;
+  if (!initialized) return null;
 
   return (
     <SelectionRangeProvider>
