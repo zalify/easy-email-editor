@@ -61,9 +61,19 @@ export default function MergeTagBadge() {
     };
   }, [targetRef, popoverRef]);
 
+  const onClose = useCallback(() => {
+    let ele = targetRef.current;
+
+    setTimeout(() => {
+      if (!ele) return;
+      focusMergeTag(ele);
+    }, 100);
+
+    setTarget(null);
+  }, [focusMergeTag, targetRef]);
+
   useEffect(() => {
     if (!root) return;
-
     const onClick: EventListenerOrEventListenerObject = (e) => {
       removeAllActiveBadge();
       const target = e.target;
@@ -73,6 +83,10 @@ export default function MergeTagBadge() {
       ) {
         target.classList.add('easy-email-merge-tag-focus');
         const namePath = target.value;
+        if (!onChangeMergeTag) {
+          focusMergeTag(target);
+          return;
+        }
         setText(get(mergeTags, namePath, ''));
         setTarget(target);
 
@@ -87,18 +101,7 @@ export default function MergeTagBadge() {
     return () => {
       root.removeEventListener('click', onClick);
     };
-  }, [focusMergeTag, mergeTags, root]);
-
-  const onClose = useCallback(() => {
-    let ele = targetRef.current;
-
-    setTimeout(() => {
-      if (!ele) return;
-      focusMergeTag(ele);
-    }, 100);
-
-    setTarget(null);
-  }, [focusMergeTag, targetRef]);
+  }, [focusMergeTag, mergeTags, onChangeMergeTag, root]);
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = useCallback((ev) => {
     setText(ev.target.value);
