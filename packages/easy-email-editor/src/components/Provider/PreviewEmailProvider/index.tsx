@@ -41,6 +41,7 @@ export const PreviewEmailProvider: React.FC<{}> = (props) => {
         mode: 'production',
         context: lazyPageData,
         dataSource: cloneDeep(injectData),
+        keepClassName: true
       })
     ).html;
     if (onBeforePreview) {

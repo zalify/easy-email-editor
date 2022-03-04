@@ -1,5 +1,6 @@
 import { SYNC_SCROLL_ELEMENT_CLASS_NAME, useActiveTab } from '@';
 import { useDomScrollHeight } from '@/hooks/useDomScrollHeight';
+import { debounce } from 'lodash';
 import React, { useState, useEffect, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 
@@ -10,12 +11,13 @@ export const SyncScrollShadowDom: React.FC<React.HTMLProps<HTMLElement> & { isAc
   const { activeTab } = useActiveTab();
   const { isActive, ...rest } = props;
 
-  const setFirstVisibleEle = useCallback((root: HTMLElement) => {
+  const setFirstVisibleEle = useCallback(debounce((root: HTMLElement) => {
     if (!root.shadowRoot) return;
 
-    const { left, width, top } = root.getBoundingClientRect();
+    const { left, width, top: containerTop } = root.getBoundingClientRect();
 
-    const ele = root.shadowRoot.elementFromPoint(left + width / 2, top);
+    const ele = root.shadowRoot.elementFromPoint(left + width / 2, containerTop);
+
     const findSelectorNode = (ele: Element): Element | null => {
       if (ele.getAttribute('data-selector')) {
         return ele;
@@ -25,35 +27,45 @@ export const SyncScrollShadowDom: React.FC<React.HTMLProps<HTMLElement> & { isAc
       }
       return null;
     };
+
     const selectorNode = ele && findSelectorNode(ele);
+
     viewElementRef.current = null;
     if (selectorNode) {
-      const { top: viewEleTop } = selectorNode.getBoundingClientRect();
+      const { top: selectorEleTop } = selectorNode.getBoundingClientRect();
+
+      let selectorDiffTop = selectorEleTop - containerTop;
+
       const selector = selectorNode.getAttribute('data-selector');
+
       if (selector) {
         viewElementRef.current = {
           selector: selector || '',
-          top: viewEleTop - top
+          top: selectorDiffTop
         };
 
       }
 
     }
-  }, [viewElementRef]);
+  }, 200), [viewElementRef]);
 
   useEffect(() => {
     if (!isActive || !root) return;
     const viewElement = viewElementRef.current;
     const scrollEle = root.querySelector(`.${SYNC_SCROLL_ELEMENT_CLASS_NAME}`);
     if (!scrollEle) return;
+
     if (viewElement) {
       const viewElementNode = root.querySelector(`[data-selector="${viewElement?.selector}"]`);
 
       if (viewElementNode && scrollEle) {
+
         viewElementNode.scrollIntoView();
+
         scrollEle.scrollTo(0, scrollEle.scrollTop - viewElement.top);
       }
     } else {
+
       scrollEle.scrollTo(0, 0);
     }
   }, [root, viewElementRef, activeTab, isActive]);

@@ -15,21 +15,28 @@ import { ICarousel, INavbar, ISocial, IPage } from '@core/blocks';
 import { getPreviewClassName } from './getPreviewClassName';
 import { getImg } from './getImg';
 
+export interface JsonToMjmlOptionProduction {
+  idx?: string | null; // current idx, default page idx
+  data: IBlockData;
+  context?: IBlockData;
+  mode: 'production';
+  keepClassName?: boolean;
+  dataSource?: { [key: string]: any; };
+}
+
+export interface JsonToMjmlOptionDev {
+  data: IBlockData;
+  idx: string | null; // current idx
+  context?: IBlockData;
+  dataSource?: { [key: string]: any; };
+  mode: 'testing';
+}
+
 export type JsonToMjmlOption =
-  | {
-    data: IBlockData;
-    idx: string | null; // current idx
-    context?: IBlockData;
-    dataSource?: { [key: string]: any; };
-    mode: 'testing';
-  }
-  | {
-    idx?: string | null; // current idx, default page idx
-    data: IBlockData;
-    context?: IBlockData;
-    mode: 'production';
-    dataSource?: { [key: string]: any; };
-  };
+  | JsonToMjmlOptionDev
+  | JsonToMjmlOptionProduction;
+
+const isProductionMode = (option: JsonToMjmlOption): option is JsonToMjmlOptionProduction => option.mode === 'production';
 
 export function JsonToMjml(options: JsonToMjmlOption): string {
   const {
@@ -54,6 +61,7 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
   );
 
   const isTest = mode === 'testing';
+  const keepClassName = isProductionMode(options) ? options.keepClassName : false;
   const placeholder = isTest ? renderPlaceholder(data.type) : '';
 
   if (isTest && idx) {
@@ -63,6 +71,10 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
       getNodeIdxClassName(idx),
       getNodeTypeClassName(data.type)
     );
+  }
+
+  if (keepClassName) {
+    att['css-class'] = classnames(att['css-class'], getNodeTypeClassName(data.type));
   }
 
   if (isTest && data.type === BasicType.TEXT) {
@@ -125,6 +137,7 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
       context: context,
       dataSource,
       mode,
+      keepClassName
     });
   }
 
@@ -143,6 +156,7 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
         dataSource,
         context,
         mode,
+        keepClassName
       });
     })
     .join('\n');
