@@ -69,6 +69,6 @@ export function EditEmailPreview() {
         <ShadowStyle />
       </SyncScrollShadowDom>
     ),
-    []
+    [activeTab]
   );
 }

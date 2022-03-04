@@ -7,8 +7,9 @@ import { HtmlStringToReactNodes } from '@/utils/HtmlStringToReactNodes';
 import { createPortal } from 'react-dom';
 import { useEditorProps } from '@/hooks/useEditorProps';
 import { getEditorRoot, getShadowRoot } from '@/utils';
-import { FIXED_CONTAINER_ID } from '@/constants';
+import { DATA_RENDER_COUNT, FIXED_CONTAINER_ID } from '@/constants';
 
+let count = 0;
 export function MjmlDomRender() {
   const { pageData: content } = useEditorContext();
   const [pageData, setPageData] = useState<IPage | null>(null);
@@ -84,6 +85,11 @@ export function MjmlDomRender() {
   return useMemo(() => {
     return (
       <div
+        {
+        ...{
+          [DATA_RENDER_COUNT]: count++
+        }
+        }
         data-dashed={dashed}
         ref={setRef}
         style={{

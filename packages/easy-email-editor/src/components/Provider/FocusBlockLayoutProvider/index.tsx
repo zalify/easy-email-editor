@@ -1,44 +1,61 @@
-import { useBlock } from '@/hooks/useBlock';
 import { useFocusIdx } from '@/hooks/useFocusIdx';
-import { awaitForElement } from '@/utils/awaitForElement';
-import { IBlockData } from 'easy-email-core';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import React from 'react';
-import { useLazyState } from '@/hooks/useLazyState';
+import { getBlockNodeByIdx, getShadowRoot } from '@/utils';
+import { DATA_RENDER_COUNT } from '@/constants';
+import { useEditorContext } from '@/hooks/useEditorContext';
+import { useRefState } from '@/hooks/useRefState';
 
 export const FocusBlockLayoutContext = React.createContext<{
-  focusBlockNode: HTMLDivElement | null;
+  focusBlockNode: HTMLElement | null;
 }>({
   focusBlockNode: null,
 });
 
 export const FocusBlockLayoutProvider: React.FC = (props) => {
-  const [focusBlockNode, setFocusBlockNode] = useState<HTMLDivElement | null>(
+  const [focusBlockNode, setFocusBlockNode] = useState<HTMLElement | null>(
     null
   );
+  const { initialized } = useEditorContext();
   const { focusIdx } = useFocusIdx();
-  const lazyFocusIdx = useLazyState(focusIdx, 60);
-  const { focusBlock } = useBlock();
-  const lastFocusBlock = useRef<IBlockData | null>(null);
+  const focusIdxRef = useRefState(focusIdx);
 
-  const isBlockEqual = useMemo(() => {
-    if (lastFocusBlock.current === focusBlock) return true;
-    lastFocusBlock.current = focusBlock;
-    return false;
-  }, [focusBlock]);
+  const root = useMemo(() => {
+    return initialized ? getShadowRoot()?.querySelector(`[${DATA_RENDER_COUNT}]`) : null;
+  }, [initialized]);
 
   useEffect(() => {
-    if (isBlockEqual) return;
+    if (!root) return;
+    let lastCount: any = '0';
+    const ms = new MutationObserver(() => {
+      const currentCount = root.getAttribute(DATA_RENDER_COUNT);
+      if (lastCount !== currentCount) {
+        lastCount = currentCount;
 
-    const promiseObj = awaitForElement<HTMLDivElement>(lazyFocusIdx);
-    promiseObj.promise.then((focusBlockNode) => {
-      setFocusBlockNode(focusBlockNode);
+        const ele = getBlockNodeByIdx(focusIdxRef.current);
+        if (ele) {
+          setFocusBlockNode(ele);
+        }
+
+      }
+
+    });
+    ms.observe(root, {
+      attributeFilter: [DATA_RENDER_COUNT]
     });
 
     return () => {
-      promiseObj.cancel();
+      ms.disconnect();
     };
-  }, [lazyFocusIdx, isBlockEqual]);
+
+  }, [focusIdxRef, root]);
+
+  useEffect(() => {
+    if (!root) return;
+    if (focusIdx) {
+      root.setAttribute(DATA_RENDER_COUNT, (+new Date()).toString());
+    }
+  }, [focusIdx, root]);
 
   const value = useMemo(() => {
     return {
