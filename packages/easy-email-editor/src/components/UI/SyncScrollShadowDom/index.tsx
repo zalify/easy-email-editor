@@ -4,6 +4,9 @@ import { debounce } from 'lodash';
 import React, { useState, useEffect, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 
+// It will be occluded by richText bar, so it needs to be offset
+const offsetTop = 50;
+
 export const SyncScrollShadowDom: React.FC<React.HTMLProps<HTMLElement> & { isActive: boolean; }> = (props) => {
   const [root, setRoot] = useState<null | ShadowRoot>(null);
   const [ref, setRef] = useState<null | HTMLDivElement>(null);
@@ -16,7 +19,7 @@ export const SyncScrollShadowDom: React.FC<React.HTMLProps<HTMLElement> & { isAc
 
     const { left, width, top: containerTop } = root.getBoundingClientRect();
 
-    const ele = root.shadowRoot.elementFromPoint(left + width / 2, containerTop);
+    const ele = root.shadowRoot.elementFromPoint(left + width / 2, containerTop + offsetTop);
 
     const findSelectorNode = (ele: Element): Element | null => {
       if (ele.getAttribute('data-selector')) {
