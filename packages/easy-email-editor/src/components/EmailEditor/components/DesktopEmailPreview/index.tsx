@@ -19,7 +19,7 @@ export function DesktopEmailPreview() {
           paddingLeft: 10,
           paddingRight: 10,
           paddingTop: 40,
-          paddingBottom: 40,
+          paddingBottom: 140,
           boxSizing: 'border-box',
         }}
       />
