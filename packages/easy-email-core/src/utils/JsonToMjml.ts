@@ -193,6 +193,8 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
         }</mj-style>`
         : '';
 
+      const extraHeadContent = value.extraHeadContent ? `<mj-raw>${value.extraHeadContent}</mj-raw>` : '';
+
       return `
         <mjml>
           <mj-head>
@@ -201,6 +203,7 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
               ${styles}
               ${userStyle}
               ${breakpoint}
+              ${extraHeadContent}
             <mj-attributes>
               ${value.headAttributes}
               ${value['font-family']

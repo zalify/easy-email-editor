@@ -12,11 +12,12 @@ export type IPage = IBlockData<
   {
     breakpoint?: string;
     headAttributes: string;
-    fonts?: { name: string; href: string }[];
+    fonts?: { name: string; href: string; }[];
     headStyles?: {
       content?: string;
       inline?: 'inline';
     }[];
+    extraHeadContent?: string;
     responsive?: boolean;
     'font-family': string;
     'font-size': string;
