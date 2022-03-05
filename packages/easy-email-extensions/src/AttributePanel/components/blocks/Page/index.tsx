@@ -42,7 +42,7 @@ export function Page() {
             <Stack vertical spacing='tight'>
               <Grid.Row>
                 <Grid.Col span={11}>
-                  <FontFamily />
+                  <FontFamily name={`${focusIdx}.data.value.font-family`} />
                 </Grid.Col>
                 <Grid.Col offset={1} span={11}>
                   <InputWithUnitField
