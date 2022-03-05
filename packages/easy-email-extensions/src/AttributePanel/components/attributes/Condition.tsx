@@ -5,6 +5,7 @@ import { SelectField, TextField } from '@extensions/components/Form';
 import React, { useCallback } from 'react';
 import { cloneDeep, get, upperFirst } from 'lodash';
 import { IconDelete, IconPlus } from '@arco-design/web-react/icon';
+import { useField } from 'react-final-form';
 
 export function Condition() {
   const { focusIdx } = useFocusIdx();
@@ -28,7 +29,7 @@ export function Condition() {
                 groups: [
                   {
                     left: '',
-                    operator: Operator.EQUAL,
+                    operator: Operator.TRUTHY,
                     right: ''
                   }
                 ],
@@ -50,7 +51,7 @@ export function Condition() {
       groups: [
         {
           left: '',
-          operator: Operator.EQUAL,
+          operator: Operator.TRUTHY,
           right: ''
         }
       ],
@@ -63,7 +64,7 @@ export function Condition() {
 
     groups.push({
       left: '',
-      operator: Operator.EQUAL,
+      operator: Operator.TRUTHY,
       right: ''
 
     });
@@ -201,12 +202,15 @@ const options = Object.values(Operator).map(item => ({ label: upperFirst(item), 
 function ConditionItem({ path, onDelete, gIndex, ggIndex }: { path: string; gIndex: number; ggIndex: number; onDelete: (path: string, gIndex: number, ggIndex: number,) => void; }) {
 
   const name = `${path}.${gIndex}.groups.${ggIndex}`;
+  const { input: { value } } = useField(name);
+
+  const hideRight = value.operator === Operator.TRUTHY || value.operator === Operator.FALSY;
 
   return (
     <Grid.Row align='end'>
-      <Grid.Col span={7}> <TextField label="Left" name={`${name}.left`} /></Grid.Col>
+      <Grid.Col span={7}> <TextField label="Variable path" name={`${name}.left`} /></Grid.Col>
       <Grid.Col span={7}> <SelectField label="Operator" name={`${name}.operator`} options={options} /></Grid.Col>
-      <Grid.Col span={7}> <TextField label="Right" name={`${name}.right`} /></Grid.Col>
+      <Grid.Col span={7}> {!hideRight && <TextField label="Right" name={`${name}.right`} />}</Grid.Col>
       <Grid.Col span={3}>
         <Button onClick={() => onDelete(path, gIndex, ggIndex)} icon={<IconDelete />} />
       </Grid.Col>

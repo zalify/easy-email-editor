@@ -40,6 +40,12 @@ function generateConditionTemplate(
     operator: Operator;
     right: string | number;
   }) => {
+    if (condition.operator === Operator.TRUTHY) {
+      return condition.left;
+    }
+    if (condition.operator === Operator.FALSY) {
+      return condition.left + ' == nil';
+    }
     return (
       condition.left +
       ' ' +

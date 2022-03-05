@@ -136,6 +136,8 @@ export enum Operator {
   GREATER_OR_EQUAL = '>=',
   LESS = '<',
   LESS_OR_EQUAL = '<=',
+  TRUTHY = 'truthy',
+  FALSY = 'falsy',
 }
 
 export enum OperatorSymbol {
