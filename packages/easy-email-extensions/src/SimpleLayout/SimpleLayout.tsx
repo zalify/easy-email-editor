@@ -95,7 +95,7 @@ export const SimpleLayout: React.FC<
             className={styles.customScrollBar}
           >
             <Tabs>
-              <Tabs.TabPane destroyOnHide key='Configuration' title='Configuration'>
+              <Tabs.TabPane title='Configuration'>
                 <AttributePanel />
               </Tabs.TabPane>
               {showSourceCode && (
