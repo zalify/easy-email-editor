@@ -14,7 +14,7 @@ export type DividerProps = RecursivePartial<IDivider['data']> &
 export function Divider(props: DividerProps) {
   return (
     <MjmlBlock
-      attributes={omit(props, ['data', 'children'])}
+      attributes={omit(props, ['data', 'children', 'value'])}
       value={props.value}
       type={BasicType.DIVIDER}
     >

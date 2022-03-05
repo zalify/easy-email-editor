@@ -14,7 +14,7 @@ export type AccordionTextProps = RecursivePartial<IAccordionText['data']> &
 export function AccordionText(props: AccordionTextProps) {
   return (
     <MjmlBlock
-      attributes={omit(props, ['data', 'children'])}
+      attributes={omit(props, ['data', 'children', 'value'])}
       value={props.value}
       type={BasicType.ACCORDION_TEXT}
     >

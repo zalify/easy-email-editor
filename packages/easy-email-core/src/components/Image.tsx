@@ -14,7 +14,7 @@ export type ImageProps = RecursivePartial<IImage['data']> &
 export function Image(props: ImageProps) {
   return (
     <MjmlBlock
-      attributes={omit(props, ['data', 'children'])}
+      attributes={omit(props, ['data', 'children', 'value'])}
       value={props.value}
       type={BasicType.IMAGE}
     >

@@ -53,10 +53,6 @@ export function generateAdvancedBlock<T extends AdvancedBlock>(option: {
 
       let children = getBaseContent(idx, 0);
 
-      if (!context || !idx) {
-        return children;
-      }
-
       if (mode === 'testing') {
         return (
           <Template>
@@ -130,14 +126,14 @@ export interface IConditionGroupItem {
 }
 
 export enum Operator {
+  TRUTHY = 'truthy',
+  FALSY = 'falsy',
   EQUAL = '==',
   NOT_EQUAL = '!=',
   GREATER = '>',
   GREATER_OR_EQUAL = '>=',
   LESS = '<',
   LESS_OR_EQUAL = '<=',
-  TRUTHY = 'truthy',
-  FALSY = 'falsy',
 }
 
 export enum OperatorSymbol {

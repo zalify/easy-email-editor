@@ -14,7 +14,7 @@ export type RawProps = RecursivePartial<IRaw['data']> &
 export function Raw(props: RawProps) {
   return (
     <MjmlBlock
-      attributes={omit(props, ['data', 'children'])}
+      attributes={omit(props, ['data', 'children', 'value'])}
       value={props.value}
       type={BasicType.RAW}
     >

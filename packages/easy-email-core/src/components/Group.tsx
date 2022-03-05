@@ -14,7 +14,7 @@ export type GroupProps = RecursivePartial<IGroup['data']> &
 export function Group(props: GroupProps) {
   return (
     <MjmlBlock
-      attributes={omit(props, ['data', 'children'])}
+      attributes={omit(props, ['data', 'children', 'value'])}
       value={props.value}
       type={BasicType.GROUP}
     >

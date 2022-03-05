@@ -14,7 +14,7 @@ export type SocialProps = RecursivePartial<ISocial['data']> &
 export function Social(props: SocialProps) {
   return (
     <MjmlBlock
-      attributes={omit(props, ['data', 'children'])}
+      attributes={omit(props, ['data', 'children', 'value'])}
       value={props.value}
       type={BasicType.SOCIAL}
     >

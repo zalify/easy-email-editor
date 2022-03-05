@@ -14,7 +14,7 @@ export type HeroProps = RecursivePartial<IHero['data']> &
 export function Hero(props: HeroProps) {
   return (
     <MjmlBlock
-      attributes={omit(props, ['data', 'children'])}
+      attributes={omit(props, ['data', 'children', 'value'])}
       value={props.value}
       type={BasicType.HERO}
     >

@@ -14,7 +14,7 @@ export type SectionProps = RecursivePartial<ISection['data']> &
 export function Section(props: SectionProps) {
   return (
     <MjmlBlock
-      attributes={omit(props, ['data', 'children'])}
+      attributes={omit(props, ['data', 'children', 'value'])}
       value={props.value}
       type={BasicType.SECTION}
     >

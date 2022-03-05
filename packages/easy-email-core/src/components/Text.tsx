@@ -14,7 +14,7 @@ export type TextProps = RecursivePartial<IText['data']> &
 export function Text(props: TextProps) {
   return (
     <MjmlBlock
-      attributes={omit(props, ['data', 'children'])}
+      attributes={omit(props, ['data', 'children', 'value'])}
       value={props.value}
       type={BasicType.TEXT}
     >

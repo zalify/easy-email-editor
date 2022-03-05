@@ -14,7 +14,7 @@ export type PageProps = RecursivePartial<IPage['data']> &
 export function Page(props: PageProps) {
   return (
     <MjmlBlock
-      attributes={omit(props, ['data', 'children'])}
+      attributes={omit(props, ['data', 'children', 'value'])}
       value={props.value}
       type={BasicType.PAGE}
     >

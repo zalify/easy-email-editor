@@ -14,7 +14,7 @@ export type WrapperProps = RecursivePartial<IWrapper['data']> &
 export function Wrapper(props: WrapperProps) {
   return (
     <MjmlBlock
-      attributes={omit(props, ['data', 'children'])}
+      attributes={omit(props, ['data', 'children', 'value'])}
       value={props.value}
       type={BasicType.WRAPPER}
     >

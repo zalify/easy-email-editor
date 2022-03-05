@@ -14,7 +14,7 @@ export type ColumnProps = RecursivePartial<IColumn['data']> &
 export function Column(props: ColumnProps) {
   return (
     <MjmlBlock
-      attributes={omit(props, ['data', 'children'])}
+      attributes={omit(props, ['data', 'children', 'value'])}
       value={props.value}
       type={BasicType.COLUMN}
     >

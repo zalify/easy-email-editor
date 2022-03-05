@@ -14,7 +14,7 @@ export type CarouselProps = RecursivePartial<ICarousel['data']> &
 export function Carousel(props: CarouselProps) {
   return (
     <MjmlBlock
-      attributes={omit(props, ['data', 'children'])}
+      attributes={omit(props, ['data', 'children', 'value'])}
       value={props.value}
       type={BasicType.CAROUSEL}
     >

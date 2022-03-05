@@ -14,11 +14,12 @@ import { IconLeft, IconRight } from '@arco-design/web-react/icon';
 export const SimpleLayout: React.FC<
   {
     showSourceCode?: boolean;
+    defaultShowLayer?: boolean;
   } & BlockLayerProps
 > = (props) => {
   const { height: containerHeight } = useEditorProps();
-  const { showSourceCode = true } = props;
-  const [collapsed, setCollapsed] = useState(false);
+  const { showSourceCode = true, defaultShowLayer = true } = props;
+  const [collapsed, setCollapsed] = useState(!defaultShowLayer);
   return (
     <ConfigProvider locale={enUS}>
       <Layout

@@ -14,7 +14,7 @@ export type TableProps = RecursivePartial<ITable['data']> &
 export function Table(props: TableProps) {
   return (
     <MjmlBlock
-      attributes={omit(props, ['data', 'children'])}
+      attributes={omit(props, ['data', 'children', 'value'])}
       value={props.value}
       type={BasicType.TABLE}
     >

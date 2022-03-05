@@ -14,7 +14,7 @@ export type ButtonProps = RecursivePartial<IButton['data']> &
 export function Button(props: ButtonProps) {
   return (
     <MjmlBlock
-      attributes={omit(props, ['data', 'children'])}
+      attributes={omit(props, ['data', 'children', 'value'])}
       value={props.value}
       type={BasicType.BUTTON}
     >
