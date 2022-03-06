@@ -52,6 +52,7 @@ import purpleTheme from '@arco-themes/react-easy-email-theme-purple/css/arco.css
 import greenTheme from '@arco-themes/react-easy-email-theme-green/css/arco.css?inline';
 import { useState } from 'react';
 import { testMergeTags } from './testMergeTags';
+import { useMergeTagsModal } from './components/useMergeTagsModal';
 
 const imageCompression = import('browser-image-compression');
 
@@ -79,13 +80,13 @@ export default function Editor() {
   const [theme, setTheme] = useState<'blue' | 'green' | 'purple'>('purple');
   const dispatch = useDispatch();
   const history = useHistory();
-  const [mergeTags, setMergeTags] = useState(testMergeTags);
   const templateData = useAppSelector('template');
   const { addCollection, removeCollection, collectionCategory } =
     useCollection();
   const { openModal, modal } = useEmailModal();
   const { id, userId } = useQuery();
   const loading = useLoading(template.loadings.fetchById);
+  const { modal: mergeTagsModal, openModal: openMergeTagsModal, mergeTags, setMergeTags } = useMergeTagsModal(testMergeTags);
 
   const isSubmitting = useLoading([
     template.loadings.create,
@@ -202,6 +203,19 @@ export default function Editor() {
     Message.success('Copied to pasteboard!');
   };
 
+  const onExportMJML = (values: IEmailTemplate) => {
+    pushEvent({ name: 'ExportMJML' });
+    const html = JsonToMjml({
+      data: values.content,
+      mode: 'production',
+      context: values.content,
+      dataSource: mergeTags,
+    });
+
+    copy(html);
+    Message.success('Copied to pasteboard!');
+  };
+
   const initialValues: IEmailTemplate | null = useMemo(() => {
     if (!templateData) return null;
     const sourceData = cloneDeep(templateData.content) as IBlockData;
@@ -253,7 +267,7 @@ export default function Editor() {
         onChangeMergeTag={onChangeMergeTag}
         autoComplete
         enabledLogic
-        enabledMergeTagsBadge
+        // enabledMergeTagsBadge
         dashed={false}
         mergeTags={mergeTags}
         mergeTagGenerate={(tag) => `{{${tag}}}`}
@@ -282,9 +296,19 @@ export default function Editor() {
                       <Select.Option value='purple'>Purple</Select.Option>
                     </Select>
 
+
+                    <Button onClick={openMergeTagsModal}>
+                      Update mergeTags
+                    </Button>
+
+                    <Button onClick={() => onExportMJML(values)}>
+                      Export MJML
+                    </Button>
+
                     <Button onClick={() => onExportHtml(values)}>
                       Export html
                     </Button>
+
                     <Button onClick={() => openModal(values, mergeTags)}>
                       Send test email
                     </Button>
@@ -325,6 +349,7 @@ export default function Editor() {
         }}
       </EmailEditorProvider>
       {modal}
+      {mergeTagsModal}
     </div>
   );
 }
@@ -352,97 +377,3 @@ function replaceStandardBlockToAdvancedBlock(blockData: IBlockData) {
   blockData.children.forEach(replaceStandardBlockToAdvancedBlock);
   return blockData;
 }
-
-const b = {
-  type: 'page',
-  data: {
-    value: {
-      breakpoint: '480px',
-      headAttributes: '',
-      'font-size': '14px',
-      'line-height': '1.7',
-      headStyles: [],
-      fonts: [],
-      responsive: true,
-      'font-family': 'lucida Grande,Verdana,Microsoft YaHei',
-      'text-color': '#000000',
-    },
-  },
-  attributes: {
-    'background-color': '#efeeea',
-    width: '600px',
-  },
-  children: [
-    {
-      type: 'advanced_section',
-      data: {
-        value: {
-          noWrap: false,
-        },
-      },
-      attributes: {
-        padding: '20px 0px 20px 0px',
-        'background-repeat': 'repeat',
-        'background-size': 'auto',
-        'background-position': 'top center',
-        border: 'none',
-        direction: 'ltr',
-        'text-align': 'center',
-      },
-      children: [
-        {
-          type: 'advanced_column',
-          data: {
-            value: {
-              iteration: {
-                enabled: true,
-                dataSource: 'product_list',
-                itemName: 'item',
-                limit: 9999,
-                mockQuantity: 2,
-              },
-            },
-          },
-          attributes: {
-            padding: '0px 0px 0px 0px',
-            border: 'none',
-            'vertical-align': 'top',
-            width: '50%',
-          },
-          children: [
-            {
-              type: 'advanced_text',
-              data: {
-                value: {
-                  content: 'Hello, {{item.title}}',
-                  iteration: {
-                    dataSource: 'product_list',
-                    itemName: 'item',
-                    limit: 2,
-                    enabled: false,
-                    mockQuantity: 3,
-                  },
-                },
-              },
-              attributes: {
-                padding: '10px 25px 10px 25px',
-                align: 'left',
-              },
-              children: [],
-            },
-          ],
-        },
-      ],
-    },
-  ],
-};
-
-// const a = JsonToMjml({
-//   idx: getPageIdx(),
-//   mode: 'testing',
-//   context: b,
-//   dataSource: testMergeTags,
-//   data: b,
-// });
-
-// console.log('a', a);
