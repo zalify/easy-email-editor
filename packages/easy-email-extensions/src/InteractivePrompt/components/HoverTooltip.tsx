@@ -160,7 +160,7 @@ function TipNode(props: TipNodeProps) {
             style={{
               position: 'absolute',
               left: 0,
-              bottom: 0,
+              top: 0,
             }}
           >
             <div
@@ -174,7 +174,7 @@ function TipNode(props: TipNodeProps) {
                 boxSizing: 'border-box',
                 whiteSpace: 'nowrap',
                 fontFamily: 'sans-serif',
-                transform: 'translateY(100%)',
+                transform: 'translateY(-100%)',
               }}
             >
               {title}
