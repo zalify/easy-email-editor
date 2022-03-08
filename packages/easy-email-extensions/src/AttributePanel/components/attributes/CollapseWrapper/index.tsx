@@ -56,7 +56,7 @@ export const CollapseWrapper: React.FC<CollapseWrapperProps> = (props) => {
   }, [conditionEnabled, isAdvancedBlockType]);
 
   return (
-    <Space size='large' direction='vertical'>
+    <Space size='large' direction='vertical' style={{ width: '100%' }}>
       <Collapse onChange={onChange} activeKey={activeKeys}>
         {props.children}
         {

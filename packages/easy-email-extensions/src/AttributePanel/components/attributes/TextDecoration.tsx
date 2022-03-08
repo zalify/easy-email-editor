@@ -29,16 +29,16 @@ const options = [
   },
 ];
 
-export function TextDecoration() {
+export function TextDecoration({ name }: { name?: string; }) {
   const { focusIdx } = useFocusIdx();
 
   return useMemo(() => {
     return (
       <SelectField
         label='Text decoration'
-        name={`${focusIdx}.attributes.text-decoration`}
+        name={name || `${focusIdx}.attributes.text-decoration`}
         options={options}
       />
     );
-  }, [focusIdx]);
+  }, [focusIdx, name]);
 }
