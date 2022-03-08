@@ -1,9 +1,7 @@
 .SimpleLayout {
-  .layoutTabs {
-    :global {
-      .arco-layout-sider-children {
-        overflow-x: hidden;
-      }
+  :global {
+    .arco-layout-sider-children {
+      overflow-x: hidden;
       .arco-tabs-content {
         padding: 0;
       }
