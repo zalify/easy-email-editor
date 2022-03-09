@@ -20,6 +20,7 @@ export function ShortcutToolbar() {
       <DragIcon type={AdvancedType.SOCIAL} color='rgb(111,206,236) ' />
       <DragIcon type={AdvancedType.NAVBAR} color='rgb(191,24,84)' />
       <DragIcon type={AdvancedType.DIVIDER} color='rgb(71,67,239)' />
+      <DragIcon type={AdvancedType.SPACER} color='#ccc' />
       <DragIcon
         color='rgb(24,201,137)'
         payload={{

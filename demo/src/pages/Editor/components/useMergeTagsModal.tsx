@@ -41,7 +41,8 @@ export function useMergeTagsModal(defaultMergeTags: Record<string, any>) {
       >
         {({ handleSubmit }) => (
           <Modal
-            style={{ zIndex: 9999 }}
+
+            style={{ zIndex: 9999, width: '80vw', height: '80vh' }}
             title='Merge tags'
             okText='Save'
             visible={visible}
@@ -49,7 +50,7 @@ export function useMergeTagsModal(defaultMergeTags: Record<string, any>) {
             onCancel={closeModal}
           >
             <TextAreaField
-              rows={15}
+              rows={20}
               autoFocus
               name='mergeTags'
               label='Merge tags'

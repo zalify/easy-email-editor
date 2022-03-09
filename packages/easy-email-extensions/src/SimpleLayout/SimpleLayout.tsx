@@ -63,7 +63,7 @@ export const SimpleLayout: React.FC<
                 overflowX: 'hidden',
               }}
             >
-              <Card title='Layout' style={{ border: 'none' }}>
+              <Card title='Layout' style={{ border: 'none' }} headerStyle={{ height: 50 }}>
                 {!collapsed && (
                   <BlockLayer renderTitle={props.renderTitle} />
                 )}

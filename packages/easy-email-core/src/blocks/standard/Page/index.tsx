@@ -21,6 +21,7 @@ export type IPage = IBlockData<
     responsive?: boolean;
     'font-family': string;
     'font-size': string;
+    'font-weight': string;
     'line-height': string;
     'text-color': string;
     'user-style'?: {
@@ -42,11 +43,12 @@ export const Page = createBlock<IPage>({
           breakpoint: '480px',
           headAttributes: '',
           'font-size': '14px',
+          'font-weight': '400',
           'line-height': '1.7',
           headStyles: [],
           fonts: [],
           responsive: true,
-          'font-family': 'lucida Grande,Verdana,Microsoft YaHei',
+          'font-family': '-apple-system, BlinkMacSystemFont, \'Segoe UI\', \'Roboto\', \'Oxygen\', \'Ubuntu\', \'Cantarell\', \'Fira Sans\', \'Droid Sans\',\'Helvetica Neue\', sans-serif',
           'text-color': '#000000',
         },
       },

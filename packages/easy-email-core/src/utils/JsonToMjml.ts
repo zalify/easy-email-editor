@@ -224,8 +224,12 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
           ? `<mj-text color="${value['text-color']}" />`
           : ''
         }
-              ${value['line-height']
+        ${value['line-height']
           ? `<mj-text line-height="${value['line-height']}" />`
+          : ''
+        }
+        ${value['font-weight']
+          ? `<mj-text font-weight="${value['font-weight']}" />`
           : ''
         }
               ${value['content-background-color']
@@ -390,6 +394,7 @@ export function generaMjmlMetaData(data: IPage) {
     'font-family',
     'font-size',
     'line-height',
+    'font-weight',
     'user-style',
     'responsive',
   ];

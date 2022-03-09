@@ -14,9 +14,6 @@ interface Props
   windowRef?: (e: Window) => void;
 }
 
-// It will be occluded by richText bar, so it needs to be offset
-const offsetTop = 50;
-
 export const SyncScrollIframeComponent = ({ children, title, windowRef, ...props }: Props) => {
   const [mountNode, setMountNode] = useState<HTMLElement | null>(null);
   const [contentWindow, setContentWindow] = useState<Window | null>(null);
@@ -24,10 +21,9 @@ export const SyncScrollIframeComponent = ({ children, title, windowRef, ...props
 
   const setFirstVisibleEle = useCallback(debounce((root: Document) => {
 
-    const { left, width, top: containerTop } = root.documentElement.getBoundingClientRect();
+    const { top: containerTop } = root.documentElement.getBoundingClientRect();
 
     const ele = root.elementFromPoint(0, 10);
-    console.log(root, 'ele', ele);
 
     const findSelectorNode = (ele: Element): Element | null => {
       if (ele.getAttribute('data-selector')) {

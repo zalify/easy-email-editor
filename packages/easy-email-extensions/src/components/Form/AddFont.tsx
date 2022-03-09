@@ -50,10 +50,13 @@ export function AddFont() {
                             label='Href'
                           />
                         </Stack.Item>
-                        <Button
-                          icon={<IconDelete />}
-                          onClick={() => arrayHelpers.fields.remove(index)}
-                        />
+                        <Stack vertical spacing='loose'>
+                          <Stack.Item />
+                          <Button
+                            icon={<IconDelete />}
+                            onClick={() => arrayHelpers.fields.remove(index)}
+                          />
+                        </Stack>
                       </Stack>
                     </div>
                   );
