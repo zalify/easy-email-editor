@@ -204,6 +204,12 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
               ${userStyle}
               ${breakpoint}
               ${extraHeadContent}
+              ${value.fonts
+          ?.filter(Boolean)
+          .map(
+            (item) =>
+              `<mj-font name="${item.name}" href="${item.href}" />`
+          )}
             <mj-attributes>
               ${value.headAttributes}
               ${value['font-family']
@@ -228,12 +234,7 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
                     `
           : ''
         }
-              ${value.fonts
-          ?.filter(Boolean)
-          .map(
-            (item) =>
-              `<mj-font name="${item.name}" href="${item.href}" />`
-          )}
+
             </mj-attributes>
           </mj-head>
           <mj-body ${attributeStr}>

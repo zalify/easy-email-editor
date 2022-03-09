@@ -6,6 +6,9 @@ import { ActiveTabKeys } from '@/components/Provider/BlocksProvider';
 import { SyncScrollShadowDom } from '@/components/UI/SyncScrollShadowDom';
 import { classnames } from '@/utils/classnames';
 import { SYNC_SCROLL_ELEMENT_CLASS_NAME } from '@/constants';
+import { SyncScrollIframeComponent } from '@/components/UI/SyncScrollIframeComponent';
+import { useEditorContext } from '@/hooks/useEditorContext';
+import { createPortal } from 'react-dom';
 
 export interface PreviewEmailProps {
   style?: React.CSSProperties;
@@ -16,6 +19,9 @@ export function PreviewEmail(props: PreviewEmailProps) {
   const { errMsg, reactNode } = usePreviewEmail();
 
   const { activeTab } = useActiveTab();
+  const { pageData } = useEditorContext();
+
+  const fonts = pageData.data.value.fonts || [];
 
   const isMobile = activeTab === ActiveTabKeys.MOBILE;
 
@@ -24,6 +30,39 @@ export function PreviewEmail(props: PreviewEmailProps) {
       <div style={{ textAlign: 'center', fontSize: 24, color: 'red' }}>
         {errMsg}
       </div>
+    );
+  }
+
+  if (isMobile) {
+    return (
+      <SyncScrollIframeComponent
+        style={{
+          border: 'none',
+          height: '100%',
+          width: '100%',
+
+        }}
+      >
+        <style>
+          {`
+          *::-webkit-scrollbar {
+            -webkit-appearance: none;
+            width: 0px;
+          }
+        `}
+        </style>
+        <div
+          className={classnames('preview-container', SYNC_SCROLL_ELEMENT_CLASS_NAME)}
+          style={{
+            height: '100%',
+            overflow: 'auto',
+            margin: 'auto',
+            ...props.style
+          }}
+        >
+          {reactNode}
+        </div>
+      </SyncScrollIframeComponent>
     );
   }
 
@@ -37,26 +76,14 @@ export function PreviewEmail(props: PreviewEmailProps) {
 
       }}
     >
-      {isMobile ?
-        (
-          <style>
-            {`
-          *::-webkit-scrollbar {
-            -webkit-appearance: none;
-            width: 0px;
-          }
-        `}
-          </style>
-        )
-        : (
-          <style>
-            {`
+      <style>
+        {`
               .preview-container {
                 overflow: overlay !important;
               }
               *::-webkit-scrollbar {
                 -webkit-appearance: none;
-                width: 8px;
+                width: 0px;
               }
               *::-webkit-scrollbar-thumb {
                 background-color: rgba(0, 0, 0, 0.5);
@@ -64,8 +91,7 @@ export function PreviewEmail(props: PreviewEmailProps) {
                 -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
               }
             `}
-          </style>
-        )}
+      </style>
       <div
         className={classnames('preview-container', SYNC_SCROLL_ELEMENT_CLASS_NAME)}
         style={{
@@ -77,6 +103,12 @@ export function PreviewEmail(props: PreviewEmailProps) {
       >
         {reactNode}
       </div>
+      {createPortal(
+        <>
+          {
+            fonts.map((item, index) => <link key={index} href={item.href} rel="stylesheet" type="text/css" />)
+          }
+        </>, document.body)}
     </SyncScrollShadowDom>
   );
 }
