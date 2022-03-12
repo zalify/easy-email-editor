@@ -213,7 +213,7 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
             <mj-attributes>
               ${value.headAttributes}
               ${value['font-family']
-          ? `<mj-all font-family="${value['font-family']}" />`
+          ? `<mj-all font-family="${value['font-family'].replace(/"/gm, '')}" />`
           : ''
         }
               ${value['font-size']
@@ -398,6 +398,7 @@ export function generaMjmlMetaData(data: IPage) {
     'user-style',
     'responsive',
   ];
+
   return `
     <mj-html-attributes>
       ${attributes
@@ -408,8 +409,12 @@ export function generaMjmlMetaData(data: IPage) {
         const value = isMultipleAttributes
           ? Object.keys(values[attKey]!)
             .map(
-              (childKey) =>
-                `${childKey}="${(values[attKey] as any)[childKey]}"`
+              (childKey) => {
+                const childValue = (values[attKey] as any)[childKey];
+
+                return `${childKey}="${isString(childValue) ? childValue.replace(/"/gm, '') : childValue}"`;
+              }
+
             )
             .join(' ')
           : `${key}="${values[attKey]}"`;
