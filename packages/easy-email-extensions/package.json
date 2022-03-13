@@ -2,7 +2,7 @@
   "name": "easy-email-extensions",
   "license": "MIT",
   "description": "Email editor",
-  "version": "4.0.0-alpha.1",
+  "version": "4.0.0-alpha.2",
   "author": "m-Ryan",
   "repository": {
     "type": "git",
@@ -84,5 +84,5 @@
     "react-dom": "^17.0.2",
     "react-final-form": "^6.5.7"
   },
-  "gitHead": "9456819fc6017c4bb164ba438febbd06ae429831"
+  "gitHead": "511c93213b06dcbee421491a06a77330fa417e9e"
 }
