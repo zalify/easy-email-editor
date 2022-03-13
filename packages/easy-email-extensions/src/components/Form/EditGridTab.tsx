@@ -18,7 +18,8 @@ export function EditGridTab<T extends any = any>(props: EditGridTabProps<T>) {
 
   const onAdd = (index: number) => {
     let newItem = additionItem || cloneDeep(value[index]);
-    props.onChange([...value, newItem]);
+    value.splice(index + 1, 0, newItem);
+    props.onChange([...value]);
   };
 
   const onDelete = (index: number) => {
