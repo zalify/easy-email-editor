@@ -2,7 +2,7 @@
   "name": "easy-email-core",
   "license": "MIT",
   "description": "Email editor",
-  "version": "4.0.0-alpha.5",
+  "version": "4.0.0-alpha.6",
   "author": "m-Ryan",
   "repository": {
     "type": "git",
@@ -79,5 +79,5 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
-  "gitHead": "9456819fc6017c4bb164ba438febbd06ae429831"
+  "gitHead": "f6cf54160ffdba0d4d6b23483293dd9190d2d2c2"
 }
