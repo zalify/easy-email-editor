@@ -4,8 +4,8 @@ import { createBlock } from '@core/utils/createBlock';
 import { AccordionElement } from '../AccordionElement';
 import { AccordionTitle } from '../AccordionTitle';
 import { AccordionText } from '../AccordionText';
-import { merge } from 'lodash';
 import { getImg } from '@core/utils/getImg';
+import { mergeBlock } from '@core/utils/mergeBlock';
 
 export type IAccordion = IBlockData<
   {
@@ -87,6 +87,6 @@ export const Accordion = createBlock<IAccordion>({
         }),
       ],
     };
-    return merge(defaultData, payload);
+    return mergeBlock(defaultData, payload);
   },
 });

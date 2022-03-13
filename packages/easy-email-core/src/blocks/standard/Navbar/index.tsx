@@ -1,7 +1,7 @@
 import { IBlock, IBlockData } from '@core/typings';
 import { BasicType } from '@core/constants';
 import { createBlock } from '@core/utils/createBlock';
-import { merge } from 'lodash';
+import { mergeBlock } from '@core/utils/mergeBlock';
 
 export type INavbar = IBlockData<
   {
@@ -81,7 +81,7 @@ export const Navbar: IBlock<INavbar> = createBlock({
       },
       children: [],
     };
-    return merge(defaultData, payload);
+    return mergeBlock(defaultData, payload);
   },
   validParentType: [BasicType.COLUMN, BasicType.HERO],
 });

@@ -1,8 +1,8 @@
 import { IBlockData } from '@core/typings';
 import { BasicType } from '@core/constants';
-import { merge } from 'lodash';
 import { createBlock } from '@core/utils/createBlock';
 import { getImg } from '@core/utils/getImg';
+import { mergeBlock } from '@core/utils/mergeBlock';
 export type IHero = IBlockData<
   {
     'background-color'?: string;
@@ -107,7 +107,7 @@ export const Hero = createBlock<IHero>({
         },
       ],
     };
-    return merge(defaultData, payload);
+    return mergeBlock(defaultData, payload);
   },
   validParentType: [BasicType.PAGE, BasicType.WRAPPER],
 });
