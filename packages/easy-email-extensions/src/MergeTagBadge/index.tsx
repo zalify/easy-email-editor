@@ -28,7 +28,7 @@ const removeAllActiveBadge = () => {
   }
 };
 
-export default function MergeTagBadge() {
+export function MergeTagBadge() {
   const { initialized } = useEditorContext();
   const popoverRef = useRef<HTMLDivElement | null>(null);
   const { onChangeMergeTag, mergeTags } = useEditorProps();
