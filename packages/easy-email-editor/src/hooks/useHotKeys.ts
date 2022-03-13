@@ -65,9 +65,9 @@ export function useHotKeys() {
 
       if (!isShadowRootFocus) return;
       if (isContentEditFocus()) return;
-      if (isHotkey('delete', ev) || isHotkey('backspace', ev)) {
-        removeBlock(focusIdx);
-      }
+      // if (isHotkey('delete', ev) || isHotkey('backspace', ev)) {
+      //   removeBlock(focusIdx);
+      // }
     };
     window.addEventListener('keydown', onKeyDown);
 

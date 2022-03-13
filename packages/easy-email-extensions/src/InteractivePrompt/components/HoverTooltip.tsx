@@ -9,9 +9,11 @@ import {
   useHoverIdx,
 } from 'easy-email-editor';
 import { awaitForElement } from '@extensions/utils/awaitForElement';
+import { useLazyState } from 'easy-email-editor';
 
 export function HoverTooltip() {
   const { hoverIdx, direction, isDragging } = useHoverIdx();
+  const lazyHoverIdx = useLazyState(hoverIdx, 60);
   const { focusIdx } = useFocusIdx();
   const [isTop, setIsTop] = useState(false);
   const { initialized } = useEditorContext();
@@ -29,8 +31,8 @@ export function HoverTooltip() {
     const rootBounds = rootRef.current;
     if (!initialized) return;
 
-    if (hoverIdx) {
-      const promiseObj = awaitForElement<HTMLDivElement>(hoverIdx);
+    if (lazyHoverIdx) {
+      const promiseObj = awaitForElement<HTMLDivElement>(lazyHoverIdx);
       promiseObj.promise.then((blockNode) => {
         if (rootBounds) {
           const { top } = blockNode.getBoundingClientRect();
@@ -44,15 +46,16 @@ export function HoverTooltip() {
         promiseObj.cancel();
       };
     } else {
+
       setBlockNode(null);
     }
-  }, [hoverIdx, initialized]);
+  }, [lazyHoverIdx, initialized]);
 
   const block = useMemo(() => {
     return blockNode
       ? BlockManager.getBlockByType(
-          getNodeTypeFromClassName(blockNode.classList)!
-        )
+        getNodeTypeFromClassName(blockNode.classList)!
+      )
       : null;
   }, [blockNode]);
 
@@ -63,7 +66,7 @@ export function HoverTooltip() {
     <>
       {createPortal(
         <div
-          id="easy-email-extensions-InteractivePrompt-HoverTooltip"
+          id='easy-email-extensions-InteractivePrompt-HoverTooltip'
           style={{
             position: 'absolute',
             height: '100%',
@@ -95,6 +98,7 @@ interface TipNodeProps {
   lineWidth: number;
   type: 'drag' | 'hover';
 }
+
 function TipNode(props: TipNodeProps) {
   const { direction, title, lineWidth, type } = props;
   const dragTitle = useMemo(() => {
@@ -152,7 +156,13 @@ function TipNode(props: TipNodeProps) {
         }}
       >
         {type === 'hover' && (
-          <>
+          <div
+            style={{
+              position: 'absolute',
+              left: 0,
+              top: 0,
+            }}
+          >
             <div
               style={{
                 backgroundColor: color,
@@ -163,13 +173,13 @@ function TipNode(props: TipNodeProps) {
                 padding: '1px 5px',
                 boxSizing: 'border-box',
                 whiteSpace: 'nowrap',
-                transform: 'translateX(-100%)',
                 fontFamily: 'sans-serif',
+                transform: 'translateY(-100%)',
               }}
             >
               {title}
             </div>
-          </>
+          </div>
         )}
       </div>
 

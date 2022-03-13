@@ -2,7 +2,7 @@
   "name": "easy-email-editor",
   "license": "MIT",
   "description": "Email editor",
-  "version": "3.1.60",
+  "version": "4.0.0",
   "author": "m-Ryan",
   "repository": {
     "type": "git",
@@ -64,7 +64,7 @@
     "rimraf": "^3.0.2",
     "sass": "^1.43.4",
     "tsc-alias": "^1.4.1",
-    "typescript": "^4.4.4",
+    "typescript": "^4.5.5",
     "vite": "^2.6.14"
   },
   "peerDependencies": {
@@ -74,5 +74,5 @@
     "react-dom": "^17.0.2",
     "react-final-form": "^6.5.7"
   },
-  "gitHead": "801465cc126f6fc227b7d938c67d3b9487878cd4"
+  "gitHead": "9456819fc6017c4bb164ba438febbd06ae429831"
 }

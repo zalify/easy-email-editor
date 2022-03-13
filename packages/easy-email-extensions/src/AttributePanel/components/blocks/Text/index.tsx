@@ -13,27 +13,28 @@ import { LineHeight } from '@extensions/AttributePanel/components/attributes/Lin
 import { LetterSpacing } from '@extensions/AttributePanel/components/attributes/LetterSpacing';
 
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
-import { Collapse, Grid, Space, Tooltip } from '@arco-design/web-react';
+import { Collapse, Grid, Space, Switch, Tooltip } from '@arco-design/web-react';
 import { Button } from '@arco-design/web-react';
-import { IconFont, Stack } from 'easy-email-editor';
+import { IconFont } from 'easy-email-editor';
 import { HtmlEditor } from '../../UI/HtmlEditor';
 import { ClassName } from '../../attributes/ClassName';
+import { CollapseWrapper } from '../../attributes/CollapseWrapper';
 
 export function Text() {
   const [visible, setVisible] = useState(false);
 
   return (
     <AttributesPanelWrapper
-      extra={
+      extra={(
         <Tooltip content='Html mode'>
           <Button
             onClick={() => setVisible(true)}
             icon={<IconFont iconName='icon-html' />}
           />
         </Tooltip>
-      }
+      )}
     >
-      <Collapse defaultActiveKey={['0', '1', '2']}>
+      <CollapseWrapper defaultActiveKey={['0', '1', '2']}>
         <Collapse.Item name='0' header='Dimension'>
           <Space direction='vertical'>
             <Height />
@@ -94,7 +95,7 @@ export function Text() {
             <ClassName />
           </Grid.Col>
         </Collapse.Item>
-      </Collapse>
+      </CollapseWrapper>
       <HtmlEditor visible={visible} setVisible={setVisible} />
     </AttributesPanelWrapper>
   );

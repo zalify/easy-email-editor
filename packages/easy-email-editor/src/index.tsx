@@ -15,6 +15,7 @@ export { useBlock } from './hooks/useBlock';
 export { useEditorContext } from './hooks/useEditorContext';
 export { useDomScrollHeight } from './hooks/useDomScrollHeight';
 export { useRefState } from './hooks/useRefState';
+export { useLazyState } from './hooks/useLazyState';
 export { useFocusBlockLayout } from './hooks/useFocusBlockLayout';
 export * from './hooks/useDataTransfer';
 export * from './hooks/useFocusIdx';

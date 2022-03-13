@@ -34,6 +34,7 @@ export function EditTab<T extends any = any>(props: EditTabProps<T>) {
 
   return (
     <Tabs
+      destroyOnHide
       className={classnames(styles.editTab)}
       style={{ border: 'none' }}
       type='card'

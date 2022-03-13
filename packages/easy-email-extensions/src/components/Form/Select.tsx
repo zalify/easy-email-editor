@@ -6,7 +6,7 @@ import { merge } from 'lodash';
 import React from 'react';
 
 export interface SelectProps extends ArcoSelectProps {
-  options: Array<{ value: string; label: React.ReactNode }>;
+  options: Array<{ value: string; label: React.ReactNode; }>;
   onChange?: (val: string) => void;
   value: string;
 }
@@ -15,7 +15,8 @@ export function Select(props: SelectProps) {
   return (
     <ArcoSelect
       {...props}
-      style={merge({ width: '100%', minWidth: 100 }, props.style)}
+      dropdownMenuClassName='easy-email-overlay'
+      style={merge({ width: '100%', }, props.style)}
       value={props.value}
       onChange={props.onChange}
     >

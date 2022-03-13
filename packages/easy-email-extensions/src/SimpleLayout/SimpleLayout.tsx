@@ -1,21 +1,25 @@
 import { ShortcutToolbar } from '../ShortcutToolbar';
-import { Card, ConfigProvider, Layout, Tabs } from '@arco-design/web-react';
+import { Button, Card, ConfigProvider, Layout, Tabs } from '@arco-design/web-react';
 import { useEditorProps } from 'easy-email-editor';
-import React from 'react';
+import React, { useState } from 'react';
 import { SourceCodePanel } from '../SourceCodePanel';
 import { AttributePanel } from '../AttributePanel';
 import { BlockLayer, BlockLayerProps } from '../BlockLayer';
 import { InteractivePrompt } from '../InteractivePrompt';
 import styles from './index.module.scss';
 import enUS from '@arco-design/web-react/es/locale/en-US';
+import { MergeTagBadgePrompt } from '@extensions/MergeTagBadgePrompt';
+import { IconLeft, IconRight } from '@arco-design/web-react/icon';
 
 export const SimpleLayout: React.FC<
   {
     showSourceCode?: boolean;
+    defaultShowLayer?: boolean;
   } & BlockLayerProps
 > = (props) => {
   const { height: containerHeight } = useEditorProps();
-  const { showSourceCode = true } = props;
+  const { showSourceCode = true, defaultShowLayer = true } = props;
+  const [collapsed, setCollapsed] = useState(!defaultShowLayer);
   return (
     <ConfigProvider locale={enUS}>
       <Layout
@@ -28,12 +32,25 @@ export const SimpleLayout: React.FC<
         }}
       >
         <Layout.Sider
-          resizeDirections={['right']}
-          style={{ minWidth: 300, maxWidth: 360, width: 360, paddingRight: 0 }}
+          style={{ paddingRight: 0 }}
+          collapsed={collapsed}
+          collapsible
+          trigger={null} breakpoint='xl'
+          collapsedWidth={60}
+          width={'300'}
         >
           <Card bodyStyle={{ padding: 0 }} style={{ border: 'none' }}>
-            <Card.Grid style={{ width: 60 }}>
+            <Card.Grid style={{ width: 60, textAlign: 'center' }}>
               <ShortcutToolbar />
+              <Button style={{
+                marginTop: 30,
+                marginLeft: 'auto',
+                marginRight: 'auto'
+              }}
+                icon={collapsed ? <IconRight /> : <IconLeft />}
+                shape='round'
+                onClick={() => setCollapsed(v => !v)}
+              />
             </Card.Grid>
             <Card.Grid
               className={styles.customScrollBar}
@@ -46,10 +63,13 @@ export const SimpleLayout: React.FC<
                 overflowX: 'hidden',
               }}
             >
-              <Card title='Layout' style={{ border: 'none' }}>
-                <BlockLayer renderTitle={props.renderTitle} />
+              <Card title='Layout' style={{ border: 'none' }} headerStyle={{ height: 50 }}>
+                {!collapsed && (
+                  <BlockLayer renderTitle={props.renderTitle} />
+                )}
               </Card>
             </Card.Grid>
+
           </Card>
         </Layout.Sider>
 
@@ -73,14 +93,14 @@ export const SimpleLayout: React.FC<
               borderLeft: 'none',
             }}
             bodyStyle={{ padding: 0 }}
-            className={styles.customScrollBar}
+            className={styles.customScrollBarV2}
           >
-            <Tabs>
-              <Tabs.TabPane key='Configuration' title='Configuration'>
+            <Tabs className={styles.layoutTabs}>
+              <Tabs.TabPane title={<div style={{ height: 31, lineHeight: '31px' }}>Configuration</div>}>
                 <AttributePanel />
               </Tabs.TabPane>
               {showSourceCode && (
-                <Tabs.TabPane key='Source code' title='Source code'>
+                <Tabs.TabPane destroyOnHide key='Source code' title={<div style={{ height: 31, lineHeight: '31px' }}>Source code</div>}>
                   <SourceCodePanel />
                 </Tabs.TabPane>
               )}
@@ -89,6 +109,7 @@ export const SimpleLayout: React.FC<
         </Layout.Sider>
 
         <InteractivePrompt />
+        <MergeTagBadgePrompt />
       </Layout>
     </ConfigProvider>
   );

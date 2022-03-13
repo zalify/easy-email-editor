@@ -11,11 +11,12 @@ import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/at
 import { Collapse, Grid, Space } from '@arco-design/web-react';
 import { Stack } from 'easy-email-editor';
 import { ClassName } from '../../attributes/ClassName';
+import { CollapseWrapper } from '../../attributes/CollapseWrapper';
 
 export function Divider() {
   return (
     <AttributesPanelWrapper>
-      <Collapse defaultActiveKey={['-1', '0', '1', '2', '3']}>
+      <CollapseWrapper defaultActiveKey={['-1', '0', '1', '2', '3']}>
         <Collapse.Item name='1' header='Dimension'>
           <Space direction='vertical'>
             <Grid.Row>
@@ -57,7 +58,7 @@ export function Divider() {
             <ClassName />
           </Grid.Col>
         </Collapse.Item>
-      </Collapse>
+      </CollapseWrapper>
     </AttributesPanelWrapper>
   );
 }

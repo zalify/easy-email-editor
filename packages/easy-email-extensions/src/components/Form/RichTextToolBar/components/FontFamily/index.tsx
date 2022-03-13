@@ -1,34 +1,72 @@
-import { Menu } from '@arco-design/web-react';
-import { useFontFamily } from '@extensions/hooks/useFontFamily';
-import React from 'react';
+import React, { useCallback } from 'react';
 
-export function FontFamily(props: { onChange: (val: string) => void; }) {
+import { Menu, Popover } from '@arco-design/web-react';
+import { ToolItem } from '../ToolItem';
+import { IconFont } from 'easy-email-editor';
+import { useFontFamily } from '@extensions/hooks/useFontFamily';
+import styleText from '../../styles/ToolsPopover.css?inline';
+export interface FontFamilyProps {
+  execCommand: (cmd: string, value: any) => void;
+  getPopupContainer: () => HTMLElement;
+}
+
+export function FontFamily(props: FontFamilyProps) {
   const { fontList } = useFontFamily();
+  const { execCommand } = props;
+  const [visible, setVisible] = React.useState(false);
+
+  const onChange = useCallback((val: string) => {
+    execCommand('fontName', val);
+    setVisible(false);
+  }, [execCommand]);
+
+  const onVisibleChange = useCallback((v: boolean) => {
+    setVisible(v);
+  }, []);
+
   return (
-    <div
-      style={{
-        maxWidth: 150,
-        maxHeight: 350,
-        overflowY: 'auto',
-        overflowX: 'hidden',
-      }}
-    >
-      <Menu
-        onClickMenuItem={(item) => {
-          props.onChange(item);
-        }}
-        selectedKeys={[]}
-        style={{ border: 'none', padding: 0 }}
-      >
-        {fontList.map((item) => (
-          <Menu.Item
-            style={{ lineHeight: '30px', height: 30 }}
-            key={item.value}
+    <Popover
+      trigger='click'
+      color='#fff'
+      position='left'
+      className='easy-email-extensions-Tools-Popover'
+      popupVisible={visible}
+      onVisibleChange={onVisibleChange}
+      content={(
+        <>
+          <style>{styleText}</style>
+          <div
+            style={{
+              maxWidth: 150,
+              maxHeight: 350,
+              overflowY: 'auto',
+              overflowX: 'hidden',
+            }}
           >
-            {item.label}
-          </Menu.Item>
-        ))}
-      </Menu>
-    </div>
+            <Menu
+              onClickMenuItem={onChange}
+              selectedKeys={[]}
+              style={{ border: 'none', padding: 0 }}
+            >
+              {fontList.map((item) => (
+                <Menu.Item
+                  style={{ lineHeight: '30px', height: 30 }}
+                  key={item.value}
+                >
+                  {item.label}
+                </Menu.Item>
+              ))}
+            </Menu>
+          </div>
+        </>
+
+      )}
+      getPopupContainer={props.getPopupContainer}
+    >
+      <ToolItem
+        title='Font family'
+        icon={<IconFont iconName='icon-font-family' />}
+      />
+    </Popover>
   );
 }

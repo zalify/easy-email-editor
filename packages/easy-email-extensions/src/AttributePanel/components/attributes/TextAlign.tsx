@@ -17,7 +17,7 @@ const options = [
   },
 ];
 
-export function TextAlign() {
+export function TextAlign({ name }: { name?: string; }) {
   const { focusIdx } = useFocusIdx();
 
   return useMemo(() => {
@@ -25,10 +25,10 @@ export function TextAlign() {
       <Stack>
         <RadioGroupField
           label='Text align'
-          name={`${focusIdx}.attributes.text-align`}
+          name={name || `${focusIdx}.attributes.text-align`}
           options={options}
         />
       </Stack>
     );
-  }, [focusIdx]);
+  }, [focusIdx, name]);
 }

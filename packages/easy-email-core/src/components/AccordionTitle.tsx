@@ -1,25 +1,24 @@
 
-  import { omit } from 'lodash';
-  import { BasicType } from '@core/constants';
-  import { RecursivePartial } from '@core/typings';
-  import React from 'react';
-  import { IAccordionTitle } from '@core/blocks/AccordionTitle';
-  import MjmlBlock, { MjmlBlockProps } from '@core/components/MjmlBlock';
+import { omit } from 'lodash';
+import { BasicType } from '@core/constants';
+import { RecursivePartial } from '@core/typings';
+import React from 'react';
+import { IAccordionTitle } from '@core/blocks';
+import MjmlBlock, { MjmlBlockProps } from '@core/components/MjmlBlock';
 
-  export type AccordionTitleProps = RecursivePartial<IAccordionTitle['data']> &
+export type AccordionTitleProps = RecursivePartial<IAccordionTitle['data']> &
   RecursivePartial<IAccordionTitle['attributes']> & {
     children?: MjmlBlockProps<IAccordionTitle>['children'];
   };
 
-  export function AccordionTitle(props: AccordionTitleProps) {
-    return (
-      <MjmlBlock
-        attributes={omit(props, ['data', 'children'])}
-        value={props.value}
-        type={BasicType.ACCORDION_TITLE}
-      >
-        {props.children}
-      </MjmlBlock>
-    );
-  }
-  
+export function AccordionTitle(props: AccordionTitleProps) {
+  return (
+    <MjmlBlock
+      attributes={omit(props, ['data', 'children', 'value'])}
+      value={props.value}
+      type={BasicType.ACCORDION_TITLE}
+    >
+      {props.children}
+    </MjmlBlock>
+  );
+}

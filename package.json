@@ -8,9 +8,11 @@
     "build:extensions": "cd packages/easy-email-extensions && yarn build",
     "dev": "cd demo && yarn dev",
     "demo": "cd demo && yarn build",
-    "lint": "lerna exec -- yarn format"
+    "lint": "lerna exec -- yarn format",
+    "publish": "lerna publish --force-publish"
   },
   "dependencies": {
-    "lerna": "^4.0.0"
+    "lerna": "^4.0.0",
+    "liquidjs": "^9.34.1"
   }
 }

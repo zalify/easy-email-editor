@@ -1,16 +1,16 @@
 import React from 'react';
-import { Stack } from 'easy-email-editor';
 import { Width } from '@extensions/AttributePanel/components/attributes/Width';
 import { BackgroundColor } from '@extensions/AttributePanel/components/attributes/BackgroundColor';
 import { VerticalAlign } from '@extensions/AttributePanel/components/attributes/VerticalAlign';
 import { Collapse, Grid } from '@arco-design/web-react';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
 import { ClassName } from '../../attributes/ClassName';
+import { CollapseWrapper } from '../../attributes/CollapseWrapper';
 
 export function Group() {
   return (
     <AttributesPanelWrapper>
-      <Collapse defaultActiveKey={['0', '1', '2']}>
+      <CollapseWrapper defaultActiveKey={['0', '1', '2']}>
         <Collapse.Item name='0' header='Dimension'>
           <Grid.Row>
             <Grid.Col span={11}>
@@ -34,7 +34,7 @@ export function Group() {
             <ClassName />
           </Grid.Col>
         </Collapse.Item>
-      </Collapse>
+      </CollapseWrapper>
     </AttributesPanelWrapper>
   );
 }

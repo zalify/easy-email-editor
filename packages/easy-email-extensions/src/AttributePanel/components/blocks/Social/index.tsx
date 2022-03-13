@@ -1,7 +1,7 @@
 import React from 'react';
 import { Padding } from '@extensions/AttributePanel/components/attributes/Padding';
 import {
-  EditTabField,
+  EditGridTabField,
   ImageUploaderField,
   InputWithUnitField,
   RadioGroupField,
@@ -9,7 +9,7 @@ import {
   TextField,
 } from '@extensions/components/Form';
 import { Align } from '@extensions/AttributePanel/components/attributes/Align';
-import { IconLink } from '@arco-design/web-react/icon';
+import { IconClose, IconLink, IconPlus } from '@arco-design/web-react/icon';
 import { Color } from '@extensions/AttributePanel/components/attributes/Color';
 import { ContainerBackgroundColor } from '@extensions/AttributePanel/components/attributes/ContainerBackgroundColor';
 import { FontFamily } from '@extensions/AttributePanel/components/attributes/FontFamily';
@@ -18,13 +18,14 @@ import { FontStyle } from '@extensions/AttributePanel/components/attributes/Font
 import { FontWeight } from '@extensions/AttributePanel/components/attributes/FontWeight';
 
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
-import { Collapse, Grid, Space } from '@arco-design/web-react';
+import { Button, Card, Collapse, Grid, Space, Typography } from '@arco-design/web-react';
 import { TextDecoration } from '@extensions/AttributePanel/components/attributes/TextDecoration';
 import { LineHeight } from '@extensions/AttributePanel/components/attributes/LineHeight';
-import { Stack, useEditorProps, useFocusIdx } from 'easy-email-editor';
+import { Stack, useBlock, useEditorProps, useFocusIdx } from 'easy-email-editor';
 import { ISocial } from 'easy-email-core';
 import { getImg } from '@extensions/AttributePanel/utils/getImg';
 import { ClassName } from '../../attributes/ClassName';
+import { CollapseWrapper } from '../../attributes/CollapseWrapper';
 
 const options = [
   {
@@ -39,23 +40,23 @@ const options = [
 
 export function Social() {
   const { focusIdx } = useFocusIdx();
+  const { focusBlock } = useBlock();
+  const value = focusBlock?.data.value as ISocial['data']['value'];
+  if (!value) return null;
+
   return (
     <AttributesPanelWrapper style={{ padding: 0 }}>
-      <Collapse defaultActiveKey={['0', '1', '2']}>
+      <CollapseWrapper defaultActiveKey={['0', '1', '2', '3']}>
         <Collapse.Item name='1' header='Setting'>
           <Space direction='vertical'>
-            <Grid.Row>
-              <Grid.Col span={11}>
-                <RadioGroupField
-                  label='Mode'
-                  name={`${focusIdx}.attributes.mode`}
-                  options={options}
-                />
-              </Grid.Col>
-              <Grid.Col offset={1} span={11}>
-                <ContainerBackgroundColor title='Background color' />
-              </Grid.Col>
-            </Grid.Row>
+            <RadioGroupField
+              label='Mode'
+              name={`${focusIdx}.attributes.mode`}
+              options={options}
+            />
+
+            <Align />
+
           </Space>
         </Collapse.Item>
 
@@ -79,22 +80,32 @@ export function Social() {
             </Grid.Row>
             <Grid.Row>
               <Grid.Col span={11}>
+                <Color />
+              </Grid.Col>
+              <Grid.Col offset={1} span={11}>
+
+                <ContainerBackgroundColor title='Background color' />
+              </Grid.Col>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Col span={11}>
                 <TextDecoration />
               </Grid.Col>
               <Grid.Col offset={1} span={11}>
-                <Color inline={false} />
+                <FontStyle />
               </Grid.Col>
             </Grid.Row>
-            <FontStyle />
+
           </Space>
         </Collapse.Item>
 
         <Collapse.Item
           name='2'
           header='Social item'
-          contentStyle={{ padding: 0 }}
+          contentStyle={{ padding: 10 }}
         >
-          <EditTabField
+
+          <EditGridTabField
             tabPosition='top'
             name={`${focusIdx}.data.value.elements`}
             label=''
@@ -102,35 +113,40 @@ export function Social() {
             renderItem={(item, index) => (
               <SocialElement item={item} index={index} />
             )}
-            additionItem={{
-              href: '',
-              'icon-size': '20px',
-              target: '_blank',
-              src: getImg('AttributePanel_01'),
-              content: 'Google',
-            }}
           />
         </Collapse.Item>
 
         <Collapse.Item name='0' header='Dimension'>
-          <Stack vertical spacing='tight'>
-            <Align />
-            <TextField
-              label='Border radius'
-              name={`${focusIdx}.attributes.border-radius`}
-              inline
-            />
+
+          <Space direction="vertical" size="large">
+
+            <Grid.Row>
+              <Grid.Col span={11}>
+                <InputWithUnitField
+                  label='Icon width'
+                  name={`${focusIdx}.attributes.icon-size`}
+                />
+              </Grid.Col>
+              <Grid.Col offset={1} span={11}>
+                <TextField
+                  label='Border radius'
+                  name={`${focusIdx}.attributes.border-radius`}
+                />
+              </Grid.Col>
+            </Grid.Row>
+
             <Padding />
-            <Padding attributeName='inner-padding' title='Inner padding' />
+            <Padding attributeName='inner-padding' title='Icon padding' />
             <Padding attributeName='text-padding' title='Text padding' />
-          </Stack>
+          </Space>
+
         </Collapse.Item>
         <Collapse.Item name='4' header='Extra'>
           <Grid.Col span={24}>
             <ClassName />
           </Grid.Col>
         </Collapse.Item>
-      </Collapse>
+      </CollapseWrapper>
     </AttributesPanelWrapper>
   );
 }
@@ -138,7 +154,7 @@ export function Social() {
 function SocialElement({
   index,
 }: {
-  item: ISocial['data']['value']['elements'];
+  item: ISocial['data']['value']['elements'][0];
   index: number;
 }) {
   const { focusIdx } = useFocusIdx();
@@ -150,17 +166,27 @@ function SocialElement({
         label='Image'
         labelHidden
         name={`${focusIdx}.data.value.elements.[${index}].src`}
-        helpText='The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.'
+        // helpText='The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.'
         uploadHandler={onUploadImage}
       />
 
-      <TextField
-        label='Content'
-        name={`${focusIdx}.data.value.elements.[${index}].content`}
-        quickchange
-      />
-
       <Grid.Row>
+        <Grid.Col span={11}>
+          <TextField
+            label='Content'
+            name={`${focusIdx}.data.value.elements.[${index}].content`}
+            quickchange
+          />
+        </Grid.Col>
+        <Grid.Col offset={1} span={11}>
+          <TextField
+            prefix={<IconLink />}
+            label='Link'
+            name={`${focusIdx}.data.value.elements.[${index}].href`}
+          />
+        </Grid.Col>
+      </Grid.Row>
+      {/* <Grid.Row>
         <Grid.Col span={11}>
           <InputWithUnitField
             label='Icon width'
@@ -173,34 +199,8 @@ function SocialElement({
             name={`${focusIdx}.data.value.elements.[${index}].icon-height`}
           />
         </Grid.Col>
-      </Grid.Row>
+      </Grid.Row> */}
 
-      <Grid.Row>
-        <Grid.Col span={11}>
-          <TextField
-            prefix={<IconLink />}
-            label='Url'
-            name={`${focusIdx}.data.value.elements.[${index}].href`}
-          />
-        </Grid.Col>
-        <Grid.Col offset={1} span={11}>
-          <SelectField
-            style={{ minWidth: 65 }}
-            label='Target'
-            name={`${focusIdx}.data.value.elements.[${index}].target`}
-            options={[
-              {
-                value: '_blank',
-                label: '_blank',
-              },
-              {
-                value: '_self',
-                label: '_self',
-              },
-            ]}
-          />
-        </Grid.Col>
-      </Grid.Row>
     </Space>
   );
 }

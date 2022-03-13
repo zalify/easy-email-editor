@@ -34,9 +34,17 @@ export enum AdvancedType {
   DIVIDER = 'advanced_divider',
   SPACER = 'advanced_spacer',
   BUTTON = 'advanced_button',
-  WRAPPER = 'advanced_wrapper',
   NAVBAR = 'advanced_navbar',
   SOCIAL = 'advanced_social',
   ACCORDION = 'advanced_accordion',
   CAROUSEL = 'advanced_carousel',
+
+  WRAPPER = 'advanced_wrapper',
+  SECTION = 'advanced_section',
+  COLUMN = 'advanced_column',
+  GROUP = 'advanced_group',
+  HERO = 'advanced_hero',
 }
+
+export const MERGE_TAG_CLASS_NAME = 'easy-email-merge-tag-container';
+export const EMAIL_BLOCK_CLASS_NAME = 'email-block';

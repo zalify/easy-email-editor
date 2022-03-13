@@ -1,15 +1,20 @@
-import { BasicType } from 'easy-email-core';
+import { BasicType, getNodeIdxFromClassName } from 'easy-email-core';
 import { camelCase } from 'lodash';
 import React from 'react';
 import {
-  getChildIdx,
   getNodeTypeFromClassName,
-  getPageIdx,
+  MERGE_TAG_CLASS_NAME,
 } from 'easy-email-core';
 import { getEditNode } from './getEditNode';
+import { isTextBlock } from './isTextBlock';
+import { MergeTagBadge } from './MergeTagBadge';
 const domParser = new DOMParser();
 
 const errLog = console.error;
+
+export function getChildSelector(selector: string, index: number) {
+  return `${selector}-${index}`;
+}
 
 console.error = (message?: any, ...optionalParams: any[]) => {
   // ignore validateDOMNesting
@@ -29,21 +34,25 @@ console.error = (message?: any, ...optionalParams: any[]) => {
 };
 
 export interface HtmlStringToReactNodesOptions {
-  focusIdx: string;
+  enabledMergeTagsBadge: boolean;
 }
 
-export function HtmlStringToReactNodes(content: string) {
+export function HtmlStringToReactNodes(
+  content: string,
+  option: HtmlStringToReactNodesOptions
+) {
   let doc = domParser.parseFromString(content, 'text/html'); // The average time is about 1.4 ms
-  doc.querySelectorAll('.node-type-text').forEach((child) => {
-    const editNode = getEditNode(child as HTMLElement);
-
+  [...doc.querySelectorAll(`.${MERGE_TAG_CLASS_NAME}`)].forEach((child) => {
+    const editNode = child.querySelector('div');
     if (editNode) {
-      editNode.contentEditable = 'true';
+      if (option.enabledMergeTagsBadge) {
+        editNode.innerHTML = MergeTagBadge.transform(editNode.innerHTML);
+      }
     }
   });
 
   const reactNode = (
-    <RenderReactNode idx={getPageIdx()} node={doc.documentElement} index={0} />
+    <RenderReactNode selector={'0'} node={doc.documentElement} index={0} />
   );
 
   return reactNode;
@@ -52,13 +61,15 @@ export function HtmlStringToReactNodes(content: string) {
 const RenderReactNode = React.memo(function ({
   node,
   index,
-  idx,
+  selector,
 }: {
   node: HTMLElement;
   index: number;
-  idx: string;
+  selector: string;
 }): React.ReactElement {
-  const attributes: { [key: string]: string } = {};
+  const attributes: { [key: string]: string; } = {
+    'data-selector': selector,
+  };
   node.getAttributeNames?.().forEach((att) => {
     if (att) {
       attributes[att] = node.getAttribute(att) || '';
@@ -84,14 +95,15 @@ const RenderReactNode = React.memo(function ({
     }
 
     const blockType = getNodeTypeFromClassName(node.classList);
-    const isTextBlockNode = blockType === BasicType.TEXT;
+    const isTextBlockNode = isTextBlock(blockType) && getNodeIdxFromClassName(node.classList);
     const isButtonBlockNode = blockType === BasicType.BUTTON;
     const isNavbarBlockNode = blockType === BasicType.NAVBAR;
+
     if (isTextBlockNode) {
+
       const editNode = getEditNode(node);
 
       if (editNode) {
-        editNode.id = idx;
         editNode.contentEditable = 'true';
       }
     }
@@ -126,13 +138,13 @@ const RenderReactNode = React.memo(function ({
         node.childNodes.length === 0
           ? null
           : [...node.childNodes].map((n, i) => (
-              <RenderReactNode
-                idx={getChildIdx(idx, i)}
-                key={i}
-                node={n as any}
-                index={i}
-              />
-            )),
+            <RenderReactNode
+              selector={getChildSelector(selector, i)}
+              key={i}
+              node={n as any}
+              index={i}
+            />
+          )),
     });
 
     return <>{reactNode}</>;

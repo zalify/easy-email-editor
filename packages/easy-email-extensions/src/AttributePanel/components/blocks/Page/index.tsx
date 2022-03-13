@@ -42,12 +42,29 @@ export function Page() {
             <Stack vertical spacing='tight'>
               <Grid.Row>
                 <Grid.Col span={11}>
-                  <FontFamily />
+                  <FontFamily name={`${focusIdx}.data.value.font-family`} />
                 </Grid.Col>
                 <Grid.Col offset={1} span={11}>
                   <InputWithUnitField
                     label='Font size'
                     name={`${focusIdx}.data.value.font-size`}
+                  />
+                </Grid.Col>
+              </Grid.Row>
+
+              <Grid.Row>
+                <Grid.Col span={11}>
+                  <InputWithUnitField
+                    label='Line height'
+                    unitOptions='percent'
+                    name={`${focusIdx}.data.value.line-height`}
+                  />
+                </Grid.Col>
+                <Grid.Col offset={1} span={11}>
+                  <InputWithUnitField
+                    label='Font weight'
+                    unitOptions='percent'
+                    name={`${focusIdx}.data.value.font-weight`}
                   />
                 </Grid.Col>
               </Grid.Row>
@@ -60,34 +77,31 @@ export function Page() {
                   />
                 </Grid.Col>
                 <Grid.Col offset={1} span={11}>
-                  <InputWithUnitField
-                    label='Line height'
-                    unitOptions='percent'
-                    name={`${focusIdx}.data.value.line-height`}
-                  />
-                </Grid.Col>
-              </Grid.Row>
-
-              <Grid.Row>
-                <Grid.Col span={11}>
                   <ColorPickerField
                     label='Background'
                     name={`${focusIdx}.attributes.background-color`}
                   />
                 </Grid.Col>
-                <Grid.Col offset={1} span={11}>
-                  <ColorPickerField
-                    label='Content background'
-                    name={`${focusIdx}.data.value.content-background-color`}
-                  />
-                </Grid.Col>
+              </Grid.Row>
+
+              <Grid.Row>
+                <ColorPickerField
+                  label='Content background'
+                  name={`${focusIdx}.data.value.content-background-color`}
+                />
+
               </Grid.Row>
 
               <TextAreaField
-                label='Style'
+                autoSize
+                label='User style'
                 name={`${focusIdx}.data.value.user-style.content`}
               />
+              <Stack.Item />
+              <Stack.Item />
               <AddFont />
+              <Stack.Item />
+              <Stack.Item />
             </Stack>
           </Collapse.Item>
         </Collapse>

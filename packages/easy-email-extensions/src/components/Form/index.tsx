@@ -24,6 +24,7 @@ import { Input, InputProps } from './Input';
 import { InputWithUnit, InputWithUnitProps } from './InputWithUnit';
 import { CheckBoxGroup } from './CheckBoxGroup';
 import { EditTab, EditTabProps } from './EditTab';
+import { EditGridTab, EditGridTabProps } from './EditGridTab';
 import { Dayjs } from 'dayjs';
 import { InlineText, InlineTextProps } from './InlineTextField';
 import { AutoCompleteProps, AutoComplete } from './AutoComplete';
@@ -108,6 +109,7 @@ export const CheckboxField = enhancer<
 >(CheckBoxGroup, (e) => e);
 
 export const EditTabField = enhancer<EditTabProps>(EditTab, (e: any[]) => e);
+export const EditGridTabField = enhancer<EditGridTabProps>(EditGridTab, (e: any[]) => e);
 
 export const InlineTextField = enhancer<
   InlineTextProps,
