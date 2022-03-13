@@ -8,7 +8,7 @@ import { BlockLayer, BlockLayerProps } from '../BlockLayer';
 import { InteractivePrompt } from '../InteractivePrompt';
 import styles from './index.module.scss';
 import enUS from '@arco-design/web-react/es/locale/en-US';
-import { MergeTagBadge } from '@extensions/MergeTagBadge';
+import { MergeTagBadgePrompt } from '@extensions/MergeTagBadgePrompt';
 import { IconLeft, IconRight } from '@arco-design/web-react/icon';
 
 export const SimpleLayout: React.FC<
@@ -109,7 +109,7 @@ export const SimpleLayout: React.FC<
         </Layout.Sider>
 
         <InteractivePrompt />
-        <MergeTagBadge />
+        <MergeTagBadgePrompt />
       </Layout>
     </ConfigProvider>
   );

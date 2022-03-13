@@ -6,7 +6,7 @@ export * from './ShortcutToolbar';
 export * from './SourceCodePanel';
 export * from './InteractivePrompt';
 export * from './SimpleLayout';
-export * from './MergeTagBadge';
+export * from './MergeTagBadgePrompt';
 
 export * from './components/Form';
 

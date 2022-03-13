@@ -1,0 +1,138 @@
+.easy-email-merge-tag {
+  font-size: inherit;
+  outline: 1px solid rgb(78 89 105) !important;
+  outline-offset: 0px;
+  padding: 0px 8px;
+  border-radius: 4px;
+  cursor: default !important;
+  transition: all 0.1s linear;
+  border: none;
+  font-weight: inherit;
+  font-style: inherit;
+  outline-color: rgb(0 160 172) !important;
+  color: inherit;
+  background-color: rgb(235 249 252);
+}
+
+.easy-email-merge-tag:hover:not(.easy-email-merge-tag-focus) {
+  // outline-color: rgb(201 205 212) !important;
+  // color: rgb(78 89 105);
+  // background-color: rgb(229 230 235);
+}
+
+.easy-email-merge-tag-focus {
+  // outline-color: rgb(0 160 172) !important;
+  // color: rgb(78 89 105);
+  // background-color: rgb(235 249 252);
+}
+
+.easy-email-merge-tag-popover {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translate(-50%, -100%);
+}
+
+.easy-email-merge-tag-popover {
+  line-height: 1.3;
+  background-color: #fff;
+  width: 360px;
+  border: 1px solid rgb(229 230 235);
+  border-radius: 8px;
+  position: absolute;
+  top: calc(100% + 20px);
+  left: 50%;
+  transform: translate(-50%, 0%);
+  z-index: 10;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI,
+    Roboto, Helvetica Neue, sans-serif;
+  h3 {
+    margin: 0;
+    font-size: 12px;
+    color: rgb(32, 34, 35);
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .easy-email-merge-tag-popover-desc {
+    font-size: 14px;
+    color: rgb(109, 113, 117);
+  }
+  .easy-email-merge-tag-popover-desc-label {
+    font-weight: 400;
+    line-height: 15px;
+    border: 1px solid rgb(109, 113, 117);
+    border-radius: 4px;
+    text-transform: none;
+    letter-spacing: normal;
+    position: relative;
+    display: flex;
+    align-items: center;
+    color: rgb(32 34 35);
+    cursor: text;
+    font-size: 14px;
+  }
+  input {
+    text-transform: none;
+    letter-spacing: normal;
+    position: relative;
+    z-index: 20;
+    display: block;
+    flex: 1 1;
+    width: 100%;
+    min-width: 0;
+    min-height: 25px;
+    margin: 0;
+    padding: 5px 12px;
+    background: none;
+    border: 1px solid transparent;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    appearance: none;
+    caret-color: rgb(32 34 35);
+    color: rgb(32 34 35);
+    &:focus {
+      outline: none;
+    }
+  }
+  .easy-email-merge-tag-popover-desc-label-count {
+    color: rgb(109, 113, 117);
+    z-index: 20;
+    margin: 0 12px 0 3.5px;
+    pointer-events: none;
+    text-align: right;
+  }
+  .easy-email-merge-tag-popover-desc-label-button {
+    font-size: 14px;
+    text-align: right;
+    margin-top: 10px;
+    font-weight: normal;
+    margin-bottom: 5px;
+    button {
+      color: var(--selected-color);
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: all 0.1s linear;
+      cursor: pointer;
+      outline: none;
+      background-color: transparent;
+      border: 1px solid transparent;
+      &:focus {
+        color: var(--selected-color);
+        background-color: rgb(242 243 245);
+      }
+      &:hover {
+        color: var(--selected-color);
+        background-color: rgb(242 243 245);
+      }
+    }
+  }
+
+  .easy-email-merge-tag-popover-container {
+    position: relative;
+    z-index: 2;
+  }
+}
