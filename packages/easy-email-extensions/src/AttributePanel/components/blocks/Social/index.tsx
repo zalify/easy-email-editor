@@ -47,24 +47,6 @@ export function Social() {
   return (
     <AttributesPanelWrapper style={{ padding: 0 }}>
       <CollapseWrapper defaultActiveKey={['0', '1', '2', '3']}>
-
-        <Collapse.Item
-          name='2'
-          header='Social item'
-          contentStyle={{ padding: 10 }}
-        >
-
-          <EditGridTabField
-            tabPosition='top'
-            name={`${focusIdx}.data.value.elements`}
-            label=''
-            labelHidden
-            renderItem={(item, index) => (
-              <SocialElement item={item} index={index} />
-            )}
-          />
-        </Collapse.Item>
-
         <Collapse.Item name='1' header='Setting'>
           <Space direction='vertical'>
             <RadioGroupField
@@ -117,6 +99,23 @@ export function Social() {
           </Space>
         </Collapse.Item>
 
+        <Collapse.Item
+          name='2'
+          header='Social item'
+          contentStyle={{ padding: 10 }}
+        >
+
+          <EditGridTabField
+            tabPosition='top'
+            name={`${focusIdx}.data.value.elements`}
+            label=''
+            labelHidden
+            renderItem={(item, index) => (
+              <SocialElement item={item} index={index} />
+            )}
+          />
+        </Collapse.Item>
+
         <Collapse.Item name='0' header='Dimension'>
 
           <Space direction="vertical" size="large">
@@ -137,7 +136,7 @@ export function Social() {
             </Grid.Row>
 
             <Padding />
-            <Padding attributeName='inner-padding' title='Inner padding' />
+            <Padding attributeName='inner-padding' title='Icon padding' />
             <Padding attributeName='text-padding' title='Text padding' />
           </Space>
 
