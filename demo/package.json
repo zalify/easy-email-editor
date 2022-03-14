@@ -4,7 +4,6 @@
   "description": "Email editor demo",
   "version": "2.2.1",
   "author": "m-Ryan",
-  "type": "module",
   "repository": {
     "type": "git",
     "url": "git@github.com:m-Ryan/easy-email.git"
@@ -19,7 +18,7 @@
   "scripts": {
     "dev": "vite",
     "preview": "vite preview",
-    "build": "NODE_OPTIONS=--max-old-space-size=4096 vite build --config vite.production.config.ts",
+    "build": "vite build --config vite.production.config.ts",
     "template": "ts-node scripts/makeTemplates.js"
   },
   "husky": {

@@ -11,7 +11,6 @@ import { Loading } from '@demo/components/loading';
 import { history } from '@demo/utils/history';
 import { pushEvent } from '@demo/utils/pushEvent';
 import templates from '@demo/config/templates.json';
-import '@arco-design/web-react/dist/css/arco.css';
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -36,14 +35,16 @@ export default function Home() {
         </Button>
       }
     >
-      <Stack>
-        {[...templates, ...list].map((item) => (
-          <CardItem data={item} key={item.article_id} />
-        ))}
-      </Stack>
-      <Loading loading={loading}>
-        Load user template
-      </Loading>
+      <>
+        <Stack>
+          {[...templates, ...list].map((item) => (
+            <CardItem data={item} key={item.article_id} />
+          ))}
+        </Stack>
+        <Loading loading={loading}>
+          Load user template
+        </Loading>
+      </>
     </Frame>
   );
 }
