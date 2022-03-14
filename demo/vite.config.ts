@@ -114,6 +114,7 @@ export default defineConfig({
 
         `
             : '',
+        buildTime: `<meta name="updated-time" content="${new Date().toUTCString()}" />`
       },
     }),
   ].filter(Boolean),
