@@ -79,7 +79,7 @@ export default defineConfig({
         analysis:
           process.env.NODE_ENV !== 'development'
             ? `
-        <script type="text/javascript">
+        <script async type="text/javascript">
         (function (c, l, a, r, i, t, y) {
           c[a] =
             c[a] ||
@@ -100,6 +100,7 @@ export default defineConfig({
         }
       </style>
       <script
+        async
         type="text/javascript"
         src="https://s9.cnzz.com/z_stat.php?id=1280025969&web_id=1280025969"
       ></script>

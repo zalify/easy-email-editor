@@ -7,7 +7,7 @@ import { useLoading } from '@demo/hooks/useLoading';
 import { Button, Message, PageHeader, Select } from '@arco-design/web-react';
 import { useQuery } from '@demo/hooks/useQuery';
 import { useHistory } from 'react-router-dom';
-import { cloneDeep, set } from 'lodash';
+import { cloneDeep, set, isEqual } from 'lodash';
 import { Loading } from '@demo/components/loading';
 import mjml from 'mjml-browser';
 import { copy } from '@demo/utils/clipboard';
@@ -53,6 +53,7 @@ import greenTheme from '@arco-themes/react-easy-email-theme-green/css/arco.css?i
 import { useState } from 'react';
 import { testMergeTags } from './testMergeTags';
 import { useMergeTagsModal } from './components/useMergeTagsModal';
+import { getTemplate } from '@demo/config/getTemplate';
 
 const imageCompression = import('browser-image-compression');
 
@@ -77,7 +78,7 @@ const fontList = [
 
 export default function Editor() {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [theme, setTheme] = useState<'blue' | 'green' | 'purple'>('purple');
+  const [theme, setTheme] = useState<'blue' | 'green' | 'purple'>('blue');
   const dispatch = useDispatch();
   const history = useHistory();
   const templateData = useAppSelector('template');
@@ -151,38 +152,6 @@ export default function Editor() {
     });
   }, []);
 
-  const onSubmit = useCallback(
-    async (
-      values: IEmailTemplate,
-      form: FormApi<IEmailTemplate, Partial<IEmailTemplate>>
-    ) => {
-      pushEvent({ name: 'Save' });
-      if (id) {
-        dispatch(
-          template.actions.updateById({
-            id: +id,
-            template: values,
-            success() {
-              Message.success('Updated success!');
-              form.restart(values);
-            },
-          })
-        );
-      } else {
-        dispatch(
-          template.actions.create({
-            template: values,
-            success(id, newTemplate) {
-              Message.success('Saved success!');
-              form.restart(newTemplate);
-              history.replace(`/editor?id=${id}`);
-            },
-          })
-        );
-      }
-    },
-    [dispatch, history, id]
-  );
 
   const onExportHtml = (values: IEmailTemplate) => {
     pushEvent({ name: 'ExportHtml' });
@@ -224,6 +193,47 @@ export default function Editor() {
       content: sourceData, // replace standard block
     };
   }, [templateData]);
+
+
+  const onSubmit = useCallback(
+    async (
+      values: IEmailTemplate,
+      form: FormApi<IEmailTemplate, Partial<IEmailTemplate>>
+    ) => {
+      pushEvent({ name: 'Save' });
+      if (id) {
+        const isChanged = !(isEqual(initialValues?.content, values.content) && isEqual(initialValues?.subTitle, values?.subTitle) && isEqual(initialValues?.subject, values?.subject));
+
+        if (!isChanged) {
+          Message.success('Updated success!');
+          form.restart(values);
+          return;
+        }
+        dispatch(
+          template.actions.updateById({
+            id: +id,
+            template: values,
+            success() {
+              Message.success('Updated success!');
+              form.restart(values);
+            },
+          })
+        );
+      } else {
+        dispatch(
+          template.actions.create({
+            template: values,
+            success(id, newTemplate) {
+              Message.success('Saved success!');
+              form.restart(newTemplate);
+              history.replace(`/editor?id=${id}`);
+            },
+          })
+        );
+      }
+    },
+    [dispatch, history, id, initialValues]
+  );
 
   const onBeforePreview: EmailEditorProviderProps['onBeforePreview'] =
     useCallback((html: string, mergeTags) => {

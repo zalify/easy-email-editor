@@ -4,12 +4,11 @@ import { Provider } from 'react-redux';
 import Page from '@demo/components/Page';
 import store from '@demo/store';
 import '@demo/styles/common.scss';
-import '@arco-design/web-react/dist/css/arco.css';
 import { history } from './utils/history';
+import Home from '@demo/pages/Home';
 
-const HomePromise = import('@demo/pages/Home');
 const EditorPromise = import('@demo/pages/Editor');
-const Home = React.lazy(() => HomePromise);
+
 
 const Editor = React.lazy(() => EditorPromise);
 

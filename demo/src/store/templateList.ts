@@ -12,16 +12,16 @@ export default createSliceState({
   effects: {
     fetch: async (state) => {
       let provideUserData: IArticle[] = [];
-      if (USER.provideUserId && USER.provideCategoryId) {
-        // Provided template
-        const data = await article.getArticleList({
-          userId: USER.provideUserId,
-          categoryId: USER.provideCategoryId,
-          page: 1,
-          size: 1000,
-        });
-        provideUserData = data.list;
-      }
+      // if (USER.provideUserId && USER.provideCategoryId) {
+      //   // Provided template
+      //   const data = await article.getArticleList({
+      //     userId: USER.provideUserId,
+      //     categoryId: USER.provideCategoryId,
+      //     page: 1,
+      //     size: 1000,
+      //   });
+      //   provideUserData = data.list;
+      // }
 
       // user data
       const data2 = await article.getArticleList({
