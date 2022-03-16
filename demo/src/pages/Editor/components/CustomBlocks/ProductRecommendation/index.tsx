@@ -8,6 +8,7 @@ import {
 import { CustomBlocksType } from '../constants';
 import React from 'react';
 import { merge } from 'lodash';
+import { getContentEditableClassName } from 'easy-email-editor';
 
 const { Column, Section, Wrapper, Text, Button, Image, Group } = components;
 
@@ -100,6 +101,7 @@ export const ProductRecommendation = createCustomBlock<IProductRecommendation>({
               align='center'
               font-weight='bold'
               color={attributes['title-color']}
+              css-class={getContentEditableClassName(BasicType.TEXT, `${idx}.data.value.title`).join(' ')}
             >
               {title}
             </Text>
