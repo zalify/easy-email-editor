@@ -1,8 +1,6 @@
 import { camelCase } from 'lodash';
 import React from 'react';
 import { getNodeTypeFromClassName } from 'easy-email-core';
-import { isTextBlock } from './isTextBlock';
-import { getEditNode } from './getEditNode';
 
 const domParser = new DOMParser();
 
@@ -58,16 +56,6 @@ const RenderReactNode = React.memo(function ({
     }
 
     const blockType = getNodeTypeFromClassName(node.classList);
-    const isTextBlockNode = isTextBlock(blockType);
-
-    if (isTextBlockNode) {
-
-      const editNode = getEditNode(node);
-
-      if (editNode) {
-        editNode.setAttribute('data-contenteditable', 'true');
-      }
-    }
 
     if (attributes['data-contenteditable'] === 'true') {
       return React.createElement(tagName, {

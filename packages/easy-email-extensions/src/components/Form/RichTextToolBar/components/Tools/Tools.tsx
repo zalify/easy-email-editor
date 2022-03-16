@@ -3,7 +3,6 @@ import { ToolItem } from '../ToolItem';
 import { Link, LinkParams } from '../Link';
 import {
   FIXED_CONTAINER_ID,
-  getEditNode,
   getShadowRoot,
   IconFont,
   useEditorProps,
@@ -33,20 +32,13 @@ export function Tools(props: ToolsProps) {
   const { selectionRange, restoreRange, setRangeByElement } =
     useSelectionRange();
 
-  const execCommand = (cmd: string, val?: any) => {
-    const container = getEditNode(focusBlockNode);
-    if (!container) {
-      console.error('No container');
-      return;
-    }
+  const execCommand = useCallback((cmd: string, val?: any) => {
     if (!selectionRange) {
       console.error('No selectionRange');
       return;
     }
     if (
-      !container?.contains(selectionRange?.commonAncestorContainer) &&
-      container !== selectionRange?.commonAncestorContainer
-    ) {
+      !focusBlockNode?.contains(selectionRange?.commonAncestorContainer)) {
       console.error('Not commonAncestorContainer');
       return;
     }
@@ -87,20 +79,15 @@ export function Tools(props: ToolsProps) {
       document.execCommand(cmd, false, val);
     }
 
-    const html = container.innerHTML;
+    const html = getShadowRoot().activeElement?.innerHTML || '';
     props.onChange(html);
-  };
+  }, [enabledMergeTagsBadge, focusBlockNode, props, restoreRange, selectionRange, setRangeByElement]);
 
   const execCommandWithRange = useCallback((cmd: string, val?: any) => {
-    const container = getEditNode(focusBlockNode);
-    if (!container) {
-      console.error('No container');
-      return;
-    }
     document.execCommand(cmd, false, val);
-    const html = container.innerHTML;
+    const html = getShadowRoot().activeElement?.innerHTML || '';
     props.onChange(html);
-  }, [focusBlockNode, props]);
+  }, [props.onChange]);
 
   const getPopoverMountNode = () =>
     document.getElementById(FIXED_CONTAINER_ID)!;

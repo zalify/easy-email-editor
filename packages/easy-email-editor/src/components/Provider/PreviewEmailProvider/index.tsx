@@ -6,19 +6,28 @@ import { HtmlStringToPreviewReactNodes } from '@/utils/HtmlStringToPreviewReactN
 import { JsonToMjml } from 'easy-email-core';
 import { cloneDeep, isString } from 'lodash';
 import mjml from 'mjml-browser';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+
+export const MOBILE_WIDTH = 320;
 
 export const PreviewEmailContext = React.createContext<{
   html: string;
   reactNode: React.ReactNode | null;
   errMsg: React.ReactNode;
+  mobileWidth: number;
 }>({
   html: '',
   reactNode: null,
-  errMsg: ''
+  errMsg: '',
+  mobileWidth: 320
 });
 
 export const PreviewEmailProvider: React.FC<{}> = (props) => {
+
+  const { current: iframe } = useRef(document.createElement('iframe'));
+  const contentWindowRef = useRef<Window | null>(null);
+
+  const [mobileWidth, setMobileWidth] = useState(MOBILE_WIDTH);
 
   const { pageData } = useEditorContext();
   const { onBeforePreview, mergeTags, previewInjectData } = useEditorProps();
@@ -35,11 +44,27 @@ export const PreviewEmailProvider: React.FC<{}> = (props) => {
   }, [mergeTags, previewInjectData]);
 
   useEffect(() => {
+
+    const breakpoint = parseInt(lazyPageData.data.value.breakpoint || '0');
+    let adjustBreakPoint = breakpoint;
+    if (breakpoint > 360) {
+      adjustBreakPoint = Math.max((mobileWidth + 1), breakpoint);
+    }
+    const cloneData = {
+      ...lazyPageData,
+      data: {
+        ...lazyPageData.data,
+        value: {
+          ...lazyPageData.data.value,
+          breakpoint: adjustBreakPoint + 'px'
+        }
+      }
+    };
     let parseHtml = mjml(
       JsonToMjml({
-        data: lazyPageData,
+        data: cloneData,
         mode: 'production',
-        context: lazyPageData,
+        context: cloneData,
         dataSource: cloneDeep(injectData),
         keepClassName: true
       })
@@ -61,17 +86,42 @@ export const PreviewEmailProvider: React.FC<{}> = (props) => {
       }
     }
     setHtml(parseHtml);
-  }, [injectData, onBeforePreview, lazyPageData]);
+  }, [injectData, onBeforePreview, lazyPageData, mobileWidth]);
 
   const htmlNode = useMemo(() => HtmlStringToPreviewReactNodes(html), [html]);
+
+  useEffect(() => {
+    if (errMsg) return;
+
+    iframe.width = '400px';
+    iframe.style.position = 'fixed';
+    iframe.style.left = '-9999px';
+    iframe.onload = (evt) => {
+      contentWindowRef.current = (evt.target as any)?.contentWindow;
+    };
+
+    document.body.appendChild(iframe);
+  }, [errMsg, html, iframe]);
+
+  useEffect(() => {
+    if (!contentWindowRef.current) return;
+    const innerBody = contentWindowRef.current.document.body;
+    innerBody.innerHTML = html;
+    const a = innerBody.querySelector('.mjml-body') as HTMLElement;
+    if (a) {
+      a.style.display = 'inline-block';
+      setMobileWidth(Math.max(a.clientWidth, MOBILE_WIDTH));
+    }
+  }, [html]);
 
   const value = useMemo(() => {
     return {
       reactNode: htmlNode,
       html,
-      errMsg
+      errMsg,
+      mobileWidth
     };
-  }, [errMsg, html, htmlNode]);
+  }, [errMsg, html, htmlNode, mobileWidth]);
 
   return (
     <PreviewEmailContext.Provider

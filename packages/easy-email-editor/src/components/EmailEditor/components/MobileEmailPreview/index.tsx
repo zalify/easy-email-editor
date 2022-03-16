@@ -2,14 +2,14 @@ import React from 'react';
 import { PreviewEmail } from '../PreviewEmail';
 
 import iphoneFrame from '@/assets/images/iphone.png';
-import { useMobileScale } from '@/hooks/useMobileScale';
 import { ActiveTabKeys } from '@/components/Provider/BlocksProvider';
 import { useActiveTab } from '@';
+import { usePreviewEmail } from '@/hooks/usePreviewEmail';
 const MOBILE_WIDTH = 320;
 const MOBILE_Height = 640;
 
 export function MobileEmailPreview() {
-  const { mobileWidth } = useMobileScale();
+  const { mobileWidth } = usePreviewEmail();
   const { activeTab } = useActiveTab();
   return (
     <div

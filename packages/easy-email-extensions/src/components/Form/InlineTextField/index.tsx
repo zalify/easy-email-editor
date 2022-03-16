@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { getShadowRoot } from 'easy-email-editor';
+import { ContentEditableType, DATA_CONTENT_EDITABLE_TYPE, getShadowRoot } from 'easy-email-editor';
 import { useField, useForm } from 'react-final-form';
 
 export interface InlineTextProps {
@@ -24,12 +24,23 @@ export function InlineText({ idx, onChange, children }: InlineTextProps) {
 
       const text = e.clipboardData?.getData('text/plain') || '';
       document.execCommand('insertHTML', false, text);
-      onChange(e.target.innerHTML || '');
+      const contentEditableType = e.target.getAttribute(DATA_CONTENT_EDITABLE_TYPE);
+      if (contentEditableType === ContentEditableType.RichText) {
+        onChange(e.target.innerHTML || '');
+      } else if (contentEditableType === ContentEditableType.Text) {
+        onChange(e.target.textContent?.trim() || '');
+      }
     };
 
     const onInput = (e: Event) => {
       if (e.target instanceof Element && e.target.getAttribute('contenteditable')) {
-        onChange(e.target.innerHTML || '');
+
+        const contentEditableType = e.target.getAttribute(DATA_CONTENT_EDITABLE_TYPE);
+        if (contentEditableType === ContentEditableType.RichText) {
+          onChange(e.target.innerHTML || '');
+        } else if (contentEditableType === ContentEditableType.Text) {
+          onChange(e.target.textContent?.trim() || '');
+        }
       }
     };
 
