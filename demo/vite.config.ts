@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import reactRefresh from '@vitejs/plugin-react-refresh';
 import path from 'path';
+import styleImport from 'vite-plugin-style-import';
 import { injectHtml } from 'vite-plugin-html';
 
 export default defineConfig({
@@ -78,13 +79,34 @@ export default defineConfig({
     },
   },
   plugins: [
+    styleImport({
+      libs: [
+        // Dynamic import @arco-design styles
+        {
+          libraryName: '@arco-design/web-react',
+          libraryNameChangeCase: 'pascalCase',
+          esModule: true,
+          resolveStyle: (name) =>
+            `@arco-design/web-react/es/${name}/style/index`,
+        },
+        {
+          libraryName: '@arco-design/web-react/icon',
+          libraryNameChangeCase: 'pascalCase',
+          resolveStyle: (name) =>
+            `@arco-design/web-react/icon/react-icon/${name}`,
+          resolveComponent: (name) =>
+            `@arco-design/web-react/icon/react-icon/${name}`,
+        },
+      ],
+    }),
     reactRefresh(),
+
     injectHtml({
       data: {
         analysis:
           process.env.NODE_ENV !== 'development'
             ? `
-        <script type="text/javascript">
+        <script async type="text/javascript">
         (function (c, l, a, r, i, t, y) {
           c[a] =
             c[a] ||
@@ -105,12 +127,14 @@ export default defineConfig({
         }
       </style>
       <script
+        async
         type="text/javascript"
         src="https://s9.cnzz.com/z_stat.php?id=1280025969&web_id=1280025969"
       ></script>
 
         `
             : '',
+        buildTime: `<meta name="updated-time" content="${new Date().toUTCString()}" />`
       },
     }),
   ].filter(Boolean),

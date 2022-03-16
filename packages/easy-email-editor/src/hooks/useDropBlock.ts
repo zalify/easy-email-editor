@@ -1,9 +1,7 @@
 import { useEffect, useMemo, useState, useRef } from 'react';
 
 import {
-  BasicType,
   getNodeIdxFromClassName,
-  getNodeTypeFromClassName,
 } from 'easy-email-core';
 import { getBlockNodeByChildEle } from '@/utils/getBlockNodeByChildEle';
 import { useBlock } from '@/hooks/useBlock';
@@ -12,10 +10,7 @@ import { useFocusIdx } from './useFocusIdx';
 import { useDataTransfer } from './useDataTransfer';
 import { useHoverIdx } from './useHoverIdx';
 import { getInsertPosition } from '@/utils/getInsertPosition';
-import { scrollBlockEleIntoView } from '@/utils/scrollBlockEleIntoView';
-import { getEditNode } from '@/utils/getEditNode';
 import { useEditorProps } from './useEditorProps';
-import { getBlockNodeByIdx, isTextBlock } from '@/utils';
 import { DATA_ATTRIBUTE_DROP_CONTAINER } from '@/constants';
 
 export function useDropBlock() {
@@ -38,17 +33,6 @@ export function useDropBlock() {
     useHoverIdx();
 
   useEffect(() => {
-    if (focusBlock?.type === BasicType.TEXT) {
-      const node = getBlockNodeByIdx(focusIdx);
-      if (node) {
-        const editNode = getEditNode(node);
-
-        editNode?.focus();
-      }
-    }
-  }, [focusBlock?.type, focusIdx]);
-
-  useEffect(() => {
     if (ref) {
       let target: EventTarget | null = null;
       const onMouseDown = (ev: MouseEvent) => {
@@ -61,12 +45,7 @@ export function useDropBlock() {
         if (ev.target instanceof Element) {
           const target = getBlockNodeByChildEle(ev.target);
           if (!target) return;
-          const blockType = getNodeTypeFromClassName(target.classList);
           const idx = getNodeIdxFromClassName(target.classList)!;
-          if (isTextBlock(blockType)) {
-            const editNode = getEditNode(target);
-            editNode?.focus();
-          }
           setFocusIdx(idx);
           // scrollBlockEleIntoView({ idx });
         }

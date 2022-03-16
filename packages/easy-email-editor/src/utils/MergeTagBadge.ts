@@ -45,7 +45,6 @@ export class MergeTagBadge {
         item
       );
     });
-    console.log('container.innerHTML', container.innerHTML);
 
     return container.innerHTML;
   }

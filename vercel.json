@@ -5,12 +5,28 @@
     },
     {
       "src":"/images/(.*)",
-      "headers" : [
-        {
-          "key" : "Cache-Control",
-          "value" : "public, max-age=31536000"
-        }
-      ]
+      "headers" :  {
+        "Cache-Control": "public, max-age=2592000, s-maxage=2592000, immutable"
+      }
+    },
+    {
+      "src":"/assets/(.*)",
+      "headers" :  {
+        "Cache-Control": "public, max-age=2592000, s-maxage=2592000, immutable"
+      }
+
+    },
+    {
+      "src":"/assets/(.*)",
+      "headers" :  {
+        "Cache-Control": "public, max-age=2592000, s-maxage=2592000, immutable"
+      }
+    },
+    {
+      "src":"/(.*).jpg",
+      "headers" :  {
+        "Cache-Control": "public, max-age=2592000, s-maxage=2592000, immutable"
+      }
     },
     {
       "src": "/(.*)",

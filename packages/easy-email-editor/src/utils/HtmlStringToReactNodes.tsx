@@ -5,9 +5,13 @@ import {
   getNodeTypeFromClassName,
   MERGE_TAG_CLASS_NAME,
 } from 'easy-email-core';
-import { getEditNode } from './getEditNode';
 import { isTextBlock } from './isTextBlock';
 import { MergeTagBadge } from './MergeTagBadge';
+import { ContentEditableType, DATA_CONTENT_EDITABLE_IDX, DATA_CONTENT_EDITABLE_TYPE, } from '@/constants';
+import { isButtonBlock } from './isButtonBlock';
+import { getContentEditableIdxFromClassName, getContentEditableTypeFromClassName } from './contenteditable';
+import { getContentEditableClassName } from './getContentEditableClassName';
+import { isNavbarBlock } from './isNavbarBlock';
 const domParser = new DOMParser();
 
 const errLog = console.error;
@@ -42,6 +46,9 @@ export function HtmlStringToReactNodes(
   option: HtmlStringToReactNodesOptions
 ) {
   let doc = domParser.parseFromString(content, 'text/html'); // The average time is about 1.4 ms
+  [...doc.getElementsByTagName('a')].forEach((node) => {
+    node.setAttribute('tabIndex', '-1');
+  });
   [...doc.querySelectorAll(`.${MERGE_TAG_CLASS_NAME}`)].forEach((child) => {
     const editNode = child.querySelector('div');
     if (editNode) {
@@ -95,33 +102,17 @@ const RenderReactNode = React.memo(function ({
     }
 
     const blockType = getNodeTypeFromClassName(node.classList);
-    const isTextBlockNode = isTextBlock(blockType) && getNodeIdxFromClassName(node.classList);
-    const isButtonBlockNode = blockType === BasicType.BUTTON;
-    const isNavbarBlockNode = blockType === BasicType.NAVBAR;
+    const idx = getNodeIdxFromClassName(node.classList);
 
-    if (isTextBlockNode) {
-
-      const editNode = getEditNode(node);
-
-      if (editNode) {
-        editNode.contentEditable = 'true';
+    if (blockType) {
+      if (idx) {
+        makeStandardContentEditable(node, blockType, idx);
       }
-    }
-
-    if (isButtonBlockNode) {
-      const editNode = getEditNode(node);
-      if (editNode) {
-        editNode.setAttribute('tabIndex', '-1');
-      }
-    }
-
-    if (isNavbarBlockNode) {
-      node.querySelectorAll('a').forEach((anchor) => {
-        anchor.setAttribute('tabIndex', '-1');
-      });
+      makeBlockNodeContentEditable(node);
     }
 
     if (attributes['contenteditable'] === 'true') {
+
       return createElement(tagName, {
         key: performance.now(),
         ...attributes,
@@ -187,3 +178,52 @@ function createElement(
 
   return React.createElement(type, props);
 }
+
+function makeBlockNodeContentEditable(node: ChildNode) {
+  if (!(node instanceof Element)) return;
+  const type = getContentEditableTypeFromClassName(node.classList);
+  const idx = getContentEditableIdxFromClassName(node.classList);
+
+  if (isTextBlock(type)) {
+    const editNode = node.querySelector('div');
+    if (editNode) {
+      editNode.setAttribute('contentEditable', 'true');
+      editNode.setAttribute(DATA_CONTENT_EDITABLE_TYPE, ContentEditableType.RichText);
+      editNode.setAttribute(DATA_CONTENT_EDITABLE_IDX, idx);
+    }
+  } else if (isButtonBlock(type)) {
+    const editNode = node.querySelector('a') || node.querySelector('p');
+    if (editNode) {
+      editNode.setAttribute('contentEditable', 'true');
+      editNode.setAttribute(DATA_CONTENT_EDITABLE_TYPE, ContentEditableType.Text);
+      editNode.setAttribute(DATA_CONTENT_EDITABLE_IDX, idx);
+    }
+  } else if (isNavbarBlock(type)) {
+    node.setAttribute('contentEditable', 'true');
+    node.setAttribute(DATA_CONTENT_EDITABLE_TYPE, ContentEditableType.Text);
+    node.setAttribute(DATA_CONTENT_EDITABLE_IDX, idx);
+
+  }
+
+  node.childNodes.forEach(makeBlockNodeContentEditable);
+
+}
+
+function makeStandardContentEditable(node: HTMLElement, blockType: string, idx: string) {
+  if (isTextBlock(blockType) || isButtonBlock(blockType)) {
+    node.classList.add(...getContentEditableClassName(blockType, `${idx}.data.value.content`));
+  }
+  if (isNavbarBlock(blockType)) {
+    node.querySelectorAll('.mj-link').forEach((anchor, index) => {
+
+      anchor.classList.add(...getContentEditableClassName(blockType, `${idx}.data.value.links.${index}.content`));
+    });
+  }
+}
+
+// Ending tags
+// Some of the mjml components are "ending tags". These are mostly the components that will contain text contents, like mj-text or mj-buttons. These components can contain not only text, but also any HTML content, which will be completely unprocessed and left as it is. This means you cannot use other MJML components inside them, but you can use any HTML tag, like <img> or <a>.
+
+// This has a little downside : The content is not modified at all, this means that the text won't be escaped, so if you use characters that are used to define html tags in your text, like < or >, you should use the encoded characters &lt; and &lt;. If you don't, sometimes the browser can be clever enough to understand that you're not really trying to open/close an html tag, and display the unescaped character as normal text, but this may cause problems in some cases. For instance, this will likely cause problems if you use the minify option, mj-html-attributes or an inline mj-style, because these require the html to be re-parsed internally. If you're just using the minify option, and really need to use the < > characters, i.e. for templating language, you can also avoid this problem by wrapping the troublesome content between two <!-- htmlmin:ignore --> tags.
+
+// Here is the list of all ending tags : - mj-accordion-text - mj-accordion-title - mj-button - mj-navbar-link - mj-raw - mj-social-element - mj-text - mj-table
