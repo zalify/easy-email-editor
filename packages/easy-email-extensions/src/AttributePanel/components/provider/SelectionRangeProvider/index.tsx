@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
+import { RICH_TEXT_TOOL_BAR } from '@extensions/constants';
 import { getShadowRoot } from 'easy-email-editor';
 import React, { useEffect, useMemo, useState } from 'react';
 
@@ -18,6 +19,9 @@ export const SelectionRangeProvider: React.FC<{}> = (props) => {
       try {
         const range = (getShadowRoot() as any).getSelection().getRangeAt(0);
         if (range) {
+          const toolbar = getShadowRoot().getElementById(RICH_TEXT_TOOL_BAR);
+          if (toolbar && toolbar.contains(range.commonAncestorContainer))
+            return;
           setSelectionRange(range);
         }
       } catch (error) {}
