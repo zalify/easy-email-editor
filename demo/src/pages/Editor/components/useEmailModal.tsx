@@ -29,7 +29,7 @@ export function useEmailModal() {
   const onSendEmail = useCallback(
     async (values: { toEmail: string; mergeTags: string; }) => {
       if (!emailData) return null;
-      pushEvent({ name: 'SendTestEmail', label: values.toEmail });
+      pushEvent({ action: 'SendTestEmail', name: values.toEmail });
       let mergeTagsPayload = {};
       try {
         mergeTagsPayload = JSON.parse(values.mergeTags);

@@ -44,3 +44,9 @@
   padding: 0px 5px !important;
   text-align: center !important;
 }
+
+.colorPicker {
+  :global(.sketch-picker .flexbox-fix:nth-child(3)) {
+    display: none !important;
+  }
+}
