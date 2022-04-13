@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Stack, TextStyle, } from 'easy-email-editor';
-import { BasicType, IDivider, RecursivePartial } from 'easy-email-core';
+import { AdvancedType, IDivider, RecursivePartial } from 'easy-email-core';
 import { BlockMaskWrapper } from '@extensions/ShortcutToolbar/components/BlockMaskWrapper';
 
 const dividerList = [
@@ -32,7 +32,7 @@ export function DividerBlockItem() {
           return (
             <BlockMaskWrapper
               key={index}
-              type={BasicType.DIVIDER}
+              type={AdvancedType.DIVIDER}
               payload={
                 {
                   attributes: { ...item, padding: '10px 0px' },
