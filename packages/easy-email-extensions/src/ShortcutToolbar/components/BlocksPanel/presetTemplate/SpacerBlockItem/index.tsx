@@ -1,6 +1,6 @@
 import React from 'react';
 import { Stack, TextStyle, } from 'easy-email-editor';
-import { BasicType, ISpacer, RecursivePartial } from 'easy-email-core';
+import { AdvancedType, ISpacer, RecursivePartial } from 'easy-email-core';
 
 import { BlockMaskWrapper } from '@extensions/ShortcutToolbar/components/BlockMaskWrapper';
 
@@ -14,7 +14,7 @@ export function SpacerBlockItem() {
           return (
             <BlockMaskWrapper
               key={index}
-              type={BasicType.SPACER}
+              type={AdvancedType.SPACER}
               payload={
                 {
                   attributes: {

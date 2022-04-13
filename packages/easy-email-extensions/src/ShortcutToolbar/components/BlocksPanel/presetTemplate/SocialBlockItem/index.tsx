@@ -1,5 +1,5 @@
 import React from 'react';
-import { BasicType } from 'easy-email-core';
+import { AdvancedType } from 'easy-email-core';
 import { Stack } from 'easy-email-editor';
 
 import { BlockMaskWrapper } from '@extensions/ShortcutToolbar/components/BlockMaskWrapper';
@@ -10,7 +10,7 @@ const list = [
   {
     thumbnail: getImg('IMAGE_52'),
     payload: {
-      type: BasicType.SOCIAL,
+      type: AdvancedType.SOCIAL,
       data: {
         value: {
           elements: [
@@ -58,7 +58,7 @@ const list = [
   {
     thumbnail: getImg('IMAGE_71'),
     payload: {
-      type: BasicType.SOCIAL,
+      type: AdvancedType.SOCIAL,
       data: {
         value: {
           elements: [
@@ -113,7 +113,7 @@ export function SocialBlockItem() {
           return (
             <BlockMaskWrapper
               key={index}
-              type={BasicType.SOCIAL}
+              type={AdvancedType.SOCIAL}
               payload={item.payload}
             >
               <div style={{ position: 'relative' }}>

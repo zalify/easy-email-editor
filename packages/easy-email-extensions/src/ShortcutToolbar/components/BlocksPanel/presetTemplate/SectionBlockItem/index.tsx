@@ -1,5 +1,5 @@
 import React from 'react';
-import { BasicType } from 'easy-email-core';
+import { AdvancedType } from 'easy-email-core';
 import { Stack } from 'easy-email-editor';
 
 import { BlockMaskWrapper } from '@extensions/ShortcutToolbar/components/BlockMaskWrapper';
@@ -14,7 +14,7 @@ export function SectionBlockItem() {
           return (
             <BlockMaskWrapper
               key={index}
-              type={BasicType.SECTION}
+              type={AdvancedType.SECTION}
               payload={item.payload}
             >
               <div style={{ position: 'relative' }}>
