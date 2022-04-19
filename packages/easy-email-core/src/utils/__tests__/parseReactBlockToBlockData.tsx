@@ -77,7 +77,7 @@ describe('Test parseXml2', () => {
             },
           ],
           data: { value: {} },
-          type: 'column',
+          type: 'advanced_column',
         },
       ],
       data: { value: { noWrap: false } },

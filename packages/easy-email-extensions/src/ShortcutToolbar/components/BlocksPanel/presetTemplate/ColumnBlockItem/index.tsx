@@ -42,7 +42,7 @@ const list = [
   {
     thumbnail: getImg('IMAGE_20'),
     payload: {
-      type: 'column',
+      type: 'advanced_column',
       data: {
         value: {},
       },

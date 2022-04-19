@@ -79,7 +79,7 @@ const list = [
           },
           children: [
             {
-              type: 'column',
+              type: 'advanced_column',
               data: {
                 value: {},
               },
@@ -127,7 +127,7 @@ const list = [
           },
           children: [
             {
-              type: 'column',
+              type: 'advanced_column',
               data: {
                 value: {},
               },
