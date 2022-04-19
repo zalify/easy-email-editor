@@ -46,7 +46,7 @@ const list = [
   {
     thumbnail: getImg('IMAGE_23'),
     payload: {
-      type: 'group',
+      type: 'advanced_group',
       data: {
         value: {},
       },
@@ -115,7 +115,7 @@ const list = [
   {
     thumbnail: getImg('IMAGE_26'),
     payload: {
-      type: 'group',
+      type: 'advanced_group',
       data: {
         value: {},
       },

@@ -46,7 +46,7 @@ const list = [
   {
     thumbnail: getImg('IMAGE_48'),
     payload: {
-      type: 'section',
+      type: 'advanced_section',
       data: {
         value: {
           noWrap: false,
@@ -80,7 +80,7 @@ const list = [
   {
     thumbnail: getImg('IMAGE_49'),
     payload: {
-      type: 'section',
+      type: 'advanced_section',
       data: {
         value: {
           noWrap: false,
@@ -126,7 +126,7 @@ const list = [
   {
     thumbnail: getImg('IMAGE_50'),
     payload: {
-      type: 'section',
+      type: 'advanced_section',
       data: {
         value: {
           noWrap: false,
@@ -184,7 +184,7 @@ const list = [
   {
     thumbnail: getImg('IMAGE_51'),
     payload: {
-      type: 'section',
+      type: 'advanced_section',
       data: {
         value: {
           noWrap: false,

@@ -81,7 +81,7 @@ describe('Test parseXml2', () => {
         },
       ],
       data: { value: { noWrap: false } },
-      type: 'section',
+      type: 'advanced_section',
     });
   });
 
