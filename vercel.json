@@ -1,18 +1,14 @@
+
 {
-  "routes": [
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/assets/(.*)",
-      "headers": {
-        "Cache-Control": "public, max-age=31556952, immutable"
-      },
-      "continue": true
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
+  "headers": [
+      {
+          "source":  "/assets/(.*)",
+          "headers" : [
+              {
+                  "key" : "Cache-Control",
+                  "value" : "public, max-age=31536000, immutable"
+              }
+          ]
+      }
   ]
 }
