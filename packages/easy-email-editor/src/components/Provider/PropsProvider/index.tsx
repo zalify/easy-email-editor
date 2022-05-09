@@ -27,6 +27,7 @@ export interface PropsProviderProps {
   };
   autoComplete?: boolean;
   dashed?: boolean;
+  socialIcons?: Array<{ content: string; image: string; }>;
 
   mergeTagGenerate: (m: string) => string;
   onChangeMergeTag?: (ptah: string, val: any) => any;
@@ -58,7 +59,7 @@ export const EditorPropsContext = React.createContext<PropsProviderProps>({
   autoComplete: false,
   dashed: true,
   mergeTagGenerate: defaultMergeTagGenerate,
-  enabledLogic: false
+  enabledLogic: false,
 });
 
 export const PropsProvider: React.FC<PropsProviderProps> = (props) => {
