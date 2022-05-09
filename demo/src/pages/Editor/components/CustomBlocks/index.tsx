@@ -11,7 +11,7 @@ import {
 import { Example as ProductRecommendationExample } from './ProductRecommendation/Example';
 
 BlockManager.registerBlocks({
-  ProductRecommendation: ProductRecommendation,
+  [CustomBlocksType.PRODUCT_RECOMMENDATION]: ProductRecommendation,
 });
 
 BlockAttributeConfigurationManager.add({

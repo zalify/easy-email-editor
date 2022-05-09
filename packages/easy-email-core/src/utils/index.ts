@@ -9,4 +9,5 @@ export { BlockManager } from './BlockManager';
 export { ImageManager } from './ImageManager';
 export { TemplateEngineManager } from './TemplateEngineManager';
 export { isAdvancedBlock } from './isAdvancedBlock';
+export { getAdapterAttributesString } from './getAdapterAttributesString';
 export * from './block';

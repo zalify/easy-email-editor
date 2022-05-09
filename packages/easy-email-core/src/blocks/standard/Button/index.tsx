@@ -1,8 +1,9 @@
+import React from 'react';
 import { IBlockData } from '@core/typings';
 import { BasicType } from '@core/constants';
-import { CSSProperties } from 'react';
 import { createBlock } from '@core/utils/createBlock';
 import { merge } from 'lodash';
+import { BasicBlock } from '@core/components/BasicBlock';
 export type IButton = IBlockData<
   {
     align?: string;
@@ -17,20 +18,20 @@ export type IButton = IBlockData<
     title?: string;
     padding?: string;
     'inner-padding'?: string;
-    'text-align'?: CSSProperties['textAlign'];
+    'text-align'?: string;
     'vertical-align'?: 'middle' | 'top' | 'bottom';
     width?: string;
     'font-family'?: string;
     'font-size'?: string;
     'font-style'?: string;
-    'font-weight'?: CSSProperties['fontWeight'];
-    'line-height'?: string | number;
+    'font-weight'?: string;
+    'line-height'?: string;
     'letter-spacing'?: string;
     height?: string;
     'text-decoration'?: string;
-    'text-transform'?: CSSProperties['textTransform'];
+    'text-transform'?: string;
   },
-  { content: string }
+  { content: string; }
 >;
 
 export const Button = createBlock<IButton>({
@@ -64,4 +65,9 @@ export const Button = createBlock<IButton>({
     return merge(defaultData, payload);
   },
   validParentType: [BasicType.COLUMN, BasicType.HERO],
+  render(params) {
+    const { data } = params;
+    return <BasicBlock params={params} tag="mj-button">{data.data.value.content}</BasicBlock>;
+  },
+
 });

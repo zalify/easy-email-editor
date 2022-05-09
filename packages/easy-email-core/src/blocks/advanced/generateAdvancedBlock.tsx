@@ -1,4 +1,3 @@
-import { Template } from '@core/components';
 import { BasicType } from '@core/constants';
 import { IBlock, IBlockData } from '@core/typings';
 import { createCustomBlock } from '@core/utils/createCustomBlock';
@@ -13,7 +12,7 @@ export function generateAdvancedBlock<T extends AdvancedBlock>(option: {
   getContent: (params: {
     index: number;
     data: T;
-    idx: string | null;
+    idx: string | null | undefined;
     mode: 'testing' | 'production';
     context?: IPage;
     dataSource?: { [key: string]: any; };
@@ -38,10 +37,11 @@ export function generateAdvancedBlock<T extends AdvancedBlock>(option: {
       } as any;
       return merge(defaultData, payload);
     },
-    render: (data, idx, mode, context, dataSource) => {
+    render: (params) => {
+      const { data, idx, mode, context, dataSource } = params;
       const { iteration, condition } = data.data.value;
 
-      const getBaseContent = (bIdx: string | null, index: number) =>
+      const getBaseContent = (bIdx: string | null | undefined, index: number) =>
         option.getContent({
           index,
           data,
@@ -55,19 +55,16 @@ export function generateAdvancedBlock<T extends AdvancedBlock>(option: {
 
       if (mode === 'testing') {
         return (
-          <Template>
-            {children}
-            <Template>
-              {new Array((iteration?.mockQuantity || 1) - 1)
-                .fill(true)
-                .map((_, index) => (
-                  <Template key={index}>
-                    <Template>{getBaseContent(idx, index + 1)}</Template>
-                  </Template>
-                ))}
-            </Template>
-          </Template>
-        );
+<>
+          {children}
+
+          {new Array((iteration?.mockQuantity || 1) - 1)
+            .fill(true)
+            .map((_, index) => (
+              getBaseContent(idx, index + 1)
+            ))}
+</>
+);
       }
 
       if (condition && condition.enabled) {
@@ -80,7 +77,7 @@ export function generateAdvancedBlock<T extends AdvancedBlock>(option: {
       if (iteration && iteration.enabled) {
         children = TemplateEngineManager.generateTagTemplate('iteration')(
           iteration,
-          <Template>{children}</Template>
+          children
         );
       }
 

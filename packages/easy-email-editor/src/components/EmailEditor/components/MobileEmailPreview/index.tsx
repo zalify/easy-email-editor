@@ -1,16 +1,32 @@
 import React from 'react';
-import { PreviewEmail } from '../PreviewEmail';
 
 import iphoneFrame from '@/assets/images/iphone.png';
 import { ActiveTabKeys } from '@/components/Provider/BlocksProvider';
-import { useActiveTab } from '@';
+import { SYNC_SCROLL_ELEMENT_CLASS_NAME } from '@/constants';
 import { usePreviewEmail } from '@/hooks/usePreviewEmail';
+import { SyncScrollIframeComponent } from '@/components/UI/SyncScrollIframeComponent';
+import { classnames } from '@/utils/classnames';
+import { useActiveTab } from '@/hooks/useActiveTab';
+
 const MOBILE_WIDTH = 320;
 const MOBILE_Height = 640;
 
 export function MobileEmailPreview() {
   const { mobileWidth } = usePreviewEmail();
   const { activeTab } = useActiveTab();
+
+  const { errMsg, reactNode } = usePreviewEmail();
+
+  const isActive = activeTab === ActiveTabKeys.MOBILE;
+
+  if (errMsg) {
+    return (
+      <div style={{ textAlign: 'center', fontSize: 24, color: 'red' }}>
+        {errMsg}
+      </div>
+    );
+  }
+
   return (
     <div
       className='easy-email-overlay'
@@ -61,7 +77,34 @@ export function MobileEmailPreview() {
               overflow: 'hidden'
             }}
           >
-            <PreviewEmail isActive={activeTab === ActiveTabKeys.MOBILE} />
+            <SyncScrollIframeComponent
+              isActive={isActive}
+              style={{
+                border: 'none',
+                height: '100%',
+                width: '100%',
+
+              }}
+            >
+              <style>
+                {`
+            *::-webkit-scrollbar {
+              -webkit-appearance: none;
+              width: 0px;
+            }
+          `}
+              </style>
+              <div
+                className={classnames('preview-container', SYNC_SCROLL_ELEMENT_CLASS_NAME)}
+                style={{
+                  height: '100%',
+                  overflow: 'auto',
+                  margin: 'auto',
+                }}
+              >
+                {reactNode}
+              </div>
+            </SyncScrollIframeComponent>
           </div>
         </div>
 

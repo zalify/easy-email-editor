@@ -2,7 +2,7 @@ import {
   AdvancedBlock,
   Operator,
 } from '@core/blocks/advanced/generateAdvancedBlock';
-import { Template, Raw } from '@core/components';
+import { Raw } from '@core/components';
 import { isNumber } from 'lodash';
 import React from 'react';
 import { nanoid } from 'nanoid';
@@ -12,7 +12,7 @@ function generateIterationTemplate(
   content: React.ReactElement
 ) {
   return (
-    <Template>
+    <>
       <Raw>
         {`
         <!-- htmlmin:ignore -->
@@ -25,7 +25,7 @@ function generateIterationTemplate(
       <Raw>
         {' <!-- htmlmin:ignore -->{% endfor %}  <!-- htmlmin:ignore -->'}
       </Raw>
-    </Template>
+    </>
   );
 }
 
@@ -67,7 +67,7 @@ function generateConditionTemplate(
   const conditionExpression = variables.join(` ${symbol} `);
 
   return (
-    <Template>
+    <>
       <Raw>
         {`
         <!-- htmlmin:ignore -->
@@ -84,7 +84,7 @@ function generateConditionTemplate(
         <!-- htmlmin:ignore -->
         `}
       </Raw>
-    </Template>
+    </>
   );
 }
 

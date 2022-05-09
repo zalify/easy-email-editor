@@ -1,7 +1,9 @@
+import React from 'react';
 import { IBlockData } from '@core/typings';
 import { BasicType } from '@core/constants';
 import { createBlock } from '@core/utils/createBlock';
 import { merge } from 'lodash';
+import { BlockRenderer } from '@core/components/BlockRenderer';
 
 export type ITemplate = IBlockData<
   {},
@@ -27,4 +29,16 @@ export const Template = createBlock<ITemplate>({
     return merge(defaultData, payload);
   },
   validParentType: [],
+  render(params) {
+    const { data } = params;
+    return (
+      <>
+        {`
+          ${data.children.map((child) => (
+          <BlockRenderer {...params} data={child} />
+        ))}
+        `}
+      </>
+    );
+  },
 });
