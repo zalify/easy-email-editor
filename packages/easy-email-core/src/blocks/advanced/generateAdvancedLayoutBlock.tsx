@@ -4,7 +4,6 @@ import { AdvancedBlock, generateAdvancedBlock } from './generateAdvancedBlock';
 import { getPreviewClassName } from '@core/utils/getPreviewClassName';
 import { classnames } from '@core/utils/classnames';
 import { BlockRenderer } from '@core/components/BlockRenderer';
-import { MjmlBlock } from '@core/components';
 import { getChildIdx } from '@core/utils';
 
 export function generateAdvancedLayoutBlock<T extends AdvancedBlock>(option: {
@@ -36,30 +35,31 @@ export function generateAdvancedLayoutBlock<T extends AdvancedBlock>(option: {
           : '';
 
       return (
-<MjmlBlock
-        idx={null}
-        attributes={{
-          ...blockData.attributes,
-          'css-class': classnames(
-            data.attributes['css-class'],
-            previewClassName
-          ),
-        }}
-        type={blockData.type}
-        value={blockData.data.value}
->
-        {blockData.children.map((child, index) => {
-          return (
-            <BlockRenderer
-              key={index}
-              {...params}
-              data={child}
-              idx={idx ? getChildIdx(idx, index) : null}
-            />
-          );
-        })}
-</MjmlBlock>
-);
+        <BlockRenderer
+          idx={null}
+          data={{
+            ...blockData,
+            attributes: {
+              ...blockData.attributes,
+              'css-class': classnames(
+                data.attributes['css-class'],
+                previewClassName
+              )
+            }
+          }}
+        >
+          {blockData.children.map((child, index) => {
+            return (
+              <BlockRenderer
+                key={index}
+                {...params}
+                data={child}
+                idx={idx ? getChildIdx(idx, index) : null}
+              />
+            );
+          })}
+        </BlockRenderer>
+      );
 
     },
   });

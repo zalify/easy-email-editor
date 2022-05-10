@@ -66,10 +66,10 @@ export function generateAdvancedContentBlock<T extends IBlockData>(option: {
         parentBlockData.type === AdvancedType.WRAPPER
       ) {
         return (
-<Section padding='0px'>
-          <Column>{children}</Column>
-</Section>
-);
+          <Section padding='0px'>
+            <Column>{children}</Column>
+          </Section>
+        );
 
       }
 

@@ -55,16 +55,16 @@ export function generateAdvancedBlock<T extends AdvancedBlock>(option: {
 
       if (mode === 'testing') {
         return (
-<>
-          {children}
+          <>
+            {children}
 
-          {new Array((iteration?.mockQuantity || 1) - 1)
-            .fill(true)
-            .map((_, index) => (
-              getBaseContent(idx, index + 1)
-            ))}
-</>
-);
+            {new Array((iteration?.mockQuantity || 1) - 1)
+              .fill(true)
+              .map((_, index) => (
+                getBaseContent(idx, index + 1)
+              ))}
+          </>
+        );
       }
 
       if (condition && condition.enabled) {

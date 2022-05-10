@@ -1,6 +1,11 @@
 import { AdvancedType, BasicType } from '@core/constants';
+import { IBlock } from '@core/typings';
 
-export function getPlaceholder(type: string) {
+export function getPlaceholder(params: Parameters<IBlock['render']>[0]) {
+  const { data: { type }, mode } = params;
+
+  if (mode === 'production') return null;
+
   let text: null | string = null;
   if (type === BasicType.PAGE) {
     text = 'Drop a Wrapper block here';

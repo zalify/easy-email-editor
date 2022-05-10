@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { BlockManager } from '@core/utils';
 import { IBlockData, RecursivePartial } from '@core/typings';
 import { set } from 'lodash';
+import { useEmailRenderContext } from '@core/utils/JsonToMjml';
 
 export interface MjmlBlockProps<T extends IBlockData> {
   idx?: string | null;
@@ -18,6 +19,7 @@ export default function MjmlBlock<T extends IBlockData>({
   attributes,
   children,
 }: MjmlBlockProps<T>) {
+  const { mode } = useEmailRenderContext();
   const block = BlockManager.getBlockByType(type);
 
   if (!block) {
@@ -40,20 +42,20 @@ export default function MjmlBlock<T extends IBlockData>({
   }, [children, value]);
 
   return (
-<>
-    {block.render({
-      idx: idx,
-      mode: 'production',
-      data: {
-        type: block.type,
+    <>
+      {block.render({
+        idx: idx,
+        mode: mode,
         data: {
-          value: mergeValue,
+          type: block.type,
+          data: {
+            value: mergeValue,
+          },
+          attributes,
+          children: [],
         },
-        attributes,
-        children: [],
-      },
-      children
-    })}
-</>
-);
+        children
+      })}
+    </>
+  );
 }

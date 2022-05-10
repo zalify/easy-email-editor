@@ -1,18 +1,30 @@
 import { IBlock } from '@core/typings';
 import { getAdapterAttributesString, getChildIdx } from '@core/utils';
+import { getImg } from '@core/utils/getImg';
 import { getPlaceholder } from '@core/utils/getPlaceholder';
 import React from 'react';
 import { BlockRenderer } from './BlockRenderer';
 
 export function BasicBlock(props: { params: Parameters<IBlock['render']>[0]; tag: string; children?: React.ReactNode; }) {
-  const { params, params: { data, idx, children: children2 }, tag, children } = props;
+  const { params, params: { data, idx, children: children2, mode }, tag, children } = props;
 
-  const placeholder = data.children.length === 0 && getPlaceholder(data.type);
+  const placeholder = data.children.length === 0 && getPlaceholder(params);
 
   let content = children || children2;
-
   if ((!content || Array.isArray(content) && content.length === 0) && data.children.length === 0) {
     content = placeholder;
+  }
+
+  if (mode === 'testing' && tag === 'mj-image' && !data.attributes.src) {
+    return (
+      <>
+        {`<${tag} ${getAdapterAttributesString(params)} src="${getImg(
+          'IMAGE_59'
+        )}">`}
+
+        {`</${tag}>`}
+      </>
+    );
   }
 
   return (
