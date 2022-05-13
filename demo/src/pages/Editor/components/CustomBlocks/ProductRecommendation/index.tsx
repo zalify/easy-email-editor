@@ -73,7 +73,7 @@ export const ProductRecommendation = createCustomBlock<IProductRecommendation>({
     };
     return merge(defaultData, payload);
   },
-  render: (data, idx, mode, context, dataSource) => {
+  render: ({ data, idx, mode, context, dataSource }) => {
     const { title, buttonText, quantity } = data.data.value;
     const attributes = data.attributes;
 

@@ -56,12 +56,12 @@ export function generateAdvancedBlock<T extends AdvancedBlock>(option: {
       if (mode === 'testing') {
         return (
           <>
-            {children}
+            <React.Fragment key="children">{children}</React.Fragment>
 
             {new Array((iteration?.mockQuantity || 1) - 1)
               .fill(true)
               .map((_, index) => (
-                getBaseContent(idx, index + 1)
+                <React.Fragment key={index}>{getBaseContent(idx, index + 1)}</React.Fragment>
               ))}
           </>
         );
