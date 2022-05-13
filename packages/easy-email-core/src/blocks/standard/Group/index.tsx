@@ -1,7 +1,11 @@
+import React from 'react';
 import { IBlock, IBlockData } from '@core/typings';
 import { BasicType } from '@core/constants';
 import { createBlock } from '@core/utils/createBlock';
 import { merge } from 'lodash';
+import { getAdapterAttributesString } from '@core/utils';
+import { BlockRenderer } from '@core/components/BlockRenderer';
+import { BasicBlock } from '@core/components/BasicBlock';
 
 export type IGroup = IBlockData<{
   width?: string;
@@ -28,4 +32,8 @@ export const Group: IBlock<IGroup> = createBlock({
     return merge(defaultData, payload);
   },
   validParentType: [BasicType.SECTION],
+
+  render(params) {
+    return <BasicBlock params={params} tag="mj-group" />;
+  },
 });

@@ -1,3 +1,4 @@
+import { AdvancedType } from '@core/constants';
 import { get } from 'lodash';
 import {
   getChildIdx,
@@ -16,6 +17,13 @@ interface Params {
   directionPosition: DirectionPosition;
   dragType: string;
 }
+
+const verticalTypes: string[] = [
+  BasicType.SECTION,
+  BasicType.GROUP,
+  AdvancedType.SECTION,
+  AdvancedType.GROUP,
+];
 
 export function getInsertPosition(params: Params) {
   const { idx, dragType, directionPosition, context } = params;
@@ -132,9 +140,7 @@ function getValidDirection(
   targetType: string,
   directionPosition: DirectionPosition
 ): { valid: boolean; direction: string; isEdge: boolean } {
-  const isVertical =
-    targetType === BasicType.SECTION || targetType === BasicType.GROUP;
-
+  const isVertical = verticalTypes.includes(targetType);
   let direction = directionPosition.vertical.direction;
   let isEdge = directionPosition.vertical.isEdge;
 

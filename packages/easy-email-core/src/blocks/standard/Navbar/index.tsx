@@ -1,7 +1,10 @@
+import React from 'react';
 import { IBlock, IBlockData } from '@core/typings';
 import { BasicType } from '@core/constants';
 import { createBlock } from '@core/utils/createBlock';
 import { mergeBlock } from '@core/utils/mergeBlock';
+import { getAdapterAttributesString } from '@core/utils';
+import { BasicBlock } from '@core/components/BasicBlock';
 
 export type INavbar = IBlockData<
   {
@@ -84,4 +87,21 @@ export const Navbar: IBlock<INavbar> = createBlock({
     return mergeBlock(defaultData, payload);
   },
   validParentType: [BasicType.COLUMN, BasicType.HERO],
+
+  render(params) {
+    const { data } = params;
+    const links = (data ).data.value.links
+      .map((link, index) => {
+        const linkAttributeStr = Object.keys(link)
+          .filter((key) => key !== 'content' && link[key as keyof typeof link] !== '') // filter att=""
+          .map((key) => `${key}="${link[key as keyof typeof link]}"`)
+          .join(' ');
+        return `
+          <mj-navbar-link ${linkAttributeStr}>${link.content}</mj-navbar-link>
+          `;
+      })
+      .join('\n');
+    return <BasicBlock params={params} tag="mj-navbar">{links}</BasicBlock>;
+
+  },
 });

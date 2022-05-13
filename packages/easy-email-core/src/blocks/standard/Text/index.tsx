@@ -1,21 +1,22 @@
+import React from 'react';
 import { IBlockData } from '@core/typings';
 import { BasicType } from '@core/constants';
-import { CSSProperties } from 'react';
 import { createBlock } from '@core/utils/createBlock';
 import { merge } from 'lodash';
+import { BasicBlock } from '@core/components/BasicBlock';
 export type IText = IBlockData<
   {
     color?: string;
     'font-family'?: string;
     'font-size'?: string;
     'font-style'?: string;
-    'font-weight'?: CSSProperties['fontWeight'];
-    'line-height'?: string | number;
+    'font-weight'?: string;
+    'line-height'?: string;
     'letter-spacing'?: string;
     height?: string;
     'text-decoration'?: string;
-    'text-transform'?: CSSProperties['textTransform'];
-    align?: CSSProperties['textAlign'];
+    'text-transform'?: string;
+    align?: string;
     'container-background-color'?: string;
     width?: string;
     padding?: string;
@@ -45,4 +46,8 @@ export const Text = createBlock<IText>({
     return merge(defaultData, payload);
   },
   validParentType: [BasicType.COLUMN, BasicType.HERO],
+  render(params) {
+    const { data } = params;
+    return <BasicBlock params={params} tag="mj-text">{data.data.value.content}</BasicBlock>;
+  },
 });

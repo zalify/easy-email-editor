@@ -13,5 +13,8 @@
   "dependencies": {
     "lerna": "^4.0.0",
     "liquidjs": "^9.34.1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.22.0"
   }
 }

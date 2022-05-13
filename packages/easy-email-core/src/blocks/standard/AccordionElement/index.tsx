@@ -1,7 +1,11 @@
+import React from 'react';
 import { IBlockData } from '@core/typings';
 import { BasicType } from '@core/constants';
 import { createBlock } from '@core/utils/createBlock';
 import { merge } from 'lodash';
+import { getAdapterAttributesString } from '@core/utils';
+import { BlockRenderer } from '@core/components/BlockRenderer';
+import { BasicBlock } from '@core/components/BasicBlock';
 export type IAccordionElement = IBlockData<
   {
     'icon-width': string;
@@ -43,4 +47,7 @@ export const AccordionElement = createBlock<IAccordionElement>({
     return merge(defaultData, payload);
   },
   validParentType: [BasicType.ACCORDION],
+  render(params) {
+    return <BasicBlock params={params} tag="mj-accordion-element" />;
+  },
 });

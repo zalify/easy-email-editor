@@ -1,25 +1,27 @@
-import React, { isValidElement, useMemo } from 'react';
-import { BlockManager, isValidBlockData } from '@core/utils';
+import React, { useMemo } from 'react';
+import { BlockManager } from '@core/utils';
 import { IBlockData, RecursivePartial } from '@core/typings';
-import { parseReactBlockToBlockData } from '@core/utils/parseReactBlockToBlockData';
 import { set } from 'lodash';
-
-export type MjmlBlockChild = JSX.Element | IBlockData | string | null | false;
+import { useEmailRenderContext } from '@core/utils/JsonToMjml';
 
 export interface MjmlBlockProps<T extends IBlockData> {
+  idx?: string | null;
   type: T['type'];
   value?: RecursivePartial<T['data']['value']>;
   attributes?: RecursivePartial<T['attributes']>;
-  children?: MjmlBlockChild | Array<MjmlBlockChild>;
+  children?: React.ReactNode;
 }
 
 export default function MjmlBlock<T extends IBlockData>({
+  idx,
   value,
   type,
   attributes,
   children,
 }: MjmlBlockProps<T>) {
+  const { mode } = useEmailRenderContext();
   const block = BlockManager.getBlockByType(type);
+
   if (!block) {
     throw new Error(`Can no find ${type}`);
   }
@@ -39,33 +41,21 @@ export default function MjmlBlock<T extends IBlockData>({
     return value;
   }, [children, value]);
 
-  const getChild = (child: any) => {
-    if (!child) return null;
-    if (isValidBlockData(child)) return child;
-    if (isValidElement(child)) return parseReactBlockToBlockData(child);
-    return child;
-  };
-
-  const getChildren = () => {
-    if (Array.isArray(children)) {
-      return children.map(getChild).filter(Boolean);
-    }
-
-    if (isValidBlockData(children)) {
-      return [children];
-    }
-
-    if (typeof children === 'string') return [];
-    return React.Children.map(children, getChild);
-  };
-
-  const instance = block.create({
-    data: {
-      value: mergeValue,
-    },
-    attributes,
-    children: getChildren() || [],
-  });
-
-  return <>{JSON.stringify(instance)}</>;
+  return (
+    <>
+      {block.render({
+        idx: idx,
+        mode: mode,
+        data: {
+          type: block.type,
+          data: {
+            value: mergeValue,
+          },
+          attributes,
+          children: [],
+        },
+        children
+      })}
+    </>
+  );
 }

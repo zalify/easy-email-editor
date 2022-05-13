@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite';
 import reactRefresh from '@vitejs/plugin-react-refresh';
 import path from 'path';
-import styleImport from 'vite-plugin-style-import';
 import { injectHtml } from 'vite-plugin-html';
 
 export default defineConfig({
@@ -39,10 +38,16 @@ export default defineConfig({
       'easy-email-extensions': path.resolve(
         '../packages/easy-email-extensions/src/index.tsx'
       ),
+      '@arco-design/web-react/dist/css/arco.css': path.resolve(
+        './node_modules/@arco-design/web-react/dist/css/arco.css'
+      ),
     },
   },
 
   define: {},
+  esbuild: {
+    jsxInject: 'import "@arco-design/web-react/dist/css/arco.css";',
+  },
   build: {
     minify: 'terser',
     manifest: true,
@@ -79,26 +84,6 @@ export default defineConfig({
     },
   },
   plugins: [
-    styleImport({
-      libs: [
-        // Dynamic import @arco-design styles
-        {
-          libraryName: '@arco-design/web-react',
-          libraryNameChangeCase: 'pascalCase',
-          esModule: true,
-          resolveStyle: (name) =>
-            `@arco-design/web-react/es/${name}/style/index`,
-        },
-        {
-          libraryName: '@arco-design/web-react/icon',
-          libraryNameChangeCase: 'pascalCase',
-          resolveStyle: (name) =>
-            `@arco-design/web-react/icon/react-icon/${name}`,
-          resolveComponent: (name) =>
-            `@arco-design/web-react/icon/react-icon/${name}`,
-        },
-      ],
-    }),
     reactRefresh(),
 
     injectHtml({
@@ -134,7 +119,7 @@ export default defineConfig({
 
         `
             : '',
-        buildTime: `<meta name="updated-time" content="${new Date().toUTCString()}" />`
+        buildTime: `<meta name="updated-time" content="${new Date().toUTCString()}" />`,
       },
     }),
   ].filter(Boolean),

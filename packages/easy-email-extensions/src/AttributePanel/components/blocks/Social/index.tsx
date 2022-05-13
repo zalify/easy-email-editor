@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Padding } from '@extensions/AttributePanel/components/attributes/Padding';
 import {
   EditGridTabField,
@@ -9,7 +9,7 @@ import {
   TextField,
 } from '@extensions/components/Form';
 import { Align } from '@extensions/AttributePanel/components/attributes/Align';
-import { IconClose, IconLink, IconPlus } from '@arco-design/web-react/icon';
+import { IconLink } from '@arco-design/web-react/icon';
 import { Color } from '@extensions/AttributePanel/components/attributes/Color';
 import { ContainerBackgroundColor } from '@extensions/AttributePanel/components/attributes/ContainerBackgroundColor';
 import { FontFamily } from '@extensions/AttributePanel/components/attributes/FontFamily';
@@ -18,7 +18,7 @@ import { FontStyle } from '@extensions/AttributePanel/components/attributes/Font
 import { FontWeight } from '@extensions/AttributePanel/components/attributes/FontWeight';
 
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
-import { Button, Card, Collapse, Grid, Space, Typography } from '@arco-design/web-react';
+import { Button, Card, Collapse, Dropdown, Grid, Menu, Popover, Space, Typography } from '@arco-design/web-react';
 import { TextDecoration } from '@extensions/AttributePanel/components/attributes/TextDecoration';
 import { LineHeight } from '@extensions/AttributePanel/components/attributes/LineHeight';
 import { Stack, useBlock, useEditorProps, useFocusIdx } from 'easy-email-editor';
@@ -158,12 +158,23 @@ function SocialElement({
   index: number;
 }) {
   const { focusIdx } = useFocusIdx();
-  const { onUploadImage } = useEditorProps();
+  const { onUploadImage, socialIcons } = useEditorProps();
+
+  const autoCompleteOptions = useMemo(() => {
+    if (!socialIcons) return undefined;
+    return socialIcons.map((icon) => {
+      return {
+        label: icon.content,
+        value: icon.image
+      };
+    });
+  }, [socialIcons]);
 
   return (
     <Space direction='vertical'>
       <ImageUploaderField
         label='Image'
+        autoCompleteOptions={autoCompleteOptions}
         labelHidden
         name={`${focusIdx}.data.value.elements.[${index}].src`}
         // helpText='The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.'

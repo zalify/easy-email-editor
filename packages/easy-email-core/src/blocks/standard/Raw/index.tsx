@@ -1,9 +1,12 @@
+import React from 'react';
 import { IBlockData } from '@core/typings';
 import { BasicType } from '@core/constants';
 import { createBlock } from '@core/utils/createBlock';
 import { merge } from 'lodash';
+import { getAdapterAttributesString } from '@core/utils';
+import { BasicBlock } from '@core/components/BasicBlock';
 
-export type IRaw = IBlockData<{}>;
+export type IRaw = IBlockData<{}, { content: string; }>;
 
 export const Raw = createBlock<IRaw>({
   name: 'Raw',
@@ -29,4 +32,7 @@ export const Raw = createBlock<IRaw>({
     BasicType.COLUMN,
     BasicType.HERO,
   ],
+  render(params) {
+    return <BasicBlock params={params} tag="mj-raw" />;
+  },
 });

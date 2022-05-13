@@ -1,14 +1,16 @@
 import React, { useState, useCallback, useRef, useMemo } from 'react';
 import {
+  Dropdown,
   Grid,
   Input,
+  Menu,
   Message,
   Modal,
   Popover,
   Space,
   Spin,
 } from '@arco-design/web-react';
-import { IconPlus, IconEye, IconDelete } from '@arco-design/web-react/icon';
+import { IconPlus, IconEye, IconDelete, IconAt } from '@arco-design/web-react/icon';
 import styles from './index.module.scss';
 import {
   Uploader,
@@ -16,7 +18,6 @@ import {
 } from '@extensions/AttributePanel/utils/Uploader';
 import { classnames } from '@extensions/AttributePanel/utils/classnames';
 import { previewLoadImage } from '@extensions/AttributePanel/utils/previewLoadImage';
-import { getImg } from '@extensions/AttributePanel/utils/getImg';
 import { MergeTags } from '@extensions';
 import { Button as ArcoButton } from '@arco-design/web-react';
 import { IconFont, useEditorProps } from 'easy-email-editor';
@@ -26,6 +27,7 @@ export interface ImageUploaderProps {
   value: string;
   label: string;
   uploadHandler?: UploaderServer;
+  autoCompleteOptions?: Array<{ value: string; label: React.ReactNode; }>;
 }
 
 export function ImageUploader(props: ImageUploaderProps) {
@@ -158,7 +160,32 @@ export function ImageUploader(props: ImageUploaderProps) {
             value={props.value}
             onChange={onChange}
             disabled={isUploading}
+
           />
+          {props.autoCompleteOptions && (
+            <Dropdown
+              position="tr"
+              droplist={(
+                <Menu onClickMenuItem={(indexStr) => {
+                  if (!props.autoCompleteOptions) return;
+                  onChange(props.autoCompleteOptions[+indexStr]?.value);
+                }}
+                >
+                  {
+                    props.autoCompleteOptions.map((item, index) => {
+                      return (
+                        <Menu.Item style={{ display: 'flex', alignItems: 'center' }} key={index.toString()}>
+                          <img src={item.value} style={{ width: 20, height: 20 }} />&emsp;<span>{item.label}</span>
+                        </Menu.Item>
+                      );
+                    })
+                  }
+                </Menu>
+              )}
+            >
+              <ArcoButton icon={<IconAt />} />
+            </Dropdown>
+          )}
         </Grid.Row>
       </div>
       <Modal visible={preview} footer={null} onCancel={() => setPreview(false)}>

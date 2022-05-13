@@ -1,8 +1,11 @@
+import React from 'react';
 import { IBlockData } from '@core/typings';
 import { BasicType } from '@core/constants';
-import { CSSProperties } from 'react';
 import { createBlock } from '@core/utils/createBlock';
 import { merge } from 'lodash';
+import { getAdapterAttributesString } from '@core/utils';
+import { BlockRenderer } from '@core/components/BlockRenderer';
+import { BasicBlock } from '@core/components/BasicBlock';
 
 export type IColumn = IBlockData<
   {
@@ -12,8 +15,8 @@ export type IColumn = IBlockData<
     'inner-border'?: string;
     'inner-border-radius'?: string;
     padding?: string;
-    'text-align'?: CSSProperties['textAlign'];
-    'vertical-align'?: CSSProperties['verticalAlign'];
+    'text-align'?: string;
+    'vertical-align'?: string;
     width?: string;
   },
   {}
@@ -38,4 +41,8 @@ export const Column = createBlock<IColumn>({
     return merge(defaultData, payload);
   },
   validParentType: [BasicType.SECTION, BasicType.GROUP],
+
+  render(params) {
+    return <BasicBlock params={params} tag="mj-column" />;
+  },
 });
