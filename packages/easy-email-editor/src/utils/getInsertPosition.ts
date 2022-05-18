@@ -1,4 +1,3 @@
-import { AdvancedType } from 'easy-email-core';
 import { get } from 'lodash';
 import {
   getChildIdx,
@@ -6,31 +5,87 @@ import {
   getParentIdx,
   getSameParent,
   IPage,
-  BasicType,
   IBlockData,
+  getParentByIdx,
+  BasicType,
+  AdvancedType,
 } from 'easy-email-core';
 import { DirectionPosition } from './getDirectionPosition';
 
 interface Params {
-  context: { content: IPage; };
+  context: { content: IPage };
   idx: string;
   directionPosition: DirectionPosition;
   dragType: string;
 }
 
-const verticalTypes: string[] = [
+const verticalBlocks: string[] = [
   BasicType.SECTION,
   BasicType.GROUP,
   AdvancedType.SECTION,
   AdvancedType.GROUP,
 ];
 
+const isColumnBlock = (type: string) =>
+  ([BasicType.COLUMN, AdvancedType.COLUMN] as string[]).includes(type);
+
 export function getInsertPosition(params: Params) {
   const { idx, dragType, directionPosition, context } = params;
 
-  const parentData = getSameParent(context, idx, dragType);
+  let parentData = getSameParent(context, idx, dragType);
 
   if (!parentData) return null;
+
+  // 切边则认为是选择 parent， 这样的话，即使 child 和 parent 一样 size 也可以选到 parent
+  const directlyParent = getParentByIdx(context, idx);
+
+  if (directlyParent) {
+    if (directionPosition.vertical.isEdge) {
+      const isTop =
+        directionPosition.vertical.direction === 'top' &&
+        getIndexByIdx(idx) === 0;
+      const isBottom =
+        directionPosition.vertical.direction === 'bottom' &&
+        getIndexByIdx(idx) === directlyParent.children.length - 1;
+      // 只有第一个和最后一个才能插入
+      if (isTop || isBottom) {
+        const prevParent = getParentByIdx(context, parentData.parentIdx);
+        if (prevParent) {
+          parentData = {
+            parent: prevParent,
+            parentIdx: getParentIdx(parentData.parentIdx)!,
+          };
+          //  如果是 column 的话，选择到 section，这样做有个好处，例如 button 就可以直接 插入 section 后面
+          if (isColumnBlock(parentData.parent.type)) {
+            const sectionBlock = getParentByIdx(context, parentData.parentIdx);
+            if (sectionBlock) {
+              parentData = {
+                parent: sectionBlock,
+                parentIdx: getParentIdx(parentData.parentIdx)!,
+              };
+            }
+          }
+        }
+      }
+    } else if (directionPosition.horizontal.isEdge) {
+      // 如果是 column 的话，选择到 section，这样做有个好处，可以插入一个 column
+      if (isColumnBlock(parentData.parent.type)) {
+        const prevParent = getParentByIdx(context, parentData.parentIdx);
+        if (prevParent) {
+          const isLeft = directionPosition.horizontal.direction === 'left';
+          console.log('idx', parentData.parentIdx);
+          return {
+            parentIdx: getParentIdx(parentData.parentIdx)!,
+            insertIndex: isLeft
+              ? getIndexByIdx(parentData.parentIdx)
+              : getIndexByIdx(parentData.parentIdx) + 1,
+            endDirection: directionPosition.horizontal.direction,
+            hoverIdx: parentData.parentIdx,
+          };
+        }
+      }
+    }
+  }
 
   const insertData = getInsetParentAndIndex(
     context,
@@ -43,7 +98,7 @@ export function getInsertPosition(params: Params) {
 }
 
 function getInsetParentAndIndex(
-  context: { content: IPage; },
+  context: { content: IPage },
   idx: string,
   type: string,
   directionPosition: DirectionPosition
@@ -65,8 +120,19 @@ function getInsetParentAndIndex(
       );
 
       if (!valid) return null;
-      const isVertical =
-        parent.type === BasicType.SECTION || parent.type === BasicType.GROUP;
+
+      const isVertical = verticalBlocks.includes(parent.type);
+      if (isVertical && parent.children.length > 0) {
+        const isTop = directionPosition.vertical.direction === 'top';
+        return {
+          insertIndex: isTop
+            ? getIndexByIdx(parentIdx)
+            : getIndexByIdx(parentIdx) + 1,
+          parentIdx: getParentIdx(parentIdx)!,
+          endDirection: directionPosition.vertical.direction,
+          hoverIdx: parentIdx,
+        };
+      }
 
       let insertIndex = 0; // 默认为0，表示拖拽到一个空children的节点
       let endDirection = direction;
@@ -139,8 +205,9 @@ function getInsetParentAndIndex(
 function getValidDirection(
   targetType: string,
   directionPosition: DirectionPosition
-): { valid: boolean; direction: string; isEdge: boolean; } {
-  const isVertical = verticalTypes.includes(targetType);
+): { valid: boolean; direction: string; isEdge: boolean } {
+  const isVertical = verticalBlocks.includes(targetType);
+
   let direction = directionPosition.vertical.direction;
   let isEdge = directionPosition.vertical.isEdge;
 

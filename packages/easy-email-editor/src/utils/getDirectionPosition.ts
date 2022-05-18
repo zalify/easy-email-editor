@@ -33,6 +33,7 @@ export function getDirectionPosition(
   };
   if (!blockNode) return position;
   const { top, height, left, width } = blockNode.getBoundingClientRect();
+
   const mouseY = ev.clientY;
   const mouseX = ev.clientX;
 
@@ -50,12 +51,13 @@ export function getDirectionPosition(
 
   if (mouseX - left <= 0.5 * width) {
     position.horizontal.direction = 'left';
-    if (Math.abs(left + width - mouseX) <= deviation) {
+    if (Math.abs(left - mouseX) <= deviation) {
       position.horizontal.isEdge = true;
     }
   } else {
     position.horizontal.direction = 'right';
-    if (Math.abs(left - mouseX) <= deviation) {
+
+    if (Math.abs(left + width - mouseX) <= deviation) {
       position.horizontal.isEdge = true;
     }
   }
