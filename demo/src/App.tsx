@@ -7,10 +7,7 @@ import '@demo/styles/common.scss';
 import { history } from './utils/history';
 import Home from '@demo/pages/Home';
 
-const EditorPromise = import('@demo/pages/Editor');
-
-
-const Editor = React.lazy(() => EditorPromise);
+const Editor = React.lazy(() => import('@demo/pages/Editor'));
 
 function App() {
   return (

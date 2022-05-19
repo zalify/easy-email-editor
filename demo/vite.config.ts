@@ -88,37 +88,6 @@ export default defineConfig({
 
     injectHtml({
       data: {
-        analysis:
-          process.env.NODE_ENV !== 'development'
-            ? `
-        <script async type="text/javascript">
-        (function (c, l, a, r, i, t, y) {
-          c[a] =
-            c[a] ||
-            function () {
-              (c[a].q = c[a].q || []).push(arguments);
-            };
-          t = l.createElement(r);
-          t.async = 1;
-          t.src = 'https://www.clarity.ms/tag/' + i;
-          y = l.getElementsByTagName(r)[0];
-          y.parentNode.insertBefore(t, y);
-        })(window, document, 'clarity', 'script', '85gnvzh5py');
-      </script>
-      <style>
-        a[title='站长统计'] {
-          visibility: hidden;
-          display: none !important;
-        }
-      </style>
-      <script
-        async
-        type="text/javascript"
-        src="https://s9.cnzz.com/z_stat.php?id=1280025969&web_id=1280025969"
-      ></script>
-
-        `
-            : '',
         buildTime: `<meta name="updated-time" content="${new Date().toUTCString()}" />`,
       },
     }),

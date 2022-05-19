@@ -88,7 +88,7 @@ export function CardItem(props: CardItemProps) {
               <Link
                 to={`/editor?id=${data.article_id}&userId=${data.user_id}`}
                 onClick={() =>
-                  pushEvent({ name: 'Edit', label: data.article_id.toString() })
+                  pushEvent({ name: 'Edit', payload: { article_id: data.article_id, title: data.title } })
                 }
               >
                 <IconEdit />
