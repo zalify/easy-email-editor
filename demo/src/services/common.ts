@@ -1,38 +1,16 @@
 import { request } from './axios.config';
-import { getCookie } from '../utils/utils';
-import { v4 as uuidv4 } from 'uuid';
-const QI_NIUI_KEY = 'qiniuConfig';
+import axios from 'axios';
 
-type QiniuConfig = { origin: string; token: string };
+const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dfite2e16/image/upload';
 
 export const common = {
   async uploadByQiniu(file: File | Blob): Promise<string> {
-    const qiniuCookie = getCookie(QI_NIUI_KEY); // 有cookie先拿cookie
-    let qiniuConfig: QiniuConfig;
-    if (qiniuCookie) {
-      qiniuConfig = JSON.parse(qiniuCookie);
-    } else {
-      qiniuConfig = await request.get<QiniuConfig>(
-        '/upload/visitor/qiniu-token'
-      );
-      document.cookie = `${QI_NIUI_KEY}=${JSON.stringify(
-        qiniuConfig
-      )}; max-age=540;`; // 设置十分钟有效期
-    }
-    const { token, origin } = qiniuConfig;
-
     const data = new FormData();
     data.append('file', file);
-    data.append('token', token);
-    data.append(
-      'key',
-      uuidv4() + `-${(file as any)?.name?.replace(/\s/gi, '') || ''}`
-    );
-    const res = await request.post<{ key: string }>(
-      'https://up.qiniu.com',
-      data
-    );
-    return origin + '/' + res.key;
+    data.append('upload_preset', 'p06udqtq');
+
+    const res = await axios.post<{ url: string }>(CLOUDINARY_URL, data);
+    return res.data.url;
   },
   uploadByUrl(url: string) {
     return request.get<string>('/upload/user/upload-by-url', {
