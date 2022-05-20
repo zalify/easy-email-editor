@@ -3,9 +3,16 @@ export function pushEvent(params: {
   action?: string;
   payload?: Record<string, any>;
 }) {
-  (window as any).gtag &&
-    (window as any).gtag('event', 'custom', {
-      name: params.name,
-      payload: params.payload,
-    });
+  const gtag = (window as any).gtag;
+  if (!gtag) return;
+
+  gtag('event', 'custom', {
+    name: params.name,
+    payload: params.payload,
+  });
+
+  gtag('event', params.name, {
+    name: params.name,
+    payload: params.payload,
+  });
 }
