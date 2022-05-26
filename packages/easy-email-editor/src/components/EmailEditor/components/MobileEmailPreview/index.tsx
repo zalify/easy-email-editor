@@ -21,6 +21,7 @@ export function MobileEmailPreview() {
         justifyContent: 'center',
         overflow: 'auto',
         padding: '10px 0px',
+        boxSizing: 'border-box'
       }}
     >
       <div

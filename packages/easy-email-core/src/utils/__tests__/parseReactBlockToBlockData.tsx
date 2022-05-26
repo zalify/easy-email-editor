@@ -77,11 +77,11 @@ describe('Test parseXml2', () => {
             },
           ],
           data: { value: {} },
-          type: 'column',
+          type: 'advanced_column',
         },
       ],
       data: { value: { noWrap: false } },
-      type: 'section',
+      type: 'advanced_section',
     });
   });
 
