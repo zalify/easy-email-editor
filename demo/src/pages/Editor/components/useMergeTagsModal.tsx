@@ -45,6 +45,7 @@ export function useMergeTagsModal(defaultMergeTags: Record<string, any>) {
             style={{ zIndex: 9999, width: '80vw', height: '80vh' }}
             title='Merge tags'
             okText='Save'
+            cancelText='Cancel'
             visible={visible}
             onOk={() => handleSubmit()}
             onCancel={closeModal}
