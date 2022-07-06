@@ -94,6 +94,7 @@ export function useEmailModal() {
             style={{ zIndex: 9999 }}
             title='Send test email'
             okText='Send'
+            cancelText='Cancel'
             visible={visible}
             confirmLoading={emailSendLoading}
             onOk={() => handleSubmit()}
