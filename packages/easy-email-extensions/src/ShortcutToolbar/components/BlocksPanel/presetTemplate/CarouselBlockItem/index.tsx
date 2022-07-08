@@ -10,7 +10,7 @@ const list = [
   {
     thumbnail: getImg('IMAGE_14'),
     payload: {
-      type: 'carousel',
+      type: AdvancedType.CAROUSEL,
       data: {
         value: {
           images: [

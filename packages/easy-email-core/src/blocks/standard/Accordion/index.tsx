@@ -1,3 +1,4 @@
+import React from 'react';
 import { IBlockData } from '@core/typings';
 import { BasicType } from '@core/constants';
 import { createBlock } from '@core/utils/createBlock';
@@ -6,6 +7,9 @@ import { AccordionTitle } from '../AccordionTitle';
 import { AccordionText } from '../AccordionText';
 import { getImg } from '@core/utils/getImg';
 import { mergeBlock } from '@core/utils/mergeBlock';
+import { getAdapterAttributesString } from '@core/utils';
+import { BlockRenderer } from '@core/components/BlockRenderer';
+import { BasicBlock } from '@core/components/BasicBlock';
 
 export type IAccordion = IBlockData<
   {
@@ -88,5 +92,8 @@ export const Accordion = createBlock<IAccordion>({
       ],
     };
     return mergeBlock(defaultData, payload);
+  },
+  render(params) {
+    return <BasicBlock params={params} tag="mj-accordion" />;
   },
 });

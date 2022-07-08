@@ -1,11 +1,10 @@
 import { AdvancedType, BasicType } from '@core/constants';
 import React from 'react';
-import { Template } from '@core/components';
-import MjmlBlock from '@core/components/MjmlBlock';
-
 import { AdvancedBlock, generateAdvancedBlock } from './generateAdvancedBlock';
 import { getPreviewClassName } from '@core/utils/getPreviewClassName';
 import { classnames } from '@core/utils/classnames';
+import { BlockRenderer } from '@core/components/BlockRenderer';
+import { getChildIdx } from '@core/utils';
 
 export function generateAdvancedLayoutBlock<T extends AdvancedBlock>(option: {
   type: string;
@@ -15,7 +14,7 @@ export function generateAdvancedLayoutBlock<T extends AdvancedBlock>(option: {
   return generateAdvancedBlock<T>({
     ...option,
     getContent: (params) => {
-      const { data, idx, mode, context, dataSource, index } = params;
+      const { data, idx, mode, index } = params;
       const { iteration } = data.data.value;
 
       const blockData = {
@@ -30,24 +29,38 @@ export function generateAdvancedLayoutBlock<T extends AdvancedBlock>(option: {
 
       const previewClassName =
         mode === 'testing'
-          ? classnames(index === 0 && getPreviewClassName(idx, data.type))
+          ? classnames(
+            index === 0 && idx && getPreviewClassName(idx, data.type)
+          )
           : '';
 
       return (
-        <MjmlBlock
-          type={blockData.type}
-          attributes={{
-            ...blockData.attributes,
-            'css-class': classnames(
-              data.attributes['css-class'],
-              previewClassName
-            ),
+        <BlockRenderer
+          idx={null}
+          data={{
+            ...blockData,
+            attributes: {
+              ...blockData.attributes,
+              'css-class': classnames(
+                data.attributes['css-class'],
+                previewClassName
+              )
+            }
           }}
-          value={blockData.data.value}
         >
-          <Template idx={index === 0 ? idx : null}>{data.children}</Template>
-        </MjmlBlock>
+          {blockData.children.map((child, index) => {
+            return (
+              <BlockRenderer
+                key={index}
+                {...params}
+                data={child}
+                idx={idx ? getChildIdx(idx, index) : null}
+              />
+            );
+          })}
+        </BlockRenderer>
       );
+
     },
   });
 }

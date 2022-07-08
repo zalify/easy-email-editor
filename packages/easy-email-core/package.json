@@ -2,7 +2,7 @@
   "name": "easy-email-core",
   "license": "MIT",
   "description": "Email editor",
-  "version": "4.1.9",
+  "version": "4.1.12",
   "author": "m-Ryan",
   "repository": {
     "type": "git",
@@ -68,7 +68,9 @@
     "vite": "^2.5.6"
   },
   "dependencies": {
+    "@types/js-beautify": "^1.13.3",
     "@types/uuid": "^8.3.4",
+    "js-beautify": "^1.14.4",
     "lodash": "^4.17.21",
     "nanoid": "^3.3.1",
     "typescript": "^4.4.4",

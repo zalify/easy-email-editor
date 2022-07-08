@@ -1,14 +1,15 @@
+import React from 'react';
 import { IBlockData } from '@core/typings';
 import { BasicType } from '@core/constants';
 import { createBlock } from '@core/utils/createBlock';
 import { merge } from 'lodash';
+import { BasicBlock } from '@core/components/BasicBlock';
 export type IAccordionElement = IBlockData<
   {
     'icon-width': string;
     'icon-height': string;
     'container-background-color'?: string;
     border?: string;
-    padding: string;
     'inner-padding'?: string;
     'font-family'?: string;
     'icon-align'?: 'middle' | 'top' | 'bottom';
@@ -36,11 +37,13 @@ export const AccordionElement = createBlock<IAccordionElement>({
         'icon-width': '32px',
 
         'icon-position': 'right',
-        padding: '10px 25px 10px 25px',
       },
       children: [],
     };
     return merge(defaultData, payload);
   },
   validParentType: [BasicType.ACCORDION],
+  render(params) {
+    return <BasicBlock params={params} tag='mj-accordion-element' />;
+  },
 });

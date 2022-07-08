@@ -1,7 +1,11 @@
+import React from 'react';
 import { IBlock, IBlockData } from '@core/typings';
 import { BasicType } from '@core/constants';
 import { createBlock } from '@core/utils/createBlock';
 import { merge } from 'lodash';
+import { getAdapterAttributesString } from '@core/utils';
+import { BlockRenderer } from '@core/components/BlockRenderer';
+import { BasicBlock } from '@core/components/BasicBlock';
 
 export type IAccordionTitle = IBlockData<
   {
@@ -34,4 +38,11 @@ export const AccordionTitle: IBlock = createBlock({
     return merge(defaultData, payload);
   },
   validParentType: [BasicType.ACCORDION],
+  render(params) {
+    return (
+      <BasicBlock params={params} tag='mj-accordion-title'>
+        {params.data.data.value.content}
+      </BasicBlock>
+    );
+  },
 });

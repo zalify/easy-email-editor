@@ -1,8 +1,7 @@
-import { Column, Section, Template } from '@core/components';
+import { Column, Section } from '@core/components';
 import { BasicType, AdvancedType } from '@core/constants';
-import { getParentByIdx } from '@core/utils';
+import { BlockManager, getParentByIdx } from '@core/utils';
 import { classnames } from '@core/utils/classnames';
-import { MERGE_TAG_CLASS_NAME } from '@core/constants';
 import React from 'react';
 import { generateAdvancedBlock } from './generateAdvancedBlock';
 import { getPreviewClassName } from '@core/utils/getPreviewClassName';
@@ -25,16 +24,16 @@ export function generateAdvancedContentBlock<T extends IBlockData>(option: {
       AdvancedType.WRAPPER,
       AdvancedType.COLUMN,
       AdvancedType.GROUP,
-      AdvancedType.HERO
+      AdvancedType.HERO,
     ],
     getContent: (params) => {
-      const { data, idx, mode, context, dataSource, index } = params;
+      const { data, idx, mode, context, index } = params;
 
       const previewClassName =
         mode === 'testing'
           ? classnames(
-            index === 0 && idx && getPreviewClassName(idx, data.type)
-          )
+              index === 0 && idx && getPreviewClassName(idx, data.type)
+            )
           : '';
 
       const blockData = {
@@ -48,9 +47,17 @@ export function generateAdvancedContentBlock<T extends IBlockData>(option: {
           ),
         },
       };
+
+      const block = BlockManager.getBlockByType(blockData.type);
+      if (!block) {
+        throw new Error(`Can not find ${blockData.type}`);
+      }
+
+      const children = block?.render({ ...params, data: blockData, idx });
+
       const parentBlockData = getParentByIdx({ content: context! }, idx!);
       if (!parentBlockData) {
-        return <Template>{blockData}</Template>;
+        return children;
       }
 
       if (
@@ -59,13 +66,13 @@ export function generateAdvancedContentBlock<T extends IBlockData>(option: {
         parentBlockData.type === AdvancedType.WRAPPER
       ) {
         return (
-          <Section padding='0px'>
-            <Column>{blockData}</Column>
+          <Section padding='0px' text-align='left'>
+            <Column>{children}</Column>
           </Section>
         );
       }
 
-      return blockData;
+      return children;
     },
   });
 }

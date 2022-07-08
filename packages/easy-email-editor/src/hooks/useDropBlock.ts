@@ -1,8 +1,6 @@
 import { useEffect, useMemo, useState, useRef } from 'react';
 
-import {
-  getNodeIdxFromClassName,
-} from 'easy-email-core';
+import { getNodeIdxFromClassName } from 'easy-email-core';
 import { getBlockNodeByChildEle } from '@/utils/getBlockNodeByChildEle';
 import { useBlock } from '@/hooks/useBlock';
 import { getDirectionPosition } from '@/utils/getDirectionPosition';
@@ -15,7 +13,7 @@ import { DATA_ATTRIBUTE_DROP_CONTAINER } from '@/constants';
 
 export function useDropBlock() {
   const [ref, setRef] = useState<HTMLElement | null>(null);
-  const { values, focusBlock } = useBlock();
+  const { values } = useBlock();
   const { autoComplete } = useEditorProps();
   const { dataTransfer, setDataTransfer } = useDataTransfer();
   const cacheValues = useRef(values);
@@ -90,13 +88,13 @@ export function useDropBlock() {
       const onDragOver = (ev: DragEvent) => {
         if (!cacheDataTransfer.current) return;
 
-        if (ev.target === lastDragover.target) {
-          if (lastDragover.valid) {
-            ev.preventDefault();
+        // if (ev.target === lastDragover.target) {
+        //   if (lastDragover.valid) {
+        //     ev.preventDefault();
 
-            return;
-          }
-        }
+        //     return;
+        //   }
+        // }
 
         lastDragover.target = ev.target;
         lastDragover.valid = false;

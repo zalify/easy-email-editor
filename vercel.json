@@ -4,31 +4,6 @@
       "handle": "filesystem"
     },
     {
-      "src":"/images/(.*)",
-      "headers" :  {
-        "Cache-Control": "public, max-age=2592000, s-maxage=2592000, immutable"
-      }
-    },
-    {
-      "src":"/assets/(.*)",
-      "headers" :  {
-        "Cache-Control": "public, max-age=2592000, s-maxage=2592000, immutable"
-      }
-
-    },
-    {
-      "src":"/assets/(.*)",
-      "headers" :  {
-        "Cache-Control": "public, max-age=2592000, s-maxage=2592000, immutable"
-      }
-    },
-    {
-      "src":"/(.*).jpg",
-      "headers" :  {
-        "Cache-Control": "public, max-age=2592000, s-maxage=2592000, immutable"
-      }
-    },
-    {
       "src": "/(.*)",
       "dest": "/index.html"
     }

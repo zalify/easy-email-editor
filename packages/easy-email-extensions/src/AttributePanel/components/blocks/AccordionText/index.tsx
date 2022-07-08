@@ -23,6 +23,7 @@ export function AccordionText() {
             <TextAreaField
               label='Content'
               name={`${focusIdx}.data.value.content`}
+              autoSize={{ minRows: 5 }}
             />
             <Grid.Row>
               <Grid.Col span={11}>

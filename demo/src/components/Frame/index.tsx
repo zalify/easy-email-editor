@@ -31,7 +31,12 @@ export default function Frame({
           <h1 style={{ color: 'white', margin: '15px 0' }}>Easy-email</h1>
 
           <div style={{ marginTop: 10 }}>
-            <Stack>
+            <Stack distribution='equalSpacing' alignment='center'>
+              <a
+                href="https://www.buymeacoffee.com/easyemail" target="_blank"
+                onClick={() => pushEvent({ name: 'Donate' })}>
+                <img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" />
+              </a>
               <a
                 className='github-button'
                 href='https://github.com/arco-design/easy-email'

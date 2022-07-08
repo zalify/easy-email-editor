@@ -20,35 +20,36 @@ import { AccordionElement, IAccordionElement } from './AccordionElement';
 import { AccordionTitle, IAccordionTitle } from './AccordionTitle';
 import { AccordionText, IAccordionText } from './AccordionText';
 import { Table, ITable } from './Table';
+import { BasicType } from '@core/constants';
 
 export const standardBlocks = {
-  Page,
-  Section,
-  Column,
-  Text,
-  Image,
-  Group,
-  Button,
-  Divider,
-  Wrapper,
-  Spacer,
-  Raw,
-  Carousel,
-  Hero,
-  Navbar,
-  Social,
+  [BasicType.PAGE]: Page,
+  [BasicType.SECTION]: Section,
+  [BasicType.COLUMN]: Column,
+  [BasicType.TEXT]: Text,
+  [BasicType.IMAGE]: Image,
+  [BasicType.GROUP]: Group,
+  [BasicType.BUTTON]: Button,
+  [BasicType.DIVIDER]: Divider,
+  [BasicType.WRAPPER]: Wrapper,
+  [BasicType.SPACER]: Spacer,
+  [BasicType.RAW]: Raw,
+  [BasicType.CAROUSEL]: Carousel,
+  [BasicType.HERO]: Hero,
+  [BasicType.NAVBAR]: Navbar,
+  [BasicType.SOCIAL]: Social,
 
   // spacial block, render string
-  Template,
+  [BasicType.TEMPLATE]: Template,
 
   // TODO:
 
-  Accordion,
-  AccordionElement,
-  AccordionTitle,
-  AccordionText,
+  [BasicType.ACCORDION]: Accordion,
+  [BasicType.ACCORDION_ELEMENT]: AccordionElement,
+  [BasicType.ACCORDION_TITLE]: AccordionTitle,
+  [BasicType.ACCORDION_TEXT]: AccordionText,
 
-  Table,
+  [BasicType.TABLE]: Table,
 };
 
 export type {

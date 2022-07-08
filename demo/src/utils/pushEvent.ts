@@ -1,16 +1,18 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 export function pushEvent(params: {
-  page?: string;
-  action?: string;
   name: string;
-  label?: string;
+  action?: string;
+  payload?: Record<string, any>;
 }) {
-  (window as any)._czc &&
-    (window as any)._czc.push([
-      '_trackEvent',
-      params.page || 'common',
-      params.action || 'click',
-      params.name || '',
-      params.label || 1,
-    ]);
+  const gtag = (window as any).gtag;
+  if (!gtag) return;
+
+  gtag('event', 'custom', {
+    name: params.name,
+    payload: params.payload,
+  });
+
+  gtag('event', params.name, {
+    name: params.name,
+    payload: params.payload,
+  });
 }

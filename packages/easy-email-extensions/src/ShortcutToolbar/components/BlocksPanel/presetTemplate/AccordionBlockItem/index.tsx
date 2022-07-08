@@ -9,7 +9,7 @@ const list = [
   {
     thumbnail: getImg('IMAGE_08'),
     payload: {
-      type: 'accordion',
+      type: AdvancedType.ACCORDION,
       data: {
         value: {},
       },

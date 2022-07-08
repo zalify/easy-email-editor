@@ -1,8 +1,12 @@
+import React from 'react';
 import { IBlockData } from '@core/typings';
 import { BasicType } from '@core/constants';
 import { createBlock } from '@core/utils/createBlock';
 import { getImg } from '@core/utils/getImg';
 import { mergeBlock } from '@core/utils/mergeBlock';
+import { getAdapterAttributesString } from '@core/utils';
+import { BlockRenderer } from '@core/components/BlockRenderer';
+import { BasicBlock } from '@core/components/BasicBlock';
 export type IHero = IBlockData<
   {
     'background-color'?: string;
@@ -110,4 +114,7 @@ export const Hero = createBlock<IHero>({
     return mergeBlock(defaultData, payload);
   },
   validParentType: [BasicType.PAGE, BasicType.WRAPPER],
+  render(params) {
+    return <BasicBlock params={params} tag="mj-hero" />;
+  },
 });
