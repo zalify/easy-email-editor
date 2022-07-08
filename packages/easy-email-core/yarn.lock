@@ -3703,10 +3703,10 @@ jest@^27.0.6:
     import-local "^3.0.2"
     jest-cli "^27.3.1"
 
-js-beautify@^1.14.3:
-  version "1.14.3"
-  resolved "https://registry.yarnpkg.com/js-beautify/-/js-beautify-1.14.3.tgz#3dd11c949178de7f3bdf3f6f752778d3bed95150"
-  integrity sha512-f1ra8PHtOEu/70EBnmiUlV8nJePS58y9qKjl4JHfYWlFH6bo7ogZBz//FAZp7jDuXtYnGYKymZPlrg2I/9Zo4g==
+js-beautify@^1.14.4:
+  version "1.14.4"
+  resolved "https://registry.yarnpkg.com/js-beautify/-/js-beautify-1.14.4.tgz#187d600a835f84de67a6d09ceaf3f199b7284c82"
+  integrity sha512-+b4A9c3glceZEmxyIbxDOYB0ZJdReLvyU1077RqKsO4dZx9FUHjTOJn8VHwpg33QoucIykOiYbh7MfqBOghnrA==
   dependencies:
     config-chain "^1.1.13"
     editorconfig "^0.15.3"

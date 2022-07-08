@@ -54,7 +54,7 @@ export default function MjmlBlock<T extends IBlockData>({
           attributes,
           children: [],
         },
-        children
+        children,
       })}
     </>
   );

@@ -15,7 +15,11 @@ type EmailRenderProps = {
 const EmailRenderContext = React.createContext<EmailRenderProps>({} as any);
 
 const EmailRenderProvider: React.FC<EmailRenderProps> = (props) => {
-  return <EmailRenderContext.Provider value={props}>{props.children}</EmailRenderContext.Provider>;
+  return (
+    <EmailRenderContext.Provider value={props}>
+      {props.children}
+    </EmailRenderContext.Provider>
+  );
 };
 
 export function JsonToMjml(options: JsonToMjmlOption): string {
@@ -25,7 +29,15 @@ export function JsonToMjml(options: JsonToMjmlOption): string {
     throw new Error(`Block ${data.type} not found`);
   }
   const mjmlString = unescape(
-    renderToStaticMarkup(<EmailRenderProvider dataSource={options.dataSource} mode={options.mode} context={options.context}>{block.render(options)}</EmailRenderProvider>)
+    renderToStaticMarkup(
+      <EmailRenderProvider
+        dataSource={options.dataSource}
+        mode={options.mode}
+        context={options.context}
+      >
+        {block.render(options)}
+      </EmailRenderProvider>
+    )
   );
   if (beautify) {
     return html(mjmlString, { indent_size: 2 });

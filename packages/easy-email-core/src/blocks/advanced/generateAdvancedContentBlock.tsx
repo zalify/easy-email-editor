@@ -24,7 +24,7 @@ export function generateAdvancedContentBlock<T extends IBlockData>(option: {
       AdvancedType.WRAPPER,
       AdvancedType.COLUMN,
       AdvancedType.GROUP,
-      AdvancedType.HERO
+      AdvancedType.HERO,
     ],
     getContent: (params) => {
       const { data, idx, mode, context, index } = params;
@@ -32,8 +32,8 @@ export function generateAdvancedContentBlock<T extends IBlockData>(option: {
       const previewClassName =
         mode === 'testing'
           ? classnames(
-            index === 0 && idx && getPreviewClassName(idx, data.type)
-          )
+              index === 0 && idx && getPreviewClassName(idx, data.type)
+            )
           : '';
 
       const blockData = {
@@ -53,7 +53,7 @@ export function generateAdvancedContentBlock<T extends IBlockData>(option: {
         throw new Error(`Can not find ${blockData.type}`);
       }
 
-      const children = block?.render({ ...params, data: blockData, idx: null, });
+      const children = block?.render({ ...params, data: blockData, idx });
 
       const parentBlockData = getParentByIdx({ content: context! }, idx!);
       if (!parentBlockData) {
@@ -66,11 +66,10 @@ export function generateAdvancedContentBlock<T extends IBlockData>(option: {
         parentBlockData.type === AdvancedType.WRAPPER
       ) {
         return (
-          <Section padding='0px'>
+          <Section padding='0px' text-align='left'>
             <Column>{children}</Column>
           </Section>
         );
-
       }
 
       return children;

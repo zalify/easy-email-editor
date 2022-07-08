@@ -39,6 +39,10 @@ export const AccordionTitle: IBlock = createBlock({
   },
   validParentType: [BasicType.ACCORDION],
   render(params) {
-    return <BasicBlock params={params} tag="mj-accordion-title" />;
+    return (
+      <BasicBlock params={params} tag='mj-accordion-title'>
+        {params.data.data.value.content}
+      </BasicBlock>
+    );
   },
 });
