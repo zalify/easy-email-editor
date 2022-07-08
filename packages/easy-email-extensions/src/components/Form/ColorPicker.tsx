@@ -12,11 +12,20 @@ export interface ColorPickerProps extends PopoverProps {
   showInput?: boolean;
 }
 
+const getCollapseItemEle = (node: HTMLElement | null): HTMLElement | null => {
+  if (!node) return null;
+  if (node.classList.contains('arco-collapse-item')) {
+    return node;
+  }
+  return getCollapseItemEle(node.parentElement);
+};
+
 export function ColorPicker(props: ColorPickerProps) {
   const { colors: presetColors, addCurrentColor } =
     useContext(PresetColorsContext);
   const [color, setColor] = useState('');
   const { value = '', onChange, children, showInput = true } = props;
+  const [refEle, setRefEle] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
     setColor(value);
@@ -48,7 +57,9 @@ export function ColorPicker(props: ColorPickerProps) {
         title={props.label}
         trigger='click'
         {...props}
-        content={(
+        getPopupContainer={() => getCollapseItemEle(refEle) as any}
+        position='top'
+        content={
           <div className={styles.colorPicker}>
             <SketchPicker
               presetColors={presetColors}
@@ -57,52 +68,54 @@ export function ColorPicker(props: ColorPickerProps) {
               onChangeComplete={onChangeComplete}
             />
           </div>
-        )}
+        }
       >
-        {children || (
-          <div
-            style={{
-              display: 'inline-block',
-              height: 32,
-              width: 32,
-              boxSizing: 'border-box',
-              padding: 4,
-              border: '1px solid var(--color-neutral-3, rgb(229, 230, 235))',
-              borderRadius: showInput ? undefined : 4,
-              fontSize: 0,
-              borderRight: showInput ? 'none' : undefined,
-              position: 'relative',
-              cursor: 'pointer',
-            }}
-          >
-            {props.value ? (
-              <span
-                style={{
-                  position: 'relative',
-                  display: 'block',
-                  border:
-                    '1px solid var(--color-neutral-3, rgb(229, 230, 235))',
+        <div style={{ display: 'inline-flex' }} ref={setRefEle}>
+          {children || (
+            <div
+              style={{
+                display: 'inline-block',
+                height: 32,
+                width: 32,
+                boxSizing: 'border-box',
+                padding: 4,
+                border: '1px solid var(--color-neutral-3, rgb(229, 230, 235))',
+                borderRadius: showInput ? undefined : 4,
+                fontSize: 0,
+                borderRight: showInput ? 'none' : undefined,
+                position: 'relative',
+                cursor: 'pointer',
+              }}
+            >
+              {props.value ? (
+                <span
+                  style={{
+                    position: 'relative',
+                    display: 'block',
+                    border:
+                      '1px solid var(--color-neutral-3, rgb(229, 230, 235))',
 
-                  borderRadius: 2,
-                  width: '100%',
-                  height: '100%',
-                  textAlign: 'center',
-                  backgroundColor: value,
-                }}
-              />
-            ) : (
-              <img
-                style={{
-                  maxWidth: '100%',
-                  maxHeight: '100%',
-                  filter:
-                    'invert(  0.78  )  drop-shadow(0 0px 0 rgb(0 0 0 / 45%))',
-                }}
-                src={getImg('AttributePanel_02')}
-              />
-            )}
-          </div>
-        )}
+                    borderRadius: 2,
+                    width: '100%',
+                    height: '100%',
+                    textAlign: 'center',
+                    backgroundColor: value,
+                  }}
+                />
+              ) : (
+                <img
+                  style={{
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                    filter:
+                      'invert(  0.78  )  drop-shadow(0 0px 0 rgb(0 0 0 / 45%))',
+                  }}
+                  src={getImg('AttributePanel_02')}
+                />
+              )}
+            </div>
+          )}
+        </div>
       </Popover>
       {showInput && (
         <Input

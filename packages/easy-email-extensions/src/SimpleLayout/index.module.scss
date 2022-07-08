@@ -6,6 +6,9 @@
         padding: 0;
       }
     }
+    .arco-collapse-item-content-expanded {
+      overflow: visible;
+    }
   }
   *::-webkit-scrollbar {
     -webkit-appearance: none;
