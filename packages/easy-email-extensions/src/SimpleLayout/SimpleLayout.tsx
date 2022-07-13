@@ -1,5 +1,11 @@
 import { ShortcutToolbar } from '../ShortcutToolbar';
-import { Button, Card, ConfigProvider, Layout, Tabs } from '@arco-design/web-react';
+import {
+  Button,
+  Card,
+  ConfigProvider,
+  Layout,
+  Tabs,
+} from '@arco-design/web-react';
 import { useEditorProps } from 'easy-email-editor';
 import React, { useState } from 'react';
 import { SourceCodePanel } from '../SourceCodePanel';
@@ -35,21 +41,23 @@ export const SimpleLayout: React.FC<
           style={{ paddingRight: 0 }}
           collapsed={collapsed}
           collapsible
-          trigger={null} breakpoint='xl'
+          trigger={null}
+          breakpoint='xl'
           collapsedWidth={60}
-          width={'300'}
+          width={300}
         >
           <Card bodyStyle={{ padding: 0 }} style={{ border: 'none' }}>
             <Card.Grid style={{ width: 60, textAlign: 'center' }}>
               <ShortcutToolbar />
-              <Button style={{
-                marginTop: 30,
-                marginLeft: 'auto',
-                marginRight: 'auto'
-              }}
+              <Button
+                style={{
+                  marginTop: 30,
+                  marginLeft: 'auto',
+                  marginRight: 'auto',
+                }}
                 icon={collapsed ? <IconRight /> : <IconLeft />}
                 shape='round'
-                onClick={() => setCollapsed(v => !v)}
+                onClick={() => setCollapsed((v) => !v)}
               />
             </Card.Grid>
             <Card.Grid
@@ -63,13 +71,14 @@ export const SimpleLayout: React.FC<
                 overflowX: 'hidden',
               }}
             >
-              <Card title='Layout' style={{ border: 'none' }} headerStyle={{ height: 50 }}>
-                {!collapsed && (
-                  <BlockLayer renderTitle={props.renderTitle} />
-                )}
+              <Card
+                title='Layout'
+                style={{ border: 'none' }}
+                headerStyle={{ height: 50 }}
+              >
+                {!collapsed && <BlockLayer renderTitle={props.renderTitle} />}
               </Card>
             </Card.Grid>
-
           </Card>
         </Layout.Sider>
 
@@ -96,11 +105,25 @@ export const SimpleLayout: React.FC<
             className={styles.customScrollBarV2}
           >
             <Tabs className={styles.layoutTabs}>
-              <Tabs.TabPane title={<div style={{ height: 31, lineHeight: '31px' }}>Configuration</div>}>
+              <Tabs.TabPane
+                title={
+                  <div style={{ height: 31, lineHeight: '31px' }}>
+                    Configuration
+                  </div>
+                }
+              >
                 <AttributePanel />
               </Tabs.TabPane>
               {showSourceCode && (
-                <Tabs.TabPane destroyOnHide key='Source code' title={<div style={{ height: 31, lineHeight: '31px' }}>Source code</div>}>
+                <Tabs.TabPane
+                  destroyOnHide
+                  key='Source code'
+                  title={
+                    <div style={{ height: 31, lineHeight: '31px' }}>
+                      Source code
+                    </div>
+                  }
+                >
                   <SourceCodePanel />
                 </Tabs.TabPane>
               )}
