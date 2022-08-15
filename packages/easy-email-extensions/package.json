@@ -63,9 +63,11 @@
   },
   "dependencies": {
     "@arco-design/web-react": "^2.36.1",
+    "@types/color": "^3.0.3",
     "@types/react-color": "^3.0.6",
     "@types/uuid": "^8.3.4",
     "codemirror": "^5.63.3",
+    "color": "^4.2.3",
     "final-form": "^4.20.4",
     "final-form-arrays": "^3.0.2",
     "final-form-set-field-touched": "^1.0.1",

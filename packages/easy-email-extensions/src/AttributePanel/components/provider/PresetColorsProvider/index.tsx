@@ -1,5 +1,7 @@
 import React, { useCallback, useMemo, useRef } from 'react';
 import { useLocalStorage } from 'react-use';
+import { debounce } from 'lodash';
+import { useRefState } from 'easy-email-editor';
 
 const defaultPresetColor: string[] = [
   '#000000',
@@ -13,6 +15,7 @@ const defaultPresetColor: string[] = [
 ];
 
 const CURRENT_COLORS_KEY = 'CURRENT_COLORS_KEY';
+const MAX_RECORD_SIZE = 20;
 
 export const PresetColorsContext = React.createContext<{
   colors: string[];
@@ -27,21 +30,24 @@ export const PresetColorsProvider: React.FC<{}> = (props) => {
     CURRENT_COLORS_KEY,
     defaultPresetColor
   );
+  const currentColorsRef = useRefState(currentColors);
 
   const colorDivRef = useRef(document.createElement('div'));
 
   const addCurrentColor = useCallback(
-    (newColor: string) => {
+    debounce((newColor: string) => {
       colorDivRef.current.style.color = '';
       colorDivRef.current.style.color = newColor;
       if (colorDivRef.current.style.color) {
-        const newColors = [...new Set([...currentColors!, newColor])]
+        if (currentColorsRef.current!.includes(newColor)) return;
+        const newColors = [...new Set([...currentColorsRef.current!, newColor])]
           .filter(Boolean)
-          .slice(0, 16);
+          .slice(-MAX_RECORD_SIZE);
+
         setCurrentColors(newColors);
       }
-    },
-    [currentColors, setCurrentColors]
+    }, 500),
+    [currentColorsRef, setCurrentColors]
   );
 
   const value = useMemo(() => {

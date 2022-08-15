@@ -57,7 +57,7 @@ export function ColorPicker(props: ColorPickerProps) {
         title={props.label}
         trigger='click'
         {...props}
-        getPopupContainer={() => getCollapseItemEle(refEle) as any}
+        // getPopupContainer={() => getCollapseItemEle(refEle) as any}
         position='top'
         content={
           <div className={styles.colorPicker}>
