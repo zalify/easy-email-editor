@@ -57,6 +57,7 @@
     "final-form": "^4.20.4",
     "fs-extra": "^10.0.1",
     "html2canvas": "^1.3.2",
+    "liquidjs": "^9.40.0",
     "mjml-browser": "^4.10.4",
     "mustache": "^4.2.0",
     "qs": "^6.10.1",
