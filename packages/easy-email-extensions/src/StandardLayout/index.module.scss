@@ -1,0 +1,16 @@
+.StandardLayout {
+  :global {
+    .arco-layout-sider-children {
+      overflow-x: hidden;
+      .arco-tabs-content {
+        padding: 0;
+      }
+    }
+    .arco-collapse-item-content-expanded {
+      overflow: visible;
+    }
+    .easy-email-editor-tabWrapper {
+      padding: 5px;
+    }
+  }
+}

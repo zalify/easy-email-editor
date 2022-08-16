@@ -15,9 +15,9 @@ export interface BlockGroup {
 
 export interface PropsProviderProps {
   height: string;
-  fontList?: { value: string; label: string; }[];
+  fontList?: { value: string; label: string }[];
   onAddCollection?: (payload: CollectedBlock) => void;
-  onRemoveCollection?: (payload: { id: string; }) => void;
+  onRemoveCollection?: (payload: { id: string }) => void;
   onUploadImage?: (data: Blob) => Promise<string>;
   interactiveStyle?: {
     hoverColor?: string;
@@ -27,9 +27,9 @@ export interface PropsProviderProps {
   };
   autoComplete?: boolean;
   dashed?: boolean;
-  socialIcons?: Array<{ content: string; image: string; }>;
+  socialIcons?: Array<{ content: string; image: string }>;
 
-  mergeTagGenerate: (m: string) => string;
+  mergeTagGenerate?: (m: string) => string;
   onChangeMergeTag?: (ptah: string, val: any) => any;
   renderMergeTagContent?: (props: {
     onChange: (val: string) => void;
@@ -50,7 +50,11 @@ export interface PropsProviderProps {
 
 const defaultMergeTagGenerate = (m: string) => `{{${m}}}`;
 
-export const EditorPropsContext = React.createContext<PropsProviderProps>({
+export const EditorPropsContext = React.createContext<
+  PropsProviderProps & {
+    mergeTagGenerate: Required<PropsProviderProps['mergeTagGenerate']>;
+  }
+>({
   height: '100vh',
   fontList: [],
   onAddCollection: undefined,

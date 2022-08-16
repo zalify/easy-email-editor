@@ -39,7 +39,11 @@ import {
   IBlockData,
   JsonToMjml,
 } from 'easy-email-core';
-import { BlockMarketManager, SimpleLayout } from 'easy-email-extensions';
+import {
+  BlockMarketManager,
+  ExtensionProps,
+  StandardLayout,
+} from 'easy-email-extensions';
 import { AutoSaveAndRestoreEmail } from '@demo/components/AutoSaveAndRestoreEmail';
 
 // Register external blocks
@@ -54,72 +58,153 @@ import { useState } from 'react';
 import { testMergeTags } from './testMergeTags';
 import { useMergeTagsModal } from './components/useMergeTagsModal';
 
+import { useWindowSize } from 'react-use';
+
 const socialIcons = [
   {
     content: 'facebook',
-    image: 'https://assets.maocanhua.cn/ea599da9-c42d-4d15-b06d-f6bea01d897f-5282541_fb_socialmedia_facebook_facebooklogo_socialnetwork_icon.png'
+    image:
+      'https://assets.maocanhua.cn/ea599da9-c42d-4d15-b06d-f6bea01d897f-5282541_fb_socialmedia_facebook_facebooklogo_socialnetwork_icon.png',
   },
   {
     content: 'linkedin',
-    image: 'https://assets.maocanhua.cn/afeab92b-16bb-4cdc-815b-544409e9a0fa-5282542_linkedin_network_socialnetwork_linkedinlogo_icon(1).png'
+    image:
+      'https://assets.maocanhua.cn/afeab92b-16bb-4cdc-815b-544409e9a0fa-5282542_linkedin_network_socialnetwork_linkedinlogo_icon(1).png',
   },
   {
     content: 'instagram',
-    image: 'https://assets.maocanhua.cn/d202cfbe-cb0a-4d58-85c4-938c8b304439-5282544_camera_instagram_socialmedia_socialnetwork_instagramlogo_icon.png'
+    image:
+      'https://assets.maocanhua.cn/d202cfbe-cb0a-4d58-85c4-938c8b304439-5282544_camera_instagram_socialmedia_socialnetwork_instagramlogo_icon.png',
   },
   {
     content: 'pinterest',
-    image: 'https://assets.maocanhua.cn/bcb27543-662d-4a6c-b91d-9b3fce82a82a-5282545_pin_pinterest_inspiration_pinterestlogo_icon.png'
+    image:
+      'https://assets.maocanhua.cn/bcb27543-662d-4a6c-b91d-9b3fce82a82a-5282545_pin_pinterest_inspiration_pinterestlogo_icon.png',
   },
   {
     content: 'youtube',
-    image: 'https://assets.maocanhua.cn/c628f0db-7efd-4c10-a426-a633954008ad-5282548_play_player_video_youtube_youtublelogo_icon.png'
+    image:
+      'https://assets.maocanhua.cn/c628f0db-7efd-4c10-a426-a633954008ad-5282548_play_player_video_youtube_youtublelogo_icon.png',
   },
   {
     content: 'twitter',
-    image: 'https://assets.maocanhua.cn/9d594e46-a9b0-483a-8d3d-af3e748904b2-5282551_tweet_twitter_twitterlogo_icon.png'
+    image:
+      'https://assets.maocanhua.cn/9d594e46-a9b0-483a-8d3d-af3e748904b2-5282551_tweet_twitter_twitterlogo_icon.png',
   },
   {
     content: 'tiktok',
-    image: 'https://assets.maocanhua.cn/df888c4d-aa94-4649-a806-73a758b366cc-tiktok.png'
+    image:
+      'https://assets.maocanhua.cn/df888c4d-aa94-4649-a806-73a758b366cc-tiktok.png',
   },
   {
     content: 'tumblr',
-    image: 'https://assets.maocanhua.cn/06072412-c14d-483e-9ccd-01706a108053-5282552_tumblr_tumblrlogo_icon.png'
+    image:
+      'https://assets.maocanhua.cn/06072412-c14d-483e-9ccd-01706a108053-5282552_tumblr_tumblrlogo_icon.png',
   },
 
   // colorful
   {
     content: 'facebook',
-    image: 'https://assets.maocanhua.cn/a080b611-ef54-4517-a7f4-62a9de8c8c4f-5365678_fb_facebook_facebooklogo_icon.png'
+    image:
+      'https://assets.maocanhua.cn/a080b611-ef54-4517-a7f4-62a9de8c8c4f-5365678_fb_facebook_facebooklogo_icon.png',
   },
   {
     content: 'linkedin',
-    image: 'https://assets.maocanhua.cn/e616cd72-ce70-413c-a185-e2b5ae2b64f4-5296501_linkedin_network_linkedinlogo_icon.png'
+    image:
+      'https://assets.maocanhua.cn/e616cd72-ce70-413c-a185-e2b5ae2b64f4-5296501_linkedin_network_linkedinlogo_icon.png',
   },
   {
     content: 'instagram',
-    image: 'https://assets.maocanhua.cn/e0f0e4b4-8aef-4c49-a9e4-dbfe8e0cb4d6-instagram.png'
+    image:
+      'https://assets.maocanhua.cn/e0f0e4b4-8aef-4c49-a9e4-dbfe8e0cb4d6-instagram.png',
   },
   {
     content: 'pinterest',
-    image: 'https://assets.maocanhua.cn/4c53ff96-ad2f-4cdc-9e63-0f8b0ba52f10-5296503_inspiration_pin_pinned_pinterest_socialnetwork_icon.png'
+    image:
+      'https://assets.maocanhua.cn/4c53ff96-ad2f-4cdc-9e63-0f8b0ba52f10-5296503_inspiration_pin_pinned_pinterest_socialnetwork_icon.png',
   },
   {
     content: 'youtube',
-    image: 'https://assets.maocanhua.cn/9b25a927-763c-43e2-8557-63f7225ad11a-5296521_play_video_vlog_youtube_youtubelogo_icon.png'
+    image:
+      'https://assets.maocanhua.cn/9b25a927-763c-43e2-8557-63f7225ad11a-5296521_play_video_vlog_youtube_youtubelogo_icon.png',
   },
   {
     content: 'twitter',
-    image: 'https://assets.maocanhua.cn/07ae33c6-3feb-4424-a378-39031d2b63d4-5296516_tweet_twitter_twitterlogo_icon.png'
+    image:
+      'https://assets.maocanhua.cn/07ae33c6-3feb-4424-a378-39031d2b63d4-5296516_tweet_twitter_twitterlogo_icon.png',
   },
   {
     content: 'tiktok',
-    image: 'https://assets.maocanhua.cn/59102950-e1dc-41a4-b1c5-c0890f064673-7024783_tiktok_socialmedia_icon.png'
+    image:
+      'https://assets.maocanhua.cn/59102950-e1dc-41a4-b1c5-c0890f064673-7024783_tiktok_socialmedia_icon.png',
   },
   {
     content: 'tumblr',
-    image: 'https://assets.maocanhua.cn/fcbc85b0-ccbf-4f5f-a9d7-067f16691a56-5296511_network_socialnetwork_tumblr_tumblrlogo_icon.png'
+    image:
+      'https://assets.maocanhua.cn/fcbc85b0-ccbf-4f5f-a9d7-067f16691a56-5296511_network_socialnetwork_tumblr_tumblrlogo_icon.png',
+  },
+];
+
+const categories: ExtensionProps['categories'] = [
+  {
+    label: 'Content',
+    active: true,
+    blocks: [
+      {
+        type: AdvancedType.TEXT,
+      },
+      {
+        type: AdvancedType.IMAGE,
+        payload: { attributes: { padding: '0px 0px 0px 0px' } },
+      },
+      {
+        type: AdvancedType.BUTTON,
+      },
+      {
+        type: AdvancedType.SOCIAL,
+      },
+      {
+        type: AdvancedType.DIVIDER,
+      },
+      {
+        type: AdvancedType.SPACER,
+      },
+      {
+        type: AdvancedType.HERO,
+      },
+      {
+        type: AdvancedType.WRAPPER,
+      },
+    ],
+  },
+  {
+    label: 'Layout',
+    active: true,
+    displayType: 'column',
+    blocks: [
+      {
+        title: '2 columns',
+        payload: [
+          ['50%', '50%'],
+          ['33%', '67%'],
+          ['67%', '33%'],
+          ['25%', '75%'],
+          ['75%', '25%'],
+        ],
+      },
+      {
+        title: '3 columns',
+        payload: [
+          ['33.33%', '33.33%', '33.33%'],
+          ['25%', '25%', '50%'],
+          ['50%', '25%', '25%'],
+        ],
+      },
+      {
+        title: '4 columns',
+        payload: [[['25%', '25%', '25%', '25%']]],
+      },
+    ],
   },
 ];
 
@@ -152,10 +237,20 @@ export default function Editor() {
   const templateData = useAppSelector('template');
   const { addCollection, removeCollection, collectionCategory } =
     useCollection();
+
+  const { width } = useWindowSize();
+
+  const smallScene = width < 1400;
+
   const { openModal, modal } = useEmailModal();
   const { id, userId } = useQuery();
   const loading = useLoading(template.loadings.fetchById);
-  const { modal: mergeTagsModal, openModal: openMergeTagsModal, mergeTags, setMergeTags } = useMergeTagsModal(testMergeTags);
+  const {
+    modal: mergeTagsModal,
+    openModal: openMergeTagsModal,
+    mergeTags,
+    setMergeTags,
+  } = useMergeTagsModal(testMergeTags);
 
   const isSubmitting = useLoading([
     template.loadings.create,
@@ -220,7 +315,6 @@ export default function Editor() {
     });
   }, []);
 
-
   const onExportHtml = (values: IEmailTemplate) => {
     pushEvent({ name: 'ExportHtml' });
     const html = mjml(
@@ -262,7 +356,6 @@ export default function Editor() {
     };
   }, [templateData]);
 
-
   const onSubmit = useCallback(
     async (
       values: IEmailTemplate,
@@ -270,7 +363,11 @@ export default function Editor() {
     ) => {
       pushEvent({ name: 'Save' });
       if (id) {
-        const isChanged = !(isEqual(initialValues?.content, values.content) && isEqual(initialValues?.subTitle, values?.subTitle) && isEqual(initialValues?.subject, values?.subject));
+        const isChanged = !(
+          isEqual(initialValues?.content, values.content) &&
+          isEqual(initialValues?.subTitle, values?.subTitle) &&
+          isEqual(initialValues?.subject, values?.subject)
+        );
 
         if (!isChanged) {
           Message.success('Updated success!');
@@ -375,7 +472,6 @@ export default function Editor() {
                       <Select.Option value='purple'>Purple</Select.Option>
                     </Select>
 
-
                     <Button onClick={openMergeTagsModal}>
                       Update mergeTags
                     </Button>
@@ -419,9 +515,9 @@ export default function Editor() {
                   </Stack>
                 }
               />
-              <SimpleLayout>
+              <StandardLayout compact={!smallScene} categories={categories}>
                 <EmailEditor />
-              </SimpleLayout>
+              </StandardLayout>
               <AutoSaveAndRestoreEmail />
             </>
           );
