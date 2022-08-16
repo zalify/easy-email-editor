@@ -33,18 +33,22 @@ export default function Frame({
           <div style={{ marginTop: 10 }}>
             <Stack distribution='equalSpacing' alignment='center'>
               <a
-                href="https://www.buymeacoffee.com/easyemail" target="_blank"
-                onClick={() => pushEvent({ name: 'Donate' })}>
-                <img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" />
+                href='https://www.buymeacoffee.com/easyemail?utm_source=webside&utm_medium=button&utm_content=donate'
+                target='_blank'
+                onClick={() => pushEvent({ event: 'Donate' })}
+              >
+                <img
+                  src='https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png'
+                  alt='Buy Me A Coffee'
+                />
               </a>
               <a
                 className='github-button'
-                href='https://github.com/arco-design/easy-email'
+                href='https://github.com/arco-design/easy-email?utm_source=webside&utm_medium=button&utm_content=star'
                 data-size='large'
                 data-icon='octicon-star'
                 data-show-count='true'
                 aria-label='Star m-Ryan/easy-email on GitHub'
-                onClick={() => pushEvent({ name: 'Star' })}
                 style={{ opacity: 0 }}
               >
                 Star
@@ -52,11 +56,10 @@ export default function Frame({
 
               <a
                 className='github-button'
-                href='https://github.com/arco-design/easy-email/fork'
+                href='https://github.com/arco-design/easy-email/fork?utm_source=webside&utm_medium=button&utm_content=fork'
                 data-size='large'
                 data-show-count='true'
                 aria-label='Fork m-Ryan/easy-email on GitHub'
-                onClick={() => pushEvent({ name: 'Fork' })}
                 style={{ opacity: 0 }}
               >
                 Fork
@@ -64,11 +67,11 @@ export default function Frame({
 
               <a
                 className='github-button'
-                href='https://github.com/arco-design/easy-email/issues'
+                href='https://github.com/arco-design/easy-email/issues?utm_source=webside&utm_medium=button&utm_content=issues'
                 data-size='large'
                 data-show-count='true'
                 aria-label='Issue m-Ryan/easy-email on GitHub'
-                onClick={() => pushEvent({ name: 'Issue' })}
+                onClick={() => pushEvent({ event: 'Issue' })}
                 style={{ opacity: 0 }}
               >
                 Issue

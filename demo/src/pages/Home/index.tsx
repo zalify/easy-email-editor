@@ -24,7 +24,7 @@ export default function Home() {
       primaryAction={
         <Button
           onClick={() => {
-            pushEvent({ name: 'Create' });
+            pushEvent({ event: 'Create' });
             history.push('/editor');
           }}
         >

@@ -335,7 +335,6 @@ export default function Editor() {
   };
 
   const onExportMJML = (values: IEmailTemplate) => {
-    pushEvent({ name: 'ExportMJML' });
     const html = JsonToMjml({
       data: values.content,
       mode: 'production',
@@ -344,6 +343,7 @@ export default function Editor() {
     });
 
     copy(html);
+    pushEvent({ event: 'ExportMJML', payload: { values, mergeTags } });
     Message.success('Copied to pasteboard!');
   };
 
@@ -508,7 +508,7 @@ export default function Editor() {
                         backgroundColor: '#fff',
                         borderRadius: '50%',
                       }}
-                      onClick={() => pushEvent({ name: 'Github' })}
+                      onClick={() => pushEvent({ event: 'Github' })}
                     >
                       <IconGithub />
                     </a>

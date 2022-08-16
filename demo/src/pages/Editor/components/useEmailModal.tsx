@@ -27,9 +27,9 @@ export function useEmailModal() {
   const emailSendLoading = useLoading(email.loadings.send);
 
   const onSendEmail = useCallback(
-    async (values: { toEmail: string; mergeTags: string; }) => {
+    async (values: { toEmail: string; mergeTags: string }) => {
       if (!emailData) return null;
-      pushEvent({ name: 'SendTestEmail', payload: { email: values.toEmail, } });
+
       let mergeTagsPayload = {};
       try {
         mergeTagsPayload = JSON.parse(values.mergeTags);
@@ -49,7 +49,10 @@ export function useEmailModal() {
         beautify: true,
         validationLevel: 'soft',
       }).html;
-
+      pushEvent({
+        event: 'SendTestEmail',
+        payload: { email: values.toEmail, json: emailData.content, html },
+      });
       dispatch(
         email.actions.send({
           data: {

@@ -1,18 +1,12 @@
 export function pushEvent(params: {
-  name: string;
-  action?: string;
+  event: string;
   payload?: Record<string, any>;
 }) {
-  const gtag = (window as any).gtag;
-  if (!gtag) return;
+  const dataLayer = (window as any).dataLayer as any[];
+  if (!dataLayer) return;
 
-  gtag('event', 'custom', {
-    name: params.name,
-    payload: params.payload,
-  });
-
-  gtag('event', params.name, {
-    name: params.name,
+  dataLayer.push({
+    event: params.event,
     payload: params.payload,
   });
 }
