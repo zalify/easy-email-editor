@@ -4925,6 +4925,16 @@ osenv@^0.1.4:
     os-homedir "^1.0.0"
     os-tmpdir "^1.0.0"
 
+overlayscrollbars-react@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/overlayscrollbars-react/-/overlayscrollbars-react-0.3.0.tgz#6d18e741897131643aa8afbc7fed735fbd106c9c"
+  integrity sha512-dV74p9VL/aImqJpeYz0vmpScZYu6UiNTmRKfyI4CS0OYUpYCUiTd723adY38Grz2W57hoNCECWDzkOJRFDQeZg==
+
+overlayscrollbars@^1.13.2:
+  version "1.13.3"
+  resolved "https://registry.yarnpkg.com/overlayscrollbars/-/overlayscrollbars-1.13.3.tgz#992c96fd2c8535802d1e56c40bc12ec03076c626"
+  integrity sha512-1nB/B5kaakJuHXaLXLRK0bUIilWhUGT6q5g+l2s5vqYdLle/sd0kscBHkQC1kuuDg9p9WR4MTdySDOPbeL/86g==
+
 p-finally@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/p-finally/-/p-finally-1.0.0.tgz#3fbcfb15b899a44123b34b6dcc18b724336a2cae"

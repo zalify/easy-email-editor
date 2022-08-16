@@ -19,9 +19,10 @@ import { debounce } from 'lodash';
 export const RichTextField = (
   props: Omit<InlineTextProps, 'onChange' | 'mutators'>
 ) => {
-
   const [contentEditableName, setContentEditableName] = useState('');
-  const [contentEditableType, setContentEditableType] = useState<string | null>(CONTENT_EDITABLE_CLASS_NAME);
+  const [contentEditableType, setContentEditableType] = useState<string | null>(
+    CONTENT_EDITABLE_CLASS_NAME
+  );
 
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
@@ -55,7 +56,6 @@ export const RichTextField = (
       const activeElement = getShadowRoot().activeElement;
       if (!activeElement) {
         setContentEditableName('');
-
       } else {
         const idxName = activeElement.getAttribute(DATA_CONTENT_EDITABLE_IDX);
         const type = activeElement.getAttribute(DATA_CONTENT_EDITABLE_TYPE);
@@ -79,7 +79,13 @@ export const RichTextField = (
   return (
     <>
       <Field name={contentEditableName} parse={(v) => v}>
-        {({ input }) => <FieldWrapper {...props} contentEditableType={contentEditableType} input={input} />}
+        {({ input }) => (
+          <FieldWrapper
+            {...props}
+            contentEditableType={contentEditableType}
+            input={input}
+          />
+        )}
       </Field>
     </>
   );
@@ -110,7 +116,9 @@ function FieldWrapper(
 
   return (
     <>
-      {contentEditableType === ContentEditableType.RichText && <RichTextToolBar onChange={debounceCallbackChange} />}
+      {contentEditableType === ContentEditableType.RichText && (
+        <RichTextToolBar onChange={debounceCallbackChange} />
+      )}
       <InlineText {...rest} onChange={debounceCallbackChange} />;
     </>
   );

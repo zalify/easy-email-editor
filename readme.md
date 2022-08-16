@@ -60,13 +60,79 @@ $ yarn add easy-email-core easy-email-editor easy-email-extensions react-final-f
 
 ```js
 import React from 'react';
-import { BlockManager, BasicType } from 'easy-email-core';
+import { BlockManager, BasicType, AdvancedType } from 'easy-email-core';
 import { EmailEditor, EmailEditorProvider } from 'easy-email-editor';
-import { SimpleLayout } from 'easy-email-extensions';
+import { ExtensionProps, StandardLayout } from 'easy-email-extensions';
+import { useWindowSize } from 'react-use';
 
 import 'easy-email-editor/lib/style.css';
 import 'easy-email-extensions/lib/style.css';
-import '@arco-themes/react-easy-email-theme/css/arco.css'; // theme, If you need to change the theme, you can make a duplicate in https://arco.design/themes/design/1799/setting/base/Color
+
+// theme, If you need to change the theme, you can make a duplicate in https://arco.design/themes/design/1799/setting/base/Color
+import '@arco-themes/react-easy-email-theme/css/arco.css';
+
+const categories: ExtensionProps['categories'] = [
+  {
+    label: 'Content',
+    active: true,
+    blocks: [
+      {
+        type: AdvancedType.TEXT,
+      },
+      {
+        type: AdvancedType.IMAGE,
+        payload: { attributes: { padding: '0px 0px 0px 0px' } },
+      },
+      {
+        type: AdvancedType.BUTTON,
+      },
+      {
+        type: AdvancedType.SOCIAL,
+      },
+      {
+        type: AdvancedType.DIVIDER,
+      },
+      {
+        type: AdvancedType.SPACER,
+      },
+      {
+        type: AdvancedType.HERO,
+      },
+      {
+        type: AdvancedType.WRAPPER,
+      },
+    ],
+  },
+  {
+    label: 'Layout',
+    active: true,
+    displayType: 'column',
+    blocks: [
+      {
+        title: '2 columns',
+        payload: [
+          ['50%', '50%'],
+          ['33%', '67%'],
+          ['67%', '33%'],
+          ['25%', '75%'],
+          ['75%', '25%'],
+        ],
+      },
+      {
+        title: '3 columns',
+        payload: [
+          ['33.33%', '33.33%', '33.33%'],
+          ['25%', '25%', '50%'],
+          ['50%', '25%', '25%'],
+        ],
+      },
+      {
+        title: '4 columns',
+        payload: [[['25%', '25%', '25%', '25%']]],
+      },
+    ],
+  },
+];
 
 const initialValues = {
   subject: 'Welcome to Easy-email',
@@ -74,7 +140,11 @@ const initialValues = {
   content: BlockManager.getBlockByType(BasicType.PAGE)!.create({}),
 };
 
-function App() {
+export default function App() {
+  const { width } = useWindowSize();
+
+  const smallScene = width < 1400;
+
   return (
     <EmailEditorProvider
       data={initialValues}
@@ -84,16 +154,19 @@ function App() {
     >
       {({ values }) => {
         return (
-          <SimpleLayout>
+          <StandardLayout
+            compact={!smallScene}
+            categories={categories}
+            showSourceCode={true}
+          >
             <EmailEditor />
-          </SimpleLayout>
+          </StandardLayout>
         );
       }}
     </EmailEditorProvider>
   );
 }
 
-export default App;
 
 ```
 
@@ -137,8 +210,6 @@ export default App;
 - [easy-email-editor](./packages/easy-email-editor/readme.md)
 - [easy-email-extensions](./packages/easy-email-extensions/readme.md)
 
-   <img alt="" src="./layout.png">
-
 </br>
 
 ## How does it work?
@@ -146,6 +217,19 @@ export default App;
 <img alt="" src="https://assets.maocanhua.cn/9fe59818-cf17-449e-a021-2692a3c9076c-image.png">
 
 </br>
+
+## Roadmap
+
+- I18n support
+- Awesome responsive, support mobile and desktop display different styles (without any compatibility issues)
+- Replace shadow dom with iframe, support firefox/safari browsers.
+- Improve documentation and add more usage examples
+
+## Donation
+
+If you like this project, please consider donating.
+
+<a href="https://www.buymeacoffee.com/easyemail" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee"></a>
 
 ## Development
 

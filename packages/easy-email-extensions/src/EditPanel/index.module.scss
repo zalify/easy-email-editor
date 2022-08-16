@@ -1,0 +1,23 @@
+.largeTabsHeader {
+  :global {
+    .arco-tabs-header {
+      width: 100%;
+      display: flex;
+      .arco-tabs-header-title {
+        flex: 1;
+        margin: 0px !important;
+        padding: 0 !important;
+        height: 60px;
+        line-height: 60px;
+        .arco-tabs-header-title-text {
+          display: block;
+          text-align: center;
+          width: 100%;
+          &::before {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}
