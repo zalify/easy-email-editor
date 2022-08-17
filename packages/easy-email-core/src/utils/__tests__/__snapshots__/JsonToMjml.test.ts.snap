@@ -2,14 +2,15 @@
 
 exports[`Test JsonToMjml when mode is "production" should render as expected 1`] = `
 "
-        <mjml>
+          <mjml>
           <mj-head>
               
     <mj-html-attributes>
       <mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"text-color\\" text-color=\\"#000000\\"></mj-html-attribute>
-<mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"font-family\\" font-family=\\"lucida Grande,Verdana,Microsoft YaHei\\"></mj-html-attribute>
+<mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"font-family\\" font-family=\\"-apple-system, BlinkMacSystemFont, &#x27;Segoe UI&#x27;, &#x27;Roboto&#x27;, &#x27;Oxygen&#x27;, &#x27;Ubuntu&#x27;, &#x27;Cantarell&#x27;, &#x27;Fira Sans&#x27;, &#x27;Droid Sans&#x27;,&#x27;Helvetica Neue&#x27;, sans-serif\\"></mj-html-attribute>
 <mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"font-size\\" font-size=\\"14px\\"></mj-html-attribute>
 <mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"line-height\\" line-height=\\"1.7\\"></mj-html-attribute>
+<mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"font-weight\\" font-weight=\\"400\\"></mj-html-attribute>
 <mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"responsive\\" responsive=\\"true\\"></mj-html-attribute>
 
     </mj-html-attributes>
@@ -18,45 +19,33 @@ exports[`Test JsonToMjml when mode is "production" should render as expected 1`]
               
               
               <mj-breakpoint width=\\"480px\\" />
+              
+              
             <mj-attributes>
               
-              <mj-all font-family=\\"lucida Grande,Verdana,Microsoft YaHei\\" />
+              <mj-all font-family=\\"-apple-system, BlinkMacSystemFont, &#x27;Segoe UI&#x27;, &#x27;Roboto&#x27;, &#x27;Oxygen&#x27;, &#x27;Ubuntu&#x27;, &#x27;Cantarell&#x27;, &#x27;Fira Sans&#x27;, &#x27;Droid Sans&#x27;,&#x27;Helvetica Neue&#x27;, sans-serif\\" />
               <mj-text font-size=\\"14px\\" />
               <mj-text color=\\"#000000\\" />
-              <mj-text line-height=\\"1.7\\" />
+        <mj-text line-height=\\"1.7\\" />
+        <mj-text font-weight=\\"400\\" />
               
-              
+
             </mj-attributes>
           </mj-head>
-          <mj-body background-color=\\"#efeeea\\" width=\\"600px\\" css-class=\\"mjml-body\\">
-            
-              <mj-section padding=\\"20px 0px 20px 0px\\" border=\\"none\\" direction=\\"ltr\\" text-align=\\"center\\" background-repeat=\\"repeat\\" background-size=\\"auto\\" background-position=\\"top center\\">
-               
-              <mj-column padding=\\"0px 0px 0px 0px\\" border=\\"none\\" vertical-align=\\"top\\">
-               
-          <mj-text padding=\\"10px 25px 10px 25px\\" align=\\"left\\">
-           Make it easy for everyone to compose emails!
-          </mj-text>
-        
-              </mj-column>
-            
-              </mj-section>
-            
-          </mj-body>
-        </mjml>
-        "
+          <mj-body background-color=\\"#efeeea\\" width=\\"600px\\" ><mj-section padding=\\"20px 0px 20px 0px\\" border=\\"none\\" direction=\\"ltr\\" text-align=\\"center\\" background-repeat=\\"repeat\\" background-size=\\"auto\\" background-position=\\"top center\\" ><mj-column padding=\\"0px 0px 0px 0px\\" border=\\"none\\" vertical-align=\\"top\\" ><mj-text padding=\\"10px 25px 10px 25px\\" align=\\"left\\" >Make it easy for everyone to compose emails!</mj-text></mj-column></mj-section></mj-body></mjml > "
 `;
 
 exports[`Test JsonToMjml when mode is "testing" should render as expected 1`] = `
 "
-        <mjml>
+          <mjml>
           <mj-head>
               
     <mj-html-attributes>
       <mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"text-color\\" text-color=\\"#000000\\"></mj-html-attribute>
-<mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"font-family\\" font-family=\\"lucida Grande,Verdana,Microsoft YaHei\\"></mj-html-attribute>
+<mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"font-family\\" font-family=\\"-apple-system, BlinkMacSystemFont, &#x27;Segoe UI&#x27;, &#x27;Roboto&#x27;, &#x27;Oxygen&#x27;, &#x27;Ubuntu&#x27;, &#x27;Cantarell&#x27;, &#x27;Fira Sans&#x27;, &#x27;Droid Sans&#x27;,&#x27;Helvetica Neue&#x27;, sans-serif\\"></mj-html-attribute>
 <mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"font-size\\" font-size=\\"14px\\"></mj-html-attribute>
 <mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"line-height\\" line-height=\\"1.7\\"></mj-html-attribute>
+<mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"font-weight\\" font-weight=\\"400\\"></mj-html-attribute>
 <mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"responsive\\" responsive=\\"true\\"></mj-html-attribute>
 
     </mj-html-attributes>
@@ -65,31 +54,18 @@ exports[`Test JsonToMjml when mode is "testing" should render as expected 1`] = 
               
               
               <mj-breakpoint width=\\"480px\\" />
+              
+              
             <mj-attributes>
               
-              <mj-all font-family=\\"lucida Grande,Verdana,Microsoft YaHei\\" />
+              <mj-all font-family=\\"-apple-system, BlinkMacSystemFont, &#x27;Segoe UI&#x27;, &#x27;Roboto&#x27;, &#x27;Oxygen&#x27;, &#x27;Ubuntu&#x27;, &#x27;Cantarell&#x27;, &#x27;Fira Sans&#x27;, &#x27;Droid Sans&#x27;,&#x27;Helvetica Neue&#x27;, sans-serif\\" />
               <mj-text font-size=\\"14px\\" />
               <mj-text color=\\"#000000\\" />
-              <mj-text line-height=\\"1.7\\" />
+        <mj-text line-height=\\"1.7\\" />
+        <mj-text font-weight=\\"400\\" />
               
-              
+
             </mj-attributes>
           </mj-head>
-          <mj-body background-color=\\"#efeeea\\" width=\\"600px\\" css-class=\\"email-block node-idx-content node-type-page mjml-body\\">
-            
-              <mj-section padding=\\"20px 0px 20px 0px\\" border=\\"none\\" direction=\\"ltr\\" text-align=\\"center\\" background-repeat=\\"repeat\\" background-size=\\"auto\\" background-position=\\"top center\\" css-class=\\"email-block node-idx-content.children.[0] node-type-section\\">
-               
-              <mj-column padding=\\"0px 0px 0px 0px\\" border=\\"none\\" vertical-align=\\"top\\" css-class=\\"email-block node-idx-content.children.[0].children.[0] node-type-column\\">
-               
-          <mj-text padding=\\"10px 25px 10px 25px\\" align=\\"left\\" css-class=\\"email-block node-idx-content.children.[0].children.[0].children.[0] node-type-text\\">
-           Make it easy for everyone to compose emails!
-          </mj-text>
-        
-              </mj-column>
-            
-              </mj-section>
-            
-          </mj-body>
-        </mjml>
-        "
+          <mj-body background-color=\\"#efeeea\\" width=\\"600px\\" css-class=\\"email-block node-idx-content node-type-page\\" ><mj-section padding=\\"20px 0px 20px 0px\\" border=\\"none\\" direction=\\"ltr\\" text-align=\\"center\\" background-repeat=\\"repeat\\" background-size=\\"auto\\" background-position=\\"top center\\" css-class=\\"email-block node-idx-content.children.[0] node-type-section\\" ><mj-column padding=\\"0px 0px 0px 0px\\" border=\\"none\\" vertical-align=\\"top\\" css-class=\\"email-block node-idx-content.children.[0].children.[0] node-type-column\\" ><mj-text padding=\\"10px 25px 10px 25px\\" align=\\"left\\" css-class=\\"email-block node-idx-content.children.[0].children.[0].children.[0] node-type-text\\" >Make it easy for everyone to compose emails!</mj-text></mj-column></mj-section></mj-body></mjml > "
 `;
