@@ -207,6 +207,7 @@ Object {
       "breakpoint": "480px",
       "font-family": "'Hiragino Kaku Gothic ProN','Hiragino Sans',Meiryo",
       "font-size": "14px",
+      "font-weight": "400",
       "fonts": Array [],
       "headAttributes": "",
       "headStyles": Array [],

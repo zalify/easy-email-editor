@@ -3872,6 +3872,11 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
+liquidjs@^9.40.0:
+  version "9.40.0"
+  resolved "https://registry.yarnpkg.com/liquidjs/-/liquidjs-9.40.0.tgz#f4a672a48674b11ce57ff260503b5fc8a0abeb4f"
+  integrity sha512-SFE+HAGVBpfdhM4h7ZovlC0sd7c6b52IHbztIWNaatDPAIsKdKHXSSphHEHk/7qi6NDOZ5BcK65a2YfCOGJrDg==
+
 loader-utils@^2.0.0:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-2.0.2.tgz#d6e3b4fb81870721ae4e0868ab11dd638368c129"

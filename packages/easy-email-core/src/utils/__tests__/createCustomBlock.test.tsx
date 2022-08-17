@@ -40,7 +40,7 @@ const myFirstBlock = createCustomBlock({
     return merge(defaultData, payload);
   },
   validParentType: [BasicType.PAGE, BasicType.WRAPPER],
-  render(data: IMyFirstBlock) {
+  render({ data }) {
     const { imageUrl, buttonText } = data.data.value;
     const attributes = data.attributes;
 
@@ -63,7 +63,7 @@ const myFirstBlock = createCustomBlock({
 });
 
 describe('Test createCustomBlock', () => {
-  BlockManager.registerBlocks({ myFirstBlock });
+  BlockManager.registerBlocks({ ['MY_FIRST_BLOCK']: myFirstBlock });
 
   const pageBlock = BlockManager.getBlockByType(BasicType.PAGE)!;
 
