@@ -316,7 +316,7 @@ export default function Editor() {
   }, []);
 
   const onExportHtml = (values: IEmailTemplate) => {
-    pushEvent({ name: 'ExportHtml' });
+    pushEvent({ event: 'ExportHtml' });
     const html = mjml(
       JsonToMjml({
         data: values.content,
@@ -361,7 +361,7 @@ export default function Editor() {
       values: IEmailTemplate,
       form: FormApi<IEmailTemplate, Partial<IEmailTemplate>>
     ) => {
-      pushEvent({ name: 'Save' });
+      pushEvent({ event: 'Save' });
       if (id) {
         const isChanged = !(
           isEqual(initialValues?.content, values.content) &&

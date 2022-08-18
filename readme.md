@@ -1,12 +1,14 @@
 # Easy email
 
+<br>
 <p align="center">
-
-  <br/>
-  <a aria-label="Vercel logo" href="https://vercel.com">
-    <img src="https://badgen.net/badge/icon/Made%20by%20Vercel?icon=zeit&label&color=black&labelColor=black">
+  <a aria-label="Easy email logo" href="http://email.maocanhua.cn/">
+    <img src="./logo_with_text.svg" width="300">
   </a>
-  <br/>
+</p>
+<br>
+
+<p align="center">
 
   <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg">
   <a aria-label="NPM version" href="https://www.npmjs.com/package/easy-email-editor">
