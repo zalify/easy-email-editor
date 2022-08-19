@@ -2,7 +2,7 @@
 
 <br>
 <p align="center">
-  <a aria-label="Easy email logo" href="http://email.maocanhua.cn/">
+  <a aria-label="Easy email logo" href="https://email.maocanhua.cn/?utm_source=github">
     <img src="./logo_with_text.svg" width="300">
   </a>
 </p>
@@ -39,14 +39,13 @@ Easy email is developed based on the [MJML](https://mjml.io/) and has very good 
 - Easily customize UI when you need
 - Theme configuration
 
-|                                                       Video Overview                                                       |
-| :------------------------------------------------------------------------------------------------------------------------: |
-| <a href="https://www.bilibili.com/video/BV1YQ4y167bb" target="_blank"><img src="./StandardLayout.png" alt="Overview" ></a> |
-|                              Watch video overview:https://www.bilibili.com/video/BV1YQ4y167bb                              |
+|                  Video Overview                  |
+| :----------------------------------------------: |
+| <img src="./StandardLayout.png" alt="Overview" > |
 
 ## Live Demo
 
-Check out the live demo here: <a href="http://easy-email-m-ryan.vercel.app" target="_blank" alt="http://easy-email-m-ryan.vercel.app">http://easy-email-m-ryan.vercel.app</a>
+Check out the live demo here: <a href="https://email.maocanhua.cn/?utm_source=github" target="_blank" alt="https://email.maocanhua.cn/?utm_source=github">https://email.maocanhua.cn</a>
 
 ## Getting started
 
