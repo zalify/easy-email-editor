@@ -316,7 +316,7 @@ export default function Editor() {
   }, []);
 
   const onExportHtml = (values: IEmailTemplate) => {
-    pushEvent({ event: 'ExportHtml' });
+    pushEvent({ event: 'HtmlExport' });
     const html = mjml(
       JsonToMjml({
         data: values.content,
@@ -343,7 +343,7 @@ export default function Editor() {
     });
 
     copy(html);
-    pushEvent({ event: 'ExportMJML', payload: { values, mergeTags } });
+    pushEvent({ event: 'MJMLExport', payload: { values, mergeTags } });
     Message.success('Copied to pasteboard!');
   };
 
@@ -361,7 +361,7 @@ export default function Editor() {
       values: IEmailTemplate,
       form: FormApi<IEmailTemplate, Partial<IEmailTemplate>>
     ) => {
-      pushEvent({ event: 'Save' });
+      pushEvent({ event: 'EmailSave' });
       if (id) {
         const isChanged = !(
           isEqual(initialValues?.content, values.content) &&

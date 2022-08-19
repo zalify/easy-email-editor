@@ -50,7 +50,7 @@ export function useEmailModal() {
         validationLevel: 'soft',
       }).html;
       pushEvent({
-        event: 'SendTestEmail',
+        event: 'TestEmailSend',
         payload: { email: values.toEmail, json: emailData.content, html },
       });
       dispatch(
