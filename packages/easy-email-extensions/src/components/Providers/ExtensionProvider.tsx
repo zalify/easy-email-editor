@@ -46,7 +46,7 @@ export const ExtensionContext = React.createContext<ExtensionProps>({
   categories: [],
 });
 
-export const ExtensionProvider: React.FC<ExtensionProps> = (props) => {
+export const ExtensionProvider: React.FC<ExtensionProps> = props => {
   const value = omit(props, 'children');
   const valueRef = useRef(value);
 
