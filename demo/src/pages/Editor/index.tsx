@@ -13,11 +13,7 @@ import mjml from 'mjml-browser';
 import { copy } from '@demo/utils/clipboard';
 import { useEmailModal } from './components/useEmailModal';
 import services from '@demo/services';
-import {
-  IconGithub,
-  IconMoonFill,
-  IconSunFill,
-} from '@arco-design/web-react/icon';
+import { IconGithub, IconMoonFill, IconSunFill } from '@arco-design/web-react/icon';
 import { Liquid } from 'liquidjs';
 import {
   EmailEditor,
@@ -39,11 +35,7 @@ import {
   IBlockData,
   JsonToMjml,
 } from 'easy-email-core';
-import {
-  BlockMarketManager,
-  ExtensionProps,
-  StandardLayout,
-} from 'easy-email-extensions';
+import { BlockMarketManager, StandardLayout } from 'easy-email-extensions';
 import { AutoSaveAndRestoreEmail } from '@demo/components/AutoSaveAndRestoreEmail';
 
 // Register external blocks
@@ -93,8 +85,7 @@ const socialIcons = [
   },
   {
     content: 'tiktok',
-    image:
-      'https://assets.maocanhua.cn/df888c4d-aa94-4649-a806-73a758b366cc-tiktok.png',
+    image: 'https://assets.maocanhua.cn/df888c4d-aa94-4649-a806-73a758b366cc-tiktok.png',
   },
   {
     content: 'tumblr',
@@ -145,69 +136,6 @@ const socialIcons = [
   },
 ];
 
-const categories: ExtensionProps['categories'] = [
-  {
-    label: 'Content',
-    active: true,
-    blocks: [
-      {
-        type: AdvancedType.TEXT,
-      },
-      {
-        type: AdvancedType.IMAGE,
-        payload: { attributes: { padding: '0px 0px 0px 0px' } },
-      },
-      {
-        type: AdvancedType.BUTTON,
-      },
-      {
-        type: AdvancedType.SOCIAL,
-      },
-      {
-        type: AdvancedType.DIVIDER,
-      },
-      {
-        type: AdvancedType.SPACER,
-      },
-      {
-        type: AdvancedType.HERO,
-      },
-      {
-        type: AdvancedType.WRAPPER,
-      },
-    ],
-  },
-  {
-    label: 'Layout',
-    active: true,
-    displayType: 'column',
-    blocks: [
-      {
-        title: '2 columns',
-        payload: [
-          ['50%', '50%'],
-          ['33%', '67%'],
-          ['67%', '33%'],
-          ['25%', '75%'],
-          ['75%', '25%'],
-        ],
-      },
-      {
-        title: '3 columns',
-        payload: [
-          ['33.33%', '33.33%', '33.33%'],
-          ['25%', '25%', '50%'],
-          ['50%', '25%', '25%'],
-        ],
-      },
-      {
-        title: '4 columns',
-        payload: [[['25%', '25%', '25%', '25%']]],
-      },
-    ],
-  },
-];
-
 const imageCompression = import('browser-image-compression');
 
 const fontList = [
@@ -227,7 +155,7 @@ const fontList = [
   '华文楷体',
   '宋体',
   '微软雅黑',
-].map((item) => ({ value: item, label: item }));
+].map(item => ({ value: item, label: item }));
 
 export default function Editor() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -235,8 +163,7 @@ export default function Editor() {
   const dispatch = useDispatch();
   const history = useHistory();
   const templateData = useAppSelector('template');
-  const { addCollection, removeCollection, collectionCategory } =
-    useCollection();
+  const { addCollection, removeCollection, collectionCategory } = useCollection();
 
   const { width } = useWindowSize();
 
@@ -269,10 +196,8 @@ export default function Editor() {
   useEffect(() => {
     if (id) {
       if (!userId) {
-        UserStorage.getAccount().then((account) => {
-          dispatch(
-            template.actions.fetchById({ id: +id, userId: account.user_id })
-          );
+        UserStorage.getAccount().then(account => {
+          dispatch(template.actions.fetchById({ id: +id, userId: account.user_id }));
         });
       } else {
         dispatch(template.actions.fetchById({ id: +id, userId: +userId }));
@@ -303,12 +228,12 @@ export default function Editor() {
     return services.common.uploadByQiniu(compressionFile);
   };
 
-  const onChangeTheme = useCallback((t) => {
+  const onChangeTheme = useCallback(t => {
     setTheme(t);
   }, []);
 
   const onChangeMergeTag = useCallback((path: string, val: any) => {
-    setMergeTags((old) => {
+    setMergeTags(old => {
       const newObj = cloneDeep(old);
       set(newObj, path, val);
       return newObj;
@@ -316,7 +241,7 @@ export default function Editor() {
   }, []);
 
   const onExportHtml = (values: IEmailTemplate) => {
-    pushEvent({ event: 'ExportHtml' });
+    pushEvent({ event: 'HtmlExport' });
     const html = mjml(
       JsonToMjml({
         data: values.content,
@@ -327,7 +252,7 @@ export default function Editor() {
       {
         beautify: true,
         validationLevel: 'soft',
-      }
+      },
     ).html;
 
     copy(html);
@@ -343,7 +268,7 @@ export default function Editor() {
     });
 
     copy(html);
-    pushEvent({ event: 'ExportMJML', payload: { values, mergeTags } });
+    pushEvent({ event: 'MJMLExport', payload: { values, mergeTags } });
     Message.success('Copied to pasteboard!');
   };
 
@@ -359,9 +284,9 @@ export default function Editor() {
   const onSubmit = useCallback(
     async (
       values: IEmailTemplate,
-      form: FormApi<IEmailTemplate, Partial<IEmailTemplate>>
+      form: FormApi<IEmailTemplate, Partial<IEmailTemplate>>,
     ) => {
-      pushEvent({ event: 'Save' });
+      pushEvent({ event: 'EmailSave' });
       if (id) {
         const isChanged = !(
           isEqual(initialValues?.content, values.content) &&
@@ -382,7 +307,7 @@ export default function Editor() {
               Message.success('Updated success!');
               form.restart(values);
             },
-          })
+          }),
         );
       } else {
         dispatch(
@@ -393,19 +318,21 @@ export default function Editor() {
               form.restart(newTemplate);
               history.replace(`/editor?id=${id}`);
             },
-          })
+          }),
         );
       }
     },
-    [dispatch, history, id, initialValues]
+    [dispatch, history, id, initialValues],
   );
 
-  const onBeforePreview: EmailEditorProviderProps['onBeforePreview'] =
-    useCallback((html: string, mergeTags) => {
+  const onBeforePreview: EmailEditorProviderProps['onBeforePreview'] = useCallback(
+    (html: string, mergeTags) => {
       const engine = new Liquid();
       const tpl = engine.parse(html);
       return engine.renderSync(tpl, mergeTags);
-    }, []);
+    },
+    [],
+  );
 
   const themeStyleText = useMemo(() => {
     if (theme === 'green') return greenTheme;
@@ -445,7 +372,7 @@ export default function Editor() {
         // enabledMergeTagsBadge
         dashed={false}
         mergeTags={mergeTags}
-        mergeTagGenerate={(tag) => `{{${tag}}}`}
+        mergeTagGenerate={tag => `{{${tag}}}`}
         onBeforePreview={onBeforePreview}
         socialIcons={socialIcons}
       >
@@ -460,29 +387,26 @@ export default function Editor() {
                 extra={
                   <Stack alignment='center'>
                     <Button
-                      onClick={() => setIsDarkMode((v) => !v)}
+                      onClick={() => setIsDarkMode(v => !v)}
                       shape='circle'
                       type='text'
                       icon={isDarkMode ? <IconMoonFill /> : <IconSunFill />}
                     ></Button>
 
-                    <Select onChange={onChangeTheme} value={theme}>
+                    <Select
+                      onChange={onChangeTheme}
+                      value={theme}
+                    >
                       <Select.Option value='blue'>Blue</Select.Option>
                       <Select.Option value='green'>Green</Select.Option>
                       <Select.Option value='purple'>Purple</Select.Option>
                     </Select>
 
-                    <Button onClick={openMergeTagsModal}>
-                      Update mergeTags
-                    </Button>
+                    <Button onClick={openMergeTagsModal}>Update mergeTags</Button>
 
-                    <Button onClick={() => onExportMJML(values)}>
-                      Export MJML
-                    </Button>
+                    <Button onClick={() => onExportMJML(values)}>Export MJML</Button>
 
-                    <Button onClick={() => onExportHtml(values)}>
-                      Export html
-                    </Button>
+                    <Button onClick={() => onExportHtml(values)}>Export html</Button>
 
                     <Button onClick={() => openModal(values, mergeTags)}>
                       Send test email
@@ -515,7 +439,7 @@ export default function Editor() {
                   </Stack>
                 }
               />
-              <StandardLayout compact={!smallScene} categories={categories}>
+              <StandardLayout compact={!smallScene}>
                 <EmailEditor />
               </StandardLayout>
               <AutoSaveAndRestoreEmail />
