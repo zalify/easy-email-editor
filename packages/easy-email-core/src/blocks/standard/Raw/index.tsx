@@ -6,12 +6,12 @@ import { merge } from 'lodash';
 import { getAdapterAttributesString } from '@core/utils';
 import { BasicBlock } from '@core/components/BasicBlock';
 
-export type IRaw = IBlockData<{}, { content: string; }>;
+export type IRaw = IBlockData<{}, { content: string }>;
 
 export const Raw = createBlock<IRaw>({
   name: 'Raw',
   type: BasicType.RAW,
-  create: (payload) => {
+  create: payload => {
     const defaultData: IRaw = {
       type: BasicType.RAW,
       data: {
@@ -33,6 +33,13 @@ export const Raw = createBlock<IRaw>({
     BasicType.HERO,
   ],
   render(params) {
-    return <BasicBlock params={params} tag="mj-raw" />;
+    return (
+      <BasicBlock
+        params={params}
+        tag='mj-raw'
+      >
+        {params.data.data.value.content}
+      </BasicBlock>
+    );
   },
 });
