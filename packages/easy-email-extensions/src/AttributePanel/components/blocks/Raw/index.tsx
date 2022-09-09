@@ -1,17 +1,34 @@
-import React from 'react';
-import { Stack, useFocusIdx } from 'easy-email-editor';
-import { TextField } from '@extensions/components/Form';
+import React, { useState } from 'react';
+import { IconFont, useFocusIdx } from 'easy-email-editor';
+import { TextAreaField } from '@extensions/components/Form';
+import { AttributesPanelWrapper } from '../../attributes';
+import { Button, Tooltip } from '@arco-design/web-react';
+import { HtmlEditor } from '../../UI/HtmlEditor';
 
 export function Raw() {
   const { focusIdx } = useFocusIdx();
-
+  const [visible, setVisible] = useState(false);
   return (
-    <Stack>
-      <TextField
-        label='content'
+    <AttributesPanelWrapper
+      style={{ padding: 20 }}
+      extra={
+        <Tooltip content='Html mode'>
+          <Button
+            onClick={() => setVisible(true)}
+            icon={<IconFont iconName='icon-html' />}
+          />
+        </Tooltip>
+      }
+    >
+      <TextAreaField
+        label=''
         name={`${focusIdx}.data.value.content`}
-        inline
+        rows={5}
       />
-    </Stack>
+      <HtmlEditor
+        visible={visible}
+        setVisible={setVisible}
+      />
+    </AttributesPanelWrapper>
   );
 }
