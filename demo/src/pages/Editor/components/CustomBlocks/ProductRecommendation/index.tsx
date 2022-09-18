@@ -3,6 +3,8 @@ import {
   BasicType,
   components,
   createCustomBlock,
+  getPreviewClassName,
+  AdvancedType,
 } from 'easy-email-core';
 
 import { CustomBlocksType } from '../constants';
@@ -29,8 +31,7 @@ export type IProductRecommendation = IBlockData<
 >;
 
 const productPlaceholder = {
-  image:
-    'https://assets.maocanhua.cn/8e0e07e2-3f84-4426-84c1-2add355c558b-image.png',
+  image: 'https://assets.maocanhua.cn/8e0e07e2-3f84-4426-84c1-2add355c558b-image.png',
   title: 'Red Flock Buckle Winter Boots',
   price: '$59.99 HKD',
   url: 'https://easy-email-m-ryan.vercel.app',
@@ -39,8 +40,8 @@ const productPlaceholder = {
 export const ProductRecommendation = createCustomBlock<IProductRecommendation>({
   name: 'Product recommendation',
   type: CustomBlocksType.PRODUCT_RECOMMENDATION,
-  validParentType: [BasicType.PAGE],
-  create: (payload) => {
+  validParentType: [BasicType.PAGE, AdvancedType.WRAPPER, BasicType.WRAPPER],
+  create: payload => {
     const defaultData: IProductRecommendation = {
       type: CustomBlocksType.PRODUCT_RECOMMENDATION,
       data: {
@@ -86,6 +87,8 @@ export const ProductRecommendation = createCustomBlock<IProductRecommendation>({
 
     return (
       <Wrapper
+        // add class name when testing preview
+        css-class={mode === 'testing' ? getPreviewClassName(idx, data.type) : ''}
         padding='20px 0px 20px 0px'
         border='none'
         direction='ltr'
@@ -93,7 +96,11 @@ export const ProductRecommendation = createCustomBlock<IProductRecommendation>({
         background-color={attributes['background-color']}
       >
         <Section padding='0px'>
-          <Column padding='0px' border='none' vertical-align='top'>
+          <Column
+            padding='0px'
+            border='none'
+            vertical-align='top'
+          >
             <Text
               font-size='20px'
               padding='10px 25px 10px 25px'
@@ -101,7 +108,10 @@ export const ProductRecommendation = createCustomBlock<IProductRecommendation>({
               align='center'
               font-weight='bold'
               color={attributes['title-color']}
-              css-class={getContentEditableClassName(BasicType.TEXT, `${idx}.data.value.title`).join(' ')}
+              css-class={getContentEditableClassName(
+                BasicType.TEXT,
+                `${idx}.data.value.title`,
+              ).join(' ')}
             >
               {title}
             </Text>
@@ -109,7 +119,10 @@ export const ProductRecommendation = createCustomBlock<IProductRecommendation>({
         </Section>
 
         <Section padding='0px'>
-          <Group vertical-align='top' direction='ltr'>
+          <Group
+            vertical-align='top'
+            direction='ltr'
+          >
             {productList.map((item, index) => (
               <Column
                 key={index}

@@ -16,6 +16,7 @@ import services from '@demo/services';
 import { IconGithub, IconMoonFill, IconSunFill } from '@arco-design/web-react/icon';
 import { Liquid } from 'liquidjs';
 import {
+  BlockAvatarWrapper,
   EmailEditor,
   EmailEditorProvider,
   EmailEditorProviderProps,
@@ -35,7 +36,11 @@ import {
   IBlockData,
   JsonToMjml,
 } from 'easy-email-core';
-import { BlockMarketManager, StandardLayout } from 'easy-email-extensions';
+import {
+  BlockMarketManager,
+  ExtensionProps,
+  StandardLayout,
+} from 'easy-email-extensions';
 import { AutoSaveAndRestoreEmail } from '@demo/components/AutoSaveAndRestoreEmail';
 
 // Register external blocks
@@ -51,6 +56,108 @@ import { testMergeTags } from './testMergeTags';
 import { useMergeTagsModal } from './components/useMergeTagsModal';
 
 import { useWindowSize } from 'react-use';
+import { CustomBlocksType } from './components/CustomBlocks/constants';
+
+const defaultCategories: ExtensionProps['categories'] = [
+  {
+    label: 'Content',
+    active: true,
+    blocks: [
+      {
+        type: AdvancedType.TEXT,
+      },
+      {
+        type: AdvancedType.IMAGE,
+        payload: { attributes: { padding: '0px 0px 0px 0px' } },
+      },
+      {
+        type: AdvancedType.BUTTON,
+      },
+      {
+        type: AdvancedType.SOCIAL,
+      },
+      {
+        type: AdvancedType.DIVIDER,
+      },
+      {
+        type: AdvancedType.SPACER,
+      },
+      {
+        type: AdvancedType.HERO,
+      },
+      {
+        type: AdvancedType.WRAPPER,
+      },
+    ],
+  },
+  {
+    label: 'Layout',
+    active: true,
+    displayType: 'column',
+    blocks: [
+      {
+        title: '2 columns',
+        payload: [
+          ['50%', '50%'],
+          ['33%', '67%'],
+          ['67%', '33%'],
+          ['25%', '75%'],
+          ['75%', '25%'],
+        ],
+      },
+      {
+        title: '3 columns',
+        payload: [
+          ['33.33%', '33.33%', '33.33%'],
+          ['25%', '25%', '50%'],
+          ['50%', '25%', '25%'],
+        ],
+      },
+      {
+        title: '4 columns',
+        payload: [[['25%', '25%', '25%', '25%']]],
+      },
+    ],
+  },
+  {
+    label: 'Custom',
+    active: true,
+    displayType: 'custom',
+    blocks: [
+      <BlockAvatarWrapper type={CustomBlocksType.PRODUCT_RECOMMENDATION}>
+        <div
+          style={{
+            position: 'relative',
+            border: '1px solid #ccc',
+            marginBottom: 20,
+            width: '80%',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+          }}
+        >
+          <img
+            src={
+              'https://assets.maocanhua.cn/c160738b-db01-4081-89e5-e35bd3a34470-image.png'
+            }
+            style={{
+              maxWidth: '100%',
+            }}
+          />
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              zIndex: 2,
+            }}
+          />
+        </div>
+      </BlockAvatarWrapper>,
+    ],
+  },
+];
 
 const socialIcons = [
   {
@@ -439,7 +546,10 @@ export default function Editor() {
                   </Stack>
                 }
               />
-              <StandardLayout compact={!smallScene}>
+              <StandardLayout
+                compact={!smallScene}
+                categories={defaultCategories}
+              >
                 <EmailEditor />
               </StandardLayout>
               <AutoSaveAndRestoreEmail />
