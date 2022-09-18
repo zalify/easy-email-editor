@@ -3,7 +3,7 @@ import createSliceState from './common/createSliceState';
 import { Message } from '@arco-design/web-react';
 import { history } from '@demo/utils/history';
 import { emailToImage } from '@demo/utils/emailToImage';
-import { IBlockData, BlockManager, BasicType } from 'easy-email-core';
+import { IBlockData, BlockManager, BasicType, AdvancedType } from 'easy-email-core';
 import { IEmailTemplate } from 'easy-email-editor';
 import { getTemplate } from '@demo/config/getTemplate';
 
@@ -34,7 +34,7 @@ export default createSliceState({
       }: {
         id: number;
         userId: number;
-      }
+      },
     ) => {
       try {
         let data = await getTemplate(id);
@@ -47,11 +47,13 @@ export default createSliceState({
         throw error;
       }
     },
-    fetchDefaultTemplate: async (state) => {
+    fetchDefaultTemplate: async state => {
       return {
         subject: 'Welcome to Easy-email',
         subTitle: 'Nice to meet you!',
-        content: BlockManager.getBlockByType(BasicType.PAGE).create({}),
+        content: BlockManager.getBlockByType(BasicType.PAGE).create({
+          children: [BlockManager.getBlockByType(AdvancedType.WRAPPER).create()],
+        }),
       } as IEmailTemplate;
     },
     create: async (
@@ -59,7 +61,7 @@ export default createSliceState({
       payload: {
         template: IEmailTemplate;
         success: (id: number, data: IEmailTemplate) => void;
-      }
+      },
     ) => {
       const picture = await emailToImage(payload.template.content);
       const data = await article.addArticle({
@@ -79,11 +81,11 @@ export default createSliceState({
           user_id: number;
         };
         success: (id: number) => void;
-      }
+      },
     ) => {
       const source = await article.getArticle(
         payload.article.article_id,
-        payload.article.user_id
+        payload.article.user_id,
       );
       const data = await article.addArticle({
         title: source.title,
@@ -99,7 +101,7 @@ export default createSliceState({
         id: number;
         template: IEmailTemplate;
         success: (templateId: number) => void;
-      }
+      },
     ) => {
       try {
         let isDefaultTemplate = await getTemplate(payload.id);
@@ -124,7 +126,7 @@ export default createSliceState({
         }
       }
     },
-    removeById: async (state, payload: { id: number; success: () => void; }) => {
+    removeById: async (state, payload: { id: number; success: () => void }) => {
       try {
         await article.deleteArticle(payload.id);
         payload.success();
