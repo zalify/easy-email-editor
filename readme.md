@@ -3,7 +3,7 @@
 <br>
 <p align="center">
   <a aria-label="Easy email logo" href="https://email.maocanhua.cn/?utm_source=github">
-    <img src="./logo_with_text.svg" width="300">
+    <img src="./logo_text.svg" width="300">
   </a>
 </p>
 <br>
