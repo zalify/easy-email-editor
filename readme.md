@@ -26,6 +26,13 @@
   <img alt="" src="https://badgen.net/npm/license/easy-email-editor">
 </p>
 
+## Join Discord Community
+
+<a aria-label="Join Easy Email Discord Community" href="https://discord.gg/bqrAE2zCjn">
+  <img src="./join_discord.png" width="240">
+</a>
+
+
 ## Introduction
 
 Easy email is developed based on the [MJML](https://mjml.io/) and has very good compatibility. At the same time, it can generate code through drag-and-drop editing.
