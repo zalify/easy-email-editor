@@ -26,7 +26,7 @@
   <img alt="" src="https://badgen.net/npm/license/easy-email-editor">
 </p>
 
-## Join Discord Community
+## Join Our Community
 
 <a aria-label="Join Easy Email Discord Community" href="https://discord.gg/bqrAE2zCjn">
   <img src="./join_discord.png" width="240">
