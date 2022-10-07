@@ -1,3 +1,4 @@
+import React from 'react';
 import { IPage } from '@core/blocks';
 import { ReactElement } from 'react';
 export * from './CoreTranslationsMap';
