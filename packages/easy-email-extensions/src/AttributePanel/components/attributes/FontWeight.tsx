@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { useFocusIdx } from 'easy-email-editor';
 import { SelectField, TextField } from '../../../components/Form';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 const options = [
   {
@@ -51,14 +52,15 @@ const options = [
 
 export function FontWeight({ name }: { name?: string; }) {
   const { focusIdx } = useFocusIdx();
+  const { t } = useTranslation();
 
   return useMemo(() => {
     return (
       <SelectField
-        label='Font weight'
+        label={t('attributes.fontWeight')}
         name={name || `${focusIdx}.attributes.font-weight`}
         options={options}
       />
     );
-  }, [focusIdx, name]);
+  }, [focusIdx, name, t]);
 }

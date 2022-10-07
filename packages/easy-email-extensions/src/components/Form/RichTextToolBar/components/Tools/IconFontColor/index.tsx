@@ -1,10 +1,11 @@
-
 import { ColorPicker } from '@extensions/components/Form/ColorPicker';
 import { IconFont } from 'easy-email-editor';
 import React, { useMemo } from 'react';
 import { ToolItem } from '../../ToolItem';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export function IconFontColor({ selectionRange, execCommand, getPopoverMountNode }: { selectionRange: Range | null; execCommand: (cmd: string, val?: any) => void; getPopoverMountNode: () => HTMLElement; }) {
+  const { t } = useTranslation();
 
   const color = useMemo(() => {
     if (!selectionRange) return undefined;
@@ -36,7 +37,7 @@ export function IconFontColor({ selectionRange, execCommand, getPopoverMountNode
             <div style={{ borderBottom: `2px solid ${color}`, position: 'absolute', width: '130%', left: '-15%', top: 16 }} />
           </div>
         )}
-        title='Text color'
+        title={t('iconFontColor.textColor')}
       />
     </ColorPicker>
 

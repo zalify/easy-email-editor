@@ -14,14 +14,16 @@ import { TextAlign } from '../../attributes/TextAlign';
 import { Width } from '../../attributes/Width';
 import { HtmlEditor } from '../../UI/HtmlEditor';
 import { CollapseWrapper } from '../../attributes/CollapseWrapper';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export function Table() {
   const [visible, setVisible] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <AttributesPanelWrapper
       extra={(
-        <Tooltip content='Edit'>
+        <Tooltip content={t('table.edit')}>
           <Button
             onClick={() => setVisible(true)}
             icon={<IconFont iconName='icon-html' />}
@@ -30,7 +32,7 @@ export function Table() {
       )}
     >
       <CollapseWrapper defaultActiveKey={['-1', '0', '1', '2', '3']}>
-        <Collapse.Item name='1' header='Dimension'>
+        <Collapse.Item name='1' header={t('table.dimension')}>
           <Stack>
             <Width />
             <Stack.Item />
@@ -40,13 +42,13 @@ export function Table() {
           </Stack>
         </Collapse.Item>
 
-        <Collapse.Item name='2' header='Decoration'>
+        <Collapse.Item name='2' header={t('table.decoration')}>
           <Color />
           <ContainerBackgroundColor />
           <Border />
         </Collapse.Item>
 
-        <Collapse.Item name='2' header='Typography'>
+        <Collapse.Item name='2' header={t('table.typography')}>
           <Stack>
             <FontFamily />
             <FontSize />

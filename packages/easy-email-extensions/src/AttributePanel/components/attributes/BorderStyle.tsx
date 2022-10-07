@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { useFocusIdx } from 'easy-email-editor';
 import { SelectField } from '../../../components/Form';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export const borderStyleOptions = [
   {
@@ -39,14 +40,15 @@ export const borderStyleOptions = [
 
 export function BorderStyle() {
   const { focusIdx } = useFocusIdx();
+  const { t } = useTranslation();
 
   return useMemo(() => {
     return (
       <SelectField
-        label='Style'
+        label={t('attributes.style')}
         name={`${focusIdx}.attributes.border-style`}
         options={borderStyleOptions}
       />
     );
-  }, [focusIdx]);
+  }, [focusIdx, t]);
 }

@@ -7,12 +7,14 @@ import { FullHeightOverlayScrollbars } from '@extensions/components/FullHeightOv
 import styles from './index.module.scss';
 import { ConfigurationDrawer } from './ConfigurationDrawer';
 import { useExtensionProps } from '@extensions/components/Providers/ExtensionProvider';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 const TabPane = Tabs.TabPane;
 
 export function EditPanel() {
   const { height } = useEditorProps();
   const { compact = true } = useExtensionProps();
+  const { t } = useTranslation();
 
   return (
     <Layout.Sider
@@ -34,13 +36,13 @@ export function EditPanel() {
           </div>
         )}
       >
-        <TabPane key='2' title='Block'>
+        <TabPane key='2' title={t('editPanel.block')}>
           <FullHeightOverlayScrollbars height={`calc(${height} - 60px)`}>
             <Blocks />
           </FullHeightOverlayScrollbars>
         </TabPane>
 
-        <TabPane key='1' title='Layer'>
+        <TabPane key='1' title={t('editPanel.layer')}>
           <FullHeightOverlayScrollbars height={`calc(${height} - 60px)`}>
             <div style={{ padding: 20 }}>
               <BlockLayer />

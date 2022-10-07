@@ -4,6 +4,7 @@ import { IconFont } from 'easy-email-editor';
 import { ToolItem } from '../ToolItem';
 import { EMAIL_BLOCK_CLASS_NAME } from 'easy-email-core';
 import { useSelectionRange } from '@extensions/AttributePanel/hooks/useSelectionRange';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export interface LinkProps extends PopoverProps {
   currentRange: Range | null | undefined;
@@ -22,6 +23,7 @@ function getItalicNode(
 export function Italic(props: LinkProps) {
   const { onChange } = props;
   const { setRangeByElement } = useSelectionRange();
+  const { t } = useTranslation();
   const node = useMemo(() => {
     return getItalicNode(props.currentRange?.commonAncestorContainer);
 
@@ -40,7 +42,7 @@ export function Italic(props: LinkProps) {
       position='tl'
       content="Italic"
     >
-      <ToolItem title='Italic' isActive={Boolean(node)} icon={<IconFont iconName='icon-italic' />} onClick={onClick} />
+      <ToolItem title={t('richTextToolBar.italic')} isActive={Boolean(node)} icon={<IconFont iconName='icon-italic' />} onClick={onClick} />
     </Tooltip>
   );
 }

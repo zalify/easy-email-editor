@@ -4,6 +4,7 @@ import { MergeTags as MergeTagsOptions } from '@extensions/AttributePanel';
 import { Popover } from '@arco-design/web-react';
 import { ToolItem } from '../ToolItem';
 import { IconFont } from 'easy-email-editor';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export interface MergeTagsProps {
   execCommand: (cmd: string, value: any) => void;
@@ -13,6 +14,7 @@ export interface MergeTagsProps {
 export function MergeTags(props: MergeTagsProps) {
   const { execCommand } = props;
   const [visible, setVisible] = React.useState(false);
+  const { t } = useTranslation();
 
   const onChange = useCallback((val: string) => {
     execCommand('insertHTML', val);
@@ -42,7 +44,7 @@ export function MergeTags(props: MergeTagsProps) {
       getPopupContainer={props.getPopupContainer}
     >
       <ToolItem
-        title='Merge tag'
+        title={t('richTextToolBar.mergeTags')}
         icon={<IconFont iconName='icon-merge-tags' />}
       />
     </Popover>

@@ -22,12 +22,14 @@ import { Italic } from '../Italic';
 import { Bold } from '../Bold';
 import { FontSize } from '../FontSize';
 import { RICH_TEXT_TOOL_BAR } from '@extensions/constants';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export interface ToolsProps {
   onChange: (content: string) => any;
 }
 
 export function Tools(props: ToolsProps) {
+  const { t } = useTranslation();
   const { mergeTags, enabledMergeTagsBadge } = useEditorProps();
   const { focusBlockNode } = useFocusBlockLayout();
   const { selectionRange, restoreRange, setRangeByElement } =
@@ -190,41 +192,41 @@ export function Tools(props: ToolsProps) {
         <ToolItem
           onClick={() => execCommand('justifyLeft')}
           icon={<IconFont iconName='icon-align-left' />}
-          title='Align left'
+          title={t('richTextToolBar.alignLeft')}
         />
         <ToolItem
           onClick={() => execCommand('justifyCenter')}
           icon={<IconFont iconName='icon-align-center' />}
-          title='Align center'
+          title={t('richTextToolBar.alignCenter')}
         />
         <ToolItem
           onClick={() => execCommand('justifyRight')}
           icon={<IconFont iconName='icon-align-right' />}
-          title='Align right'
+          title={t('richTextToolBar.alignRight')}
         />
         <div className='easy-email-extensions-divider' />
         <ToolItem
           onClick={() => execCommand('insertOrderedList')}
           icon={<IconFont iconName='icon-list-ol' />}
-          title='Orderlist'
+          title={t('richTextToolBar.orderList')}
         />
         <ToolItem
           onClick={() => execCommand('insertUnorderedList')}
           icon={<IconFont iconName='icon-list-ul' />}
-          title='Unorderlist'
+          title={t('richTextToolBar.unorderList')}
         />
         <div className='easy-email-extensions-divider' />
 
         <ToolItem
           onClick={() => execCommand('insertHorizontalRule')}
           icon={<IconFont iconName='icon-line' />}
-          title='Line'
+          title={t('richTextToolBar.line')}
         />
         <div className='easy-email-extensions-divider' />
         <ToolItem
           onClick={() => execCommand('removeFormat')}
           icon={<IconFont iconName='icon-close' />}
-          title='Remove format'
+          title={t('richTextToolBar.removeFormat')}
         />
         <div className='easy-email-extensions-divider' />
       </div>

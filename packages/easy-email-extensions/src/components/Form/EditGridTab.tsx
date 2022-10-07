@@ -4,6 +4,7 @@ import { classnames } from '@extensions/utils/classnames';
 import { cloneDeep } from 'lodash';
 import React, { useState } from 'react';
 import styles from './index.module.scss';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export interface EditGridTabProps<T extends any = any>
   extends Omit<TabsProps, 'onChange'> {
@@ -15,6 +16,7 @@ export interface EditGridTabProps<T extends any = any>
 }
 export function EditGridTab<T extends any = any>(props: EditGridTabProps<T>) {
   const { value, additionItem } = props;
+  const { t } = useTranslation();
 
   const onAdd = (index: number) => {
     let newItem = additionItem || cloneDeep(value[index]);
@@ -34,7 +36,7 @@ export function EditGridTab<T extends any = any>(props: EditGridTabProps<T>) {
           <Card title={(
             <Space>
               <Typography.Text>
-                Item {index + 1}
+                {t('editGridTab.item')} {index + 1}
               </Typography.Text>
 
             </Space>

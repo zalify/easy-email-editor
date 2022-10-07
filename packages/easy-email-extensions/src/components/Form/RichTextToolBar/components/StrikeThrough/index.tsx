@@ -4,6 +4,7 @@ import { IconFont } from 'easy-email-editor';
 import { ToolItem } from '../ToolItem';
 import { EMAIL_BLOCK_CLASS_NAME } from 'easy-email-core';
 import { useSelectionRange } from '@extensions/AttributePanel/hooks/useSelectionRange';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export interface LinkProps extends PopoverProps {
   currentRange: Range | null | undefined;
@@ -22,9 +23,9 @@ function getStrikeThroughNode(
 export function StrikeThrough(props: LinkProps) {
   const { onChange } = props;
   const { setRangeByElement } = useSelectionRange();
+  const { t } = useTranslation();
   const node = useMemo(() => {
     return getStrikeThroughNode(props.currentRange?.commonAncestorContainer);
-
   }, [props.currentRange]);
 
   const onClick = useCallback(() => {
@@ -40,7 +41,11 @@ export function StrikeThrough(props: LinkProps) {
       position='tl'
       content="Strikethrough"
     >
-      <ToolItem title='Strikethrough' isActive={Boolean(node)} icon={<IconFont iconName='icon-strikethrough' />} onClick={onClick} />
+      <ToolItem title={t('richTextToolBar.strikethrough')}
+                isActive={Boolean(node)}
+                icon={<IconFont iconName='icon-strikethrough' />}
+                onClick={onClick}
+      />
     </Tooltip>
   );
 }

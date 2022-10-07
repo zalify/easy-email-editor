@@ -16,10 +16,12 @@ import {
 } from 'easy-email-editor';
 import { cloneDeep } from 'lodash';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export function SourceCodePanel() {
   const { setValueByIdx, focusBlock, values } = useBlock();
   const { focusIdx } = useFocusIdx();
+  const { t } = useTranslation();
 
   const [mjmlText, setMjmlText] = useState('');
   const { pageData } = useEditorContext();
@@ -103,7 +105,7 @@ export function SourceCodePanel() {
     <Collapse>
       <Collapse.Item
         name='json'
-        header='Json source'
+        header={t('jsonSource')}
         contentStyle={{ padding: '8px 13px' }}
       >
         <Input.TextArea
@@ -115,7 +117,7 @@ export function SourceCodePanel() {
       </Collapse.Item>
       <Collapse.Item
         name='mjml'
-        header='MJML source'
+        header={t('mjmlSource')}
         contentStyle={{ padding: '8px 13px' }}
       >
         <Input.TextArea

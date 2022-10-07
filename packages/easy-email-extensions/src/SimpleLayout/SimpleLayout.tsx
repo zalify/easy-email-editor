@@ -16,6 +16,7 @@ import styles from './index.module.scss';
 import enUS from '@arco-design/web-react/es/locale/en-US';
 import { MergeTagBadgePrompt } from '@extensions/MergeTagBadgePrompt';
 import { IconLeft, IconRight } from '@arco-design/web-react/icon';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export const SimpleLayout: React.FC<
   {
@@ -24,8 +25,10 @@ export const SimpleLayout: React.FC<
   } & BlockLayerProps
 > = (props) => {
   const { height: containerHeight } = useEditorProps();
+  const { t } = useTranslation();
   const { showSourceCode = true, defaultShowLayer = true } = props;
   const [collapsed, setCollapsed] = useState(!defaultShowLayer);
+
   return (
     <ConfigProvider locale={enUS}>
       <Layout
@@ -106,11 +109,11 @@ export const SimpleLayout: React.FC<
           >
             <Tabs className={styles.layoutTabs}>
               <Tabs.TabPane
-                title={
+                title={(
                   <div style={{ height: 31, lineHeight: '31px' }}>
-                    Configuration
+                    {t('simpleLayout.configuration')}
                   </div>
-                }
+                )}
               >
                 <AttributePanel />
               </Tabs.TabPane>
@@ -118,11 +121,11 @@ export const SimpleLayout: React.FC<
                 <Tabs.TabPane
                   destroyOnHide
                   key='Source code'
-                  title={
+                  title={(
                     <div style={{ height: 31, lineHeight: '31px' }}>
-                      Source code
+                      {t('simpleLayout.sourceCode')}
                     </div>
-                  }
+                  )}
                 >
                   <SourceCodePanel />
                 </Tabs.TabPane>

@@ -6,11 +6,14 @@ import { Button } from '@arco-design/web-react';
 import { Stack, TextStyle, useBlock, useFocusIdx } from 'easy-email-editor';
 import { Help } from '@extensions/AttributePanel/components/UI/Help';
 import { IPage } from 'easy-email-core';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export function AddFont() {
   const { focusBlock } = useBlock();
   const { focusIdx } = useFocusIdx();
   const value: IPage['data']['value'] = focusBlock?.data.value;
+  const { t } = useTranslation();
+
   return (
     <FieldArray
       name={`${focusIdx}.data.value.fonts`}
@@ -20,7 +23,7 @@ export function AddFont() {
             <Stack vertical spacing='tight'>
               <Stack distribution='equalSpacing'>
                 <TextStyle variation='strong'>
-                  Import font <Help title='Points to a hosted css file' />
+                  {t('addFont.importFont')} <Help title={t('addFont.importFontHelper')} />
                 </TextStyle>
                 <Stack>
                   <Button
@@ -41,13 +44,13 @@ export function AddFont() {
                         <Stack.Item fill>
                           <TextField
                             name={`${focusIdx}.data.value.fonts.${index}.name`}
-                            label='Name'
+                            label={t('addFont.name')}
                           />
                         </Stack.Item>
                         <Stack.Item fill>
                           <TextField
                             name={`${focusIdx}.data.value.fonts.${index}.href`}
-                            label='Href'
+                            label={t('addFont.href')}
                           />
                         </Stack.Item>
                         <Stack vertical spacing='loose'>

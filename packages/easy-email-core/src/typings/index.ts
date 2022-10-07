@@ -1,5 +1,6 @@
 import { IPage } from '@core/blocks';
 import { ReactElement } from 'react';
+export * from './CoreTranslationsMap';
 
 export interface IBlock<T extends IBlockData = IBlockData> {
   name: string;

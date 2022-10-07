@@ -10,6 +10,7 @@ import {
 } from 'easy-email-editor';
 import { awaitForElement } from '@extensions/utils/awaitForElement';
 import { useLazyState } from 'easy-email-editor';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export function HoverTooltip() {
   const { hoverIdx, direction, isDragging } = useHoverIdx();
@@ -101,16 +102,18 @@ interface TipNodeProps {
 
 function TipNode(props: TipNodeProps) {
   const { direction, title, lineWidth, type } = props;
+  const { t } = useTranslation();
+  
   const dragTitle = useMemo(() => {
     if (direction === 'top' || direction === 'noEnoughTop') {
-      return `Insert before ${title}`;
+      return t('interactivePrompt.insertBefore', { title });
     } else if (direction === 'bottom') {
-      return `Insert after ${title}`;
+      return t('interactivePrompt.insertAfter', { title });
     } else if (direction === 'right' || direction === 'left') {
-      return 'Drag here';
+      return t('interactivePrompt.dragHere');
     }
-    return `Drag to ${title}`;
-  }, [direction, title]);
+    return t('interactivePrompt.dragTo', { title });
+  }, [direction, title, t]);
 
   const color = useMemo(() => {
     if (type === 'drag') {

@@ -3,12 +3,14 @@ import { Tree, TreeSelect } from '@arco-design/web-react';
 import { get, isObject } from 'lodash';
 import { useBlock, useEditorProps, useFocusIdx } from 'easy-email-editor';
 import { getContextMergeTags } from '@extensions/utils/getContextMergeTags';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export const MergeTags: React.FC<{
   onChange: (v: string) => void;
   value: string;
   isSelect?: boolean;
 }> = React.memo((props) => {
+  const { t } = useTranslation();
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const { focusIdx } = useFocusIdx();
   const {
@@ -101,7 +103,7 @@ export const MergeTags: React.FC<{
           value={props.value}
           size='small'
           dropdownMenuStyle={{ maxHeight: 400, overflow: 'auto' }}
-          placeholder='Please select'
+          placeholder={t('attributes.pleaseSelect')}
           treeData={treeOptions}
           onChange={(val) => onSelect(val)}
         />

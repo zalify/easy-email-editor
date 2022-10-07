@@ -20,13 +20,16 @@ import { LetterSpacing } from '../../attributes/LetterSpacing';
 import { AttributesPanelWrapper } from '../../attributes/AttributesPanelWrapper';
 import { Stack, useFocusIdx } from 'easy-email-editor';
 import { Collapse, Grid, Space } from '@arco-design/web-react';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export function AccordionElement() {
   const { focusIdx } = useFocusIdx();
+  const { t } = useTranslation();
+
   return (
     <AttributesPanelWrapper>
       <Collapse defaultActiveKey={['0', '1', '2']}>
-        <Collapse.Item name='0' header='Setting'>
+        <Collapse.Item name='0' header={t('accordion.setting')}>
           <Space direction='vertical'>
             <Border />
             <BackgroundColor />

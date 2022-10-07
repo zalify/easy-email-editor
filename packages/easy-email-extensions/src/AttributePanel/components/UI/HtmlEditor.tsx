@@ -9,6 +9,7 @@ import {
   useFocusIdx,
 } from 'easy-email-editor';
 import { ShadowDom } from '@extensions/components/ShadowDom';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 const CodeMirrorEditorPromise = import(
   '../../../components/Form/CodemirrorEditor'
@@ -21,6 +22,7 @@ export const HtmlEditor: React.FC<{
 }> = (props) => {
   const { visible, setVisible } = props;
 
+  const { t } = useTranslation();
   const { focusBlock, setValueByIdx } = useBlock();
   const { pageData } = useEditorContext();
   const { focusIdx } = useFocusIdx();
@@ -66,11 +68,11 @@ export const HtmlEditor: React.FC<{
       title={(
         <Stack distribution='equalSpacing'>
           <TextStyle variation='strong' size='large'>
-            Html
+            {t('htmlEditor.html')}
           </TextStyle>
           <Stack>
             <Button type='primary' onClick={onSave}>
-              Save
+              {t('htmlEditor.save')}
             </Button>
           </Stack>
         </Stack>
@@ -98,7 +100,7 @@ export const HtmlEditor: React.FC<{
                   color: '#fff',
                 }}
               >
-                Editor Loading...
+                {t('htmlEditor.editingLoading')}
               </div>
             )}
           >

@@ -6,9 +6,12 @@ import React, { useCallback } from 'react';
 import { cloneDeep, get, upperFirst } from 'lodash';
 import { IconDelete, IconPlus } from '@arco-design/web-react/icon';
 import { useField } from 'react-final-form';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export function Condition() {
   const { focusIdx } = useFocusIdx();
+  const { t } = useTranslation();
+
   const { focusBlock, change, values } = useBlock();
   const condition = focusBlock?.data.value?.condition as
     | undefined
@@ -110,7 +113,7 @@ export function Condition() {
       className='condition'
       destroyOnHide
       name='Condition'
-      header='Condition'
+      header={t('attributes.condition')}
       extra={(
         <div style={{ marginRight: 10 }}>
           <Switch checked={condition?.enabled} onChange={onConditionToggle} />
@@ -127,14 +130,14 @@ export function Condition() {
                 <Grid.Col span={16}>
                   {condition.groups.length > 1 && (
                     <SelectField inline name={`${focusIdx}.data.value.condition.symbol`}
-                      label="Symbol"
+                      label={t('attributes.symbol')}
                       options={[
                         {
-                          label: 'And',
+                          label: t('attributes.and'),
                           value: OperatorSymbol.AND
                         },
                         {
-                          label: 'Or',
+                          label: t('attributes.or'),
                           value: OperatorSymbol.OR
                         },
                       ]}
@@ -155,14 +158,14 @@ export function Condition() {
                           {
                             group.groups.length > 1 && (
                               <SelectField inline name={`${focusIdx}.data.value.condition.symbol`}
-                                label="Symbol"
+                                label={t('attributes.symbol')}
                                 options={[
                                   {
-                                    label: 'And',
+                                    label: t('attributes.and'),
                                     value: OperatorSymbol.AND
                                   },
                                   {
-                                    label: 'Or',
+                                    label: t('attributes.or'),
                                     value: OperatorSymbol.OR
                                   },
                                 ]}
@@ -200,7 +203,7 @@ export function Condition() {
 const options = Object.values(Operator).map(item => ({ label: upperFirst(item), value: item }));
 
 function ConditionItem({ path, onDelete, gIndex, ggIndex }: { path: string; gIndex: number; ggIndex: number; onDelete: (path: string, gIndex: number, ggIndex: number,) => void; }) {
-
+  const { t } = useTranslation();
   const name = `${path}.${gIndex}.groups.${ggIndex}`;
   const { input: { value } } = useField(name);
 
@@ -208,9 +211,9 @@ function ConditionItem({ path, onDelete, gIndex, ggIndex }: { path: string; gInd
 
   return (
     <Grid.Row align='end'>
-      <Grid.Col span={7}> <TextField label="Variable path" name={`${name}.left`} /></Grid.Col>
-      <Grid.Col span={7}> <SelectField label="Operator" name={`${name}.operator`} options={options} /></Grid.Col>
-      <Grid.Col span={7}> {!hideRight && <TextField label="Right" name={`${name}.right`} />}</Grid.Col>
+      <Grid.Col span={7}> <TextField label={t('attributes.variablePath')} name={`${name}.left`} /></Grid.Col>
+      <Grid.Col span={7}> <SelectField label={t('attributes.operator')} name={`${name}.operator`} options={options} /></Grid.Col>
+      <Grid.Col span={7}> {!hideRight && <TextField label={t('attributes.right')} name={`${name}.right`} />}</Grid.Col>
       <Grid.Col span={3}>
         <Button onClick={() => onDelete(path, gIndex, ggIndex)} icon={<IconDelete />} />
       </Grid.Col>

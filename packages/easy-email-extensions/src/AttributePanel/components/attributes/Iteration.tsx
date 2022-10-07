@@ -3,10 +3,13 @@ import { Collapse, Grid, Switch } from '@arco-design/web-react';
 import { AdvancedBlock, AdvancedType } from 'easy-email-core';
 import { TextField } from '@extensions/components/Form';
 import React, { useCallback } from 'react';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export function Iteration() {
   const { focusIdx } = useFocusIdx();
   const { focusBlock, change } = useBlock();
+  const { t } = useTranslation();
+
   const iteration = focusBlock?.data.value?.iteration as
     | undefined
     | AdvancedBlock['data']['value']['iteration'];
@@ -56,13 +59,13 @@ export function Iteration() {
             <Grid.Row>
               <Grid.Col span={11}>
                 <TextField
-                  label='Data source'
+                  label={t('attributes.dataSource')}
                   name={`${focusIdx}.data.value.iteration.dataSource`}
                 />
               </Grid.Col>
               <Grid.Col offset={1} span={11}>
                 <TextField
-                  label='Item name'
+                  label={t('attributes.itemName')}
                   name={`${focusIdx}.data.value.iteration.itemName`}
                 />
               </Grid.Col>
@@ -70,7 +73,7 @@ export function Iteration() {
             <Grid.Row>
               <Grid.Col span={11}>
                 <TextField
-                  label='Limit'
+                  label={t('attributes.limit')}
                   name={`${focusIdx}.data.value.iteration.limit`}
                   quickchange
                   type='number'
@@ -79,7 +82,7 @@ export function Iteration() {
               </Grid.Col>
               <Grid.Col offset={1} span={11}>
                 <TextField
-                  label='Mock quantity'
+                  label={t('attributes.mockQuantity')}
                   max={iteration?.limit}
                   name={`${focusIdx}.data.value.iteration.mockQuantity`}
                   type='number'

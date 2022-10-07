@@ -1,6 +1,6 @@
 import { Card, ConfigProvider, Layout, Message, Tabs } from '@arco-design/web-react';
 import { useEditorProps, useFocusIdx } from 'easy-email-editor';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { InteractivePrompt } from '../InteractivePrompt';
 import styles from './index.module.scss';
 import enUS from '@arco-design/web-react/es/locale/en-US';
@@ -12,74 +12,81 @@ import {
   ExtensionProvider,
 } from '@extensions/components/Providers/ExtensionProvider';
 import { AdvancedType } from 'easy-email-core';
-
-const defaultCategories: ExtensionProps['categories'] = [
-  {
-    label: 'Content',
-    active: true,
-    blocks: [
-      {
-        type: AdvancedType.TEXT,
-      },
-      {
-        type: AdvancedType.IMAGE,
-        payload: { attributes: { padding: '0px 0px 0px 0px' } },
-      },
-      {
-        type: AdvancedType.BUTTON,
-      },
-      {
-        type: AdvancedType.SOCIAL,
-      },
-      {
-        type: AdvancedType.DIVIDER,
-      },
-      {
-        type: AdvancedType.SPACER,
-      },
-      {
-        type: AdvancedType.HERO,
-      },
-      {
-        type: AdvancedType.WRAPPER,
-      },
-    ],
-  },
-  {
-    label: 'Layout',
-    active: true,
-    displayType: 'column',
-    blocks: [
-      {
-        title: '2 columns',
-        payload: [
-          ['50%', '50%'],
-          ['33%', '67%'],
-          ['67%', '33%'],
-          ['25%', '75%'],
-          ['75%', '25%'],
-        ],
-      },
-      {
-        title: '3 columns',
-        payload: [
-          ['33.33%', '33.33%', '33.33%'],
-          ['25%', '25%', '50%'],
-          ['50%', '25%', '25%'],
-        ],
-      },
-      {
-        title: '4 columns',
-        payload: [[['25%', '25%', '25%', '25%']]],
-      },
-    ],
-  },
-];
+import { enTranslations } from '@extensions/Translations';
+import { useTranslation } from '@extensions/hooks/useTranslation';
+import { enCoreTranslations } from 'easy-email-core';
+import merge from 'lodash/merge';
+import cloneDeep from 'lodash/cloneDeep';
 
 export const StandardLayout: React.FC<ExtensionProps> = props => {
   const { height: containerHeight } = useEditorProps();
-  const { showSourceCode = true, compact = true, categories = defaultCategories } = props;
+  const { t } = useTranslation();
+  const defaultCategories: ExtensionProps['categories'] = useMemo(() => {
+    return [
+      {
+        label: t('standardLayout.content'),
+        active: true,
+        blocks: [
+          {
+            type: AdvancedType.TEXT,
+          },
+          {
+            type: AdvancedType.IMAGE,
+            payload: { attributes: { padding: '0px 0px 0px 0px' } },
+          },
+          {
+            type: AdvancedType.BUTTON,
+          },
+          {
+            type: AdvancedType.SOCIAL,
+          },
+          {
+            type: AdvancedType.DIVIDER,
+          },
+          {
+            type: AdvancedType.SPACER,
+          },
+          {
+            type: AdvancedType.HERO,
+          },
+          {
+            type: AdvancedType.WRAPPER,
+          },
+        ],
+      },
+      {
+        label: t('standardLayout.layout'),
+        active: true,
+        displayType: 'column',
+        blocks: [
+          {
+            title: t('standardLayout.columns2'),
+            payload: [
+              ['50%', '50%'],
+              ['33%', '67%'],
+              ['67%', '33%'],
+              ['25%', '75%'],
+              ['75%', '25%'],
+            ],
+          },
+          {
+            title:  t('standardLayout.columns3'),
+            payload: [
+              ['33.33%', '33.33%', '33.33%'],
+              ['25%', '25%', '50%'],
+              ['50%', '25%', '25%'],
+            ],
+          },
+          {
+            title:  t('standardLayout.columns4'),
+            payload: [[['25%', '25%', '25%', '25%']]],
+          },
+        ],
+      },
+    ];
+  }, [t]);
 
+  const { showSourceCode = true, compact = true, categories = defaultCategories } = props;
   const { setFocusIdx } = useFocusIdx();
 
   useEffect(() => {
@@ -88,11 +95,26 @@ export const StandardLayout: React.FC<ExtensionProps> = props => {
     }
   }, [compact, setFocusIdx]);
 
+  const translations = useMemo(() => {
+    const defaultTranslations = {
+      core: enCoreTranslations,
+      ...enTranslations,
+    };
+
+    if (props.translations) {
+      return merge(cloneDeep(defaultTranslations), props.translations);
+    }
+
+    return defaultTranslations;
+  }, [props.translations])
+
   return (
     <ExtensionProvider
       {...props}
       categories={categories}
+      translations={translations}
     >
+
       <ConfigProvider locale={enUS}>
         <Card
           style={{ padding: 0 }}

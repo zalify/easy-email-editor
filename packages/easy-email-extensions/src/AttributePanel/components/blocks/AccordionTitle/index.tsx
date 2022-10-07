@@ -10,16 +10,19 @@ import { FontFamily } from '../../attributes/FontFamily';
 import { AttributesPanelWrapper } from '../../attributes/AttributesPanelWrapper';
 import { useFocusIdx } from 'easy-email-editor';
 import { Collapse, Grid, Space } from '@arco-design/web-react';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export function AccordionTitle() {
   const { focusIdx } = useFocusIdx();
+  const { t } = useTranslation();
+
   return (
     <AttributesPanelWrapper>
       <Collapse defaultActiveKey={['0', '1', '2']}>
-        <Collapse.Item name='0' header='Setting'>
+        <Collapse.Item name='0' header={t('accordion.setting')}>
           <Space direction='vertical'>
             <TextAreaField
-              label='Content'
+              label={t('accordion.content')}
               name={`${focusIdx}.data.value.content`}
             />
 
@@ -48,7 +51,7 @@ export function AccordionTitle() {
               <Grid.Col offset={1} span={11} />
             </Grid.Row>
 
-            <Padding title='Padding' attributeName='padding' />
+            <Padding attributeName='padding' />
           </Space>
         </Collapse.Item>
       </Collapse>

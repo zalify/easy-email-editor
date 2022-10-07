@@ -6,6 +6,7 @@ import styles from '../index.module.scss';
 import Color from 'color';
 
 import { PresetColorsContext } from '@extensions/AttributePanel/components/provider/PresetColorsProvider';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export interface ColorPickerContentProps {
   onChange: (val: string) => void;
@@ -16,7 +17,7 @@ const transparentColor = 'rgba(0,0,0,0)';
 
 export function ColorPickerContent(props: ColorPickerContentProps) {
   const { colors: presetColors } = useContext(PresetColorsContext);
-
+  const { t } = useTranslation();
   const { onChange } = props;
   const [color, setColor] = useState(props.value);
 
@@ -75,7 +76,7 @@ export function ColorPickerContent(props: ColorPickerContentProps) {
             position: 'relative',
           }}
         >
-          <span>Picker...</span>
+          <span>{t('colorPicker.picker')}</span>
           <input
             style={{
               position: 'absolute',

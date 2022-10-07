@@ -5,6 +5,7 @@ import { createBlockDataByType } from 'easy-email-core';
 import { Form, useFormState } from 'react-final-form';
 import { Grid } from '@arco-design/web-react';
 import { get } from 'lodash';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export interface PaddingProps {
   title?: string;
@@ -12,7 +13,8 @@ export interface PaddingProps {
   name?: string;
 }
 export function Padding(props: PaddingProps = {}) {
-  const { title = 'Padding', attributeName = 'padding', name } = props;
+  const { t } = useTranslation();
+  const { title = t('attributes.padding'), attributeName = 'padding', name } = props;
   const { focusBlock, change, values } = useBlock();
   const { focusIdx } = useFocusIdx();
 
@@ -81,19 +83,19 @@ export function Padding(props: PaddingProps = {}) {
 
               <Grid.Row>
                 <Grid.Col span={11}>
-                  <InputWithUnitField label='Top' name='top' />
+                  <InputWithUnitField label={t('attributes.top')} name='top' />
                 </Grid.Col>
                 <Grid.Col offset={1} span={11}>
-                  <InputWithUnitField label='Left' name='left' />
+                  <InputWithUnitField label={t('attributes.left')} name='left' />
                 </Grid.Col>
               </Grid.Row>
 
               <Grid.Row>
                 <Grid.Col span={11}>
-                  <InputWithUnitField label='Bottom' name='bottom' />
+                  <InputWithUnitField label={t('attributes.bottom')} name='bottom' />
                 </Grid.Col>
                 <Grid.Col offset={1} span={11}>
-                  <InputWithUnitField label='Right' name='right' />
+                  <InputWithUnitField label={t('attributes.right')} name='right' />
                 </Grid.Col>
               </Grid.Row>
             </Stack>

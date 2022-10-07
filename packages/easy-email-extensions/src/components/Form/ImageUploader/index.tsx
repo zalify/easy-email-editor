@@ -21,6 +21,7 @@ import { previewLoadImage } from '@extensions/AttributePanel/utils/previewLoadIm
 import { MergeTags } from '@extensions';
 import { Button as ArcoButton } from '@arco-design/web-react';
 import { IconFont, useEditorProps } from 'easy-email-editor';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export interface ImageUploaderProps {
   onChange: (val: string) => void;
@@ -37,12 +38,13 @@ export function ImageUploader(props: ImageUploaderProps) {
   const uploadHandlerRef = useRef<UploaderServer | null | undefined>(
     props.uploadHandler
   );
+  const { t } = useTranslation();
 
   const onChange = props.onChange;
 
   const onUpload = useCallback(() => {
     if (isUploading) {
-      return Message.warning('Uploading...');
+      return Message.warning(t('imageUploader.uploading'));
     }
     if (!uploadHandlerRef.current) return;
 
@@ -86,13 +88,13 @@ export function ImageUploader(props: ImageUploaderProps) {
             props.onChange(picture);
             setIsUploading(false);
           } catch (error: any) {
-            Message.error(error?.message || error || 'Upload failed');
+            Message.error(error?.message || error || t('imageUploader.uploadFailed'));
             setIsUploading(false);
           }
         }
       }
     },
-    [props]
+    [props, t]
   );
 
   const onRemove = useCallback(() => {
@@ -115,7 +117,7 @@ export function ImageUploader(props: ImageUploaderProps) {
       return (
         <div className={styles['upload']} onClick={onUpload}>
           <IconPlus />
-          <div>Upload</div>
+          <div>{t('imageUploader.upload')}</div>
         </div>
       );
     }
@@ -125,17 +127,17 @@ export function ImageUploader(props: ImageUploaderProps) {
         <div className={classnames(styles['info'])}>
           <img src={props.value} />
           <div className={styles['btn-wrap']}>
-            <a title='Preview' onClick={() => setPreview(true)}>
+            <a title={t('imageUploader.preview')} onClick={() => setPreview(true)}>
               <IconEye />
             </a>
-            <a title='Remove' onClick={() => onRemove()}>
+            <a title={t('imageUploader.remove')} onClick={() => onRemove()}>
               <IconDelete />
             </a>
           </div>
         </div>
       </div>
     );
-  }, [isUploading, onRemove, onUpload, props.value]);
+  }, [isUploading, onRemove, onUpload, props.value, t]);
 
   if (!props.uploadHandler) {
     return <Input value={props.value} onChange={onChange} />;
@@ -189,7 +191,7 @@ export function ImageUploader(props: ImageUploaderProps) {
         </Grid.Row>
       </div>
       <Modal visible={preview} footer={null} onCancel={() => setPreview(false)}>
-        <img alt='Preview' style={{ width: '100%' }} src={props.value} />
+        <img alt={t('imageUploader.preview')} style={{ width: '100%' }} src={props.value} />
       </Modal>
     </div>
   );

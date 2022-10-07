@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Stack, useEditorProps, useFocusIdx } from 'easy-email-editor';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
 import { BackgroundColor } from '@extensions/AttributePanel/components/attributes/BackgroundColor';
@@ -14,41 +14,47 @@ import {
 import { Collapse, Grid, Space } from '@arco-design/web-react';
 import { ClassName } from '../../attributes/ClassName';
 import { CollapseWrapper } from '../../attributes/CollapseWrapper';
-
-const positionOptions = [
-  {
-    value: 'left',
-    label: 'Left',
-  },
-  {
-    value: 'right',
-    label: 'Right',
-  },
-];
-
-const alignOptions = [
-  {
-    value: 'top',
-    label: 'top',
-  },
-  {
-    value: 'middle',
-    label: 'middle',
-  },
-  {
-    value: 'bottom',
-    label: 'bottom',
-  },
-];
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export function Accordion() {
   const { focusIdx } = useFocusIdx();
   const { onUploadImage } = useEditorProps();
+  const { t } = useTranslation();
+
+  const [positionOptions, alignOptions] = useMemo(() => {
+    return [
+      [
+        {
+          value: 'left',
+          label: t('accordion.left')
+        },
+        {
+          value: 'right',
+          label:  t('accordion.right')
+        },
+      ],
+      [
+        {
+          value: 'top',
+          label:  t('accordion.top')
+        },
+        {
+          value: 'middle',
+          label:  t('accordion.middle')
+        },
+        {
+          value: 'bottom',
+          label:  t('accordion.bottom')
+        },
+      ]
+  ]
+
+  }, [t]);
 
   return (
     <AttributesPanelWrapper>
       <CollapseWrapper defaultActiveKey={['0', '1', '2']}>
-        <Collapse.Item name='0' header='Setting'>
+        <Collapse.Item name='0' header={t('accordion.setting')}>
           <Space direction='vertical'>
             <Grid.Row>
               <Grid.Col span={11}>
@@ -64,13 +70,13 @@ export function Accordion() {
             <Grid.Row>
               <Grid.Col span={11}>
                 <InputWithUnitField
-                  label='Icon width'
+                  label={t('accordion.iconWidth')}
                   name={`${focusIdx}.attributes.icon-width`}
                 />
               </Grid.Col>
               <Grid.Col offset={1} span={11}>
                 <InputWithUnitField
-                  label='Icon height'
+                  label={t('accordion.iconHeight')}
                   name={`${focusIdx}.attributes.icon-height`}
                 />
               </Grid.Col>
@@ -79,7 +85,7 @@ export function Accordion() {
             <Grid.Row>
               <Grid.Col span={11}>
                 <ImageUploaderField
-                  label='Unwrapped icon'
+                  label={t('accordion.unwrappedIcon')}
                   name={`${focusIdx}.attributes.icon-unwrapped-url`}
                   // helpText='The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.'
                   uploadHandler={onUploadImage}
@@ -87,7 +93,7 @@ export function Accordion() {
               </Grid.Col>
               <Grid.Col offset={1} span={11}>
                 <ImageUploaderField
-                  label='Wrapped icon'
+                  label={t('accordion.wrappedIcon')}
                   name={`${focusIdx}.attributes.icon-wrapped-url`}
                   uploadHandler={onUploadImage}
                 />
@@ -97,7 +103,7 @@ export function Accordion() {
             <Grid.Row>
               <Grid.Col span={11}>
                 <RadioGroupField
-                  label='Icon position'
+                  label={t('accordion.iconPosition')}
                   name={`${focusIdx}.attributes.icon-position`}
                   options={positionOptions}
                 />
@@ -105,17 +111,17 @@ export function Accordion() {
               <Grid.Col offset={1} span={11}>
                 <SelectField
                   style={{ width: 120 }}
-                  label='Icon align'
+                  label={t('accordion.iconAlign')}
                   name={`${focusIdx}.attributes.icon-align`}
                   options={alignOptions}
                 />
               </Grid.Col>
             </Grid.Row>
 
-            <TextField label='border' name={`${focusIdx}.attributes.border`} />
+            <TextField label={t('accordion.border')} name={`${focusIdx}.attributes.border`} />
           </Space>
         </Collapse.Item>
-        <Collapse.Item name='4' header='Extra'>
+        <Collapse.Item name='4' header={t('accordion.extra')}>
           <Grid.Col span={24}>
             <ClassName />
           </Grid.Col>

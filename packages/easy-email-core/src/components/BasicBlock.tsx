@@ -1,16 +1,18 @@
 import { IBlock } from '@core/typings';
 import { getAdapterAttributesString, getChildIdx } from '@core/utils';
 import { getImg } from '@core/utils/getImg';
-import { getPlaceholder } from '@core/utils/getPlaceholder';
 import { omit } from 'lodash';
 import React from 'react';
 import { BlockRenderer } from './BlockRenderer';
+import { useGetPlaceholder } from '@core/hooks/useGetPlaceholder';
 
 export function BasicBlock(props: {
   params: Parameters<IBlock['render']>[0];
   tag: string;
   children?: React.ReactNode;
 }) {
+  const getPlaceholder = useGetPlaceholder();
+
   const {
     params,
     params: { data, idx, children: children2, mode },

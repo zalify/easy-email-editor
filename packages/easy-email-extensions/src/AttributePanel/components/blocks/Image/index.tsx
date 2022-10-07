@@ -15,25 +15,27 @@ import { Collapse, Grid, Space } from '@arco-design/web-react';
 import { Border } from '@extensions/AttributePanel/components/attributes/Border';
 import { Stack, useEditorProps, useFocusIdx } from 'easy-email-editor';
 import { CollapseWrapper } from '../../attributes/CollapseWrapper';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export function Image() {
   const { focusIdx } = useFocusIdx();
   const { onUploadImage } = useEditorProps();
+  const { t } = useTranslation();
 
   return (
     <AttributesPanelWrapper style={{ padding: 0 }}>
       <CollapseWrapper defaultActiveKey={['0', '1', '2', '3', '4']}>
-        <Collapse.Item name='1' header='Setting'>
+        <Collapse.Item name='1' header={t('image.setting')}>
           <Stack vertical spacing='tight'>
             <ImageUploaderField
-              label='src'
+              label={t('image.src')}
               labelHidden
               name={`${focusIdx}.attributes.src`}
-              helpText='The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.'
+              helpText={t('image.srcHelp')}
               uploadHandler={onUploadImage}
             />
             <ColorPickerField
-              label='Background color'
+              label={t('image.backgroundColor')}
               name={`${focusIdx}.attributes.container-background-color`}
               inline
               alignment='center'
@@ -41,7 +43,7 @@ export function Image() {
           </Stack>
         </Collapse.Item>
 
-        <Collapse.Item name='0' header='Dimension'>
+        <Collapse.Item name='0' header={t('image.dimension')}>
           <Space direction='vertical'>
             <Grid.Row>
               <Grid.Col span={11}>
@@ -61,28 +63,28 @@ export function Image() {
           </Space>
         </Collapse.Item>
 
-        <Collapse.Item name='2' header='Link'>
+        <Collapse.Item name='2' header={t('image.link')}>
           <Stack vertical spacing='tight'>
             <Link />
           </Stack>
         </Collapse.Item>
 
-        <Collapse.Item name='3' header='Border'>
+        <Collapse.Item name='3' header={t('image.border')}>
           <Border />
         </Collapse.Item>
 
-        <Collapse.Item name='4' header='Extra'>
+        <Collapse.Item name='4' header={t('image.extra')}>
           <Grid.Row>
             <Grid.Col span={11}>
-              <TextField label='title' name={`${focusIdx}.attributes.title`} />
+              <TextField label={t('image.title')} name={`${focusIdx}.attributes.title`} />
             </Grid.Col>
             <Grid.Col offset={1} span={11}>
-              <TextField label='alt' name={`${focusIdx}.attributes.alt`} />
+              <TextField label={t('image.alt')} name={`${focusIdx}.attributes.alt`} />
             </Grid.Col>
           </Grid.Row>
           <Grid.Col span={24}>
             <TextField
-              label='class name'
+              label={t('image.className')}
               name={`${focusIdx}.attributes.css-class`}
             />
           </Grid.Col>

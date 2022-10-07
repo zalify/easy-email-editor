@@ -12,13 +12,14 @@ import { PresetColorsProvider } from './components/provider/PresetColorsProvider
 import ReactDOM from 'react-dom';
 import { BlockAttributeConfigurationManager } from './utils/BlockAttributeConfigurationManager';
 import { SelectionRangeProvider } from './components/provider/SelectionRangeProvider';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export interface AttributePanelProps { }
 
 export function AttributePanel() {
   const { values, focusBlock } = useBlock();
   const { initialized } = useEditorContext();
-
+  const { t } = useTranslation();
   const { focusIdx } = useFocusIdx();
 
   const Com =
@@ -35,7 +36,7 @@ export function AttributePanel() {
           <Com key={focusIdx} />
         ) : (
           <div style={{ marginTop: 200, padding: '0 50px' }}>
-            <TextStyle size='extraLarge'>No matching components</TextStyle>
+            <TextStyle size='extraLarge'>{t('attributePanel.noMatchingComponent')}</TextStyle>
           </div>
         )}
 

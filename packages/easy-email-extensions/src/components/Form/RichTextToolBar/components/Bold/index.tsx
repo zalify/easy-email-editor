@@ -4,6 +4,7 @@ import { IconFont } from 'easy-email-editor';
 import { ToolItem } from '../ToolItem';
 import { EMAIL_BLOCK_CLASS_NAME } from 'easy-email-core';
 import { useSelectionRange } from '@extensions/AttributePanel/hooks/useSelectionRange';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export interface LinkProps extends PopoverProps {
   currentRange: Range | null | undefined;
@@ -26,6 +27,7 @@ export function Bold(props: LinkProps) {
     return getBoldNode(props.currentRange?.commonAncestorContainer);
 
   }, [props.currentRange]);
+  const { t } = useTranslation();
 
   const onClick = useCallback(() => {
     if (node) {
@@ -40,7 +42,7 @@ export function Bold(props: LinkProps) {
       position='tl'
       content="Bold"
     >
-      <ToolItem title='Bold' isActive={Boolean(node)} icon={<IconFont iconName='icon-bold' />} onClick={onClick} />
+      <ToolItem title={t('richTextToolBar.bold')} isActive={Boolean(node)} icon={<IconFont iconName='icon-bold' />} onClick={onClick} />
     </Tooltip>
   );
 }

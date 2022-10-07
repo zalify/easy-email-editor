@@ -4,6 +4,7 @@ import React from 'react';
 import { Form } from 'react-final-form';
 import { v4 as uuidv4 } from 'uuid';
 import { ImageUploaderField, TextAreaField, TextField } from '../Form';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export const AddToCollection: React.FC<{
   visible: boolean;
@@ -11,6 +12,7 @@ export const AddToCollection: React.FC<{
 }> = ({ visible, setVisible }) => {
   const { focusBlock: focusBlockData } = useBlock();
   const { onAddCollection, onUploadImage } = useEditorProps();
+  const { t } = useTranslation();
 
   const onSubmit = (values: {
     label: string;
@@ -46,20 +48,20 @@ export const AddToCollection: React.FC<{
           <Stack vertical>
             <Stack.Item />
             <TextField
-              label='Title'
+              label={t('addToCollection.title')}
               name='label'
               validate={(val: string) => {
-                if (!val) return 'Title required!';
+                if (!val) return t('addToCollection.titleRequired');
                 return undefined;
               }}
             />
-            <TextAreaField label='Description' name='helpText' />
+            <TextAreaField label={t('addToCollection.description')} name='helpText' />
             <ImageUploaderField
-              label='Thumbnail'
+              label={t('addToCollection.thumbnail')}
               name={'thumbnail'}
               uploadHandler={onUploadImage}
               validate={(val: string) => {
-                if (!val) return 'Thumbnail required!';
+                if (!val) return t('addToCollection.thumbnailRequired');
                 return undefined;
               }}
             />

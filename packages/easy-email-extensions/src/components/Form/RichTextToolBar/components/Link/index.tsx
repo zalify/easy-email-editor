@@ -5,6 +5,7 @@ import { IconFont, Stack, TextStyle } from 'easy-email-editor';
 import { SearchField, SwitchField } from '@extensions/components/Form';
 import { ToolItem } from '../ToolItem';
 import { EMAIL_BLOCK_CLASS_NAME } from 'easy-email-core';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export interface LinkParams {
   link: string;
@@ -40,7 +41,7 @@ function getLinkNode(
 }
 
 export function Link(props: LinkProps) {
-
+  const { t } = useTranslation();
   const initialValues = useMemo((): LinkParams => {
     let link = '';
     let blank = true;
@@ -86,9 +87,9 @@ export function Link(props: LinkProps) {
                   <SearchField
                     size='small'
                     name='link'
-                    label='Link'
+                    label={t('richTextToolBar.link')}
                     labelHidden
-                    searchButton='Apply'
+                    searchButton={t('richTextToolBar.appy')}
                     placeholder='https://www.example.com'
                     onSearch={() => handleSubmit()}
                   />
@@ -96,10 +97,10 @@ export function Link(props: LinkProps) {
                 <Grid.Row>
                   <Grid.Col span={12}>
                     <Space align='center' size='mini'>
-                      <TextStyle size='smallest'>Target</TextStyle>
+                      <TextStyle size='smallest'>{t('richTextToolBar.target')}</TextStyle>
                       <SwitchField
                         size='small'
-                        label='Target'
+                        label={t('richTextToolBar.taget')}
                         labelHidden
                         name='blank'
                         checkedText='blank'
@@ -110,10 +111,10 @@ export function Link(props: LinkProps) {
                   </Grid.Col>
                   <Grid.Col span={12}>
                     <Space align='center' size='mini'>
-                      <TextStyle size='smallest'>Underline</TextStyle>
+                      <TextStyle size='smallest'>{t('richTextToolBar.underline')}</TextStyle>
                       <SwitchField
                         size='small'
-                        label='Underline'
+                        label={t('richTextToolBar.underline')}
                         labelHidden
                         name='underline'
                         checkedText='off'
@@ -126,7 +127,7 @@ export function Link(props: LinkProps) {
               </div>
             )}
           >
-            <ToolItem isActive={Boolean(initialValues.link)} title='Link' icon={<IconFont iconName='icon-link' />} />
+            <ToolItem isActive={Boolean(initialValues.link)} title={t('richTextToolBar.link')} icon={<IconFont iconName='icon-link' />} />
           </Tooltip>
         );
       }}

@@ -9,9 +9,11 @@ import { Stack, useBlock } from 'easy-email-editor';
 import { BasicType, BlockManager } from 'easy-email-core';
 import { ClassName } from '../../attributes/ClassName';
 import { CollapseWrapper } from '../../attributes/CollapseWrapper';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export function Section() {
   const { focusBlock, setFocusBlock } = useBlock();
+  const { t } = useTranslation();
 
   const noWrap = focusBlock?.data.value.noWrap;
 

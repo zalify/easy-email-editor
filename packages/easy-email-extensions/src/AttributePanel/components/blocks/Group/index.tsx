@@ -6,12 +6,15 @@ import { Collapse, Grid } from '@arco-design/web-react';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
 import { ClassName } from '../../attributes/ClassName';
 import { CollapseWrapper } from '../../attributes/CollapseWrapper';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export function Group() {
+  const { t } = useTranslation();
+
   return (
     <AttributesPanelWrapper>
       <CollapseWrapper defaultActiveKey={['0', '1', '2']}>
-        <Collapse.Item name='0' header='Dimension'>
+        <Collapse.Item name='0' header={t('group.dimension')}>
           <Grid.Row>
             <Grid.Col span={11}>
               <Width />
@@ -21,7 +24,7 @@ export function Group() {
             </Grid.Col>
           </Grid.Row>
         </Collapse.Item>
-        <Collapse.Item name='1' header='Background'>
+        <Collapse.Item name='1' header={t('group.background')}>
           <Grid.Row>
             <Grid.Col span={11}>
               <BackgroundColor />
@@ -29,7 +32,7 @@ export function Group() {
             <Grid.Col offset={1} span={11} />
           </Grid.Row>
         </Collapse.Item>
-        <Collapse.Item name='4' header='Extra'>
+        <Collapse.Item name='4' header={t('group.extra')}>
           <Grid.Col span={24}>
             <ClassName />
           </Grid.Col>

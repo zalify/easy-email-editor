@@ -3,6 +3,7 @@ import React, { useCallback } from 'react';
 import { Stack, TextStyle, useBlock, useEditorProps } from 'easy-email-editor';
 import { MergeTags } from '../MergeTags';
 import { BasicType, BlockManager } from 'easy-email-core';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export interface AttributesPanelWrapper {
   style?: React.CSSProperties;
@@ -13,7 +14,8 @@ export const AttributesPanelWrapper: React.FC<AttributesPanelWrapper> = (
 ) => {
   const { focusBlock, setFocusBlock } = useBlock();
   const block = focusBlock && BlockManager.getBlockByType(focusBlock.type);
-
+  const { t } = useTranslation();
+  
   const onChangeHidden = useCallback(
     (val: string | boolean) => {
       if (!focusBlock) return;
@@ -40,7 +42,7 @@ export const AttributesPanelWrapper: React.FC<AttributesPanelWrapper> = (
               <Stack spacing='extraTight' alignment='center'>
                 <EyeIcon />
                 <TextStyle variation='strong' size='large'>
-                  {`${block.name} attributes`}
+                  {t('attributes.blockNameAttributes', { name: block.name })}
                 </TextStyle>
               </Stack>
               <Stack.Item>{props.extra}</Stack.Item>

@@ -13,6 +13,7 @@ import { createPortal } from 'react-dom';
 import stylesText from './MergeTagBadge.scss?inline';
 import { classnames } from '@extensions/utils/classnames';
 import { useSelectionRange } from '@extensions/AttributePanel/hooks/useSelectionRange';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 const removeAllActiveBadge = () => {
   getShadowRoot()
@@ -34,6 +35,7 @@ export function MergeTagBadgePrompt() {
   const { onChangeMergeTag, mergeTags } = useEditorProps();
   const [text, setText] = useState('');
   const { setRangeByElement } = useSelectionRange();
+  const { t } = useTranslation();
 
   const root = initialized && getShadowRoot();
   const [target, setTarget] = React.useState<HTMLElement | null>(null);
@@ -140,13 +142,12 @@ export function MergeTagBadgePrompt() {
         <div ref={popoverRef} onClick={onClick} className={classnames('easy-email-merge-tag-popover')}>
           <div className='easy-email-merge-tag-popover-container'>
             <h3>
-              <span>Default value</span>
+              <span>{t('mergeTagBadgePrompt.defaultValue')}</span>
               <IconFont style={{ color: 'rgb(92, 95, 98)' }} iconName='icon-close' onClick={onClose} />
             </h3>
             <div className={'easy-email-merge-tag-popover-desc'}>
               <p>
-                If a personalized text value isn't available, then a default value
-                is shown.
+                {t('mergeTagBadgePrompt.helperText')}
               </p>
               <div className='easy-email-merge-tag-popover-desc-label'>
                 <input autoFocus value={text} onChange={onChange} type="text" autoComplete='off' maxLength={40} />
@@ -155,7 +156,7 @@ export function MergeTagBadgePrompt() {
                 </div>
               </div>
               <div className='easy-email-merge-tag-popover-desc-label-button'>
-                <button onClick={onSave}>Save</button>
+                <button onClick={onSave}>{t('mergeTagBadgePrompt.save')}</button>
               </div>
             </div>
           </div>

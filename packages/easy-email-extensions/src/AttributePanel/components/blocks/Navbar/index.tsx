@@ -15,13 +15,16 @@ import { INavbar } from 'easy-email-core';
 import { ClassName } from '../../attributes/ClassName';
 import { CollapseWrapper } from '../../attributes/CollapseWrapper';
 import { FontFamily, FontStyle, FontWeight, LetterSpacing, LineHeight, TextAlign, TextDecoration, TextTransform } from '../../attributes';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export function Navbar() {
   const { focusIdx } = useFocusIdx();
+  const { t } = useTranslation();
+
   return (
     <AttributesPanelWrapper style={{ padding: 0 }}>
       <CollapseWrapper defaultActiveKey={['0', '1', '2']}>
-        <Collapse.Item name='0' header='Layout'>
+        <Collapse.Item name='0' header={t('navbar.layout')}>
           <Stack vertical spacing='tight'>
             <Align />
           </Stack>
@@ -30,13 +33,13 @@ export function Navbar() {
         <Collapse.Item
           contentStyle={{ padding: 0 }}
           name='1'
-          header='Navbar links'
+          header={t('navbar.navbarLinks')}
         >
           <Space direction='vertical' style={{ width: '100%' }}>
             <EditTabField
               tabPosition='top'
               name={`${focusIdx}.data.value.links`}
-              label='Links'
+              label={t('navbar.links')}
               labelHidden
               renderItem={(item, index) => (
                 <NavbarLink item={item} index={index} />
@@ -52,7 +55,7 @@ export function Navbar() {
             <div />
           </Space>
         </Collapse.Item>
-        <Collapse.Item name='4' header='Extra'>
+        <Collapse.Item name='4' header={t('navbar.extra')}>
           <Grid.Col span={24}>
             <ClassName />
           </Grid.Col>
@@ -70,6 +73,8 @@ function NavbarLink({
   index: number;
 }) {
   const { focusIdx } = useFocusIdx();
+  const { t } = useTranslation();
+  
   return (
     <div className='NavbarLink'>
       <Space direction='vertical' style={{ width: '100%' }}>
@@ -77,13 +82,13 @@ function NavbarLink({
         <Grid.Row>
           <Grid.Col span={11}>
             <TextField
-              label='Content'
+              label={t('navbar.content')}
               name={`${focusIdx}.data.value.links.[${index}].content`}
             />
           </Grid.Col>
           <Grid.Col offset={1} span={11}>
             <ColorPickerField
-              label='Color'
+              label={t('navbar.color')}
               name={`${focusIdx}.data.value.links.[${index}].color`}
               alignment='center'
             />
@@ -97,7 +102,7 @@ function NavbarLink({
           </Grid.Col>
           <Grid.Col offset={1} span={11}>
             <TextField
-              label='Font size'
+              label={t('navbar.fontSize')}
               quickchange
               name={`${focusIdx}.data.value.links.[${index}].font-size`}
             />
@@ -133,14 +138,14 @@ function NavbarLink({
           <Grid.Col span={11}>
             <TextField
               prefix={<IconLink />}
-              label={<span>Url</span>}
+              label={<span>{t('navbar.url')}</span>}
               name={`${focusIdx}.data.value.links.[${index}].href`}
             />
           </Grid.Col>
           <Grid.Col offset={1} span={11}>
             <SelectField
               style={{ minWidth: 65 }}
-              label='Target'
+              label={t('navbar.target')}
               name={`${focusIdx}.data.value.links.[${index}].target`}
               options={[
                 {

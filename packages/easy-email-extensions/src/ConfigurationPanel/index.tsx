@@ -5,6 +5,8 @@ import { SourceCodePanel } from '@extensions/SourceCodePanel';
 import { FullHeightOverlayScrollbars } from '@extensions/components/FullHeightOverlayScrollbars';
 import { IconLeft } from '@arco-design/web-react/icon';
 import styles from './index.module.scss';
+import { useTranslation } from '@extensions/hooks/useTranslation';
+
 export interface ConfigurationPanelProps {
   showSourceCode: boolean;
   height: string;
@@ -19,6 +21,7 @@ export function ConfigurationPanel({
   compact,
 }: ConfigurationPanelProps) {
   const [inited, setInited] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     // Tabs 在 drawer 里面有bug
@@ -63,11 +66,11 @@ export function ConfigurationPanel({
           }
         >
           <Tabs.TabPane
-            title={
+            title={(
               <div style={{ height: 40, lineHeight: '40px' }}>
-                Configuration
+                {t('configurationPanel.configuration')}
               </div>
-            }
+            )}
           >
             <FullHeightOverlayScrollbars height={`calc(${height} - 60px)`}>
               <AttributePanel />
@@ -78,7 +81,7 @@ export function ConfigurationPanel({
             destroyOnHide
             key='Source code'
             title={
-              <div style={{ height: 40, lineHeight: '40px' }}>Source code</div>
+              <div style={{ height: 40, lineHeight: '40px' }}>{t('configurationPanel.sourceCode')}</div>
             }
           >
             <FullHeightOverlayScrollbars height={`calc(${height} - 60px)`}>

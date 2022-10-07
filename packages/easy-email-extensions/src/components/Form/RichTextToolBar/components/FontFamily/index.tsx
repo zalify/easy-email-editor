@@ -5,6 +5,7 @@ import { ToolItem } from '../ToolItem';
 import { IconFont } from 'easy-email-editor';
 import { useFontFamily } from '@extensions/hooks/useFontFamily';
 import styleText from '../../styles/ToolsPopover.css?inline';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 export interface FontFamilyProps {
   execCommand: (cmd: string, value: any) => void;
   getPopupContainer: () => HTMLElement;
@@ -14,6 +15,7 @@ export function FontFamily(props: FontFamilyProps) {
   const { fontList } = useFontFamily();
   const { execCommand } = props;
   const [visible, setVisible] = React.useState(false);
+  const { t } = useTranslation();
 
   const onChange = useCallback((val: string) => {
     execCommand('fontName', val);
@@ -64,7 +66,7 @@ export function FontFamily(props: FontFamilyProps) {
       getPopupContainer={props.getPopupContainer}
     >
       <ToolItem
-        title='Font family'
+        title={t('richTextToolBar.fontFamily')}
         icon={<IconFont iconName='icon-font-family' />}
       />
     </Popover>

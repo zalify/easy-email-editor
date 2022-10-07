@@ -9,6 +9,7 @@ import { getIndexByIdx, getSiblingIdx } from 'easy-email-core';
 import styles from './index.module.scss';
 import { IBlockDataWithId } from '../../../BlockLayer';
 import { useAddToCollection } from '@extensions/hooks/useAddToCollection';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export function ContextMenu({
   moveBlock,
@@ -30,6 +31,7 @@ export function ContextMenu({
   const { blockData, left, top } = contextMenuData;
   const idx = blockData.id;
   const { modal, modalVisible, setModalVisible } = useAddToCollection();
+  const { t } = useTranslation();
   const props = useEditorProps();
   const ref = useRef<HTMLDivElement>(null);
 
@@ -81,26 +83,26 @@ export function ContextMenu({
         {!isFirst && (
           <div className={styles.listItem} onClick={handleMoveUp}>
             <IconFont iconName='icon-top' style={{ marginRight: 10 }} />{' '}
-            <TextStyle>Move up</TextStyle>
+            <TextStyle>{t('blockLayer.contextMenu.moveUp')}</TextStyle>
           </div>
         )}
         <div className={styles.listItem} onClick={handleMoveDown}>
           <IconFont iconName='icon-bottom' style={{ marginRight: 10 }} />{' '}
-          <TextStyle>Move down</TextStyle>
+          <TextStyle>{t('blockLayer.contextMenu.moveUp')}</TextStyle>
         </div>
         <div className={styles.listItem} onClick={handleCopy}>
           <IconFont iconName='icon-copy' style={{ marginRight: 10 }} />{' '}
-          <TextStyle>Copy</TextStyle>
+          <TextStyle>{t('blockLayer.contextMenu.copy')}</TextStyle>
         </div>
         {props.onAddCollection && (
             <div className={styles.listItem} onClick={handleAddToCollection}>
               <IconFont iconName='icon-start' style={{ marginRight: 10 }} />{' '}
-              <TextStyle>Add to collection</TextStyle>
+              <TextStyle>{t('blockLayer.contextMenu.addToCollection')}</TextStyle>
             </div>
         )}
         <div className={styles.listItem} onClick={handleDelete}>
           <IconFont iconName='icon-delete' style={{ marginRight: 10 }} />{' '}
-          <TextStyle>Delete</TextStyle>
+          <TextStyle>{t('blockLayer.contextMenu.delete')}</TextStyle>
         </div>
       </div>
       <div

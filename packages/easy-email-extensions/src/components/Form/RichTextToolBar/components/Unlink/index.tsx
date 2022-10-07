@@ -5,6 +5,7 @@ import { IconFont, Stack, TextStyle } from 'easy-email-editor';
 import { SearchField, SwitchField } from '@extensions/components/Form';
 import { ToolItem } from '../ToolItem';
 import { EMAIL_BLOCK_CLASS_NAME } from 'easy-email-core';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export interface LinkParams {
   link: string;
@@ -41,9 +42,9 @@ function getLinkNode(
 
 export function Unlink(props: LinkProps) {
   const { onChange } = props;
+  const { t } = useTranslation();
   const linkNode = useMemo(() => {
     return getLinkNode(props.currentRange);
-
   }, [props.currentRange]);
 
   const onUnlink = useCallback(() => {
@@ -59,7 +60,10 @@ export function Unlink(props: LinkProps) {
       position='tl'
       content="Unlink"
     >
-      <ToolItem title='Unlink' icon={<IconFont iconName='icon-unlink' />} onClick={onUnlink} />
+      <ToolItem title={t('richTextToolBar.unlink')}
+                icon={<IconFont iconName='icon-unlink' />}
+                onClick={onUnlink}
+      />
     </Tooltip>
   );
 }

@@ -12,33 +12,35 @@ import { Collapse, Grid, Space } from '@arco-design/web-react';
 import { Stack, TextStyle, useFocusIdx } from 'easy-email-editor';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
 import { FontFamily } from '../../attributes/FontFamily';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export function Page() {
   const { focusIdx } = useFocusIdx();
+  const { t } = useTranslation();
 
   if (!focusIdx) return null;
   return (
     <AttributesPanelWrapper style={{ padding: 0 }}>
       <Stack.Item fill>
         <Collapse defaultActiveKey={['0', '1']}>
-          <Collapse.Item name='0' header='Email Setting'>
+          <Collapse.Item name='0' header={t('page.emailSettings')}>
             <Space direction='vertical'>
-              <TextField label='Subject' name={'subject'} inline />
-              <TextField label='SubTitle' name={'subTitle'} inline />
+              <TextField label={t('page.subject')} name={'subject'} inline />
+              <TextField label={t('page.subTitle')} name={'subTitle'} inline />
               <InputWithUnitField
-                label='Width'
+                label={t('page.width')}
                 name={`${focusIdx}.attributes.width`}
                 inline
               />
               <InputWithUnitField
-                label='Breakpoint'
-                helpText='Allows you to control on which breakpoint the layout should go desktop/mobile.'
+                label={t('page.breakpoint')}
+                helpText={t('page.breakpointHelper')}
                 name={`${focusIdx}.data.value.breakpoint`}
                 inline
               />
             </Space>
           </Collapse.Item>
-          <Collapse.Item name='1' header='Theme Setting'>
+          <Collapse.Item name='1' header={t('page.themeSettings')}>
             <Stack vertical spacing='tight'>
               <Grid.Row>
                 <Grid.Col span={11}>
@@ -46,7 +48,7 @@ export function Page() {
                 </Grid.Col>
                 <Grid.Col offset={1} span={11}>
                   <InputWithUnitField
-                    label='Font size'
+                    label={t('page.fontSize')}
                     name={`${focusIdx}.data.value.font-size`}
                   />
                 </Grid.Col>
@@ -55,14 +57,14 @@ export function Page() {
               <Grid.Row>
                 <Grid.Col span={11}>
                   <InputWithUnitField
-                    label='Line height'
+                    label={t('page.lineHeight')}
                     unitOptions='percent'
                     name={`${focusIdx}.data.value.line-height`}
                   />
                 </Grid.Col>
                 <Grid.Col offset={1} span={11}>
                   <InputWithUnitField
-                    label='Font weight'
+                    label={t('page.fontWeight')}
                     unitOptions='percent'
                     name={`${focusIdx}.data.value.font-weight`}
                   />
@@ -72,13 +74,13 @@ export function Page() {
               <Grid.Row>
                 <Grid.Col span={11}>
                   <ColorPickerField
-                    label='Text color'
+                    label={t('page.extColor')}
                     name={`${focusIdx}.data.value.text-color`}
                   />
                 </Grid.Col>
                 <Grid.Col offset={1} span={11}>
                   <ColorPickerField
-                    label='Background'
+                    label={t('page.background')}
                     name={`${focusIdx}.attributes.background-color`}
                   />
                 </Grid.Col>
@@ -86,7 +88,7 @@ export function Page() {
 
               <Grid.Row>
                 <ColorPickerField
-                  label='Content background'
+                  label={t('page.contentBackground')}
                   name={`${focusIdx}.data.value.content-background-color`}
                 />
 
@@ -94,7 +96,7 @@ export function Page() {
 
               <TextAreaField
                 autoSize
-                label='User style'
+                label={t('page.userStyle')}
                 name={`${focusIdx}.data.value.user-style.content`}
               />
               <Stack.Item />

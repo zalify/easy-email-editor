@@ -8,36 +8,41 @@ import {
 import { Stack, useFocusIdx, useEditorProps } from 'easy-email-editor';
 import { BackgroundColor } from './BackgroundColor';
 import { Grid, Space } from '@arco-design/web-react';
-
-const backgroundRepeatOptions = [
-  {
-    value: 'no-repeat',
-    label: 'No repeat',
-  },
-  {
-    value: 'repeat',
-    label: 'Repeat',
-  },
-  {
-    value: 'repeat-x',
-    label: 'Repeat X',
-  },
-  {
-    value: 'repeat-y',
-    label: 'Repeat Y',
-  },
-];
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export function Background() {
   const { focusIdx } = useFocusIdx();
   const { onUploadImage } = useEditorProps();
+  const { t } = useTranslation();
+
+  const options = useMemo(() => {
+    return [
+      {
+        value: 'no-repeat',
+        label: t('attributes.noRepeat')
+      },
+      {
+        value: 'repeat',
+        label: t('attributes.repeat')
+      },
+      {
+        value: 'repeat-x',
+        label: t('attributes.repeatT')
+      },
+      {
+        value: 'repeat-y',
+        label: t('attributes.repeatY')
+      },
+    ];
+  }, [t])
+
   return useMemo(() => {
     return (
       <Space key={focusIdx} direction='vertical'>
         <ImageUploaderField
-          label='Background image'
+          label={t('attributes.backgroundImage')}
           name={`${focusIdx}.attributes.background-url`}
-          helpText='The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.'
+          helpText={t('attributes.backgroundTextHelper')}
           uploadHandler={onUploadImage}
         />
 
@@ -47,17 +52,17 @@ export function Background() {
           </Grid.Col>
           <Grid.Col offset={1} span={11}>
             <SelectField
-              label='Background repeat'
+              label={t('attributes.backgroundRepeat')}
               name={`${focusIdx}.attributes.background-repeat`}
-              options={backgroundRepeatOptions}
+              options={options}
             />
           </Grid.Col>
         </Grid.Row>
         <TextField
-          label='Background size'
+          label={t('attributes.backgroundSize')}
           name={`${focusIdx}.attributes.background-size`}
         />
       </Space>
     );
-  }, [focusIdx, onUploadImage]);
+  }, [focusIdx, onUploadImage, t]);
 }

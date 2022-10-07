@@ -26,31 +26,36 @@ import { ISocial } from 'easy-email-core';
 import { getImg } from '@extensions/AttributePanel/utils/getImg';
 import { ClassName } from '../../attributes/ClassName';
 import { CollapseWrapper } from '../../attributes/CollapseWrapper';
-
-const options = [
-  {
-    value: 'vertical',
-    label: 'vertical',
-  },
-  {
-    value: 'horizontal',
-    label: 'horizontal',
-  },
-];
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export function Social() {
+  const { t } = useTranslation();
   const { focusIdx } = useFocusIdx();
   const { focusBlock } = useBlock();
   const value = focusBlock?.data.value as ISocial['data']['value'];
+
+  const options = useMemo(() => {
+    return [
+      {
+        value: 'vertical',
+        label: t('social.vertical')
+      },
+      {
+        value: 'horizontal',
+        label: t('social.horizontal')
+      },
+    ];
+  }, [t]);
+
   if (!value) return null;
 
   return (
     <AttributesPanelWrapper style={{ padding: 0 }}>
       <CollapseWrapper defaultActiveKey={['0', '1', '2', '3']}>
-        <Collapse.Item name='1' header='Setting'>
+        <Collapse.Item name='1' header={t('social.setting')}>
           <Space direction='vertical'>
             <RadioGroupField
-              label='Mode'
+              label={t('social.mode')}
               name={`${focusIdx}.attributes.mode`}
               options={options}
             />
@@ -60,7 +65,7 @@ export function Social() {
           </Space>
         </Collapse.Item>
 
-        <Collapse.Item name='3' header='Typography'>
+        <Collapse.Item name='3' header={t('social.typography')}>
           <Space direction='vertical'>
             <Grid.Row>
               <Grid.Col span={11}>
@@ -84,7 +89,7 @@ export function Social() {
               </Grid.Col>
               <Grid.Col offset={1} span={11}>
 
-                <ContainerBackgroundColor title='Background color' />
+                <ContainerBackgroundColor title={t('social.backgroundColor')} />
               </Grid.Col>
             </Grid.Row>
             <Grid.Row>
@@ -101,7 +106,7 @@ export function Social() {
 
         <Collapse.Item
           name='2'
-          header='Social item'
+          header={t('social.socialItem')}
           contentStyle={{ padding: 10 }}
         >
 
@@ -116,32 +121,32 @@ export function Social() {
           />
         </Collapse.Item>
 
-        <Collapse.Item name='0' header='Dimension'>
+        <Collapse.Item name='0' header={t('social.dimension')}>
 
           <Space direction="vertical" size="large">
 
             <Grid.Row>
               <Grid.Col span={11}>
                 <InputWithUnitField
-                  label='Icon width'
+                  label={t('social.iconWidth')}
                   name={`${focusIdx}.attributes.icon-size`}
                 />
               </Grid.Col>
               <Grid.Col offset={1} span={11}>
                 <TextField
-                  label='Border radius'
+                  label={t('social.borderRadius')}
                   name={`${focusIdx}.attributes.border-radius`}
                 />
               </Grid.Col>
             </Grid.Row>
 
             <Padding />
-            <Padding attributeName='inner-padding' title='Icon padding' />
-            <Padding attributeName='text-padding' title='Text padding' />
+            <Padding attributeName='inner-padding' title={t('social.iconPadding')} />
+            <Padding attributeName='text-padding' title={t('social.textPadding')} />
           </Space>
 
         </Collapse.Item>
-        <Collapse.Item name='4' header='Extra'>
+        <Collapse.Item name='4' header={t('social.extra')}>
           <Grid.Col span={24}>
             <ClassName />
           </Grid.Col>
@@ -157,6 +162,7 @@ function SocialElement({
   item: ISocial['data']['value']['elements'][0];
   index: number;
 }) {
+  const { t } = useTranslation();
   const { focusIdx } = useFocusIdx();
   const { onUploadImage, socialIcons } = useEditorProps();
 
@@ -173,7 +179,7 @@ function SocialElement({
   return (
     <Space direction='vertical'>
       <ImageUploaderField
-        label='Image'
+        label={t('social.image')}
         autoCompleteOptions={autoCompleteOptions}
         labelHidden
         name={`${focusIdx}.data.value.elements.[${index}].src`}
@@ -184,7 +190,7 @@ function SocialElement({
       <Grid.Row>
         <Grid.Col span={11}>
           <TextField
-            label='Content'
+            label={t('social.content')}
             name={`${focusIdx}.data.value.elements.[${index}].content`}
             quickchange
           />
@@ -192,7 +198,7 @@ function SocialElement({
         <Grid.Col offset={1} span={11}>
           <TextField
             prefix={<IconLink />}
-            label='Link'
+            label={t('social.link')}
             name={`${focusIdx}.data.value.elements.[${index}].href`}
           />
         </Grid.Col>

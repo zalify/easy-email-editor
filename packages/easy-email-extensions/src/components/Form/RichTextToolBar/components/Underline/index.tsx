@@ -4,6 +4,7 @@ import { IconFont } from 'easy-email-editor';
 import { ToolItem } from '../ToolItem';
 import { EMAIL_BLOCK_CLASS_NAME } from 'easy-email-core';
 import { useSelectionRange } from '@extensions/AttributePanel/hooks/useSelectionRange';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export interface LinkProps extends PopoverProps {
   currentRange: Range | null | undefined;
@@ -22,9 +23,9 @@ function getUnderlineNode(
 export function Underline(props: LinkProps) {
   const { onChange } = props;
   const { setRangeByElement } = useSelectionRange();
+  const { t } = useTranslation();
   const node = useMemo(() => {
     return getUnderlineNode(props.currentRange?.commonAncestorContainer);
-
   }, [props.currentRange]);
 
   const onClick = useCallback(() => {
@@ -40,7 +41,11 @@ export function Underline(props: LinkProps) {
       position='tl'
       content="Underline"
     >
-      <ToolItem title='Underline' isActive={Boolean(node)} icon={<IconFont iconName='icon-underline' />} onClick={onClick} />
+      <ToolItem  title={t('richTextToolBar.underline')}
+                 isActive={Boolean(node)}
+                 icon={<IconFont iconName='icon-underline' />}
+                 onClick={onClick}
+      />
     </Tooltip>
   );
 }

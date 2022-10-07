@@ -2,6 +2,7 @@ import { Tabs, TabsProps } from '@arco-design/web-react';
 import { classnames } from '@extensions/utils/classnames';
 import React, { useState } from 'react';
 import styles from './index.module.scss';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 const { TabPane } = Tabs;
 
@@ -16,6 +17,7 @@ export interface EditTabProps<T extends any = any>
 export function EditTab<T extends any = any>(props: EditTabProps<T>) {
   const { value, additionItem } = props;
   const [activeTab, setActiveTab] = useState('0');
+  const { t } = useTranslation();
 
   const onAddTab = () => {
     setActiveTab((value.length).toString());
@@ -48,7 +50,7 @@ export function EditTab<T extends any = any>(props: EditTabProps<T>) {
       {(Array.isArray(value) ? value : []).map((item, index) => (
         <TabPane
           style={{ paddingLeft: 12 }}
-          title={`${props.label || 'Tab'} ${index + 1}`}
+          title={`${props.label || t('tab.tab')} ${index + 1}`}
           key={index}
         >
           {props.renderItem(item, index)}

@@ -11,17 +11,19 @@ import { FontFamily } from '../../attributes/FontFamily';
 import { LineHeight } from '../../attributes/LineHeight';
 import { AttributesPanelWrapper } from '../../attributes/AttributesPanelWrapper';
 import { Collapse, Grid, Space } from '@arco-design/web-react';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 export function AccordionText() {
+  const { t } = useTranslation();
   const { focusIdx } = useFocusIdx();
 
   return (
     <AttributesPanelWrapper>
       <Collapse defaultActiveKey={['0', '1', '2']}>
-        <Collapse.Item name='0' header='Setting'>
+        <Collapse.Item name='0' header={t('accordion.setting')}>
           <Space direction='vertical'>
             <TextAreaField
-              label='Content'
+              label={t('accordion.content')}
               name={`${focusIdx}.data.value.content`}
               autoSize={{ minRows: 5 }}
             />
@@ -50,7 +52,7 @@ export function AccordionText() {
               </Grid.Col>
             </Grid.Row>
 
-            <Padding title='Padding' attributeName='padding' />
+            <Padding title={t('accordion.padding')} attributeName='padding' />
           </Space>
         </Collapse.Item>
       </Collapse>

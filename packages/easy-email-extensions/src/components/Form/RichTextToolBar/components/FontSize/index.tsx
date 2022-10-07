@@ -4,6 +4,7 @@ import { Menu, Popover } from '@arco-design/web-react';
 import { ToolItem } from '../ToolItem';
 import { IconFont } from 'easy-email-editor';
 import styleText from '../../styles/ToolsPopover.css?inline';
+import { useTranslation } from '@extensions/hooks/useTranslation';
 
 const list = [
   {
@@ -44,6 +45,7 @@ export interface FontSizeProps {
 export function FontSize(props: FontSizeProps) {
   const { execCommand } = props;
   const [visible, setVisible] = React.useState(false);
+  const { t } = useTranslation();
 
   const onChange = useCallback((val: string) => {
     execCommand('fontSize', val);
@@ -94,7 +96,7 @@ export function FontSize(props: FontSizeProps) {
       getPopupContainer={props.getPopupContainer}
     >
       <ToolItem
-        title='Font size'
+        title={t('richTextToolBar.fontSize')}
         icon={<IconFont iconName='icon-font-color' />}
       />
     </Popover>
