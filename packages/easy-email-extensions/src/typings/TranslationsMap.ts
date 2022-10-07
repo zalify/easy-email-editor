@@ -79,6 +79,12 @@ export type TranslationsMap = Partial<{
     capitalize: string;
     verticalAlign: string;
     columnsMustBeInPercentage: string;
+    backgroundTextHelper: string;
+    noRepeat: string;
+    repeat: string;
+    repeatX: string;
+    repeatY: string;
+    blockNameAttributes: string;
   }
   accordion: {
     setting: string;
@@ -351,5 +357,22 @@ export type TranslationsMap = Partial<{
     insertAfter: string;
     dragHere: string;
     dragTo: string;
+  }
+  editGridTab: {
+    item: string;
+  },
+  blockLayer: {
+    contextMenu: {
+      moveUp: string;
+      moveDown: string;
+      copy: string;
+      addToCollection: string;
+      delete: string;
+    }
+  },
+  htmlEditor: {
+    html: string;
+    save: string;
+    editingLoading: string;
   }
 }>;

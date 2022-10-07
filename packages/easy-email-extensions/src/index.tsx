@@ -12,6 +12,7 @@ export * from './components/Providers/ExtensionProvider';
 export * from './constants';
 export * from './components/Form';
 export * from './hooks';
+export * from './typings';
 
 export { getContextMergeTags } from './utils/getContextMergeTags';
 export { getIconNameByBlockType } from './utils/getIconNameByBlockType';
