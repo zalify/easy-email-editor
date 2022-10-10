@@ -14,10 +14,13 @@ export function MergeTags(props: MergeTagsProps) {
   const { execCommand } = props;
   const [visible, setVisible] = React.useState(false);
 
-  const onChange = useCallback((val: string) => {
-    execCommand('insertHTML', val);
-    setVisible(false);
-  }, [execCommand]);
+  const onChange = useCallback(
+    (val: string) => {
+      execCommand('insertHTML', val);
+      setVisible(false);
+    },
+    [execCommand],
+  );
 
   const onVisibleChange = useCallback((v: boolean) => {
     setVisible(v);
@@ -30,15 +33,15 @@ export function MergeTags(props: MergeTagsProps) {
       position='left'
       popupVisible={visible}
       onVisibleChange={onVisibleChange}
-      content={(
+      style={{ zIndex: 10 }}
+      content={
         <>
           <MergeTagsOptions
             value=''
             onChange={onChange}
           />
         </>
-
-      )}
+      }
       getPopupContainer={props.getPopupContainer}
     >
       <ToolItem
