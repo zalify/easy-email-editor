@@ -1,6 +1,6 @@
 import { blocks } from '../components/blocks';
 
-type ObjectComponent = { [key: string]: () => JSX.Element | null; };
+type ObjectComponent = { [key: string]: () => JSX.Element | null };
 
 export class BlockAttributeConfigurationManager {
   private static map: ObjectComponent = { ...blocks };
@@ -11,13 +11,11 @@ export class BlockAttributeConfigurationManager {
     });
   }
 
-  public static get<T extends ObjectComponent>(name: keyof T): string {
+  public static get<T extends ObjectComponent>(name: keyof T): () => JSX.Element | null {
     return (this.map as any)[name];
   }
 
   public static getMap() {
     return this.map;
   }
-
 }
-
