@@ -22,14 +22,13 @@
     "paths": {
       "@demo": ["src"],
       "@demo/*": ["src/*"],
+      "easy-email-editor/lib/locales.json": [
+        "../packages/easy-email-editor/lib/locales.json"
+      ],
       "easy-email-editor": ["../packages/easy-email-editor/src/index.tsx"],
       "easy-email-core": ["../packages/easy-email-core/src/index.tsx"],
-      "easy-email-extensions": [
-        "../packages/easy-email-extensions/src/index.tsx"
-      ],
-      "easy-email-config-panel": [
-        "../packages/easy-email-config-panel/src/index.tsx"
-      ]
+      "easy-email-extensions": ["../packages/easy-email-extensions/src/index.tsx"],
+      "easy-email-config-panel": ["../packages/easy-email-config-panel/src/index.tsx"]
     }
   },
   "include": ["./src", "./example", "./typings"],

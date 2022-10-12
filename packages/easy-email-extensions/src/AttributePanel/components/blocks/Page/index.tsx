@@ -21,10 +21,21 @@ export function Page() {
     <AttributesPanelWrapper style={{ padding: 0 }}>
       <Stack.Item fill>
         <Collapse defaultActiveKey={['0', '1']}>
-          <Collapse.Item name='0' header='Email Setting'>
+          <Collapse.Item
+            name='0'
+            header={t('Email Setting')}
+          >
             <Space direction='vertical'>
-              <TextField label='Subject' name={'subject'} inline />
-              <TextField label='SubTitle' name={'subTitle'} inline />
+              <TextField
+                label='Subject'
+                name={'subject'}
+                inline
+              />
+              <TextField
+                label='SubTitle'
+                name={'subTitle'}
+                inline
+              />
               <InputWithUnitField
                 label='Width'
                 name={`${focusIdx}.attributes.width`}
@@ -38,13 +49,22 @@ export function Page() {
               />
             </Space>
           </Collapse.Item>
-          <Collapse.Item name='1' header='Theme Setting'>
-            <Stack vertical spacing='tight'>
+          <Collapse.Item
+            name='1'
+            header={t('Theme Setting')}
+          >
+            <Stack
+              vertical
+              spacing='tight'
+            >
               <Grid.Row>
                 <Grid.Col span={11}>
                   <FontFamily name={`${focusIdx}.data.value.font-family`} />
                 </Grid.Col>
-                <Grid.Col offset={1} span={11}>
+                <Grid.Col
+                  offset={1}
+                  span={11}
+                >
                   <InputWithUnitField
                     label='Font size'
                     name={`${focusIdx}.data.value.font-size`}
@@ -60,7 +80,10 @@ export function Page() {
                     name={`${focusIdx}.data.value.line-height`}
                   />
                 </Grid.Col>
-                <Grid.Col offset={1} span={11}>
+                <Grid.Col
+                  offset={1}
+                  span={11}
+                >
                   <InputWithUnitField
                     label='Font weight'
                     unitOptions='percent'
@@ -76,7 +99,10 @@ export function Page() {
                     name={`${focusIdx}.data.value.text-color`}
                   />
                 </Grid.Col>
-                <Grid.Col offset={1} span={11}>
+                <Grid.Col
+                  offset={1}
+                  span={11}
+                >
                   <ColorPickerField
                     label='Background'
                     name={`${focusIdx}.attributes.background-color`}
@@ -89,7 +115,6 @@ export function Page() {
                   label='Content background'
                   name={`${focusIdx}.data.value.content-background-color`}
                 />
-
               </Grid.Row>
 
               <TextAreaField

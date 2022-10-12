@@ -13,7 +13,7 @@ import ReactDOM from 'react-dom';
 import { BlockAttributeConfigurationManager } from './utils/BlockAttributeConfigurationManager';
 import { SelectionRangeProvider } from './components/provider/SelectionRangeProvider';
 
-export interface AttributePanelProps { }
+export interface AttributePanelProps {}
 
 export function AttributePanel() {
   const { values, focusBlock } = useBlock();
@@ -21,8 +21,7 @@ export function AttributePanel() {
 
   const { focusIdx } = useFocusIdx();
 
-  const Com =
-    focusBlock && BlockAttributeConfigurationManager.get(focusBlock.type);
+  const Com = focusBlock && BlockAttributeConfigurationManager.get(focusBlock.type);
 
   const shadowRoot = getShadowRoot();
 
@@ -35,7 +34,7 @@ export function AttributePanel() {
           <Com key={focusIdx} />
         ) : (
           <div style={{ marginTop: 200, padding: '0 50px' }}>
-            <TextStyle size='extraLarge'>No matching components</TextStyle>
+            <TextStyle size='extraLarge'>{t('No matching components')}</TextStyle>
           </div>
         )}
 
@@ -53,7 +52,7 @@ export function AttributePanel() {
               }
               `}
             </style>,
-            shadowRoot as any
+            shadowRoot as any,
           )}
       </PresetColorsProvider>
     </SelectionRangeProvider>

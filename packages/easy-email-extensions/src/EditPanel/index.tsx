@@ -34,13 +34,19 @@ export function EditPanel() {
           </div>
         )}
       >
-        <TabPane key='2' title='Block'>
+        <TabPane
+          key='2'
+          title='Block'
+        >
           <FullHeightOverlayScrollbars height={`calc(${height} - 60px)`}>
             <Blocks />
           </FullHeightOverlayScrollbars>
         </TabPane>
 
-        <TabPane key='1' title='Layer'>
+        <TabPane
+          key='1'
+          title={t('Layer')}
+        >
           <FullHeightOverlayScrollbars height={`calc(${height} - 60px)`}>
             <div style={{ padding: 20 }}>
               <BlockLayer />
@@ -49,7 +55,10 @@ export function EditPanel() {
         </TabPane>
       </Tabs>
       {!compact && (
-        <ConfigurationDrawer height={height} compact={Boolean(compact)} />
+        <ConfigurationDrawer
+          height={height}
+          compact={Boolean(compact)}
+        />
       )}
     </Layout.Sider>
   );

@@ -8,15 +8,13 @@ export default defineConfig({
     alias: {
       '@demo': path.resolve(__dirname, './src'),
       react: path.resolve('./node_modules/react'),
-      'react-final-form': path.resolve(
-        __dirname,
-        './node_modules/react-final-form'
+      'react-final-form': path.resolve(__dirname, './node_modules/react-final-form'),
+      'easy-email-editor/lib/locales.json': path.resolve(
+        '../packages/easy-email-editor/public/locales.json',
       ),
       'easy-email-core': path.resolve('../packages/easy-email-core'),
       'easy-email-editor': path.resolve('../packages/easy-email-editor'),
-      'easy-email-extensions': path.resolve(
-        '../packages/easy-email-extensions'
-      ),
+      'easy-email-extensions': path.resolve('../packages/easy-email-extensions'),
     },
   },
   optimizeDeps: {},
@@ -61,16 +59,13 @@ export default defineConfig({
           libraryName: '@arco-design/web-react',
           libraryNameChangeCase: 'pascalCase',
           esModule: true,
-          resolveStyle: (name) =>
-            `@arco-design/web-react/es/${name}/style/index`,
+          resolveStyle: name => `@arco-design/web-react/es/${name}/style/index`,
         },
         {
           libraryName: '@arco-design/web-react/icon',
           libraryNameChangeCase: 'pascalCase',
-          resolveStyle: (name) =>
-            `@arco-design/web-react/icon/react-icon/${name}`,
-          resolveComponent: (name) =>
-            `@arco-design/web-react/icon/react-icon/${name}`,
+          resolveStyle: name => `@arco-design/web-react/icon/react-icon/${name}`,
+          resolveComponent: name => `@arco-design/web-react/icon/react-icon/${name}`,
         },
       ],
     }),

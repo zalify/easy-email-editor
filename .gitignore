@@ -9,3 +9,4 @@ lib
 coverage
 stats.html
 .npmrc
+.env
