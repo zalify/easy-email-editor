@@ -9,13 +9,17 @@
     "dev": "cd demo && yarn dev",
     "demo": "cd demo && yarn build",
     "test": "cd packages/easy-email-core && yarn test",
+    "translate": "ts-node scripts/translate.ts",
     "lint": "lerna exec -- yarn format"
   },
   "dependencies": {
+    "easy-localized-translation": "^1.0.2",
     "lerna": "^4.0.0",
     "liquidjs": "^9.34.1"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.22.0"
+    "@types/node": "^18.8.4",
+    "@typescript-eslint/eslint-plugin": "^5.22.0",
+    "dotenv": "^16.0.3"
   }
 }

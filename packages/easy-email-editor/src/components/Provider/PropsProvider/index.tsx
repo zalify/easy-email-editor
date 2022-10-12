@@ -41,11 +41,10 @@ export interface PropsProviderProps {
   previewInjectData?: Record<string, any>;
   onBeforePreview?: (
     html: string,
-    mergeTags:
-      | PropsProviderProps['previewInjectData']
-      | PropsProviderProps['mergeTags']
+    mergeTags: PropsProviderProps['previewInjectData'] | PropsProviderProps['mergeTags'],
   ) => string | Promise<string>;
   enabledLogic?: boolean;
+  locale?: Record<string, string>;
 }
 
 const defaultMergeTagGenerate = (m: string) => `{{${m}}}`;
@@ -66,7 +65,7 @@ export const EditorPropsContext = React.createContext<
   enabledLogic: false,
 });
 
-export const PropsProvider: React.FC<PropsProviderProps> = (props) => {
+export const PropsProvider: React.FC<PropsProviderProps> = props => {
   const { dashed = true, mergeTagGenerate = defaultMergeTagGenerate } = props;
   const formatProps = useMemo(() => {
     return {
