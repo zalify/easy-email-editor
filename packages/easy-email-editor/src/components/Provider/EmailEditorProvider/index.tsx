@@ -12,25 +12,23 @@ import { useEffect, useState } from 'react';
 import setFieldTouched from 'final-form-set-field-touched';
 import { FocusBlockLayoutProvider } from '../FocusBlockLayoutProvider';
 import { PreviewEmailProvider } from '../PreviewEmailProvider';
+import { LanguageProvider } from '../LanguageProvider';
 
 export interface EmailEditorProviderProps<T extends IEmailTemplate = any>
   extends PropsProviderProps {
   data: T;
   children: (
     props: FormState<T>,
-    helper: FormApi<IEmailTemplate, Partial<IEmailTemplate>>
+    helper: FormApi<IEmailTemplate, Partial<IEmailTemplate>>,
   ) => React.ReactNode;
   onSubmit?: Config<IEmailTemplate, Partial<IEmailTemplate>>['onSubmit'];
-  validationSchema?: Config<
-    IEmailTemplate,
-    Partial<IEmailTemplate>
-  >['validate'];
+  validationSchema?: Config<IEmailTemplate, Partial<IEmailTemplate>>['validate'];
 }
 
 export const EmailEditorProvider = <T extends any>(
-  props: EmailEditorProviderProps & T
+  props: EmailEditorProviderProps & T,
 ) => {
-  const { data, children, onSubmit = () => { }, validationSchema } = props;
+  const { data, children, onSubmit = () => {}, validationSchema } = props;
 
   const initialValues = useMemo(() => {
     return {
@@ -54,20 +52,21 @@ export const EmailEditorProvider = <T extends any>(
       {() => (
         <>
           <PropsProvider {...props}>
-            <PreviewEmailProvider>
-              <RecordProvider>
-                <BlocksProvider>
-                  <HoverIdxProvider>
-                    <ScrollProvider>
-                      <FocusBlockLayoutProvider>
-                        <FormWrapper children={children} />
-                      </FocusBlockLayoutProvider>
-                    </ScrollProvider>
-                  </HoverIdxProvider>
-                </BlocksProvider>
-              </RecordProvider>
-            </PreviewEmailProvider>
-
+            <LanguageProvider locale={props.locale}>
+              <PreviewEmailProvider>
+                <RecordProvider>
+                  <BlocksProvider>
+                    <HoverIdxProvider>
+                      <ScrollProvider>
+                        <FocusBlockLayoutProvider>
+                          <FormWrapper children={children} />
+                        </FocusBlockLayoutProvider>
+                      </ScrollProvider>
+                    </HoverIdxProvider>
+                  </BlocksProvider>
+                </RecordProvider>
+              </PreviewEmailProvider>
+            </LanguageProvider>
           </PropsProvider>
           <RegisterFields />
         </>
@@ -76,11 +75,7 @@ export const EmailEditorProvider = <T extends any>(
   );
 };
 
-function FormWrapper({
-  children,
-}: {
-  children: EmailEditorProviderProps['children'];
-}) {
+function FormWrapper({ children }: { children: EmailEditorProviderProps['children'] }) {
   const data = useFormState<IEmailTemplate>();
   const helper = useForm<IEmailTemplate>();
   return <>{children(data, helper)}</>;
@@ -90,14 +85,14 @@ function FormWrapper({
 
 const RegisterFields = React.memo(() => {
   const { touched } = useFormState<IEmailTemplate>();
-  const [touchedMap, setTouchedMap] = useState<{ [key: string]: boolean; }>({});
+  const [touchedMap, setTouchedMap] = useState<{ [key: string]: boolean }>({});
 
   useEffect(() => {
     if (touched) {
       Object.keys(touched)
-        .filter((key) => touched[key])
-        .forEach((key) => {
-          setTouchedMap((obj) => {
+        .filter(key => touched[key])
+        .forEach(key => {
+          setTouchedMap(obj => {
             obj[key] = true;
             return { ...obj };
           });
@@ -107,14 +102,19 @@ const RegisterFields = React.memo(() => {
 
   return (
     <>
-      {Object.keys(touchedMap).map((key) => {
-        return <RegisterField key={key} name={key} />;
+      {Object.keys(touchedMap).map(key => {
+        return (
+          <RegisterField
+            key={key}
+            name={key}
+          />
+        );
       })}
     </>
   );
 });
 
-function RegisterField({ name }: { name: string; }) {
+function RegisterField({ name }: { name: string }) {
   useField(name);
   return <></>;
 }

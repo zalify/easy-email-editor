@@ -57,6 +57,8 @@ import { useMergeTagsModal } from './components/useMergeTagsModal';
 
 import { useWindowSize } from 'react-use';
 import { CustomBlocksType } from './components/CustomBlocks/constants';
+import localesData from 'easy-email-editor/lib/locales.json';
+console.log(localesData);
 
 const defaultCategories: ExtensionProps['categories'] = [
   {
@@ -270,6 +272,7 @@ export default function Editor() {
   const dispatch = useDispatch();
   const history = useHistory();
   const templateData = useAppSelector('template');
+  const [locale, setLocale] = useState('en');
   const { addCollection, removeCollection, collectionCategory } = useCollection();
 
   const { width } = useWindowSize();
@@ -482,6 +485,7 @@ export default function Editor() {
         mergeTagGenerate={tag => `{{${tag}}}`}
         onBeforePreview={onBeforePreview}
         socialIcons={socialIcons}
+        locale={localesData[locale]}
       >
         {({ values }, { submit }) => {
           return (
@@ -507,6 +511,15 @@ export default function Editor() {
                       <Select.Option value='blue'>Blue</Select.Option>
                       <Select.Option value='green'>Green</Select.Option>
                       <Select.Option value='purple'>Purple</Select.Option>
+                    </Select>
+                    <Select
+                      onChange={setLocale}
+                      value={locale}
+                    >
+                      <Select.Option value='en'>English</Select.Option>
+                      <Select.Option value='zh-Hans'>中文简体</Select.Option>
+                      <Select.Option value='ja'>Japanese</Select.Option>
+                      <Select.Option value='it'>Italian</Select.Option>
                     </Select>
 
                     <Button onClick={openMergeTagsModal}>Update mergeTags</Button>

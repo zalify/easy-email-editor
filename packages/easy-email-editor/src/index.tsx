@@ -32,9 +32,6 @@ export * from './typings';
 export type { StackProps } from './components/UI/Stack';
 export type { PropsProviderProps } from './components/Provider/PropsProvider';
 export type { BlockAvatarWrapperProps } from './components/wrapper';
-export type {
-  BlockGroup,
-  CollectedBlock,
-} from './components/Provider/PropsProvider';
+export type { BlockGroup, CollectedBlock } from './components/Provider/PropsProvider';
 
 export * from './constants';
