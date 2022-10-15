@@ -151,7 +151,7 @@ export default function App() {
 
 ## How does it work?
 
-<img alt="" src="https://assets.maocanhua.cn/9fe59818-cf17-449e-a021-2692a3c9076c-image.png">
+<img alt="" src="./work.png">
 
 </br>
 

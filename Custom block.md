@@ -20,7 +20,7 @@ But we can also encapsulate it and call it Custom Section block.
     <Column>
       <Text>hello</Text>
     </Column>
-  </Section>
+  </Section>,
 );
 ```
 
@@ -34,7 +34,6 @@ There is such a conversion rule
 And it can be reversed
 
 - `<mj-text>xxx</mj-text>` => `MjmlToJson` => `IText`
-
 
 ### Write a custom block
 
@@ -61,19 +60,19 @@ A custom block should have the following structure
 `create` is a method of instance generation, Let’s say `Text`, when dragging and dropped into the edit panel and , we will call `addBlock`. In fact, it just calls the corresponding `create` and generate blockData.
 
 ```ts
-const create: CreateInstance<IText> = (payload) => {
+const create: CreateInstance<IText> = payload => {
   const defaultData: IText = {
     type: BasicType.TEXT,
     data: {
       value: {
-        content: "Make it easy for everyone to compose emails!",
+        content: 'Make it easy for everyone to compose emails!',
       },
     },
     attributes: {
-      "font-size": "13px",
-      padding: "10px 25px 10px 25px",
-      "line-height": 1,
-      align: "left",
+      'font-size': '13px',
+      padding: '10px 25px 10px 25px',
+      'line-height': 1,
+      align: 'left',
     },
     children: [],
   };
@@ -87,20 +86,14 @@ You can construct your custom block through basic blocks. For example,
 a custom button, only the background color and text can be modified
 
 ```tsx
-import { Button } from "easy-email-editor";
+import { Button } from 'easy-email-editor';
 
-const render = (
-  data: ICustomButton,
-  idx: string,
-  context: IPage
-): IBlockData => {
+const render = (data: ICustomButton, idx: string, context: IPage): IBlockData => {
   const attributes = data.attributes;
   const { buttonText } = data.data.value;
 
   const instance = (
-    <Button background-color={attributes["background-color"]}>
-      {buttonText}
-    </Button>
+    <Button background-color={attributes['background-color']}>{buttonText}</Button>
   );
 
   return instance;
@@ -117,32 +110,32 @@ const render = (
   idx: string,
   mode: 'testing' | 'production',
   context?: IPage,
-  dataSource?: { [key: string]: any }
+  dataSource?: { [key: string]: any },
 ) => {
   const attributes = data.attributes;
   const { buttonText } = data.data.value;
 
   const instance = MjmlToJson(
-    `<mj-button background-color=${attributes['background-color']}>${buttonText}</mj-button>`
+    `<mj-button background-color=${attributes['background-color']}>${buttonText}</mj-button>`,
   );
 
   return instance;
 };
-
-
 ```
 
 ### Register this block
+
 Only after registering this block, mjml-parser can convert it into basic blocks
 
 ```ts
-import { BlocksMap } from "easy-email-editor";
+import { BlocksMap } from 'easy-email-editor';
 
-BlocksMap.registerBlocks({ "block-name": YourCustomBlock });
+BlocksMap.registerBlocks({ 'block-name': YourCustomBlock });
 ```
 
 ### View demo
- [https://github.com/m-Ryan/easy-email-demo/tree/main/src/CustomBlocks](https://github.com/m-Ryan/easy-email-demo/tree/main/src/CustomBlocks)
+
+[https://github.com/m-Ryan/easy-email-demo/tree/main/src/CustomBlocks](https://github.com/m-Ryan/easy-email-demo/tree/main/src/CustomBlocks)
 
 <br/>
 <br/>
@@ -150,12 +143,7 @@ BlocksMap.registerBlocks({ "block-name": YourCustomBlock });
 ## Dynamic rendering
 
 ```tsx
-import {
-  IBlockData,
-  BasicType,
-  components,
-  createCustomBlock,
-} from 'easy-email-core';
+import { IBlockData, BasicType, components, createCustomBlock } from 'easy-email-core';
 
 import { CustomBlocksType } from '../constants';
 import React from 'react';
@@ -181,7 +169,7 @@ export type IProductRecommendation = IBlockData<
 
 const productPlaceholder = {
   image:
-    'https://assets.maocanhua.cn/8e0e07e2-3f84-4426-84c1-2add355c558b-image.png',
+    'http://res.cloudinary.com/dwkp0e1yo/image/upload/v1665756285/rayk1n0lxm6vk1aqkgah.png',
   title: 'Red Flock Buckle Winter Boots',
   price: '$59.99 HKD',
   url: 'https://easy-email-m-ryan.vercel.app',
@@ -191,7 +179,7 @@ export const ProductRecommendation = createCustomBlock<IProductRecommendation>({
   name: 'Product recommendation',
   type: CustomBlocksType.PRODUCT_RECOMMENDATION,
   validParentType: [BasicType.PAGE],
-  create: (payload) => {
+  create: payload => {
     const defaultData: IProductRecommendation = {
       type: CustomBlocksType.PRODUCT_RECOMMENDATION,
       data: {
@@ -244,7 +232,11 @@ export const ProductRecommendation = createCustomBlock<IProductRecommendation>({
         background-color={attributes['background-color']}
       >
         <Section padding='0px'>
-          <Column padding='0px' border='none' vertical-align='top'>
+          <Column
+            padding='0px'
+            border='none'
+            vertical-align='top'
+          >
             <Text
               font-size='20px'
               padding='10px 25px 10px 25px'
@@ -259,7 +251,10 @@ export const ProductRecommendation = createCustomBlock<IProductRecommendation>({
         </Section>
 
         <Section padding='0px'>
-          <Group vertical-align='top' direction='ltr'>
+          <Group
+            vertical-align='top'
+            direction='ltr'
+          >
             {productList.map((item, index) => (
               <Column
                 key={index}
@@ -316,9 +311,4 @@ export const ProductRecommendation = createCustomBlock<IProductRecommendation>({
 });
 
 export { Panel } from './Panel';
-
-
-
 ```
-
-
