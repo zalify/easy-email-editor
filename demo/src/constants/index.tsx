@@ -1,7 +1,5 @@
 import { getUserConfig } from './getUserConfig';
 
-export const ASSET_DOMAIN = 'https://assets.maocanhua.cn';
-
 export const USER = getUserConfig({
   // your account
   phone: '12252691060',
@@ -10,6 +8,5 @@ export const USER = getUserConfig({
 
   // standard user
   provideUserId: 77,
-  provideCategoryId: 90
+  provideCategoryId: 90,
 });
-

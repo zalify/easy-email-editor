@@ -14,30 +14,37 @@ export function AddFont() {
   return (
     <FieldArray
       name={`${focusIdx}.data.value.fonts`}
-      render={(arrayHelpers) => {
+      render={arrayHelpers => {
         return (
           <div>
-            <Stack vertical spacing='tight'>
+            <Stack
+              vertical
+              spacing='tight'
+            >
               <Stack distribution='equalSpacing'>
                 <TextStyle variation='strong'>
-                  Import font <Help title='Points to a hosted css file' />
+                  {t('Import font')} <Help title={t('Points to a hosted css file')} />
                 </TextStyle>
                 <Stack>
                   <Button
                     size='small'
                     icon={<IconPlus />}
-                    onClick={() =>
-                      arrayHelpers.fields.push({ name: '', href: '' })
-                    }
+                    onClick={() => arrayHelpers.fields.push({ name: '', href: '' })}
                   />
                 </Stack>
               </Stack>
 
-              <Stack vertical spacing='extraTight'>
+              <Stack
+                vertical
+                spacing='extraTight'
+              >
                 {value.fonts?.map((item, index) => {
                   return (
                     <div key={index}>
-                      <Stack alignment='center' wrap={false}>
+                      <Stack
+                        alignment='center'
+                        wrap={false}
+                      >
                         <Stack.Item fill>
                           <TextField
                             name={`${focusIdx}.data.value.fonts.${index}.name`}
@@ -50,7 +57,10 @@ export function AddFont() {
                             label='Href'
                           />
                         </Stack.Item>
-                        <Stack vertical spacing='loose'>
+                        <Stack
+                          vertical
+                          spacing='loose'
+                        >
                           <Stack.Item />
                           <Button
                             icon={<IconDelete />}

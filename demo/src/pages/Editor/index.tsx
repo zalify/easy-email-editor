@@ -139,7 +139,7 @@ const defaultCategories: ExtensionProps['categories'] = [
         >
           <img
             src={
-              'https://assets.maocanhua.cn/c160738b-db01-4081-89e5-e35bd3a34470-image.png'
+              'http://res.cloudinary.com/dwkp0e1yo/image/upload/v1665841389/ctbjtig27parugrztdhk.png'
             }
             style={{
               maxWidth: '100%',
@@ -158,90 +158,6 @@ const defaultCategories: ExtensionProps['categories'] = [
         </div>
       </BlockAvatarWrapper>,
     ],
-  },
-];
-
-const socialIcons = [
-  {
-    content: 'facebook',
-    image:
-      'https://assets.maocanhua.cn/ea599da9-c42d-4d15-b06d-f6bea01d897f-5282541_fb_socialmedia_facebook_facebooklogo_socialnetwork_icon.png',
-  },
-  {
-    content: 'linkedin',
-    image:
-      'https://assets.maocanhua.cn/afeab92b-16bb-4cdc-815b-544409e9a0fa-5282542_linkedin_network_socialnetwork_linkedinlogo_icon(1).png',
-  },
-  {
-    content: 'instagram',
-    image:
-      'https://assets.maocanhua.cn/d202cfbe-cb0a-4d58-85c4-938c8b304439-5282544_camera_instagram_socialmedia_socialnetwork_instagramlogo_icon.png',
-  },
-  {
-    content: 'pinterest',
-    image:
-      'https://assets.maocanhua.cn/bcb27543-662d-4a6c-b91d-9b3fce82a82a-5282545_pin_pinterest_inspiration_pinterestlogo_icon.png',
-  },
-  {
-    content: 'youtube',
-    image:
-      'https://assets.maocanhua.cn/c628f0db-7efd-4c10-a426-a633954008ad-5282548_play_player_video_youtube_youtublelogo_icon.png',
-  },
-  {
-    content: 'twitter',
-    image:
-      'https://assets.maocanhua.cn/9d594e46-a9b0-483a-8d3d-af3e748904b2-5282551_tweet_twitter_twitterlogo_icon.png',
-  },
-  {
-    content: 'tiktok',
-    image: 'https://assets.maocanhua.cn/df888c4d-aa94-4649-a806-73a758b366cc-tiktok.png',
-  },
-  {
-    content: 'tumblr',
-    image:
-      'https://assets.maocanhua.cn/06072412-c14d-483e-9ccd-01706a108053-5282552_tumblr_tumblrlogo_icon.png',
-  },
-
-  // colorful
-  {
-    content: 'facebook',
-    image:
-      'https://assets.maocanhua.cn/a080b611-ef54-4517-a7f4-62a9de8c8c4f-5365678_fb_facebook_facebooklogo_icon.png',
-  },
-  {
-    content: 'linkedin',
-    image:
-      'https://assets.maocanhua.cn/e616cd72-ce70-413c-a185-e2b5ae2b64f4-5296501_linkedin_network_linkedinlogo_icon.png',
-  },
-  {
-    content: 'instagram',
-    image:
-      'https://assets.maocanhua.cn/e0f0e4b4-8aef-4c49-a9e4-dbfe8e0cb4d6-instagram.png',
-  },
-  {
-    content: 'pinterest',
-    image:
-      'https://assets.maocanhua.cn/4c53ff96-ad2f-4cdc-9e63-0f8b0ba52f10-5296503_inspiration_pin_pinned_pinterest_socialnetwork_icon.png',
-  },
-  {
-    content: 'youtube',
-    image:
-      'https://assets.maocanhua.cn/9b25a927-763c-43e2-8557-63f7225ad11a-5296521_play_video_vlog_youtube_youtubelogo_icon.png',
-  },
-  {
-    content: 'twitter',
-    image:
-      'https://assets.maocanhua.cn/07ae33c6-3feb-4424-a378-39031d2b63d4-5296516_tweet_twitter_twitterlogo_icon.png',
-  },
-  {
-    content: 'tiktok',
-    image:
-      'https://assets.maocanhua.cn/59102950-e1dc-41a4-b1c5-c0890f064673-7024783_tiktok_socialmedia_icon.png',
-  },
-  {
-    content: 'tumblr',
-    image:
-      'https://assets.maocanhua.cn/fcbc85b0-ccbf-4f5f-a9d7-067f16691a56-5296511_network_socialnetwork_tumblr_tumblrlogo_icon.png',
   },
 ];
 
@@ -484,7 +400,7 @@ export default function Editor() {
         mergeTags={mergeTags}
         mergeTagGenerate={tag => `{{${tag}}}`}
         onBeforePreview={onBeforePreview}
-        socialIcons={socialIcons}
+        socialIcons={[]}
         locale={localesData[locale]}
       >
         {({ values }, { submit }) => {

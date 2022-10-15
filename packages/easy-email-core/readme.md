@@ -35,7 +35,7 @@ $ yarn add easy-email-core
 ## transform mjml to json
 
 ```ts
-import { MjmlToJson } from "easy-email-core";
+import { MjmlToJson } from 'easy-email-core';
 
 const json = MjmlToJson(`
 <mjml>
@@ -144,15 +144,16 @@ console.log(json);
   ]
 }
 ```
+
 ## transform json to mjml
 
 ```ts
-import { MjmlToJson } from "easy-email-core";
+import { MjmlToJson } from 'easy-email-core';
 
 const xml = JsonToMjml({
   data: json,
   context: null,
-  mode: "production",
+  mode: 'production',
 });
 
 console.log(xml);
@@ -204,7 +205,11 @@ console.log(xml);
       <mj-text line-height="1.7" />
     </mj-attributes>
   </mj-head>
-  <mj-body background-color="#efeeea" width="600px" css-class="mjml-body">
+  <mj-body
+    background-color="#efeeea"
+    width="600px"
+    css-class="mjml-body"
+  >
     <mj-hero
       padding="100px 0px 100px 0px"
       border="none"
@@ -255,11 +260,7 @@ console.log(xml);
 ## parseReactBlockToBlockData
 
 ```tsx
-import {
-  JsonToMjml,
-  components,
-  parseReactBlockToBlockData,
-} from 'easy-email-core';
+import { JsonToMjml, components, parseReactBlockToBlockData } from 'easy-email-core';
 
 const { Page, Section, Column, Text, Button } = components;
 
@@ -278,120 +279,120 @@ const blockData = parseReactBlockToBlockData(
         >
           GO TO SPACE
         </Text>
-        <Button href='https://mjml.io/' align='center'>
+        <Button
+          href='https://mjml.io/'
+          align='center'
+        >
           ORDER YOUR TICKET NOW
         </Button>
       </Column>
     </Section>
-  </Page>
+  </Page>,
 );
 
 console.log(blockData);
-
 ```
 
 // output
 
 ```json
 {
-    "type": "page",
-    "data": {
+  "type": "page",
+  "data": {
+    "value": {
+      "breakpoint": "480px",
+      "headAttributes": "",
+      "font-size": "14px",
+      "line-height": "1.7",
+      "headStyles": [],
+      "fonts": [],
+      "responsive": true,
+      "font-family": "lucida Grande,Verdana,Microsoft YaHei",
+      "text-color": "#000000"
+    }
+  },
+  "attributes": {
+    "background-color": "#efeeea",
+    "width": "600px"
+  },
+  "children": [
+    {
+      "type": "section",
+      "data": {
         "value": {
-            "breakpoint": "480px",
-            "headAttributes": "",
-            "font-size": "14px",
-            "line-height": "1.7",
-            "headStyles": [],
-            "fonts": [],
-            "responsive": true,
-            "font-family": "lucida Grande,Verdana,Microsoft YaHei",
-            "text-color": "#000000"
+          "noWrap": false
         }
-    },
-    "attributes": {
-        "background-color": "#efeeea",
-        "width": "600px"
-    },
-    "children": [
+      },
+      "attributes": {
+        "padding": "20px 0px 20px 0px",
+        "border": "none",
+        "direction": "ltr",
+        "text-align": "center",
+        "background-repeat": "repeat",
+        "background-size": "auto",
+        "background-position": "top center"
+      },
+      "children": [
         {
-            "type": "section",
-            "data": {
+          "type": "column",
+          "data": {
+            "value": {}
+          },
+          "attributes": {
+            "padding": "0px 0px 0px 0px",
+            "border": "none",
+            "vertical-align": "top"
+          },
+          "children": [
+            {
+              "type": "text",
+              "data": {
                 "value": {
-                    "noWrap": false
+                  "content": "GO TO SPACE"
                 }
+              },
+              "attributes": {
+                "padding": "20px",
+                "align": "center",
+                "color": "#ffffff",
+                "font-family": "Helvetica",
+                "font-size": "45px",
+                "line-height": "45px",
+                "font-weight": "900"
+              },
+              "children": []
             },
-            "attributes": {
-                "padding": "20px 0px 20px 0px",
+            {
+              "type": "button",
+              "data": {
+                "value": {
+                  "content": "ORDER YOUR TICKET NOW"
+                }
+              },
+              "attributes": {
+                "align": "center",
+                "background-color": "#414141",
+                "color": "#ffffff",
+                "font-weight": "normal",
+                "border-radius": "3px",
+                "padding": "10px 25px 10px 25px",
+                "inner-padding": "10px 25px 10px 25px",
+                "line-height": "120%",
+                "target": "_blank",
+                "vertical-align": "middle",
                 "border": "none",
-                "direction": "ltr",
                 "text-align": "center",
-                "background-repeat": "repeat",
-                "background-size": "auto",
-                "background-position": "top center"
-            },
-            "children": [
-                {
-                    "type": "column",
-                    "data": {
-                        "value": {}
-                    },
-                    "attributes": {
-                        "padding": "0px 0px 0px 0px",
-                        "border": "none",
-                        "vertical-align": "top"
-                    },
-                    "children": [
-                        {
-                            "type": "text",
-                            "data": {
-                                "value": {
-                                    "content": "GO TO SPACE"
-                                }
-                            },
-                            "attributes": {
-                                "padding": "20px",
-                                "align": "center",
-                                "color": "#ffffff",
-                                "font-family": "Helvetica",
-                                "font-size": "45px",
-                                "line-height": "45px",
-                                "font-weight": "900"
-                            },
-                            "children": []
-                        },
-                        {
-                            "type": "button",
-                            "data": {
-                                "value": {
-                                    "content": "ORDER YOUR TICKET NOW"
-                                }
-                            },
-                            "attributes": {
-                                "align": "center",
-                                "background-color": "#414141",
-                                "color": "#ffffff",
-                                "font-weight": "normal",
-                                "border-radius": "3px",
-                                "padding": "10px 25px 10px 25px",
-                                "inner-padding": "10px 25px 10px 25px",
-                                "line-height": "120%",
-                                "target": "_blank",
-                                "vertical-align": "middle",
-                                "border": "none",
-                                "text-align": "center",
-                                "href": "https://mjml.io/"
-                            },
-                            "children": []
-                        }
-                    ]
-                }
-            ]
+                "href": "https://mjml.io/"
+              },
+              "children": []
+            }
+          ]
         }
-    ]
+      ]
+    }
+  ]
 }
-
 ```
-
 
 ```tsx
 // Then transform to mjml
@@ -399,15 +400,13 @@ console.log(
   JsonToMjml({
     data: blockData,
     mode: 'production',
-  })
+  }),
 );
-
 ```
 
 // output
 
 ```html
-
 <mjml>
   <mj-head>
     <mj-html-attributes>
@@ -451,7 +450,11 @@ console.log(
       <mj-text line-height="1.7" />
     </mj-attributes>
   </mj-head>
-  <mj-body background-color="#efeeea" width="600px" css-class="mjml-body">
+  <mj-body
+    background-color="#efeeea"
+    width="600px"
+    css-class="mjml-body"
+  >
     <mj-section
       padding="20px 0px 20px 0px"
       border="none"
@@ -461,7 +464,11 @@ console.log(
       background-size="auto"
       background-position="top center"
     >
-      <mj-column padding="0px 0px 0px 0px" border="none" vertical-align="top">
+      <mj-column
+        padding="0px 0px 0px 0px"
+        border="none"
+        vertical-align="top"
+      >
         <mj-text
           padding="20px"
           align="center"
@@ -495,14 +502,12 @@ console.log(
     </mj-section>
   </mj-body>
 </mjml>
-
-
 ```
 
 ## Customize your block
 
 ```tsx
-import { merge } from "lodash";
+import { merge } from 'lodash';
 import {
   createCustomBlock,
   IBlockData,
@@ -511,13 +516,13 @@ import {
   JsonToMjml,
   BasicType,
   BlockManager,
-} from "easy-email-core";
+} from 'easy-email-core';
 const { Section, Column, Image, Button } = components;
 
 type IMyFirstBlock = IBlockData<
   {
-    "background-color": string;
-    "text-color": string;
+    'background-color': string;
+    'text-color': string;
   },
   {
     buttonText: string;
@@ -526,43 +531,49 @@ type IMyFirstBlock = IBlockData<
 >;
 
 const myFirstBlock = createCustomBlock({
-  name: "My first block",
-  type: "MY_FIRST_BLOCK",
+  name: 'My first block',
+  type: 'MY_FIRST_BLOCK',
   create(payload) {
     const defaultData: IMyFirstBlock = {
-      type: "MY_FIRST_BLOCK",
+      type: 'MY_FIRST_BLOCK',
       data: {
         value: {
-          buttonText: "Got it",
+          buttonText: 'Got it',
           imageUrl:
-            "https://assets.maocanhua.cn/10dada65-c4fb-4b1f-837e-59a1005bbea6-image.png",
+            'http://res.cloudinary.com/dwkp0e1yo/image/upload/v1665841616/pn7npfspxaqfzxiensue.png',
         },
       },
       attributes: {
-        "background-color": "#4A90E2",
-        "text-color": "#ffffff",
+        'background-color': '#4A90E2',
+        'text-color': '#ffffff',
       },
       children: [],
     };
     return merge(defaultData, payload);
   },
   validParentType: [BasicType.PAGE, BasicType.WRAPPER],
-  render(data: IMyFirstBlock,
-      idx: string | null,
-      mode: 'testing' | 'production',
-      context?: IPage,
-      dataSource?: { [key: string]: any }) {
+  render(
+    data: IMyFirstBlock,
+    idx: string | null,
+    mode: 'testing' | 'production',
+    context?: IPage,
+    dataSource?: { [key: string]: any },
+  ) {
     const { imageUrl, buttonText } = data.data.value;
     const attributes = data.attributes;
 
     const instance = (
-      <Section padding="20px">
+      <Section padding='20px'>
         <Column>
-          <Image padding="0px 0px 0px 0px" width="100px" src={imageUrl} />
+          <Image
+            padding='0px 0px 0px 0px'
+            width='100px'
+            src={imageUrl}
+          />
           <Button
-            background-color={attributes["background-color"]}
-            color={attributes["text-color"]}
-            href="#"
+            background-color={attributes['background-color']}
+            color={attributes['text-color']}
+            href='#'
           >
             {buttonText}
           </Button>
@@ -582,8 +593,8 @@ console.log(
     data: pageBlock.create({
       children: [myFirstBlock.create()],
     }),
-    mode: "production",
-  })
+    mode: 'production',
+  }),
 );
 ```
 
@@ -633,7 +644,11 @@ console.log(
       <mj-text line-height="1.7" />
     </mj-attributes>
   </mj-head>
-  <mj-body background-color="#efeeea" width="600px" css-class="mjml-body">
+  <mj-body
+    background-color="#efeeea"
+    width="600px"
+    css-class="mjml-body"
+  >
     <mj-section
       padding="20px"
       background-repeat="repeat"
@@ -643,12 +658,16 @@ console.log(
       direction="ltr"
       text-align="center"
     >
-      <mj-column padding="0px 0px 0px 0px" border="none" vertical-align="top">
+      <mj-column
+        padding="0px 0px 0px 0px"
+        border="none"
+        vertical-align="top"
+      >
         <mj-image
           align="center"
           height="auto"
           padding="0px 0px 0px 0px"
-          src="https://assets.maocanhua.cn/10dada65-c4fb-4b1f-837e-59a1005bbea6-image.png"
+          src="http://res.cloudinary.com/dwkp0e1yo/image/upload/v1665841616/pn7npfspxaqfzxiensue.png"
           width="100px"
         >
         </mj-image>

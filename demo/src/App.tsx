@@ -26,7 +26,7 @@ function App() {
             >
               <img
                 width='200px'
-                src='https://assets.maocanhua.cn/Fj1gmWbF-aY3ZnPyrTrDge6atRnm'
+                src='/loading'
                 alt=''
               />
               <p
@@ -42,8 +42,15 @@ function App() {
         >
           <Router history={history}>
             <Switch>
-              <Route path='/' exact component={Home} />
-              <Route path='/editor' component={Editor} />
+              <Route
+                path='/'
+                exact
+                component={Home}
+              />
+              <Route
+                path='/editor'
+                component={Editor}
+              />
             </Switch>
           </Router>
         </Suspense>

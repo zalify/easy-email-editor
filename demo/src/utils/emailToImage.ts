@@ -16,13 +16,13 @@ export async function emailToImage(content: IBlockData) {
     {
       beautify: true,
       validationLevel: 'soft',
-    }
+    },
   ).html;
   document.body.appendChild(container);
 
-  const blob = await new Promise<any>((resolve) => {
-    html2canvas(container, { useCORS: true }).then((canvas) =>
-      canvas.toBlob(resolve, 'png', 0.1)
+  const blob = await new Promise<any>(resolve => {
+    html2canvas(container, { useCORS: true }).then(canvas =>
+      canvas.toBlob(resolve, 'png', 0.1),
     );
   });
 
@@ -32,6 +32,6 @@ export async function emailToImage(content: IBlockData) {
     const picture = await services.common.uploadByQiniu(blob);
     return picture;
   } catch (error) {
-    return 'https://assets.maocanhua.cn/0cd7e1fc-c482-44e5-86e5-c228fbe38bc4-image.png';
+    return 'http://res.cloudinary.com/dwkp0e1yo/image/upload/v1665841585/use2lx1xqmrhzceshsys.png';
   }
 }
