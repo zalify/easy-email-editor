@@ -106,7 +106,7 @@ export const StandardLayout: React.FC<ExtensionProps> = props => {
             className={styles.StandardLayout}
             style={{
               display: 'flex',
-              width: '100vw',
+              width: '100%',
               overflow: 'hidden',
             }}
           >

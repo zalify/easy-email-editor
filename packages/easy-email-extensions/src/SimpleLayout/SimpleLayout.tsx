@@ -1,11 +1,5 @@
 import { ShortcutToolbar } from '../ShortcutToolbar';
-import {
-  Button,
-  Card,
-  ConfigProvider,
-  Layout,
-  Tabs,
-} from '@arco-design/web-react';
+import { Button, Card, ConfigProvider, Layout, Tabs } from '@arco-design/web-react';
 import { useEditorProps } from 'easy-email-editor';
 import React, { useState } from 'react';
 import { SourceCodePanel } from '../SourceCodePanel';
@@ -22,7 +16,7 @@ export const SimpleLayout: React.FC<
     showSourceCode?: boolean;
     defaultShowLayer?: boolean;
   } & BlockLayerProps
-> = (props) => {
+> = props => {
   const { height: containerHeight } = useEditorProps();
   const { showSourceCode = true, defaultShowLayer = true } = props;
   const [collapsed, setCollapsed] = useState(!defaultShowLayer);
@@ -32,7 +26,7 @@ export const SimpleLayout: React.FC<
         className={styles.SimpleLayout}
         style={{
           display: 'flex',
-          width: '100vw',
+          width: '100%',
           overflow: 'hidden',
           minWidth: 1400,
         }}
@@ -46,7 +40,10 @@ export const SimpleLayout: React.FC<
           collapsedWidth={60}
           width={300}
         >
-          <Card bodyStyle={{ padding: 0 }} style={{ border: 'none' }}>
+          <Card
+            bodyStyle={{ padding: 0 }}
+            style={{ border: 'none' }}
+          >
             <Card.Grid style={{ width: 60, textAlign: 'center' }}>
               <ShortcutToolbar />
               <Button
@@ -57,7 +54,7 @@ export const SimpleLayout: React.FC<
                 }}
                 icon={collapsed ? <IconRight /> : <IconLeft />}
                 shape='round'
-                onClick={() => setCollapsed((v) => !v)}
+                onClick={() => setCollapsed(v => !v)}
               />
             </Card.Grid>
             <Card.Grid
@@ -107,9 +104,7 @@ export const SimpleLayout: React.FC<
             <Tabs className={styles.layoutTabs}>
               <Tabs.TabPane
                 title={
-                  <div style={{ height: 31, lineHeight: '31px' }}>
-                    Configuration
-                  </div>
+                  <div style={{ height: 31, lineHeight: '31px' }}>Configuration</div>
                 }
               >
                 <AttributePanel />
@@ -119,9 +114,7 @@ export const SimpleLayout: React.FC<
                   destroyOnHide
                   key='Source code'
                   title={
-                    <div style={{ height: 31, lineHeight: '31px' }}>
-                      Source code
-                    </div>
+                    <div style={{ height: 31, lineHeight: '31px' }}>Source code</div>
                   }
                 >
                   <SourceCodePanel />
