@@ -8,9 +8,7 @@ export interface AttributesPanelWrapper {
   style?: React.CSSProperties;
   extra?: React.ReactNode;
 }
-export const AttributesPanelWrapper: React.FC<AttributesPanelWrapper> = (
-  props
-) => {
+export const AttributesPanelWrapper: React.FC<AttributesPanelWrapper> = props => {
   const { focusBlock, setFocusBlock } = useBlock();
   const block = focusBlock && BlockManager.getBlockByType(focusBlock.type);
 
@@ -20,7 +18,7 @@ export const AttributesPanelWrapper: React.FC<AttributesPanelWrapper> = (
       focusBlock.data.hidden = val as any;
       setFocusBlock({ ...focusBlock });
     },
-    [focusBlock, setFocusBlock]
+    [focusBlock, setFocusBlock],
   );
 
   if (!focusBlock || !block) return null;
@@ -36,11 +34,21 @@ export const AttributesPanelWrapper: React.FC<AttributesPanelWrapper> = (
       >
         <Stack vertical>
           <Stack.Item fill>
-            <Stack wrap={false} distribution='equalSpacing' alignment='center'>
-              <Stack spacing='extraTight' alignment='center'>
+            <Stack
+              wrap={false}
+              distribution='equalSpacing'
+              alignment='center'
+            >
+              <Stack
+                spacing='extraTight'
+                alignment='center'
+              >
                 <EyeIcon />
-                <TextStyle variation='strong' size='large'>
-                  {`${block.name} attributes`}
+                <TextStyle
+                  variation='strong'
+                  size='large'
+                >
+                  {`${block.name} `} {t('attributes')}
                 </TextStyle>
               </Stack>
               <Stack.Item>{props.extra}</Stack.Item>
@@ -69,7 +77,7 @@ function EyeIcon() {
         },
       });
     },
-    [focusBlock, setFocusBlock]
+    [focusBlock, setFocusBlock],
   );
 
   if (!focusBlock) return null;

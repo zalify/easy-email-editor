@@ -27,23 +27,25 @@ export function Page() {
           >
             <Space direction='vertical'>
               <TextField
-                label='Subject'
+                label={t('Subject')}
                 name={'subject'}
                 inline
               />
               <TextField
-                label='SubTitle'
+                label={t('SubTitle')}
                 name={'subTitle'}
                 inline
               />
               <InputWithUnitField
-                label='Width'
+                label={t('Width')}
                 name={`${focusIdx}.attributes.width`}
                 inline
               />
               <InputWithUnitField
-                label='Breakpoint'
-                helpText='Allows you to control on which breakpoint the layout should go desktop/mobile.'
+                label={t('Breakpoint')}
+                helpText={t(
+                  'Allows you to control on which breakpoint the layout should go desktop/mobile.',
+                )}
                 name={`${focusIdx}.data.value.breakpoint`}
                 inline
               />
@@ -66,7 +68,7 @@ export function Page() {
                   span={11}
                 >
                   <InputWithUnitField
-                    label='Font size'
+                    label={t('Font size')}
                     name={`${focusIdx}.data.value.font-size`}
                   />
                 </Grid.Col>
@@ -85,7 +87,7 @@ export function Page() {
                   span={11}
                 >
                   <InputWithUnitField
-                    label='Font weight'
+                    label={t('Font weight')}
                     unitOptions='percent'
                     name={`${focusIdx}.data.value.font-weight`}
                   />
@@ -95,7 +97,7 @@ export function Page() {
               <Grid.Row>
                 <Grid.Col span={11}>
                   <ColorPickerField
-                    label='Text color'
+                    label={t('Text color')}
                     name={`${focusIdx}.data.value.text-color`}
                   />
                 </Grid.Col>
@@ -104,7 +106,7 @@ export function Page() {
                   span={11}
                 >
                   <ColorPickerField
-                    label='Background'
+                    label={t('Background')}
                     name={`${focusIdx}.attributes.background-color`}
                   />
                 </Grid.Col>
@@ -112,14 +114,14 @@ export function Page() {
 
               <Grid.Row>
                 <ColorPickerField
-                  label='Content background'
+                  label={t('Content background')}
                   name={`${focusIdx}.data.value.content-background-color`}
                 />
               </Grid.Row>
 
               <TextAreaField
                 autoSize
-                label='User style'
+                label={t('User style')}
                 name={`${focusIdx}.data.value.user-style.content`}
               />
               <Stack.Item />

@@ -45,10 +45,13 @@ export function FontSize(props: FontSizeProps) {
   const { execCommand } = props;
   const [visible, setVisible] = React.useState(false);
 
-  const onChange = useCallback((val: string) => {
-    execCommand('fontSize', val);
-    setVisible(false);
-  }, [execCommand]);
+  const onChange = useCallback(
+    (val: string) => {
+      execCommand('fontSize', val);
+      setVisible(false);
+    },
+    [execCommand],
+  );
 
   const onVisibleChange = useCallback((v: boolean) => {
     setVisible(v);
@@ -62,7 +65,7 @@ export function FontSize(props: FontSizeProps) {
       className='easy-email-extensions-Tools-Popover'
       popupVisible={visible}
       onVisibleChange={onVisibleChange}
-      content={(
+      content={
         <>
           <style>{styleText}</style>
           <div
@@ -78,7 +81,7 @@ export function FontSize(props: FontSizeProps) {
               selectedKeys={[]}
               style={{ border: 'none', padding: 0 }}
             >
-              {list.map((item) => (
+              {list.map(item => (
                 <Menu.Item
                   style={{ lineHeight: '30px', height: 30 }}
                   key={item.value}
@@ -89,15 +92,13 @@ export function FontSize(props: FontSizeProps) {
             </Menu>
           </div>
         </>
-
-      )}
+      }
       getPopupContainer={props.getPopupContainer}
     >
       <ToolItem
-        title='Font size'
+        title={t('Font size')}
         icon={<IconFont iconName='icon-font-color' />}
       />
     </Popover>
   );
-
 }

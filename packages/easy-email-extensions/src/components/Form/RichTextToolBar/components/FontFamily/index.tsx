@@ -15,10 +15,13 @@ export function FontFamily(props: FontFamilyProps) {
   const { execCommand } = props;
   const [visible, setVisible] = React.useState(false);
 
-  const onChange = useCallback((val: string) => {
-    execCommand('fontName', val);
-    setVisible(false);
-  }, [execCommand]);
+  const onChange = useCallback(
+    (val: string) => {
+      execCommand('fontName', val);
+      setVisible(false);
+    },
+    [execCommand],
+  );
 
   const onVisibleChange = useCallback((v: boolean) => {
     setVisible(v);
@@ -32,7 +35,7 @@ export function FontFamily(props: FontFamilyProps) {
       className='easy-email-extensions-Tools-Popover'
       popupVisible={visible}
       onVisibleChange={onVisibleChange}
-      content={(
+      content={
         <>
           <style>{styleText}</style>
           <div
@@ -48,7 +51,7 @@ export function FontFamily(props: FontFamilyProps) {
               selectedKeys={[]}
               style={{ border: 'none', padding: 0 }}
             >
-              {fontList.map((item) => (
+              {fontList.map(item => (
                 <Menu.Item
                   style={{ lineHeight: '30px', height: 30 }}
                   key={item.value}
@@ -59,12 +62,11 @@ export function FontFamily(props: FontFamilyProps) {
             </Menu>
           </div>
         </>
-
-      )}
+      }
       getPopupContainer={props.getPopupContainer}
     >
       <ToolItem
-        title='Font family'
+        title={t('Font family')}
         icon={<IconFont iconName='icon-font-family' />}
       />
     </Popover>
