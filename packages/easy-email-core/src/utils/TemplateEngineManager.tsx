@@ -1,7 +1,4 @@
-import {
-  AdvancedBlock,
-  Operator,
-} from '@core/blocks/advanced/generateAdvancedBlock';
+import { AdvancedBlock, Operator } from '@core/blocks/advanced/generateAdvancedBlock';
 import { Raw } from '@core/components';
 import { isNumber } from 'lodash';
 import React from 'react';
@@ -9,29 +6,28 @@ import { nanoid } from 'nanoid';
 
 function generateIterationTemplate(
   option: NonNullable<AdvancedBlock['data']['value']['iteration']>,
-  content: React.ReactElement
+  content: React.ReactElement,
 ) {
   return (
     <>
       <Raw>
         {`
         <!-- htmlmin:ignore -->
-        {% for ${option.itemName} in ${option.dataSource} ${option.limit ? `limit:${option.limit}` : ''
-          } %}
+        {% for ${option.itemName} in ${option.dataSource} ${
+          option.limit ? `limit:${option.limit}` : ''
+        } %}
         <!-- htmlmin:ignore -->
         `}
       </Raw>
       {content}
-      <Raw>
-        {' <!-- htmlmin:ignore -->{% endfor %}  <!-- htmlmin:ignore -->'}
-      </Raw>
+      <Raw>{' <!-- htmlmin:ignore -->{% endfor %}  <!-- htmlmin:ignore -->'}</Raw>
     </>
   );
 }
 
 function generateConditionTemplate(
   option: NonNullable<AdvancedBlock['data']['value']['condition']>,
-  content: React.ReactElement
+  content: React.ReactElement,
 ) {
   const { symbol, groups } = option;
 
@@ -88,6 +84,25 @@ function generateConditionTemplate(
   );
 }
 
+function generateI18nTemplate(
+  option: NonNullable<AdvancedBlock['data']['value']['i18n']>,
+  content: React.ReactElement,
+) {
+  return (
+    <>
+      <Raw>
+        {`
+        <!-- htmlmin:ignore -->
+        {%
+          fuck this shit
+        <!-- htmlmin:ignore -->
+        `}
+      </Raw>
+      {content}
+    </>
+  );
+}
+
 interface IterationTemplate {
   name: 'iteration';
   templateGenerateFn: typeof generateIterationTemplate;
@@ -98,19 +113,25 @@ interface ConditionTemplate {
   templateGenerateFn: typeof generateConditionTemplate;
 }
 
+interface I18nTemplate {
+  name: 'i18n';
+  templateGenerateFn: typeof generateI18nTemplate;
+}
+
 export class TemplateEngineManager {
   private static tags = {
     iteration: generateIterationTemplate,
     condition: generateConditionTemplate,
+    i18n: generateI18nTemplate,
   };
 
   public static setTag(option: IterationTemplate | ConditionTemplate) {
     this.tags[option.name] = option.templateGenerateFn as any;
   }
 
-  public static generateTagTemplate<
-    T extends keyof typeof TemplateEngineManager['tags']
-  >(name: T): typeof TemplateEngineManager['tags'][T] {
+  public static generateTagTemplate<T extends keyof typeof TemplateEngineManager['tags']>(
+    name: T,
+  ): typeof TemplateEngineManager['tags'][T] {
     return this.tags[name];
   }
 }

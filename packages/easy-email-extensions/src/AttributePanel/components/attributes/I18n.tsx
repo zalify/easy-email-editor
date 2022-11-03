@@ -4,7 +4,7 @@ import { AdvancedBlock, AdvancedType } from 'easy-email-core';
 import { TextField } from '@extensions/components/Form';
 import React, { useCallback } from 'react';
 
-export function Iteration() {
+export function I18n() {
   const { focusIdx } = useFocusIdx();
   const { focusBlock, change } = useBlock();
   const i18n = focusBlock?.data.value?.i18n as

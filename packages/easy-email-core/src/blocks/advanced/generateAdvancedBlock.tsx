@@ -15,12 +15,12 @@ export function generateAdvancedBlock<T extends AdvancedBlock>(option: {
     idx: string | null | undefined;
     mode: 'testing' | 'production';
     context?: IPage;
-    dataSource?: { [key: string]: any; };
+    dataSource?: { [key: string]: any };
   }) => ReturnType<NonNullable<IBlock['render']>>;
   validParentType: string[];
 }) {
   const baseBlock = Object.values(standardBlocks).find(
-    (b) => b.type === (option.baseType as any as keyof typeof standardBlocks)
+    b => b.type === (option.baseType as any as keyof typeof standardBlocks),
   );
   if (!baseBlock) {
     throw new Error(`Can not find ${option.baseType}`);
@@ -30,16 +30,16 @@ export function generateAdvancedBlock<T extends AdvancedBlock>(option: {
     name: baseBlock.name,
     type: option.type,
     validParentType: option.validParentType,
-    create: (payload) => {
+    create: payload => {
       const defaultData = {
         ...baseBlock.create(),
         type: option.type,
       } as any;
       return merge(defaultData, payload);
     },
-    render: (params) => {
+    render: params => {
       const { data, idx, mode, context, dataSource } = params;
-      const { iteration, condition } = data.data.value;
+      const { iteration, condition, i18n } = data.data.value;
 
       const getBaseContent = (bIdx: string | null | undefined, index: number) =>
         option.getContent({
@@ -56,13 +56,13 @@ export function generateAdvancedBlock<T extends AdvancedBlock>(option: {
       if (mode === 'testing') {
         return (
           <>
-            <React.Fragment key="children">{children}</React.Fragment>
+            <React.Fragment key='children'>{children}</React.Fragment>
 
-            {new Array((iteration?.mockQuantity || 1) - 1)
-              .fill(true)
-              .map((_, index) => (
-                <React.Fragment key={index}>{getBaseContent(idx, index + 1)}</React.Fragment>
-              ))}
+            {new Array((iteration?.mockQuantity || 1) - 1).fill(true).map((_, index) => (
+              <React.Fragment key={index}>
+                {getBaseContent(idx, index + 1)}
+              </React.Fragment>
+            ))}
           </>
         );
       }
@@ -70,15 +70,19 @@ export function generateAdvancedBlock<T extends AdvancedBlock>(option: {
       if (condition && condition.enabled) {
         children = TemplateEngineManager.generateTagTemplate('condition')(
           condition,
-          children
+          children,
         );
       }
 
       if (iteration && iteration.enabled) {
         children = TemplateEngineManager.generateTagTemplate('iteration')(
           iteration,
-          children
+          children,
         );
+      }
+
+      if (i18n && i18n.enabled) {
+        children = TemplateEngineManager.generateTagTemplate('i18n')(i18n, children);
       }
 
       return children;
