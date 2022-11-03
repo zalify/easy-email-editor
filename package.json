@@ -1,5 +1,6 @@
 {
   "name": "easy-email",
+  "version": "0.0.1",
   "scripts": {
     "install-all": "lerna exec -- yarn --force && cd demo && yarn --force",
     "build": "yarn build:core && yarn build:editor && yarn build:extensions",

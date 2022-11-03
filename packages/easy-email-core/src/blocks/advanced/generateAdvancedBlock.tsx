@@ -101,6 +101,10 @@ export interface AdvancedBlock extends IBlockData {
         limit: number;
         mockQuantity: number;
       };
+      i18n?: {
+        enabled: boolean;
+        context: string;
+      };
     };
   };
 }
