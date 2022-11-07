@@ -30,8 +30,7 @@ export interface ToolsProps {
 export function Tools(props: ToolsProps) {
   const { mergeTags, enabledMergeTagsBadge } = useEditorProps();
   const { focusBlockNode } = useFocusBlockLayout();
-  const { selectionRange, restoreRange, setRangeByElement } =
-    useSelectionRange();
+  const { selectionRange, restoreRange, setRangeByElement } = useSelectionRange();
 
   const execCommand = useCallback(
     (cmd: string, val?: any) => {
@@ -63,7 +62,7 @@ export function Tools(props: ToolsProps) {
         }
         link.style.color = 'inherit';
         link.style.textDecoration = linkData.underline ? 'underline' : 'none';
-        link.setAttribute('href', linkData.link);
+        link.setAttribute('href', linkData.link.trim());
       } else if (cmd === 'insertHTML') {
         let newContent = val;
         if (enabledMergeTagsBadge) {
@@ -93,7 +92,7 @@ export function Tools(props: ToolsProps) {
       restoreRange,
       selectionRange,
       setRangeByElement,
-    ]
+    ],
   );
 
   const execCommandWithRange = useCallback(
@@ -105,11 +104,10 @@ export function Tools(props: ToolsProps) {
         props.onChange(html);
       }
     },
-    [props.onChange]
+    [props.onChange],
   );
 
-  const getPopoverMountNode = () =>
-    document.getElementById(FIXED_CONTAINER_ID)!;
+  const getPopoverMountNode = () => document.getElementById(FIXED_CONTAINER_ID)!;
 
   return (
     <div
@@ -177,7 +175,7 @@ export function Tools(props: ToolsProps) {
         <div className='easy-email-extensions-divider' />
         <Link
           currentRange={selectionRange}
-          onChange={(values) => execCommand('createLink', values)}
+          onChange={values => execCommand('createLink', values)}
           getPopupContainer={getPopoverMountNode}
         />
         <div className='easy-email-extensions-divider' />
