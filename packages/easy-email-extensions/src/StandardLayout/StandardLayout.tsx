@@ -78,7 +78,7 @@ const defaultCategories: ExtensionProps['categories'] = [
 
 export const StandardLayout: React.FC<ExtensionProps> = props => {
   const { height: containerHeight } = useEditorProps();
-  const { showSourceCode = true, compact = true, categories = defaultCategories } = props;
+  const { showSourceCode = true, compact = true, showEditPanel = true, categories = defaultCategories } = props;
 
   const { setFocusIdx } = useFocusIdx();
 
@@ -110,9 +110,9 @@ export const StandardLayout: React.FC<ExtensionProps> = props => {
               overflow: 'hidden',
             }}
           >
-            {compact && <EditPanel />}
+            {compact && showEditPanel && <EditPanel />}
             <Layout style={{ height: containerHeight, flex: 1 }}>{props.children}</Layout>
-            {!compact && <EditPanel />}
+            {!compact && showEditPanel && <EditPanel />}
             {compact ? (
               <Layout.Sider
                 style={{

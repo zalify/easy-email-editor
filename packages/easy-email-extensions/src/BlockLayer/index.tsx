@@ -6,6 +6,7 @@ import {
   TextStyle,
   useBlock,
   useEditorContext,
+  useEditorProps,
   useFocusIdx,
   useHoverIdx,
   useRefState,
@@ -48,6 +49,7 @@ export interface BlockLayerProps {
 
 export function BlockLayer(props: BlockLayerProps) {
   const { pageData } = useEditorContext();
+  const { disableBlockOptions } = useEditorProps();
   const { renderTitle: propsRenderTitle } = props;
   const { focusIdx, setFocusIdx } = useFocusIdx();
   const { setHoverIdx, setIsDragging, setDirection } = useHoverIdx();
@@ -283,7 +285,7 @@ export function BlockLayer(props: BlockLayerProps) {
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       />
-      {contextMenuData && (
+      {!disableBlockOptions && contextMenuData && !contextMenuData.blockData.disableBlockOptions && (
         <ContextMenu
           onClose={onCloseContextMenu}
           moveBlock={moveBlock}

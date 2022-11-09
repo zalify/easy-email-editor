@@ -12,7 +12,7 @@ const TabPane = Tabs.TabPane;
 
 export function EditPanel() {
   const { height } = useEditorProps();
-  const { compact = true } = useExtensionProps();
+  const { compact = true, showLayersTab = true, showBlocksTab = true } = useExtensionProps();
 
   return (
     <Layout.Sider
@@ -26,7 +26,7 @@ export function EditPanel() {
       width={360}
     >
       <Tabs
-        defaultActiveTab='2'
+        defaultActiveTab={ showBlocksTab ? '2' : '1' }
         style={{ width: '100%', padding: 0 }}
         renderTabHeader={(_, DefaultHeader) => (
           <div className={styles.largeTabsHeader}>
@@ -34,25 +34,25 @@ export function EditPanel() {
           </div>
         )}
       >
-        <TabPane
+        { showBlocksTab && (<TabPane
           key='2'
           title='Block'
         >
           <FullHeightOverlayScrollbars height={`calc(${height} - 60px)`}>
             <Blocks />
           </FullHeightOverlayScrollbars>
-        </TabPane>
+        </TabPane>)}
 
-        <TabPane
+        { showLayersTab && (<TabPane
           key='1'
           title={t('Layer')}
         >
           <FullHeightOverlayScrollbars height={`calc(${height} - 60px)`}>
             <div style={{ padding: 20 }}>
-              <BlockLayer />
+              <BlockLayer/>
             </div>
           </FullHeightOverlayScrollbars>
-        </TabPane>
+        </TabPane>)}
       </Tabs>
       {!compact && (
         <ConfigurationDrawer

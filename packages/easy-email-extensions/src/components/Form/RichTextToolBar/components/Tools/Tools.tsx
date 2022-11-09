@@ -28,7 +28,7 @@ export interface ToolsProps {
 }
 
 export function Tools(props: ToolsProps) {
-  const { mergeTags, enabledMergeTagsBadge } = useEditorProps();
+  const { mergeTags, enabledMergeTagsBadge, disableBlockOptions = false } = useEditorProps();
   const { focusBlockNode } = useFocusBlockLayout();
   const { selectionRange, restoreRange, setRangeByElement } =
     useSelectionRange();
@@ -122,7 +122,7 @@ export function Tools(props: ToolsProps) {
           alignItems: 'center',
         }}
       >
-        <BasicTools />
+        {!disableBlockOptions && (<BasicTools />)}
 
         {mergeTags && (
           <MergeTags

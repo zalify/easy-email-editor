@@ -10,11 +10,12 @@ import { classnames } from '@extensions/utils/classnames';
 import { useAddToCollection } from '@extensions/hooks/useAddToCollection';
 import { getBlockTitle } from '@extensions/utils/getBlockTitle';
 
-export function Toolbar() {
+export function Toolbar(props: { disableBlockOptions?: boolean; }) {
   const { moveBlock, copyBlock, removeBlock, focusBlock } = useBlock();
   const { focusIdx, setFocusIdx } = useFocusIdx();
   const { modal, setModalVisible } = useAddToCollection();
-  const props = useEditorProps();
+  const editorProps = useEditorProps();
+  const { disableBlockOptions = false } = props;
 
   const isPage = focusBlock?.type === BasicType.PAGE;
   const isText = isTextBlock(focusBlock?.type);
@@ -93,7 +94,7 @@ export function Toolbar() {
           >
             {focusBlock && getBlockTitle(focusBlock, false)}
           </div>
-          <div
+          {!disableBlockOptions && !editorProps.disableBlockOptions && (<div
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -113,14 +114,14 @@ export function Toolbar() {
               onClick={handleSelectParent}
             />
             <ToolItem iconName='icon-copy' onClick={handleCopy} />
-            {props.onAddCollection && (
+            {editorProps.onAddCollection && (
               <ToolItem
                 iconName='icon-collection'
                 onClick={handleAddToCollection}
               />
             )}
             <ToolItem iconName='icon-delete' onClick={handleDelete} />
-          </div>
+          </div>)}
         </div>
       </div>
       {modal}

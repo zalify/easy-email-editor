@@ -28,6 +28,7 @@ export interface PropsProviderProps {
   autoComplete?: boolean;
   dashed?: boolean;
   socialIcons?: Array<{ content: string; image: string }>;
+  disableBlockOptions?: boolean;
 
   mergeTagGenerate?: (m: string) => string;
   onChangeMergeTag?: (ptah: string, val: any) => any;
@@ -63,6 +64,7 @@ export const EditorPropsContext = React.createContext<
   dashed: true,
   mergeTagGenerate: defaultMergeTagGenerate,
   enabledLogic: false,
+  disableBlockOptions: false
 });
 
 export const PropsProvider: React.FC<PropsProviderProps> = props => {

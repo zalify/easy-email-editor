@@ -117,7 +117,7 @@ const defaultCategories: ExtensionProps['categories'] = [
       },
       {
         title: '4 columns',
-        payload: [[['25%', '25%', '25%', '25%']]],
+        payload: [['25%', '25%', '25%', '25%']],
       },
     ],
   },
@@ -402,6 +402,7 @@ export default function Editor() {
         onBeforePreview={onBeforePreview}
         socialIcons={[]}
         locale={localesData[locale]}
+        disableBlockOptions={false}
       >
         {({ values }, { submit }) => {
           return (
@@ -476,6 +477,9 @@ export default function Editor() {
                 }
               />
               <StandardLayout
+                showEditPanel={true}
+                showBlocksTab={true}
+                showLayersTab={true}
                 compact={!smallScene}
                 categories={defaultCategories}
               >

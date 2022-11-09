@@ -32,7 +32,6 @@
   <img src="./join_discord.png" width="240">
 </a>
 
-
 ## Introduction
 
 Easy email is developed based on the [MJML](https://mjml.io/) and has very good compatibility. At the same time, it can generate code through drag-and-drop editing.
@@ -122,22 +121,31 @@ export default function App() {
 
 ## Configuration
 
-| property           | Type                                                                                               | Description                                                                                                                          |
-| ------------------ | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| height             | string / number                                                                                    | Set the height of the container                                                                                                      |
-| data               | interface IEmailTemplate { content: IPage; subject: string; subTitle: string; }                    | Source data                                                                                                                          |
-| children           | ( props: FormState<T>,helper: FormApi<IEmailTemplate, Partial<IEmailTemplate>>) => React.ReactNode | ReactNode                                                                                                                            |
-| onSubmit           | Config<IEmailTemplate, Partial<IEmailTemplate>>['onSubmit'];                                       | Called when the commit is triggered manually                                                                                         |
-| fontList           | { value: string; label: string; }[];                                                               | Default font list.                                                                                                                   |
-| interactiveStyle   | { hoverColor?: string; selectedColor?: string;}                                                    | Interactive prompt color                                                                                                             |
-| onUploadImage      | (data: Blob) => Promise<string>;                                                                   | Triggered when an image is pasted or uploaded                                                                                        |
-| onAddCollection    | (payload: CollectedBlock) => void;                                                                 | Add to collection list                                                                                                               |
-| onRemoveCollection | (payload: { id: string; }) => void;                                                                | Remove from collection list                                                                                                          |
-| dashed             | boolean                                                                                            | Show dashed                                                                                                                          |
-| autoComplete       | boolean                                                                                            | Automatically complete missing blocks. For example, Text => Section, will generate Text=>Column=>Section                             |
-| mergeTags          | Object                                                                                             | A merge tag is a bit of specific code that allows you to insert dynamic data into emails. Like `{{user.name}}`, and used for preview |
-| previewInjectData  | Object                                                                                             | Dynamic data for preview, it will overwrite mergeTags.                                                                               |
-| onBeforePreview    | (html: string, mergeTags: PropsProviderProps['mergeTags']) => string                               | Promise<string> You can replace mergeTags when previewing.                                                                           |
+| property            | Type                                                                                               | Description                                                                                                                          |
+| ------------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| height              | string / number                                                                                    | Set the height of the container                                                                                                      |
+| data                | interface IEmailTemplate { content: IPage; subject: string; subTitle: string; }                    | Source data                                                                                                                          |
+| children            | ( props: FormState<T>,helper: FormApi<IEmailTemplate, Partial<IEmailTemplate>>) => React.ReactNode | ReactNode                                                                                                                            |
+| onSubmit            | Config<IEmailTemplate, Partial<IEmailTemplate>>['onSubmit'];                                       | Called when the commit is triggered manually                                                                                         |
+| fontList            | { value: string; label: string; }[];                                                               | Default font list.                                                                                                                   |
+| interactiveStyle    | { hoverColor?: string; selectedColor?: string;}                                                    | Interactive prompt color                                                                                                             |
+| onUploadImage       | (data: Blob) => Promise<string>;                                                                   | Triggered when an image is pasted or uploaded                                                                                        |
+| onAddCollection     | (payload: CollectedBlock) => void;                                                                 | Add to collection list                                                                                                               |
+| onRemoveCollection  | (payload: { id: string; }) => void;                                                                | Remove from collection list                                                                                                          |
+| dashed              | boolean                                                                                            | Show dashed                                                                                                                          |
+| autoComplete        | boolean                                                                                            | Automatically complete missing blocks. For example, Text => Section, will generate Text=>Column=>Section                             |
+| mergeTags           | Object                                                                                             | A merge tag is a bit of specific code that allows you to insert dynamic data into emails. Like `{{user.name}}`, and used for preview |
+| previewInjectData   | Object                                                                                             | Dynamic data for preview, it will overwrite mergeTags.                                                                               |
+| onBeforePreview     | (html: string, mergeTags: PropsProviderProps['mergeTags']) => string                               | Promise<string> You can replace mergeTags when previewing.                                                                           |
+| disableBlockOptions | boolean                                                                                            | removes 'move to parent'/copy/delete options for all blocks (can also be added in JSON for individual blocks) (default=false)        |
+
+### Standard Layout Configuration
+
+| property      | Type    | Description                                                  |
+| ------------- | ------- | ------------------------------------------------------------ |
+| showEditPanel | boolean | show/hide left panel (both blocks and layers) (default=true) |
+| showBlocksTab | boolean | show/hide blocks tab in left panel (default=true)            |
+| showLayersTab | boolean | show/hide layers tab in left panel (default=true)            |
 
 ## Hotkeys
 

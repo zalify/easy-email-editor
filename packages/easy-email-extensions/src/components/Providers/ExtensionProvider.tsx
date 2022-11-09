@@ -40,6 +40,9 @@ export interface ExtensionProps extends BlockLayerProps {
   >;
   showSourceCode?: boolean;
   compact?: boolean;
+  showEditPanel?: boolean;
+  showLayersTab?: boolean;
+  showBlocksTab?: boolean;
 }
 
 export const ExtensionContext = React.createContext<ExtensionProps>({

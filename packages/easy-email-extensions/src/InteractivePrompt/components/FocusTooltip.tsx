@@ -108,7 +108,7 @@ export function FocusTooltip() {
               height: '100%',
             }}
           >
-            <Toolbar />
+            <Toolbar disableBlockOptions={focusBlock.disableBlockOptions}/>
           </div>
         </div>,
 

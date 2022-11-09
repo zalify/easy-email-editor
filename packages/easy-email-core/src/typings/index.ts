@@ -34,6 +34,7 @@ export interface IBlockData<
   };
   attributes: Attr & { 'css-class'?: string };
   children: IBlockData[];
+  disableBlockOptions?: boolean;
 }
 
 export interface create<T extends any = any> {
