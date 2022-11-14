@@ -5,6 +5,7 @@ import {
   IConditionGroupItem,
   Operator,
   OperatorSymbol,
+  I18nType,
 } from './generateAdvancedBlock';
 import { AdvancedType } from '@core/constants';
 import {
@@ -42,5 +43,5 @@ export const advancedBlocks = {
   [AdvancedType.HERO]: AdvancedHero,
 };
 
-export { Operator, OperatorSymbol };
+export { Operator, OperatorSymbol, I18nType };
 export type { AdvancedBlock, ICondition, IConditionGroup, IConditionGroupItem };

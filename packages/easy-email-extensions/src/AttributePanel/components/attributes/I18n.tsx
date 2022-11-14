@@ -1,8 +1,10 @@
 import { useBlock, useFocusIdx } from 'easy-email-editor';
 import { Collapse, Grid, Switch } from '@arco-design/web-react';
 import { AdvancedBlock, AdvancedType } from 'easy-email-core';
-import { TextField } from '@extensions/components/Form';
+import { RadioGroupField, TextField } from '@extensions/components/Form';
 import React, { useCallback } from 'react';
+import { RadioGroup } from '@extensions/components/Form/RadioGroup';
+import { I18nType } from 'easy-email-core';
 
 export function I18n() {
   const { focusIdx } = useFocusIdx();
@@ -20,6 +22,7 @@ export function I18n() {
           change(`${focusIdx}.data.value.i18n`, {
             enabled: true,
             context: '',
+            type: I18nType.I18N,
           } as AdvancedBlock['data']['value']['i18n']);
         }
       }
@@ -34,6 +37,25 @@ export function I18n() {
   ) {
     return null;
   }
+
+  const options = [
+    {
+      value: I18nType.I18N,
+      label: 'i18n',
+    },
+    {
+      value: I18nType.CI18N,
+      label: 'ci18n',
+    },
+    {
+      value: I18nType.NI18N,
+      label: 'ni18n',
+    },
+    {
+      value: I18nType.CNI18N,
+      label: 'cni18n',
+    },
+  ];
 
   return (
     <Collapse.Item
@@ -54,12 +76,31 @@ export function I18n() {
         <Grid.Col span={24}>
           <div>
             <Grid.Row>
-              <Grid.Col span={11}>
-                <TextField
-                  label='Context'
-                  name={`${focusIdx}.data.value.i18n.context`}
+              <Grid.Col span={22}>
+                <RadioGroupField
+                  label='I18n Type'
+                  name={`${focusIdx}.data.value.i18n.type`}
+                  options={options}
                 />
               </Grid.Col>
+              {(focusBlock.data.value.i18n.type === 'ci18n' ||
+                focusBlock.data.value.i18n.type === 'cni18n') && (
+                <Grid.Col span={11}>
+                  <TextField
+                    label='Context'
+                    name={`${focusIdx}.data.value.i18n.context`}
+                  />
+                </Grid.Col>
+              )}
+              {(focusBlock.data.value.i18n.type === 'ni18n' ||
+                focusBlock.data.value.i18n.type === 'cni18n') && (
+                <Grid.Col span={11}>
+                  <TextField
+                    label='PluralText'
+                    name={`${focusIdx}.data.value.i18n.pluralText`}
+                  />
+                </Grid.Col>
+              )}
             </Grid.Row>
           </div>
         </Grid.Col>

@@ -3,6 +3,7 @@ import { Raw } from '@core/components';
 import { isNumber } from 'lodash';
 import React from 'react';
 import { nanoid } from 'nanoid';
+import { IBlockData } from '@core/typings';
 
 function generateIterationTemplate(
   option: NonNullable<AdvancedBlock['data']['value']['iteration']>,
@@ -84,25 +85,6 @@ function generateConditionTemplate(
   );
 }
 
-function generateI18nTemplate(
-  option: NonNullable<AdvancedBlock['data']['value']['i18n']>,
-  content: React.ReactElement,
-) {
-  return (
-    <>
-      <Raw>
-        {`
-        <!-- htmlmin:ignore -->
-        {%
-          fuck this shit
-        <!-- htmlmin:ignore -->
-        `}
-      </Raw>
-      {content}
-    </>
-  );
-}
-
 interface IterationTemplate {
   name: 'iteration';
   templateGenerateFn: typeof generateIterationTemplate;
@@ -113,16 +95,10 @@ interface ConditionTemplate {
   templateGenerateFn: typeof generateConditionTemplate;
 }
 
-interface I18nTemplate {
-  name: 'i18n';
-  templateGenerateFn: typeof generateI18nTemplate;
-}
-
 export class TemplateEngineManager {
   private static tags = {
     iteration: generateIterationTemplate,
     condition: generateConditionTemplate,
-    i18n: generateI18nTemplate,
   };
 
   public static setTag(option: IterationTemplate | ConditionTemplate) {

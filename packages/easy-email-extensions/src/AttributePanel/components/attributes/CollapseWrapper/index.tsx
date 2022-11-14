@@ -71,7 +71,6 @@ export const CollapseWrapper: React.FC<CollapseWrapperProps> = props => {
         onChange={onChange}
         activeKey={activeKeys}
       >
-        {props.children}
         {enabledLogic && (
           <>
             <Iteration />
@@ -79,6 +78,7 @@ export const CollapseWrapper: React.FC<CollapseWrapperProps> = props => {
             <I18n />
           </>
         )}
+        {props.children}
       </Collapse>
       <div />
       <div />

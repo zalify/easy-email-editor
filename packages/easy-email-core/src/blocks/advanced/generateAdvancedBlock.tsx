@@ -16,6 +16,7 @@ export function generateAdvancedBlock<T extends AdvancedBlock>(option: {
     mode: 'testing' | 'production';
     context?: IPage;
     dataSource?: { [key: string]: any };
+    i18n?: AdvancedBlock['data']['value']['i18n'];
   }) => ReturnType<NonNullable<IBlock['render']>>;
   validParentType: string[];
 }) {
@@ -49,6 +50,7 @@ export function generateAdvancedBlock<T extends AdvancedBlock>(option: {
           mode,
           context,
           dataSource,
+          i18n,
         }) as any;
 
       let children = getBaseContent(idx, 0);
@@ -81,9 +83,13 @@ export function generateAdvancedBlock<T extends AdvancedBlock>(option: {
         );
       }
 
-      if (i18n && i18n.enabled) {
-        children = TemplateEngineManager.generateTagTemplate('i18n')(i18n, children);
-      }
+      // if (i18n && i18n.enabled) {
+      //   children = TemplateEngineManager.generateTagTemplate('i18n')(
+      //     i18n,
+      //     children,
+      //     data,
+      //   );
+      // }
 
       return children;
     },
@@ -93,6 +99,13 @@ export function generateAdvancedBlock<T extends AdvancedBlock>(option: {
 // {% for product in collection.products %}
 //   {{ product.title }}
 // {% endfor %}
+
+export enum I18nType {
+  I18N = 'i18n',
+  CI18N = 'ci18n',
+  NI18N = 'ni18n',
+  CNI18N = 'cni18n',
+}
 
 export interface AdvancedBlock extends IBlockData {
   data: {
@@ -106,8 +119,10 @@ export interface AdvancedBlock extends IBlockData {
         mockQuantity: number;
       };
       i18n?: {
+        type: I18nType;
         enabled: boolean;
         context: string;
+        pluralText: string;
       };
     };
   };

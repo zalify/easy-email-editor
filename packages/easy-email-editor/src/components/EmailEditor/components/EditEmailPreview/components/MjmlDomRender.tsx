@@ -54,8 +54,7 @@ export function MjmlDomRender() {
     if (!root) return;
     const onClick = (e: Event) => {
       const isFocusing =
-        getShadowRoot().activeElement?.getAttribute('contenteditable') ===
-        'true';
+        getShadowRoot().activeElement?.getAttribute('contenteditable') === 'true';
       if (isFocusing) {
         setIsTextFocus(true);
       }
@@ -69,7 +68,6 @@ export function MjmlDomRender() {
 
   const html = useMemo(() => {
     if (!pageData) return '';
-
     const renderHtml = mjml(
       JsonToMjml({
         data: pageData,
@@ -77,7 +75,7 @@ export function MjmlDomRender() {
         context: pageData,
         mode: 'testing',
         dataSource: cloneDeep(mergeTags),
-      })
+      }),
     ).html;
     return renderHtml;
   }, [mergeTags, pageData]);
@@ -85,11 +83,9 @@ export function MjmlDomRender() {
   return useMemo(() => {
     return (
       <div
-        {
-        ...{
-          [DATA_RENDER_COUNT]: count++
-        }
-        }
+        {...{
+          [DATA_RENDER_COUNT]: count++,
+        }}
         data-dashed={dashed}
         ref={setRef}
         style={{
@@ -104,7 +100,7 @@ export function MjmlDomRender() {
             HtmlStringToReactNodes(html, {
               enabledMergeTagsBadge: Boolean(enabledMergeTagsBadge),
             }),
-            ref
+            ref,
           )}
       </div>
     );
