@@ -110,9 +110,9 @@ export const StandardLayout: React.FC<ExtensionProps> = props => {
               overflow: 'hidden',
             }}
           >
-            {compact && <EditPanel />}
+            {compact && <EditPanel showSourceCode={showSourceCode} />}
             <Layout style={{ height: containerHeight, flex: 1 }}>{props.children}</Layout>
-            {!compact && <EditPanel />}
+            {!compact && <EditPanel showSourceCode={showSourceCode} />}
             {compact ? (
               <Layout.Sider
                 style={{

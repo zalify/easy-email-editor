@@ -6,9 +6,11 @@ import React, { useCallback, useMemo, useRef } from 'react';
 export function ConfigurationDrawer({
   height,
   compact,
+  showSourceCode,
 }: {
   height: string;
   compact: boolean;
+  showSourceCode: boolean;
 }) {
   const refWrapper = useRef(null);
   const { focusIdx, setFocusIdx } = useFocusIdx();
@@ -48,7 +50,7 @@ export function ConfigurationDrawer({
           >
             <ConfigurationPanel
               compact={compact}
-              showSourceCode
+              showSourceCode={showSourceCode}
               height={height}
               onBack={onClose}
             />
@@ -56,5 +58,5 @@ export function ConfigurationDrawer({
         )}
       </>
     );
-  }, [visible, onClose, compact, height]);
+  }, [visible, onClose, compact, showSourceCode, height]);
 }
