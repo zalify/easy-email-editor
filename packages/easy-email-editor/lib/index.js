@@ -7469,7 +7469,6 @@ function MjmlDomRender() {
     return renderHtml;
   }, [mergeTags, pageData]);
   return useMemo(() => {
-    console.log(html);
     return /* @__PURE__ */ React.createElement("div", __spreadProps(__spreadValues({}, {
       [DATA_RENDER_COUNT]: count++
     }), {

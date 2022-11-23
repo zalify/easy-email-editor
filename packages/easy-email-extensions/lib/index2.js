@@ -37303,8 +37303,8 @@ function I18n() {
   })), (focusBlock2.data.value.i18n.type === "ni18n" || focusBlock2.data.value.i18n.type === "cni18n") && /* @__PURE__ */ React__default.createElement(Grid.Col, {
     span: 11
   }, /* @__PURE__ */ React__default.createElement(TextField, {
-    label: "PluralText",
-    name: `${focusIdx2}.data.value.i18n.pluralText`
+    label: "Singular Text",
+    name: `${focusIdx2}.data.value.i18n.singularText`
   }))))));
 }
 const CollapseWrapper = (props) => {

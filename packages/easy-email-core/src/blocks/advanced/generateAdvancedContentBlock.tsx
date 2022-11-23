@@ -54,16 +54,38 @@ export function generateAdvancedContentBlock<T extends IBlockData>(option: {
       if (mode === 'testing' || !i18n?.enabled) {
         children = block?.render({ ...params, data: blockData, idx });
       } else {
-        let dataClone = cloneDeep(blockData);
-        if (i18n.type === I18nType.CI18N) {
-          dataClone.data.value.content = `<mj-raw><!-- htmlmin:ignore -->{{"${blockData.data.value.content}" | ci18n "${i18n.context}"}}<!-- htmlmin:ignore --></mj-raw>`;
-        } else if (i18n.type === I18nType.NI18N) {
-          dataClone.data.value.content = `<mj-raw><!-- htmlmin:ignore -->{{"${blockData.data.value.content}" | ni18n "${i18n.pluralText}"}}<!-- htmlmin:ignore --></mj-raw>`;
-        } else if (i18n.type === I18nType.CNI18N) {
-          dataClone.data.value.content = `<mj-raw><!-- htmlmin:ignore -->{{"${blockData.data.value.content}" | cni18n "${i18n.context}" "${i18n.pluralText}"}}<!-- htmlmin:ignore --></mj-raw>`;
-        } else {
-          dataClone.data.value.content = `<mj-raw><!-- htmlmin:ignore -->{{"${blockData.data.value.content}" | i18n }}<!-- htmlmin:ignore --></mj-raw>`;
+        const dataClone = cloneDeep(blockData);
+        let content = blockData.data.value.content;
+        const regexPattern = /{{({*[^{}]*}*)}}/g;
+        const matches = content.matchAll(regexPattern);
+        console.log('matches:', matches);
+        let placeHolders: any[] = [];
+        let counter = 1;
+        for (const match of matches) {
+          // const idx = match.index;
+          content = content.replace(match, '{%' + counter + '=' + match + '}');
+          placeHolders.push(match);
         }
+
+        let modifiedContent = `<mj-raw><!-- htmlmin:ignore -->`;
+
+        if (i18n.type === I18nType.CI18N) {
+          modifiedContent += `{{"${blockData.data.value.content}" | ci18n "${i18n.context}"`;
+        } else if (i18n.type === I18nType.NI18N) {
+          modifiedContent += `{{"${blockData.data.value.content}" | ni18n "${i18n.singularText}"`;
+        } else if (i18n.type === I18nType.CNI18N) {
+          modifiedContent += `"{{${blockData.data.value.content}" | cni18n "${i18n.context}" "${i18n.singularText}"`;
+        } else {
+          modifiedContent += `{{"${blockData.data.value.content}" | i18n `;
+        }
+
+        placeHolders.forEach(placeHolder => {
+          modifiedContent += ' ';
+          modifiedContent += placeHolder;
+        });
+
+        modifiedContent += `}}<!-- htmlmin:ignore --></mj-raw>`;
+        modifiedContent += `ojbk`;
 
         children = block?.render({ ...params, data: dataClone, idx });
       }

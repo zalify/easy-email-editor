@@ -94,10 +94,10 @@ export function I18n() {
               )}
               {(focusBlock.data.value.i18n.type === 'ni18n' ||
                 focusBlock.data.value.i18n.type === 'cni18n') && (
-                <Grid.Col span={11}>
+                <Grid.Col span={24}>
                   <TextField
-                    label='PluralText'
-                    name={`${focusIdx}.data.value.i18n.pluralText`}
+                    label='Singular Text'
+                    name={`${focusIdx}.data.value.i18n.singularText`}
                   />
                 </Grid.Col>
               )}

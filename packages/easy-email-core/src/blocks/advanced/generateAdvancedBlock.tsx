@@ -122,7 +122,7 @@ export interface AdvancedBlock extends IBlockData {
         type: I18nType;
         enabled: boolean;
         context: string;
-        pluralText: string;
+        singularText: string;
       };
     };
   };

@@ -6386,16 +6386,33 @@ function generateAdvancedContentBlock(option) {
       if (mode === "testing" || !(i18n == null ? void 0 : i18n.enabled)) {
         children = block == null ? void 0 : block.render(__spreadProps(__spreadValues({}, params), { data: blockData, idx }));
       } else {
-        let dataClone = cloneDeep_1(blockData);
-        if (i18n.type === I18nType.CI18N) {
-          dataClone.data.value.content = `<mj-raw><!-- htmlmin:ignore -->{{"${blockData.data.value.content}" | ci18n "${i18n.context}"}}<!-- htmlmin:ignore --></mj-raw>`;
-        } else if (i18n.type === I18nType.NI18N) {
-          dataClone.data.value.content = `<mj-raw><!-- htmlmin:ignore -->{{"${blockData.data.value.content}" | ni18n "${i18n.pluralText}"}}<!-- htmlmin:ignore --></mj-raw>`;
-        } else if (i18n.type === I18nType.CNI18N) {
-          dataClone.data.value.content = `<mj-raw><!-- htmlmin:ignore -->{{"${blockData.data.value.content}" | cni18n "${i18n.context}" "${i18n.pluralText}"}}<!-- htmlmin:ignore --></mj-raw>`;
-        } else {
-          dataClone.data.value.content = `<mj-raw><!-- htmlmin:ignore -->{{"${blockData.data.value.content}" | i18n }}<!-- htmlmin:ignore --></mj-raw>`;
+        const dataClone = cloneDeep_1(blockData);
+        let content = blockData.data.value.content;
+        const regexPattern = /{{({*[^{}]*}*)}}/g;
+        const matches = content.matchAll(regexPattern);
+        console.log("matches:", matches);
+        let placeHolders = [];
+        let counter = 1;
+        for (const match of matches) {
+          content = content.replace(match, "{%" + counter + "=" + match + "}");
+          placeHolders.push(match);
         }
+        let modifiedContent = `<mj-raw><!-- htmlmin:ignore -->`;
+        if (i18n.type === I18nType.CI18N) {
+          modifiedContent += `{{"${blockData.data.value.content}" | ci18n "${i18n.context}"`;
+        } else if (i18n.type === I18nType.NI18N) {
+          modifiedContent += `{{"${blockData.data.value.content}" | ni18n "${i18n.singularText}"`;
+        } else if (i18n.type === I18nType.CNI18N) {
+          modifiedContent += `"{{${blockData.data.value.content}" | cni18n "${i18n.context}" "${i18n.singularText}"`;
+        } else {
+          modifiedContent += `{{"${blockData.data.value.content}" | i18n `;
+        }
+        placeHolders.forEach((placeHolder) => {
+          modifiedContent += " ";
+          modifiedContent += placeHolder;
+        });
+        modifiedContent += `}}<!-- htmlmin:ignore --></mj-raw>`;
+        modifiedContent += `ojbk`;
         children = block == null ? void 0 : block.render(__spreadProps(__spreadValues({}, params), { data: dataClone, idx }));
       }
       const parentBlockData = getParentByIdx({ content: context }, idx);
