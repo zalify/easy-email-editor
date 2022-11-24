@@ -58,11 +58,12 @@ export function generateAdvancedContentBlock<T extends IBlockData>(option: {
         let content = blockData.data.value.content;
         const regexPattern = /{{({*[^{}]*}*)}}/g;
         const matches = content.matchAll(regexPattern);
-        console.log('matches:', matches);
+
         let placeHolders: any[] = [];
         let counter = 1;
         for (const match of matches) {
           // const idx = match.index;
+          console.log(match);
           content = content.replace(match, '{%' + counter + '=' + match + '}');
           placeHolders.push(match);
         }
