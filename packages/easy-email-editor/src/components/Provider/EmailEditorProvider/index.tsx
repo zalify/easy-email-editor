@@ -2,7 +2,7 @@ import { IEmailTemplate } from '@/typings';
 import { Form, useForm, useFormState, useField } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import React, { useMemo } from 'react';
-import { BlocksProvider } from '..//BlocksProvider';
+import { BlocksProvider } from '../BlocksProvider';
 import { HoverIdxProvider } from '../HoverIdxProvider';
 import { PropsProvider, PropsProviderProps } from '../PropsProvider';
 import { RecordProvider } from '../RecordProvider';

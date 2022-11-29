@@ -1,5 +1,5 @@
 {
-  "name": "easy-email-core",
+  "name": "@ContextLogic/easy-email-core",
   "license": "MIT",
   "description": "Email editor",
   "version": "4.3.6",

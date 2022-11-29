@@ -1,4 +1,4 @@
-import { BlockType } from './../constants';
+import { BlockType } from '../constants';
 import { IBlock, IBlockData } from '@core/typings';
 import { get, isString } from 'lodash';
 import { ancestorOf } from './ancestorOf';
@@ -22,15 +22,15 @@ export function getNodeTypeClassName(type: string) {
 
 export function getNodeIdxFromClassName(classList: DOMTokenList) {
   return Array.from(classList)
-    .find((item) => item.includes('node-idx-'))
+    .find(item => item.includes('node-idx-'))
     ?.replace('node-idx-', '');
 }
 
 export function getNodeTypeFromClassName(
-  classList: DOMTokenList | string
+  classList: DOMTokenList | string,
 ): BlockType | null {
   return Array.from(isString(classList) ? classList.split(' ') : classList)
-    .find((item) => item.includes('node-type-'))
+    .find(item => item.includes('node-type-'))
     ?.replace('node-type-', '') as BlockType;
 }
 
@@ -45,14 +45,14 @@ export const getParentIdx = (idx: string) => {
 
 export const getValueByIdx = <T extends IBlockData>(
   values: { content: IBlockData },
-  idx: string
+  idx: string,
 ): T | null => {
   return get(values, idx);
 };
 
 export const getParentByIdx = <T extends IBlockData = IBlockData>(
   values: { content: IBlockData },
-  idx: string
+  idx: string,
 ): T | null => {
   return get(values, getParentIdx(idx) || '');
 };
@@ -67,7 +67,7 @@ export const getSiblingIdx = (sourceIndex: string, num: number) => {
 export const getParentByType = <T extends IBlockData>(
   context: { content: IBlockData },
   idx: string,
-  type: BlockType
+  type: BlockType,
 ): T | null => {
   if (!idx) return null;
   let parentIdx = getParentIdx(idx);
@@ -83,7 +83,7 @@ export const getParentByType = <T extends IBlockData>(
 export const getSameParent = (
   values: { content: IBlockData },
   idx: string,
-  dragType: string
+  dragType: string,
 ): {
   parent: IBlockData;
   parentIdx: string;
@@ -110,7 +110,7 @@ export const getSameParent = (
 export const getParenRelativeByType = <T extends IBlockData>(
   context: { content: IBlockData },
   idx: string,
-  type: BlockType
+  type: BlockType,
 ): { parentIdx: string; insertIndex: number; parent: IBlockData } | null => {
   let prevIdx = '';
   let parentIdx: string | undefined = idx;
@@ -118,9 +118,7 @@ export const getParenRelativeByType = <T extends IBlockData>(
     const parent = get(context, parentIdx) as T;
     if (parent && parent.type === type) {
       return {
-        insertIndex: prevIdx
-          ? getIndexByIdx(prevIdx)
-          : parent.children.length - 1,
+        insertIndex: prevIdx ? getIndexByIdx(prevIdx) : parent.children.length - 1,
         parentIdx,
         parent,
       };
@@ -133,7 +131,5 @@ export const getParenRelativeByType = <T extends IBlockData>(
 };
 
 export const getValidChildBlocks = (type: BlockType): IBlock[] => {
-  return BlockManager.getBlocks().filter((item) =>
-    item.validParentType.includes(type)
-  );
+  return BlockManager.getBlocks().filter(item => item.validParentType.includes(type));
 };

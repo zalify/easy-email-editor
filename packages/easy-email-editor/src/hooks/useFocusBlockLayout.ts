@@ -1,4 +1,4 @@
-import { FocusBlockLayoutContext } from './../components/Provider/FocusBlockLayoutProvider/index';
+import { FocusBlockLayoutContext } from '../components/Provider/FocusBlockLayoutProvider/index';
 import { useContext } from 'react';
 
 export function useFocusBlockLayout() {

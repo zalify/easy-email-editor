@@ -99,6 +99,10 @@ export function I18n() {
                     label='Singular Text'
                     name={`${focusIdx}.data.value.i18n.singularText`}
                   />
+                  <TextField
+                    label='Number Variable'
+                    name={`${focusIdx}.data.value.i18n.numberVariable`}
+                  />
                 </Grid.Col>
               )}
             </Grid.Row>

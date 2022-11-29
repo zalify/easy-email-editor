@@ -1,0 +1,15 @@
+import { IButton, ICarousel, IDivider, IImage, INavbar, ISpacer, IText, IAccordion, ISocial, IWrapper, ISection, IGroup, IColumn, IHero } from '../../standard';
+export declare const AdvancedText: import("../../..").IBlock<IText>;
+export declare const AdvancedButton: import("../../..").IBlock<IButton>;
+export declare const AdvancedImage: import("../../..").IBlock<IImage>;
+export declare const AdvancedDivider: import("../../..").IBlock<IDivider>;
+export declare const AdvancedSpacer: import("../../..").IBlock<ISpacer>;
+export declare const AdvancedNavbar: import("../../..").IBlock<INavbar>;
+export declare const AdvancedAccordion: import("../../..").IBlock<IAccordion>;
+export declare const AdvancedCarousel: import("../../..").IBlock<ICarousel>;
+export declare const AdvancedSocial: import("../../..").IBlock<ISocial>;
+export declare const AdvancedWrapper: import("../../..").IBlock<IWrapper>;
+export declare const AdvancedSection: import("../../..").IBlock<ISection>;
+export declare const AdvancedGroup: import("../../..").IBlock<IGroup>;
+export declare const AdvancedColumn: import("../../..").IBlock<IColumn>;
+export declare const AdvancedHero: import("../../..").IBlock<IHero>;

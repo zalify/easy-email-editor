@@ -1,10 +1,8 @@
-import { BlockManager } from './../BlockManager';
+import { BlockManager } from '../BlockManager';
 
 import { JsonToMjml } from '../JsonToMjml';
 const Page = BlockManager.getBlockByType(BasicType.PAGE)!;
-const Section = BlockManager.getBlockByType<AdvancedBlock>(
-  AdvancedType.SECTION
-)!;
+const Section = BlockManager.getBlockByType<AdvancedBlock>(AdvancedType.SECTION)!;
 const Column = BlockManager.getBlockByType(AdvancedType.COLUMN)!;
 const Text = BlockManager.getBlockByType(AdvancedType.TEXT)!;
 import { Liquid } from 'liquidjs';
@@ -74,7 +72,7 @@ describe('Test condition.test', () => {
         mode: 'production',
         context: content,
         dataSource: {},
-      })
+      }),
     );
     const html = engine.renderSync(tpl, mergeTags);
     expect(html).toContain('this will be visible');
@@ -132,7 +130,7 @@ describe('Test condition.test', () => {
         mode: 'production',
         context: content,
         dataSource: {},
-      })
+      }),
     );
     const html = engine.renderSync(tpl, mergeTags);
     expect(html).not.toContain('this will be hide');
@@ -190,7 +188,7 @@ describe('Test condition.test', () => {
         mode: 'production',
         context: content,
         dataSource: {},
-      })
+      }),
     );
     const html = engine.renderSync(tpl, mergeTags);
     expect(html).toContain('this will be visible');

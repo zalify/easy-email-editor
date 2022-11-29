@@ -1,6 +1,6 @@
 import mjml from 'mjml-browser';
 import { IBlockData } from '@core/typings';
-import { BlockType, BasicType } from './../constants';
+import { BlockType, BasicType } from '../constants';
 import { MjmlToJson } from './MjmlToJson';
 import { BlockManager } from '@core/utils';
 
@@ -24,7 +24,7 @@ export function parseXMLtoBlock(text: string) {
       throw new Error('Invalid content');
     }
     const attributes: IBlockData['attributes'] = {};
-    node.getAttributeNames().forEach((name) => {
+    node.getAttributeNames().forEach(name => {
       attributes[name] = node.getAttribute(name);
     });
     const type = node.tagName.replace('mj-', '');
@@ -43,7 +43,7 @@ export function parseXMLtoBlock(text: string) {
         },
       },
       children: [...node.children]
-        .filter((item) => item instanceof Element)
+        .filter(item => item instanceof Element)
         .map(transform as any),
     };
 

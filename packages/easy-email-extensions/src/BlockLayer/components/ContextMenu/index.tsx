@@ -3,11 +3,12 @@ import {
   IconFont,
   TextStyle,
   scrollBlockEleIntoView,
-  useBlock, useEditorProps,
+  useBlock,
+  useEditorProps,
 } from 'easy-email-editor';
 import { getIndexByIdx, getSiblingIdx } from 'easy-email-core';
 import styles from './index.module.scss';
-import { IBlockDataWithId } from '../../../BlockLayer';
+import { IBlockDataWithId } from '../..';
 import { useAddToCollection } from '@extensions/hooks/useAddToCollection';
 
 export function ContextMenu({
@@ -49,7 +50,7 @@ export function ContextMenu({
     onClose();
   };
 
-  const handleCopy: React.MouseEventHandler<HTMLDivElement> = (ev) => {
+  const handleCopy: React.MouseEventHandler<HTMLDivElement> = ev => {
     copyBlock(idx);
     scrollBlockEleIntoView({
       idx: getSiblingIdx(idx, 1),
@@ -69,44 +70,77 @@ export function ContextMenu({
   const isFirst = getIndexByIdx(idx) === 0;
 
   return (
-    <div ref={ref} style={{ visibility: modalVisible ? 'hidden' : undefined }}>
+    <div
+      ref={ref}
+      style={{ visibility: modalVisible ? 'hidden' : undefined }}
+    >
       <div
         style={{
           left: left,
           top: top,
         }}
         className={styles.wrap}
-        onClick={(e) => e.stopPropagation()}
+        onClick={e => e.stopPropagation()}
       >
         {!isFirst && (
-          <div className={styles.listItem} onClick={handleMoveUp}>
-            <IconFont iconName='icon-top' style={{ marginRight: 10 }} />{' '}
+          <div
+            className={styles.listItem}
+            onClick={handleMoveUp}
+          >
+            <IconFont
+              iconName='icon-top'
+              style={{ marginRight: 10 }}
+            />{' '}
             <TextStyle>Move up</TextStyle>
           </div>
         )}
-        <div className={styles.listItem} onClick={handleMoveDown}>
-          <IconFont iconName='icon-bottom' style={{ marginRight: 10 }} />{' '}
+        <div
+          className={styles.listItem}
+          onClick={handleMoveDown}
+        >
+          <IconFont
+            iconName='icon-bottom'
+            style={{ marginRight: 10 }}
+          />{' '}
           <TextStyle>Move down</TextStyle>
         </div>
-        <div className={styles.listItem} onClick={handleCopy}>
-          <IconFont iconName='icon-copy' style={{ marginRight: 10 }} />{' '}
+        <div
+          className={styles.listItem}
+          onClick={handleCopy}
+        >
+          <IconFont
+            iconName='icon-copy'
+            style={{ marginRight: 10 }}
+          />{' '}
           <TextStyle>Copy</TextStyle>
         </div>
         {props.onAddCollection && (
-            <div className={styles.listItem} onClick={handleAddToCollection}>
-              <IconFont iconName='icon-start' style={{ marginRight: 10 }} />{' '}
-              <TextStyle>Add to collection</TextStyle>
-            </div>
+          <div
+            className={styles.listItem}
+            onClick={handleAddToCollection}
+          >
+            <IconFont
+              iconName='icon-start'
+              style={{ marginRight: 10 }}
+            />{' '}
+            <TextStyle>Add to collection</TextStyle>
+          </div>
         )}
-        <div className={styles.listItem} onClick={handleDelete}>
-          <IconFont iconName='icon-delete' style={{ marginRight: 10 }} />{' '}
+        <div
+          className={styles.listItem}
+          onClick={handleDelete}
+        >
+          <IconFont
+            iconName='icon-delete'
+            style={{ marginRight: 10 }}
+          />{' '}
           <TextStyle>Delete</TextStyle>
         </div>
       </div>
       <div
         className={styles.contextmenuMark}
         onClick={onClose}
-        onContextMenu={(e) => {
+        onContextMenu={e => {
           e.preventDefault();
           onClose(e);
         }}

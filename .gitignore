@@ -4,7 +4,7 @@ dist
 *.local
 .history
 yarn-error.log
-lib
+//lib
 
 coverage
 stats.html

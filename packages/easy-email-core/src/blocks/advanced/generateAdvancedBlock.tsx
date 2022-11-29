@@ -123,6 +123,7 @@ export interface AdvancedBlock extends IBlockData {
         enabled: boolean;
         context: string;
         singularText: string;
+        numberVariable: string;
       };
     };
   };

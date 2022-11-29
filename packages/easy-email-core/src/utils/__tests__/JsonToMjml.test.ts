@@ -1,5 +1,5 @@
-import { BasicType } from './../../constants';
-import { BlockManager } from './../BlockManager';
+import { BasicType } from '../../constants';
+import { BlockManager } from '../BlockManager';
 
 import { JsonToMjml } from '../JsonToMjml';
 const Page = BlockManager.getBlockByType(BasicType.PAGE)!;
@@ -61,7 +61,7 @@ describe('Test JsonToMjml when responsive is "true"', () => {
 
   it('should contains the mark of responsive="true"', () => {
     expect(
-      parseHtml.includes('attribute-name="responsive" responsive="true"')
+      parseHtml.includes('attribute-name="responsive" responsive="true"'),
     ).toBeTruthy();
   });
 });

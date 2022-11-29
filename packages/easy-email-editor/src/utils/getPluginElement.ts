@@ -1,4 +1,4 @@
-import { PLUGINS_CONTAINER_ID } from './../constants';
+import { PLUGINS_CONTAINER_ID } from '../constants';
 import { getEditorRoot } from './getEditorRoot';
 
 export const getPluginElement = () =>

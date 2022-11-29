@@ -55,39 +55,82 @@ export function generateAdvancedContentBlock<T extends IBlockData>(option: {
         children = block?.render({ ...params, data: blockData, idx });
       } else {
         const dataClone = cloneDeep(blockData);
-        let content = blockData.data.value.content;
+        let content = dataClone.data.value.content;
         const regexPattern = /{{({*[^{}]*}*)}}/g;
         const matches = content.matchAll(regexPattern);
 
         let placeHolders: any[] = [];
         let counter = 1;
+        let foundNumberVariable = false;
         for (const match of matches) {
           // const idx = match.index;
-          console.log(match);
-          content = content.replace(match, '{%' + counter + '=' + match + '}');
-          placeHolders.push(match);
+          if (i18n.type === I18nType.NI18N || i18n.type === I18nType.CNI18N) {
+            if (match[1] === i18n.numberVariable) {
+              content = content.replace(match[0], '{%' + 1 + '=' + match[1] + '}');
+              placeHolders.unshift(match[1]);
+              foundNumberVariable = true;
+            } else {
+              content = content.replace(
+                match[0],
+                '{%' + (counter + 1) + '=' + match[1] + '}',
+              );
+              counter++;
+              placeHolders.push(match[1]);
+            }
+          } else {
+            content = content.replace(match[0], '{%' + counter + '=' + match[1] + '}');
+            counter++;
+            placeHolders.push(match[1]);
+          }
+        }
+
+        // Replace singualr variables
+        let singularText = i18n.singularText;
+        if (i18n.type === I18nType.NI18N || i18n.type === I18nType.CNI18N) {
+          const matches = singularText.matchAll(regexPattern);
+          let counter = 1;
+          for (const match of matches) {
+            if (match[1] === i18n.numberVariable) {
+              singularText = singularText.replace(match[0], '1');
+            } else {
+              singularText = singularText.replace(
+                match[0],
+                '{%' + counter + '=' + match[1] + '}',
+              );
+              // counter++;
+            }
+          }
         }
 
         let modifiedContent = `<mj-raw><!-- htmlmin:ignore -->`;
 
         if (i18n.type === I18nType.CI18N) {
-          modifiedContent += `{{"${blockData.data.value.content}" | ci18n "${i18n.context}"`;
+          modifiedContent += `{{"${content}" | ci18n: "${i18n.context}"`;
         } else if (i18n.type === I18nType.NI18N) {
-          modifiedContent += `{{"${blockData.data.value.content}" | ni18n "${i18n.singularText}"`;
+          modifiedContent += `{{"${content}" | ni18n: "${singularText}"`;
         } else if (i18n.type === I18nType.CNI18N) {
-          modifiedContent += `"{{${blockData.data.value.content}" | cni18n "${i18n.context}" "${i18n.singularText}"`;
+          if (!foundNumberVariable) {
+            console.log('Please input correct Number Vairable in i18n attribute panel!');
+          }
+          modifiedContent += `"{{${content}" | cni18n: "${i18n.context}", "${singularText}"`;
         } else {
-          modifiedContent += `{{"${blockData.data.value.content}" | i18n `;
+          modifiedContent += `{{"${content}" | i18n`;
+        }
+        console.log('placeholders:', placeHolders);
+
+        for (let i = 0; i < placeHolders.length; i++) {
+          if (i === 0 && i18n.type === I18nType.I18N) {
+            modifiedContent += ': ';
+          } else {
+            modifiedContent += ', ';
+          }
+
+          modifiedContent += placeHolders[i];
         }
 
-        placeHolders.forEach(placeHolder => {
-          modifiedContent += ' ';
-          modifiedContent += placeHolder;
-        });
-
         modifiedContent += `}}<!-- htmlmin:ignore --></mj-raw>`;
-        modifiedContent += `ojbk`;
-
+        console.log(modifiedContent);
+        dataClone.data.value.content = modifiedContent;
         children = block?.render({ ...params, data: dataClone, idx });
       }
 

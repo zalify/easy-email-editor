@@ -1,11 +1,14 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { MjmlDomRender } from '../EditEmailPreview/components/MjmlDomRender';
+import { MjmlDomRender } from './components/MjmlDomRender';
 import { useDropBlock } from '@/hooks/useDropBlock';
 import { useHotKeys } from '@/hooks/useHotKeys';
 import { SyncScrollShadowDom } from '@/components/UI/SyncScrollShadowDom';
 import { ShadowStyle } from './components/ShadowStyle';
 import { useEditorContext } from '@/hooks/useEditorContext';
-import { DATA_ATTRIBUTE_DROP_CONTAINER, SYNC_SCROLL_ELEMENT_CLASS_NAME } from '@/constants';
+import {
+  DATA_ATTRIBUTE_DROP_CONTAINER,
+  SYNC_SCROLL_ELEMENT_CLASS_NAME,
+} from '@/constants';
 import { classnames } from '@/utils/classnames';
 import { ActiveTabKeys } from '@/components/Provider/BlocksProvider';
 import { useActiveTab } from '@/hooks/useActiveTab';
@@ -62,13 +65,12 @@ export function EditEmailPreview() {
             boxSizing: 'border-box',
           }}
           ref={setContainerRef}
-
         >
           <MjmlDomRender />
         </div>
         <ShadowStyle />
       </SyncScrollShadowDom>
     ),
-    [activeTab]
+    [activeTab],
   );
 }

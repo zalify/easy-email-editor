@@ -1,4 +1,4 @@
-import { BlockManager } from './../BlockManager';
+import { BlockManager } from '../BlockManager';
 
 import { BasicType } from '@core/constants';
 import { ancestorOf } from '../ancestorOf';
@@ -18,41 +18,29 @@ const ContentBlocks = [
 ];
 
 describe('Test content block', () => {
-  it.each(ContentBlocks)(
-    'drop content block to "column" should return 1',
-    (block) => {
-      expect(ancestorOf(block, BasicType.COLUMN)).toBe(1);
-    }
-  );
+  it.each(ContentBlocks)('drop content block to "column" should return 1', block => {
+    expect(ancestorOf(block, BasicType.COLUMN)).toBe(1);
+  });
 
-  it.each(ContentBlocks)(
-    'drop content block to "section" should return 2',
-    (block) => {
-      expect(ancestorOf(block, BasicType.SECTION)).toBe(2);
-    }
-  );
+  it.each(ContentBlocks)('drop content block to "section" should return 2', block => {
+    expect(ancestorOf(block, BasicType.SECTION)).toBe(2);
+  });
 
-  it.each(ContentBlocks)(
-    'drop content block to "wrapper" should return 3',
-    (block) => {
-      expect(ancestorOf(block, BasicType.WRAPPER)).toBe(3);
-    }
-  );
+  it.each(ContentBlocks)('drop content block to "wrapper" should return 3', block => {
+    expect(ancestorOf(block, BasicType.WRAPPER)).toBe(3);
+  });
 
-  it.each(ContentBlocks)(
-    'drop content block to "Page" should return 3',
-    (block) => {
-      expect(ancestorOf(block, BasicType.PAGE)).toBe(3);
-    }
-  );
+  it.each(ContentBlocks)('drop content block to "Page" should return 3', block => {
+    expect(ancestorOf(block, BasicType.PAGE)).toBe(3);
+  });
 
   it.each(ContentBlocks)(
     'drop content block to content block should return -1',
-    (block) => {
-      ContentBlocks.forEach((item) => {
+    block => {
+      ContentBlocks.forEach(item => {
         expect(ancestorOf(block, item)).toBe(-1);
       });
-    }
+    },
   );
 });
 
@@ -105,7 +93,7 @@ describe('Test "wrapper" block', () => {
 });
 
 describe('Test all block', () => {
-  it.each(allBlocks)('drop a block to same block should return -1', (block) => {
+  it.each(allBlocks)('drop a block to same block should return -1', block => {
     expect(ancestorOf(block.type, block.type)).toBe(-1);
   });
 });
