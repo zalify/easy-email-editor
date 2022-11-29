@@ -63,7 +63,6 @@ export function generateAdvancedContentBlock<T extends IBlockData>(option: {
         let counter = 1;
         let foundNumberVariable = false;
         for (const match of matches) {
-          // const idx = match.index;
           if (i18n.type === I18nType.NI18N || i18n.type === I18nType.CNI18N) {
             if (match[1] === i18n.numberVariable) {
               content = content.replace(match[0], '{%' + 1 + '=' + match[1] + '}');
@@ -84,7 +83,7 @@ export function generateAdvancedContentBlock<T extends IBlockData>(option: {
           }
         }
 
-        // Replace singualr variables
+        // Replace singular variables
         let singularText = i18n.singularText;
         if (i18n.type === I18nType.NI18N || i18n.type === I18nType.CNI18N) {
           const matches = singularText.matchAll(regexPattern);
@@ -97,7 +96,6 @@ export function generateAdvancedContentBlock<T extends IBlockData>(option: {
                 match[0],
                 '{%' + counter + '=' + match[1] + '}',
               );
-              // counter++;
             }
           }
         }
