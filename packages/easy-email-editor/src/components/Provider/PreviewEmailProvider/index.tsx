@@ -1,4 +1,3 @@
-
 import { useEditorContext } from '@/hooks/useEditorContext';
 import { useEditorProps } from '@/hooks/useEditorProps';
 import { useLazyState } from '@/hooks/useLazyState';
@@ -19,11 +18,10 @@ export const PreviewEmailContext = React.createContext<{
   html: '',
   reactNode: null,
   errMsg: '',
-  mobileWidth: 320
+  mobileWidth: 320,
 });
 
-export const PreviewEmailProvider: React.FC<{}> = (props) => {
-
+export const PreviewEmailProvider: React.FC<{}> = props => {
   const { current: iframe } = useRef(document.createElement('iframe'));
   const contentWindowRef = useRef<Window | null>(null);
 
@@ -44,11 +42,10 @@ export const PreviewEmailProvider: React.FC<{}> = (props) => {
   }, [mergeTags, previewInjectData]);
 
   useEffect(() => {
-
     const breakpoint = parseInt(lazyPageData.data.value.breakpoint || '0');
     let adjustBreakPoint = breakpoint;
     if (breakpoint > 360) {
-      adjustBreakPoint = Math.max((mobileWidth + 1), breakpoint);
+      adjustBreakPoint = Math.max(mobileWidth + 1, breakpoint);
     }
     const cloneData = {
       ...lazyPageData,
@@ -56,9 +53,9 @@ export const PreviewEmailProvider: React.FC<{}> = (props) => {
         ...lazyPageData.data,
         value: {
           ...lazyPageData.data.value,
-          breakpoint: adjustBreakPoint + 'px'
-        }
-      }
+          breakpoint: adjustBreakPoint + 'px',
+        },
+      },
     };
     let parseHtml = mjml(
       JsonToMjml({
@@ -66,17 +63,19 @@ export const PreviewEmailProvider: React.FC<{}> = (props) => {
         mode: 'production',
         context: cloneData,
         dataSource: cloneDeep(injectData),
-        keepClassName: true
-      })
+        keepClassName: true,
+      }),
     ).html;
     if (onBeforePreview) {
       try {
         const result = onBeforePreview(parseHtml, injectData);
         if (isString(result)) {
           parseHtml = result;
+          setHtml(parseHtml);
         } else {
-          result.then((resHtml) => {
+          result.then(resHtml => {
             parseHtml = resHtml;
+            setHtml(parseHtml);
           });
         }
 
@@ -85,7 +84,6 @@ export const PreviewEmailProvider: React.FC<{}> = (props) => {
         setErrMsg(error?.message || error);
       }
     }
-    setHtml(parseHtml);
   }, [injectData, onBeforePreview, lazyPageData, mobileWidth]);
 
   const htmlNode = useMemo(() => HtmlStringToPreviewReactNodes(html), [html]);
@@ -96,7 +94,7 @@ export const PreviewEmailProvider: React.FC<{}> = (props) => {
     iframe.width = '400px';
     iframe.style.position = 'fixed';
     iframe.style.left = '-9999px';
-    iframe.onload = (evt) => {
+    iframe.onload = evt => {
       contentWindowRef.current = (evt.target as any)?.contentWindow;
     };
 
@@ -119,14 +117,12 @@ export const PreviewEmailProvider: React.FC<{}> = (props) => {
       reactNode: htmlNode,
       html,
       errMsg,
-      mobileWidth
+      mobileWidth,
     };
   }, [errMsg, html, htmlNode, mobileWidth]);
 
   return (
-    <PreviewEmailContext.Provider
-      value={value}
-    >
+    <PreviewEmailContext.Provider value={value}>
       {props.children}
     </PreviewEmailContext.Provider>
   );
