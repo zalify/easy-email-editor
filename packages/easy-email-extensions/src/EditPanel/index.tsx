@@ -10,7 +10,7 @@ import { useExtensionProps } from '@extensions/components/Providers/ExtensionPro
 
 const TabPane = Tabs.TabPane;
 
-export function EditPanel() {
+export function EditPanel({ showSourceCode }: { showSourceCode: boolean }) {
   const { height } = useEditorProps();
   const { compact = true } = useExtensionProps();
 
@@ -57,6 +57,7 @@ export function EditPanel() {
       {!compact && (
         <ConfigurationDrawer
           height={height}
+          showSourceCode={showSourceCode}
           compact={Boolean(compact)}
         />
       )}
