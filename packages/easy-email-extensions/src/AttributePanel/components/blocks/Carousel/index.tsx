@@ -33,7 +33,10 @@ export function Carousel() {
   return (
     <AttributesPanelWrapper style={{ padding: 0 }}>
       <CollapseWrapper defaultActiveKey={['0', '1', '2', '3', '4']}>
-        <Collapse.Item name='0' header='Dimension'>
+        <Collapse.Item
+          name='0'
+          header='Dimension'
+        >
           <Space direction='vertical'>
             <InputWithUnitField
               label='Thumbnail width'
@@ -51,15 +54,25 @@ export function Carousel() {
             <Align inline />
           </Space>
         </Collapse.Item>
-        <Collapse.Item name='4' contentStyle={{ padding: 0 }} header='Images'>
-          <Stack vertical spacing='tight'>
+        <Collapse.Item
+          name='4'
+          contentStyle={{ padding: 0 }}
+          header='Images'
+        >
+          <Stack
+            vertical
+            spacing='tight'
+          >
             <EditTabField
               tabPosition='top'
               name={`${focusIdx}.data.value.images`}
               label=''
               labelHidden
               renderItem={(item, index) => (
-                <CarouselImage item={item} index={index} />
+                <CarouselImage
+                  item={item}
+                  index={index}
+                />
               )}
               additionItem={{
                 src: 'https://www.mailjet.com/wp-content/uploads/2016/11/ecommerce-guide.jpg',
@@ -68,7 +81,10 @@ export function Carousel() {
             />
           </Stack>
         </Collapse.Item>
-        <Collapse.Item name='3' header='Icon'>
+        <Collapse.Item
+          name='3'
+          header='Icon'
+        >
           <Grid.Row>
             <Grid.Col span={11}>
               <TextField
@@ -76,7 +92,10 @@ export function Carousel() {
                 name={`${focusIdx}.attributes.left-icon`}
               />
             </Grid.Col>
-            <Grid.Col offset={1} span={11}>
+            <Grid.Col
+              offset={1}
+              span={11}
+            >
               <TextField
                 label='Right icon'
                 name={`${focusIdx}.attributes.right-icon`}
@@ -91,24 +110,31 @@ export function Carousel() {
                 name={`${focusIdx}.attributes.icon-width`}
               />
             </Grid.Col>
-            <Grid.Col offset={1} span={11} />
+            <Grid.Col
+              offset={1}
+              span={11}
+            />
           </Grid.Row>
         </Collapse.Item>
 
-        <Collapse.Item name='1' header='Border'>
+        <Collapse.Item
+          name='1'
+          header='Border'
+        >
           <Grid.Row>
             <Grid.Col span={11}>
               <ColorPickerField
                 label='Hovered border'
                 name={`${focusIdx}.attributes.tb-hover-border-color`}
-                alignment='center'
               />
             </Grid.Col>
-            <Grid.Col offset={1} span={11}>
+            <Grid.Col
+              offset={1}
+              span={11}
+            >
               <ColorPickerField
                 label='Selected Border'
                 name={`${focusIdx}.attributes.tb-selected-border-color`}
-                alignment='center'
               />
             </Grid.Col>
           </Grid.Row>
@@ -119,7 +145,10 @@ export function Carousel() {
                 name={`${focusIdx}.attributes.tb-border`}
               />
             </Grid.Col>
-            <Grid.Col offset={1} span={11}>
+            <Grid.Col
+              offset={1}
+              span={11}
+            >
               <TextField
                 label='Border radius of the thumbnails'
                 name={`${focusIdx}.attributes.tb-border-radius`}
@@ -127,7 +156,10 @@ export function Carousel() {
             </Grid.Col>
           </Grid.Row>
         </Collapse.Item>
-        <Collapse.Item name='4' header='Extra'>
+        <Collapse.Item
+          name='4'
+          header='Extra'
+        >
           <Grid.Col span={24}>
             <ClassName />
           </Grid.Col>
@@ -163,7 +195,10 @@ function CarouselImage({
             name={`${focusIdx}.data.value.images.[${index}].href`}
           />
         </Grid.Col>
-        <Grid.Col offset={1} span={11}>
+        <Grid.Col
+          offset={1}
+          span={11}
+        >
           <SelectField
             label='Target'
             name={`${focusIdx}.data.value.images.[${index}].target`}

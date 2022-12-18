@@ -1,208 +1,206 @@
-import { TextStyle, Stack, StackProps } from 'easy-email-editor';
-import { Form, Grid, Space } from '@arco-design/web-react';
-import { Field, FieldProps, useField } from 'react-final-form';
+import { Field, UseFieldConfig } from 'react-final-form';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import styles from './index.module.scss';
-import { InputProps } from './Input';
+import { useEditorProps, useRefState } from 'easy-email-editor';
 import { debounce } from 'lodash';
+import { Form, FormItemProps } from '@arco-design/web-react';
 
-export interface EnhancerProps<T> extends Partial<FieldProps<T, any>> {
+export interface EnhancerProps {
   name: string;
-  label: React.ReactNode | null;
-  labelHidden?: boolean;
-  alignment?: StackProps['alignment'];
-  distribution?: StackProps['distribution'];
-  helpText?: React.ReactNode;
-  inline?: boolean;
-  required?: boolean;
-  valueAdapter?: (value: any) => any;
   onChangeAdapter?: (value: any) => any;
   validate?: (value: any) => string | undefined | Promise<string | undefined>;
-  wrapper?: boolean;
-  size?: InputProps['size'];
+  config?: UseFieldConfig<any, any>;
+  changeOnBlur?: boolean;
+  formItem?: FormItemProps;
+  label?: FormItemProps['label'];
+  inline?: boolean;
+  equalSpacing?: boolean;
+  required?: boolean;
+  autoComplete?: 'on' | 'off';
+  style?: React.CSSProperties;
+  helpText?: React.ReactNode;
+  debounceTime?: number;
+  labelHidden?: boolean;
 }
 
-let primaryId = 0;
 const parse = (v: any) => v;
-export default function enhancer<P, C extends (...rest: any[]) => any = any>(
-  Component: any,
-  changeAdapter: C
+export default function enhancer<P extends { onChange?: (...rest: any) => any }>(
+  Component: React.FC<any>,
+  changeAdapter: (args: Parameters<NonNullable<P['onChange']>>) => any,
+  option?: { debounceTime: number },
 ) {
-  return (
-    props: EnhancerProps<P> & Omit<P, 'value' | 'onChange' | 'mutators'>
-  ) => {
+  return (props: EnhancerProps & Omit<P, 'value' | 'onChange' | 'mutators'>) => {
     const {
       name,
-      onChangeAdapter,
-      valueAdapter,
-      inline,
-      label,
-      labelHidden,
-      helpText,
-      alignment,
-      distribution,
       validate,
+      onChangeAdapter,
+      changeOnBlur,
+      inline,
+      equalSpacing,
+      formItem,
+      label,
       required,
-      size,
-      wrapper = true,
-      debounceTime = 0,
+      style,
+      helpText,
+      autoComplete,
+      labelHidden,
       ...rest
     } = props;
 
-    const {
-      input: { value, onChange },
-    } = useField(name, {
-      validate,
-      parse: (v) => v,
-    });
+    const debounceTime = props.debounceTime || option?.debounceTime || 300;
 
-    const [currentValue, setCurrentValue] = useState(value);
+    const config = useMemo(() => {
+      return {
+        ...props.config,
+        validate: validate,
+        parse: props.config?.parse || parse,
+      };
+    }, [props.config, validate]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const debounceCallbackChange = useCallback(
-      debounce(
-        (val) => {
-          onChange(val);
-        },
-        500,
-        {
-          // maxWait: 500,
-        }
-      ),
-      [onChange]
-    );
+    const [currentValue, setCurrentValue] = useState('');
+    const currentValueRef = useRefState(currentValue);
 
-    useEffect(() => {
-      setCurrentValue(value);
-    }, [value]);
-
-    const id = useMemo(() => {
-      return `enhancer-${primaryId++}`;
-    }, []);
-
-    return (
-      <Field name={name} validate={validate} parse={parse}>
-        {({ input: { onBlur }, meta: { touched, error } }) => {
-          const onFieldChange = useCallback(
-            (e: any) => {
-              const newVal = onChangeAdapter
-                ? onChangeAdapter(changeAdapter(e))
-                : changeAdapter(e);
-              setCurrentValue(newVal);
-              debounceCallbackChange(newVal);
-              onBlur();
+    const layoutStyle = useMemo((): FormItemProps => {
+      if (equalSpacing) {
+        return {
+          labelCol: {
+            span: 11,
+            style: {
+              textAlign: 'left',
+              paddingRight: 0,
             },
-            [onBlur]
-          );
+          },
+          wrapperCol: {
+            span: 11,
+            offset: 1,
+            style: {
+              textAlign: 'right',
+            },
+          },
+        };
+      }
+      if (inline) {
+        return {
+          labelCol: {
+            span: 7,
+            style: {
+              textAlign: 'right',
+              paddingRight: 0,
+            },
+          },
+          wrapperCol: {
+            span: 16,
+            offset: 1,
+            style: {},
+          },
+        };
+      }
 
-          if (!wrapper)
-            return (
-              <Component
-                {...rest}
-                id={id}
-                name={name}
-                checked={
-                  valueAdapter ? valueAdapter(currentValue) : currentValue
-                }
-                value={valueAdapter ? valueAdapter(currentValue) : currentValue}
-                onChange={onFieldChange}
-              />
+      return {
+        labelCol: {
+          span: 24,
+          style: {
+            paddingRight: 0,
+          },
+        },
+        wrapperCol: {
+          span: 24,
+        },
+      };
+    }, [equalSpacing, inline]);
+
+    return useMemo(() => {
+      return (
+        <Field
+          name={name}
+          {...config}
+        >
+          {({ input: { onBlur, onChange, value }, meta }) => {
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+
+            const debounceCallbackChange = useCallback(
+              debounce(
+                val => {
+                  onChange(val);
+                  onBlur();
+                },
+                debounceTime,
+                {
+                  // maxWait: 500,
+                },
+              ),
+              [onChange, onBlur],
             );
 
-          const wrapperStyle: {
-            label: {
-              span: number;
-              offset: number;
-            };
-            value: {
-              span: number;
-              offset: number;
-            };
-            textAlign: 'right' | 'left';
-          } = inline
-              ? {
-                label: {
-                  span: 7,
-                  offset: 0,
-                },
-                value: {
-                  span: 16,
-                  offset: 1,
-                },
-                textAlign: 'right',
-              }
-              : {
-                label: {
-                  span: 24,
-                  offset: 0,
-                },
-                value: {
-                  span: 24,
-                  offset: 0,
-                },
-                textAlign: 'left',
-              };
+            const onFieldChange: P['onChange'] = useCallback(
+              (e: any) => {
+                const newVal = onChangeAdapter
+                  ? onChangeAdapter(changeAdapter(e))
+                  : changeAdapter(e);
 
-          return (
-            <Form.Item
-              noStyle
-              validateStatus={touched && error ? 'error' : undefined}
-              help={touched && error}
-            >
-              <Space direction='vertical' style={{ width: '100%' }}>
-                <Grid.Row align='center'>
-                  <Grid.Col
-                    span={wrapperStyle.label.span}
-                    offset={wrapperStyle.label.offset}
-                    style={{ textAlign: wrapperStyle.textAlign }}
-                  >
-                    <label
-                      className={
-                        labelHidden ? styles['label-hidden'] : undefined
-                      }
-                      style={{ width: '100%', display: 'flex' }}
-                      htmlFor={id}
-                    >
-                      {required && (
-                        <span style={{ color: '#ff4d4f', marginRight: 4 }}>
-                          *{' '}
-                        </span>
-                      )}
-                      <div style={{ flex: 1 }}> {label}</div>
-                    </label>
-                  </Grid.Col>
-                  <Grid.Col
-                    style={{
-                      textAlign: 'left',
-                    }}
-                    offset={wrapperStyle.value.offset}
-                    span={wrapperStyle.value.span}
-                  >
-                    <Component
-                      size={size}
-                      {...rest}
-                      id={id}
-                      name={name}
-                      checked={
-                        valueAdapter ? valueAdapter(currentValue) : currentValue
-                      }
-                      value={
-                        valueAdapter ? valueAdapter(currentValue) : currentValue
-                      }
-                      onChange={onFieldChange}
-                    />
-                  </Grid.Col>
-                </Grid.Row>
-                {helpText && (
-                  <div className={styles.helperText}>
-                    <small>{helpText}</small>
-                  </div>
-                )}
-              </Space>
-            </Form.Item>
-          );
-        }}
-      </Field>
-    );
+                setCurrentValue(newVal);
+                if (!changeOnBlur) {
+                  debounceCallbackChange(newVal);
+                }
+              },
+              [debounceCallbackChange],
+            );
+
+            const onFieldBlur = useCallback(() => {
+              if (changeOnBlur) {
+                onChange(currentValueRef.current);
+                onBlur();
+              }
+            }, [onBlur, onChange]);
+
+            useEffect(() => {
+              setCurrentValue(value);
+            }, [value]);
+
+            return (
+              <Form.Item
+                style={{
+                  ...style,
+                  margin: '0px',
+                }}
+                rules={required ? [{ required: true }] : undefined}
+                {...layoutStyle}
+                {...formItem}
+                label={labelHidden ? undefined : label || formItem?.label}
+                labelAlign='left'
+                validateStatus={meta.touched && meta.error ? 'error' : undefined}
+                help={meta.touched && meta.error ? meta.error : helpText}
+              >
+                <Component
+                  autoComplete={autoComplete}
+                  {...rest}
+                  name={name}
+                  checked={currentValue}
+                  value={currentValue}
+                  onChange={onFieldChange}
+                  onBlur={onFieldBlur}
+                />
+              </Form.Item>
+            );
+          }}
+        </Field>
+      );
+    }, [
+      autoComplete,
+      changeOnBlur,
+      config,
+      currentValue,
+      currentValueRef,
+      debounceTime,
+      formItem,
+      helpText,
+      label,
+      labelHidden,
+      layoutStyle,
+      name,
+      onChangeAdapter,
+      required,
+      rest,
+      style,
+    ]);
   };
 }
