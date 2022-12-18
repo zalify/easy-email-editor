@@ -11,6 +11,7 @@ export interface InputWithUnitProps extends Omit<ArcoInputProps, 'onChange'> {
   value: string;
   onChange: (val: string) => void;
   unitOptions?: Array<{ value: string; label: string }> | 'default' | 'percent';
+  quickchange?: boolean;
 }
 
 const defaultUnitOptions = [

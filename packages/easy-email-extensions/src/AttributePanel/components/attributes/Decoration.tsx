@@ -7,8 +7,15 @@ export function Decoration() {
 
   return useMemo(() => {
     return (
-      <Stack key={focusIdx} vertical spacing='extraTight'>
-        <TextStyle variation='strong' size='large'>
+      <Stack
+        key={focusIdx}
+        vertical
+        spacing='extraTight'
+      >
+        <TextStyle
+          variation='strong'
+          size='large'
+        >
           Decoration
         </TextStyle>
         <TextField
@@ -20,7 +27,6 @@ export function Decoration() {
           label='Border'
           name={`${focusIdx}.attributes.border`}
           inline
-          alignment='center'
         />
         <NumberField
           label='Opacity'
@@ -29,7 +35,6 @@ export function Decoration() {
           step={0.1}
           name={`${focusIdx}.attributes.opacity`}
           inline
-          alignment='center'
         />
       </Stack>
     );

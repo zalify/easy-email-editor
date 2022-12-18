@@ -23,8 +23,14 @@ export function Image() {
   return (
     <AttributesPanelWrapper style={{ padding: 0 }}>
       <CollapseWrapper defaultActiveKey={['0', '1', '2', '3', '4']}>
-        <Collapse.Item name='1' header='Setting'>
-          <Stack vertical spacing='tight'>
+        <Collapse.Item
+          name='1'
+          header='Setting'
+        >
+          <Stack
+            vertical
+            spacing='tight'
+          >
             <ImageUploaderField
               label='src'
               labelHidden
@@ -36,18 +42,23 @@ export function Image() {
               label='Background color'
               name={`${focusIdx}.attributes.container-background-color`}
               inline
-              alignment='center'
             />
           </Stack>
         </Collapse.Item>
 
-        <Collapse.Item name='0' header='Dimension'>
+        <Collapse.Item
+          name='0'
+          header='Dimension'
+        >
           <Space direction='vertical'>
             <Grid.Row>
               <Grid.Col span={11}>
                 <Width />
               </Grid.Col>
-              <Grid.Col offset={1} span={11}>
+              <Grid.Col
+                offset={1}
+                span={11}
+              >
                 <Height />
               </Grid.Col>
             </Grid.Row>
@@ -61,23 +72,44 @@ export function Image() {
           </Space>
         </Collapse.Item>
 
-        <Collapse.Item name='2' header='Link'>
-          <Stack vertical spacing='tight'>
+        <Collapse.Item
+          name='2'
+          header='Link'
+        >
+          <Stack
+            vertical
+            spacing='tight'
+          >
             <Link />
           </Stack>
         </Collapse.Item>
 
-        <Collapse.Item name='3' header='Border'>
+        <Collapse.Item
+          name='3'
+          header='Border'
+        >
           <Border />
         </Collapse.Item>
 
-        <Collapse.Item name='4' header='Extra'>
+        <Collapse.Item
+          name='4'
+          header='Extra'
+        >
           <Grid.Row>
             <Grid.Col span={11}>
-              <TextField label='title' name={`${focusIdx}.attributes.title`} />
+              <TextField
+                label='title'
+                name={`${focusIdx}.attributes.title`}
+              />
             </Grid.Col>
-            <Grid.Col offset={1} span={11}>
-              <TextField label='alt' name={`${focusIdx}.attributes.alt`} />
+            <Grid.Col
+              offset={1}
+              span={11}
+            >
+              <TextField
+                label='alt'
+                name={`${focusIdx}.attributes.alt`}
+              />
             </Grid.Col>
           </Grid.Row>
           <Grid.Col span={24}>

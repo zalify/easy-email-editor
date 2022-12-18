@@ -11,22 +11,26 @@ export interface AutoCompleteProps
   value: string;
   options: Array<{ value: any; label: any }>;
   onChange: (val: string) => void;
+  showSearch?: boolean;
 }
 
 export function AutoComplete(props: AutoCompleteProps) {
   const options = useMemo(() => {
     const selectedValue = (props.value || '').toLowerCase();
     return props.options
-      .filter((item) => {
+      .filter(item => {
         return (
-          (isString(item.value) &&
-            item.value.toLowerCase().startsWith(selectedValue)) ||
-          (isString(item.label) &&
-            item.label.toLowerCase().startsWith(selectedValue))
+          (isString(item.value) && item.value.toLowerCase().startsWith(selectedValue)) ||
+          (isString(item.label) && item.label.toLowerCase().startsWith(selectedValue))
         );
       })
-      .map((item) => ({ ...item, name: item.label }));
+      .map(item => ({ ...item, name: item.label }));
   }, [props.options, props.value]);
 
-  return <ArcoAutoComplete {...props} data={options} />;
+  return (
+    <ArcoAutoComplete
+      {...props}
+      data={options}
+    />
+  );
 }
