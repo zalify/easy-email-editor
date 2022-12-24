@@ -83,6 +83,8 @@ export const PreviewEmailProvider: React.FC<{}> = props => {
       } catch (error: any) {
         setErrMsg(error?.message || error);
       }
+    } else {
+      setHtml(parseHtml);
     }
   }, [injectData, onBeforePreview, lazyPageData, mobileWidth]);
 
