@@ -93,7 +93,12 @@ const render = (data: ICustomButton, idx: string, context: IPage): IBlockData =>
   const { buttonText } = data.data.value;
 
   const instance = (
-    <Button background-color={attributes['background-color']}>{buttonText}</Button>
+    <Button 
+      background-color={attributes['background-color']}
+      css-class={mode === 'testing' ? getPreviewClassName(idx, data.type) : ''} // Add this class to enable an interactive prompt during editing.
+    >
+      {buttonText}
+    </Button>
   );
 
   return instance;
