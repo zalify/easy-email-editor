@@ -3,6 +3,7 @@ export { Color } from './Color';
 export { Height } from './Height';
 export { TextAlign } from './TextAlign';
 export { AttributesPanelWrapper } from './AttributesPanelWrapper';
+export { CollapseWrapper } from './CollapseWrapper';
 export { ContainerBackgroundColor } from './ContainerBackgroundColor';
 export { LetterSpacing } from './LetterSpacing';
 export { TextDecoration } from './TextDecoration';
