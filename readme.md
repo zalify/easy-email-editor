@@ -54,6 +54,25 @@ Easy email is developed based on the [MJML](https://mjml.io/) and has very good 
 
 Check out the live demo here: <a href="https://email.maocanhua.cn/?utm_source=github" target="_blank" alt="https://email.maocanhua.cn/?utm_source=github">https://email.maocanhua.cn</a>
 
+## How does it work?
+
+<img alt="" src="./work.png">
+
+</br>
+
+## Roadmap
+
+- Localization in progress.
+- Awesome responsive, support mobile and desktop display different styles (without any compatibility issues)
+- Replace shadow dom with iframe, support firefox/safari browsers.
+- Improve documentation and add more usage examples
+
+## Donation
+
+If you like this project, please consider donating.
+
+<a href="https://www.buymeacoffee.com/easyemail" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee"></a>
+
 ## Getting started
 
 ```sh
@@ -155,25 +174,6 @@ export default function App() {
 - [easy-email-extensions](./packages/easy-email-extensions/readme.md)
 
 </br>
-
-## How does it work?
-
-<img alt="" src="./work.png">
-
-</br>
-
-## Roadmap
-
-- Localization in progress.
-- Awesome responsive, support mobile and desktop display different styles (without any compatibility issues)
-- Replace shadow dom with iframe, support firefox/safari browsers.
-- Improve documentation and add more usage examples
-
-## Donation
-
-If you like this project, please consider donating.
-
-<a href="https://www.buymeacoffee.com/easyemail" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee"></a>
 
 ## Development
 
