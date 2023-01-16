@@ -455,22 +455,27 @@ export default function Editor() {
                       Save
                     </Button>
                     <a
+                      href='https://www.buymeacoffee.com/easyemail?utm_source=webside&utm_medium=button&utm_content=donate'
                       target='_blank'
-                      href='https://github.com/m-Ryan/easy-email'
-                      style={{
-                        color: '#000',
-                        fontSize: 28,
-                        width: 33,
-                        height: 33,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        backgroundColor: '#fff',
-                        borderRadius: '50%',
+                      onClick={ev => {
+                        ev.preventDefault();
+                        pushEvent({ event: 'Donate' });
+                        window.open(
+                          'https://www.buymeacoffee.com/easyemail?utm_source=webside&utm_medium=button&utm_content=donate',
+                          '_blank',
+                        );
                       }}
-                      onClick={() => pushEvent({ event: 'Github' })}
                     >
-                      <IconGithub />
+                      <img
+                        style={{
+                          marginTop: -16,
+                          position: 'relative',
+                          top: 11,
+                          height: 32,
+                        }}
+                        src='https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png'
+                        alt='Buy Me A Coffee'
+                      />
                     </a>
                   </Stack>
                 }
