@@ -31,7 +31,7 @@ export function ConfigurationDrawer({
             left: 0,
             width: '100%',
             height: '100%',
-            zIndex: 1,
+            zIndex: visible ? 1 : -1,
             pointerEvents: visible ? 'auto' : 'none',
           }}
         />
@@ -43,7 +43,7 @@ export function ConfigurationDrawer({
             focusLock={false}
             placement='right'
             bodyStyle={{ padding: 0 }}
-            visible={visible}
+            visible
             getPopupContainer={() => refWrapper && (refWrapper.current as any)}
             footer={null}
             onCancel={onClose}
