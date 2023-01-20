@@ -36,7 +36,7 @@ export function EditPanel({ showSourceCode }: { showSourceCode: boolean }) {
       >
         <TabPane
           key='2'
-          title='Block'
+          title={t('Block')}
         >
           <FullHeightOverlayScrollbars height={`calc(${height} - 60px)`}>
             <Blocks />

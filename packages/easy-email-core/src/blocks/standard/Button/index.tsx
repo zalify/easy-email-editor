@@ -4,6 +4,7 @@ import { BasicType } from '@core/constants';
 import { createBlock } from '@core/utils/createBlock';
 import { merge } from 'lodash';
 import { BasicBlock } from '@core/components/BasicBlock';
+import { t } from '@core/utils';
 export type IButton = IBlockData<
   {
     align?: string;
@@ -31,13 +32,15 @@ export type IButton = IBlockData<
     'text-decoration'?: string;
     'text-transform'?: string;
   },
-  { content: string; }
+  { content: string }
 >;
 
 export const Button = createBlock<IButton>({
-  name: 'Button',
+  get name() {
+    return t('Button');
+  },
   type: BasicType.BUTTON,
-  create: (payload) => {
+  create: payload => {
     const defaultData: IButton = {
       type: BasicType.BUTTON,
       data: {
@@ -67,7 +70,13 @@ export const Button = createBlock<IButton>({
   validParentType: [BasicType.COLUMN, BasicType.HERO],
   render(params) {
     const { data } = params;
-    return <BasicBlock params={params} tag="mj-button">{data.data.value.content}</BasicBlock>;
+    return (
+      <BasicBlock
+        params={params}
+        tag='mj-button'
+      >
+        {data.data.value.content}
+      </BasicBlock>
+    );
   },
-
 });

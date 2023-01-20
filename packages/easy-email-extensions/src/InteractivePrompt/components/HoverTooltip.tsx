@@ -33,7 +33,7 @@ export function HoverTooltip() {
 
     if (lazyHoverIdx) {
       const promiseObj = awaitForElement<HTMLDivElement>(lazyHoverIdx);
-      promiseObj.promise.then((blockNode) => {
+      promiseObj.promise.then(blockNode => {
         if (rootBounds) {
           const { top } = blockNode.getBoundingClientRect();
           setIsTop(rootBounds.top === top);
@@ -46,16 +46,13 @@ export function HoverTooltip() {
         promiseObj.cancel();
       };
     } else {
-
       setBlockNode(null);
     }
   }, [lazyHoverIdx, initialized]);
 
   const block = useMemo(() => {
     return blockNode
-      ? BlockManager.getBlockByType(
-        getNodeTypeFromClassName(blockNode.classList)!
-      )
+      ? BlockManager.getBlockByType(getNodeTypeFromClassName(blockNode.classList)!)
       : null;
   }, [blockNode]);
 
@@ -85,7 +82,7 @@ export function HoverTooltip() {
             isDragging={isDragging}
           />
         </div>,
-        blockNode
+        blockNode,
       )}
     </>
   );
@@ -103,11 +100,11 @@ function TipNode(props: TipNodeProps) {
   const { direction, title, lineWidth, type } = props;
   const dragTitle = useMemo(() => {
     if (direction === 'top' || direction === 'noEnoughTop') {
-      return `Insert before ${title}`;
+      return t(`Insert before`, title);
     } else if (direction === 'bottom') {
-      return `Insert after ${title}`;
+      return t(`Insert after`, title);
     } else if (direction === 'right' || direction === 'left') {
-      return 'Drag here';
+      return t('Drag here');
     }
     return `Drag to ${title}`;
   }, [direction, title]);

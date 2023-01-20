@@ -5,15 +5,21 @@ import { RadioGroupField } from '../../../components/Form';
 const options = [
   {
     value: 'left',
-    label: 'left',
+    get label() {
+      return t('left');
+    },
   },
   {
     value: 'center',
-    label: 'center',
+    get label() {
+      return t('center');
+    },
   },
   {
     value: 'right',
-    label: 'right',
+    get label() {
+      return t('right');
+    },
   },
 ];
 
@@ -22,7 +28,7 @@ export function Align({ inline }: { inline?: boolean }) {
 
   return (
     <RadioGroupField
-      label='Align'
+      label={t('Align')}
       name={`${focusIdx}.attributes.align`}
       options={options}
     />
