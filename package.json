@@ -13,11 +13,13 @@
     "lint": "lerna exec -- yarn format"
   },
   "dependencies": {
-    "easy-localized-translation": "^1.0.2",
+    "easy-localized-translation": "^1.1.0",
     "lerna": "^4.0.0",
     "liquidjs": "^9.34.1"
   },
   "devDependencies": {
+    "@types/fs-extra": "^11.0.1",
+    "@types/lodash": "^4.14.191",
     "@types/node": "^18.8.4",
     "@typescript-eslint/eslint-plugin": "^5.22.0",
     "dotenv": "^16.0.3"

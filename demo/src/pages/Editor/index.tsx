@@ -57,7 +57,8 @@ import { useMergeTagsModal } from './components/useMergeTagsModal';
 
 import { useWindowSize } from 'react-use';
 import { CustomBlocksType } from './components/CustomBlocks/constants';
-import localesData from 'easy-email-editor/lib/locales.json';
+import localesData from 'easy-email-localization/locales/locales.json';
+
 console.log(localesData);
 
 const defaultCategories: ExtensionProps['categories'] = [
@@ -188,7 +189,7 @@ export default function Editor() {
   const dispatch = useDispatch();
   const history = useHistory();
   const templateData = useAppSelector('template');
-  const [locale, setLocale] = useState('en');
+  const [locale, setLocale] = useState('zh-Hans');
   const { addCollection, removeCollection, collectionCategory } = useCollection();
 
   const { width } = useWindowSize();

@@ -12,5 +12,6 @@ export { BlockManager } from './BlockManager';
 export { ImageManager } from './ImageManager';
 export { TemplateEngineManager } from './TemplateEngineManager';
 export { isAdvancedBlock } from './isAdvancedBlock';
+export { I18nManager, t } from './I18nManager';
 export { getAdapterAttributesString } from './getAdapterAttributesString';
 export * from './block';

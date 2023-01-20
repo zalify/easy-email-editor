@@ -1,0 +1,12 @@
+{
+  "name": "easy-email-localization",
+  "license": "MIT",
+  "description": "Email editor",
+  "version": "4.4.4",
+  "author": "m-Ryan",
+  "keywords": [],
+  "files": [
+    "locales"
+  ],
+  "scripts": {}
+}
