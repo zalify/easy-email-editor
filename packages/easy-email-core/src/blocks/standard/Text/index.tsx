@@ -4,6 +4,7 @@ import { BasicType } from '@core/constants';
 import { createBlock } from '@core/utils/createBlock';
 import { merge } from 'lodash';
 import { BasicBlock } from '@core/components/BasicBlock';
+import { t } from '@core/utils';
 export type IText = IBlockData<
   {
     color?: string;
@@ -27,9 +28,11 @@ export type IText = IBlockData<
 >;
 
 export const Text = createBlock<IText>({
-  name: 'Text',
+  get name() {
+    return t('Text');
+  },
   type: BasicType.TEXT,
-  create: (payload) => {
+  create: payload => {
     const defaultData: IText = {
       type: BasicType.TEXT,
       data: {
@@ -48,6 +51,13 @@ export const Text = createBlock<IText>({
   validParentType: [BasicType.COLUMN, BasicType.HERO],
   render(params) {
     const { data } = params;
-    return <BasicBlock params={params} tag="mj-text">{data.data.value.content}</BasicBlock>;
+    return (
+      <BasicBlock
+        params={params}
+        tag='mj-text'
+      >
+        {data.data.value.content}
+      </BasicBlock>
+    );
   },
 });

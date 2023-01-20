@@ -1,17 +1,17 @@
-import { generateTranslate } from '@/utils/generateTranslate';
 import React, { useEffect, useMemo, useState } from 'react';
+import { I18nManager, t } from 'easy-email-core';
 
 export const LanguageProvider: React.FC<{ locale?: Record<string, string> }> = props => {
   const [count, setCount] = useState(0);
 
-  const translate = useMemo(() => generateTranslate(props.locale || {}), [props.locale]);
+  I18nManager.setLocaleData(props.locale || {});
+  window.t = t as any;
 
   useEffect(() => {
     setCount(c => c + 1);
-  }, []);
+  }, [props.locale]);
 
   return useMemo(() => {
-    window.t = translate;
     return <React.Fragment key={count}>{props.children}</React.Fragment>;
-  }, [count, props.children, translate]);
+  }, [count, props.children]);
 };
