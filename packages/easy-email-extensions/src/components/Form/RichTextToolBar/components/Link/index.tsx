@@ -86,38 +86,38 @@ export function Link(props: LinkProps) {
                   <SearchField
                     size='small'
                     name='link'
-                    label='Link'
+                    label={t('Link')}
                     labelHidden
-                    searchButton='Apply'
-                    placeholder='https://www.example.com'
+                    searchButton={t('Apply')}
+                    placeholder={t('https://www.example.com')}
                     onSearch={() => handleSubmit()}
                   />
                 </Stack>
                 <Grid.Row>
                   <Grid.Col span={12}>
                     <Space align='center' size='mini'>
-                      <TextStyle size='smallest'>Target</TextStyle>
+                      <TextStyle size='smallest'>{t('Target')}</TextStyle>
                       <SwitchField
                         size='small'
-                        label='Target'
+                        label={t('Target')}
                         labelHidden
                         name='blank'
-                        checkedText='blank'
-                        uncheckedText='self'
+                        checkedText={t('blank')}
+                        uncheckedText={t('self')}
                         inline
                       />
                     </Space>
                   </Grid.Col>
                   <Grid.Col span={12}>
                     <Space align='center' size='mini'>
-                      <TextStyle size='smallest'>Underline</TextStyle>
+                      <TextStyle size='smallest'>{t('Underline')}</TextStyle>
                       <SwitchField
                         size='small'
-                        label='Underline'
+                        label={t('Underline')}
                         labelHidden
                         name='underline'
-                        checkedText='off'
-                        uncheckedText='on'
+                        checkedText={t('off')}
+                        uncheckedText={t('on')}
                         inline
                       />
                     </Space>
@@ -126,7 +126,7 @@ export function Link(props: LinkProps) {
               </div>
             )}
           >
-            <ToolItem isActive={Boolean(initialValues.link)} title='Link' icon={<IconFont iconName='icon-link' />} />
+            <ToolItem isActive={Boolean(initialValues.link)} title={t('Link')} icon={<IconFont iconName='icon-link' />} />
           </Tooltip>
         );
       }}

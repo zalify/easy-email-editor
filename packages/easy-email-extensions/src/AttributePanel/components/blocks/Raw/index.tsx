@@ -12,7 +12,7 @@ export function Raw() {
     <AttributesPanelWrapper
       style={{ padding: 20 }}
       extra={
-        <Tooltip content='Html mode'>
+        <Tooltip content={t('Html mode')}>
           <Button
             onClick={() => setVisible(true)}
             icon={<IconFont iconName='icon-html' />}

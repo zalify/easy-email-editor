@@ -39,9 +39,9 @@ export const CollapseWrapper: React.FC<CollapseWrapperProps> = (props) => {
     if (!isAdvancedBlockType) return;
 
     if (iterationEnabled) {
-      setActiveKeys((keys) => [...keys, 'Iteration']);
+      setActiveKeys((keys) => [...keys, t('Iteration')]);
     } else {
-      setActiveKeys((keys) => keys.filter((k) => k !== 'Iteration'));
+      setActiveKeys((keys) => keys.filter((k) => k !== t('Iteration')));
     }
   }, [iterationEnabled, isAdvancedBlockType]);
 
@@ -49,9 +49,9 @@ export const CollapseWrapper: React.FC<CollapseWrapperProps> = (props) => {
     if (!isAdvancedBlockType) return;
 
     if (conditionEnabled) {
-      setActiveKeys((keys) => [...keys, 'Condition']);
+      setActiveKeys((keys) => [...keys, t('Condition')]);
     } else {
-      setActiveKeys((keys) => keys.filter((k) => k !== 'Condition'));
+      setActiveKeys((keys) => keys.filter((k) => k !== t('Condition')));
     }
   }, [conditionEnabled, isAdvancedBlockType]);
 

@@ -35,11 +35,11 @@ export function Tools(props: ToolsProps) {
   const execCommand = useCallback(
     (cmd: string, val?: any) => {
       if (!selectionRange) {
-        console.error('No selectionRange');
+        console.error(t('No selectionRange'));
         return;
       }
       if (!focusBlockNode?.contains(selectionRange?.commonAncestorContainer)) {
-        console.error('Not commonAncestorContainer');
+        console.error(t('Not commonAncestorContainer'));
         return;
       }
 
@@ -188,41 +188,41 @@ export function Tools(props: ToolsProps) {
         <ToolItem
           onClick={() => execCommand('justifyLeft')}
           icon={<IconFont iconName='icon-align-left' />}
-          title='Align left'
+          title={t('Align left')}
         />
         <ToolItem
           onClick={() => execCommand('justifyCenter')}
           icon={<IconFont iconName='icon-align-center' />}
-          title='Align center'
+          title={t('Align center')}
         />
         <ToolItem
           onClick={() => execCommand('justifyRight')}
           icon={<IconFont iconName='icon-align-right' />}
-          title='Align right'
+          title={t('Align right')}
         />
         <div className='easy-email-extensions-divider' />
         <ToolItem
           onClick={() => execCommand('insertOrderedList')}
           icon={<IconFont iconName='icon-list-ol' />}
-          title='Orderlist'
+          title={t('Orderlist')}
         />
         <ToolItem
           onClick={() => execCommand('insertUnorderedList')}
           icon={<IconFont iconName='icon-list-ul' />}
-          title='Unorderlist'
+          title={t('Unorderlist')}
         />
         <div className='easy-email-extensions-divider' />
 
         <ToolItem
           onClick={() => execCommand('insertHorizontalRule')}
           icon={<IconFont iconName='icon-line' />}
-          title='Line'
+          title={t('Line')}
         />
         <div className='easy-email-extensions-divider' />
         <ToolItem
           onClick={() => execCommand('removeFormat')}
           icon={<IconFont iconName='icon-close' />}
-          title='Remove format'
+          title={t('Remove format')}
         />
         <div className='easy-email-extensions-divider' />
       </div>

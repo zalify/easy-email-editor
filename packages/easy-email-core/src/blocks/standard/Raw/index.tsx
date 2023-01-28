@@ -3,13 +3,15 @@ import { IBlockData } from '@core/typings';
 import { BasicType } from '@core/constants';
 import { createBlock } from '@core/utils/createBlock';
 import { merge } from 'lodash';
-import { getAdapterAttributesString } from '@core/utils';
+import { getAdapterAttributesString, t } from '@core/utils';
 import { BasicBlock } from '@core/components/BasicBlock';
 
 export type IRaw = IBlockData<{}, { content: string }>;
 
 export const Raw = createBlock<IRaw>({
-  name: 'Raw',
+  get name() {
+    return t('Raw');
+  },
   type: BasicType.RAW,
   create: payload => {
     const defaultData: IRaw = {

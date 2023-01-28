@@ -30,11 +30,11 @@ import { CollapseWrapper } from '../../attributes/CollapseWrapper';
 const options = [
   {
     value: 'vertical',
-    label: 'vertical',
+    label: t('vertical'),
   },
   {
     value: 'horizontal',
-    label: 'horizontal',
+    label: t('horizontal'),
   },
 ];
 
@@ -47,10 +47,10 @@ export function Social() {
   return (
     <AttributesPanelWrapper style={{ padding: 0 }}>
       <CollapseWrapper defaultActiveKey={['0', '1', '2', '3']}>
-        <Collapse.Item name='1' header='Setting'>
+        <Collapse.Item name='1' header={t('Setting')}>
           <Space direction='vertical'>
             <RadioGroupField
-              label='Mode'
+              label={t('Mode')}
               name={`${focusIdx}.attributes.mode`}
               options={options}
             />
@@ -60,7 +60,7 @@ export function Social() {
           </Space>
         </Collapse.Item>
 
-        <Collapse.Item name='3' header='Typography'>
+        <Collapse.Item name='3' header={t('Typography')}>
           <Space direction='vertical'>
             <Grid.Row>
               <Grid.Col span={11}>
@@ -84,7 +84,7 @@ export function Social() {
               </Grid.Col>
               <Grid.Col offset={1} span={11}>
 
-                <ContainerBackgroundColor title='Background color' />
+                <ContainerBackgroundColor title={t('Background color')} />
               </Grid.Col>
             </Grid.Row>
             <Grid.Row>
@@ -101,7 +101,7 @@ export function Social() {
 
         <Collapse.Item
           name='2'
-          header='Social item'
+          header={t('Social item')}
           contentStyle={{ padding: 10 }}
         >
 
@@ -116,32 +116,32 @@ export function Social() {
           />
         </Collapse.Item>
 
-        <Collapse.Item name='0' header='Dimension'>
+        <Collapse.Item name='0' header={t('Dimension')}>
 
           <Space direction="vertical" size="large">
 
             <Grid.Row>
               <Grid.Col span={11}>
                 <InputWithUnitField
-                  label='Icon width'
+                  label={t('Icon width')}
                   name={`${focusIdx}.attributes.icon-size`}
                 />
               </Grid.Col>
               <Grid.Col offset={1} span={11}>
                 <TextField
-                  label='Border radius'
+                  label={t('Border radius')}
                   name={`${focusIdx}.attributes.border-radius`}
                 />
               </Grid.Col>
             </Grid.Row>
 
             <Padding />
-            <Padding attributeName='inner-padding' title='Icon padding' />
-            <Padding attributeName='text-padding' title='Text padding' />
+            <Padding attributeName='inner-padding' title={t('Icon padding')} />
+            <Padding attributeName='text-padding' title={t('Text padding')} />
           </Space>
 
         </Collapse.Item>
-        <Collapse.Item name='4' header='Extra'>
+        <Collapse.Item name='4' header={t('Extra')}>
           <Grid.Col span={24}>
             <ClassName />
           </Grid.Col>
@@ -173,18 +173,18 @@ function SocialElement({
   return (
     <Space direction='vertical'>
       <ImageUploaderField
-        label='Image'
+        label={t('Image')}
         autoCompleteOptions={autoCompleteOptions}
         labelHidden
         name={`${focusIdx}.data.value.elements.[${index}].src`}
-        // helpText='The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.'
+        //helpText={t('The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.')}
         uploadHandler={onUploadImage}
       />
 
       <Grid.Row>
         <Grid.Col span={11}>
           <TextField
-            label='Content'
+            label={t('Content')}
             name={`${focusIdx}.data.value.elements.[${index}].content`}
             quickchange
           />
@@ -192,7 +192,7 @@ function SocialElement({
         <Grid.Col offset={1} span={11}>
           <TextField
             prefix={<IconLink />}
-            label='Link'
+            label={t('Link')}
             name={`${focusIdx}.data.value.elements.[${index}].href`}
           />
         </Grid.Col>
@@ -200,13 +200,13 @@ function SocialElement({
       {/* <Grid.Row>
         <Grid.Col span={11}>
           <InputWithUnitField
-            label='Icon width'
+            label={t('Icon width')}
             name={`${focusIdx}.data.value.elements.[${index}].icon-size`}
           />
         </Grid.Col>
         <Grid.Col offset={1} span={11}>
           <InputWithUnitField
-            label='Icon height'
+            label={t('Icon height')}
             name={`${focusIdx}.data.value.elements.[${index}].icon-height`}
           />
         </Grid.Col>

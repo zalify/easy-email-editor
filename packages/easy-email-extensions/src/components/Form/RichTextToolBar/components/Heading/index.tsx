@@ -29,7 +29,7 @@ export function Heading(props: { onChange: (val: string) => void }) {
     },
     {
       value: 'P',
-      label: 'Paragraph',
+      label: t('Paragraph'),
     },
   ];
   return (
