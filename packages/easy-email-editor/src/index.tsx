@@ -6,9 +6,9 @@ export { BlockAvatarWrapper } from './components/wrapper';
 export { EmailEditor } from './components/EmailEditor';
 
 // exposing more granular components
-export { EditEmailPreview } from'./components/EmailEditor/components/EditEmailPreview'
-export { MobileEmailPreview } from'./components/EmailEditor/components/MobileEmailPreview'
-export { DesktopEmailPreview } from'./components/EmailEditor/components/DesktopEmailPreview'
+export { EditEmailPreview } from'./components/EmailEditor/components/EditEmailPreview';
+export { MobileEmailPreview } from'./components/EmailEditor/components/MobileEmailPreview';
+export { DesktopEmailPreview } from'./components/EmailEditor/components/DesktopEmailPreview';
 
 // export utils
 export * from './utils/index';
