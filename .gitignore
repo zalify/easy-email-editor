@@ -10,3 +10,6 @@ coverage
 stats.html
 .npmrc
 .env
+
+# webstorm
+.idea
