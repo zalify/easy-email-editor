@@ -37,7 +37,7 @@ export const Text = createBlock<IText>({
       type: BasicType.TEXT,
       data: {
         value: {
-          content: t('textDefaultValueText'),
+          content: t('Make it easy for everyone to compose emails!'),
         },
       },
       attributes: {

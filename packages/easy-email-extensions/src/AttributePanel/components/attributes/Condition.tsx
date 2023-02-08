@@ -109,7 +109,7 @@ export function Condition() {
       }}
       className='condition'
       destroyOnHide
-      name={t('Condition')}
+      name='Condition'
       header={t('Condition')}
       extra={(
         <div style={{ marginRight: 10 }}>

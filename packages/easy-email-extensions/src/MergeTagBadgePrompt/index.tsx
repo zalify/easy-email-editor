@@ -145,7 +145,7 @@ export function MergeTagBadgePrompt() {
             </h3>
             <div className={'easy-email-merge-tag-popover-desc'}>
               <p>
-                {t(`personalizedTextValue`)}
+                {t(`If a personalized text value isn\"t available, then a default value is shown.`)}
               </p>
               <div className='easy-email-merge-tag-popover-desc-label'>
                 <input autoFocus value={text} onChange={onChange} type="text" autoComplete='off' maxLength={40} />

@@ -25,7 +25,7 @@ export const defaultCategories = [
       {
         type: AdvancedType.TEXT,
         title: t('Text'),
-        description: t('blockDescriptionText'),
+        description: t('This block allows you to display text in your email'),
         component: TextBlockItem,
       },
       {
@@ -34,7 +34,7 @@ export const defaultCategories = [
         description: (
           <Stack vertical spacing='none'>
             <TextStyle>
-              {t('imageDescriptionText')}
+              {t(`Displays a responsive image in your email. It is similar to the HTML '&lt;img/&gt;' tag. Note that if no width is provided, the image will use the parent column width.`)}
             </TextStyle>
           </Stack>
         ),
@@ -43,49 +43,49 @@ export const defaultCategories = [
       {
         type: AdvancedType.BUTTON,
         title: t('Button'),
-        description: t('buttonDescriptionText'),
+        description: t('Displays a customizable button.'),
         component: ButtonBlockItem,
       },
       {
         type: AdvancedType.HERO,
         title: t('Hero'),
-        description: t('heroDescriptionText'),
+        description: t(`This block displays a hero image. It behaves like an 'section' with a single 'column'.`),
         component: HeroBlockItem,
       },
       {
         type: AdvancedType.NAVBAR,
         title: t('Navbar'),
-        description: t('navbarDescriptionText'),
+        description: t('Displays a menu for navigation with an optional hamburger mode for mobile devices.'),
         component: NavbarBlockItem,
       },
       {
         type: AdvancedType.SPACER,
         title: t('Spacer'),
-        description: t('spacerDescriptionText'),
+        description: t('Displays a blank space.'),
         component: SpacerBlockItem,
       },
       {
         type: AdvancedType.DIVIDER,
         title: t('Divider'),
-        description: t('dividerDescriptionText'),
+        description: t('Displays a horizontal divider that can be customized like a HTML border.'),
         component: DividerBlockItem,
       },
       {
         type: AdvancedType.ACCORDION,
         title: t('Accordion'),
-        description:t('accordionDescriptionText'),
+        description:t('Accordion is an interactive component to stack content in tabs, so the information is collapsed and only the titles are visible. Readers can interact by clicking on the tabs to reveal the content, providing a great experience on mobile devices where space is scarce.'),
         component: AccordionBlockItem,
       },
       {
         type: AdvancedType.CAROUSEL,
         title: t('Carousel'),
-        description: t('carouselDescriptionText'),
+        description: t(`This block displays a gallery of images or 'carousel'. Readers can interact by hovering and clicking on thumbnails depending on the email client they use.`),
         component: CarouselBlockItem,
       },
       {
         type: AdvancedType.SOCIAL,
         title: t('Social'),
-        description: t('socialDescriptionText'),
+        description: t('Displays calls-to-action for various social networks with their associated logo.'),
         component: SocialBlockItem,
       },
     ],
@@ -97,7 +97,7 @@ export const defaultCategories = [
       {
         type: AdvancedType.WRAPPER,
         title: t('Wrapper'),
-        description: t("wrapperDescriptionText"),
+        description: t("Wrapper enables to wrap multiple sections together. It\"s especially useful to achieve nested layouts with shared border or background images across sections."),
         component: WrapperBlockItem,
       },
       {
@@ -106,10 +106,10 @@ export const defaultCategories = [
         description: (
           <Stack vertical spacing='none'>
             <TextStyle>
-              {t('sectionDescriptionText1')}
+              {t('Sections are intended to be used as rows within your email. They will be used to structure the layout.')}
             </TextStyle>
             <TextStyle>
-             {t('sectionDescriptionText2')}
+             {t('Sections cannot nest in sections. Columns can nest in sections; all content must be in a column.')}
             </TextStyle>
           </Stack>
         ),
@@ -118,7 +118,7 @@ export const defaultCategories = [
       {
         type: AdvancedType.GROUP,
         title: t('Group'),
-        description: t('groupDescriptionText'),
+        description: t('Group allows you to prevent columns from stacking on mobile. To do so, wrap the columns inside a group block, so they\"ll stay side by side on mobile.'),
         component: GroupBlockItem,
       },
       {
@@ -127,10 +127,15 @@ export const defaultCategories = [
         description: (
           <Stack vertical spacing='none'>
             <TextStyle>
-              {t(`columnDescriptionText1`)}
+            {t(`Columns enable you to horizontally organize the content within
+              your sections. They must be located under "Section" block in order
+              to be considered by the engine. To be responsive, columns are
+              expressed in terms of percentage.`)}
             </TextStyle>
             <TextStyle>
-              {t('columnDescriptionText2')}
+            {t(`Every single column has to contain something because they are
+              responsive containers, and will be vertically stacked on a mobile
+              view.`)}
             </TextStyle>
           </Stack>
         ),

@@ -42,7 +42,7 @@ export function Iteration() {
     <Collapse.Item
       className='iteration'
       destroyOnHide
-      name={t('Iteration')}
+      name='Iteration'
       header={t('Iteration')}
       extra={(
         <div style={{ marginRight: 10 }}>
