@@ -9,6 +9,7 @@ import { DATA_ATTRIBUTE_DROP_CONTAINER, SYNC_SCROLL_ELEMENT_CLASS_NAME } from '@
 import { classnames } from '@/utils/classnames';
 import { ActiveTabKeys } from '@/components/Provider/BlocksProvider';
 import { useActiveTab } from '@/hooks/useActiveTab';
+import '@/assets/font/iconfont.css';
 
 export function EditEmailPreview() {
   useHotKeys();

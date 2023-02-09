@@ -30,7 +30,6 @@ import { UserStorage } from '@demo/utils/user-storage';
 import { useCollection } from './components/useCollection';
 import {
   AdvancedType,
-  BasicType,
   IBlockData,
   JsonToMjml,
 } from 'easy-email-core';
@@ -189,7 +188,7 @@ export default function Editor() {
   const history = useHistory();
   const templateData = useAppSelector('template');
   const [locale, setLocale] = useState('zh-Hans');
-  const { addCollection, removeCollection, collectionCategory } = useCollection();
+  const { collectionCategory } = useCollection();
 
   const { width } = useWindowSize();
 

@@ -17,7 +17,6 @@ import {
   EditEmailPreview,
 } from 'easy-email-editor';
 import './index.scss';
-import '@extensions/assets/font/iconfont.css';
 
 (window as any).global = window; // react-codemirror
 
