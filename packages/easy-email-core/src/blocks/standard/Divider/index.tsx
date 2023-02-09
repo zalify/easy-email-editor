@@ -4,6 +4,7 @@ import { BasicType } from '@core/constants';
 import { createBlock } from '@core/utils/createBlock';
 import { merge } from 'lodash';
 import { BasicBlock } from '@core/components/BasicBlock';
+
 export type IDivider = IBlockData<
   {
     'border-color'?: string;

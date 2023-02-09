@@ -7,8 +7,6 @@ import { AccordionTitle } from '../AccordionTitle';
 import { AccordionText } from '../AccordionText';
 import { getImg } from '@core/utils/getImg';
 import { mergeBlock } from '@core/utils/mergeBlock';
-import { getAdapterAttributesString } from '@core/utils';
-import { BlockRenderer } from '@core/components/BlockRenderer';
 import { BasicBlock } from '@core/components/BasicBlock';
 
 export type IAccordion = IBlockData<

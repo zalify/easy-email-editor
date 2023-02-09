@@ -1,8 +1,7 @@
-import { Stack } from '@/components/UI/Stack';
+import { Stack } from '@extensions/../../../easy-email-editor/src/components/UI/Stack';
 import React from 'react';
-import { useBlock } from '@/hooks/useBlock';
-import { IconFont } from '@/components/IconFont';
-import { Button } from '@/components/UI/Button';
+import { useBlock, IconFont } from 'easy-email-editor';
+import { Button } from '@extensions/components/Button';
 
 export function ToolsPanel() {
   const { redo, undo, redoable, undoable } = useBlock();

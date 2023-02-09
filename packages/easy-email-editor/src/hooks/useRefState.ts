@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 
 export function useRefState<T>(state: T) {
   const ref = useRef(state);

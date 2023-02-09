@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useFocusIdx } from 'easy-email-editor';
-import { SelectField, TextField } from '../../../components/Form';
+import { SelectField } from '../../../components/Form';
 
 const options = [
   {

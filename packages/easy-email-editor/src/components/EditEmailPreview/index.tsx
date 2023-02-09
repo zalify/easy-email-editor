@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { MjmlDomRender } from '../EditEmailPreview/components/MjmlDomRender';
+import { MjmlDomRender } from './components/MjmlDomRender';
 import { useDropBlock } from '@/hooks/useDropBlock';
 import { useHotKeys } from '@/hooks/useHotKeys';
 import { SyncScrollShadowDom } from '@/components/UI/SyncScrollShadowDom';

@@ -1,5 +1,5 @@
-import { getParentIdx, getIndexByIdx } from 'easy-email-core';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { getParentIdx, getIndexByIdx, BlockManager, getNodeIdxFromClassName } from 'easy-email-core';
+import { useCallback, useEffect, useState } from 'react';
 import {
   getBlockNodeByChildEle,
   getDirectionPosition,
@@ -8,7 +8,6 @@ import {
   useHoverIdx,
   useRefState,
 } from 'easy-email-editor';
-import { BlockManager, getNodeIdxFromClassName } from 'easy-email-core';
 import { debounce, get } from 'lodash';
 import { IBlockDataWithId } from '..';
 import { BlockTreeProps } from '../components/BlockTree';

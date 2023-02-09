@@ -1,9 +1,8 @@
-import { classnames } from '@/utils/classnames';
-import React, { useEffect, useState } from 'react';
-import { useCallback } from 'react';
-import { Button } from '../Button';
-import { Stack } from '../Stack';
+import { classnames } from '@extensions/utils/classnames';
+import React, { useEffect, useState, useCallback } from 'react';
+import { Button } from '@extensions/components/Button';
 import './index.scss';
+import { Stack } from 'easy-email-editor';
 
 export interface TabsProps {
   tabBarExtraContent?: React.ReactNode;

@@ -9,4 +9,4 @@ export { scrollBlockEleIntoView } from './scrollBlockEleIntoView';
 export { isTextBlock } from './isTextBlock';
 export { MergeTagBadge } from './MergeTagBadge';
 export { getContentEditableClassName } from './getContentEditableClassName';
-export { EventManager } from './EventManager';
+export { EventManager, EventType } from './EventManager';

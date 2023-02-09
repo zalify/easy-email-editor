@@ -5,7 +5,6 @@ import {
   ImageUploaderField,
   InputWithUnitField,
   RadioGroupField,
-  SelectField,
   TextField,
 } from '@extensions/components/Form';
 import { Align } from '@extensions/AttributePanel/components/attributes/Align';
@@ -18,12 +17,11 @@ import { FontStyle } from '@extensions/AttributePanel/components/attributes/Font
 import { FontWeight } from '@extensions/AttributePanel/components/attributes/FontWeight';
 
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
-import { Button, Card, Collapse, Dropdown, Grid, Menu, Popover, Space, Typography } from '@arco-design/web-react';
+import { Collapse, Grid, Space } from '@arco-design/web-react';
 import { TextDecoration } from '@extensions/AttributePanel/components/attributes/TextDecoration';
 import { LineHeight } from '@extensions/AttributePanel/components/attributes/LineHeight';
-import { Stack, useBlock, useEditorProps, useFocusIdx } from 'easy-email-editor';
+import { useBlock, useEditorProps, useFocusIdx } from 'easy-email-editor';
 import { ISocial } from 'easy-email-core';
-import { getImg } from '@extensions/AttributePanel/utils/getImg';
 import { ClassName } from '../../attributes/ClassName';
 import { CollapseWrapper } from '../../attributes/CollapseWrapper';
 

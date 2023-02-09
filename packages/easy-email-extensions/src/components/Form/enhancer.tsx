@@ -1,6 +1,6 @@
 import { Field, UseFieldConfig } from 'react-final-form';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useEditorProps, useRefState } from 'easy-email-editor';
+import { useRefState } from 'easy-email-editor';
 import { debounce } from 'lodash';
 import { Form, FormItemProps } from '@arco-design/web-react';
 

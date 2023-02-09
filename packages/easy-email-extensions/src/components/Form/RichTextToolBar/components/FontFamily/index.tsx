@@ -5,6 +5,7 @@ import { ToolItem } from '../ToolItem';
 import { IconFont } from 'easy-email-editor';
 import { useFontFamily } from '@extensions/hooks/useFontFamily';
 import styleText from '../../styles/ToolsPopover.css?inline';
+
 export interface FontFamilyProps {
   execCommand: (cmd: string, value: any) => void;
   getPopupContainer: () => HTMLElement;

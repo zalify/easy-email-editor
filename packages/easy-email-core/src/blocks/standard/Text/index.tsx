@@ -5,6 +5,7 @@ import { createBlock } from '@core/utils/createBlock';
 import { merge } from 'lodash';
 import { BasicBlock } from '@core/components/BasicBlock';
 import { t } from '@core/utils';
+
 export type IText = IBlockData<
   {
     color?: string;

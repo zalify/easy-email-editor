@@ -1,4 +1,4 @@
-import { classnames } from '@/utils/classnames';
+import { classnames } from '@extensions/utils/classnames';
 import React from 'react';
 import './index.scss';
 

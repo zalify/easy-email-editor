@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 
 import { MergeTags as MergeTagsOptions } from '@extensions/AttributePanel';
 import { Popover } from '@arco-design/web-react';

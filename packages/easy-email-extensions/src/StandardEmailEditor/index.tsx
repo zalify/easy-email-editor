@@ -1,20 +1,24 @@
-import React, { useMemo } from 'react';
-import { Stack } from '../UI/Stack';
-import { ToolsPanel } from './components/ToolsPanel';
+import React, { useMemo, useCallback } from 'react';
+import { ToolsPanel } from '../ToolsPanel';
 import { createPortal } from 'react-dom';
-import { EASY_EMAIL_EDITOR_ID, FIXED_CONTAINER_ID } from '@/constants';
-import { useActiveTab } from '@/hooks/useActiveTab';
-import { ActiveTabKeys } from '../Provider/BlocksProvider';
-import { DesktopEmailPreview } from './components/DesktopEmailPreview';
-import { MobileEmailPreview } from './components/MobileEmailPreview';
-import { EditEmailPreview } from './components/EditEmailPreview';
-import { IconFont } from '../IconFont';
-import { TabPane, Tabs } from '@/components/UI/Tabs';
-import { useEditorProps } from '@/hooks/useEditorProps';
+import { TabPane, Tabs } from '@extensions/components/Tabs';
+import {
+  EventManager,
+  EventType,
+  useActiveTab,
+  IconFont,
+  useEditorProps,
+  Stack,
+  EASY_EMAIL_EDITOR_ID,
+  FIXED_CONTAINER_ID,
+  ActiveTabKeys,
+  DesktopEmailPreview,
+  MobileEmailPreview,
+  EditEmailPreview,
+} from 'easy-email-editor';
 import './index.scss';
 import '@/assets/font/iconfont.css';
-import { useCallback } from 'react';
-import { EventManager, EventType } from '@/utils/EventManager';
+
 (window as any).global = window; // react-codemirror
 
 export const EmailEditor = () => {

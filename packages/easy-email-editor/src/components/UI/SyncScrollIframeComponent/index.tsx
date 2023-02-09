@@ -1,8 +1,7 @@
 import { SYNC_SCROLL_ELEMENT_CLASS_NAME } from '@/constants';
 import { useDomScrollHeight } from '@/hooks/useDomScrollHeight';
 import { debounce } from 'lodash';
-import React, { useCallback, useEffect, useState } from 'react';
-import { useMemo } from 'react';
+import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 
 interface Props {

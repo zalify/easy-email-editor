@@ -5,6 +5,7 @@ import { createBlock } from '@core/utils/createBlock';
 import { getImg } from '@core/utils/getImg';
 import { mergeBlock } from '@core/utils/mergeBlock';
 import { BasicBlock } from '@core/components/BasicBlock';
+
 export type ICarousel = IBlockData<
   {
     align?: string;

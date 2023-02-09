@@ -17,7 +17,6 @@ import { IconGithub, IconMoonFill, IconSunFill } from '@arco-design/web-react/ic
 import { Liquid } from 'liquidjs';
 import {
   BlockAvatarWrapper,
-  EmailEditor,
   EmailEditorProvider,
   EmailEditorProviderProps,
   IEmailTemplate,
@@ -40,6 +39,7 @@ import {
   BlockMarketManager,
   ExtensionProps,
   StandardLayout,
+  StandardEmailEditor,
 } from 'easy-email-extensions';
 import { AutoSaveAndRestoreEmail } from '@demo/components/AutoSaveAndRestoreEmail';
 
@@ -485,7 +485,7 @@ export default function Editor() {
                 compact={!smallScene}
                 categories={defaultCategories}
               >
-                <EmailEditor />
+                <StandardEmailEditor />
               </StandardLayout>
               <AutoSaveAndRestoreEmail />
             </>
