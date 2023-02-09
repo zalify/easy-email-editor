@@ -5,15 +5,19 @@ import { RadioGroupField } from '../../../components/Form';
 const options = [
   {
     value: 'normal',
-    label: t('Normal'),
+    get label() {
+      return t('Normal');
+    },
   },
   {
     value: 'italic',
-    label: t('Italic'),
+    get label() {
+      return t('Italic');
+    },
   },
 ];
 
-export function FontStyle({ name }: { name?: string; }) {
+export function FontStyle({ name }: { name?: string }) {
   const { focusIdx } = useFocusIdx();
 
   return (

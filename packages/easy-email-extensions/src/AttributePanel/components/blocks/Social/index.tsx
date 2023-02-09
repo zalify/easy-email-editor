@@ -18,7 +18,17 @@ import { FontStyle } from '@extensions/AttributePanel/components/attributes/Font
 import { FontWeight } from '@extensions/AttributePanel/components/attributes/FontWeight';
 
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
-import { Button, Card, Collapse, Dropdown, Grid, Menu, Popover, Space, Typography } from '@arco-design/web-react';
+import {
+  Button,
+  Card,
+  Collapse,
+  Dropdown,
+  Grid,
+  Menu,
+  Popover,
+  Space,
+  Typography,
+} from '@arco-design/web-react';
 import { TextDecoration } from '@extensions/AttributePanel/components/attributes/TextDecoration';
 import { LineHeight } from '@extensions/AttributePanel/components/attributes/LineHeight';
 import { Stack, useBlock, useEditorProps, useFocusIdx } from 'easy-email-editor';
@@ -30,11 +40,15 @@ import { CollapseWrapper } from '../../attributes/CollapseWrapper';
 const options = [
   {
     value: 'vertical',
-    label: t('vertical'),
+    get label() {
+      return t('vertical');
+    },
   },
   {
     value: 'horizontal',
-    label: t('horizontal'),
+    get label() {
+      return t('horizontal');
+    },
   },
 ];
 
@@ -47,7 +61,10 @@ export function Social() {
   return (
     <AttributesPanelWrapper style={{ padding: 0 }}>
       <CollapseWrapper defaultActiveKey={['0', '1', '2', '3']}>
-        <Collapse.Item name='1' header={t('Setting')}>
+        <Collapse.Item
+          name='1'
+          header={t('Setting')}
+        >
           <Space direction='vertical'>
             <RadioGroupField
               label={t('Mode')}
@@ -56,17 +73,22 @@ export function Social() {
             />
 
             <Align />
-
           </Space>
         </Collapse.Item>
 
-        <Collapse.Item name='3' header={t('Typography')}>
+        <Collapse.Item
+          name='3'
+          header={t('Typography')}
+        >
           <Space direction='vertical'>
             <Grid.Row>
               <Grid.Col span={11}>
                 <FontFamily />
               </Grid.Col>
-              <Grid.Col offset={1} span={11}>
+              <Grid.Col
+                offset={1}
+                span={11}
+              >
                 <FontSize />
               </Grid.Col>
             </Grid.Row>
@@ -74,7 +96,10 @@ export function Social() {
               <Grid.Col span={11}>
                 <FontWeight />
               </Grid.Col>
-              <Grid.Col offset={1} span={11}>
+              <Grid.Col
+                offset={1}
+                span={11}
+              >
                 <LineHeight />
               </Grid.Col>
             </Grid.Row>
@@ -82,8 +107,10 @@ export function Social() {
               <Grid.Col span={11}>
                 <Color />
               </Grid.Col>
-              <Grid.Col offset={1} span={11}>
-
+              <Grid.Col
+                offset={1}
+                span={11}
+              >
                 <ContainerBackgroundColor title={t('Background color')} />
               </Grid.Col>
             </Grid.Row>
@@ -91,11 +118,13 @@ export function Social() {
               <Grid.Col span={11}>
                 <TextDecoration />
               </Grid.Col>
-              <Grid.Col offset={1} span={11}>
+              <Grid.Col
+                offset={1}
+                span={11}
+              >
                 <FontStyle />
               </Grid.Col>
             </Grid.Row>
-
           </Space>
         </Collapse.Item>
 
@@ -104,22 +133,28 @@ export function Social() {
           header={t('Social item')}
           contentStyle={{ padding: 10 }}
         >
-
           <EditGridTabField
             tabPosition='top'
             name={`${focusIdx}.data.value.elements`}
             label=''
             labelHidden
             renderItem={(item, index) => (
-              <SocialElement item={item} index={index} />
+              <SocialElement
+                item={item}
+                index={index}
+              />
             )}
           />
         </Collapse.Item>
 
-        <Collapse.Item name='0' header={t('Dimension')}>
-
-          <Space direction="vertical" size="large">
-
+        <Collapse.Item
+          name='0'
+          header={t('Dimension')}
+        >
+          <Space
+            direction='vertical'
+            size='large'
+          >
             <Grid.Row>
               <Grid.Col span={11}>
                 <InputWithUnitField
@@ -127,7 +162,10 @@ export function Social() {
                   name={`${focusIdx}.attributes.icon-size`}
                 />
               </Grid.Col>
-              <Grid.Col offset={1} span={11}>
+              <Grid.Col
+                offset={1}
+                span={11}
+              >
                 <TextField
                   label={t('Border radius')}
                   name={`${focusIdx}.attributes.border-radius`}
@@ -136,12 +174,20 @@ export function Social() {
             </Grid.Row>
 
             <Padding />
-            <Padding attributeName='inner-padding' title={t('Icon padding')} />
-            <Padding attributeName='text-padding' title={t('Text padding')} />
+            <Padding
+              attributeName='inner-padding'
+              title={t('Icon padding')}
+            />
+            <Padding
+              attributeName='text-padding'
+              title={t('Text padding')}
+            />
           </Space>
-
         </Collapse.Item>
-        <Collapse.Item name='4' header={t('Extra')}>
+        <Collapse.Item
+          name='4'
+          header={t('Extra')}
+        >
           <Grid.Col span={24}>
             <ClassName />
           </Grid.Col>
@@ -162,10 +208,10 @@ function SocialElement({
 
   const autoCompleteOptions = useMemo(() => {
     if (!socialIcons) return undefined;
-    return socialIcons.map((icon) => {
+    return socialIcons.map(icon => {
       return {
         label: icon.content,
-        value: icon.image
+        value: icon.image,
       };
     });
   }, [socialIcons]);
@@ -189,7 +235,10 @@ function SocialElement({
             quickchange
           />
         </Grid.Col>
-        <Grid.Col offset={1} span={11}>
+        <Grid.Col
+          offset={1}
+          span={11}
+        >
           <TextField
             prefix={<IconLink />}
             label={t('Link')}
@@ -211,7 +260,6 @@ function SocialElement({
           />
         </Grid.Col>
       </Grid.Row> */}
-
     </Space>
   );
 }

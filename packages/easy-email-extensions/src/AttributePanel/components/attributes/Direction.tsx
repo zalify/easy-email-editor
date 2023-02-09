@@ -5,11 +5,15 @@ import { RadioGroupField } from '../../../components/Form';
 const options = [
   {
     value: 'ltr',
-    label: t('ltr'),
+    get label() {
+      return t('ltr');
+    },
   },
   {
     value: 'rtl',
-    label: t('rtl'),
+    get label() {
+      return t('rtl');
+    },
   },
 ];
 

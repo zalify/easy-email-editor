@@ -15,7 +15,9 @@ import { AdvancedType } from 'easy-email-core';
 
 const defaultCategories: ExtensionProps['categories'] = [
   {
-    label: t('Content'),
+    get label() {
+      return t('Content');
+    },
     active: true,
     blocks: [
       {
@@ -46,12 +48,16 @@ const defaultCategories: ExtensionProps['categories'] = [
     ],
   },
   {
-    label: t('Layout'),
+    get label() {
+      return t('Layout');
+    },
     active: true,
     displayType: 'column',
     blocks: [
       {
-        title: t('2 columns'),
+        get title() {
+          return t('2 columns');
+        },
         payload: [
           ['50%', '50%'],
           ['33%', '67%'],
@@ -61,7 +67,9 @@ const defaultCategories: ExtensionProps['categories'] = [
         ],
       },
       {
-        title: t('3 columns'),
+        get title() {
+          return t('3 columns');
+        },
         payload: [
           ['33.33%', '33.33%', '33.33%'],
           ['25%', '25%', '50%'],
@@ -69,7 +77,9 @@ const defaultCategories: ExtensionProps['categories'] = [
         ],
       },
       {
-        title: t('4 columns'),
+        get title() {
+          return t('4 columns');
+        },
         payload: [[['25%', '25%', '25%', '25%']]],
       },
     ],

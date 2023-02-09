@@ -5,31 +5,43 @@ import { SelectField } from '../../../components/Form';
 const options = [
   {
     value: '',
-    label: t('None'),
+    get label() {
+      return t('None');
+    },
   },
   {
     value: 'underline',
-    label: t('Underline'),
+    get label() {
+      return t('Underline');
+    },
   },
   {
     value: 'overline',
-    label: t('Overline'),
+    get label() {
+      return t('Overline');
+    },
   },
   {
     value: 'line-through',
-    label: t('Line through'),
+    get label() {
+      return t('Line through');
+    },
   },
   {
     value: 'blink',
-    label: t('Blink'),
+    get label() {
+      return t('Blink');
+    },
   },
   {
     value: 'inherit',
-    label: t('Inherit'),
+    get label() {
+      return t('Inherit');
+    },
   },
 ];
 
-export function TextDecoration({ name }: { name?: string; }) {
+export function TextDecoration({ name }: { name?: string }) {
   const { focusIdx } = useFocusIdx();
 
   return useMemo(() => {
