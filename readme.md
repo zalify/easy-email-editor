@@ -88,8 +88,8 @@ $ yarn add easy-email-core easy-email-editor easy-email-extensions react-final-f
 ```js
 import React from 'react';
 import { BlockManager, BasicType, AdvancedType } from 'easy-email-core';
-import { EmailEditor, EmailEditorProvider } from 'easy-email-editor';
-import { ExtensionProps, StandardLayout } from 'easy-email-extensions';
+import { EmailEditorProvider } from 'easy-email-editor';
+import { ExtensionProps, StandardLayout, StandardEmailEditor } from 'easy-email-extensions';
 import { useWindowSize } from 'react-use';
 
 import 'easy-email-editor/lib/style.css';
@@ -122,7 +122,7 @@ export default function App() {
             compact={!smallScene}
             showSourceCode={true}
           >
-            <EmailEditor />
+            <StandardEmailEditor />
           </StandardLayout>
         );
       }}
