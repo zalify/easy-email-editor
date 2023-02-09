@@ -13,7 +13,7 @@ import mjml from 'mjml-browser';
 import { copy } from '@demo/utils/clipboard';
 import { useEmailModal } from './components/useEmailModal';
 import services from '@demo/services';
-import { IconGithub, IconMoonFill, IconSunFill } from '@arco-design/web-react/icon';
+import {  IconMoonFill, IconSunFill } from '@arco-design/web-react/icon';
 import { Liquid } from 'liquidjs';
 import {
   BlockAvatarWrapper,
@@ -31,7 +31,6 @@ import { useCollection } from './components/useCollection';
 import {
   AdvancedType,
   BasicType,
-  getPageIdx,
   IBlockData,
   JsonToMjml,
 } from 'easy-email-core';
@@ -498,26 +497,4 @@ export default function Editor() {
   );
 }
 
-function replaceStandardBlockToAdvancedBlock(blockData: IBlockData) {
-  const map = {
-    [BasicType.TEXT]: AdvancedType.TEXT,
-    [BasicType.BUTTON]: AdvancedType.BUTTON,
-    [BasicType.IMAGE]: AdvancedType.IMAGE,
-    [BasicType.DIVIDER]: AdvancedType.DIVIDER,
-    [BasicType.SPACER]: AdvancedType.SPACER,
-    [BasicType.SOCIAL]: AdvancedType.SOCIAL,
-    [BasicType.ACCORDION]: AdvancedType.ACCORDION,
-    [BasicType.CAROUSEL]: AdvancedType.CAROUSEL,
-    [BasicType.NAVBAR]: AdvancedType.NAVBAR,
-    [BasicType.WRAPPER]: AdvancedType.WRAPPER,
-    [BasicType.SECTION]: AdvancedType.SECTION,
-    [BasicType.GROUP]: AdvancedType.GROUP,
-    [BasicType.COLUMN]: AdvancedType.COLUMN,
-  };
 
-  if (map[blockData.type]) {
-    blockData.type = map[blockData.type];
-  }
-  blockData.children.forEach(replaceStandardBlockToAdvancedBlock);
-  return blockData;
-}

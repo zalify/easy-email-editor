@@ -11,6 +11,7 @@ export * from './MergeTagBadgePrompt';
 export * from './components/Providers/ExtensionProvider';
 export * from './constants';
 export * from './components/Form';
+export * from './StandardEmailEditor';
 
 export { getContextMergeTags } from './utils/getContextMergeTags';
 export { getIconNameByBlockType } from './utils/getIconNameByBlockType';

@@ -1,6 +1,5 @@
-import { Stack } from '@extensions/../../../easy-email-editor/src/components/UI/Stack';
 import React from 'react';
-import { useBlock, IconFont } from 'easy-email-editor';
+import { Stack, useBlock, IconFont } from 'easy-email-editor';
 import { Button } from '@extensions/components/Button';
 
 export function ToolsPanel() {

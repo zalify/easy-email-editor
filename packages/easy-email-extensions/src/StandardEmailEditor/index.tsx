@@ -17,11 +17,11 @@ import {
   EditEmailPreview,
 } from 'easy-email-editor';
 import './index.scss';
-import '@/assets/font/iconfont.css';
+import '@extensions/assets/font/iconfont.css';
 
 (window as any).global = window; // react-codemirror
 
-export const EmailEditor = () => {
+export const StandardEmailEditor = () => {
   const { height: containerHeight } = useEditorProps();
   const { setActiveTab, activeTab } = useActiveTab();
 
