@@ -5,51 +5,55 @@ import { SelectField, TextField } from '../../../components/Form';
 const options = [
   {
     value: 'normal',
-    label: t('Normal'),
+    get label() {
+      return t('Normal');
+    },
   },
   {
     value: 'bold',
-    label: t('Bold'),
+    get label() {
+      return t('Bold');
+    },
   },
   {
     value: '100',
-    label: t('100'),
+    label: '100',
   },
   {
     value: '200',
-    label: t('200'),
+    label: '200',
   },
   {
     value: '300',
-    label: t('300'),
+    label: '300',
   },
   {
     value: '400',
-    label: t('400'),
+    label: '400',
   },
   {
     value: '500',
-    label: t('500'),
+    label: '500',
   },
   {
     value: '600',
-    label: t('600'),
+    label: '600',
   },
   {
     value: '700',
-    label: t('700'),
+    label: '700',
   },
   {
     value: '800',
-    label: t('800'),
+    label: '800',
   },
   {
     value: '900',
-    label: t('900'),
+    label: '900',
   },
 ];
 
-export function FontWeight({ name }: { name?: string; }) {
+export function FontWeight({ name }: { name?: string }) {
   const { focusIdx } = useFocusIdx();
 
   return useMemo(() => {

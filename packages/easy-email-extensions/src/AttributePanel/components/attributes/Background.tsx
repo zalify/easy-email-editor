@@ -12,19 +12,27 @@ import { Grid, Space } from '@arco-design/web-react';
 const backgroundRepeatOptions = [
   {
     value: 'no-repeat',
-    label: t('No repeat'),
+    get label() {
+      return t('No repeat');
+    },
   },
   {
     value: 'repeat',
-    label: t('Repeat'),
+    get label() {
+      return t('Repeat');
+    },
   },
   {
     value: 'repeat-x',
-    label: t('Repeat X'),
+    get label() {
+      return t('Repeat X');
+    },
   },
   {
     value: 'repeat-y',
-    label: t('Repeat Y'),
+    get label() {
+      return t('Repeat Y');
+    },
   },
 ];
 
@@ -33,11 +41,16 @@ export function Background() {
   const { onUploadImage } = useEditorProps();
   return useMemo(() => {
     return (
-      <Space key={focusIdx} direction='vertical'>
+      <Space
+        key={focusIdx}
+        direction='vertical'
+      >
         <ImageUploaderField
           label={t('Background image')}
           name={`${focusIdx}.attributes.background-url`}
-          helpText={t('The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.')}
+          helpText={t(
+            'The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.',
+          )}
           uploadHandler={onUploadImage}
         />
 
@@ -45,7 +58,10 @@ export function Background() {
           <Grid.Col span={11}>
             <BackgroundColor />
           </Grid.Col>
-          <Grid.Col offset={1} span={11}>
+          <Grid.Col
+            offset={1}
+            span={11}
+          >
             <SelectField
               label={t('Background repeat')}
               name={`${focusIdx}.attributes.background-repeat`}

@@ -5,35 +5,51 @@ import { SelectField } from '../../../components/Form';
 export const borderStyleOptions = [
   {
     value: 'dashed',
-    label: t('Dashed'),
+    get label() {
+      return t('Dashed');
+    },
   },
   {
     value: 'dotted',
-    label: t('Dotted'),
+    get label() {
+      return t('Dotted');
+    },
   },
   {
     value: 'solid',
-    label: t('Solid'),
+    get label() {
+      return t('Solid');
+    },
   },
   {
     value: 'double',
-    label: t('double'),
+    get label() {
+      return t('double');
+    },
   },
   {
     value: 'ridge',
-    label: t('ridge'),
+    get label() {
+      return t('ridge');
+    },
   },
   {
     value: 'groove',
-    label: t('groove'),
+    get label() {
+      return t('groove');
+    },
   },
   {
     value: 'inset',
-    label: t('inset'),
+    get label() {
+      return t('inset');
+    },
   },
   {
     value: 'outset',
-    label: t('outset'),
+    get label() {
+      return t('outset');
+    },
   },
 ];
 

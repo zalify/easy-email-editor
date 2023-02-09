@@ -20,11 +20,15 @@ import { CollapseWrapper } from '../../attributes/CollapseWrapper';
 const options = [
   {
     value: 'hidden',
-    label: t('hidden'),
+    get label() {
+      return t('hidden');
+    },
   },
   {
     value: 'visible',
-    label: t('visible'),
+    get label() {
+      return t('visible');
+    },
   },
 ];
 
@@ -184,7 +188,9 @@ function CarouselImage({
         label={t('Image')}
         labelHidden
         name={`${focusIdx}.data.value.images.[${index}].src`}
-        helpText={t('The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.')}
+        helpText={t(
+          'The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.',
+        )}
         uploadHandler={onUploadImage}
       />
       <Grid.Row>

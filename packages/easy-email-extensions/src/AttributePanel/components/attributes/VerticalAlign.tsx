@@ -5,15 +5,21 @@ import { SelectField } from '../../../components/Form';
 const options = [
   {
     value: 'top',
-    label: t('top'),
+    get label() {
+      return t('top');
+    },
   },
   {
     value: 'middle',
-    label: t('middle'),
+    get label() {
+      return t('middle');
+    },
   },
   {
     value: 'bottom',
-    label: t('bottom'),
+    get label() {
+      return t('bottom');
+    },
   },
 ];
 

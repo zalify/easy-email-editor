@@ -18,26 +18,36 @@ import { CollapseWrapper } from '../../attributes/CollapseWrapper';
 const positionOptions = [
   {
     value: 'left',
-    label: t('Left'),
+    get label() {
+      return t('Left');
+    },
   },
   {
     value: 'right',
-    label: t('Right'),
+    get label() {
+      return t('Right');
+    },
   },
 ];
 
 const alignOptions = [
   {
     value: 'top',
-    label: t('top'),
+    get label() {
+      return t('top');
+    },
   },
   {
     value: 'middle',
-    label: t('middle'),
+    get label() {
+      return t('middle');
+    },
   },
   {
     value: 'bottom',
-    label: t('bottom'),
+    get label() {
+      return t('bottom');
+    },
   },
 ];
 
