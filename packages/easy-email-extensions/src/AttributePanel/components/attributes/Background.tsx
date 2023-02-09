@@ -12,19 +12,19 @@ import { Grid, Space } from '@arco-design/web-react';
 const backgroundRepeatOptions = [
   {
     value: 'no-repeat',
-    label: 'No repeat',
+    label: t('No repeat'),
   },
   {
     value: 'repeat',
-    label: 'Repeat',
+    label: t('Repeat'),
   },
   {
     value: 'repeat-x',
-    label: 'Repeat X',
+    label: t('Repeat X'),
   },
   {
     value: 'repeat-y',
-    label: 'Repeat Y',
+    label: t('Repeat Y'),
   },
 ];
 
@@ -35,9 +35,9 @@ export function Background() {
     return (
       <Space key={focusIdx} direction='vertical'>
         <ImageUploaderField
-          label='Background image'
+          label={t('Background image')}
           name={`${focusIdx}.attributes.background-url`}
-          helpText='The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.'
+          helpText={t('The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.')}
           uploadHandler={onUploadImage}
         />
 
@@ -47,14 +47,14 @@ export function Background() {
           </Grid.Col>
           <Grid.Col offset={1} span={11}>
             <SelectField
-              label='Background repeat'
+              label={t('Background repeat')}
               name={`${focusIdx}.attributes.background-repeat`}
               options={backgroundRepeatOptions}
             />
           </Grid.Col>
         </Grid.Row>
         <TextField
-          label='Background size'
+          label={t('Background size')}
           name={`${focusIdx}.attributes.background-size`}
         />
       </Space>

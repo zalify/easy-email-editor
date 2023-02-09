@@ -39,27 +39,27 @@ export const AddToCollection: React.FC<{
           maskClosable={false}
           style={{ zIndex: 2000 }}
           visible={visible}
-          title='Add to collection'
+          title={t('Add to collection')}
           onOk={() => handleSubmit()}
           onCancel={() => setVisible(false)}
         >
           <Stack vertical>
             <Stack.Item />
             <TextField
-              label='Title'
+              label={t('Title')}
               name='label'
               validate={(val: string) => {
-                if (!val) return 'Title required!';
+                if (!val) return t('Title required!');
                 return undefined;
               }}
             />
-            <TextAreaField label='Description' name='helpText' />
+            <TextAreaField label={t('Description')} name='helpText' />
             <ImageUploaderField
-              label='Thumbnail'
+              label={t('Thumbnail')}
               name={'thumbnail'}
               uploadHandler={onUploadImage}
               validate={(val: string) => {
-                if (!val) return 'Thumbnail required!';
+                if (!val) return t('Thumbnail required!');
                 return undefined;
               }}
             />

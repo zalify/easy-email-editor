@@ -14,7 +14,7 @@ export function Column() {
   return (
     <AttributesPanelWrapper>
       <CollapseWrapper defaultActiveKey={['0', '1', '2']}>
-        <Collapse.Item name='0' header='Dimension'>
+        <Collapse.Item name='0' header={t('Dimension')}>
           <Space direction='vertical'>
             <Grid.Row>
               <Grid.Col span={11}>
@@ -28,13 +28,13 @@ export function Column() {
             <Padding />
           </Space>
         </Collapse.Item>
-        <Collapse.Item name='1' header='Background'>
+        <Collapse.Item name='1' header={t('Background')}>
           <Background />
         </Collapse.Item>
-        <Collapse.Item name='2' header='Border'>
+        <Collapse.Item name='2' header={t('Border')}>
           <Border />
         </Collapse.Item>
-        <Collapse.Item name='4' header='Extra'>
+        <Collapse.Item name='4' header={t('Extra')}>
           <Grid.Col span={24}>
             <ClassName />
           </Grid.Col>

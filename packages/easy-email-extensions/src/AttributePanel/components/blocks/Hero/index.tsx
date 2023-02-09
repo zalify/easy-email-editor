@@ -19,11 +19,11 @@ import { CollapseWrapper } from '../../attributes/CollapseWrapper';
 const options = [
   {
     value: 'fluid-height',
-    label: 'Fluid height',
+    label: t('Fluid height'),
   },
   {
     value: 'fixed-height',
-    label: 'Fixed height',
+    label: t('Fixed height'),
   },
 ];
 
@@ -34,10 +34,10 @@ export function Hero() {
   return (
     <AttributesPanelWrapper>
       <CollapseWrapper defaultActiveKey={['0', '1', '2']}>
-        <Collapse.Item name='0' header='Dimension'>
+        <Collapse.Item name='0' header={t('Dimension')}>
           <Space direction='vertical'>
             <RadioGroupField
-              label='Mode'
+              label={t('Mode')}
               name={`${focusIdx}.attributes.mode`}
               options={options}
             />
@@ -54,25 +54,25 @@ export function Hero() {
             <VerticalAlign />
           </Space>
         </Collapse.Item>
-        <Collapse.Item name='1' header='Background'>
+        <Collapse.Item name='1' header={t('Background')}>
           <Space direction='vertical'>
             <ImageUploaderField
-              label='src'
+              label={t('src')}
               name={`${focusIdx}.attributes.background-url`}
-              helpText='The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.'
+              helpText={t('The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.')}
               uploadHandler={onUploadImage}
             />
 
             <Grid.Row>
               <Grid.Col span={11}>
                 <InputWithUnitField
-                  label='Background width'
+                  label={t('Background width')}
                   name={`${focusIdx}.attributes.background-width`}
                 />
               </Grid.Col>
               <Grid.Col offset={1} span={11}>
                 <InputWithUnitField
-                  label='Background height'
+                  label={t('Background height')}
                   name={`${focusIdx}.attributes.background-height`}
                 />
               </Grid.Col>
@@ -81,13 +81,13 @@ export function Hero() {
             <Grid.Row>
               <Grid.Col span={11}>
                 <TextField
-                  label='Background position'
+                  label={t('Background position')}
                   name={`${focusIdx}.attributes.background-position`}
                 />
               </Grid.Col>
               <Grid.Col offset={1} span={11}>
                 <InputWithUnitField
-                  label='Border radius'
+                  label={t('Border radius')}
                   name={`${focusIdx}.attributes.border-radius`}
                   unitOptions='percent'
                 />
@@ -98,7 +98,7 @@ export function Hero() {
             </Grid.Row>
           </Space>
         </Collapse.Item>
-        <Collapse.Item name='4' header='Extra'>
+        <Collapse.Item name='4' header={t('Extra')}>
           <Grid.Col span={24}>
             <ClassName />
           </Grid.Col>

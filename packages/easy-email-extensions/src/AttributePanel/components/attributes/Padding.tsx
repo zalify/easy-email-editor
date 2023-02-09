@@ -84,7 +84,7 @@ export function Padding(props: PaddingProps = {}) {
               <Grid.Row>
                 <Grid.Col span={11}>
                   <InputWithUnitField
-                    label='Top'
+                    label={t('Top')}
                     name='top'
                   />
                 </Grid.Col>
@@ -93,7 +93,7 @@ export function Padding(props: PaddingProps = {}) {
                   span={11}
                 >
                   <InputWithUnitField
-                    label='Left'
+                    label={t('Left')}
                     name='left'
                   />
                 </Grid.Col>
@@ -102,7 +102,7 @@ export function Padding(props: PaddingProps = {}) {
               <Grid.Row>
                 <Grid.Col span={11}>
                   <InputWithUnitField
-                    label='Bottom'
+                    label={t('Bottom')}
                     name='bottom'
                   />
                 </Grid.Col>
@@ -111,7 +111,7 @@ export function Padding(props: PaddingProps = {}) {
                   span={11}
                 >
                   <InputWithUnitField
-                    label='Right'
+                    label={t('Right')}
                     name='right'
                   />
                 </Grid.Col>

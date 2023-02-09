@@ -6,6 +6,8 @@ import { createBlock } from '@core/utils/createBlock';
 import { merge } from 'lodash';
 import React from 'react';
 import { BasicBlock } from '@core/components/BasicBlock';
+import { t } from '@core/utils';
+
 export type IWrapper = IBlockData<
   {
     'background-color'?: string;
@@ -20,7 +22,9 @@ export type IWrapper = IBlockData<
 >;
 
 export const Wrapper = createBlock<IWrapper>({
-  name: 'Wrapper',
+  get name() {
+    return t('Wrapper');
+  },
   type: BasicType.WRAPPER,
   create: (payload) => {
     const defaultData: IWrapper = {

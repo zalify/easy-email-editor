@@ -5,15 +5,15 @@ import { SelectField } from '../../../components/Form';
 const options = [
   {
     value: 'top',
-    label: 'top',
+    label: t('top'),
   },
   {
     value: 'middle',
-    label: 'middle',
+    label: t('middle'),
   },
   {
     value: 'bottom',
-    label: 'bottom',
+    label: t('bottom'),
   },
 ];
 
@@ -29,7 +29,7 @@ export function VerticalAlign({
       <Stack>
         <SelectField
           style={{ width: 120 }}
-          label='Vertical align'
+          label={t('Vertical align')}
           name={`${focusIdx}.attributes.${attributeName}`}
           options={options}
         />

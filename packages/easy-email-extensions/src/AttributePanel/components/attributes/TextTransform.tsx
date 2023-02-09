@@ -5,19 +5,19 @@ import { SelectField } from '../../../components/Form';
 const options = [
   {
     value: 'initial',
-    label: 'none',
+    label: t('none'),
   },
   {
     value: 'uppercase',
-    label: 'uppercase',
+    label: t('uppercase'),
   },
   {
     value: 'lowercase',
-    label: 'lowercase',
+    label: t('lowercase'),
   },
   {
     value: 'capitalize',
-    label: 'capitalize',
+    label: t('capitalize'),
   },
 ];
 
@@ -27,7 +27,7 @@ export function TextTransform({ name }: { name?: string; }) {
   return useMemo(() => {
     return (
       <SelectField
-        label='Text transform'
+        label={t('Text transform')}
         name={name || `${focusIdx}.attributes.text-transform`}
         options={options}
       />
