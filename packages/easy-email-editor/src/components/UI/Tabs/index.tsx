@@ -1,6 +1,5 @@
 import { classnames } from '@/utils/classnames';
-import React, { useEffect, useState } from 'react';
-import { useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Button } from '../Button';
 import { Stack } from '../Stack';
 import './index.scss';

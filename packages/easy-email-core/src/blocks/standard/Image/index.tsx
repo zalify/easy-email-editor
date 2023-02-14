@@ -1,11 +1,9 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import { IBlock, IBlockData } from '@core/typings';
 import { BasicType } from '@core/constants';
-import { CSSProperties } from 'react';
 import { createBlock } from '@core/utils/createBlock';
 import { merge } from 'lodash';
-import { getImg } from '@core/utils/getImg';
-import { getAdapterAttributesString, t } from '@core/utils';
+import { t } from '@core/utils';
 import { BasicBlock } from '@core/components/BasicBlock';
 
 export type IImage = IBlockData<{

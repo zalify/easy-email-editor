@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Tabs } from '@arco-design/web-react';
+import { Tabs } from '@arco-design/web-react';
 import { AttributePanel } from '@extensions/AttributePanel';
 import { SourceCodePanel } from '@extensions/SourceCodePanel';
 import { FullHeightOverlayScrollbars } from '@extensions/components/FullHeightOverlayScrollbars';
 import { IconLeft } from '@arco-design/web-react/icon';
 import styles from './index.module.scss';
+
 export interface ConfigurationPanelProps {
   showSourceCode: boolean;
   height: string;

@@ -1,5 +1,3 @@
-
-
 import templates from '@demo/config/templates.json';
 
 export async function getTemplate(id: string|number) {

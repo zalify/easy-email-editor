@@ -1,6 +1,7 @@
 import { PageHeader, PageHeaderProps } from '@arco-design/web-react';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+
 export interface HeaderProps extends Omit<PageHeaderProps, 'onBack'> {
   backUrl?: string;
   title: React.ReactNode;
