@@ -1,18 +1,19 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { InputWithUnitField, TextField } from '../../../components/Form';
-import { useFocusIdx, Stack, useBlock, TextStyle } from 'easy-email-editor';
+import { useFocusIdx, Stack, useBlock, TextStyle, IconFont } from 'easy-email-editor';
 import { createBlockDataByType } from 'easy-email-core';
 import { Form, useFormState } from 'react-final-form';
-import { Grid } from '@arco-design/web-react';
+import { Button, Grid, Space, Tooltip } from '@arco-design/web-react';
 import { get } from 'lodash';
 
 export interface PaddingProps {
   title?: string;
   attributeName?: 'padding' | 'inner-padding' | 'text-padding';
   name?: string;
+  showResetAll?: boolean;
 }
 export function Padding(props: PaddingProps = {}) {
-  const { title = t('Padding'), attributeName = 'padding', name } = props;
+  const { title = t('Padding'), attributeName = 'padding', name, showResetAll } = props;
   const { focusBlock, change, values } = useBlock();
   const { focusIdx } = useFocusIdx();
 
@@ -64,6 +65,13 @@ export function Padding(props: PaddingProps = {}) {
     },
     [name, change, focusIdx, attributeName],
   );
+  const onResetPadding = useCallback(() => {
+    if (name) {
+      change(name, '0px 0px 0px 0px');
+    } else {
+      change(focusIdx + `.attributes[${attributeName}]`, '0px 0px 0px 0px');
+    }
+  }, [name, change, focusIdx, attributeName]);
 
   return (
     <Form<{ top: string; right: string; left: string; bottom: string }>
@@ -79,7 +87,23 @@ export function Padding(props: PaddingProps = {}) {
               vertical
               spacing='extraTight'
             >
-              <TextStyle variation='strong'>{title}</TextStyle>
+              <Space align='center'>
+                <TextStyle variation='strong'>{title}</TextStyle>
+                {showResetAll && (
+                  <Tooltip content='Remove all padding'>
+                    <Button
+                      onClick={onResetPadding}
+                      size='mini'
+                      icon={
+                        <IconFont
+                          iconName='icon-remove'
+                          size={12}
+                        />
+                      }
+                    />
+                  </Tooltip>
+                )}
+              </Space>
 
               <Grid.Row>
                 <Grid.Col span={11}>

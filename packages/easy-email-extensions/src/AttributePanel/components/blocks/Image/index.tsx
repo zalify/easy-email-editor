@@ -63,7 +63,7 @@ export function Image() {
               </Grid.Col>
             </Grid.Row>
 
-            <Padding />
+            <Padding showResetAll />
             <Grid.Row>
               <Grid.Col span={24}>
                 <Align />

@@ -6,11 +6,81 @@
   "description": "",
   "glyphs": [
     {
-      "icon_id": "3681539",
-      "name": "bg-color",
+      "icon_id": "21585962",
+      "name": "橡皮擦",
+      "font_class": "clear",
+      "unicode": "e6d3",
+      "unicode_decimal": 59091
+    },
+    {
+      "icon_id": "7617118",
+      "name": "remove",
+      "font_class": "remove-cycle",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "11215298",
+      "name": "remove",
+      "font_class": "remove",
+      "unicode": "e709",
+      "unicode_decimal": 59145
+    },
+    {
+      "icon_id": "4767095",
+      "name": "dash",
+      "font_class": "dash",
+      "unicode": "e7fc",
+      "unicode_decimal": 59388
+    },
+    {
+      "icon_id": "7951276",
+      "name": "disable",
+      "font_class": "disable",
+      "unicode": "e638",
+      "unicode_decimal": 58936
+    },
+    {
+      "icon_id": "21937634",
+      "name": "ic_arrow_topright",
+      "font_class": "arrow_topright",
+      "unicode": "e6b4",
+      "unicode_decimal": 59060
+    },
+    {
+      "icon_id": "20219332",
+      "name": "si-glyph-database-plus",
+      "font_class": "database",
+      "unicode": "e685",
+      "unicode_decimal": 59013
+    },
+    {
+      "icon_id": "1393785",
+      "name": "text_background_color",
       "font_class": "bg-color",
-      "unicode": "e9de",
-      "unicode_decimal": 59870
+      "unicode": "e72c",
+      "unicode_decimal": 59180
+    },
+    {
+      "icon_id": "5634133",
+      "name": "heading",
+      "font_class": "heading",
+      "unicode": "f00f",
+      "unicode_decimal": 61455
+    },
+    {
+      "icon_id": "2196",
+      "name": "明星",
+      "font_class": "logo",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "5394476",
+      "name": "address",
+      "font_class": "address",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
     },
     {
       "icon_id": "27363508",
@@ -242,13 +312,6 @@
       "font_class": "emoji",
       "unicode": "e78d",
       "unicode_decimal": 59277
-    },
-    {
-      "icon_id": "1045032",
-      "name": "clear",
-      "font_class": "clear",
-      "unicode": "e639",
-      "unicode_decimal": 58937
     },
     {
       "icon_id": "4766965",
