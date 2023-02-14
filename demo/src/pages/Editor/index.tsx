@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import template from '@demo/store/template';
 import { useAppSelector } from '@demo/hooks/useAppSelector';
 import { useLoading } from '@demo/hooks/useLoading';
-import { Button, Message, PageHeader, Select } from '@arco-design/web-react';
+import { Button, Input, Message, PageHeader, Select } from '@arco-design/web-react';
 import { useQuery } from '@demo/hooks/useQuery';
 import { useHistory } from 'react-router-dom';
 import { cloneDeep, set, isEqual } from 'lodash';
@@ -13,7 +13,7 @@ import mjml from 'mjml-browser';
 import { copy } from '@demo/utils/clipboard';
 import { useEmailModal } from './components/useEmailModal';
 import services from '@demo/services';
-import { IconGithub, IconMoonFill, IconSunFill } from '@arco-design/web-react/icon';
+import { IconMoonFill, IconSunFill } from '@arco-design/web-react/icon';
 import { Liquid } from 'liquidjs';
 import {
   BlockAvatarWrapper,
@@ -32,7 +32,6 @@ import { useCollection } from './components/useCollection';
 import {
   AdvancedType,
   BasicType,
-  getPageIdx,
   IBlockData,
   JsonToMjml,
 } from 'easy-email-core';
@@ -40,6 +39,7 @@ import {
   BlockMarketManager,
   ExtensionProps,
   StandardLayout,
+  TextField,
 } from 'easy-email-extensions';
 import { AutoSaveAndRestoreEmail } from '@demo/components/AutoSaveAndRestoreEmail';
 
@@ -58,8 +58,6 @@ import { useMergeTagsModal } from './components/useMergeTagsModal';
 import { useWindowSize } from 'react-use';
 import { CustomBlocksType } from './components/CustomBlocks/constants';
 import localesData from 'easy-email-localization/locales/locales.json';
-
-console.log(localesData);
 
 const defaultCategories: ExtensionProps['categories'] = [
   {
@@ -414,6 +412,16 @@ export default function Editor() {
                 onBack={() => history.push('/')}
                 extra={
                   <Stack alignment='center'>
+                    <TextField
+                      label={t('Subject')}
+                      name={'subject'}
+                      inline
+                    />
+                    <TextField
+                      label={t('SubTitle')}
+                      name={'subTitle'}
+                      inline
+                    />
                     <Button
                       onClick={() => setIsDarkMode(v => !v)}
                       shape='circle'

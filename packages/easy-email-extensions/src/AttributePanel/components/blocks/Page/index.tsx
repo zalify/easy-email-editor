@@ -2,14 +2,11 @@ import React from 'react';
 import {
   ColorPickerField,
   InputWithUnitField,
-  SwitchField,
   TextAreaField,
-  TextField,
 } from '@extensions/components/Form';
-import { Help } from '@extensions/AttributePanel/components/UI/Help';
 import { AddFont } from '@extensions/components/Form/AddFont';
 import { Collapse, Grid, Space } from '@arco-design/web-react';
-import { Stack, TextStyle, useFocusIdx } from 'easy-email-editor';
+import { Stack, useFocusIdx } from 'easy-email-editor';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
 import { FontFamily } from '../../attributes/FontFamily';
 
@@ -26,16 +23,6 @@ export function Page() {
             header={t('Email Setting')}
           >
             <Space direction='vertical'>
-              <TextField
-                label={t('Subject')}
-                name={'subject'}
-                inline
-              />
-              <TextField
-                label={t('SubTitle')}
-                name={'subTitle'}
-                inline
-              />
               <InputWithUnitField
                 label={t('Width')}
                 name={`${focusIdx}.attributes.width`}
