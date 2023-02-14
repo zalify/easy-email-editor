@@ -15,6 +15,7 @@ import { Collapse, Grid, Space } from '@arco-design/web-react';
 import { Border } from '@extensions/AttributePanel/components/attributes/Border';
 import { Stack, useEditorProps, useFocusIdx } from 'easy-email-editor';
 import { CollapseWrapper } from '../../attributes/CollapseWrapper';
+import { imageHeightAdapter, pixelAdapter } from '../../adapter';
 
 export function Image() {
   const { focusIdx } = useFocusIdx();
@@ -53,13 +54,13 @@ export function Image() {
           <Space direction='vertical'>
             <Grid.Row>
               <Grid.Col span={11}>
-                <Width />
+                <Width config={pixelAdapter} />
               </Grid.Col>
               <Grid.Col
                 offset={1}
                 span={11}
               >
-                <Height />
+                <Height config={imageHeightAdapter} />
               </Grid.Col>
             </Grid.Row>
 

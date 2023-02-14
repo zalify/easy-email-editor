@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { InputWithUnitField, TextField } from '../../../components/Form';
+import { InputWithUnitField, NumberField, TextField } from '../../../components/Form';
 import { useFocusIdx, Stack, useBlock, TextStyle, IconFont } from 'easy-email-editor';
 import { createBlockDataByType } from 'easy-email-core';
 import { Form, useFormState } from 'react-final-form';
 import { Button, Grid, Space, Tooltip } from '@arco-design/web-react';
 import { get } from 'lodash';
+import { pixelAdapter } from '../adapter';
 
 export interface PaddingProps {
   title?: string;
@@ -107,36 +108,44 @@ export function Padding(props: PaddingProps = {}) {
 
               <Grid.Row>
                 <Grid.Col span={11}>
-                  <InputWithUnitField
-                    label='Top'
+                  <NumberField
+                    label='Top (px)'
                     name='top'
+                    autoComplete='off'
+                    config={pixelAdapter}
                   />
                 </Grid.Col>
                 <Grid.Col
                   offset={1}
                   span={11}
                 >
-                  <InputWithUnitField
-                    label='Left'
+                  <NumberField
+                    label='Left (px)'
                     name='left'
+                    autoComplete='off'
+                    config={pixelAdapter}
                   />
                 </Grid.Col>
               </Grid.Row>
 
               <Grid.Row>
                 <Grid.Col span={11}>
-                  <InputWithUnitField
-                    label='Bottom'
+                  <NumberField
+                    label='Bottom (px)'
                     name='bottom'
+                    config={pixelAdapter}
+                    autoComplete='off'
                   />
                 </Grid.Col>
                 <Grid.Col
                   offset={1}
                   span={11}
                 >
-                  <InputWithUnitField
-                    label='Right'
+                  <NumberField
+                    label='Right (px)'
                     name='right'
+                    autoComplete='off'
+                    config={pixelAdapter}
                   />
                 </Grid.Col>
               </Grid.Row>
