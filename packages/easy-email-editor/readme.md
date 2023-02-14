@@ -23,6 +23,8 @@ import { EmailEditor, EmailEditorProvider } from "easy-email-editor";
 import "easy-email-editor/lib/style.css";
 
 const initialValues = {
+  subject: "Welcome to Easy-email",
+  subTitle: "Nice to meet you!",
   content: BlockManager.getBlockByType(BasicType.PAGE).create({}),
 };
 
