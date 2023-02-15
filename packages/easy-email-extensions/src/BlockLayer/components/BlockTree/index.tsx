@@ -1,6 +1,16 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { Tree } from '@arco-design/web-react';
-import { AllowDrop, NodeInstance, TreeProps } from '@arco-design/web-react/es/Tree/interface';
+import {
+  AllowDrop,
+  NodeInstance,
+  TreeProps,
+} from '@arco-design/web-react/es/Tree/interface';
 import { debounce } from 'lodash';
 import { transparentImage } from './transparentImage';
 

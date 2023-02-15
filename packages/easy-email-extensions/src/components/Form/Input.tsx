@@ -1,4 +1,7 @@
-import { Input as ArcoInput, InputProps as ArcoInputProps } from '@arco-design/web-react';
+import {
+  Input as ArcoInput,
+  InputProps as ArcoInputProps,
+} from '@arco-design/web-react';
 import React, { useCallback } from 'react';
 
 export interface InputProps extends Omit<ArcoInputProps, 'onChange'> {

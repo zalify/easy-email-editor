@@ -1,7 +1,9 @@
-import { Card, Space, TabsProps, Typography } from '@arco-design/web-react';
+import { Card, Space, Tabs, TabsProps, Typography } from '@arco-design/web-react';
 import { IconClose, IconPlus } from '@arco-design/web-react/icon';
+import { classnames } from '@extensions/utils/classnames';
 import { cloneDeep } from 'lodash';
-import React from 'react';
+import React, { useState } from 'react';
+import styles from './index.module.scss';
 
 export interface EditGridTabProps<T extends any = any>
   extends Omit<TabsProps, 'onChange'> {

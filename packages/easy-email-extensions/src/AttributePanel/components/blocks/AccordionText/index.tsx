@@ -1,5 +1,5 @@
 import React from 'react';
-import { useFocusIdx } from 'easy-email-editor';
+import { Stack, useFocusIdx } from 'easy-email-editor';
 
 import { Padding } from '../../attributes/Padding';
 import { BackgroundColor } from '../../attributes/BackgroundColor';

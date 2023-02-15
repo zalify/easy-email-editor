@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Padding } from '@extensions/AttributePanel/components/attributes/Padding';
-import { ColorPickerField, ImageUploaderField, TextField } from '@extensions/components/Form';
+import {
+  ColorPickerField,
+  ImageUploaderField,
+  TextField,
+} from '@extensions/components/Form';
 import { Width } from '@extensions/AttributePanel/components/attributes/Width';
 import { Height } from '@extensions/AttributePanel/components/attributes/Height';
 import { Link } from '@extensions/AttributePanel/components/attributes/Link';

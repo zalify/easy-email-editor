@@ -2,7 +2,6 @@ import { BasicType } from './../../constants';
 import { BlockManager } from './../BlockManager';
 
 import { JsonToMjml } from '../JsonToMjml';
-
 const Page = BlockManager.getBlockByType(BasicType.PAGE)!;
 const Section = BlockManager.getBlockByType(BasicType.SECTION)!;
 const Column = BlockManager.getBlockByType(BasicType.COLUMN)!;

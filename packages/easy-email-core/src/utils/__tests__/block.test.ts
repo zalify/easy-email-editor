@@ -1,6 +1,12 @@
 import { BasicType } from '@core/constants';
 import { AdvancedType } from '../../constants';
-import { getChildIdx, getIndexByIdx, getParentIdx, getSiblingIdx, getValidChildBlocks } from '../block';
+import {
+  getChildIdx,
+  getIndexByIdx,
+  getParentIdx,
+  getSiblingIdx,
+  getValidChildBlocks,
+} from '../block';
 
 describe('Test parseXml', () => {
   it('test getChildIdx', () => {

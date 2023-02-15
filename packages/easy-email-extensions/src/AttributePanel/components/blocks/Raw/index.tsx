@@ -11,14 +11,14 @@ export function Raw() {
   return (
     <AttributesPanelWrapper
       style={{ padding: 20 }}
-      extra={(
+      extra={
         <Tooltip content='Html mode'>
           <Button
             onClick={() => setVisible(true)}
             icon={<IconFont iconName='icon-html' />}
           />
         </Tooltip>
-      )}
+      }
     >
       <TextAreaField
         label=''

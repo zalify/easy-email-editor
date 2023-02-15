@@ -2,7 +2,7 @@ import { BlockManager } from '../BlockManager';
 import { BasicType } from '@core/constants';
 import { createCustomBlock } from '../createCustomBlock';
 import { merge } from 'lodash';
-import { Section, Column, Image, Button } from '../../components';
+import { Section, Column, Text, Image, Button } from '../../components';
 import { IBlockData } from '@core/typings';
 import React from 'react';
 import { JsonToMjml } from '..';

@@ -5,7 +5,6 @@ import { isString } from 'lodash';
 
 import { classnames } from '@core/utils/classnames';
 import { getNodeIdxClassName, getNodeTypeClassName } from '@core/utils';
-
 export function getAdapterAttributesString(
   params: Parameters<IBlock['render']>[0]
 ) {

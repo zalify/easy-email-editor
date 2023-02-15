@@ -1,4 +1,7 @@
-import { AdvancedBlock, Operator } from '@core/blocks/advanced/generateAdvancedBlock';
+import {
+  AdvancedBlock,
+  Operator,
+} from '@core/blocks/advanced/generateAdvancedBlock';
 import { Raw } from '@core/components';
 import { isNumber } from 'lodash';
 import React from 'react';

@@ -1,7 +1,8 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Padding } from '@extensions/AttributePanel/components/attributes/Padding';
 import { Background } from '@extensions/AttributePanel/components/attributes/Background';
 import { Border } from '@extensions/AttributePanel/components/attributes/Border';
+import { useCallback } from 'react';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
 import { Collapse, Grid, Space, Switch } from '@arco-design/web-react';
 import { Stack, useBlock } from 'easy-email-editor';

@@ -1,14 +1,13 @@
 import { BlockManager } from './../BlockManager';
 
 import { JsonToMjml } from '../JsonToMjml';
-import { Liquid } from 'liquidjs';
-import { AdvancedType, BasicType } from '@core/constants';
-import { AdvancedBlock } from '@core/blocks';
-
 const Page = BlockManager.getBlockByType(BasicType.PAGE)!;
 const Section = BlockManager.getBlockByType<AdvancedBlock>(AdvancedType.SECTION)!;
 const Column = BlockManager.getBlockByType(AdvancedType.COLUMN)!;
 const Text = BlockManager.getBlockByType(AdvancedType.TEXT)!;
+import { Liquid } from 'liquidjs';
+import { AdvancedType, BasicType } from '@core/constants';
+import { AdvancedBlock } from '@core/blocks';
 
 const engine = new Liquid();
 describe('Test iteration.test', () => {

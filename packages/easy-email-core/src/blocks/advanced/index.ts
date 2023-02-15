@@ -21,7 +21,7 @@ import {
   AdvancedSection,
   AdvancedGroup,
   AdvancedColumn,
-  AdvancedHero,
+  AdvancedHero
 } from './blocks';
 
 export const advancedBlocks = {

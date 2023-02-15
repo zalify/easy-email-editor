@@ -5,7 +5,6 @@ import { ToolItem } from '../ToolItem';
 import { IconFont } from 'easy-email-editor';
 import { useFontFamily } from '@extensions/hooks/useFontFamily';
 import styleText from '../../styles/ToolsPopover.css?inline';
-
 export interface FontFamilyProps {
   execCommand: (cmd: string, value: any) => void;
   getPopupContainer: () => HTMLElement;
@@ -36,7 +35,7 @@ export function FontFamily(props: FontFamilyProps) {
       className='easy-email-extensions-Tools-Popover'
       popupVisible={visible}
       onVisibleChange={onVisibleChange}
-      content={(
+      content={
         <>
           <style>{styleText}</style>
           <div
@@ -63,7 +62,7 @@ export function FontFamily(props: FontFamilyProps) {
             </Menu>
           </div>
         </>
-      )}
+      }
       getPopupContainer={props.getPopupContainer}
     >
       <ToolItem

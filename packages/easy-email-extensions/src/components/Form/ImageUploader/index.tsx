@@ -7,15 +7,19 @@ import {
   Message,
   Modal,
   Popover,
+  Space,
   Spin,
-  Button as ArcoButton,
 } from '@arco-design/web-react';
 import { IconPlus, IconEye, IconDelete, IconAt } from '@arco-design/web-react/icon';
 import styles from './index.module.scss';
-import { Uploader, UploaderServer } from '@extensions/AttributePanel/utils/Uploader';
+import {
+  Uploader,
+  UploaderServer,
+} from '@extensions/AttributePanel/utils/Uploader';
 import { classnames } from '@extensions/AttributePanel/utils/classnames';
 import { previewLoadImage } from '@extensions/AttributePanel/utils/previewLoadImage';
 import { MergeTags } from '@extensions';
+import { Button as ArcoButton } from '@arco-design/web-react';
 import { IconFont, useEditorProps } from 'easy-email-editor';
 
 export interface ImageUploaderProps {

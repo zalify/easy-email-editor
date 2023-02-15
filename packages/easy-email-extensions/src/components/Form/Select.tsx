@@ -1,4 +1,7 @@
-import { Select as ArcoSelect, SelectProps as ArcoSelectProps } from '@arco-design/web-react';
+import {
+  Select as ArcoSelect,
+  SelectProps as ArcoSelectProps,
+} from '@arco-design/web-react';
 import { merge } from 'lodash';
 import React from 'react';
 

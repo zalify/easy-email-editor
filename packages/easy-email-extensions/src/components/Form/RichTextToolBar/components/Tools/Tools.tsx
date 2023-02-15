@@ -7,13 +7,13 @@ import {
   IconFont,
   useEditorProps,
   useFocusBlockLayout,
-  MergeTagBadge,
 } from 'easy-email-editor';
 import { FontFamily } from '../FontFamily';
 import { MergeTags } from '../MergeTags';
 import { useSelectionRange } from '@extensions/AttributePanel/hooks/useSelectionRange';
 import { IconBgColor } from './IconBgColor';
 import { IconFontColor } from './IconFontColor';
+import { MergeTagBadge } from 'easy-email-editor';
 import { BasicTools } from '../BasicTools';
 import { Unlink } from '../Unlink';
 import { StrikeThrough } from '../StrikeThrough';

@@ -2,6 +2,7 @@
   "name": "easy-email",
   "scripts": {
     "install-all": "lerna exec -- yarn --force && cd demo && yarn --force",
+    "vercel-install": "lerna exec -- yarn install --network-concurrency 1 && cd demo && yarn install --network-concurrency 1",
     "build": "yarn build:core && yarn build:editor && yarn build:extensions",
     "build:core": "cd packages/easy-email-core && yarn build",
     "build:editor": "cd packages/easy-email-editor && yarn build",

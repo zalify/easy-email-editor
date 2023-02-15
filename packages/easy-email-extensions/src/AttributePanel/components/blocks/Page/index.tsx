@@ -1,8 +1,15 @@
 import React from 'react';
-import { ColorPickerField, InputWithUnitField, TextAreaField, TextField } from '@extensions/components/Form';
+import {
+  ColorPickerField,
+  InputWithUnitField,
+  SwitchField,
+  TextAreaField,
+  TextField,
+} from '@extensions/components/Form';
+import { Help } from '@extensions/AttributePanel/components/UI/Help';
 import { AddFont } from '@extensions/components/Form/AddFont';
 import { Collapse, Grid, Space } from '@arco-design/web-react';
-import { Stack, useFocusIdx } from 'easy-email-editor';
+import { Stack, TextStyle, useFocusIdx } from 'easy-email-editor';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
 import { FontFamily } from '../../attributes/FontFamily';
 

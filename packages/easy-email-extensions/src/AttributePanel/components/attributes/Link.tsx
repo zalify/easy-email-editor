@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useFocusIdx } from 'easy-email-editor';
+import { useFocusIdx, Stack } from 'easy-email-editor';
 import { IconLink } from '@arco-design/web-react/icon';
 import { SelectField, TextField } from '../../../components/Form';
 import { Grid } from '@arco-design/web-react';
