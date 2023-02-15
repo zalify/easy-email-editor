@@ -6,6 +6,7 @@ import { merge } from 'lodash';
 import { getAdapterAttributesString } from '@core/utils';
 import { BlockRenderer } from '@core/components/BlockRenderer';
 import { BasicBlock } from '@core/components/BasicBlock';
+import { t } from '@core/utils';
 
 export type IAccordionText = IBlockData<
   {
@@ -22,7 +23,9 @@ export type IAccordionText = IBlockData<
 >;
 
 export const AccordionText: IBlock = createBlock({
-  name: 'Accordion text',
+  get name() {
+    return t('Accordion text');
+  },
   type: BasicType.ACCORDION_TEXT,
   create: (payload) => {
     const defaultData: IAccordionText = {

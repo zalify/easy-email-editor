@@ -69,7 +69,7 @@ export const SimpleLayout: React.FC<
               }}
             >
               <Card
-                title='Layout'
+                title={t('Layout')}
                 style={{ border: 'none' }}
                 headerStyle={{ height: 50 }}
               >
@@ -104,7 +104,7 @@ export const SimpleLayout: React.FC<
             <Tabs className={styles.layoutTabs}>
               <Tabs.TabPane
                 title={
-                  <div style={{ height: 31, lineHeight: '31px' }}>Configuration</div>
+                  <div style={{ height: 31, lineHeight: '31px' }}>{t('Configuration')}</div>
                 }
               >
                 <AttributePanel />
@@ -114,7 +114,7 @@ export const SimpleLayout: React.FC<
                   destroyOnHide
                   key='Source code'
                   title={
-                    <div style={{ height: 31, lineHeight: '31px' }}>Source code</div>
+                    <div style={{ height: 31, lineHeight: '31px' }}>{t('Source code')}</div>
                   }
                 >
                   <SourceCodePanel />

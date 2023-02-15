@@ -4,6 +4,7 @@ import { BasicType } from '@core/constants';
 import { createBlock } from '@core/utils/createBlock';
 import { merge } from 'lodash';
 import { BlockRenderer } from '@core/components/BlockRenderer';
+import { t } from '@core/utils';
 
 export type ITemplate = IBlockData<
   {},
@@ -13,7 +14,9 @@ export type ITemplate = IBlockData<
 >;
 
 export const Template = createBlock<ITemplate>({
-  name: 'Template',
+  get name() {
+    return t('Template');
+  },
   type: BasicType.TEMPLATE,
   create: (payload) => {
     const defaultData: ITemplate = {

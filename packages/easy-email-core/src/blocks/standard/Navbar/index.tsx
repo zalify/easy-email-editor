@@ -3,7 +3,7 @@ import { IBlock, IBlockData } from '@core/typings';
 import { BasicType } from '@core/constants';
 import { createBlock } from '@core/utils/createBlock';
 import { mergeBlock } from '@core/utils/mergeBlock';
-import { getAdapterAttributesString } from '@core/utils';
+import { getAdapterAttributesString, t } from '@core/utils';
 import { BasicBlock } from '@core/components/BasicBlock';
 
 export type INavbar = IBlockData<
@@ -36,7 +36,9 @@ export type INavbar = IBlockData<
 >;
 
 export const Navbar: IBlock<INavbar> = createBlock({
-  name: 'Navbar',
+  get name() {
+    return t('Navbar');
+  },
   type: BasicType.NAVBAR,
   create: (payload) => {
     const defaultData: INavbar = {

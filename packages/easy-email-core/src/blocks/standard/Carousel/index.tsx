@@ -5,6 +5,8 @@ import { createBlock } from '@core/utils/createBlock';
 import { getImg } from '@core/utils/getImg';
 import { mergeBlock } from '@core/utils/mergeBlock';
 import { BasicBlock } from '@core/components/BasicBlock';
+import { t } from '@core/utils';
+
 export type ICarousel = IBlockData<
   {
     align?: string;
@@ -34,7 +36,9 @@ export type ICarousel = IBlockData<
 >;
 
 export const Carousel = createBlock<ICarousel>({
-  name: 'Carousel',
+  get name() {
+    return t('Carousel');
+  },
   type: BasicType.CAROUSEL,
   create: (payload) => {
     const defaultData: ICarousel = {

@@ -48,7 +48,7 @@ export function EditTab<T extends any = any>(props: EditTabProps<T>) {
       {(Array.isArray(value) ? value : []).map((item, index) => (
         <TabPane
           style={{ paddingLeft: 12 }}
-          title={`${props.label || 'Tab'} ${index + 1}`}
+          title={`${props.label || t('Tab')} ${index + 1}`}
           key={index}
         >
           {props.renderItem(item, index)}

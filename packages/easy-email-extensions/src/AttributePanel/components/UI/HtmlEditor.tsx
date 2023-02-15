@@ -66,11 +66,11 @@ export const HtmlEditor: React.FC<{
       title={(
         <Stack distribution='equalSpacing'>
           <TextStyle variation='strong' size='large'>
-            Html
+            {t('Html')}
           </TextStyle>
           <Stack>
             <Button type='primary' onClick={onSave}>
-              Save
+              {t('Save')}
             </Button>
           </Stack>
         </Stack>
@@ -98,7 +98,7 @@ export const HtmlEditor: React.FC<{
                   color: '#fff',
                 }}
               >
-                Editor Loading...
+                {t('Editor Loading...')}
               </div>
             )}
           >

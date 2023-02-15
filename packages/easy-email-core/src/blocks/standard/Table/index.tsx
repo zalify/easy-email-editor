@@ -4,11 +4,14 @@ import { BasicType } from '@core/constants';
 import { createBlock } from '@core/utils/createBlock';
 import { merge } from 'lodash';
 import { BasicBlock } from '@core/components/BasicBlock';
+import { t } from '@core/utils';
 
 export type ITable = IBlockData<{}, { content: string; }>;
 
 export const Table = createBlock<ITable>({
-  name: 'Table',
+  get name() {
+    return t('Table');
+  },
   type: BasicType.TABLE,
   create: (payload) => {
     const defaultData: ITable = {
