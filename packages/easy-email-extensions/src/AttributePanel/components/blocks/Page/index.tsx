@@ -1,10 +1,17 @@
 import React from 'react';
-import { ColorPickerField, InputWithUnitField, TextAreaField, TextField } from '@extensions/components/Form';
+import {
+  ColorPickerField,
+  InputWithUnitField,
+  NumberField,
+  TextAreaField,
+  TextField,
+} from '@extensions/components/Form';
 import { AddFont } from '@extensions/components/Form/AddFont';
 import { Collapse, Grid, Space } from '@arco-design/web-react';
 import { Stack, useFocusIdx } from 'easy-email-editor';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
 import { FontFamily } from '../../attributes/FontFamily';
+import { pixelAdapter } from '../../adapter';
 
 export function Page() {
   const { focusIdx } = useFocusIdx();
@@ -60,9 +67,11 @@ export function Page() {
                   offset={1}
                   span={11}
                 >
-                  <InputWithUnitField
-                    label={t('Font size')}
+                  <NumberField
+                    label='Font size (px)'
                     name={`${focusIdx}.data.value.font-size`}
+                    config={pixelAdapter}
+                    autoComplete='off'
                   />
                 </Grid.Col>
               </Grid.Row>
@@ -70,7 +79,7 @@ export function Page() {
               <Grid.Row>
                 <Grid.Col span={11}>
                   <InputWithUnitField
-                    label='Line height'
+                    label={t('Line height')}
                     unitOptions='percent'
                     name={`${focusIdx}.data.value.line-height`}
                   />

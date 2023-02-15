@@ -11,7 +11,7 @@ export function AccordionElement() {
   return (
     <AttributesPanelWrapper>
       <Collapse defaultActiveKey={['0', '1', '2']}>
-        <Collapse.Item name='0' header='Setting'>
+        <Collapse.Item name='0' header={t('Setting')}>
           <Space direction='vertical'>
             <Border />
             <BackgroundColor />

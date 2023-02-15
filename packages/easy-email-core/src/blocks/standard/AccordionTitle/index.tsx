@@ -3,6 +3,7 @@ import { IBlock, IBlockData } from '@core/typings';
 import { BasicType } from '@core/constants';
 import { createBlock } from '@core/utils/createBlock';
 import { merge } from 'lodash';
+import { t } from '@core/utils';
 import { BasicBlock } from '@core/components/BasicBlock';
 
 export type IAccordionTitle = IBlockData<
@@ -17,7 +18,9 @@ export type IAccordionTitle = IBlockData<
 >;
 
 export const AccordionTitle: IBlock = createBlock({
-  name: 'Accordion title',
+  get name() {
+    return t('Accordion title');
+  },
   type: BasicType.ACCORDION_TITLE,
   create: (payload) => {
     const defaultData: IAccordionTitle = {

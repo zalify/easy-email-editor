@@ -45,23 +45,17 @@ export function Section() {
   return (
     <AttributesPanelWrapper style={{ padding: 0 }}>
       <CollapseWrapper defaultActiveKey={['0', '1', '2']}>
-        <Collapse.Item name='0' header='Dimension'>
+        <Collapse.Item name='0' header={t('Dimension')}>
           <Space direction='vertical'>
             <Grid.Row>
               <Grid.Col span={12}>
-
-                <label
-
-                  style={{ width: '100%', display: 'flex' }}
-                >
-
-                  <div style={{ flex: 1 }}>Group</div>
+                <label style={{ width: '100%', display: 'flex' }}>
+                  <div style={{ flex: 1 }}>{t('Group')}</div>
                 </label>
-
                 <Switch
                   checked={noWrap}
-                  checkedText='True'
-                  uncheckedText='False'
+                  checkedText={t('True')}
+                  uncheckedText={t('False')}
                   onChange={onChange}
                 />
               </Grid.Col>
@@ -71,15 +65,15 @@ export function Section() {
             <Padding />
           </Space>
         </Collapse.Item>
-        <Collapse.Item name='1' header='Background'>
+        <Collapse.Item name='1' header={t('Background')}>
           <Stack vertical spacing='tight'>
             <Background />
           </Stack>
         </Collapse.Item>
-        <Collapse.Item name='2' header='Border'>
+        <Collapse.Item name='2' header={t('Border')}>
           <Border />
         </Collapse.Item>
-        <Collapse.Item name='4' header='Extra'>
+        <Collapse.Item name='4' header={t('Extra')}>
           <Grid.Col span={24}>
             <ClassName />
           </Grid.Col>

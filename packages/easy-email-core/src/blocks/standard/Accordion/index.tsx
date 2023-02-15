@@ -7,6 +7,7 @@ import { AccordionTitle } from '../AccordionTitle';
 import { AccordionText } from '../AccordionText';
 import { getImg } from '@core/utils/getImg';
 import { mergeBlock } from '@core/utils/mergeBlock';
+import { t } from '@core/utils';
 import { BasicBlock } from '@core/components/BasicBlock';
 
 export type IAccordion = IBlockData<
@@ -29,7 +30,9 @@ export type IAccordion = IBlockData<
 >;
 
 export const Accordion = createBlock<IAccordion>({
-  name: 'Accordion',
+  get name() {
+    return t('Accordion');
+  },
   type: BasicType.ACCORDION,
   validParentType: [BasicType.COLUMN],
   create: (payload) => {

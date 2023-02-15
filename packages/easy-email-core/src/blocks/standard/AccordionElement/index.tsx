@@ -4,6 +4,7 @@ import { BasicType } from '@core/constants';
 import { createBlock } from '@core/utils/createBlock';
 import { merge } from 'lodash';
 import { BasicBlock } from '@core/components/BasicBlock';
+import { t } from '@core/utils';
 
 export type IAccordionElement = IBlockData<
   {
@@ -24,7 +25,9 @@ export type IAccordionElement = IBlockData<
 >;
 
 export const AccordionElement = createBlock<IAccordionElement>({
-  name: 'Accordion element',
+  get name() {
+    return t('Accordion element');
+  },
   type: BasicType.ACCORDION_ELEMENT,
   create: (payload) => {
     const defaultData: IAccordionElement = {

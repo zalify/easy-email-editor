@@ -13,7 +13,6 @@ import {
 } from '@arco-design/web-react';
 import { ImageUploaderProps, ImageUploader } from './ImageUploader';
 import { UploadField as Uploader, UploadFieldProps } from './UploadField';
-import { ColorPicker, ColorPickerProps } from './ColorPicker';
 import { Select, SelectProps } from './Select';
 import { RadioGroup, RadioGroupProps } from './RadioGroup';
 import enhancer from './enhancer';
@@ -25,6 +24,7 @@ import { EditGridTab, EditGridTabProps } from './EditGridTab';
 import { InlineText, InlineTextProps } from './InlineTextField';
 import { AutoCompleteProps, AutoComplete } from './AutoComplete';
 import { InputSearchProps } from '@arco-design/web-react/es/Input';
+import { ColorPickerField } from './ColorPickerField';
 
 export { RichTextField } from './RichTextField';
 
@@ -42,8 +42,6 @@ export const TextAreaField = enhancer<TextAreaProps>(ArcoInput.TextArea, val => 
 export const NumberField = enhancer<InputNumberProps>(InputNumber, e => e);
 
 export const SliderField = enhancer<SliderProps>(Slider, e => e);
-
-export const ColorPickerField = enhancer<ColorPickerProps>(ColorPicker, e => e);
 
 export const UploadField = enhancer<UploadFieldProps>(Uploader, val => val);
 
@@ -65,5 +63,7 @@ export const EditTabField = enhancer<EditTabProps>(EditTab, (e: any[]) => e);
 export const EditGridTabField = enhancer<EditGridTabProps>(EditGridTab, (e: any[]) => e);
 
 export const InlineTextField = enhancer<InlineTextProps>(InlineText, value => value);
+
+export { ColorPickerField };
 
 export { enhancer };

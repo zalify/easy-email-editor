@@ -25,7 +25,7 @@ export function Text() {
   return (
     <AttributesPanelWrapper
       extra={(
-        <Tooltip content='Html mode'>
+        <Tooltip content={t('Html mode')}>
           <Button
             onClick={() => setVisible(true)}
             icon={<IconFont iconName='icon-html' />}
@@ -34,29 +34,44 @@ export function Text() {
       )}
     >
       <CollapseWrapper defaultActiveKey={['0', '1', '2']}>
-        <Collapse.Item name='0' header='Dimension'>
+        <Collapse.Item
+          name='0'
+          header={t('Dimension')}
+        >
           <Space direction='vertical'>
             <Height />
-            <Padding />
+            <Padding showResetAll />
           </Space>
         </Collapse.Item>
-        <Collapse.Item name='1' header='Color'>
+        <Collapse.Item
+          name='1'
+          header={t('Color')}
+        >
           <Grid.Row>
             <Grid.Col span={11}>
               <Color />
             </Grid.Col>
-            <Grid.Col offset={1} span={11}>
-              <ContainerBackgroundColor title='Background color' />
+            <Grid.Col
+              offset={1}
+              span={11}
+            >
+              <ContainerBackgroundColor title={t('Background color')} />
             </Grid.Col>
           </Grid.Row>
         </Collapse.Item>
-        <Collapse.Item name='2' header='Typography'>
+        <Collapse.Item
+          name='2'
+          header={t('Typography')}
+        >
           <Space direction='vertical'>
             <Grid.Row>
               <Grid.Col span={11}>
                 <FontFamily />
               </Grid.Col>
-              <Grid.Col offset={1} span={11}>
+              <Grid.Col
+                offset={1}
+                span={11}
+              >
                 <FontSize />
               </Grid.Col>
             </Grid.Row>
@@ -65,7 +80,10 @@ export function Text() {
               <Grid.Col span={11}>
                 <LineHeight />
               </Grid.Col>
-              <Grid.Col offset={1} span={11}>
+              <Grid.Col
+                offset={1}
+                span={11}
+              >
                 <LetterSpacing />
               </Grid.Col>
             </Grid.Row>
@@ -74,7 +92,10 @@ export function Text() {
               <Grid.Col span={11}>
                 <TextDecoration />
               </Grid.Col>
-              <Grid.Col offset={1} span={11}>
+              <Grid.Col
+                offset={1}
+                span={11}
+              >
                 <FontWeight />
               </Grid.Col>
             </Grid.Row>
@@ -85,17 +106,26 @@ export function Text() {
 
             <Grid.Row>
               <Grid.Col span={11} />
-              <Grid.Col offset={1} span={11} />
+              <Grid.Col
+                offset={1}
+                span={11}
+              />
             </Grid.Row>
           </Space>
         </Collapse.Item>
-        <Collapse.Item name='4' header='Extra'>
+        <Collapse.Item
+          name='4'
+          header={t('Extra')}
+        >
           <Grid.Col span={24}>
             <ClassName />
           </Grid.Col>
         </Collapse.Item>
       </CollapseWrapper>
-      <HtmlEditor visible={visible} setVisible={setVisible} />
+      <HtmlEditor
+        visible={visible}
+        setVisible={setVisible}
+      />
     </AttributesPanelWrapper>
   );
 }

@@ -34,7 +34,7 @@ export function SourceCodePanel() {
 
         const block = BlockManager.getBlockByType(parseValue.type);
         if (!block) {
-          throw new Error('Invalid content');
+          throw new Error(t('Invalid content'));
         }
         if (
           !parseValue.data ||
@@ -42,7 +42,7 @@ export function SourceCodePanel() {
           !parseValue.attributes ||
           !Array.isArray(parseValue.children)
         ) {
-          throw new Error('Invalid content');
+          throw new Error(t('Invalid content'));
         }
         setValueByIdx(focusIdx, parseValue);
       } catch (error: any) {
@@ -61,15 +61,15 @@ export function SourceCodePanel() {
           const parseBlock = BlockManager.getBlockByType(parseValue.type);
 
           if (!parseBlock?.validParentType.includes(parentBlock?.type)) {
-            throw new Error('Invalid content');
+            throw new Error(t('Invalid content'));
           }
         } else if (focusIdx !== getPageIdx()) {
-          throw new Error('Invalid content');
+          throw new Error(t('Invalid content'));
         }
 
         setValueByIdx(focusIdx, parseValue);
       } catch (error) {
-        Message.error('Invalid content');
+        Message.error(t('Invalid content'));
       }
     },
     [focusIdx, setValueByIdx, values]
@@ -98,7 +98,7 @@ export function SourceCodePanel() {
     <Collapse>
       <Collapse.Item
         name='json'
-        header='Json source'
+        header={t('Json source')}
         contentStyle={{ padding: '8px 13px' }}
       >
         <Input.TextArea
@@ -110,7 +110,7 @@ export function SourceCodePanel() {
       </Collapse.Item>
       <Collapse.Item
         name='mjml'
-        header='MJML source'
+        header={t('MJML source')}
         contentStyle={{ padding: '8px 13px' }}
       >
         <Input.TextArea

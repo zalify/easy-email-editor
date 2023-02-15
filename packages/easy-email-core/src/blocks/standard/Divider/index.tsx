@@ -4,6 +4,7 @@ import { BasicType } from '@core/constants';
 import { createBlock } from '@core/utils/createBlock';
 import { merge } from 'lodash';
 import { BasicBlock } from '@core/components/BasicBlock';
+import { t } from '@core/utils';
 
 export type IDivider = IBlockData<
   {
@@ -19,7 +20,9 @@ export type IDivider = IBlockData<
 >;
 
 export const Divider = createBlock<IDivider>({
-  name: 'Divider',
+  get name() {
+    return t('Divider');
+  },
   type: BasicType.DIVIDER,
   create: (payload) => {
     const defaultData: IDivider = {
