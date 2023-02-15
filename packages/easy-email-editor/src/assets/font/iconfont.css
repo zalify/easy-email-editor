@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 2806724 */
-  src: url('iconfont.woff2?t=1643966530292') format('woff2'),
-       url('iconfont.woff?t=1643966530292') format('woff'),
-       url('iconfont.ttf?t=1643966530292') format('truetype');
+  src: url('iconfont.woff2?t=1676343677332') format('woff2'),
+       url('iconfont.woff?t=1676343677332') format('woff'),
+       url('iconfont.ttf?t=1676343677332') format('truetype');
 }
 
 .iconfont {
@@ -13,8 +13,48 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-clear:before {
+  content: "\e6d3";
+}
+
+.icon-remove-cycle:before {
+  content: "\e604";
+}
+
+.icon-remove:before {
+  content: "\e709";
+}
+
+.icon-dash:before {
+  content: "\e7fc";
+}
+
+.icon-disable:before {
+  content: "\e638";
+}
+
+.icon-arrow_topright:before {
+  content: "\e6b4";
+}
+
+.icon-database:before {
+  content: "\e685";
+}
+
 .icon-bg-color:before {
-  content: "\e9de";
+  content: "\e72c";
+}
+
+.icon-heading:before {
+  content: "\f00f";
+}
+
+.icon-logo:before {
+  content: "\e602";
+}
+
+.icon-address:before {
+  content: "\e62c";
 }
 
 .icon-font-color:before {
@@ -147,10 +187,6 @@
 
 .icon-emoji:before {
   content: "\e78d";
-}
-
-.icon-clear:before {
-  content: "\e639";
 }
 
 .icon-link:before {

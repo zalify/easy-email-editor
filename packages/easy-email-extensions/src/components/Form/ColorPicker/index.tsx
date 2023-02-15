@@ -2,6 +2,7 @@ import { Input, Popover, PopoverProps } from '@arco-design/web-react';
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 
 import { getImg } from '@extensions/AttributePanel/utils/getImg';
+import Color from 'color';
 import { PresetColorsContext } from '@extensions/AttributePanel/components/provider/PresetColorsProvider';
 import { ColorPickerContent } from './ColorPickerContent';
 export interface ColorPickerProps extends PopoverProps {
@@ -33,12 +34,27 @@ export function ColorPicker(props: ColorPickerProps) {
       onChange?.(value);
       addCurrentColor(value);
     },
-    [addCurrentColor, onChange]
+    [addCurrentColor, onChange],
   );
 
   const getPopupContainer = useCallback(() => {
     return getCollapseItemEle(refEle);
   }, [refEle]);
+
+  const inputColor = useMemo(() => {
+    if (props.value?.startsWith('#') && props.value?.length === 7)
+      return props.value?.replace('#', '');
+    return props.value;
+  }, [props.value]);
+
+  const adapterColor = useMemo(() => {
+    try {
+      if (value.length === 6 && Color(`#${value}`).hex()) return `#${value}`;
+    } catch (error) {
+      console.log('err', value);
+    }
+    return value;
+  }, [value]);
 
   return (
     <div style={{ flex: 1, display: 'flex' }}>
@@ -46,7 +62,12 @@ export function ColorPicker(props: ColorPickerProps) {
         title={props.label}
         trigger='click'
         className='color-picker-popup'
-        content={<ColorPickerContent value={value} onChange={onInputChange} />}
+        content={
+          <ColorPickerContent
+            value={adapterColor}
+            onChange={onInputChange}
+          />
+        }
         getPopupContainer={getPopupContainer}
         {...props}
       >
@@ -72,14 +93,13 @@ export function ColorPicker(props: ColorPickerProps) {
                 style={{
                   position: 'relative',
                   display: 'block',
-                  border:
-                    '1px solid var(--color-neutral-3, rgb(229, 230, 235))',
+                  border: '1px solid var(--color-neutral-3, rgb(229, 230, 235))',
 
                   borderRadius: 2,
                   width: '100%',
                   height: '100%',
                   textAlign: 'center',
-                  backgroundColor: value,
+                  backgroundColor: adapterColor,
                 }}
               />
             ) : (
@@ -87,8 +107,7 @@ export function ColorPicker(props: ColorPickerProps) {
                 style={{
                   maxWidth: '100%',
                   maxHeight: '100%',
-                  filter:
-                    'invert(  0.78  )  drop-shadow(0 0px 0 rgb(0 0 0 / 45%))',
+                  filter: 'invert(  0.78  )  drop-shadow(0 0px 0 rgb(0 0 0 / 45%))',
                 }}
                 src={getImg('AttributePanel_02')}
               />
@@ -106,7 +125,7 @@ export function ColorPicker(props: ColorPickerProps) {
       </Popover>
       {showInput && (
         <Input
-          value={props.value}
+          value={inputColor}
           style={{ outline: 'none', flex: 1 }}
           onChange={onInputChange}
         />
