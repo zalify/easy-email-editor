@@ -2,6 +2,7 @@ import React from 'react';
 import {
   ColorPickerField,
   EditTabField,
+  NumberField,
   SelectField,
   TextField,
 } from '@extensions/components/Form';
@@ -24,6 +25,7 @@ import {
   TextDecoration,
   TextTransform,
 } from '../../attributes';
+import { pixelAdapter } from '../../adapter';
 
 export function Navbar() {
   const { focusIdx } = useFocusIdx();
@@ -126,10 +128,11 @@ function NavbarLink({
             offset={1}
             span={11}
           >
-            <TextField
-              label='Font size'
-              quickchange
+            <NumberField
+              label='Font size (px)'
               name={`${focusIdx}.data.value.links.[${index}].font-size`}
+              config={pixelAdapter}
+              autoComplete='off'
             />
           </Grid.Col>
         </Grid.Row>

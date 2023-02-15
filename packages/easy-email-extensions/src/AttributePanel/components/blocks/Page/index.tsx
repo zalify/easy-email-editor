@@ -2,6 +2,7 @@ import React from 'react';
 import {
   ColorPickerField,
   InputWithUnitField,
+  NumberField,
   SwitchField,
   TextAreaField,
   TextField,
@@ -12,6 +13,7 @@ import { Collapse, Grid, Space } from '@arco-design/web-react';
 import { Stack, TextStyle, useFocusIdx } from 'easy-email-editor';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
 import { FontFamily } from '../../attributes/FontFamily';
+import { pixelAdapter } from '../../adapter';
 
 export function Page() {
   const { focusIdx } = useFocusIdx();
@@ -67,9 +69,11 @@ export function Page() {
                   offset={1}
                   span={11}
                 >
-                  <InputWithUnitField
-                    label={t('Font size')}
+                  <NumberField
+                    label='Font size (px)'
                     name={`${focusIdx}.data.value.font-size`}
+                    config={pixelAdapter}
+                    autoComplete='off'
                   />
                 </Grid.Col>
               </Grid.Row>
