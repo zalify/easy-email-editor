@@ -4,7 +4,6 @@ import { ContainerBackgroundColor } from '@extensions/AttributePanel/components/
 import { Padding } from '@extensions/AttributePanel/components/attributes/Padding';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
 import { Collapse, Grid, Space } from '@arco-design/web-react';
-import { Stack } from 'easy-email-editor';
 import { ClassName } from '../../attributes/ClassName';
 import { CollapseWrapper } from '../../attributes/CollapseWrapper';
 

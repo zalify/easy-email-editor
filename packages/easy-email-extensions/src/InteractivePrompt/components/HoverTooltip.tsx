@@ -2,14 +2,8 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 import { getNodeTypeFromClassName, BlockManager } from 'easy-email-core';
 import { createPortal } from 'react-dom';
-import {
-  getEditorRoot,
-  useEditorContext,
-  useFocusIdx,
-  useHoverIdx,
-} from 'easy-email-editor';
+import { getEditorRoot, useEditorContext, useFocusIdx, useHoverIdx, useLazyState } from 'easy-email-editor';
 import { awaitForElement } from '@extensions/utils/awaitForElement';
-import { useLazyState } from 'easy-email-editor';
 
 export function HoverTooltip() {
   const { hoverIdx, direction, isDragging } = useHoverIdx();
@@ -100,9 +94,9 @@ function TipNode(props: TipNodeProps) {
   const { direction, title, lineWidth, type } = props;
   const dragTitle = useMemo(() => {
     if (direction === 'top' || direction === 'noEnoughTop') {
-      return t(`Insert before`, title);
+      return t('Insert before', title);
     } else if (direction === 'bottom') {
-      return t(`Insert after`, title);
+      return t('Insert after', title);
     } else if (direction === 'right' || direction === 'left') {
       return t('Drag here');
     }

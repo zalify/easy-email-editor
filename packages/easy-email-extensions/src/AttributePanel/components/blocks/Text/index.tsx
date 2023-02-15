@@ -13,8 +13,7 @@ import { LineHeight } from '@extensions/AttributePanel/components/attributes/Lin
 import { LetterSpacing } from '@extensions/AttributePanel/components/attributes/LetterSpacing';
 
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
-import { Collapse, Grid, Space, Switch, Tooltip } from '@arco-design/web-react';
-import { Button } from '@arco-design/web-react';
+import { Collapse, Grid, Space, Tooltip, Button } from '@arco-design/web-react';
 import { IconFont } from 'easy-email-editor';
 import { HtmlEditor } from '../../UI/HtmlEditor';
 import { ClassName } from '../../attributes/ClassName';

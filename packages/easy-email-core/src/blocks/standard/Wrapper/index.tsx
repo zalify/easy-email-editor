@@ -1,11 +1,10 @@
-
 import { IBlockData } from '@core/typings';
 import { BasicType } from '@core/constants';
-import { CSSProperties } from 'react';
+import React, { CSSProperties } from 'react';
 import { createBlock } from '@core/utils/createBlock';
 import { merge } from 'lodash';
-import React from 'react';
 import { BasicBlock } from '@core/components/BasicBlock';
+
 export type IWrapper = IBlockData<
   {
     'background-color'?: string;
