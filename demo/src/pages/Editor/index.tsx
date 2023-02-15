@@ -40,6 +40,7 @@ import {
   ExtensionProps,
   StandardLayout,
   TextField,
+  BlockAttributeConfigurationManager
 } from 'easy-email-extensions';
 import { AutoSaveAndRestoreEmail } from '@demo/components/AutoSaveAndRestoreEmail';
 
@@ -180,6 +181,11 @@ const fontList = [
   '宋体',
   '微软雅黑',
 ].map(item => ({ value: item, label: item }));
+
+BlockAttributeConfigurationManager.add({
+  [BasicType.SUBJECT]: () => <></>,
+  [BasicType.SUBTITLE]: () => <></>,
+})
 
 export default function Editor() {
   const [isDarkMode, setIsDarkMode] = useState(false);

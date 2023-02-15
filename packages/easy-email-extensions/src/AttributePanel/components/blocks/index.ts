@@ -20,9 +20,13 @@ import { Navbar } from './Navbar';
 import { Social } from './Social';
 import { Table } from './Table';
 import { BasicType, AdvancedType } from 'easy-email-core';
+import { SubTitle } from '@extensions/AttributePanel/components/blocks/Subtitle';
+import { Subject } from '@extensions/AttributePanel/components/blocks/Subject';
 
 export const blocks = {
   [BasicType.PAGE]: Page,
+  [BasicType.SUBJECT]: Subject,
+  [BasicType.SUBTITLE]: SubTitle,
   [BasicType.SECTION]: Section,
   [BasicType.COLUMN]: Column,
   [BasicType.TEXT]: Text,

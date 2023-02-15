@@ -3,6 +3,8 @@ export type BlockType = BasicType;
 // 基础组件
 export enum BasicType {
   PAGE = 'page',
+  SUBJECT = 'subject',
+  SUBTITLE = 'subtitle',
   SECTION = 'section',
   COLUMN = 'column',
   GROUP = 'group',

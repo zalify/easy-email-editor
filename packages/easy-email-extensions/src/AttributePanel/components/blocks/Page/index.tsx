@@ -5,13 +5,19 @@ import {
   NumberField,
   SwitchField,
   TextAreaField,
+  TextField,
 } from '@extensions/components/Form';
+import { Help } from '@extensions/AttributePanel/components/UI/Help';
 import { AddFont } from '@extensions/components/Form/AddFont';
 import { Collapse, Grid, Space } from '@arco-design/web-react';
-import { Stack, useFocusIdx } from 'easy-email-editor';
+import { Stack, TextStyle, useFocusIdx } from 'easy-email-editor';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
 import { FontFamily } from '../../attributes/FontFamily';
 import { pixelAdapter } from '../../adapter';
+import { Subject } from '@extensions/AttributePanel/components/blocks/Subject';
+import { SubTitle } from '@extensions/AttributePanel/components/blocks/Subtitle';
+import { BlockAttributeConfigurationManager } from '@extensions';
+import { BasicType } from '@core/constants';
 
 export function Page() {
   const { focusIdx } = useFocusIdx();
@@ -26,6 +32,8 @@ export function Page() {
             header={t('Email Setting')}
           >
             <Space direction='vertical'>
+              {BlockAttributeConfigurationManager.get(BasicType.SUBJECT)}
+              {BlockAttributeConfigurationManager.get(BasicType.SUBTITLE)}
               <InputWithUnitField
                 label={t('Width')}
                 name={`${focusIdx}.attributes.width`}
