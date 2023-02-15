@@ -17,7 +17,7 @@ export function Height({
       <Stack wrap={false}>
         <Stack.Item fill>
           <TextField
-            label='Height'
+            label={t('Height')}
             name={`${focusIdx}.attributes.height`}
             quickchange
             inline={inline}

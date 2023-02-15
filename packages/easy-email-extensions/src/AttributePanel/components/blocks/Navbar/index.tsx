@@ -34,7 +34,7 @@ export function Navbar() {
       <CollapseWrapper defaultActiveKey={['0', '1', '2']}>
         <Collapse.Item
           name='0'
-          header='Layout'
+          header={t('Layout')}
         >
           <Stack
             vertical
@@ -47,7 +47,7 @@ export function Navbar() {
         <Collapse.Item
           contentStyle={{ padding: 0 }}
           name='1'
-          header='Navbar links'
+          header={t('Navbar links')}
         >
           <Space
             direction='vertical'
@@ -56,7 +56,7 @@ export function Navbar() {
             <EditTabField
               tabPosition='top'
               name={`${focusIdx}.data.value.links`}
-              label='Links'
+              label={t('Links')}
               labelHidden
               renderItem={(item, index) => (
                 <NavbarLink
@@ -77,7 +77,7 @@ export function Navbar() {
         </Collapse.Item>
         <Collapse.Item
           name='4'
-          header='Extra'
+          header={t('Extra')}
         >
           <Grid.Col span={24}>
             <ClassName />
@@ -105,7 +105,7 @@ function NavbarLink({
         <Grid.Row>
           <Grid.Col span={11}>
             <TextField
-              label='Content'
+              label={t('Content')}
               name={`${focusIdx}.data.value.links.[${index}].content`}
             />
           </Grid.Col>
@@ -114,7 +114,7 @@ function NavbarLink({
             span={11}
           >
             <ColorPickerField
-              label='Color'
+              label={t('Color')}
               name={`${focusIdx}.data.value.links.[${index}].color`}
             />
           </Grid.Col>
@@ -128,8 +128,8 @@ function NavbarLink({
             offset={1}
             span={11}
           >
-            <NumberField
-              label='Font size (px)'
+            <TextField
+              label={t('Font size (px)')}
               name={`${focusIdx}.data.value.links.[${index}].font-size`}
               config={pixelAdapter}
               autoComplete='off'
@@ -181,7 +181,7 @@ function NavbarLink({
           <Grid.Col span={11}>
             <TextField
               prefix={<IconLink />}
-              label={<span>Url</span>}
+              label={<span>{t('Url')}</span>}
               name={`${focusIdx}.data.value.links.[${index}].href`}
             />
           </Grid.Col>
@@ -191,16 +191,16 @@ function NavbarLink({
           >
             <SelectField
               style={{ minWidth: 65 }}
-              label='Target'
+              label={t('Target')}
               name={`${focusIdx}.data.value.links.[${index}].target`}
               options={[
                 {
                   value: '_blank',
-                  label: '_blank',
+                  label: t('_blank'),
                 },
                 {
                   value: '_self',
-                  label: '_self',
+                  label: t('_self'),
                 },
               ]}
             />

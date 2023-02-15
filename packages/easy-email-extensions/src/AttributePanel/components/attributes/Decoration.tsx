@@ -19,17 +19,17 @@ export function Decoration() {
           Decoration
         </TextStyle>
         <TextField
-          label='Border radius'
+          label={t('Border radius')}
           name={`${focusIdx}.attributes.borderRadius`}
           inline
         />
         <TextField
-          label='Border'
+          label={t('Border')}
           name={`${focusIdx}.attributes.border`}
           inline
         />
         <NumberField
-          label='Opacity'
+          label={t('Opacity')}
           max={1}
           min={0}
           step={0.1}

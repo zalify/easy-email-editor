@@ -7,7 +7,7 @@ export function LineHeight({ name }: { name?: string; }) {
 
   return (
     <InputWithUnitField
-      label='Line height'
+      label={t('Line height')}
       unitOptions='percent'
       name={name || `${focusIdx}.attributes.line-height`}
     />

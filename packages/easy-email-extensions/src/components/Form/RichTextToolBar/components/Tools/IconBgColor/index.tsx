@@ -36,7 +36,7 @@ export function IconBgColor({ selectionRange, execCommand, getPopoverMountNode }
             <div style={{ borderBottom: `2px solid ${color}`, position: 'absolute', width: '130%', left: '-15%', top: 16 }} />
           </div>
         )}
-        title='Background color'
+        title={t('Background color')}
       />
     </ColorPicker>
 

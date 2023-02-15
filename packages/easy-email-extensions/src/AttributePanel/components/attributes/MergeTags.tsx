@@ -101,7 +101,7 @@ export const MergeTags: React.FC<{
           value={props.value}
           size='small'
           dropdownMenuStyle={{ maxHeight: 400, overflow: 'auto' }}
-          placeholder='Please select'
+          placeholder={t('Please select')}
           treeData={treeOptions}
           onChange={(val) => onSelect(val)}
         />

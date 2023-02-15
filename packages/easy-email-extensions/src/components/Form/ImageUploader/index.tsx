@@ -42,7 +42,7 @@ export function ImageUploader(props: ImageUploaderProps) {
 
   const onUpload = useCallback(() => {
     if (isUploading) {
-      return Message.warning('Uploading...');
+      return Message.warning(t('Uploading...'));
     }
     if (!uploadHandlerRef.current) return;
 
@@ -86,7 +86,7 @@ export function ImageUploader(props: ImageUploaderProps) {
             props.onChange(picture);
             setIsUploading(false);
           } catch (error: any) {
-            Message.error(error?.message || error || 'Upload failed');
+            Message.error(error?.message || error || t('Upload failed'));
             setIsUploading(false);
           }
         }
@@ -125,10 +125,10 @@ export function ImageUploader(props: ImageUploaderProps) {
         <div className={classnames(styles['info'])}>
           <img src={props.value} />
           <div className={styles['btn-wrap']}>
-            <a title='Preview' onClick={() => setPreview(true)}>
+            <a title={t('Preview')} onClick={() => setPreview(true)}>
               <IconEye />
             </a>
-            <a title='Remove' onClick={() => onRemove()}>
+            <a title={t('Remove')} onClick={() => onRemove()}>
               <IconDelete />
             </a>
           </div>
@@ -189,7 +189,7 @@ export function ImageUploader(props: ImageUploaderProps) {
         </Grid.Row>
       </div>
       <Modal visible={preview} footer={null} onCancel={() => setPreview(false)}>
-        <img alt='Preview' style={{ width: '100%' }} src={props.value} />
+        <img alt={t('Preview')} style={{ width: '100%' }} src={props.value} />
       </Modal>
     </div>
   );

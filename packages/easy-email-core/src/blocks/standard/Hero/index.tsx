@@ -4,7 +4,7 @@ import { BasicType } from '@core/constants';
 import { createBlock } from '@core/utils/createBlock';
 import { getImg } from '@core/utils/getImg';
 import { mergeBlock } from '@core/utils/mergeBlock';
-import { getAdapterAttributesString } from '@core/utils';
+import { getAdapterAttributesString, t } from '@core/utils';
 import { BlockRenderer } from '@core/components/BlockRenderer';
 import { BasicBlock } from '@core/components/BasicBlock';
 export type IHero = IBlockData<
@@ -25,7 +25,9 @@ export type IHero = IBlockData<
 >;
 
 export const Hero = createBlock<IHero>({
-  name: 'Hero',
+  get name() {
+    return t('Hero');
+  },
   type: BasicType.HERO,
   create: (payload) => {
     const defaultData: IHero = {
