@@ -27,7 +27,7 @@ import { CollapseWrapper } from '../../attributes/CollapseWrapper';
 export function Button() {
   const { focusIdx } = useFocusIdx();
   const { input } = useField(`${focusIdx}.data.value.content`, {
-    parse: (v) => v,
+    parse: v => v,
   });
 
   const { mergeTags } = useEditorProps();
@@ -35,21 +35,24 @@ export function Button() {
   return (
     <AttributesPanelWrapper>
       <CollapseWrapper defaultActiveKey={['-1', '0', '1', '2', '3']}>
-        <Collapse.Item name='-1' header='Setting'>
+        <Collapse.Item
+          name='-1'
+          header='Setting'
+        >
           <Space direction='vertical'>
             <TextField
-              label={(
+              label={
                 <Space>
                   <span>Content</span>
                   {mergeTags && (
                     <Popover
                       trigger='click'
-                      content={(
+                      content={
                         <MergeTags
                           value={input.value}
                           onChange={input.onChange}
                         />
-                      )}
+                      }
                     >
                       <ArcoButton
                         type='text'
@@ -58,36 +61,55 @@ export function Button() {
                     </Popover>
                   )}
                 </Space>
-              )}
+              }
               name={`${focusIdx}.data.value.content`}
             />
             <Link />
           </Space>
         </Collapse.Item>
 
-        <Collapse.Item name='0' header='Dimension'>
+        <Collapse.Item
+          name='0'
+          header='Dimension'
+        >
           <Space direction='vertical'>
             <Grid.Row>
               <Grid.Col span={11}>
                 <Width />
               </Grid.Col>
-              <Grid.Col offset={1} span={11}>
+              <Grid.Col
+                offset={1}
+                span={11}
+              >
                 <FontWeight />
               </Grid.Col>
             </Grid.Row>
 
-            <Padding title='Padding' attributeName='padding' />
-            <Padding title='Inner padding' attributeName='inner-padding' />
+            <Padding
+              title='Padding'
+              attributeName='padding'
+              showResetAll
+            />
+            <Padding
+              title='Inner padding'
+              attributeName='inner-padding'
+            />
           </Space>
         </Collapse.Item>
 
-        <Collapse.Item name='1' header='Color'>
+        <Collapse.Item
+          name='1'
+          header='Color'
+        >
           <Space direction='vertical'>
             <Grid.Row>
               <Grid.Col span={11}>
                 <Color title='Text color' />
               </Grid.Col>
-              <Grid.Col offset={1} span={11}>
+              <Grid.Col
+                offset={1}
+                span={11}
+              >
                 <BackgroundColor title='Button color' />
               </Grid.Col>
               <Grid.Col span={11}>
@@ -97,13 +119,19 @@ export function Button() {
           </Space>
         </Collapse.Item>
 
-        <Collapse.Item name='2' header='Typography'>
+        <Collapse.Item
+          name='2'
+          header='Typography'
+        >
           <Space direction='vertical'>
             <Grid.Row>
               <Grid.Col span={11}>
                 <FontFamily />
               </Grid.Col>
-              <Grid.Col offset={1} span={11}>
+              <Grid.Col
+                offset={1}
+                span={11}
+              >
                 <FontSize />
               </Grid.Col>
             </Grid.Row>
@@ -112,7 +140,10 @@ export function Button() {
               <Grid.Col span={11}>
                 <FontWeight />
               </Grid.Col>
-              <Grid.Col offset={1} span={11}>
+              <Grid.Col
+                offset={1}
+                span={11}
+              >
                 <LineHeight />
               </Grid.Col>
             </Grid.Row>
@@ -121,7 +152,10 @@ export function Button() {
               <Grid.Col span={11}>
                 <TextDecoration />
               </Grid.Col>
-              <Grid.Col offset={1} span={11}>
+              <Grid.Col
+                offset={1}
+                span={11}
+              >
                 <LetterSpacing />
               </Grid.Col>
             </Grid.Row>
@@ -131,10 +165,16 @@ export function Button() {
           </Space>
         </Collapse.Item>
 
-        <Collapse.Item name='3' header='Border'>
+        <Collapse.Item
+          name='3'
+          header='Border'
+        >
           <Border />
         </Collapse.Item>
-        <Collapse.Item name='4' header='Extra'>
+        <Collapse.Item
+          name='4'
+          header='Extra'
+        >
           <Grid.Col span={24}>
             <ClassName />
           </Grid.Col>
