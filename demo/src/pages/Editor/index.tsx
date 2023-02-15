@@ -39,7 +39,6 @@ import {
   BlockMarketManager,
   ExtensionProps,
   StandardLayout,
-  TextField,
   BlockAttributeConfigurationManager
 } from 'easy-email-extensions';
 import { AutoSaveAndRestoreEmail } from '@demo/components/AutoSaveAndRestoreEmail';
@@ -418,16 +417,6 @@ export default function Editor() {
                 onBack={() => history.push('/')}
                 extra={
                   <Stack alignment='center'>
-                    <TextField
-                      label={t('Subject')}
-                      name={'subject'}
-                      inline
-                    />
-                    <TextField
-                      label={t('SubTitle')}
-                      name={'subTitle'}
-                      inline
-                    />
                     <Button
                       onClick={() => setIsDarkMode(v => !v)}
                       shape='circle'
