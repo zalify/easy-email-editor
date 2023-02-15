@@ -100,13 +100,13 @@ function TipNode(props: TipNodeProps) {
   const { direction, title, lineWidth, type } = props;
   const dragTitle = useMemo(() => {
     if (direction === 'top' || direction === 'noEnoughTop') {
-      return t(`Insert before`, title);
+      return `${t('Insert before')} ${title}`;
     } else if (direction === 'bottom') {
-      return t(`Insert after`, title);
+      return `${t('Insert after')} ${title}`;
     } else if (direction === 'right' || direction === 'left') {
       return t('Drag here');
-    }
-    return `Drag to ${title}`;
+    }    
+    return `${t('Drag to')} ${title}`;
   }, [direction, title]);
 
   const color = useMemo(() => {

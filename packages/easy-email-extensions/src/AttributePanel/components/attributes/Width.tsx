@@ -23,7 +23,7 @@ export function Width({
       if (focusBlock?.type === BasicType.COLUMN && parentType === BasicType.GROUP) {
         return /(\d)*%/.test(val)
           ? undefined
-          : 'Column inside a group must have a width in percentage, not in pixel';
+          : t('Column inside a group must have a width in percentage, not in pixel');
       }
       return undefined;
     },
@@ -33,7 +33,7 @@ export function Width({
   return (
     <InputWithUnitField
       validate={validate}
-      label='Width'
+      label={t('Width')}
       inline={inline}
       name={`${focusIdx}.attributes.width`}
       unitOptions={unitOptions}

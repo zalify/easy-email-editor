@@ -108,8 +108,8 @@ export function Padding(props: PaddingProps = {}) {
 
               <Grid.Row>
                 <Grid.Col span={11}>
-                  <NumberField
-                    label='Top (px)'
+                  <InputWithUnitField
+                    label={t('Top (px)')}
                     name='top'
                     autoComplete='off'
                     config={pixelAdapter}
@@ -119,8 +119,8 @@ export function Padding(props: PaddingProps = {}) {
                   offset={1}
                   span={11}
                 >
-                  <NumberField
-                    label='Left (px)'
+                  <InputWithUnitField
+                    label={t('Left (px)')}
                     name='left'
                     autoComplete='off'
                     config={pixelAdapter}
@@ -130,8 +130,8 @@ export function Padding(props: PaddingProps = {}) {
 
               <Grid.Row>
                 <Grid.Col span={11}>
-                  <NumberField
-                    label='Bottom (px)'
+                  <InputWithUnitField
+                    label={t('Bottom (px)')}
                     name='bottom'
                     config={pixelAdapter}
                     autoComplete='off'
@@ -141,8 +141,8 @@ export function Padding(props: PaddingProps = {}) {
                   offset={1}
                   span={11}
                 >
-                  <NumberField
-                    label='Right (px)'
+                  <InputWithUnitField
+                    label={t('Right (px)')}
                     name='right'
                     autoComplete='off'
                     config={pixelAdapter}

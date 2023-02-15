@@ -7,7 +7,7 @@ export function LetterSpacing({ name }: { name?: string; }) {
 
   return (
     <InputWithUnitField
-      label='Letter spacing'
+      label={t('Letter spacing')}
       name={name || `${focusIdx}.attributes.letter-spacing`}
     />
   );

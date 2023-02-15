@@ -34,7 +34,7 @@ export function EditGridTab<T extends any = any>(props: EditGridTabProps<T>) {
           <Card title={(
             <Space>
               <Typography.Text>
-                Item {index + 1}
+                {t('Item')} {index + 1}
               </Typography.Text>
 
             </Space>

@@ -81,7 +81,7 @@ export function Page() {
               <Grid.Row>
                 <Grid.Col span={11}>
                   <InputWithUnitField
-                    label='Line height'
+                    label={t('Line height')}
                     unitOptions='percent'
                     name={`${focusIdx}.data.value.line-height`}
                   />

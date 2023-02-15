@@ -7,8 +7,8 @@ export function FontSize() {
   const { focusIdx } = useFocusIdx();
 
   return (
-    <NumberField
-      label='Font size (px)'
+    <InputWithUnitField
+      label={t('Font size (px)')}
       name={`${focusIdx}.attributes.font-size`}
       config={pixelAdapter}
       autoComplete='off'

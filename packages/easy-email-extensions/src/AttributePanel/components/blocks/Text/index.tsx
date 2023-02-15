@@ -26,7 +26,7 @@ export function Text() {
   return (
     <AttributesPanelWrapper
       extra={
-        <Tooltip content='Html mode'>
+        <Tooltip content={t('Html mode')}>
           <Button
             onClick={() => setVisible(true)}
             icon={<IconFont iconName='icon-html' />}
@@ -37,7 +37,7 @@ export function Text() {
       <CollapseWrapper defaultActiveKey={['0', '1', '2']}>
         <Collapse.Item
           name='0'
-          header='Dimension'
+          header={t('Dimension')}
         >
           <Space direction='vertical'>
             <Height />
@@ -46,7 +46,7 @@ export function Text() {
         </Collapse.Item>
         <Collapse.Item
           name='1'
-          header='Color'
+          header={t('Color')}
         >
           <Grid.Row>
             <Grid.Col span={11}>
@@ -56,13 +56,13 @@ export function Text() {
               offset={1}
               span={11}
             >
-              <ContainerBackgroundColor title='Background color' />
+              <ContainerBackgroundColor title={t('Background color')} />
             </Grid.Col>
           </Grid.Row>
         </Collapse.Item>
         <Collapse.Item
           name='2'
-          header='Typography'
+          header={t('Typography')}
         >
           <Space direction='vertical'>
             <Grid.Row>
@@ -116,7 +116,7 @@ export function Text() {
         </Collapse.Item>
         <Collapse.Item
           name='4'
-          header='Extra'
+          header={t('Extra')}
         >
           <Grid.Col span={24}>
             <ClassName />

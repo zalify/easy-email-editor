@@ -37,13 +37,13 @@ export function Button() {
       <CollapseWrapper defaultActiveKey={['-1', '0', '1', '2', '3']}>
         <Collapse.Item
           name='-1'
-          header='Setting'
+          header={t('Setting')}
         >
           <Space direction='vertical'>
             <TextField
               label={
                 <Space>
-                  <span>Content</span>
+                  <span>{t('Content')}</span>
                   {mergeTags && (
                     <Popover
                       trigger='click'
@@ -70,7 +70,7 @@ export function Button() {
 
         <Collapse.Item
           name='0'
-          header='Dimension'
+          header={t('Dimension')}
         >
           <Space direction='vertical'>
             <Grid.Row>
@@ -86,12 +86,12 @@ export function Button() {
             </Grid.Row>
 
             <Padding
-              title='Padding'
+              title={t('Padding')}
               attributeName='padding'
               showResetAll
             />
             <Padding
-              title='Inner padding'
+              title={t('Inner padding')}
               attributeName='inner-padding'
             />
           </Space>
@@ -99,21 +99,21 @@ export function Button() {
 
         <Collapse.Item
           name='1'
-          header='Color'
+          header={t('Color')}
         >
           <Space direction='vertical'>
             <Grid.Row>
               <Grid.Col span={11}>
-                <Color title='Text color' />
+                <Color title={t('Text color')} />
               </Grid.Col>
               <Grid.Col
                 offset={1}
                 span={11}
               >
-                <BackgroundColor title='Button color' />
+                <BackgroundColor title={t('Button color')} />
               </Grid.Col>
               <Grid.Col span={11}>
-                <ContainerBackgroundColor title='Background color' />
+                <ContainerBackgroundColor title={t('Background color')} />
               </Grid.Col>
             </Grid.Row>
           </Space>
@@ -121,7 +121,7 @@ export function Button() {
 
         <Collapse.Item
           name='2'
-          header='Typography'
+          header={t('Typography')}
         >
           <Space direction='vertical'>
             <Grid.Row>
@@ -167,13 +167,13 @@ export function Button() {
 
         <Collapse.Item
           name='3'
-          header='Border'
+          header={t('Border')}
         >
           <Border />
         </Collapse.Item>
         <Collapse.Item
           name='4'
-          header='Extra'
+          header={t('Extra')}
         >
           <Grid.Col span={24}>
             <ClassName />
