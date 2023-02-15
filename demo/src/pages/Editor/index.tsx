@@ -13,7 +13,7 @@ import mjml from 'mjml-browser';
 import { copy } from '@demo/utils/clipboard';
 import { useEmailModal } from './components/useEmailModal';
 import services from '@demo/services';
-import { IconMoonFill, IconSunFill } from '@arco-design/web-react/icon';
+import { IconGithub, IconMoonFill, IconSunFill } from '@arco-design/web-react/icon';
 import { Liquid } from 'liquidjs';
 import {
   BlockAvatarWrapper,
@@ -32,6 +32,7 @@ import { useCollection } from './components/useCollection';
 import {
   AdvancedType,
   BasicType,
+  getPageIdx,
   IBlockData,
   JsonToMjml,
 } from 'easy-email-core';
@@ -39,7 +40,6 @@ import {
   BlockMarketManager,
   ExtensionProps,
   StandardLayout,
-  BlockAttributeConfigurationManager
 } from 'easy-email-extensions';
 import { AutoSaveAndRestoreEmail } from '@demo/components/AutoSaveAndRestoreEmail';
 
@@ -58,6 +58,8 @@ import { useMergeTagsModal } from './components/useMergeTagsModal';
 import { useWindowSize } from 'react-use';
 import { CustomBlocksType } from './components/CustomBlocks/constants';
 import localesData from 'easy-email-localization/locales/locales.json';
+
+console.log(localesData);
 
 const defaultCategories: ExtensionProps['categories'] = [
   {
@@ -180,11 +182,6 @@ const fontList = [
   '宋体',
   '微软雅黑',
 ].map(item => ({ value: item, label: item }));
-
-BlockAttributeConfigurationManager.add({
-  [BasicType.SUBJECT]: () => <></>,
-  [BasicType.SUBTITLE]: () => <></>,
-})
 
 export default function Editor() {
   const [isDarkMode, setIsDarkMode] = useState(false);
