@@ -13,9 +13,7 @@ import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/at
 import { FontFamily } from '../../attributes/FontFamily';
 import { pixelAdapter } from '../../adapter';
 
-interface PageProps { hideSubTitle?: boolean; hideSubject?: boolean,
-  children: React.ReactElement;
-}
+interface PageProps { hideSubTitle?: boolean; hideSubject?: boolean}
 export function Page({ hideSubTitle, hideSubject }: PageProps) {
   const { focusIdx } = useFocusIdx();
 
