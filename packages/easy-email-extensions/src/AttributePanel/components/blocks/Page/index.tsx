@@ -3,26 +3,24 @@ import {
   ColorPickerField,
   InputWithUnitField,
   NumberField,
-  SwitchField,
   TextAreaField,
   TextField,
 } from '@extensions/components/Form';
-import { Help } from '@extensions/AttributePanel/components/UI/Help';
 import { AddFont } from '@extensions/components/Form/AddFont';
 import { Collapse, Grid, Space } from '@arco-design/web-react';
-import { Stack, TextStyle, useFocusIdx } from 'easy-email-editor';
+import { Stack, useFocusIdx } from 'easy-email-editor';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
 import { FontFamily } from '../../attributes/FontFamily';
 import { pixelAdapter } from '../../adapter';
-import { Subject } from '@extensions/AttributePanel/components/blocks/Subject';
-import { SubTitle } from '@extensions/AttributePanel/components/blocks/Subtitle';
-import { BlockAttributeConfigurationManager } from '@extensions';
-import { BasicType } from '@core/constants';
 
-export function Page() {
+interface PageProps { hideSubTitle?: boolean; hideSubject?: boolean,
+  children: React.ReactElement;
+}
+export function Page({ hideSubTitle, hideSubject }: PageProps) {
   const { focusIdx } = useFocusIdx();
 
   if (!focusIdx) return null;
+
   return (
     <AttributesPanelWrapper style={{ padding: 0 }}>
       <Stack.Item fill>
@@ -32,8 +30,20 @@ export function Page() {
             header={t('Email Setting')}
           >
             <Space direction='vertical'>
-              {BlockAttributeConfigurationManager.get(BasicType.SUBJECT)}
-              {BlockAttributeConfigurationManager.get(BasicType.SUBTITLE)}
+              {!hideSubject && (
+                <TextField
+                  label={t('Subject')}
+                  name={'subject'}
+                  inline
+                />
+              )}
+              {!hideSubTitle && (
+                <TextField
+                  label={t('SubTitle')}
+                  name={'subTitle'}
+                  inline
+                />
+              )}
               <InputWithUnitField
                 label={t('Width')}
                 name={`${focusIdx}.attributes.width`}

@@ -1,6 +1,6 @@
 import { blocks } from '../components/blocks';
 
-type ObjectComponent = { [key: string]: () => JSX.Element | null };
+type ObjectComponent = { [key: string]: (props: any) => JSX.Element | null };
 
 export class BlockAttributeConfigurationManager {
   private static map: ObjectComponent = { ...blocks };
