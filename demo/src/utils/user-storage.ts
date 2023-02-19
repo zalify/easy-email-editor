@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { IUser } from '@demo/services/user';
 import { USER } from '@demo/constants';
+
 const sessionKey = 'session-key';
 const tokenKey = 'token-key';
 export class UserStorage {

@@ -47,7 +47,7 @@ export const defaultCategories = [
             >
               <TextStyle>
                 {t(
-                  `Displays a responsive image in your email. It is similar to the HTML '&lt;img/&gt;' tag. Note that if no width is provided, the image will use the parent column width.`,
+                  'Displays a responsive image in your email. It is similar to the HTML \'&lt;img/&gt;\' tag. Note that if no width is provided, the image will use the parent column width.',
                 )}
               </TextStyle>
             </Stack>
@@ -72,7 +72,7 @@ export const defaultCategories = [
         },
         get description() {
           return t(
-            `This block displays a hero image. It behaves like an 'section' with a single 'column'.`,
+            'This block displays a hero image. It behaves like an \'section\' with a single \'column\'.',
           );
         },
         component: HeroBlockItem,
@@ -130,7 +130,7 @@ export const defaultCategories = [
         },
         get description() {
           return t(
-            `This block displays a gallery of images or 'carousel'. Readers can interact by hovering and clicking on thumbnails depending on the email client they use.`,
+            'This block displays a gallery of images or \'carousel\'. Readers can interact by hovering and clicking on thumbnails depending on the email client they use.',
           );
         },
         component: CarouselBlockItem,

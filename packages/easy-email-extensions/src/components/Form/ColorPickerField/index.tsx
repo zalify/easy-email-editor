@@ -1,6 +1,5 @@
 import { colorAdapter } from '@extensions/AttributePanel/components/adapter';
-import React from 'react';
-import { ComponentProps } from 'react';
+import React, { ComponentProps } from 'react';
 import { ColorPicker, ColorPickerProps } from '../ColorPicker';
 import enhancer from '../enhancer';
 

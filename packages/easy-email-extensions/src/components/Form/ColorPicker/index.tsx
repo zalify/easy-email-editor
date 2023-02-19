@@ -5,6 +5,7 @@ import { getImg } from '@extensions/AttributePanel/utils/getImg';
 import Color from 'color';
 import { PresetColorsContext } from '@extensions/AttributePanel/components/provider/PresetColorsProvider';
 import { ColorPickerContent } from './ColorPickerContent';
+
 export interface ColorPickerProps extends PopoverProps {
   onChange?: (val: string) => void;
   value?: string;
@@ -62,12 +63,12 @@ export function ColorPicker(props: ColorPickerProps) {
         title={props.label}
         trigger='click'
         className='color-picker-popup'
-        content={
+        content={(
           <ColorPickerContent
             value={adapterColor}
             onChange={onInputChange}
           />
-        }
+        )}
         getPopupContainer={getPopupContainer}
         {...props}
       >

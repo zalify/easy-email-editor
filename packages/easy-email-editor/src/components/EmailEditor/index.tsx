@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { Stack } from '../UI/Stack';
 import { ToolsPanel } from './components/ToolsPanel';
 import { createPortal } from 'react-dom';
@@ -13,8 +13,8 @@ import { TabPane, Tabs } from '@/components/UI/Tabs';
 import { useEditorProps } from '@/hooks/useEditorProps';
 import './index.scss';
 import '@/assets/font/iconfont.css';
-import { useCallback } from 'react';
 import { EventManager, EventType } from '@/utils/EventManager';
+
 (window as any).global = window; // react-codemirror
 
 export const EmailEditor = () => {

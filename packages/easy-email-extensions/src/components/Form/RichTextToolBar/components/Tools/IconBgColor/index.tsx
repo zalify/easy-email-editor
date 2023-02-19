@@ -1,4 +1,3 @@
-
 import { ColorPicker } from '@extensions/components/Form/ColorPicker';
 import { IconFont } from 'easy-email-editor';
 import React, { useMemo } from 'react';

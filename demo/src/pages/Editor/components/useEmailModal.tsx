@@ -1,18 +1,15 @@
-import { JsonToMjml, IBlockData } from 'easy-email-core';
+import { JsonToMjml } from 'easy-email-core';
 import { IEmailTemplate } from 'easy-email-editor';
 import { Message, Modal } from '@arco-design/web-react';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
 import mjml from 'mjml-browser';
 import { useDispatch } from 'react-redux';
 import email from '@demo/store/email';
 import * as Yup from 'yup';
 import { Form } from 'react-final-form';
 import { useLoading } from '@demo/hooks/useLoading';
-import { useCallback } from 'react';
 import { pushEvent } from '@demo/utils/pushEvent';
 import mustache from 'mustache';
-import { CustomBlocksType } from './CustomBlocks/constants';
-import { cloneDeep, merge } from 'lodash';
 import { TextAreaField, TextField } from 'easy-email-extensions';
 
 const schema = Yup.object().shape({

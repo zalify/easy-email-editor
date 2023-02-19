@@ -13,7 +13,6 @@ import {
 } from '@arco-design/web-react';
 import { ImageUploaderProps, ImageUploader } from './ImageUploader';
 import { UploadField as Uploader, UploadFieldProps } from './UploadField';
-import { ColorPicker, ColorPickerProps } from './ColorPicker';
 import { Select, SelectProps } from './Select';
 import { RadioGroup, RadioGroupProps } from './RadioGroup';
 import enhancer from './enhancer';
@@ -22,11 +21,11 @@ import { InputWithUnit, InputWithUnitProps } from './InputWithUnit';
 import { CheckBoxGroup } from './CheckBoxGroup';
 import { EditTab, EditTabProps } from './EditTab';
 import { EditGridTab, EditGridTabProps } from './EditGridTab';
-import { Dayjs } from 'dayjs';
 import { InlineText, InlineTextProps } from './InlineTextField';
 import { AutoCompleteProps, AutoComplete } from './AutoComplete';
 import { InputSearchProps } from '@arco-design/web-react/es/Input';
 import { ColorPickerField } from './ColorPickerField';
+
 export { RichTextField } from './RichTextField';
 
 export const TextField = enhancer<InputProps>(Input, value => value);

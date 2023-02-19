@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 
 import { MergeTags as MergeTagsOptions } from '@extensions/AttributePanel';
 import { Popover } from '@arco-design/web-react';
@@ -34,14 +34,14 @@ export function MergeTags(props: MergeTagsProps) {
       popupVisible={visible}
       onVisibleChange={onVisibleChange}
       style={{ zIndex: 10 }}
-      content={
+      content={(
         <>
           <MergeTagsOptions
             value=''
             onChange={onChange}
           />
         </>
-      }
+      )}
       getPopupContainer={props.getPopupContainer}
     >
       <ToolItem

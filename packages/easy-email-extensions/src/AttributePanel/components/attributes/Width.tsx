@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { InputWithUnitField } from '../../../components/Form';
 import { useFocusIdx, useBlock } from 'easy-email-editor';
 import { BasicType, getParentByIdx } from 'easy-email-core';

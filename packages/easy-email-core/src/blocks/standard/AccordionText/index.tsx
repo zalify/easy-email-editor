@@ -3,10 +3,8 @@ import { IBlock, IBlockData } from '@core/typings';
 import { BasicType } from '@core/constants';
 import { createBlock } from '@core/utils/createBlock';
 import { merge } from 'lodash';
-import { getAdapterAttributesString } from '@core/utils';
-import { BlockRenderer } from '@core/components/BlockRenderer';
-import { BasicBlock } from '@core/components/BasicBlock';
 import { t } from '@core/utils';
+import { BasicBlock } from '@core/components/BasicBlock';
 
 export type IAccordionText = IBlockData<
   {

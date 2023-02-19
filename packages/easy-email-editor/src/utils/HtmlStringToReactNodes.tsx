@@ -1,17 +1,14 @@
-import { BasicType, getNodeIdxFromClassName } from 'easy-email-core';
+import { BasicType, getNodeIdxFromClassName, getNodeTypeFromClassName, MERGE_TAG_CLASS_NAME } from 'easy-email-core';
 import { camelCase } from 'lodash';
 import React from 'react';
-import {
-  getNodeTypeFromClassName,
-  MERGE_TAG_CLASS_NAME,
-} from 'easy-email-core';
 import { isTextBlock } from './isTextBlock';
 import { MergeTagBadge } from './MergeTagBadge';
-import { ContentEditableType, DATA_CONTENT_EDITABLE_IDX, DATA_CONTENT_EDITABLE_TYPE, } from '@/constants';
+import { ContentEditableType, DATA_CONTENT_EDITABLE_IDX, DATA_CONTENT_EDITABLE_TYPE } from '@/constants';
 import { isButtonBlock } from './isButtonBlock';
 import { getContentEditableIdxFromClassName, getContentEditableTypeFromClassName } from './contenteditable';
 import { getContentEditableClassName } from './getContentEditableClassName';
 import { isNavbarBlock } from './isNavbarBlock';
+
 const domParser = new DOMParser();
 
 const errLog = console.error;
