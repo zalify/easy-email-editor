@@ -4,9 +4,9 @@ import { BasicType } from '@core/constants';
 import { createBlock } from '@core/utils/createBlock';
 import { getImg } from '@core/utils/getImg';
 import { mergeBlock } from '@core/utils/mergeBlock';
-import { getAdapterAttributesString, t } from '@core/utils';
-import { BlockRenderer } from '@core/components/BlockRenderer';
+import { t } from '@core/utils';
 import { BasicBlock } from '@core/components/BasicBlock';
+
 export type IHero = IBlockData<
   {
     'background-color'?: string;

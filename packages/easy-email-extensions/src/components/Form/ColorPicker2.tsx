@@ -1,9 +1,10 @@
-import { Input, Popover, PopoverProps, Space } from '@arco-design/web-react';
+import { Input, Popover, PopoverProps } from '@arco-design/web-react';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { ColorResult, SketchPicker } from 'react-color';
 import { PresetColorsContext } from '../../AttributePanel/components/provider/PresetColorsProvider';
 import { getImg } from '@extensions/AttributePanel/utils/getImg';
 import styles from './index.module.scss';
+
 export interface ColorPickerProps extends PopoverProps {
   onChange?: (val: string) => void;
   value?: string;
@@ -59,7 +60,7 @@ export function ColorPicker(props: ColorPickerProps) {
         {...props}
         // getPopupContainer={() => getCollapseItemEle(refEle) as any}
         position='top'
-        content={
+        content={(
           <div className={styles.colorPicker}>
             <SketchPicker
               presetColors={presetColors}
@@ -68,7 +69,7 @@ export function ColorPicker(props: ColorPickerProps) {
               onChangeComplete={onChangeComplete}
             />
           </div>
-        }
+        )}
       >
         <div style={{ display: 'inline-flex' }} ref={setRefEle}>
           {children || (

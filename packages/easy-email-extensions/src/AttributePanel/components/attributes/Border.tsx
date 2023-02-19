@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { InputWithUnitField, TextField } from '../../../components/Form';
-import { Stack, useFocusIdx } from 'easy-email-editor';
-import { Grid, Space } from '@arco-design/web-react';
+import { useFocusIdx } from 'easy-email-editor';
+import { Grid } from '@arco-design/web-react';
 
 export function Border() {
   const { focusIdx } = useFocusIdx();

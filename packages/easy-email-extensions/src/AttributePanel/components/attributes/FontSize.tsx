@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFocusIdx } from 'easy-email-editor';
-import { InputWithUnitField, NumberField } from '../../../components/Form';
+import { InputWithUnitField } from '../../../components/Form';
 import { pixelAdapter } from '../adapter';
 
 export function FontSize() {

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 
 import { Menu, Popover } from '@arco-design/web-react';
 import { ToolItem } from '../ToolItem';
@@ -65,7 +65,7 @@ export function FontSize(props: FontSizeProps) {
       className='easy-email-extensions-Tools-Popover'
       popupVisible={visible}
       onVisibleChange={onVisibleChange}
-      content={
+      content={(
         <>
           <style>{styleText}</style>
           <div
@@ -92,7 +92,7 @@ export function FontSize(props: FontSizeProps) {
             </Menu>
           </div>
         </>
-      }
+      )}
       getPopupContainer={props.getPopupContainer}
     >
       <ToolItem

@@ -8,5 +8,10 @@
   "files": [
     "locales"
   ],
-  "scripts": {}
+  "scripts": {
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\""
+  },
+  "devDependencies": {
+    "prettier": "^2.8.4"
+  }
 }

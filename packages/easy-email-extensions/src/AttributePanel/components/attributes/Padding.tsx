@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { InputWithUnitField, NumberField, TextField } from '../../../components/Form';
+import { InputWithUnitField } from '../../../components/Form';
 import { useFocusIdx, Stack, useBlock, TextStyle, IconFont } from 'easy-email-editor';
 import { createBlockDataByType } from 'easy-email-core';
 import { Form, useFormState } from 'react-final-form';
@@ -95,12 +95,12 @@ export function Padding(props: PaddingProps = {}) {
                     <Button
                       onClick={onResetPadding}
                       size='mini'
-                      icon={
+                      icon={(
                         <IconFont
                           iconName='icon-remove'
                           size={12}
                         />
-                      }
+                      )}
                     />
                   </Tooltip>
                 )}

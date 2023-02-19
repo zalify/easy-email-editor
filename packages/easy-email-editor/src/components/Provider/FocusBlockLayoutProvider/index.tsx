@@ -1,6 +1,5 @@
 import { useFocusIdx } from '@/hooks/useFocusIdx';
-import { useEffect, useMemo, useState } from 'react';
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { getBlockNodeByIdx, getShadowRoot } from '@/utils';
 import { DATA_RENDER_COUNT } from '@/constants';
 import { useEditorContext } from '@/hooks/useEditorContext';
