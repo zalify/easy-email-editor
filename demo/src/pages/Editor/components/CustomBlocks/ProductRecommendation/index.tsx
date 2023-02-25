@@ -5,11 +5,11 @@ import {
   createCustomBlock,
   getPreviewClassName,
   AdvancedType,
+  mergeBlock,
 } from 'easy-email-core';
 
 import { CustomBlocksType } from '../constants';
 import React from 'react';
-import { merge } from 'lodash';
 import { getContentEditableClassName } from 'easy-email-editor';
 
 const { Column, Section, Wrapper, Text, Button, Image, Group } = components;
@@ -72,7 +72,7 @@ export const ProductRecommendation = createCustomBlock<IProductRecommendation>({
         },
       ],
     };
-    return merge(defaultData, payload);
+    return mergeBlock(defaultData, payload);
   },
   render: ({ data, idx, mode, context, dataSource }) => {
     const { title, buttonText, quantity } = data.data.value;
