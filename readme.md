@@ -178,7 +178,7 @@ export default function App() {
 ## Development
 
 ```sh
-$ git clone git@github.com:arco-design/easy-email.git
+$ git clone git@github.com:zalify/easy-email.git
 $ cd easy-email
 $ yarn  
 $ yarn install-all
