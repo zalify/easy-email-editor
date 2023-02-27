@@ -93,13 +93,6 @@ export function Condition() {
 
   }, [change, condition, values]);
 
-  if (
-    !focusBlock?.type ||
-    !Object.values(AdvancedType).includes(focusBlock?.type as any)
-  ) {
-    return null;
-  }
-
   const isEmpty = !condition?.groups.length;
 
   return (
