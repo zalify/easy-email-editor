@@ -1,6 +1,5 @@
 export { isValidBlockData } from './isValidBlockData';
 export { JsonToMjml } from './JsonToMjml';
-export { MjmlToJson } from './MjmlToJson';
 export { parseReactBlockToBlockData } from './parseReactBlockToBlockData';
 export { createCustomBlock } from './createCustomBlock';
 export { createBlock } from './createBlock';

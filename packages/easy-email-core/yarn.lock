@@ -2910,6 +2910,8 @@ globals@^13.6.0, globals@^13.9.0:
   version "13.12.0"
   resolved "https://registry.yarnpkg.com/globals/-/globals-13.12.0.tgz#4d733760304230a0082ed96e21e5c565f898089e"
   integrity sha512-uS8X6lSKN2JumVoXrbUz+uG4BYG+eiawqm3qFcT7ammfbUHeCBoJMlHcec/S3krSk73/AE/f0szYFmgAA3kYZg==
+  dependencies:
+    type-fest "^0.20.2"
 
 globby@^11.0.3, globby@^11.0.4:
   version "11.0.4"
@@ -4011,11 +4013,6 @@ minimist@^1.2.0, minimist@^1.2.5:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.5.tgz#67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
   integrity sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==
-
-mjml-browser@^4.10.4:
-  version "4.11.0"
-  resolved "https://registry.yarnpkg.com/mjml-browser/-/mjml-browser-4.11.0.tgz#36d5afa3a777076cca93a6b9049d325ce643e4ef"
-  integrity sha512-hBQo+kibKRD1Rz4oouS6fMt+M1dcbGoi8wVY9y3BOgOVCbZD/dRySiuX2rusOXSxa1Tu3QfOAaK9m2pGy7+hZQ==
 
 ms@2.0.0:
   version "2.0.0"

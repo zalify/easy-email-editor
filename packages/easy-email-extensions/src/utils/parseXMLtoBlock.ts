@@ -1,8 +1,6 @@
 import mjml from 'mjml-browser';
-import { IBlockData } from '@core/typings';
-import { BlockType, BasicType } from './../constants';
+import { IBlockData, BlockType, BasicType, BlockManager } from 'easy-email-core';
 import { MjmlToJson } from './MjmlToJson';
-import { BlockManager } from '@core/utils';
 
 const domParser = new DOMParser();
 export function parseXMLtoBlock(text: string) {
