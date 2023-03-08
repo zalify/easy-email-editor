@@ -21,7 +21,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: yarn install-all
+        run: yarn && yarn install-all
 
       - name: Run tests
         run: yarn test
