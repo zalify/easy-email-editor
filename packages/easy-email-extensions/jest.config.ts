@@ -19,5 +19,6 @@ export default {
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': '<rootDir>/node_modules/babel-jest',
   },
+  testEnvironment: 'jsdom',
   transformIgnorePatterns: ['/node_modules/', '\\.pnp\\.[^\\/]+$'],
 };
