@@ -115,8 +115,8 @@ import {
   createCustomBlock,
   getPreviewClassName,
   AdvancedType,
-  MjmlToJson,
 } from 'easy-email-core';
+import { MjmlToJson } from 'easy-email-extensions';
 
 const { BlockRenderer } = components;
 
