@@ -18,10 +18,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          cache: 'yarn'
 
       - name: Install dependencies
-        run: yarn install-all
+        run: yarn install-all-ci
 
       - name: Run tests
         run: yarn test
