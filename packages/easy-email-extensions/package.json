@@ -65,6 +65,7 @@
     "react-final-form": "^6.5.7",
     "rollup-plugin-visualizer": "^5.5.2",
     "sass": "^1.43.4",
+    "ts-node": "^10.4.0",
     "tsc-alias": "^1.4.1",
     "typescript": "^4.4.4",
     "vite": "^2.6.14",
