@@ -18,13 +18,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
+          cache: 'npm'
 
-      - name: Install root dependencies
-        run: yarn
-
-      - name: Install packages dependencies
-        run: yarn install-all-ci
+      - name: Install dependencies
+        run: cd packages/easy-email-core && yarn
 
       - name: Run tests
         run: yarn test
