@@ -21,7 +21,15 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: yarn && yarn install-all-ci
+        run: | 
+          cd packages/easy-email-core && yarn
 
       - name: Run tests
-        run: yarn test
+        run: yarn test:core
+
+      - name: Install dependencies
+        run: |
+          cd packages/easy-email-extensions && yarn
+
+      - name: Run tests
+        run: yarn test:extensions
