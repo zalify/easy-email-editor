@@ -2,7 +2,10 @@
 
 ## Introduction
 
-Provide default UI components, when they don’t meet your needs, you can refer to it and write your own
+Provide default UI components, when they don’t meet your needs, you can refer to it and write your own.
+
+It also provides the following utils:
+- MjmlToJson
 
 ## usage
 
@@ -227,3 +230,116 @@ export default function App() {
     - compact
     - categories
     - showSourceCode
+
+## transform mjml to json
+
+```ts
+import { MjmlToJson } from 'easy-email-extensions';
+
+const json = MjmlToJson(`
+<mjml>
+  <mj-body>
+    <mj-hero mode="fluid-height" background-width="600px" background-height="469px" background-url="https://cloud.githubusercontent.com/assets/1830348/15354890/1442159a-1cf0-11e6-92b1-b861dadf1750.jpg" background-color="#2a3448" padding="100px 0px">
+      <mj-text padding="20px" color="#ffffff" font-family="Helvetica" align="center" font-size="45px" line-height="45px" font-weight="900">
+        GO TO SPACE
+      </mj-text>
+      <mj-button href="https://mjml.io/" align="center">
+        ORDER YOUR TICKET NOW
+      </mj-button>
+    </mj-hero>
+  </mj-body>
+</mjml>
+`);
+
+console.log(json);
+```
+
+// output
+
+```json
+{
+  "type": "page",
+  "data": {
+    "value": {
+      "breakpoint": "480px",
+      "headAttributes": "",
+      "font-size": "14px",
+      "line-height": "1.7",
+      "headStyles": [],
+      "fonts": [],
+      "responsive": true,
+      "font-family": "lucida Grande,Verdana,Microsoft YaHei",
+      "text-color": "#000000"
+    }
+  },
+  "attributes": {
+    "background-color": "#efeeea",
+    "width": "600px"
+  },
+  "children": [
+    {
+      "type": "hero",
+      "data": {
+        "value": {}
+      },
+      "attributes": {
+        "padding": "100px 0px 100px 0px",
+        "border": "none",
+        "direction": "ltr",
+        "text-align": "center",
+        "background-color": "#2a3448",
+        "background-position": "center center",
+        "mode": "fluid-height",
+        "vertical-align": "top",
+        "background-url": "https://cloud.githubusercontent.com/assets/1830348/15354890/1442159a-1cf0-11e6-92b1-b861dadf1750.jpg",
+        "background-width": "600px",
+        "background-height": "469px"
+      },
+      "children": [
+        {
+          "type": "text",
+          "data": {
+            "value": {
+              "content": "GO TO SPACE"
+            }
+          },
+          "attributes": {
+            "padding": "20px 20px 20px 20px",
+            "align": "center",
+            "color": "#ffffff",
+            "font-size": "45px",
+            "line-height": "45px",
+            "font-family": "Helvetica",
+            "font-weight": "900"
+          },
+          "children": []
+        },
+        {
+          "type": "button",
+          "data": {
+            "value": {
+              "content": "ORDER YOUR TICKET NOW"
+            }
+          },
+          "attributes": {
+            "align": "center",
+            "background-color": "#414141",
+            "color": "#ffffff",
+            "font-weight": "normal",
+            "border-radius": "3px",
+            "padding": "10px 25px 10px 25px",
+            "inner-padding": "10px 25px 10px 25px",
+            "line-height": "120%",
+            "target": "_blank",
+            "vertical-align": "middle",
+            "border": "none",
+            "text-align": "center",
+            "href": "https://mjml.io/"
+          },
+          "children": []
+        }
+      ]
+    }
+  ]
+}
+```

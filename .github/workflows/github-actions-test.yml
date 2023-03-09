@@ -20,8 +20,16 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
-      - name: Install dependencies
-        run: cd packages/easy-email-core && yarn
+      - name: Install dependencies core
+        run: | 
+          cd packages/easy-email-core && yarn
 
-      - name: Run tests
-        run: yarn test
+      - name: Run tests core
+        run: yarn test:core
+
+      - name: Install dependencies extensions
+        run: |
+          cd packages/easy-email-extensions && yarn
+
+      - name: Run tests extensions
+        run: yarn test:extensions

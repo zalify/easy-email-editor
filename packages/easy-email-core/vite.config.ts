@@ -26,7 +26,6 @@ export default defineConfig({
         'react',
         'react-dom',
         'react-dom/server',
-        'mjml-browser',
         'lodash',
       ],
       output: {},

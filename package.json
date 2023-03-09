@@ -9,7 +9,9 @@
     "build:extensions": "cd packages/easy-email-extensions && yarn build",
     "dev": "cd demo && yarn dev",
     "demo": "cd demo && yarn build",
-    "test": "cd packages/easy-email-core && yarn test",
+    "test": "yarn test:core && yarn test:extensions",
+    "test:core" : "cd packages/easy-email-core && yarn test",
+    "test:extensions" : "cd packages/easy-email-extensions && yarn test",
     "translate": "ts-node scripts/translate.ts",
     "lint": "lerna exec -- yarn format"
   },

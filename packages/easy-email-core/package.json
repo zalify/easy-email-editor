@@ -59,7 +59,6 @@
     "jest": "^27.0.6",
     "jsdom": "^17.0.0",
     "liquidjs": "^9.40.0",
-    "mjml-browser": "^4.10.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "rimraf": "^3.0.2",
@@ -78,7 +77,6 @@
     "uuid": "^8.3.2"
   },
   "peerDependencies": {
-    "mjml-browser": "^4.10.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
