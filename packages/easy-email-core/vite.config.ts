@@ -27,6 +27,10 @@ export default defineConfig({
         'react-dom',
         'react-dom/server',
         'lodash',
+        // Let uuid library handle how to use its crypto module depending on the environment
+        // Otherwise, uuid will be bundled into a specific environment (here would it would expect to be in a browser environment)
+        // and any project importing easy-email-core in a node environment would fail with a missing 'crypto' module error
+        'uuid'
       ],
       output: {},
     },
