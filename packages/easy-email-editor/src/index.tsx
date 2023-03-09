@@ -6,9 +6,10 @@ export { BlockAvatarWrapper } from './components/wrapper';
 export { EmailEditor } from './components/EmailEditor';
 
 // exposing more granular components
-export { EditEmailPreview } from'./components/EmailEditor/components/EditEmailPreview';
-export { MobileEmailPreview } from'./components/EmailEditor/components/MobileEmailPreview';
-export { DesktopEmailPreview } from'./components/EmailEditor/components/DesktopEmailPreview';
+export { EditEmailPreview } from './components/EmailEditor/components/EditEmailPreview';
+export { MobileEmailPreview } from './components/EmailEditor/components/MobileEmailPreview';
+export { DesktopEmailPreview } from './components/EmailEditor/components/DesktopEmailPreview';
+export { ToolsPanel } from './components/EmailEditor/components/ToolsPanel';
 
 // export utils
 export * from './utils/index';
@@ -32,6 +33,7 @@ export { ActiveTabKeys } from './components/Provider/BlocksProvider';
 export { IconFont } from './components/IconFont';
 export { TextStyle } from './components/UI/TextStyle';
 export { Stack } from './components/UI/Stack';
+export { Tabs, TabPane } from './components/UI/Tabs';
 
 export * from './typings';
 export type { StackProps } from './components/UI/Stack';
