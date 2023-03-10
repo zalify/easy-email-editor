@@ -22,6 +22,8 @@ import { Italic } from '../Italic';
 import { Bold } from '../Bold';
 import { FontSize } from '../FontSize';
 import { RICH_TEXT_TOOL_BAR } from '@extensions/constants';
+import { Sup } from '../Sub';
+import { Sub } from '../Sup';
 
 export interface ToolsProps {
   onChange: (content: string) => any;
@@ -158,6 +160,15 @@ export function Tools(props: ToolsProps) {
         <Underline
           currentRange={selectionRange}
           onChange={() => execCommandWithRange('underline')}
+        />
+        <div className='easy-email-extensions-divider' />
+        <Sup
+          currentRange={selectionRange}
+          onChange={() => execCommandWithRange('superscript')}
+        />
+        <Sub
+          currentRange={selectionRange}
+          onChange={() => execCommandWithRange('subscript')}
         />
         <div className='easy-email-extensions-divider' />
         <IconFontColor
