@@ -73,7 +73,6 @@
   "dependencies": {
     "js-beautify": "^1.14.4",
     "lodash": "^4.17.21",
-    "nanoid": "^3.3.1",
     "uuid": "^8.3.2"
   },
   "peerDependencies": {

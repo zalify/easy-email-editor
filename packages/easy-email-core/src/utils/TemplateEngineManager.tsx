@@ -2,7 +2,7 @@ import { AdvancedBlock, Operator } from '@core/blocks/advanced/generateAdvancedB
 import { Raw } from '@core/components';
 import { isNumber } from 'lodash';
 import React from 'react';
-import { nanoid } from 'nanoid';
+import { v4 as uuidv4 } from 'uuid';
 
 function generateIterationTemplate(
   option: NonNullable<AdvancedBlock['data']['value']['iteration']>,
@@ -41,7 +41,7 @@ function generateConditionTemplate(
       return condition.left;
     }
     if (condition.operator === Operator.FALSY) {
-      return condition.left + ' == nil';
+      return `${condition.left} == nil or ${condition.left} == false`;
     }
     return (
       condition.left +
@@ -51,7 +51,7 @@ function generateConditionTemplate(
       (isNumber(condition.right) ? condition.right : `"${condition.right}"`)
     );
   };
-  const uuid = nanoid(5);
+  const uuid = uuidv4();
   const variables = groups.map((_, index) => `con_${index}_${uuid}`);
 
   const assignExpression = groups
