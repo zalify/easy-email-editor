@@ -7,7 +7,7 @@ exports[`Test createCustomBlock should render as expected 1`] = `
               
     <mj-html-attributes>
       <mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"text-color\\" text-color=\\"#000000\\"></mj-html-attribute>
-<mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"font-family\\" font-family=\\"-apple-system, BlinkMacSystemFont, &#x27;Segoe UI&#x27;, &#x27;Roboto&#x27;, &#x27;Oxygen&#x27;, &#x27;Ubuntu&#x27;, &#x27;Cantarell&#x27;, &#x27;Fira Sans&#x27;, &#x27;Droid Sans&#x27;,&#x27;Helvetica Neue&#x27;, sans-serif\\"></mj-html-attribute>
+<mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"font-family\\" font-family=\\"-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans','Helvetica Neue', sans-serif\\"></mj-html-attribute>
 <mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"font-size\\" font-size=\\"14px\\"></mj-html-attribute>
 <mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"line-height\\" line-height=\\"1.7\\"></mj-html-attribute>
 <mj-html-attribute class=\\"easy-email\\" multiple-attributes=\\"false\\" attribute-name=\\"font-weight\\" font-weight=\\"400\\"></mj-html-attribute>
@@ -23,7 +23,7 @@ exports[`Test createCustomBlock should render as expected 1`] = `
               
             <mj-attributes>
               
-              <mj-all font-family=\\"-apple-system, BlinkMacSystemFont, &#x27;Segoe UI&#x27;, &#x27;Roboto&#x27;, &#x27;Oxygen&#x27;, &#x27;Ubuntu&#x27;, &#x27;Cantarell&#x27;, &#x27;Fira Sans&#x27;, &#x27;Droid Sans&#x27;,&#x27;Helvetica Neue&#x27;, sans-serif\\" />
+              <mj-all font-family=\\"-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans','Helvetica Neue', sans-serif\\" />
               <mj-text font-size=\\"14px\\" />
               <mj-text color=\\"#000000\\" />
         <mj-text line-height=\\"1.7\\" />
