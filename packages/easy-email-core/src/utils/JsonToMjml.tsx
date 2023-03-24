@@ -1,10 +1,10 @@
 import { html } from 'js-beautify';
-import { unescape } from 'lodash';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { BlockManager } from '@core/utils';
 import { JsonToMjmlOption } from './isProductionMode';
 import React, { useContext } from 'react';
 import { IBlockData } from '@core/typings';
+import { unescape } from 'he'
 
 type EmailRenderProps = {
   mode: 'production' | 'testing';

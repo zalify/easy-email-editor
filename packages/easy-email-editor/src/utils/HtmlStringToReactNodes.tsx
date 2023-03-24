@@ -11,28 +11,9 @@ import { isNavbarBlock } from './isNavbarBlock';
 
 const domParser = new DOMParser();
 
-const errLog = console.error;
-
 export function getChildSelector(selector: string, index: number) {
   return `${selector}-${index}`;
 }
-
-console.error = (message?: any, ...optionalParams: any[]) => {
-  // ignore validateDOMNesting
-  if (
-    typeof message === 'string' &&
-    [
-      'Unsupported vendor-prefixed style property',
-      'validateDOMNesting',
-      'Invalid DOM',
-      'You provided a `checked` prop to a form field without an `onChange` handler',
-    ].some((item) => message.includes(item))
-  ) {
-    // no console
-  } else {
-    errLog(message, ...optionalParams);
-  }
-};
 
 export interface HtmlStringToReactNodesOptions {
   enabledMergeTagsBadge: boolean;

@@ -12,6 +12,7 @@ import setFieldTouched from 'final-form-set-field-touched';
 import { FocusBlockLayoutProvider } from '../FocusBlockLayoutProvider';
 import { PreviewEmailProvider } from '../PreviewEmailProvider';
 import { LanguageProvider } from '../LanguageProvider';
+import { overrideErrorLog, restoreErrorLog } from '@/utils/logger';
 
 export interface EmailEditorProviderProps<T extends IEmailTemplate = any>
   extends PropsProviderProps {
@@ -36,6 +37,13 @@ export const EmailEditorProvider = <T extends any>(
       content: data.content,
     };
   }, [data]);
+
+  useEffect(() => {
+    overrideErrorLog();
+    return () => {
+      restoreErrorLog();
+    };
+  }, []);
 
   if (!initialValues.content) return null;
 
