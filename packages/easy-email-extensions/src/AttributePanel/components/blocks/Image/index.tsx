@@ -60,7 +60,7 @@ export function Image() {
             />
             <SwitchField
               label={t('Full width on mobile')}
-              name={`${focusIdx}.attributes.fluid-on-mobile `}
+              name={`${focusIdx}.attributes.fluid-on-mobile`}
               config={fullWidthOnMobileAdapter}
             />
           </Stack>
