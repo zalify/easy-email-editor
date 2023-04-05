@@ -175,16 +175,21 @@ export default function App() {
 
 </br>
 
+
 ## Development
 
 ```sh
 $ git clone git@github.com:zalify/easy-email.git
 $ cd easy-email
+
+
 $ yarn  
 $ yarn install-all
 $ yarn dev
 
 ```
+`If you need some new features, we always welcome you to submit a PR.`
+
 
 ## License
 
