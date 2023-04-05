@@ -17,7 +17,7 @@ import { Field, FieldInputProps } from 'react-final-form';
 import { debounce } from 'lodash';
 
 export const RichTextField = (
-  props: Omit<InlineTextProps, 'onChange' | 'mutators'>
+  props: Omit<InlineTextProps, 'onChange' | 'mutators'> & {richToolBarVisible?: boolean}
 ) => {
   const [contentEditableName, setContentEditableName] = useState('');
   const [contentEditableType, setContentEditableType] = useState<string | null>(
@@ -84,6 +84,7 @@ export const RichTextField = (
             {...props}
             contentEditableType={contentEditableType}
             input={input}
+            richToolBarVisible={props.richToolBarVisible}
           />
         )}
       </Field>
@@ -95,9 +96,10 @@ function FieldWrapper(
   props: Omit<InlineTextProps, 'onChange'> & {
     input: FieldInputProps<any, HTMLElement>;
     contentEditableType: string | null;
+    richToolBarVisible?: boolean;
   }
 ) {
-  const { input, contentEditableType, ...rest } = props;
+  const { input, contentEditableType, richToolBarVisible = true, ...rest } = props;
   const { mergeTagGenerate, enabledMergeTagsBadge } = useEditorProps();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -116,10 +118,10 @@ function FieldWrapper(
 
   return (
     <>
-      {contentEditableType === ContentEditableType.RichText && (
+      {contentEditableType === ContentEditableType.RichText && richToolBarVisible && (
         <RichTextToolBar onChange={debounceCallbackChange} />
       )}
-      <InlineText {...rest} onChange={debounceCallbackChange} />;
+      <InlineText {...rest} onChange={debounceCallbackChange} />
     </>
   );
 }
