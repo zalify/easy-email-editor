@@ -119,7 +119,7 @@ function FieldWrapper(
       {contentEditableType === ContentEditableType.RichText && (
         <RichTextToolBar onChange={debounceCallbackChange} />
       )}
-      <InlineText {...rest} onChange={debounceCallbackChange} />;
+      <InlineText {...rest} onChange={debounceCallbackChange} />
     </>
   );
 }
