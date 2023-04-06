@@ -91,7 +91,7 @@ export function Padding(props: PaddingProps = {}) {
               <Space align='center'>
                 <TextStyle variation='strong'>{title}</TextStyle>
                 {showResetAll && (
-                  <Tooltip content='Remove all padding'>
+                  <Tooltip content={t('Remove all padding')}>
                     <Button
                       onClick={onResetPadding}
                       size='mini'
