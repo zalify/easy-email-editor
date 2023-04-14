@@ -28,13 +28,24 @@ export function ColorPickerContent(props: ColorPickerContentProps) {
     return [...presetColors.filter(item => item !== transparentColor).slice(-14)];
   }, [presetColors]);
 
+  let adapterColor = color;
+
+  try {
+    if (Color(color).hex()) {
+      adapterColor = Color(color).hex();
+    }
+  } catch (error) {}
+
   return (
     <div
       className={styles.colorPicker}
       style={{ width: 202, paddingTop: 12, paddingBottom: 12 }}
     >
       <div style={{ padding: '0px 16px' }}>
-        <Space wrap size='mini'>
+        <Space
+          wrap
+          size='mini'
+        >
           {presetColorList.map(item => {
             return (
               <div
@@ -87,7 +98,7 @@ export function ColorPickerContent(props: ColorPickerContentProps) {
               opacity: 0,
             }}
             type='color'
-            value={color ? Color(color).hex() : color}
+            value={adapterColor}
             onChange={e => onChange(e.target.value)}
           />
         </Button>
