@@ -12,54 +12,65 @@ interface Props {
   style?: React.CSSProperties;
 }
 
-export const SyncScrollIframeComponent = ({ children, title, windowRef, isActive, style }: Props) => {
+export const SyncScrollIframeComponent = ({
+  children,
+  title,
+  windowRef,
+  isActive,
+  style,
+}: Props) => {
   const [mountNode, setMountNode] = useState<HTMLElement | null>(null);
   const [contentWindow, setContentWindow] = useState<Window | null>(null);
   const { viewElementRef } = useDomScrollHeight();
   const [ref, setRef] = useState<null | HTMLDivElement>(null);
 
-  const setFirstVisibleEle = useCallback(debounce((root: Document) => {
-    if (!ref) return;
+  const setFirstVisibleEle = useCallback(
+    debounce((root: Document) => {
+      if (!ref) return;
 
-    const { top: containerTop } = ref.getBoundingClientRect();
-    const ele = root.elementFromPoint(0, 10);
+      const { top: containerTop } = ref.getBoundingClientRect();
+      const ele = root.elementFromPoint(0, 10);
 
-    const findSelectorNode = (ele: Element): Element | null => {
-      if (ele.getAttribute('data-selector')) {
-        return ele;
+      const findSelectorNode = (ele: Element): Element | null => {
+        if (ele.getAttribute('data-selector')) {
+          return ele;
+        }
+        if (ele.parentNode instanceof Element) {
+          return findSelectorNode(ele.parentNode);
+        }
+        return null;
+      };
+      const selectorNode = ele && findSelectorNode(ele);
+      viewElementRef.current = null;
+      if (selectorNode) {
+        const { top: selectorEleTop } = selectorNode.getBoundingClientRect();
+        let selectorDiffTop = selectorEleTop - containerTop;
+
+        const selector = selectorNode.getAttribute('data-selector');
+
+        if (selector) {
+          viewElementRef.current = {
+            selector: selector || '',
+            top: selectorDiffTop,
+          };
+        }
       }
-      if (ele.parentNode instanceof Element) {
-        return findSelectorNode(ele.parentNode);
-      }
-      return null;
-    };
-    const selectorNode = ele && findSelectorNode(ele);
-    viewElementRef.current = null;
-    if (selectorNode) {
-      const { top: selectorEleTop } = selectorNode.getBoundingClientRect();
-      let selectorDiffTop = selectorEleTop - containerTop;
+    }, 200),
+    [viewElementRef, ref],
+  );
 
-      const selector = selectorNode.getAttribute('data-selector');
-
-      if (selector) {
-        viewElementRef.current = {
-          selector: selector || '',
-          top: selectorDiffTop
-        };
-      }
-
-    }
-  }, 200), [viewElementRef, ref]);
-
-  const onLoad: React.ReactEventHandler<HTMLIFrameElement> = useCallback((evt) => {
-    const contentWindow = (evt.target as any)?.contentWindow;
-    if (!contentWindow) return;
-    windowRef?.(contentWindow);
-    const innerBody = contentWindow.document.body;
-    innerBody.style.backgroundColor = 'transparent';
-    setMountNode(innerBody);
-    setContentWindow(contentWindow);
-  }, [windowRef]);
+  const onLoad: React.ReactEventHandler<HTMLIFrameElement> = useCallback(
+    evt => {
+      const contentWindow = (evt.target as any)?.contentWindow;
+      if (!contentWindow) return;
+      windowRef?.(contentWindow);
+      const innerBody = contentWindow.document.body;
+      innerBody.style.backgroundColor = 'transparent';
+      setMountNode(innerBody);
+      setContentWindow(contentWindow);
+    },
+    [windowRef],
+  );
 
   useEffect(() => {
     if (!isActive || !mountNode) return;
@@ -70,7 +81,9 @@ export const SyncScrollIframeComponent = ({ children, title, windowRef, isActive
     if (!scrollEle) return;
 
     if (viewElement) {
-      const viewElementNode = mountNode.querySelector(`[data-selector="${viewElement?.selector}"]`);
+      const viewElementNode = mountNode.querySelector(
+        `[data-selector="${viewElement?.selector}"]`,
+      );
 
       if (viewElementNode && scrollEle) {
         viewElementNode.scrollIntoView();
@@ -78,7 +91,6 @@ export const SyncScrollIframeComponent = ({ children, title, windowRef, isActive
         scrollEle.scrollTo(0, scrollEle.scrollTop - viewElement.top);
       }
     } else {
-
       scrollEle.scrollTo(0, 0);
     }
   }, [viewElementRef, mountNode, isActive]);
@@ -96,7 +108,6 @@ export const SyncScrollIframeComponent = ({ children, title, windowRef, isActive
   }, [contentWindow, isActive, setFirstVisibleEle]);
 
   return useMemo(() => {
-
     return (
       <iframe
         ref={setRef}
@@ -107,7 +118,7 @@ export const SyncScrollIframeComponent = ({ children, title, windowRef, isActive
         style={style}
         onLoad={onLoad}
       >
-        {mountNode && createPortal(children, mountNode)}
+        <>{mountNode && createPortal(children, mountNode)}</>
       </iframe>
     );
   }, [title, style, onLoad, mountNode, children]);

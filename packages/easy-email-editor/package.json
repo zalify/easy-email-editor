@@ -46,8 +46,8 @@
     "@types/is-hotkey": "^0.1.7",
     "@types/lodash": "^4.14.178",
     "@types/node": "^16.11.7",
-    "@types/react": "17.0.2",
-    "@types/react-dom": "^17.0.11",
+    "@types/react": "^18.2.2",
+    "@types/react-dom": "^18.2.3",
     "@typescript-eslint/eslint-plugin": "^5.22.0",
     "@typescript-eslint/parser": "^4.28.3",
     "eslint": "^7.31.0",
@@ -58,8 +58,8 @@
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "mjml-browser": "^4.10.4",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-final-form": "^6.5.7",
     "rimraf": "^3.0.2",
     "sass": "^1.43.4",
@@ -70,8 +70,8 @@
   "peerDependencies": {
     "easy-email-core": "^4.3.6",
     "mjml-browser": "^4.10.4",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-final-form": "^6.5.7"
   },
   "gitHead": "2a08e8af15766344de708d891c1c8ea31bb77646"

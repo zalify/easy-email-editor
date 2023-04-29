@@ -24,7 +24,7 @@ export const RecordContext = React.createContext<{
   undoable: false,
 });
 
-export const RecordProvider: React.FC<{}> = props => {
+export const RecordProvider: React.FC<{ children?: React.ReactNode }> = props => {
   const formState = useFormState<IEmailTemplate>();
   const [data, setData] = useState<Array<IEmailTemplate>>([]);
   const [index, setIndex] = useState(-1);

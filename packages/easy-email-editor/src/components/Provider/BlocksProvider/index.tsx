@@ -23,40 +23,49 @@ export const BlocksContext = React.createContext<{
   setActiveTab: React.Dispatch<React.SetStateAction<ActiveTabKeys>>;
 }>({
   initialized: false,
-  setInitialized: () => { },
+  setInitialized: () => {},
   focusIdx: getPageIdx(),
-  setFocusIdx: () => { },
+  setFocusIdx: () => {},
   dragEnabled: false,
-  setDragEnabled: () => { },
+  setDragEnabled: () => {},
   collapsed: false,
-  setCollapsed: () => { },
+  setCollapsed: () => {},
   activeTab: ActiveTabKeys.EDIT,
-  setActiveTab: () => { },
+  setActiveTab: () => {},
 });
 
-export const BlocksProvider: React.FC<{}> = (props) => {
+export const BlocksProvider: React.FC<{ children?: React.ReactNode }> = props => {
   const [focusIdx, setFocusIdx] = useState(getPageIdx());
   const [dragEnabled, setDragEnabled] = useState(false);
   const [initialized, setInitialized] = useState(false);
   const [collapsed, setCollapsed] = useState(true);
   const [activeTab, setActiveTab] = useState(ActiveTabKeys.EDIT);
 
-  const onChangeTab: React.Dispatch<React.SetStateAction<ActiveTabKeys>> = useCallback((handler) => {
-    if (isFunction(handler)) {
-      setActiveTab((currentTab) => {
-        const nextTab = handler(currentTab);
-        const next = EventManager.exec(EventType.ACTIVE_TAB_CHANGE, { currentTab, nextTab });
+  const onChangeTab: React.Dispatch<React.SetStateAction<ActiveTabKeys>> = useCallback(
+    handler => {
+      if (isFunction(handler)) {
+        setActiveTab(currentTab => {
+          const nextTab = handler(currentTab);
+          const next = EventManager.exec(EventType.ACTIVE_TAB_CHANGE, {
+            currentTab,
+            nextTab,
+          });
+          if (next) return nextTab;
+          return currentTab;
+        });
+      }
+      setActiveTab(currentTab => {
+        let nextTab = handler as ActiveTabKeys;
+        const next = EventManager.exec(EventType.ACTIVE_TAB_CHANGE, {
+          currentTab,
+          nextTab,
+        });
         if (next) return nextTab;
         return currentTab;
       });
-    }
-    setActiveTab((currentTab) => {
-      let nextTab = handler as ActiveTabKeys;
-      const next = EventManager.exec(EventType.ACTIVE_TAB_CHANGE, { currentTab, nextTab });
-      if (next) return nextTab;
-      return currentTab;
-    });
-  }, []);
+    },
+    [],
+  );
 
   return (
     <BlocksContext.Provider

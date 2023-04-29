@@ -1,7 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { I18nManager, t } from 'easy-email-core';
 
-export const LanguageProvider: React.FC<{ locale?: Record<string, string> }> = props => {
+export const LanguageProvider: React.FC<{
+  children?: React.ReactNode;
+  locale?: Record<string, string>;
+}> = props => {
   const [count, setCount] = useState(0);
 
   I18nManager.setLocaleData(props.locale || {});

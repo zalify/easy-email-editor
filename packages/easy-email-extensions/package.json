@@ -43,9 +43,9 @@
     "@types/jsdom": "^16.2.13",
     "@types/lodash": "^4.14.178",
     "@types/node": "^16.11.7",
-    "@types/react": "17.0.2",
+    "@types/react": "^18.2.2",
     "@types/react-color": "^3.0.6",
-    "@types/react-dom": "^17.0.11",
+    "@types/react-dom": "^18.2.3",
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^4.28.3",
     "@typescript-eslint/parser": "^4.28.3",
@@ -63,8 +63,8 @@
     "jsdom": "^17.0.0",
     "lerna": "^4.0.0",
     "less": "^4.1.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-final-form": "^6.5.7",
     "rollup-plugin-visualizer": "^5.5.2",
     "sass": "^1.43.4",
@@ -95,8 +95,8 @@
   "peerDependencies": {
     "easy-email-core": "^4.3.6",
     "easy-email-editor": "^4.3.6",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-final-form": "^6.5.7"
   },
   "gitHead": "bb5757eb3146f55c31d4354f1480939c3af8efe1"
