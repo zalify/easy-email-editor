@@ -11,10 +11,10 @@ export const FocusBlockLayoutContext = React.createContext<{
   focusBlockNode: null,
 });
 
-export const FocusBlockLayoutProvider: React.FC = (props) => {
-  const [focusBlockNode, setFocusBlockNode] = useState<HTMLElement | null>(
-    null
-  );
+export const FocusBlockLayoutProvider: React.FC<{
+  children?: React.ReactNode;
+}> = props => {
+  const [focusBlockNode, setFocusBlockNode] = useState<HTMLElement | null>(null);
   const { initialized } = useEditorContext();
   const { focusIdx } = useFocusIdx();
   const focusIdxRef = useRefState(focusIdx);
@@ -35,18 +35,15 @@ export const FocusBlockLayoutProvider: React.FC = (props) => {
         if (ele) {
           setFocusBlockNode(ele);
         }
-
       }
-
     });
     ms.observe(root, {
-      attributeFilter: [DATA_RENDER_COUNT]
+      attributeFilter: [DATA_RENDER_COUNT],
     });
 
     return () => {
       ms.disconnect();
     };
-
   }, [focusIdxRef, root]);
 
   useEffect(() => {

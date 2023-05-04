@@ -46,8 +46,8 @@
     "@types/jsdom": "^16.2.13",
     "@types/lodash": "^4.14.178",
     "@types/node": "^16.11.7",
-    "@types/react": "17.0.2",
-    "@types/react-dom": "^17.0.11",
+    "@types/react": "^18.2.2",
+    "@types/react-dom": "^18.2.3",
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^4.28.3",
     "@typescript-eslint/parser": "^4.28.3",
@@ -62,8 +62,8 @@
     "jest": "^27.0.6",
     "jsdom": "^17.0.0",
     "liquidjs": "^9.40.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "rimraf": "^3.0.2",
     "ts-node": "^10.4.0",
     "tsc-alias": "^1.4.1",
@@ -78,8 +78,8 @@
     "uuid": "^8.3.2"
   },
   "peerDependencies": {
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "gitHead": "f6cf54160ffdba0d4d6b23483293dd9190d2d2c2"
 }

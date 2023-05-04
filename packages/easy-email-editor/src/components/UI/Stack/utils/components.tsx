@@ -15,8 +15,8 @@ export function wrapWithComponent<P>(
   return isElementOfType(element, Component) ? (
     element
   ) : (
-      <Component {...props}>{element}</Component>
-    );
+    <Component {...props}>{element}</Component>
+  );
 }
 
 // In development, we compare based on the name of the function because
@@ -26,9 +26,9 @@ const isComponent =
   process.env.NODE_ENV === 'development'
     ? hotReloadComponentCheck
     : (
-      AComponent: React.ComponentType<any>,
-      AnotherComponent: React.ComponentType<any>,
-    ) => AComponent === AnotherComponent;
+        AComponent: React.ComponentType<any>,
+        AnotherComponent: React.ComponentType<any>,
+      ) => AComponent === AnotherComponent;
 
 // Checks whether `element` is a React element of type `Component` (or one of
 // the passed components, if `Component` is an array of React components).
@@ -36,11 +36,7 @@ export function isElementOfType<P>(
   element: React.ReactNode | null | undefined,
   Component: React.ComponentType<P> | React.ComponentType<P>[],
 ): boolean {
-  if (
-    element == null ||
-    !isValidElement(element) ||
-    typeof element.type === 'string'
-  ) {
+  if (element == null || !isValidElement(element) || typeof element.type === 'string') {
     return false;
   }
 
@@ -52,7 +48,7 @@ export function isElementOfType<P>(
   const Components = Array.isArray(Component) ? Component : [Component];
 
   return Components.some(
-    (AComponent) => typeof type !== 'string' && isComponent(AComponent, type),
+    AComponent => typeof type !== 'string' && isComponent(AComponent, type),
   );
 }
 
@@ -63,7 +59,7 @@ export function elementChildren<T extends React.ReactElement>(
   predicate: (element: T) => boolean = () => true,
 ): T[] {
   return Children.toArray(children).filter(
-    (child) => isValidElement(child) && predicate(child as T),
+    child => isValidElement(child) && predicate(child as T),
   ) as T[];
 }
 
@@ -98,9 +94,7 @@ function hotReloadComponentCheck(
   AnotherComponent: React.ComponentType<any>,
 ) {
   const componentName = AComponent.name;
-  const anotherComponentName = (AnotherComponent as React.StatelessComponent<
-    any
-  >).displayName;
+  const anotherComponentName = (AnotherComponent as React.FC<any>).displayName;
 
   return (
     AComponent === AnotherComponent ||
