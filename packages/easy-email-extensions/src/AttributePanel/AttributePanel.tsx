@@ -1,5 +1,11 @@
 import React from 'react';
-import { getShadowRoot, TextStyle, useBlock, useEditorContext, useFocusIdx } from 'easy-email-editor';
+import {
+  getShadowRoot,
+  TextStyle,
+  useBlock,
+  useEditorContext,
+  useFocusIdx,
+} from 'easy-email-editor';
 import { RichTextField } from '../components/Form/RichTextField';
 import { PresetColorsProvider } from './components/provider/PresetColorsProvider';
 import ReactDOM from 'react-dom';
@@ -35,7 +41,7 @@ export function AttributePanel() {
           <RichTextField idx={focusIdx} />
         </div>
         {shadowRoot &&
-          ReactDOM.createPortal(
+          (ReactDOM.createPortal(
             <style>
               {`
               .email-block [contentEditable="true"],
@@ -46,7 +52,7 @@ export function AttributePanel() {
               `}
             </style>,
             shadowRoot as any,
-          )}
+          ) as any)}
       </PresetColorsProvider>
     </SelectionRangeProvider>
   );
