@@ -15,12 +15,14 @@ import { LanguageProvider } from '../LanguageProvider';
 import { overrideErrorLog, restoreErrorLog } from '@/utils/logger';
 
 export interface EmailEditorProviderProps<T extends IEmailTemplate = any>
-  extends PropsProviderProps {
+  extends PropsProviderProps<
+    (
+      props: FormState<T>,
+      helper: FormApi<IEmailTemplate, Partial<IEmailTemplate>>,
+    ) => React.ReactNode
+  > {
   data: T;
-  children: (
-    props: FormState<T>,
-    helper: FormApi<IEmailTemplate, Partial<IEmailTemplate>>,
-  ) => React.ReactNode;
+
   onSubmit?: Config<IEmailTemplate, Partial<IEmailTemplate>>['onSubmit'];
   validationSchema?: Config<IEmailTemplate, Partial<IEmailTemplate>>['validate'];
 }
@@ -85,7 +87,7 @@ export const EmailEditorProvider = <T extends any>(
 function FormWrapper({ children }: { children: EmailEditorProviderProps['children'] }) {
   const data = useFormState<IEmailTemplate>();
   const helper = useForm<IEmailTemplate>();
-  return <>{children(data, helper)}</>;
+  return <>{children?.(data, helper)}</>;
 }
 
 // final-form bug https://github.com/final-form/final-form/issues/169

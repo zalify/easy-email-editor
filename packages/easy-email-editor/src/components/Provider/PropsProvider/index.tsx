@@ -14,8 +14,8 @@ export interface BlockGroup {
   blocks: Array<CollectedBlock>;
 }
 
-export interface PropsProviderProps {
-  children?: React.ReactNode;
+export interface PropsProviderProps<T = React.ReactNode> {
+  children?: T;
   height: string;
   fontList?: { value: string; label: string }[];
   onAddCollection?: (payload: CollectedBlock) => void;

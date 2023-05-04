@@ -5,7 +5,7 @@ import { Stack } from '../Stack';
 import './index.scss';
 
 export interface TabsProps {
-  children?: React.ReactNode;
+  children: React.ReactNode;
   tabBarExtraContent?: React.ReactNode;
   style?: React.CSSProperties;
   className?: string;
@@ -16,6 +16,7 @@ export interface TabsProps {
 }
 export interface TabPaneProps {
   children?: React.ReactNode;
+
   tab: React.ReactNode;
   key: string;
   style?: React.CSSProperties;
@@ -72,7 +73,7 @@ const Tabs: React.FC<TabsProps> = props => {
                       activeTab === item.key && 'easy-email-editor-tabActiveItem',
                     )}
                   >
-                    <Button noBorder>{item.props.tab}</Button>
+                    <Button noBorder>{item.props.tab as any}</Button>
                   </div>
                 );
               },
@@ -92,7 +93,7 @@ const Tabs: React.FC<TabsProps> = props => {
                 height: 'calc(100% - 50px)',
               }}
             >
-              {item}
+              {item as any}
             </div>
           );
         },

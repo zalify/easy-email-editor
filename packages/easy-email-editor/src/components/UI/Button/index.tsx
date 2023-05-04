@@ -9,7 +9,7 @@ export interface ButtonProps {
   noBorder?: boolean;
   onClick?: React.DOMAttributes<HTMLButtonElement>['onClick'];
 }
-export const Button: React.FC<ButtonProps> = props => {
+export const Button = (props: ButtonProps) => {
   return (
     <button
       onClick={props.onClick}

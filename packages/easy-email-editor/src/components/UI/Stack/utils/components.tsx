@@ -5,7 +5,7 @@ import React, { Children, isValidElement } from 'react';
 // wrapped component. If `element` is null, the component is not wrapped.
 export function wrapWithComponent<P>(
   element: React.ReactNode | null | undefined,
-  Component: React.ComponentType<P>,
+  Component: React.ComponentType<any>,
   props: P,
 ): React.ReactNode {
   if (element == null) {
