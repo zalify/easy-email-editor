@@ -21,7 +21,7 @@ export const Button: React.FC<ButtonProps> = props => {
       disabled={props.disabled}
       type='button'
     >
-      {props.children}
+      <>{props.children}</>
     </button>
   );
 };

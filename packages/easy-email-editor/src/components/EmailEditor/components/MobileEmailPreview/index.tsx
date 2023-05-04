@@ -22,7 +22,7 @@ export function MobileEmailPreview() {
   if (errMsg) {
     return (
       <div style={{ textAlign: 'center', fontSize: 24, color: 'red' }}>
-        {errMsg}
+        <>{errMsg}</>
       </div>
     );
   }
@@ -37,7 +37,7 @@ export function MobileEmailPreview() {
         justifyContent: 'center',
         overflow: 'auto',
         padding: '10px 0px',
-        boxSizing: 'border-box'
+        boxSizing: 'border-box',
       }}
     >
       <div
@@ -45,26 +45,27 @@ export function MobileEmailPreview() {
           position: 'relative',
           margin: 'auto',
           padding: '6px 6.8px 2px 6.8px',
-
         }}
       >
-        <div style={{
-          left: 0,
-          top: 0,
-          width: '100%',
-          height: '100%',
-          position: 'absolute',
-          padding: '6px 6.8px 2px 6.8px',
-          backgroundImage: `url(${iphoneFrame})`,
-          backgroundSize: '100% 100%',
-          zIndex: 10,
-          pointerEvents: 'none'
-        }}
+        <div
+          style={{
+            left: 0,
+            top: 0,
+            width: '100%',
+            height: '100%',
+            position: 'absolute',
+            padding: '6px 6.8px 2px 6.8px',
+            backgroundImage: `url(${iphoneFrame})`,
+            backgroundSize: '100% 100%',
+            zIndex: 10,
+            pointerEvents: 'none',
+          }}
         />
-        <div style={{
-          width: MOBILE_WIDTH,
-          height: MOBILE_Height
-        }}
+        <div
+          style={{
+            width: MOBILE_WIDTH,
+            height: MOBILE_Height,
+          }}
         >
           <div
             style={{
@@ -75,7 +76,7 @@ export function MobileEmailPreview() {
               border: 'none',
               transform: `scale(${MOBILE_WIDTH / mobileWidth})`,
               transformOrigin: 'left top',
-              overflow: 'hidden'
+              overflow: 'hidden',
             }}
           >
             <SyncScrollIframeComponent
@@ -84,7 +85,6 @@ export function MobileEmailPreview() {
                 border: 'none',
                 height: '100%',
                 width: '100%',
-
               }}
             >
               <style>
@@ -96,19 +96,21 @@ export function MobileEmailPreview() {
           `}
               </style>
               <div
-                className={classnames('preview-container', SYNC_SCROLL_ELEMENT_CLASS_NAME)}
+                className={classnames(
+                  'preview-container',
+                  SYNC_SCROLL_ELEMENT_CLASS_NAME,
+                )}
                 style={{
                   height: '100%',
                   overflow: 'auto',
                   margin: 'auto',
                 }}
               >
-                {reactNode}
+                <>{reactNode}</>
               </div>
             </SyncScrollIframeComponent>
           </div>
         </div>
-
       </div>
     </div>
   );

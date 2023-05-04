@@ -72,7 +72,9 @@ const Tabs: React.FC<TabsProps> = props => {
                       activeTab === item.key && 'easy-email-editor-tabActiveItem',
                     )}
                   >
-                    <Button noBorder>{item.props.tab}</Button>
+                    <Button noBorder>
+                      <>{item.props.tab}</>
+                    </Button>
                   </div>
                 );
               },
@@ -92,7 +94,7 @@ const Tabs: React.FC<TabsProps> = props => {
                 height: 'calc(100% - 50px)',
               }}
             >
-              {item}
+              <>{item}</>
             </div>
           );
         },

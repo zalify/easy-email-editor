@@ -22,7 +22,9 @@ export function DesktopEmailPreview() {
 
   if (errMsg) {
     return (
-      <div style={{ textAlign: 'center', fontSize: 24, color: 'red' }}>{errMsg}</div>
+      <div style={{ textAlign: 'center', fontSize: 24, color: 'red' }}>
+        <>{errMsg}</>
+      </div>
     );
   }
 
@@ -71,7 +73,7 @@ export function DesktopEmailPreview() {
               boxSizing: 'border-box',
             }}
           >
-            {reactNode}
+            <>{reactNode}</>
           </div>
           {createPortal(
             <>

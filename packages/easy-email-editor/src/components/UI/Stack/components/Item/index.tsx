@@ -11,6 +11,7 @@ export interface ItemProps {
   /**
    * @default false
    */
+  key?: string | number;
 }
 
 export function Item({ children, fill }: ItemProps) {

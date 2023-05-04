@@ -15,7 +15,7 @@ import { LanguageProvider } from '../LanguageProvider';
 import { overrideErrorLog, restoreErrorLog } from '@/utils/logger';
 
 export interface EmailEditorProviderProps<T extends IEmailTemplate = any>
-  extends PropsProviderProps {
+  extends Omit<PropsProviderProps, 'children'> {
   data: T;
   children: (
     props: FormState<T>,

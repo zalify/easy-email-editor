@@ -11,7 +11,9 @@ export const SelectionRangeContext = React.createContext<{
   setSelectionRange: () => {},
 });
 
-export const SelectionRangeProvider: React.FC<{}> = (props) => {
+export const SelectionRangeProvider: React.FC<{
+  children: React.ReactNode | React.ReactElement;
+}> = props => {
   const [selectionRange, setSelectionRange] = useState<Range | null>(null);
 
   useEffect(() => {
@@ -20,8 +22,7 @@ export const SelectionRangeProvider: React.FC<{}> = (props) => {
         const range = (getShadowRoot() as any).getSelection().getRangeAt(0);
         if (range) {
           const toolbar = getShadowRoot().getElementById(RICH_TEXT_TOOL_BAR);
-          if (toolbar && toolbar.contains(range.commonAncestorContainer))
-            return;
+          if (toolbar && toolbar.contains(range.commonAncestorContainer)) return;
           setSelectionRange(range);
         }
       } catch (error) {}

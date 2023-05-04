@@ -6,7 +6,8 @@ import styles from './index.module.scss';
 export const BlockMaskWrapper: React.FC<{
   type: BlockType | string;
   payload: any;
-}> = (props) => {
+  children: React.ReactNode | React.ReactElement;
+}> = props => {
   const ref = useRef<HTMLDivElement>(null);
   const dragRef = useRef<HTMLDivElement>(null);
   const { type, payload } = props;
@@ -17,18 +18,12 @@ export const BlockMaskWrapper: React.FC<{
     }
   }, []);
 
-  const onMaskMouseDown: React.MouseEventHandler<HTMLDivElement> = useCallback(
-    (ev) => {
-      if (
-        !dragRef.current ||
-        !dragRef.current.contains(ev.target as HTMLElement)
-      ) {
-        ev.preventDefault();
-        ev.stopPropagation();
-      }
-    },
-    []
-  );
+  const onMaskMouseDown: React.MouseEventHandler<HTMLDivElement> = useCallback(ev => {
+    if (!dragRef.current || !dragRef.current.contains(ev.target as HTMLElement)) {
+      ev.preventDefault();
+      ev.stopPropagation();
+    }
+  }, []);
 
   useEffect(() => {
     const mouseup = () => {
@@ -57,8 +52,15 @@ export const BlockMaskWrapper: React.FC<{
           justifyContent: 'flex-end',
         }}
       >
-        <BlockAvatarWrapper type={type} payload={payload}>
-          <div ref={ref} className={styles.mask} onMouseDown={onMaskMouseDown}>
+        <BlockAvatarWrapper
+          type={type}
+          payload={payload}
+        >
+          <div
+            ref={ref}
+            className={styles.mask}
+            onMouseDown={onMaskMouseDown}
+          >
             <div
               ref={dragRef}
               style={{

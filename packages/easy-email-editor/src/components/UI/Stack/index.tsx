@@ -3,7 +3,7 @@ import React, { memo, NamedExoticComponent } from 'react';
 import { classNames, variationName } from './utils/css';
 import { elementChildren, wrapWithComponent } from './utils/components';
 
-import { Item } from './components/Item';
+import { Item, ItemProps } from './components/Item';
 import styles from './Stack.module.scss';
 
 // From polaris-react
@@ -52,11 +52,15 @@ export const Stack = memo(function Stack({
     wrap === false && styles.noWrap,
   );
   const itemMarkup = elementChildren(children).map((child, index) => {
-    const props = { key: index };
+    const props: ItemProps = { key: index };
     return wrapWithComponent(child, Item, props);
   });
 
-  return <div className={className}>{itemMarkup}</div>;
+  return (
+    <div className={className}>
+      <>{itemMarkup}</>
+    </div>
+  );
 }) as NamedExoticComponent<StackProps> & {
   Item: typeof Item;
 };

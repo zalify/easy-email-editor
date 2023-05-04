@@ -6,6 +6,7 @@ import { BasicType, BlockManager } from 'easy-email-core';
 export interface AttributesPanelWrapper {
   style?: React.CSSProperties;
   extra?: React.ReactNode;
+  children: React.ReactNode | React.ReactElement;
 }
 export const AttributesPanelWrapper: React.FC<AttributesPanelWrapper> = props => {
   const { focusBlock, setFocusBlock } = useBlock();

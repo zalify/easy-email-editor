@@ -15,6 +15,7 @@ export const SimpleLayout: React.FC<
   {
     showSourceCode?: boolean;
     defaultShowLayer?: boolean;
+    children: React.ReactNode | React.ReactElement;
   } & BlockLayerProps
 > = props => {
   const { height: containerHeight } = useEditorProps();
@@ -104,7 +105,9 @@ export const SimpleLayout: React.FC<
             <Tabs className={styles.layoutTabs}>
               <Tabs.TabPane
                 title={
-                  <div style={{ height: 31, lineHeight: '31px' }}>{t('Configuration')}</div>
+                  <div style={{ height: 31, lineHeight: '31px' }}>
+                    {t('Configuration')}
+                  </div>
                 }
               >
                 <AttributePanel />
@@ -114,7 +117,9 @@ export const SimpleLayout: React.FC<
                   destroyOnHide
                   key='Source code'
                   title={
-                    <div style={{ height: 31, lineHeight: '31px' }}>{t('Source code')}</div>
+                    <div style={{ height: 31, lineHeight: '31px' }}>
+                      {t('Source code')}
+                    </div>
                   }
                 >
                   <SourceCodePanel />
