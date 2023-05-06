@@ -48,11 +48,11 @@ If you customize the UI yourself,maybe you need to know
   - useActiveTab // current tab is edit or preview
   - useBlock // includes addBlock、moveBlock、removeBlock、undo, redo, etc.
     - values // current block form values 
-    - change // formHelpers, assign form values
+    - change // formHelpers, assign form values ```(name: F, value?: any) => void```
     - focusBlock // IBlockData
-    - setFocusBlock // set focusBlock
-    - setFocusBlockValue // assign form values by focusBlock
-    - setValueByIdx // assign form values by focusIdx
+    - setFocusBlock // set focusBlock values ```(values: IBlockData)=>void```
+    - setFocusBlockValue // assign focusBlock data values ```(values: IBlockData)=>void```
+    - setValueByIdx // assign form values by focusIdx ```(focusIdx:string, values: IBlockData)=>void```
     - addBlock  (params: {
           type: string;
           parentIdx: string;
