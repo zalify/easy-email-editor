@@ -53,22 +53,22 @@ If you customize the UI yourself,maybe you need to know
     - setFocusBlock // set focusBlock values ```(values: IBlockData)=>void```
     - setFocusBlockValue // assign focusBlock data values ```(values: IBlockData)=>void```
     - setValueByIdx // assign form values by focusIdx ```(focusIdx:string, values: IBlockData)=>void```
-    - addBlock  (params: {
+    - addBlock  ```(params: {
           type: string;
           parentIdx: string;
           positionIndex?: number;
           payload?: any;
           canReplace?: boolean;
-        }) => void
-    - moveBlock // (sourceIdx: string, destinationIdx: string) => null | undefined
-    - copyBlock // (idx: string) => void
-    - removeBlock // (idx: string) => void
-    - isExistBlock // (idx:string)=>boolean
-    - redo // () => void
-    - undo // () => void
-    - reset // () => void
-    - redoable // boolean
-    - undoable // boolean
+        }) => void```
+    - moveBlock // ```(sourceIdx: string, destinationIdx: string) => null | undefined```
+    - copyBlock // ```(idx: string) => void```
+    - removeBlock // ```(idx: string) => void```
+    - isExistBlock // ```(idx:string)=>boolean```
+    - redo // ```() => void```
+    - undo // ```() => void```
+    - reset // ```() => void```
+    - redoable // ```boolean```
+    - undoable // ```boolean```
   - useHoverIdx // hover block related, dragging status related, dragging direction related
   - useEditorProps // get props from EmailEditorProvider
   - useEditorContext // get form state and initialized status
