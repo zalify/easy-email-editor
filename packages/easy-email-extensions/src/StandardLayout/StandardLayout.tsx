@@ -77,7 +77,7 @@ const defaultCategories: ExtensionProps['categories'] = [
         get title() {
           return t('4 columns');
         },
-        payload: [[['25%', '25%', '25%', '25%']]],
+        payload: [['25%', '25%', '25%', '25%']],
       },
     ],
   },
