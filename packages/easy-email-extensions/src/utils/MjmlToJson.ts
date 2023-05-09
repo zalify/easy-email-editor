@@ -67,7 +67,7 @@ export function MjmlToJson(data: MjmlBlockItem | string): IPage {
               headAttributes: headAttributes,
               headStyles: headStyles,
               fonts,
-              breakpoint: breakpoint?.attributes.breakpoint,
+              breakpoint: breakpoint?.attributes.width,
               ...metaData,
             },
           },
