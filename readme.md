@@ -60,13 +60,6 @@ Check out the live demo here: <a href="https://email.maocanhua.cn/?utm_source=gi
 
 </br>
 
-## Roadmap
-
-- Localization in progress.
-- Awesome responsive, support mobile and desktop display different styles (without any compatibility issues)
-- Replace shadow dom with iframe, support firefox/safari browsers.
-- Improve documentation and add more usage examples
-
 ## Donation
 
 If you like this project, please consider donating.
