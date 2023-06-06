@@ -448,29 +448,6 @@ export default function Editor() {
                     >
                       Save
                     </Button>
-                    <a
-                      href='https://www.buymeacoffee.com/easyemail?utm_source=webside&utm_medium=button&utm_content=donate'
-                      target='_blank'
-                      onClick={ev => {
-                        ev.preventDefault();
-                        pushEvent({ event: 'Donate' });
-                        window.open(
-                          'https://www.buymeacoffee.com/easyemail?utm_source=webside&utm_medium=button&utm_content=donate',
-                          '_blank',
-                        );
-                      }}
-                    >
-                      <img
-                        style={{
-                          marginTop: -16,
-                          position: 'relative',
-                          top: 11,
-                          height: 32,
-                        }}
-                        src='https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png'
-                        alt='Buy Me A Coffee'
-                      />
-                    </a>
                   </Stack>
                 }
               />
