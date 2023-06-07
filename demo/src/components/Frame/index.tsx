@@ -125,10 +125,11 @@ export default function Frame({
             content={
               <div>
                 <div>
-                  We are developing a powerful commercial version of Email Editor.{' '}
+                  We are developing a powerful commercial version of Email Editor that includes amazing responsive views, replaces Shadow DOM with iframes, and boasts a sleeker UI.
+
                 </div>
                 <div>
-                  If you are interested, please leave your email address{' '}
+                  If you are interested, contact us now and enjoy two months of free usage! Please leave your email address 
                   <a
                     href='#'
                     onClick={e => {
