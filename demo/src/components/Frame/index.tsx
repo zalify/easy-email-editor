@@ -129,7 +129,7 @@ export default function Frame({
 
                 </div>
                 <div>
-                  If you are interested, contact us now and enjoy two months of free usage! Please leave your email address 
+                  If you are interested, contact us now and enjoy two months of free usage! Please leave your email address{' '}
                   <a
                     href='#'
                     onClick={e => {
