@@ -125,7 +125,7 @@ export default function Frame({
             content={
               <div>
                 <div>
-                  We are developing a powerful commercial version of Email Editor that includes amazing responsive views, replaces Shadow DOM with iframes, and boasts a sleeker UI.
+                  We are developing a powerful commercial version of Email Editor that includes amazing responsive views(mobile only /desktop only), replaces Shadow DOM with iframes, and boasts a sleeker UI.
 
                 </div>
                 <div>
