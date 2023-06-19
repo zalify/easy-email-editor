@@ -7,11 +7,13 @@ export function ConfigurationDrawer({
   height,
   compact,
   showSourceCode,
+  jsonReadOnly,
   mjmlReadOnly,
 }: {
   height: string;
   compact: boolean;
   showSourceCode: boolean;
+  jsonReadOnly: boolean;
   mjmlReadOnly: boolean;
 }) {
   const refWrapper = useRef(null);
@@ -55,6 +57,7 @@ export function ConfigurationDrawer({
               showSourceCode={showSourceCode}
               height={height}
               onBack={onClose}
+              jsonReadOnly={jsonReadOnly}
               mjmlReadOnly={mjmlReadOnly}
             />
           </Drawer>

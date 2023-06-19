@@ -40,6 +40,7 @@ export interface ExtensionProps extends BlockLayerProps {
       }
   >;
   showSourceCode?: boolean;
+  jsonReadOnly?: boolean;
   mjmlReadOnly?: boolean;
   compact?: boolean;
 }

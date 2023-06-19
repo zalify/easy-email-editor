@@ -92,6 +92,7 @@ export const StandardLayout: React.FC<ExtensionProps> = props => {
     showSourceCode = true,
     compact = true,
     categories = defaultCategories,
+    jsonReadOnly = true,
     mjmlReadOnly = true,
   } = props;
 
@@ -128,6 +129,7 @@ export const StandardLayout: React.FC<ExtensionProps> = props => {
             {compact && (
               <EditPanel
                 showSourceCode={showSourceCode}
+                jsonReadOnly={jsonReadOnly}
                 mjmlReadOnly={mjmlReadOnly}
               />
             )}
@@ -135,6 +137,7 @@ export const StandardLayout: React.FC<ExtensionProps> = props => {
             {!compact && (
               <EditPanel
                 showSourceCode={showSourceCode}
+                jsonReadOnly={jsonReadOnly}
                 mjmlReadOnly={mjmlReadOnly}
               />
             )}
@@ -151,6 +154,7 @@ export const StandardLayout: React.FC<ExtensionProps> = props => {
                   compact={compact}
                   height={containerHeight}
                   showSourceCode={showSourceCode}
+                  jsonReadOnly={jsonReadOnly}
                   mjmlReadOnly={mjmlReadOnly}
                 />
               </Layout.Sider>

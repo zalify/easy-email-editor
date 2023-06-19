@@ -8,6 +8,7 @@ import styles from './index.module.scss';
 
 export interface ConfigurationPanelProps {
   showSourceCode: boolean;
+  jsonReadOnly: boolean;
   mjmlReadOnly: boolean;
   height: string;
   onBack?: () => void;
@@ -19,6 +20,7 @@ export function ConfigurationPanel({
   height,
   onBack,
   compact,
+  jsonReadOnly,
   mjmlReadOnly,
 }: ConfigurationPanelProps) {
   const [inited, setInited] = useState(false);
@@ -83,7 +85,7 @@ export function ConfigurationPanel({
             }
           >
             <FullHeightOverlayScrollbars height={`calc(${height} - 60px)`}>
-              <SourceCodePanel mjmlReadOnly={mjmlReadOnly} />
+              <SourceCodePanel jsonReadOnly={jsonReadOnly} mjmlReadOnly={mjmlReadOnly} />
             </FullHeightOverlayScrollbars>
           </Tabs.TabPane>
         </Tabs>

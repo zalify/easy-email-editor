@@ -17,7 +17,7 @@ import { cloneDeep } from 'lodash';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { MjmlToJson } from '@extensions/utils/MjmlToJson';
 
-export function SourceCodePanel({ mjmlReadOnly }: { mjmlReadOnly: boolean }) {
+export function SourceCodePanel({ jsonReadOnly, mjmlReadOnly }: { jsonReadOnly: boolean; mjmlReadOnly: boolean }) {
   const { setValueByIdx, focusBlock, values } = useBlock();
   const { focusIdx } = useFocusIdx();
 
@@ -111,6 +111,7 @@ export function SourceCodePanel({ mjmlReadOnly }: { mjmlReadOnly: boolean }) {
           defaultValue={code}
           autoSize={{ maxRows: 25 }}
           onBlur={onChangeCode}
+          readOnly={jsonReadOnly}
         />
       </Collapse.Item>
       <Collapse.Item

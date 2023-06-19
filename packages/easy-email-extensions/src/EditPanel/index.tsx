@@ -12,9 +12,11 @@ const TabPane = Tabs.TabPane;
 
 export function EditPanel({
   showSourceCode,
+  jsonReadOnly,
   mjmlReadOnly,
 }: {
   showSourceCode: boolean;
+  jsonReadOnly: boolean;
   mjmlReadOnly: boolean;
 }) {
   const { height } = useEditorProps();
@@ -65,6 +67,7 @@ export function EditPanel({
           height={height}
           showSourceCode={showSourceCode}
           compact={Boolean(compact)}
+          jsonReadOnly={jsonReadOnly}
           mjmlReadOnly={mjmlReadOnly}
         />
       )}
