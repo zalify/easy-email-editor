@@ -92,7 +92,7 @@ export const StandardLayout: React.FC<ExtensionProps> = props => {
     showSourceCode = true,
     compact = true,
     categories = defaultCategories,
-    jsonReadOnly = true,
+    jsonReadOnly = false,
     mjmlReadOnly = true,
   } = props;
 

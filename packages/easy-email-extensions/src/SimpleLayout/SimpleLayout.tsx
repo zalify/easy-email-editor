@@ -21,7 +21,7 @@ export const SimpleLayout: React.FC<
   } & BlockLayerProps
 > = props => {
   const { height: containerHeight } = useEditorProps();
-  const { showSourceCode = true, defaultShowLayer = true, jsonReadOnly = true, mjmlReadOnly = true } = props;
+  const { showSourceCode = true, defaultShowLayer = true, jsonReadOnly = false, mjmlReadOnly = true } = props;
   const [collapsed, setCollapsed] = useState(!defaultShowLayer);
   return (
     <ConfigProvider locale={enUS}>
