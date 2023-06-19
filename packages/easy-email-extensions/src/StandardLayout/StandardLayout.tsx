@@ -7,7 +7,10 @@ import enUS from '@arco-design/web-react/es/locale/en-US';
 import { MergeTagBadgePrompt } from '@extensions/MergeTagBadgePrompt';
 import { EditPanel } from '../EditPanel';
 import { ConfigurationPanel } from '@extensions/ConfigurationPanel';
-import { ExtensionProps, ExtensionProvider } from '@extensions/components/Providers/ExtensionProvider';
+import {
+  ExtensionProps,
+  ExtensionProvider,
+} from '@extensions/components/Providers/ExtensionProvider';
 import { AdvancedType } from 'easy-email-core';
 
 const defaultCategories: ExtensionProps['categories'] = [
@@ -85,7 +88,12 @@ const defaultCategories: ExtensionProps['categories'] = [
 
 export const StandardLayout: React.FC<ExtensionProps> = props => {
   const { height: containerHeight } = useEditorProps();
-  const { showSourceCode = true, compact = true, categories = defaultCategories } = props;
+  const {
+    showSourceCode = true,
+    compact = true,
+    categories = defaultCategories,
+    mjmlReadOnly = true,
+  } = props;
 
   const { setFocusIdx } = useFocusIdx();
 
@@ -117,9 +125,19 @@ export const StandardLayout: React.FC<ExtensionProps> = props => {
               overflow: 'hidden',
             }}
           >
-            {compact && <EditPanel showSourceCode={showSourceCode} />}
+            {compact && (
+              <EditPanel
+                showSourceCode={showSourceCode}
+                mjmlReadOnly={mjmlReadOnly}
+              />
+            )}
             <Layout style={{ height: containerHeight, flex: 1 }}>{props.children}</Layout>
-            {!compact && <EditPanel showSourceCode={showSourceCode} />}
+            {!compact && (
+              <EditPanel
+                showSourceCode={showSourceCode}
+                mjmlReadOnly={mjmlReadOnly}
+              />
+            )}
             {compact ? (
               <Layout.Sider
                 style={{
@@ -133,6 +151,7 @@ export const StandardLayout: React.FC<ExtensionProps> = props => {
                   compact={compact}
                   height={containerHeight}
                   showSourceCode={showSourceCode}
+                  mjmlReadOnly={mjmlReadOnly}
                 />
               </Layout.Sider>
             ) : (

@@ -7,12 +7,17 @@ import {
   IBlockData,
   JsonToMjml,
 } from 'easy-email-core';
-import { useBlock, useFocusIdx, useEditorContext, useEditorProps } from 'easy-email-editor';
+import {
+  useBlock,
+  useFocusIdx,
+  useEditorContext,
+  useEditorProps,
+} from 'easy-email-editor';
 import { cloneDeep } from 'lodash';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { MjmlToJson } from '@extensions/utils/MjmlToJson';
 
-export function SourceCodePanel() {
+export function SourceCodePanel({ mjmlReadOnly }: { mjmlReadOnly: boolean }) {
   const { setValueByIdx, focusBlock, values } = useBlock();
   const { focusIdx } = useFocusIdx();
 
@@ -29,7 +34,7 @@ export function SourceCodePanel() {
     (event: React.FocusEvent<HTMLTextAreaElement>) => {
       try {
         const parseValue = JSON.parse(
-          JSON.stringify(eval('(' + event.target.value + ')'))
+          JSON.stringify(eval('(' + event.target.value + ')')),
         ) as IBlockData;
 
         const block = BlockManager.getBlockByType(parseValue.type);
@@ -49,7 +54,7 @@ export function SourceCodePanel() {
         Message.error(error?.message || error);
       }
     },
-    [focusIdx, setValueByIdx]
+    [focusIdx, setValueByIdx],
   );
 
   const onMjmlChange = useCallback(
@@ -72,7 +77,7 @@ export function SourceCodePanel() {
         Message.error(t('Invalid content'));
       }
     },
-    [focusIdx, setValueByIdx, values]
+    [focusIdx, setValueByIdx, values],
   );
 
   const onChangeMjmlText = useCallback((value: string) => {
@@ -88,7 +93,7 @@ export function SourceCodePanel() {
           context: pageData,
           mode: 'production',
           dataSource: cloneDeep(mergeTags),
-        })
+        }),
       );
   }, [focusBlock, focusIdx, pageData, mergeTags]);
 
@@ -119,6 +124,7 @@ export function SourceCodePanel() {
           autoSize={{ maxRows: 25 }}
           onChange={onChangeMjmlText}
           onBlur={onMjmlChange}
+          readOnly={mjmlReadOnly}
         />
       </Collapse.Item>
     </Collapse>

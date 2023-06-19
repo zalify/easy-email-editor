@@ -14,12 +14,13 @@ import { IconLeft, IconRight } from '@arco-design/web-react/icon';
 export const SimpleLayout: React.FC<
   {
     showSourceCode?: boolean;
+    mjmlReadOnly?: boolean;
     defaultShowLayer?: boolean;
     children: React.ReactNode | React.ReactElement;
   } & BlockLayerProps
 > = props => {
   const { height: containerHeight } = useEditorProps();
-  const { showSourceCode = true, defaultShowLayer = true } = props;
+  const { showSourceCode = true, defaultShowLayer = true, mjmlReadOnly = true } = props;
   const [collapsed, setCollapsed] = useState(!defaultShowLayer);
   return (
     <ConfigProvider locale={enUS}>
@@ -122,7 +123,7 @@ export const SimpleLayout: React.FC<
                     </div>
                   }
                 >
-                  <SourceCodePanel />
+                  <SourceCodePanel mjmlReadOnly={mjmlReadOnly} />
                 </Tabs.TabPane>
               )}
             </Tabs>

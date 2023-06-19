@@ -10,7 +10,13 @@ import { useExtensionProps } from '@extensions/components/Providers/ExtensionPro
 
 const TabPane = Tabs.TabPane;
 
-export function EditPanel({ showSourceCode }: { showSourceCode: boolean }) {
+export function EditPanel({
+  showSourceCode,
+  mjmlReadOnly,
+}: {
+  showSourceCode: boolean;
+  mjmlReadOnly: boolean;
+}) {
   const { height } = useEditorProps();
   const { compact = true } = useExtensionProps();
 
@@ -59,6 +65,7 @@ export function EditPanel({ showSourceCode }: { showSourceCode: boolean }) {
           height={height}
           showSourceCode={showSourceCode}
           compact={Boolean(compact)}
+          mjmlReadOnly={mjmlReadOnly}
         />
       )}
     </Layout.Sider>
