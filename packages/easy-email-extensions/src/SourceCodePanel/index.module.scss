@@ -1,0 +1,13 @@
+.customTextArea {
+  &[readonly] {
+    color: var(--color-text-2);
+    &:hover {
+      border-color: var(--color-neutral-3);
+    }
+    &:focus {
+      border-color: var(--color-neutral-3);
+      background-color: transparent;
+      box-shadow: none;
+    }
+  }
+}

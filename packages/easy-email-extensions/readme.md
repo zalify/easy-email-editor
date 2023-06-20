@@ -232,6 +232,8 @@ export default function App() {
     - compact
     - categories
     - showSourceCode
+    - jsonReadOnly
+    - mjmlReadOnly
 
 ## transform mjml to json
 
