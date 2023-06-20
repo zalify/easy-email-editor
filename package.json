@@ -10,13 +10,16 @@
     "dev": "cd demo && yarn dev",
     "demo": "cd demo && yarn build",
     "test": "yarn test:core && yarn test:extensions",
-    "test:core" : "cd packages/easy-email-core && yarn test",
-    "test:extensions" : "cd packages/easy-email-extensions && yarn test",
+    "test:core": "cd packages/easy-email-core && yarn test",
+    "test:extensions": "cd packages/easy-email-extensions && yarn test",
     "translate": "ts-node scripts/translate.ts",
     "lint": "lerna exec -- yarn format"
   },
   "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
+    "@types/file-saver": "^2.0.5",
     "easy-localized-translation": "^1.1.0",
+    "file-saver": "^2.0.5",
     "lerna": "^4.0.0",
     "liquidjs": "^9.34.1"
   },
