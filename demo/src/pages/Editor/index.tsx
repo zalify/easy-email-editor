@@ -428,6 +428,7 @@ export default function Editor() {
                     >
                       <Select.Option value='en'>English</Select.Option>
                       <Select.Option value='zh-Hans'>中文简体</Select.Option>
+                      <Select.Option value='zh-Hant'>中文繁體</Select.Option>
                       <Select.Option value='ja'>Japanese</Select.Option>
                       <Select.Option value='it'>Italian</Select.Option>
                     </Select>
