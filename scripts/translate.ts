@@ -22,7 +22,7 @@ async function main() {
 
   const translateWords = await translate(words, {
     from: 'en',
-    locales: ['zh-Hans', 'ja', 'ko', 'it'],
+    locales: ['zh-Hans', 'zh-Hant', 'ja', 'ko', 'it'],
     servicesAccount: {
       private_key: config.parsed!.private_key!, // NEED services account
       client_email: config.parsed!.client_email!, // NEED services account
