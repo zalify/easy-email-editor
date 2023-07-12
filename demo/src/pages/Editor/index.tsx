@@ -633,7 +633,7 @@ export default function Editor() {
                           <strong>Export</strong>
                         </Button>
                       </Dropdown>
-                      <Button type="text" href="mailto:962491243@qq.com">
+                      <Button target="_blank" href="mailto:962491243@qq.com">
                         <strong>Try advanced editor</strong>
                       </Button>
                       <a
