@@ -198,7 +198,7 @@ export default function Editor() {
   const dispatch = useDispatch();
   const history = useHistory();
   const templateData = useAppSelector('template');
-  const [locale, setLocale] = useState('zh-Hans');
+  const [locale, setLocale] = useState('en');
   const { addCollection, removeCollection, collectionCategory } = useCollection();
   const [visible, setVisible] = useState(false);
   const [text, setText] = useState('');
