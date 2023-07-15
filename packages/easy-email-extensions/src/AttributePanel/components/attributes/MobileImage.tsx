@@ -40,7 +40,7 @@ export function MobileImage() {
     <Collapse.Item
       className='mobile-image'
       destroyOnHide
-      name='mobile-image'
+      name='mobileImage'
       header={t('Mobile Image')}
       extra={(
         <div style={{ marginRight: 10 }}>

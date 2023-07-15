@@ -25,6 +25,8 @@ export const CollapseWrapper: React.FC<CollapseWrapperProps> = props => {
   const conditionEnabled =
     isAdvancedBlockType && Boolean(value?.condition && value?.condition?.enabled);
 
+  const mobileImageEnabled = isAdvancedBlockType && Boolean(value?.mobileImage && value.mobileImage.enabled);
+
   const onChange = useCallback((key: string, keys: string[]) => {
     setActiveKeys(keys);
   }, []);
@@ -48,6 +50,16 @@ export const CollapseWrapper: React.FC<CollapseWrapperProps> = props => {
       setActiveKeys(keys => keys.filter(k => k !== 'Condition'));
     }
   }, [conditionEnabled, isAdvancedBlockType]);
+
+  useEffect(() => {
+    if (!isAdvancedBlockType) return;
+
+    if (mobileImageEnabled) {
+      setActiveKeys(keys => [...keys, 'mobileImage']);
+    } else {
+      setActiveKeys(keys => keys.filter(k => k !== 'mobileImage'));
+    }
+  }, [mobileImageEnabled, isAdvancedBlockType]);
 
   return (
     <Space

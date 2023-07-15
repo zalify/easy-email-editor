@@ -67,7 +67,7 @@ export function Image() {
           </Stack>
         </Collapse.Item>
 
-        {/* <MobileImage /> */}
+        <MobileImage />
 
         <Collapse.Item
           name='0'
