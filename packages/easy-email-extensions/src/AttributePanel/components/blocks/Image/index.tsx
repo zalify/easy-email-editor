@@ -10,6 +10,7 @@ import { Width } from '@extensions/AttributePanel/components/attributes/Width';
 import { Height } from '@extensions/AttributePanel/components/attributes/Height';
 import { Link } from '@extensions/AttributePanel/components/attributes/Link';
 import { Align } from '@extensions/AttributePanel/components/attributes/Align';
+import { MobileImage } from '@extensions/AttributePanel/components/attributes/MobileImage';
 
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
 import { Collapse, Grid, Space } from '@arco-design/web-react';
@@ -65,6 +66,8 @@ export function Image() {
             />
           </Stack>
         </Collapse.Item>
+
+        {/* <MobileImage /> */}
 
         <Collapse.Item
           name='0'

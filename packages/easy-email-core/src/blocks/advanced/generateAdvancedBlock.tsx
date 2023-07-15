@@ -15,7 +15,7 @@ export function generateAdvancedBlock<T extends AdvancedBlock>(option: {
     idx: string | null | undefined;
     mode: 'testing' | 'production';
     context?: IPage;
-    dataSource?: { [key: string]: any };
+    dataSource?: { [key: string]: any; };
   }) => ReturnType<NonNullable<IBlock['render']>>;
   validParentType: string[];
 }) {
@@ -102,6 +102,10 @@ export interface AdvancedBlock extends IBlockData {
         itemName: string; // -> product
         limit: number;
         mockQuantity: number;
+      };
+      mobileImage?: {
+        enabled: boolean;
+        sourceUrl: string;
       };
     };
   };
