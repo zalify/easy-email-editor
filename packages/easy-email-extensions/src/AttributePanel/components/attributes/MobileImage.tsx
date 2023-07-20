@@ -54,7 +54,7 @@ export function MobileImage() {
             <ImageUploaderField
               label={t('src')}
               labelHidden
-              name={`${focusIdx}.attributes.src`}
+              name={`${focusIdx}.data.value.mobileImage.sourceUrl`}
               helpText={t(
                 'The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.',
               )}
