@@ -9,6 +9,11 @@ import { generaMjmlMetaData } from '@core/utils/generaMjmlMetaData';
 import { BlockRenderer } from '@core/components/BlockRenderer';
 import { getAdapterAttributesString, getChildIdx, getPageIdx } from '@core/utils';
 import { t } from '@core/utils/I18nManager';
+import { classnames } from '@core/utils/classnames';
+import { EMAIL_BLOCK_CLASS_NAME } from '@core/constants';
+import { getNodeIdxClassName, getNodeTypeClassName } from '@core/utils';
+import { listeners } from 'process';
+import { log } from 'console';
 
 export type IPage = IBlockData<
   {
@@ -104,7 +109,7 @@ export const Page = createBlock<IPage>({
       ? `<mj-raw>${value.extraHeadContent}</mj-raw>`
       : '';
 
-    const findAdvancedImages = (obj: IBlockData): IBlockData<any, any>[] => {
+    const findAdvancedImages = (obj: IBlockData, index: number): IBlockData<any, any>[] => {
       if (obj.type === 'advanced_image') {
         return [obj];
       }
@@ -120,8 +125,17 @@ export const Page = createBlock<IPage>({
 
     let styleStr = "";
 
-    advancedImages.map(image => {
+    advancedImages.map((image, index) => {
       if (image.data.value?.mobileImage?.enabled) {
+        let idx = getChildIdx(getPageIdx(), index);
+        let cssname = classnames(
+          image.attributes['css-class'],
+          EMAIL_BLOCK_CLASS_NAME,
+          getNodeIdxClassName(idx),
+          getNodeTypeClassName(image.type)
+        );
+        console.log(cssname.replaceAll(' ', '.'));
+
         styleStr += `.node-idx-content.children.[0].node-type-advanced_image { content: url(${image.data.value?.mobileImage?.sourceUrl});
           width: 100%; }`;
       }

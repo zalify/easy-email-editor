@@ -10,26 +10,31 @@ export function getAdapterAttributesString(
   params: Parameters<IBlock['render']>[0]
 ) {
   const { data, idx } = params;
-  const isTest = params.mode === 'testing';
+  //const isTest = params.mode === 'testing';
   const attributes = { ...data.attributes };
-  const keepClassName = isTest ? params.keepClassName : false;
+  //const keepClasName = isTest ? params.keepClassName : false;
+  const keepClassName = true;
 
-  if (isTest && idx) {
+  // if (idx) {
+  //   attributes['css-class'] = classnames(
+  //     attributes['css-class'],
+  //     EMAIL_BLOCK_CLASS_NAME,
+  //     getNodeIdxClassName(idx),
+  //     getNodeTypeClassName(data.type)
+  //   );
+  // }
+
+  if (idx) {
     attributes['css-class'] = classnames(
       attributes['css-class'],
       EMAIL_BLOCK_CLASS_NAME,
       getNodeIdxClassName(idx),
       getNodeTypeClassName(data.type)
     );
+    if (data.type == 'image') {
+      attributes['css-class'] += ` rippedClass_${idx}`;
+    }
   }
-
-  if (keepClassName) {
-    attributes['css-class'] = classnames(
-      attributes['css-class'],
-      getNodeTypeClassName(data.type)
-    );
-  }
-
   let attributeStr = '';
   for (let key in attributes) {
     const keyName = key as keyof typeof attributes;

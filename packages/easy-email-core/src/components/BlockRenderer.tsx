@@ -2,6 +2,7 @@ import { IBlock } from '@core/typings';
 import { BlockManager } from '@core/utils';
 import { useEmailRenderContext } from '@core/utils/JsonToMjml';
 import React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 
 type BlockDataItem = Omit<
   Parameters<IBlock['render']>[0],
@@ -14,7 +15,25 @@ export const BlockRenderer = (props: BlockDataItem) => {
   if (data.data.hidden) return null;
   const block = BlockManager.getBlockByType(data.type);
   if (!block) return null;
-  return <>{block.render({ ...props, mode, context, dataSource })}</>;
+  let staticStyle = null;
+  if (data.type == "advanced_image") {
+    staticStyle = renderToStaticMarkup(
+      <>
+        {`<mj-style>
+      @media all and (max-width: 480px) {
+        .advanced_image {
+          content: url(https://images.pexels.com/photos/17502672/pexels-photo-17502672/free-photo-of-light-city-art-street.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load);
+        }
+      }
+    </mj-style>`}
+      </>
+    );
+  }
+  return <>
+    {staticStyle}
+    {block.render({ ...props, mode, context, dataSource })}
+
+  </>;
 };
 
 // const BlockEditRenderer = (props: BlockDataItem) => {
