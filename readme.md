@@ -60,11 +60,9 @@ Check out the live demo here: <a href="https://email.maocanhua.cn/?utm_source=gi
 
 </br>
 
-## Donation
+## Custom Services
+For customized features or paid consultation services, please contact 962491243@qq.com.
 
-If you like this project, please consider donating.
-
-<a href="https://www.buymeacoffee.com/easyemail" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee"></a>
 
 ## Getting started
 
@@ -167,7 +165,6 @@ export default function App() {
 - [easy-email-extensions](./packages/easy-email-extensions/readme.md)
 
 </br>
-
 
 ## Development
 
