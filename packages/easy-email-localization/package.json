@@ -1,9 +1,13 @@
 {
-  "name": "easy-email-localization",
+  "name": "examinatr-email-localization",
   "license": "MIT",
   "description": "Email editor",
-  "version": "4.14.0",
-  "author": "m-Ryan",
+  "version": "4.12.2",
+  "author": "Sarath Kumar",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:sarathjasrin/easy-email.git"
+  },
   "keywords": [],
   "files": [
     "locales"

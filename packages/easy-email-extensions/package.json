@@ -1,12 +1,12 @@
 {
-  "name": "easy-email-extensions",
+  "name": "examinatr-email-extensions",
   "license": "MIT",
   "description": "Email editor",
-  "version": "4.14.1",
-  "author": "m-Ryan",
+  "version": "4.12.2",
+  "author": "Sarath Kumar",
   "repository": {
     "type": "git",
-    "url": "git@github.com:m-Ryan/easy-email.git"
+    "url": "git@github.com:sarathjasrin/easy-email.git"
   },
   "keywords": [
     "email editor core"
