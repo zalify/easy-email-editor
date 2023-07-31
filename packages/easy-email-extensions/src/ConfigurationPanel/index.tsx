@@ -79,9 +79,9 @@ export function ConfigurationPanel({
 
           <Tabs.TabPane
             destroyOnHide
-            key='Source code'
+            key='Data'
             title={
-              <div style={{ height: 40, lineHeight: '40px' }}>{t('Source code')}</div>
+              <div style={{ height: 40, lineHeight: '40px' }}>{t('Data')}</div>
             }
           >
             <FullHeightOverlayScrollbars height={`calc(${height} - 60px)`}>

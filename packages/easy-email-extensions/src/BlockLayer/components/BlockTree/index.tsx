@@ -163,7 +163,7 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
   );
 
   const renderTitle: TreeProps['renderTitle'] = useCallback(
-    (nodeData) => {
+    (nodeData:any) => {
       return (
         <div
           style={{ display: 'inline-flex', width: '100%' }}
@@ -182,7 +182,7 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
   }, [propsDragEnd]);
 
   const onSelect: TreeProps['onSelect'] = useCallback(
-    (selectedKeys) => {
+    (selectedKeys:any) => {
       propsSelect(selectedKeys[0]);
     },
     [propsSelect]

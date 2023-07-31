@@ -117,10 +117,10 @@ export const SimpleLayout: React.FC<
               {showSourceCode && (
                 <Tabs.TabPane
                   destroyOnHide
-                  key='Source code'
+                  key='Data'
                   title={
                     <div style={{ height: 31, lineHeight: '31px' }}>
-                      {t('Source code')}
+                      {t('Data')}
                     </div>
                   }
                 >
