@@ -98,6 +98,9 @@ const defaultCategories: ExtensionProps['categories'] = [
       },
       {
         type: CustomBlocksType.PRODUCT_RECOMMENDATION,
+      },
+      {
+        type: CustomBlocksType.TOPBAR_1,
       }
     ],
   },
