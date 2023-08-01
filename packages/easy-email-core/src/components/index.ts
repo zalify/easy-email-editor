@@ -9,6 +9,7 @@ export { Divider } from './Divider';
 export { Wrapper } from './Wrapper';
 export { Spacer } from './Spacer';
 export { Raw } from './Raw';
+export { BasicBlock } from './BasicBlock';
 export { Accordion } from './Accordion';
 export { AccordionElement } from './AccordionElement';
 export { AccordionTitle } from './AccordionTitle';

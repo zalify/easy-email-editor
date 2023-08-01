@@ -96,6 +96,9 @@ const defaultCategories: ExtensionProps['categories'] = [
       {
         type: AdvancedType.WRAPPER,
       },
+      {
+        type: CustomBlocksType.PRODUCT_RECOMMENDATION,
+      }
     ],
   },
   {
@@ -502,7 +505,7 @@ export default function Editor() {
           mergeTagGenerate={tag => `{{${tag}}}`}
           onBeforePreview={onBeforePreview}
           socialIcons={[]}
-          // locale={localesData[locale]}
+        // locale={localesData[locale]}
         >
           {({ values }, { submit, restart }) => {
             return (
