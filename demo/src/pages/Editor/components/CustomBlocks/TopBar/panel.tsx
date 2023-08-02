@@ -13,6 +13,9 @@ export function TopbarPanel1() {
           name='Kya Haal hai'
           inline
         />
+        <TextField
+          label='Background-Color' name='bg-color' inline
+        ></TextField>
       </Stack>
     </AttributesPanelWrapper>
   );

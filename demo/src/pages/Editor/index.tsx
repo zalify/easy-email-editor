@@ -97,10 +97,10 @@ const defaultCategories: ExtensionProps['categories'] = [
         type: AdvancedType.WRAPPER,
       },
       {
-        type: CustomBlocksType.PRODUCT_RECOMMENDATION,
+        type: CustomBlocksType.TOPBAR_1,
       },
       {
-        type: CustomBlocksType.TOPBAR_1,
+        type: CustomBlocksType.BODY_1,
       }
     ],
   },
