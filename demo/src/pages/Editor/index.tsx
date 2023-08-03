@@ -72,103 +72,21 @@ const defaultCategories: ExtensionProps['categories'] = [
     active: true,
     blocks: [
       {
-        type: AdvancedType.TEXT,
-      },
-      {
-        type: AdvancedType.IMAGE,
-        payload: { attributes: { padding: '0px 0px 0px 0px' } },
-      },
-      {
-        type: AdvancedType.BUTTON,
-      },
-      {
-        type: AdvancedType.SOCIAL,
-      },
-      {
-        type: AdvancedType.DIVIDER,
-      },
-      {
-        type: AdvancedType.SPACER,
-      },
-      {
-        type: AdvancedType.HERO,
-      },
-      {
-        type: AdvancedType.WRAPPER,
-      },
-      {
         type: CustomBlocksType.TOPBAR_1,
+        category: 'Topbar'
+      },
+      {
+        type: CustomBlocksType.TOPBAR_2,
+        category: 'Topbar'
       },
       {
         type: CustomBlocksType.BODY_1,
+        category: 'Body'
+      },
+      {
+        type: CustomBlocksType.BODY_2,
+        category: 'Body'
       }
-    ],
-  },
-  {
-    label: 'Layout',
-    active: true,
-    displayType: 'column',
-    blocks: [
-      {
-        title: '2 columns',
-        payload: [
-          ['50%', '50%'],
-          ['33%', '67%'],
-          ['67%', '33%'],
-          ['25%', '75%'],
-          ['75%', '25%'],
-        ],
-      },
-      {
-        title: '3 columns',
-        payload: [
-          ['33.33%', '33.33%', '33.33%'],
-          ['25%', '25%', '50%'],
-          ['50%', '25%', '25%'],
-        ],
-      },
-      {
-        title: '4 columns',
-        payload: [['25%', '25%', '25%', '25%']],
-      },
-    ],
-  },
-  {
-    label: 'Custom',
-    active: true,
-    displayType: 'custom',
-    blocks: [
-      <BlockAvatarWrapper type={CustomBlocksType.PRODUCT_RECOMMENDATION}>
-        <div
-          style={{
-            position: 'relative',
-            border: '1px solid #ccc',
-            marginBottom: 20,
-            width: '80%',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-          }}
-        >
-          <img
-            src={
-              'http://res.cloudinary.com/dwkp0e1yo/image/upload/v1665841389/ctbjtig27parugrztdhk.png'
-            }
-            style={{
-              maxWidth: '100%',
-            }}
-          />
-          <div
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              zIndex: 2,
-            }}
-          />
-        </div>
-      </BlockAvatarWrapper>,
     ],
   },
 ];
@@ -258,7 +176,7 @@ export default function Editor() {
     return services.common.uploadByQiniu(compressionFile);
   };
 
-  // const onChangeTheme = useCallback(t => {
+  // const   = useCallback(t => {
   //   setTheme(t);
   // }, []);
 

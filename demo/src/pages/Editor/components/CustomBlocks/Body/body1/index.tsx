@@ -3,18 +3,14 @@ import {
   BasicType,
   components,
   createCustomBlock,
-  getPreviewClassName,
   AdvancedType,
   mergeBlock,
 } from 'easy-email-core';
 
-import { CustomBlocksType } from '../constants';
+import { CustomBlocksType } from '../../constants';
 import React from 'react';
-import { getContentEditableClassName } from 'easy-email-editor';
-import { BlockRenderer } from '../../../../../../../packages/easy-email-core/src/components';
-// import { BasicBlock } from '../../../../../../../packages/easy-email-core/src/components';
 
-const { Column, Section, Wrapper, Text, Button, Image, Group, BasicBlock } = components;
+const { BasicBlock } = components;
 
 export type IBody = IBlockData<
   {
@@ -39,7 +35,7 @@ export const Body1 = createCustomBlock<IBody>({
   create: payload => {
     const defaultData: IBody =
     {
-      type: BasicType.HERO,
+      type: CustomBlocksType.BODY_1,
       data: {
         value: {},
       },

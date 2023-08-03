@@ -1,4 +1,4 @@
-import { Collapse, Grid, Space, Typography } from '@arco-design/web-react';
+import { Collapse, Grid, Select, Space, Typography } from '@arco-design/web-react';
 import { AdvancedType, BlockManager, IBlockData } from 'easy-email-core';
 import { BlockAvatarWrapper, IconFont } from 'easy-email-editor';
 import React, { useMemo, useState } from 'react';
@@ -6,9 +6,12 @@ import { IconCaretRight, IconCaretUp } from '@arco-design/web-react/icon';
 import { getIconNameByBlockType } from '@extensions/utils/getIconNameByBlockType';
 import styles from './index.module.scss';
 import { useExtensionProps } from '@extensions/components/Providers/ExtensionProvider';
+import { isArray } from 'lodash';
 
 export function Blocks() {
-  const { categories } = useExtensionProps();
+  const { categories, } = useExtensionProps();
+  const [defaultCategories, setDefaultCategories] = useState(categories);
+  const [selectedCategory, setSelectedCategory] = useState('Content');
 
   const defaultActiveKey = useMemo(
     () => [
@@ -16,12 +19,29 @@ export function Blocks() {
     ],
     [categories]
   );
+
+  const changeCategories = (t: string) => {
+    const newVal = JSON.parse(JSON.stringify(categories));
+
+    const val = newVal.map((cat: any, ind: number) => {
+      if (cat.blocks.length && isArray(cat.blocks)) {
+        cat.blocks = cat.blocks.filter((block: any) => {
+          if (block.category === t) return true;
+        });
+      }
+      return cat;
+    });
+
+    setDefaultCategories(val);
+    setSelectedCategory(t);
+  };
+
   return (
     <Collapse
       defaultActiveKey={defaultActiveKey}
       style={{ paddingBottom: 30, minHeight: '100%' }}
     >
-      {categories.map((cat, index) => {
+      {defaultCategories.map((cat, index) => {
         if (cat.displayType === 'column') {
           return (
             <Collapse.Item
@@ -33,9 +53,9 @@ export function Blocks() {
               <Space direction='vertical'>
                 <div />
               </Space>
-              {cat.blocks.map((item) => (
+              {cat.blocks.map((item, index) => (
                 <LayoutItem
-                  key={item.title}
+                  key={index}
                   title={item.title || ''}
                   columns={item.payload}
                 />
@@ -65,18 +85,29 @@ export function Blocks() {
           );
         }
         return (
-          <Collapse.Item
-            key={index}
-            contentStyle={{ padding: 0, paddingBottom: 0, paddingTop: 20 }}
-            name={cat.label}
-            header={cat.label}
-          >
+          // <Collapse.Item
+          //   key={index}
+          //   contentStyle={{ padding: 0, paddingBottom: 0, paddingTop: 20 }}
+          //   name={cat.label}
+          //   header={cat.label}
+          // >
+          <>
+            <Select
+              style={{ padding: 15 }}
+              onChange={(t) => { changeCategories(t); }}
+              value={selectedCategory}
+            >
+              <Select.Option key='fff-0' value='Footer'>Footer</Select.Option>
+              <Select.Option key='fff-1' value='Topbar'>Topbar</Select.Option>
+              <Select.Option key='fff-2' value='Body'>Body</Select.Option>
+            </Select>
             <Grid.Row>
               {cat.blocks.map((item, index) => {
                 return <BlockItem key={index} {...(item as any)} />;
               })}
             </Grid.Row>
-          </Collapse.Item>
+          </>
+          // </Collapse.Item>
         );
       })}
     </Collapse>

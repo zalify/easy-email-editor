@@ -8,10 +8,10 @@ import {
   mergeBlock,
 } from 'easy-email-core';
 
-import { CustomBlocksType } from '../constants';
+import { CustomBlocksType } from '../../constants';
 import React from 'react';
 import { getContentEditableClassName } from 'easy-email-editor';
-import { BlockRenderer } from '../../../../../../../packages/easy-email-core/src/components';
+import { BlockRenderer } from '../../../../../../../../packages/easy-email-core/src/components';
 // import { BasicBlock } from '../../../../../../../packages/easy-email-core/src/components';
 
 const { Column, Section, Wrapper, Text, Button, Image, Group, BasicBlock } = components;
@@ -32,18 +32,11 @@ export type ITopBar1 = IBlockData<
   }
 >;
 
-const productPlaceholder = {
-  image: 'https://commons.wikimedia.org/wiki/File:Moon.jpg',
-  title: 'Red Flock Buckle Winter Boots',
-  price: '$59.99 HKD',
-  url: 'https://easy-email-m-ryan.vercel.app',
-};
-
 export const TopBar1 = createCustomBlock<ITopBar1>({
-  name: 'TopBar 1',
+  name: 'Footer 1',
   type: CustomBlocksType.TOPBAR_1,
   validParentType: [BasicType.PAGE, AdvancedType.WRAPPER, BasicType.WRAPPER],
-  create: payload => {
+  create: (payload: any) => {
     const defaultData: ITopBar1 = {
       type: CustomBlocksType.TOPBAR_1,
       data: {
@@ -71,8 +64,8 @@ export const TopBar1 = createCustomBlock<ITopBar1>({
                 type: BasicType.TEXT,
                 children: [],
                 data: {
-                  value:{
-                    content:'custom'
+                  value: {
+                    content: 'custom'
                   }
                 },
                 attributes: {},
@@ -92,7 +85,7 @@ export const TopBar1 = createCustomBlock<ITopBar1>({
                 children: [],
                 data: {
                   value: {
-                    content:'hello'
+                    content: 'hello'
                   },
                 },
                 attributes: {},
@@ -108,7 +101,7 @@ export const TopBar1 = createCustomBlock<ITopBar1>({
               type: BasicType.COLUMN,
               children: [
                 {
-                  type: BasicType.IMAGE,
+                  type: BasicType.TEXT,
                   children: [],
                   data: {
                     value: {
@@ -116,10 +109,10 @@ export const TopBar1 = createCustomBlock<ITopBar1>({
                     }
                   },
                   attributes: {
-                    src: 'https://plus.unsplash.com/premium_photo-1668064108355-ac4e7a7d089e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=401&q=80 '
+
                   }
                 },
-                ],
+              ],
               data: {
                 value: {
 
