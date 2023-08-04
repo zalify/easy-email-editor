@@ -16,159 +16,179 @@ import { BlockRenderer } from '../../../../../../../../packages/easy-email-core/
 
 const { Column, Section, Wrapper, Text, Button, Image, Group, BasicBlock } = components;
 
-export type ITopBar1 = IBlockData<
+export type IFooter1 = IBlockData<
   {
     'background-color': string;
-    'button-color': string;
-    'button-text-color': string;
-    'product-name-color': string;
-    'product-price-color': string;
-    'title-color': string;
-  },
-  {
-    title: string;
-    buttonText: string;
-    quantity: number;
+    align: string;
   }
 >;
 
-export const TopBar1 = createCustomBlock<ITopBar1>({
+export const Footer1 = createCustomBlock<IFooter1>({
   name: 'Footer 1',
-  type: CustomBlocksType.TOPBAR_1,
-  validParentType: [BasicType.PAGE, AdvancedType.WRAPPER, BasicType.WRAPPER],
+  type: CustomBlocksType.FOOTER_1,
+  validParentType: [BasicType.PAGE],
   create: (payload: any) => {
-    const defaultData: ITopBar1 = {
-      type: CustomBlocksType.TOPBAR_1,
+    const defaultData: IFooter1 = {
+      type: CustomBlocksType.FOOTER_1,
       data: {
         value: {
-          title: 'You might also like',
-          buttonText: 'Buy now',
-          quantity: 3,
         },
       },
       attributes: {
         'background-color': '#ffffff',
-        'button-text-color': '#ffffff',
-        'button-color': '#414141',
-        'product-name-color': '#414141',
-        'product-price-color': '#414141',
-        'title-color': '#222222',
+        align: 'center',
       },
       children: [
         {
-          type: BasicType.GROUP,
-          children: [
-            {
-              type: BasicType.COLUMN,
-              children: [{
-                type: BasicType.TEXT,
-                children: [],
-                data: {
-                  value: {
-                    content: 'custom'
-                  }
-                },
-                attributes: {},
-              },],
-              data: {
-                value: {
-
-                },
-              },
-              attributes: {},
-            },
-
-            {
-              type: BasicType.COLUMN,
-              children: [{
-                type: BasicType.TEXT,
-                children: [],
-                data: {
-                  value: {
-                    content: 'hello'
-                  },
-                },
-                attributes: {},
-              },],
-              data: {
-                value: {
-
-                },
-              },
-              attributes: {},
-            },
-            {
-              type: BasicType.COLUMN,
-              children: [
-                {
-                  type: BasicType.TEXT,
-                  children: [],
-                  data: {
-                    value: {
-
-                    }
-                  },
-                  attributes: {
-
-                  }
-                },
-              ],
-              data: {
-                value: {
-
-                },
-              },
-              attributes: {},
-            },
-
-            {
-              type: BasicType.COLUMN,
-              children: [{
-                type: BasicType.TEXT,
-                children: [],
-                data: {
-                  value: {
-                    content: 'custom block title',
-                  },
-                },
-                attributes: {},
-              },],
-              data: {
-                value: {
-
-                },
-              },
-              attributes: {},
-            },
-
-            {
-              type: BasicType.COLUMN,
-              children: [{
-                type: BasicType.TEXT,
-                children: [],
-                data: {
-                  value: {
-                    content: 'block title',
-                  },
-                },
-                attributes: {},
-              },],
-              data: {
-                value: {
-
-                },
-              },
-              attributes: {},
-            },
-          ],
+          type: BasicType.SECTION,
           data: {
             value: {
             },
           },
-          attributes: {},
+          attributes: {
+
+          },
+          children: [
+            {
+              type: BasicType.COLUMN,
+              data: {
+                value: {},
+              },
+              attributes: {},
+              children: [
+                {
+                  type: BasicType.TEXT,
+                  data: {
+                    value: {
+                      content: 'Glue Labs Pvt. Ltd.',
+                    },
+                  },
+                  attributes: {
+                    padding: '0px 0px 0px 0px',
+                    align: 'center',
+                    'font-size': '25px',
+                    'font-weight': '600',
+                    color: 'black',
+                    'line-height': '30px',
+                  },
+                  children: [
+
+                  ],
+                }
+              ],
+            }
+          ],
         },
-
-
+        {
+          type: BasicType.SECTION,
+          data: {
+            value: {
+            },
+          },
+          attributes: {
+            padding: '0px 25px 0px 25px',
+            align: 'center',
+            'font-size': '25px',
+            'line-height': '25px',
+          },
+          children: [
+            {
+              type: BasicType.GROUP,
+              data: {
+                value: {},
+              },
+              attributes: {
+                width: "60%"
+              },
+              children: [
+                {
+                  type: BasicType.COLUMN,
+                  data: {
+                    value: {},
+                  },
+                  attributes: {
+                    padding: '0px 0px 0px 0px',
+                  },
+                  children: [
+                    {
+                      type: BasicType.TEXT,
+                      data: {
+                        value: {
+                          content: 'My Profile'
+                        },
+                      },
+                      attributes: {
+                        padding: '0px 0px 0px 0px',
+                        align: 'center',
+                        'font-size': '16px',
+                        'font-weight': '400',
+                        color: '#CCCCCC',
+                        'line-height': '16px',
+                      },
+                      children: [],
+                    }
+                  ],
+                },
+                {
+                  type: BasicType.COLUMN,
+                  data: {
+                    value: {},
+                  },
+                  attributes: {
+                    padding: '0px 0px 0px 0px',
+                  },
+                  children: [
+                    {
+                      type: BasicType.TEXT,
+                      data: {
+                        value: {
+                          content: 'Contact'
+                        },
+                      },
+                      attributes: {
+                        padding: '0px 0px 0px 0px',
+                        align: 'center',
+                        'font-size': '16px',
+                        'font-weight': '400',
+                        color: '#CCCCCC',
+                        'line-height': '16px',
+                      },
+                      children: [],
+                    }
+                  ],
+                },
+                {
+                  type: BasicType.COLUMN,
+                  data: {
+                    value: {},
+                  },
+                  attributes: {
+                    padding: '0px 0px 0px 0px',
+                  },
+                  children: [
+                    {
+                      type: BasicType.TEXT,
+                      data: {
+                        value: {
+                          content: 'Explore'
+                        },
+                      },
+                      attributes: {
+                        padding: '0px 0px 0px 0px',
+                        align: 'center',
+                        'font-size': '16px',
+                        'font-weight': '400',
+                        color: '#CCCCCC',
+                        'line-height': '16px',
+                      },
+                      children: [],
+                    }
+                  ],
+                }
+              ],
+            }
+          ],
+        },
       ],
     };
     return mergeBlock(defaultData, payload);
@@ -177,7 +197,7 @@ export const TopBar1 = createCustomBlock<ITopBar1>({
     const { data, idx, mode, context, dataSource } = params;
 
     return (
-      <BasicBlock tag='mj-section' params={params}></BasicBlock>
+      <BasicBlock tag='mj-wrapper' params={params}></BasicBlock>
     );
   },
 });

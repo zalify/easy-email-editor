@@ -86,6 +86,10 @@ const defaultCategories: ExtensionProps['categories'] = [
       {
         type: CustomBlocksType.BODY_2,
         category: 'Body'
+      },
+      {
+        type: CustomBlocksType.FOOTER_1,
+        category: 'Footer'
       }
     ],
   },
