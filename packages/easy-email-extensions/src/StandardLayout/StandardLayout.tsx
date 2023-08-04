@@ -46,44 +46,7 @@ const defaultCategories: ExtensionProps['categories'] = [
         type: AdvancedType.WRAPPER,
       },
     ],
-  },
-  {
-    get label() {
-      return t('Layout');
-    },
-    active: true,
-    displayType: 'column',
-    blocks: [
-      {
-        get title() {
-          return t('2 columns');
-        },
-        payload: [
-          ['50%', '50%'],
-          ['33%', '67%'],
-          ['67%', '33%'],
-          ['25%', '75%'],
-          ['75%', '25%'],
-        ],
-      },
-      {
-        get title() {
-          return t('3 columns');
-        },
-        payload: [
-          ['33.33%', '33.33%', '33.33%'],
-          ['25%', '25%', '50%'],
-          ['50%', '25%', '25%'],
-        ],
-      },
-      {
-        get title() {
-          return t('4 columns');
-        },
-        payload: [['25%', '25%', '25%', '25%']],
-      },
-    ],
-  },
+  }
 ];
 
 export const StandardLayout: React.FC<ExtensionProps> = props => {
@@ -154,8 +117,6 @@ export const StandardLayout: React.FC<ExtensionProps> = props => {
                   compact={compact}
                   height={containerHeight}
                   showSourceCode={showSourceCode}
-                  jsonReadOnly={jsonReadOnly}
-                  mjmlReadOnly={mjmlReadOnly}
                 />
               </Layout.Sider>
             ) : (

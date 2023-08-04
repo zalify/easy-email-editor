@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Tabs } from '@arco-design/web-react';
 import { AttributePanel } from '@extensions/AttributePanel';
-import { SourceCodePanel } from '@extensions/SourceCodePanel';
+import { DataPanel } from '@extensions/DataPanel';
 import { FullHeightOverlayScrollbars } from '@extensions/components/FullHeightOverlayScrollbars';
 import { IconLeft } from '@arco-design/web-react/icon';
 import styles from './index.module.scss';
 
 export interface ConfigurationPanelProps {
   showSourceCode: boolean;
-  jsonReadOnly: boolean;
-  mjmlReadOnly: boolean;
   height: string;
   onBack?: () => void;
   compact?: boolean;
@@ -20,8 +18,6 @@ export function ConfigurationPanel({
   height,
   onBack,
   compact,
-  jsonReadOnly,
-  mjmlReadOnly,
 }: ConfigurationPanelProps) {
   const [inited, setInited] = useState(false);
 
@@ -85,7 +81,14 @@ export function ConfigurationPanel({
             }
           >
             <FullHeightOverlayScrollbars height={`calc(${height} - 60px)`}>
-              <SourceCodePanel jsonReadOnly={jsonReadOnly} mjmlReadOnly={mjmlReadOnly} />
+              <DataPanel
+                dataObjects={
+                  [
+                    { key: 'logo', value: 'logoImg' },
+                    { key: 'place', value: 'Chandigarh' }
+                  ]
+                }
+              />
             </FullHeightOverlayScrollbars>
           </Tabs.TabPane>
         </Tabs>

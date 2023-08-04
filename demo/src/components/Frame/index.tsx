@@ -28,56 +28,7 @@ export default function Frame({
     <Layout>
       <Header style={{ padding: '0 20px', backgroundColor: '#001529' }}>
         <Stack distribution='equalSpacing' alignment='center'>
-          <h1 style={{ color: 'white', margin: '15px 0' }}>Easy-email</h1>
-
-          <div style={{ marginTop: 10 }}>
-            <Stack distribution='equalSpacing' alignment='center'>
-              <a
-                href='https://www.buymeacoffee.com/easyemail?utm_source=webside&utm_medium=button&utm_content=donate'
-                target='_blank'
-                onClick={() => pushEvent({ event: 'Donate' })}
-              >
-                <img
-                  src='https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png'
-                  alt='Buy Me A Coffee'
-                />
-              </a>
-              <a
-                className='github-button'
-                href='https://github.com/arco-design/easy-email?utm_source=webside&utm_medium=button&utm_content=star'
-                data-size='large'
-                data-icon='octicon-star'
-                data-show-count='true'
-                aria-label='Star m-Ryan/easy-email on GitHub'
-                style={{ opacity: 0 }}
-              >
-                Star
-              </a>
-
-              <a
-                className='github-button'
-                href='https://github.com/arco-design/easy-email/fork?utm_source=webside&utm_medium=button&utm_content=fork'
-                data-size='large'
-                data-show-count='true'
-                aria-label='Fork m-Ryan/easy-email on GitHub'
-                style={{ opacity: 0 }}
-              >
-                Fork
-              </a>
-
-              <a
-                className='github-button'
-                href='https://github.com/arco-design/easy-email/issues?utm_source=webside&utm_medium=button&utm_content=issues'
-                data-size='large'
-                data-show-count='true'
-                aria-label='Issue m-Ryan/easy-email on GitHub'
-                onClick={() => pushEvent({ event: 'Issue' })}
-                style={{ opacity: 0 }}
-              >
-                Issue
-              </a>
-            </Stack>
-          </div>
+          <h1 style={{ color: 'white', margin: '15px 0' }}>Email Editor POC</h1>
         </Stack>
       </Header>
       <Layout>

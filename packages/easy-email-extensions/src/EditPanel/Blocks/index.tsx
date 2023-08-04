@@ -87,18 +87,20 @@ function BlockItem({
   type,
   payload,
   title,
+  json,
   filterType,
 }: {
   type: string;
   payload?: Partial<IBlockData>;
   title?: string;
   filterType: string | undefined;
+  json: any;
 }) {
-  const block = BlockManager.getBlockByType(type);
+  const block = BlockManager.getBlockByType(type, json);
 
   return (
     <div className={styles.blockItem}>
-      <BlockAvatarWrapper type={type} payload={payload}>
+      <BlockAvatarWrapper type={type} payload={payload} json={json}>
         <div className={styles.blockItemContainer}>
           <IconFont
             style={{ fontSize: 20 }}

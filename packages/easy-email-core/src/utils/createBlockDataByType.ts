@@ -3,9 +3,10 @@ import { BlockManager } from './BlockManager';
 
 export function createBlockDataByType<T extends IBlockData>(
   type: string,
-  payload?: RecursivePartial<T>
+  payload?: RecursivePartial<T>,
+  json?: any,
 ): IBlockData {
-  const component = BlockManager.getBlockByType(type);
+  const component = BlockManager.getBlockByType(type, json);
   if (component) {
     return component.create(payload as any);
   }

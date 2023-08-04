@@ -75,3 +75,5 @@ export type {
   IAccordionText,
   ITemplate,
 };
+
+export * from '../dummy';

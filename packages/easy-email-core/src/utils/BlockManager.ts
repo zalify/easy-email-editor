@@ -1,15 +1,16 @@
 import { IBlock, IBlockData } from '@core/typings';
 import { standardBlocks, advancedBlocks } from '@core/blocks';
+import createMyCustomBlock from '@core/blocks/dummy';
 
 export class BlockManager {
   private static blocksMap: Record<string, IBlock> = {
     ...standardBlocks,
     ...advancedBlocks,
   };
-  private static autoCompletePath: { [key: string]: Array<string[]> } = {};
+  private static autoCompletePath: { [key: string]: Array<string[]>; } = {};
 
   private static setAutoCompletePath() {
-    const paths: { [key: string]: Array<string[]> } = {};
+    const paths: { [key: string]: Array<string[]>; } = {};
 
     const renderFullPath = (
       type: string,
@@ -40,7 +41,7 @@ export class BlockManager {
     return Object.values(this.blocksMap);
   }
 
-  public static registerBlocks(blocksMap: { [key: string]: IBlock }) {
+  public static registerBlocks(blocksMap: { [key: string]: IBlock; }) {
     this.blocksMap = {
       ...this.blocksMap,
       ...blocksMap,
@@ -49,8 +50,13 @@ export class BlockManager {
   }
 
   public static getBlockByType<T extends IBlockData>(
-    type: string
+    type: string,
+    json?: any
   ): IBlock<T> | undefined {
+    if (!this.blocksMap[type]) {
+      return createMyCustomBlock(json) as IBlock<any> as IBlock<T>;;
+    }
+
     return this.blocksMap[type] as IBlock<any> as IBlock<T>;
   }
 

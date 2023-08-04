@@ -7,27 +7,21 @@ import { useLoading } from '@demo/hooks/useLoading';
 import {
   Button,
   ConfigProvider,
-  Dropdown,
   Form,
   Input,
-  Menu,
   Message,
   Modal,
   PageHeader,
-  Select,
 } from '@arco-design/web-react';
 import { useQuery } from '@demo/hooks/useQuery';
 import { useHistory } from 'react-router-dom';
 import { cloneDeep, set, isEqual } from 'lodash';
 import { Loading } from '@demo/components/loading';
 import mjml from 'mjml-browser';
-import { copy } from '@demo/utils/clipboard';
-import { useEmailModal } from './components/useEmailModal';
 import services from '@demo/services';
 import { Liquid } from 'liquidjs';
 import { saveAs } from 'file-saver';
 import {
-  BlockAvatarWrapper,
   EmailEditor,
   EmailEditorProvider,
   EmailEditorProviderProps,
@@ -49,127 +43,163 @@ import {
 } from 'easy-email-extensions';
 import { AutoSaveAndRestoreEmail } from '@demo/components/AutoSaveAndRestoreEmail';
 
-// Register external blocks
-import './components/CustomBlocks';
-
 import 'easy-email-editor/lib/style.css';
 import 'easy-email-extensions/lib/style.css';
 import { testMergeTags } from './testMergeTags';
 import { useMergeTagsModal } from './components/useMergeTagsModal';
 
 import { useWindowSize } from 'react-use';
-import { CustomBlocksType } from './components/CustomBlocks/constants';
-import localesData from 'easy-email-localization/locales/locales.json';
 import { Uploader } from '@demo/utils/Uploader';
 import axios from 'axios';
 import enUS from '@arco-design/web-react/es/locale/en-US';
-
-console.log(localesData);
-
-const defaultCategories: ExtensionProps['categories'] = [
-  {
-    label: 'Content',
-    active: true,
-    blocks: [
-      {
-        type: AdvancedType.TEXT,
-      },
-      {
-        type: AdvancedType.IMAGE,
-        payload: { attributes: { padding: '0px 0px 0px 0px' } },
-      },
-      {
-        type: AdvancedType.BUTTON,
-      },
-      {
-        type: AdvancedType.SOCIAL,
-      },
-      {
-        type: AdvancedType.DIVIDER,
-      },
-      {
-        type: AdvancedType.SPACER,
-      },
-      {
-        type: AdvancedType.HERO,
-      },
-      {
-        type: AdvancedType.WRAPPER,
-      },
-    ],
-  },
-  {
-    label: 'Layout',
-    active: true,
-    displayType: 'column',
-    blocks: [
-      {
-        title: '2 columns',
-        payload: [
-          ['50%', '50%'],
-          ['33%', '67%'],
-          ['67%', '33%'],
-          ['25%', '75%'],
-          ['75%', '25%'],
-        ],
-      },
-      {
-        title: '3 columns',
-        payload: [
-          ['33.33%', '33.33%', '33.33%'],
-          ['25%', '25%', '50%'],
-          ['50%', '25%', '25%'],
-        ],
-      },
-      {
-        title: '4 columns',
-        payload: [['25%', '25%', '25%', '25%']],
-      },
-    ],
-  },
-  {
-    label: 'Custom',
-    active: true,
-    displayType: 'custom',
-    blocks: [
-      <BlockAvatarWrapper type={CustomBlocksType.PRODUCT_RECOMMENDATION}>
-        <div
-          style={{
-            position: 'relative',
-            border: '1px solid #ccc',
-            marginBottom: 20,
-            width: '80%',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-          }}
-        >
-          <img
-            src={
-              'http://res.cloudinary.com/dwkp0e1yo/image/upload/v1665841389/ctbjtig27parugrztdhk.png'
-            }
-            style={{
-              maxWidth: '100%',
-            }}
-          />
-          <div
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              zIndex: 2,
-            }}
-          />
-        </div>
-      </BlockAvatarWrapper>,
-    ],
-  },
-];
+import { IconSave } from '@arco-design/web-react/icon';
+import { useEmailModal } from './components/useEmailModal';
 
 const imageCompression = import('browser-image-compression');
 
 export default function Editor() {
+  const defaultCategories: ExtensionProps['categories'] = [
+    {
+      label: 'Content',
+      active: true,
+      blocks: [
+        {
+          type: AdvancedType.TEXT,
+        },
+        {
+          type: AdvancedType.IMAGE,
+          payload: { attributes: { padding: '0px 0px 0px 0px' } },
+        },
+        {
+          type: AdvancedType.BUTTON,
+        },
+        {
+          type: AdvancedType.SOCIAL,
+        },
+        {
+          type: AdvancedType.DIVIDER,
+        },
+        {
+          type: AdvancedType.SPACER,
+        },
+        {
+          type: AdvancedType.HERO,
+        },
+        {
+          type: 'TopBar1',
+          json: {
+            tag: 'mj-hero',
+            name: 'Top Bar I',
+            type: 'TopBar1',
+            defaultData: {
+              type: 'TopBar1',
+              data: {
+                value: 'DHFHB HDHD hHDD'
+              },
+              attributes: {
+                'background-color': '#ffffff',
+                'background-position': 'center center',
+                mode: 'fluid-height',
+                padding: '100px 0px 100px 0px',
+                'vertical-align': 'top',
+                'background-url': 'https://easy-email-m-ryan.vercel.app/images/dd1584fb-cb60-42c9-80c7-5545e16130ca-226ba72b-ce9e-4948-ad0d-347381fb96c5.png',
+              },
+              children: [
+                {
+                  type: 'text',
+                  data: {
+                    value: {
+                      content: 'We Serve Healthy &amp; Delicious Foods',
+                    },
+                  },
+                  attributes: {
+                    padding: '10px 25px 10px 25px',
+                    align: 'center',
+                    color: '#ffffff',
+                    'font-size': '45px',
+                    'line-height': '45px',
+                  },
+                  children: [],
+                },
+                {
+                  type: 'text',
+                  data: {
+                    value: {
+                      content:
+                        'A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.<br>',
+                    },
+                  },
+                  attributes: {
+                    align: 'center',
+                    'background-color': '#414141',
+                    color: '#ffffff',
+                    'font-weight': 'normal',
+                    'border-radius': '3px',
+                    padding: '10px 25px 10px 25px',
+                    'inner-padding': '10px 25px 10px 25px',
+                    'line-height': '1.5',
+                    target: '_blank',
+                    'vertical-align': 'middle',
+                    border: 'none',
+                    'text-align': 'center',
+                    href: '#',
+                    'font-size': '14px',
+                  },
+                  children: [],
+                },
+                {
+                  type: 'button',
+                  data: {
+                    value: {
+                      content: 'Get Your Order Here!',
+                    },
+                  },
+                  attributes: {
+                    align: 'center',
+                    'background-color': '#f3a333',
+                    color: '#ffffff',
+                    'font-size': '13px',
+                    'font-weight': 'normal',
+                    'border-radius': '30px',
+                    padding: '10px 25px 10px 25px',
+                    'inner-padding': '10px 25px 10px 25px',
+                    'line-height': '120%',
+                    target: '_blank',
+                    'vertical-align': 'middle',
+                    border: 'none',
+                    'text-align': 'center',
+                    href: '#',
+                  },
+                  children: [],
+                },
+              ],
+            },
+            validParentType: [BasicType.PAGE],
+          },
+        }
+      ],
+    }
+  ];
+  const [defaultCategoriesState, setDefaultCategoriesState] = useState(defaultCategories);
+  const changeCategories = (category: string) => {
+    const newBlock: ExtensionProps['categories'] = [
+      {
+        label: 'Content',
+        active: true,
+        blocks: [
+          {
+            type: AdvancedType.TEXT,
+          },
+          {
+            type: AdvancedType.IMAGE,
+            payload: { attributes: { padding: '0px 0px 0px 0px' } },
+          }
+        ]
+      }
+    ];
+    setDefaultCategoriesState(newBlock);
+  };
+
   // const [theme, setTheme] = useState<'blue' | 'green' | 'purple'>('blue');
   const dispatch = useDispatch();
   const history = useHistory();
@@ -251,10 +281,6 @@ export default function Editor() {
     });
     return services.common.uploadByQiniu(compressionFile);
   };
-
-  // const onChangeTheme = useCallback(t => {
-  //   setTheme(t);
-  // }, []);
 
   const onChangeMergeTag = useCallback((path: string, val: any) => {
     setMergeTags(old => {
@@ -502,7 +528,7 @@ export default function Editor() {
           mergeTagGenerate={tag => `{{${tag}}}`}
           onBeforePreview={onBeforePreview}
           socialIcons={[]}
-          // locale={localesData[locale]}
+        // locale={localesData[locale]}
         >
           {({ values }, { submit, restart }) => {
             return (
@@ -514,124 +540,19 @@ export default function Editor() {
                   onBack={() => history.push('/')}
                   extra={
                     <Stack alignment='center'>
-                      {/* <Button
-                        onClick={() => setIsDarkMode(v => !v)}
-                        shape='circle'
-                        type='text'
-                        icon={isDarkMode ? <IconMoonFill /> : <IconSunFill />}
-                      ></Button> */}
-
-                      {/* <Select
-                        onChange={onChangeTheme}
-                        value={theme}
-                      >
-                        <Select.Option value='blue'>Blue</Select.Option>
-                        <Select.Option value='green'>Green</Select.Option>
-                        <Select.Option value='purple'>Purple</Select.Option>
-                      </Select> */}
-                      {/* <Select
-                        onChange={setLocale}
-                        value={locale}
-                      >
-                        <Select.Option value='en'>English</Select.Option>
-                        <Select.Option value='zh-Hans'>中文简体</Select.Option>
-                        <Select.Option value='zh-Hant'>中文繁體</Select.Option>
-                        <Select.Option value='ja'>Japanese</Select.Option>
-                        <Select.Option value='it'>Italian</Select.Option>
-                      </Select> */}
-
-                      {/* <Button onClick={openMergeTagsModal}>Update mergeTags</Button> */}
-
-                      {/* <Dropdown
-                        droplist={
-                          <Menu>
-                            <Menu.Item
-                              key='MJML'
-                              onClick={() => onImportMJML({ restart })}
-                            >
-                              Import from MJML
-                            </Menu.Item>
-
-                            <Menu.Item
-                              key='JSON'
-                              onClick={() => onImportJSON({ restart })}
-                            >
-                              Import from JSON
-                            </Menu.Item>
-                          </Menu>
+                      <Button
+                        type='outline'
+                        onClick={() => changeCategories()}
+                        icon={<IconSave />
                         }
-                      >
-                        <Button>
-                          <strong>Import</strong>
-                        </Button>
-                      </Dropdown> */}
-
-                      {/* <Dropdown
-                        droplist={
-                          <Menu>
-                            <Menu.Item
-                              key='Export MJML'
-                              onClick={() => onExportMJML(values)}
-                            >
-                              Export MJML
-                            </Menu.Item>
-                            <Menu.Item
-                              key='Export HTML'
-                              onClick={() => onExportHTML(values)}
-                            >
-                              Export HTML
-                            </Menu.Item>
-                            <Menu.Item
-                              key='Export JSON'
-                              onClick={() => onExportJSON(values)}
-                            >
-                              Export JSON
-                            </Menu.Item>
-                            <Menu.Item
-                              key='Export Image'
-                              onClick={() => onExportImage(values)}
-                            >
-                              Export Image
-                            </Menu.Item>
-                          </Menu>
-                        }
-                      >
-                        <Button>
-                          <strong>Export</strong>
-                        </Button>
-                      </Dropdown>
-                      <Button onClick={() => setVisible(true)}>
-                        <strong>Try responsive editor</strong>
-                      </Button> */}
-                      {/* <a
-                        href='https://www.buymeacoffee.com/easyemail?utm_source=webside&utm_medium=button&utm_content=donate'
-                        target='_blank'
-                        onClick={ev => {
-                          ev.preventDefault();
-                          pushEvent({ event: 'Donate' });
-                          window.open(
-                            'https://www.buymeacoffee.com/easyemail?utm_source=webside&utm_medium=button&utm_content=donate',
-                            '_blank',
-                          );
-                        }}
-                      >
-                        <img
-                          style={{
-                            marginTop: -16,
-                            position: 'relative',
-                            top: 11,
-                            height: 32,
-                          }}
-                          src='https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png'
-                          alt='Buy Me A Coffee'
-                        />
-                      </a> */}
+                      ></Button>
                     </Stack>
                   }
                 />
                 <StandardLayout
                   compact={!smallScene}
-                  categories={defaultCategories}
+                  categories={defaultCategoriesState}
+                  changeCategories={changeCategories}
                 >
                   <EmailEditor />
                 </StandardLayout>

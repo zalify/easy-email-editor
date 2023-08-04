@@ -41,7 +41,7 @@
         "../easy-email-core/src/*"
       ],
       "easy-email-core": [
-        "../easy-email-core"
+        "../easy-email-core/src/index.tsx"
       ]
     }
   },

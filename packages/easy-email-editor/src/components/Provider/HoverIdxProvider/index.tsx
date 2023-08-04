@@ -15,6 +15,7 @@ export interface DataTransfer {
   positionIndex?: number;
   parentIdx?: string;
   sourceIdx?: string;
+  json: any;
 }
 
 export const HoverIdxContext = React.createContext<{
@@ -31,13 +32,13 @@ export const HoverIdxContext = React.createContext<{
   direction: '',
   isDragging: false,
   dataTransfer: null,
-  setHoverIdx: () => {},
-  setIsDragging: () => {},
-  setDirection: () => {},
-  setDataTransfer: () => {},
+  setHoverIdx: () => { },
+  setIsDragging: () => { },
+  setDirection: () => { },
+  setDataTransfer: () => { },
 });
 
-export const HoverIdxProvider: React.FC<{ children?: React.ReactNode }> = props => {
+export const HoverIdxProvider: React.FC<{ children?: React.ReactNode; }> = props => {
   const [hoverIdx, setHoverIdx] = useState('');
   const [isDragging, setIsDragging] = useState(false);
   const [dataTransfer, setDataTransfer] = useState<DataTransfer | null>(null);

@@ -8,6 +8,7 @@ import {
   getValueByIdx,
   BlockManager,
   createBlockDataByType,
+  createCustomBlock,
 } from 'easy-email-core';
 import { cloneDeep, debounce, get } from 'lodash';
 import { useCallback, useContext } from 'react';
@@ -18,6 +19,7 @@ import { useFocusIdx } from './useFocusIdx';
 import { IEmailTemplate } from '@/typings';
 import { useEditorProps } from './useEditorProps';
 import { scrollBlockEleIntoView } from '@/utils';
+import createMyCustomBlock from '@core/blocks/dummy';
 
 export function useBlock() {
   const {
@@ -29,92 +31,104 @@ export function useBlock() {
 
   const { autoComplete } = useEditorProps();
 
-  const focusBlock = get(values, focusIdx) as IBlockData | null;
+  const focusBlock = get(values, focusIdx);
 
   const { redo, undo, redoable, undoable, reset } = useContext(RecordContext);
 
   const addBlock = useCallback(
-    (params: {
+    async (params: {
       type: string;
       parentIdx: string;
       positionIndex?: number;
       payload?: any;
       canReplace?: boolean;
+      json?: any;
     }) => {
-      const start = console.time();
+      return new Promise(async (resolve) => {
+        console.log(params, 'FD', params.type);
+        // await new Promise((resolve) => {
+        //   setTimeout(() => {
+        //     console.log('DFDD');
+        //     resolve();
+        //   }, 100);
+        // });
+        const start = console.time();
 
-      let { type, parentIdx, positionIndex, payload } = params;
-      let nextFocusIdx: string;
-      const values = cloneDeep(getState().values) as IEmailTemplate;
-      const parent = get(values, parentIdx) as IBlockData | null;
-      if (!parent) {
-        console.error(`Invalid ${type} block`);
-        return;
-      }
+        let { type, parentIdx, positionIndex, payload, json } = params;
 
-      let child = createBlockDataByType(type, payload);
+        let nextFocusIdx: string;
+        const values = cloneDeep(getState().values) as IEmailTemplate;
+        const parent = get(values, parentIdx);
+        if (!parent) {
+          console.error(`Invalid ${type} block`);
+          return;
+        }
 
-      if (typeof positionIndex === 'undefined') {
-        positionIndex = parent.children.length;
-      }
-      nextFocusIdx = `${parentIdx}.children.[${positionIndex}]`;
-      const block = BlockManager.getBlockByType(type);
-      if (!block) {
-        console.error(`Invalid ${type} block`);
-        return;
-      }
-      const parentBlock = BlockManager.getBlockByType(parent.type)!;
+        let child = createBlockDataByType(type, payload, json);
 
-      if (autoComplete) {
-        const autoCompletePaths = BlockManager.getAutoCompletePath(
-          type,
-          parent.type
-        );
-        if (autoCompletePaths) {
-          autoCompletePaths.forEach((item) => {
-            child = createBlockDataByType(item, {
-              children: [child],
+        if (typeof positionIndex === 'undefined') {
+          positionIndex = parent.children.length;
+        }
+        nextFocusIdx = `${parentIdx}.children.[${positionIndex}]`;
+        const block = BlockManager.getBlockByType(type, json);
+
+        if (!block) {
+          console.error(`Invalid ${type} block`);
+          return;
+        }
+        const parentBlock = BlockManager.getBlockByType(parent.type, json)!;
+        if (autoComplete) {
+          const autoCompletePaths = BlockManager.getAutoCompletePath(
+            type,
+            parent.type
+          );
+          if (autoCompletePaths) {
+            autoCompletePaths.forEach((item: any) => {
+              child = createBlockDataByType(item, {
+                children: [child],
+              });
+              nextFocusIdx += '.children.[0]';
             });
-            nextFocusIdx += '.children.[0]';
-          });
+          }
         }
-      }
 
-      // Replace
-      if (params.canReplace) {
-        const parentIndex = getIndexByIdx(parentIdx);
-        const upParent = getParentByIdx(values, parentIdx);
-        if (upParent) {
-          upParent.children.splice(parentIndex, 1, child);
-
-          return change(getParentIdx(parentIdx)!, { ...upParent });
+        // Replace
+        if (params.canReplace) {
+          const parentIndex = getIndexByIdx(parentIdx);
+          const upParent = getParentByIdx(values, parentIdx);
+          if (upParent) {
+            upParent.children.splice(parentIndex, 1, child);
+            return change(getParentIdx(parentIdx)!, { ...upParent });
+          }
         }
-      }
 
-      const fixedBlock = BlockManager.getBlockByType(child.type);
-      if (!fixedBlock?.validParentType.includes(parent.type)) {
-        console.error(
-          `${block.type} cannot be used inside ${
-            parentBlock.type
-          }, only inside: ${block.validParentType.join(', ')}`
-        );
-        return;
-      }
+        const fixedBlock = BlockManager.getBlockByType(child.type, json);
+        if (!fixedBlock?.validParentType.includes(parent.type)) {
+          console.error(
+            `${block.type} cannot be used inside ${parentBlock.type
+            }, only inside: ${block.validParentType.join(', ')}`
+          );
+          return;
+        }
 
-      parent.children.splice(positionIndex, 0, child);
-      console.timeLog();
-      change(parentIdx, parent); // listeners not notified
-      setFocusIdx(nextFocusIdx);
-      scrollBlockEleIntoView({
-        idx: nextFocusIdx,
+        parent.children.splice(positionIndex, 0, child);
+        console.timeLog();
+        change(parentIdx, parent); // listeners not notified
+        setFocusIdx(nextFocusIdx);
+        scrollBlockEleIntoView({
+          idx: nextFocusIdx,
+        });
+        console.timeEnd();
+
+        return resolve(true);
       });
-      console.timeEnd();
     },
     [autoComplete, change, getState, setFocusIdx]
   );
 
   const moveBlock = useCallback(
     (sourceIdx: string, destinationIdx: string) => {
+      console.log('DFF', sourceIdx);
       if (sourceIdx === destinationIdx) return null;
 
       let nextFocusIdx: string;
@@ -135,7 +149,7 @@ export function useBlock() {
           destinationParent.type
         );
         if (autoCompletePaths) {
-          autoCompletePaths.forEach((item) => {
+          autoCompletePaths.forEach((item: any) => {
             removed = createBlockDataByType(item, {
               children: [removed],
             });
@@ -180,7 +194,7 @@ export function useBlock() {
 
       const parentIdx = getParentIdx(idx);
       if (!parentIdx) return;
-      const parent = get(values, getParentIdx(idx) || '') as IBlockData | null;
+      const parent = get(values, getParentIdx(idx) || '');
       if (!parent) {
         console.error('Invalid block');
         return;
@@ -208,7 +222,7 @@ export function useBlock() {
         return;
       }
       const parentIdx = getParentIdx(idx);
-      const parent = get(values, getParentIdx(idx) || '') as IBlockData | null;
+      const parent = get(values, getParentIdx(idx) || '');
       const blockIndex = getIndexByIdx(idx);
       if (!parentIdx || !parent) {
         if (block.type === BasicType.PAGE) {

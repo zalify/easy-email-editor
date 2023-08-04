@@ -8,6 +8,7 @@ export * from './InteractivePrompt';
 export * from './SimpleLayout';
 export * from './StandardLayout';
 export * from './MergeTagBadgePrompt';
+export * from './DataPanel';
 export * from './components/Providers/ExtensionProvider';
 export * from './constants';
 export * from './components/Form';
