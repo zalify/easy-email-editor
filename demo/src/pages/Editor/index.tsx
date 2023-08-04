@@ -73,23 +73,24 @@ const defaultCategories: ExtensionProps['categories'] = [
     blocks: [
       {
         type: CustomBlocksType.TOPBAR_1,
-        category: 'Topbar'
+        category: 'Topbar',
+
       },
       {
         type: CustomBlocksType.TOPBAR_2,
-        category: 'Topbar'
+        category: 'Topbar',
       },
       {
         type: CustomBlocksType.BODY_1,
-        category: 'Body'
+        category: 'Body',
       },
       {
         type: CustomBlocksType.BODY_2,
-        category: 'Body'
+        category: 'Body',
       },
       {
         type: CustomBlocksType.FOOTER_1,
-        category: 'Footer'
+        category: 'Footer',
       }
     ],
   },

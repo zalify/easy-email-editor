@@ -85,17 +85,12 @@ export function Blocks() {
           );
         }
         return (
-          // <Collapse.Item
-          //   key={index}
-          //   contentStyle={{ padding: 0, paddingBottom: 0, paddingTop: 20 }}
-          //   name={cat.label}
-          //   header={cat.label}
-          // >
-          <>
+          <div key={index}>
             <Select
               style={{ padding: 15 }}
               onChange={(t) => { changeCategories(t); }}
               value={selectedCategory}
+
             >
               <Select.Option key='fff-0' value='Footer'>Footer</Select.Option>
               <Select.Option key='fff-1' value='Topbar'>Topbar</Select.Option>
@@ -106,11 +101,12 @@ export function Blocks() {
                 return <BlockItem key={index} {...(item as any)} />;
               })}
             </Grid.Row>
-          </>
+          </div>
           // </Collapse.Item>
         );
       })}
     </Collapse>
+
   );
 }
 
