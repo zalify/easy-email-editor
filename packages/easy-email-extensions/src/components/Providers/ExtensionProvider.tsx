@@ -22,6 +22,7 @@ export interface ExtensionProps extends BlockLayerProps {
       active?: boolean;
       blocks: Array<{
         payload?: any;
+        category: string;
         title?: string | undefined;
       }>;
       displayType: 'column';
@@ -31,6 +32,7 @@ export interface ExtensionProps extends BlockLayerProps {
       active?: boolean;
       blocks: Array<{
         payload?: any;
+        category?: string;
       }>;
       displayType: 'widget';
     }

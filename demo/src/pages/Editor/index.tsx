@@ -542,7 +542,7 @@ export default function Editor() {
                     <Stack alignment='center'>
                       <Button
                         type='outline'
-                        onClick={() => changeCategories()}
+                        onClick={() => changeCategories('1')}
                         icon={<IconSave />
                         }
                       ></Button>

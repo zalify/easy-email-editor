@@ -8,7 +8,6 @@ import {
   getValueByIdx,
   BlockManager,
   createBlockDataByType,
-  createCustomBlock,
 } from 'easy-email-core';
 import { cloneDeep, debounce, get } from 'lodash';
 import { useCallback, useContext } from 'react';
@@ -19,7 +18,6 @@ import { useFocusIdx } from './useFocusIdx';
 import { IEmailTemplate } from '@/typings';
 import { useEditorProps } from './useEditorProps';
 import { scrollBlockEleIntoView } from '@/utils';
-import createMyCustomBlock from '@core/blocks/dummy';
 
 export function useBlock() {
   const {
