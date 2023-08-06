@@ -31,8 +31,8 @@ export function getAdapterAttributesString(
       getNodeIdxClassName(idx),
       getNodeTypeClassName(data.type)
     );
-    if (data.type == 'image') {
-      attributes['css-class'] += ` rippedClass_${idx}`;
+    if (data.type == 'image' && data.data.value?.mobileImage?.enabled) {
+      attributes['css-class'] += `mobile_image_width`;
     }
   }
   let attributeStr = '';

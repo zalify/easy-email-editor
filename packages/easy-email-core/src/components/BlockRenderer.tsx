@@ -15,25 +15,7 @@ export const BlockRenderer = (props: BlockDataItem) => {
   if (data.data.hidden) return null;
   const block = BlockManager.getBlockByType(data.type);
   if (!block) return null;
-  let staticStyle = null;
-  if (data.type == "advanced_image") {
-    staticStyle = renderToStaticMarkup(
-      <>
-        {`<mj-style>
-      @media all and (max-width: 480px) {
-        .advanced_image {
-          content: url(https://images.pexels.com/photos/17502672/pexels-photo-17502672/free-photo-of-light-city-art-street.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load);
-        }
-      }
-    </mj-style>`}
-      </>
-    );
-  }
-  return <>
-    {staticStyle}
-    {block.render({ ...props, mode, context, dataSource })}
-
-  </>;
+  return block.render({ ...props, mode, context, dataSource });
 };
 
 // const BlockEditRenderer = (props: BlockDataItem) => {

@@ -33,7 +33,7 @@ export type IButton = IBlockData<
     'text-decoration'?: string;
     'text-transform'?: string;
   },
-  { content: string }
+  { content: string; }
 >;
 
 export const Button = createBlock<IButton>({

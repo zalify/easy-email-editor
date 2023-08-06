@@ -9,11 +9,7 @@ import { generaMjmlMetaData } from '@core/utils/generaMjmlMetaData';
 import { BlockRenderer } from '@core/components/BlockRenderer';
 import { getAdapterAttributesString, getChildIdx, getPageIdx } from '@core/utils';
 import { t } from '@core/utils/I18nManager';
-import { classnames } from '@core/utils/classnames';
-import { EMAIL_BLOCK_CLASS_NAME } from '@core/constants';
-import { getNodeIdxClassName, getNodeTypeClassName } from '@core/utils';
-import { listeners } from 'process';
-import { log } from 'console';
+import { convertCssClass } from '@core/utils/block';
 
 export type IPage = IBlockData<
   {
@@ -121,22 +117,29 @@ export const Page = createBlock<IPage>({
       return [];
     };
 
-    const advancedImages = flatMap(data.children, findAdvancedImages);
+    function findAdvancedImage(obj: IBlockData[], images = [], idx = 'content') {
+      obj.forEach((o, i) => {
+        if (o.children.length === 0) {
+          o.idx = idx + `.children.[${i}]`;
+          if (o.type == 'advanced_image') {
+            images.push(o);
+          }
+        } else {
+          findAdvancedImage(o.children, images, `${idx}.children.[${i}]`);
+        }
+      });
+
+      return images;
+    }
+
+    const advancedImages = findAdvancedImage(data.children);//flatMap(pageElements, findAdvancedImages);
 
     let styleStr = "";
 
-    advancedImages.map((image, index) => {
+    advancedImages.map((image: any, index) => {
       if (image.data.value?.mobileImage?.enabled) {
-        let idx = getChildIdx(getPageIdx(), index);
-        let cssname = classnames(
-          image.attributes['css-class'],
-          EMAIL_BLOCK_CLASS_NAME,
-          getNodeIdxClassName(idx),
-          getNodeTypeClassName(image.type)
-        );
-        console.log(cssname.replaceAll(' ', '.'));
-
-        styleStr += `.node-idx-content.children.[0].node-type-advanced_image { content: url(${image.data.value?.mobileImage?.sourceUrl});
+        const convertedCss = convertCssClass(image.idx);
+        styleStr += `.node-idx-${convertedCss} img{ content: url(${image.data.value?.mobileImage?.sourceUrl});
           width: 100%; }`;
       }
     });
