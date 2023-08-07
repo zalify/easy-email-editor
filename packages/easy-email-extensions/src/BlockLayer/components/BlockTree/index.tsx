@@ -22,19 +22,19 @@ export interface BlockTreeProps<T extends TreeNode<T>> {
   renderTitle: (data: T) => React.ReactNode;
   defaultExpandAll?: boolean;
   allowDrop: (o: {
-    dragNode: { type: string } | { key: string };
-    dropNode: { dataRef: T; parent: T; key: string };
+    dragNode: { type: string; } | { key: string; };
+    dropNode: { dataRef: T; parent: T; key: string; };
     dropPosition: number;
   }) =>
     | false
     | {
-        key: string;
-        position: number;
-      };
+      key: string;
+      position: number;
+    };
 
   onDrop: (o: {
-    dragNode: { dataRef: T; parent: T; key: string; parentKey: string };
-    dropNode: { dataRef: T; parent: T; key: string; parentKey: string };
+    dragNode: { dataRef: T; parent: T; key: string; parentKey: string; };
+    dropNode: { dataRef: T; parent: T; key: string; parentKey: string; };
     dropPosition: number;
   }) => void;
 }
@@ -96,6 +96,7 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
 
   const onDragStart = useCallback(
     (e: React.DragEvent<HTMLSpanElement>, node: NodeInstance) => {
+      console.log('DDFF', e.dataTransfer);
       e.dataTransfer.dropEffect = 'none';
       // e.dataTransfer.setDragImage(img, 0, 0);
       const dragNodeData = (node.props as any).dataRef as T;
@@ -142,6 +143,7 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
       dropNode: NodeInstance | null;
       dropPosition: number;
     }) => {
+      console.log('DDD', info);
       const { dropNode, dropPosition, e } = info;
       e.dataTransfer.dropEffect = 'move';
       if (!dragNode.current || !dropNode) return;
@@ -163,7 +165,7 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
   );
 
   const renderTitle: TreeProps['renderTitle'] = useCallback(
-    (nodeData:any) => {
+    (nodeData: any) => {
       return (
         <div
           style={{ display: 'inline-flex', width: '100%' }}
@@ -182,7 +184,7 @@ export function BlockTree<T extends TreeNode<T>>(props: BlockTreeProps<T>) {
   }, [propsDragEnd]);
 
   const onSelect: TreeProps['onSelect'] = useCallback(
-    (selectedKeys:any) => {
+    (selectedKeys: any) => {
       propsSelect(selectedKeys[0]);
     },
     [propsSelect]

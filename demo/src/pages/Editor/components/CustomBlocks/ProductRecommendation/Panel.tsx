@@ -5,6 +5,7 @@ import React from 'react';
 
 export function Panel() {
   const { focusIdx } = useFocusIdx();
+
   return (
     <AttributesPanelWrapper style={{ padding: '20px' }}>
       <Stack vertical>

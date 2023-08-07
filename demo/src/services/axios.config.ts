@@ -44,4 +44,10 @@ export const request = {
   ) {
     return axiosInstance.post<T>(url, data, config).then((data) => data.data);
   },
+  async put<T>(url: string, data: any, config?: AxiosRequestConfig | undefined) {
+    return axiosInstance.put<T>(url, data, config).then((data) => data.data);
+  },
+  async delete<T>(url: string, config?: AxiosRequestConfig | undefined) {
+    return axiosInstance.delete<T>(url, config).then((data) => data.data);
+  },
 };

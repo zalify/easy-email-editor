@@ -53,6 +53,7 @@ export class BlockManager {
     type: string,
     json?: any
   ): IBlock<T> | undefined {
+    console.log(type, 'type');
     if (!this.blocksMap[type]) {
       return createMyCustomBlock(json) as IBlock<any> as IBlock<T>;;
     }

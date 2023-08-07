@@ -7,10 +7,7 @@ import { useLoading } from '@demo/hooks/useLoading';
 import {
   Button,
   ConfigProvider,
-  Form,
-  Input,
   Message,
-  Modal,
   PageHeader,
 } from '@arco-design/web-react';
 import { useQuery } from '@demo/hooks/useQuery';
@@ -34,7 +31,7 @@ import { FormApi } from 'final-form';
 import { UserStorage } from '@demo/utils/user-storage';
 
 import { useCollection } from './components/useCollection';
-import { AdvancedType, BasicType, IBlockData, JsonToMjml } from 'easy-email-core';
+import { AdvancedType, IBlockData, JsonToMjml } from 'easy-email-core';
 import {
   BlockMarketManager,
   ExtensionProps,
@@ -50,10 +47,9 @@ import { useMergeTagsModal } from './components/useMergeTagsModal';
 
 import { useWindowSize } from 'react-use';
 import { Uploader } from '@demo/utils/Uploader';
-import axios from 'axios';
 import enUS from '@arco-design/web-react/es/locale/en-US';
 import { IconSave } from '@arco-design/web-react/icon';
-import { useEmailModal } from './components/useEmailModal';
+import component from '@demo/store/component';
 
 const imageCompression = import('browser-image-compression');
 
@@ -84,167 +80,37 @@ export default function Editor() {
         },
         {
           type: AdvancedType.HERO,
-        },
-        {
-          type: 'TopBar1',
-          json: {
-            tag: 'mj-hero',
-            name: 'Top Bar I',
-            type: 'TopBar1',
-            defaultData: {
-              type: 'TopBar1',
-              data: {
-                value: 'DHFHB HDHD hHDD'
-              },
-              attributes: {
-                'background-color': '#ffffff',
-                'background-position': 'center center',
-                mode: 'fluid-height',
-                padding: '100px 0px 100px 0px',
-                'vertical-align': 'top',
-                'background-url': 'https://easy-email-m-ryan.vercel.app/images/dd1584fb-cb60-42c9-80c7-5545e16130ca-226ba72b-ce9e-4948-ad0d-347381fb96c5.png',
-              },
-              children: [
-                {
-                  type: 'text',
-                  data: {
-                    value: {
-                      content: 'We Serve Healthy &amp; Delicious Foods',
-                    },
-                  },
-                  attributes: {
-                    padding: '10px 25px 10px 25px',
-                    align: 'center',
-                    color: '#ffffff',
-                    'font-size': '45px',
-                    'line-height': '45px',
-                  },
-                  children: [],
-                },
-                {
-                  type: 'text',
-                  data: {
-                    value: {
-                      content:
-                        'A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.<br>',
-                    },
-                  },
-                  attributes: {
-                    align: 'center',
-                    'background-color': '#414141',
-                    color: '#ffffff',
-                    'font-weight': 'normal',
-                    'border-radius': '3px',
-                    padding: '10px 25px 10px 25px',
-                    'inner-padding': '10px 25px 10px 25px',
-                    'line-height': '1.5',
-                    target: '_blank',
-                    'vertical-align': 'middle',
-                    border: 'none',
-                    'text-align': 'center',
-                    href: '#',
-                    'font-size': '14px',
-                  },
-                  children: [],
-                },
-                {
-                  type: 'button',
-                  data: {
-                    value: {
-                      content: 'Get Your Order Here!',
-                    },
-                  },
-                  attributes: {
-                    align: 'center',
-                    'background-color': '#f3a333',
-                    color: '#ffffff',
-                    'font-size': '13px',
-                    'font-weight': 'normal',
-                    'border-radius': '30px',
-                    padding: '10px 25px 10px 25px',
-                    'inner-padding': '10px 25px 10px 25px',
-                    'line-height': '120%',
-                    target: '_blank',
-                    'vertical-align': 'middle',
-                    border: 'none',
-                    'text-align': 'center',
-                    href: '#',
-                  },
-                  children: [],
-                },
-              ],
-            },
-            validParentType: [BasicType.PAGE],
-          },
         }
       ],
     }
   ];
-  const [defaultCategoriesState, setDefaultCategoriesState] = useState(defaultCategories);
+
   const changeCategories = (category: string) => {
-    const newBlock: ExtensionProps['categories'] = [
-      {
-        label: 'Content',
-        active: true,
-        blocks: [
-          {
-            type: AdvancedType.TEXT,
-          },
-          {
-            type: AdvancedType.IMAGE,
-            payload: { attributes: { padding: '0px 0px 0px 0px' } },
-          }
-        ]
-      }
-    ];
-    setDefaultCategoriesState(newBlock);
+    dispatch(component.actions.fetch({
+      categoryId: category
+    }));
   };
 
-  // const [theme, setTheme] = useState<'blue' | 'green' | 'purple'>('blue');
   const dispatch = useDispatch();
   const history = useHistory();
   const templateData = useAppSelector('template');
-  // const [locale, setLocale] = useState('en');
-  const { addCollection, removeCollection, collectionCategory } = useCollection();
-  const [visible, setVisible] = useState(false);
-  const [text, setText] = useState('');
+  const { collectionCategory } = useCollection();
   const { width } = useWindowSize();
-
-  const emailPattern =
-    // eslint-disable-next-line
-    /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))$/i;
-
-  const postEmail = async () => {
-    if (!emailPattern.test(text)) {
-      Message.error('Please enter a valid email address');
-      return;
-    }
-    pushEvent({
-      event: 'TryNewEditor',
-      payload: { email: text },
-    });
-    await axios.post(`/api/email`, {
-      email: text,
-    });
-    setVisible(false);
-  };
 
   const smallScene = width < 1400;
 
-  const { openModal, modal } = useEmailModal();
   const { id, userId } = useQuery();
   const loading = useLoading(template.loadings.fetchById);
   const {
-    modal: mergeTagsModal,
-    openModal: openMergeTagsModal,
     mergeTags,
     setMergeTags,
   } = useMergeTagsModal(testMergeTags);
 
-  const isSubmitting = useLoading([
-    template.loadings.create,
-    template.loadings.updateById,
-  ]);
+  // My Code
+  const list = useAppSelector('component');
+  useEffect(() => {
+    dispatch(component.actions.fetch({}));
+  }, [dispatch]);
 
   useEffect(() => {
     if (collectionCategory) {
@@ -434,6 +300,15 @@ export default function Editor() {
     };
   }, [templateData]);
 
+  const categories = useMemo(() => {
+    if (!list) return [];
+    const newList = cloneDeep(list);
+    defaultCategories[0].blocks = newList.map((l: any) =>
+      l.templateJson
+    );
+    return defaultCategories;
+  }, [list]);
+
   const onSubmit = useCallback(
     async (
       values: IEmailTemplate,
@@ -487,13 +362,7 @@ export default function Editor() {
     [],
   );
 
-  // const themeStyleText = useMemo(() => {
-  //   if (theme === 'green') return greenTheme;
-  //   if (theme === 'purple') return purpleTheme;
-  //   return blueTheme;
-  // }, [theme]);
-
-  if (!templateData && loading) {
+  if (!templateData && loading && !categories.length) {
     return (
       <Loading loading={loading}>
         <div style={{ height: '100vh' }} />
@@ -506,29 +375,20 @@ export default function Editor() {
   return (
     <ConfigProvider locale={enUS}>
       <div>
-        {/* <style>{themeStyleText}</style> */}
         <EmailEditorProvider
           key={id}
           height={'calc(100vh - 68px)'}
           data={initialValues}
-          // interactiveStyle={{
-          //   hoverColor: '#78A349',
-          //   selectedColor: '#1890ff',
-          // }}
-          // onAddCollection={addCollection}
-          // onRemoveCollection={({ id }) => removeCollection(id)}
           onUploadImage={onUploadImage}
           onSubmit={onSubmit}
           onChangeMergeTag={onChangeMergeTag}
           autoComplete
           enabledLogic
-          // enabledMergeTagsBadge
           dashed={false}
           mergeTags={mergeTags}
           mergeTagGenerate={tag => `{{${tag}}}`}
           onBeforePreview={onBeforePreview}
           socialIcons={[]}
-        // locale={localesData[locale]}
         >
           {({ values }, { submit, restart }) => {
             return (
@@ -542,7 +402,7 @@ export default function Editor() {
                     <Stack alignment='center'>
                       <Button
                         type='outline'
-                        onClick={() => changeCategories('1')}
+                        onClick={() => { console.log('DFF SAve'); }}
                         icon={<IconSave />
                         }
                       ></Button>
@@ -551,7 +411,7 @@ export default function Editor() {
                 />
                 <StandardLayout
                   compact={!smallScene}
-                  categories={defaultCategoriesState}
+                  categories={categories}
                   changeCategories={changeCategories}
                 >
                   <EmailEditor />
@@ -561,47 +421,8 @@ export default function Editor() {
             );
           }}
         </EmailEditorProvider>
-        {modal}
-        {mergeTagsModal}
-        <Modal
-          title={<p style={{ textAlign: 'left' }}>Leave your email</p>}
-          visible={visible}
-          onCancel={() => setVisible(false)}
-          onOk={postEmail}
-        >
-          <Form.Item label='Email'>
-            <Input
-              value={text}
-              onChange={setText}
-            />
-          </Form.Item>
-        </Modal>
         <style>{`#bmc-wbtn {display:none !important;}`}</style>
       </div>
     </ConfigProvider>
   );
-}
-
-function replaceStandardBlockToAdvancedBlock(blockData: IBlockData) {
-  const map = {
-    [BasicType.TEXT]: AdvancedType.TEXT,
-    [BasicType.BUTTON]: AdvancedType.BUTTON,
-    [BasicType.IMAGE]: AdvancedType.IMAGE,
-    [BasicType.DIVIDER]: AdvancedType.DIVIDER,
-    [BasicType.SPACER]: AdvancedType.SPACER,
-    [BasicType.SOCIAL]: AdvancedType.SOCIAL,
-    [BasicType.ACCORDION]: AdvancedType.ACCORDION,
-    [BasicType.CAROUSEL]: AdvancedType.CAROUSEL,
-    [BasicType.NAVBAR]: AdvancedType.NAVBAR,
-    [BasicType.WRAPPER]: AdvancedType.WRAPPER,
-    [BasicType.SECTION]: AdvancedType.SECTION,
-    [BasicType.GROUP]: AdvancedType.GROUP,
-    [BasicType.COLUMN]: AdvancedType.COLUMN,
-  };
-
-  if (map[blockData.type]) {
-    blockData.type = map[blockData.type];
-  }
-  blockData.children.forEach(replaceStandardBlockToAdvancedBlock);
-  return blockData;
 }

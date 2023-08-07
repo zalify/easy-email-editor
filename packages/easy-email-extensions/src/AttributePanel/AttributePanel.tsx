@@ -12,7 +12,7 @@ import ReactDOM from 'react-dom';
 import { BlockAttributeConfigurationManager } from './utils/BlockAttributeConfigurationManager';
 import { SelectionRangeProvider } from './components/provider/SelectionRangeProvider';
 
-export interface AttributePanelProps {}
+export interface AttributePanelProps { }
 
 export function AttributePanel() {
   const { values, focusBlock } = useBlock();

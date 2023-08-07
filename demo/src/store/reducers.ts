@@ -7,6 +7,7 @@ import extraBlocks from './extraBlocks';
 import toast from './common/toast';
 import loading from './common/loading';
 import email from './email';
+import component from './component';
 
 const rootReducer = combineReducers({
   user: user.reducer,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   toast: toast.reducer,
   email: email.reducer,
   loading: loading.reducer,
+  component: component.reducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

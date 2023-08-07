@@ -6,11 +6,9 @@ import { IconCaretRight, IconCaretUp } from '@arco-design/web-react/icon';
 import { getIconNameByBlockType } from '@extensions/utils/getIconNameByBlockType';
 import styles from './index.module.scss';
 import { useExtensionProps } from '@extensions/components/Providers/ExtensionProvider';
-import { isArray } from 'lodash';
 
 export function Blocks() {
-  const { categories, } = useExtensionProps();
-  const [defaultCategories, setDefaultCategories] = useState(categories);
+  const { categories, changeCategories } = useExtensionProps();
   const [selectedCategory, setSelectedCategory] = useState('Content');
 
   const defaultActiveKey = useMemo(
@@ -20,28 +18,12 @@ export function Blocks() {
     [categories]
   );
 
-  const changeCategories = (t: string) => {
-    const newVal = JSON.parse(JSON.stringify(categories));
-
-    const val = newVal.map((cat: any, ind: number) => {
-      if (cat.blocks.length && isArray(cat.blocks)) {
-        cat.blocks = cat.blocks.filter((block: any) => {
-          if (block.category === t) return true;
-        });
-      }
-      return cat;
-    });
-
-    setDefaultCategories(val);
-    setSelectedCategory(t);
-  };
-
   return (
     <Collapse
       defaultActiveKey={defaultActiveKey}
       style={{ paddingBottom: 30, minHeight: '100%' }}
     >
-      {defaultCategories.map((cat, index) => {
+      {categories.map((cat, index) => {
         if (cat.displayType === 'column') {
           return (
             <Collapse.Item
@@ -85,29 +67,23 @@ export function Blocks() {
           );
         }
         return (
-          // <Collapse.Item
-          //   key={index}
-          //   contentStyle={{ padding: 0, paddingBottom: 0, paddingTop: 20 }}
-          //   name={cat.label}
-          //   header={cat.label}
-          // >
-          <>
+          <div key={index}>
             <Select
               style={{ padding: 15 }}
-              onChange={(t) => { changeCategories(t); }}
+              onChange={(t) => { changeCategories && changeCategories(t); }}
               value={selectedCategory}
             >
-              <Select.Option key='fff-0' value='Footer'>Footer</Select.Option>
-              <Select.Option key='fff-1' value='Topbar'>Topbar</Select.Option>
-              <Select.Option key='fff-2' value='Body'>Body</Select.Option>
+              <Select.Option key='All' value='all'>All</Select.Option>
+              <Select.Option key='footer' value='footer'>Footer</Select.Option>
+              <Select.Option key='topbar' value='topbar'>Topbar</Select.Option>
+              <Select.Option key='body' value='body'>Body</Select.Option>
             </Select>
             <Grid.Row>
               {cat.blocks.map((item, index) => {
                 return <BlockItem key={index} {...(item as any)} />;
               })}
             </Grid.Row>
-          </>
-          // </Collapse.Item>
+          </div>
         );
       })}
     </Collapse>
