@@ -5,6 +5,7 @@ import { SourceCodePanel } from '@extensions/SourceCodePanel';
 import { FullHeightOverlayScrollbars } from '@extensions/components/FullHeightOverlayScrollbars';
 import { IconLeft } from '@arco-design/web-react/icon';
 import styles from './index.module.scss';
+import { BlockLayer } from '@extensions/BlockLayer';
 
 export interface ConfigurationPanelProps {
   showSourceCode: boolean;
@@ -73,7 +74,7 @@ export function ConfigurationPanel({
             }
           >
             <FullHeightOverlayScrollbars height={`calc(${height} - 60px)`}>
-              <AttributePanel />
+              <BlockLayer/>
             </FullHeightOverlayScrollbars>
           </Tabs.TabPane>
 

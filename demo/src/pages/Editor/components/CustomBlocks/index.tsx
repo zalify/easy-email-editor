@@ -20,5 +20,5 @@ BlockManager.registerBlocks({
 
 BlockAttributeConfigurationManager.add({
   [CustomBlocksType.PRODUCT_RECOMMENDATION]: ProductRecommendationPanel,
-  [CustomBlocksType.TOPBAR_1]: TopBarPanel1
+  
 });
