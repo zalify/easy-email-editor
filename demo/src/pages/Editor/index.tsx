@@ -83,6 +83,7 @@ const defaultCategories: ExtensionProps['categories'] = [
   },
 ];
 
+export default function Editor() {
   const changeCategories = (category: string) => {
     dispatch(component.actions.fetch({
       categoryId: category
