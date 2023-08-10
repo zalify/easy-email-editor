@@ -6,6 +6,7 @@ import { FullHeightOverlayScrollbars } from '@extensions/components/FullHeightOv
 import { IconLeft } from '@arco-design/web-react/icon';
 import styles from './index.module.scss';
 import { BlockLayer } from '@extensions/BlockLayer';
+import { GlobalAttributePanel } from '@extensions/GlobalAttributePanel';
 
 export interface ConfigurationPanelProps {
   showSourceCode: boolean;
@@ -74,7 +75,9 @@ export function ConfigurationPanel({
             }
           >
             <FullHeightOverlayScrollbars height={`calc(${height} - 60px)`}>
-              <BlockLayer/>
+              {/* <BlockLayer/> */}
+              <AttributePanel/>
+              {/* <GlobalAttributePanel/> */}
             </FullHeightOverlayScrollbars>
           </Tabs.TabPane>
 
