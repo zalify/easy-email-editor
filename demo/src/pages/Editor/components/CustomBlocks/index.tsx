@@ -3,7 +3,7 @@ import { BlockAttributeConfigurationManager } from 'easy-email-extensions';
 import { CustomBlocksType } from './constants';
 import { Panel as ProductRecommendationPanel, ProductRecommendation } from './ProductRecommendation';
 import { TopBar1 } from './TopBar/topbar1';
-import { TopbarPanel1 } from './TopBar/topbar1/panel';
+import { Panel as TopBarPanel1 } from './TopBar/topbar1/panel';
 import { Body1 } from './Body/body1';
 import { Body2 } from './Body/body2';
 import { TopBar2 } from './TopBar/topbar2';
@@ -20,5 +20,5 @@ BlockManager.registerBlocks({
 
 BlockAttributeConfigurationManager.add({
   [CustomBlocksType.PRODUCT_RECOMMENDATION]: ProductRecommendationPanel,
-  [CustomBlocksType.TOPBAR_1]: TopbarPanel1
+  
 });

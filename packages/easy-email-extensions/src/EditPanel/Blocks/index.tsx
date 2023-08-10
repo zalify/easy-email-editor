@@ -72,6 +72,7 @@ export function Blocks() {
               style={{ padding: 15 }}
               onChange={(t) => { changeCategories && changeCategories(t); }}
               value={selectedCategory}
+
             >
               <Select.Option key='All' value='all'>All</Select.Option>
               <Select.Option key='footer' value='footer'>Footer</Select.Option>
@@ -87,6 +88,7 @@ export function Blocks() {
         );
       })}
     </Collapse>
+
   );
 }
 

@@ -5,6 +5,8 @@ import { DataPanel } from '@extensions/DataPanel';
 import { FullHeightOverlayScrollbars } from '@extensions/components/FullHeightOverlayScrollbars';
 import { IconLeft } from '@arco-design/web-react/icon';
 import styles from './index.module.scss';
+import { BlockLayer } from '@extensions/BlockLayer';
+import { GlobalAttributePanel } from '@extensions/GlobalAttributePanel';
 
 export interface ConfigurationPanelProps {
   showSourceCode: boolean;
@@ -65,11 +67,13 @@ export function ConfigurationPanel({
         >
           <Tabs.TabPane
             title={
-              <div style={{ height: 40, lineHeight: '40px' }}>{t('Configuration')}</div>
+              <div style={{ height: 40, lineHeight: '40px' }}>{t('Layers')}</div>
             }
           >
             <FullHeightOverlayScrollbars height={`calc(${height} - 60px)`}>
-              <AttributePanel />
+              {/* <BlockLayer/> */}
+              <AttributePanel/>
+              {/* <GlobalAttributePanel/> */}
             </FullHeightOverlayScrollbars>
           </Tabs.TabPane>
 

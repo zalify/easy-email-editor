@@ -34,6 +34,7 @@ import { getBlockTitle } from '@extensions/utils/getBlockTitle';
 import { ConfigurationPanel } from '@extensions/ConfigurationPanel';
 import { SettingIcon } from './components/SettingIcon';
 import { SimpleLayout } from '@extensions/SimpleLayout';
+import { AttributePanel, AttributesPanelWrapper } from '@extensions/AttributePanel';
 
 export interface IBlockDataWithId extends IBlockData {
   id: string;
@@ -112,7 +113,7 @@ export function BlockLayer(props: BlockLayerProps) {
           </Space>
           <div className={styles.eyeIcon}>
 
-            <SettingIcon openConfig={SimpleLayout} />
+            <SettingIcon openConfig = {AttributesPanelWrapper}/>
           </div>
         </div>
       );

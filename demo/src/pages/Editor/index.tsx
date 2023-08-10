@@ -50,40 +50,38 @@ import { Uploader } from '@demo/utils/Uploader';
 import enUS from '@arco-design/web-react/es/locale/en-US';
 import { IconSave } from '@arco-design/web-react/icon';
 import component from '@demo/store/component';
+import { CustomBlocksType } from './components/CustomBlocks/constants';
 
 const imageCompression = import('browser-image-compression');
 
-export default function Editor() {
-  const defaultCategories: ExtensionProps['categories'] = [
-    {
-      label: 'Content',
-      active: true,
-      blocks: [
-        {
-          type: AdvancedType.TEXT,
-        },
-        {
-          type: AdvancedType.IMAGE,
-          payload: { attributes: { padding: '0px 0px 0px 0px' } },
-        },
-        {
-          type: AdvancedType.BUTTON,
-        },
-        {
-          type: AdvancedType.SOCIAL,
-        },
-        {
-          type: AdvancedType.DIVIDER,
-        },
-        {
-          type: AdvancedType.SPACER,
-        },
-        {
-          type: AdvancedType.HERO,
-        }
-      ],
-    }
-  ];
+const defaultCategories: ExtensionProps['categories'] = [
+  {
+    label: 'Content',
+    active: true,
+    blocks: [
+      {
+        type: CustomBlocksType.TOPBAR_1,
+        category: 'Topbar'
+      },
+      {
+        type: CustomBlocksType.TOPBAR_2,
+        category: 'Topbar'
+      },
+      {
+        type: CustomBlocksType.BODY_1,
+        category: 'Body'
+      },
+      {
+        type: CustomBlocksType.BODY_2,
+        category: 'Body'
+      },
+      {
+        type: CustomBlocksType.FOOTER_1,
+        category: 'Footer'
+      }
+    ],
+  },
+];
 
   const changeCategories = (category: string) => {
     dispatch(component.actions.fetch({

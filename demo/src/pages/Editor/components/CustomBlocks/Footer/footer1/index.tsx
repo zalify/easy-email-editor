@@ -3,18 +3,15 @@ import {
   BasicType,
   components,
   createCustomBlock,
-  getPreviewClassName,
-  AdvancedType,
   mergeBlock,
 } from 'easy-email-core';
 
+import { getImg } from "easy-email-core";
+
 import { CustomBlocksType } from '../../constants';
 import React from 'react';
-import { getContentEditableClassName } from 'easy-email-editor';
-import { BlockRenderer } from '../../../../../../../../packages/easy-email-core/src/components';
-// import { BasicBlock } from '../../../../../../../packages/easy-email-core/src/components';
 
-const { Column, Section, Wrapper, Text, Button, Image, Group, BasicBlock } = components;
+const { BasicBlock } = components;
 
 export type IFooter1 = IBlockData<
   {
@@ -189,6 +186,65 @@ export const Footer1 = createCustomBlock<IFooter1>({
             }
           ],
         },
+        {
+          type: BasicType.SECTION,
+          data: {
+            value: {
+            },
+          },
+          attributes: {
+
+          },
+          children: [
+            {
+              type: BasicType.COLUMN,
+              data: {
+                value: {},
+              },
+              attributes: {},
+              children: [
+                {
+                  type: BasicType.SOCIAL,
+                  data: {
+                    value: {
+                      elements: [
+                        {
+                          href: '#',
+                          target: '_blank',
+                          src: getImg('IMAGE_02'),
+                          content: 'Facebook',
+                        },
+                        {
+                          href: '#',
+                          target: '_blank',
+                          src: getImg('IMAGE_03'),
+                          content: 'Google',
+                        },
+                        {
+                          href: '',
+                          target: '_blank',
+                          src: getImg('IMAGE_04'),
+                          content: 'Twitter',
+                        },
+                      ],
+                    }
+                  },
+                  attributes: {
+                    padding: '0px 0px 0px 0px',
+                    align: 'center',
+                    'font-size': '25px',
+                    'font-weight': '600',
+                    color: 'black',
+                    'line-height': '30px',
+                  },
+                  children: [
+
+                  ],
+                }
+              ],
+            }
+          ],
+        }
       ],
     };
     return mergeBlock(defaultData, payload);
