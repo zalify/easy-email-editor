@@ -81,6 +81,22 @@ const defaultCategories: ExtensionProps['categories'] = [
         category: 'Topbar',
       },
       {
+        type: CustomBlocksType.TOPBAR_3,
+        category: 'Topbar',
+      },
+      {
+        type: CustomBlocksType.TOPBAR_4,
+        category: 'Topbar',
+      },
+      {
+        type: CustomBlocksType.TOPBAR_5,
+        category: 'Topbar',
+      },
+      {
+        type: CustomBlocksType.TOPBAR_6,
+        category: 'Topbar',
+      },
+      {
         type: CustomBlocksType.BODY_1,
         category: 'Body',
       },
