@@ -45,19 +45,19 @@ export function EditPanel({
       >
         <TabPane
           key='2'
-          title={t('Block')}
+          title={t('Templates')}
         >
           <FullHeightOverlayScrollbars height={`calc(${height} - 60px)`}>
-            <Blocks />
+          <TemplateUi />
           </FullHeightOverlayScrollbars>
         </TabPane>
 
         <TabPane
           key='1'
-          title={t('Template')}
+          title={t('Blocks')}
         >
           <FullHeightOverlayScrollbars height={`calc(${height} - 60px)`}>
-            <TemplateUi></TemplateUi>
+          <Blocks />
           </FullHeightOverlayScrollbars>
         </TabPane>
       </Tabs>
