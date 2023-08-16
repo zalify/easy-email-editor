@@ -21,7 +21,8 @@
     "easy-localized-translation": "^1.1.0",
     "file-saver": "^2.0.5",
     "lerna": "^4.0.0",
-    "liquidjs": "^9.34.1"
+    "liquidjs": "^9.34.1",
+    "posthog-js": "^1.76.0"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.1",
