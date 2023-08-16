@@ -633,8 +633,8 @@ export default function Editor() {
                           <strong>Export</strong>
                         </Button>
                       </Dropdown>
-                      <Button onClick={() => setVisible(true)}>
-                        <strong>Try responsive editor</strong>
+                      <Button target="_blank" href="https://github.com/m-Ryan">
+                        <strong>Commercial Editor</strong>
                       </Button>
                       <a
                         href='https://www.buymeacoffee.com/easyemail?utm_source=webside&utm_medium=button&utm_content=donate'
