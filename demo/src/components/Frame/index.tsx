@@ -3,6 +3,8 @@ import { Layout, Menu, Breadcrumb } from '@arco-design/web-react';
 import { Stack } from '../Stack';
 import { pushEvent } from '@demo/utils/pushEvent';
 import { githubButtonGenerate } from '@demo/utils/githubButtonGenerate';
+import { CommercialEmailEditorBanner } from '../CommercialEmailEditorBanner';
+import { useShowCommercialEditor } from '@demo/hooks/useShowCommercialEditor';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -23,15 +25,21 @@ export default function Frame({
   useEffect(() => {
     githubButtonGenerate();
   }, []);
-
+  const { featureEnabled } = useShowCommercialEditor();
   return (
     <Layout>
       <Header style={{ padding: '0 20px', backgroundColor: '#001529' }}>
-        <Stack distribution='equalSpacing' alignment='center'>
+        <Stack
+          distribution='equalSpacing'
+          alignment='center'
+        >
           <h1 style={{ color: 'white', margin: '15px 0' }}>Easy-email</h1>
 
           <div style={{ marginTop: 10 }}>
-            <Stack distribution='equalSpacing' alignment='center'>
+            <Stack
+              distribution='equalSpacing'
+              alignment='center'
+            >
               <a
                 href='https://www.buymeacoffee.com/easyemail?utm_source=webside&utm_medium=button&utm_content=donate'
                 target='_blank'
@@ -80,6 +88,7 @@ export default function Frame({
           </div>
         </Stack>
       </Header>
+
       <Layout>
         <Sider width={200}>
           <Menu
@@ -87,7 +96,10 @@ export default function Frame({
             defaultOpenKeys={['sub1']}
             style={{ height: '100%', borderRight: 0 }}
           >
-            <SubMenu key='sub1' title='Templates'>
+            <SubMenu
+              key='sub1'
+              title='Templates'
+            >
               <Menu.Item key='1'>Templates</Menu.Item>
             </SubMenu>
           </Menu>
@@ -100,7 +112,10 @@ export default function Frame({
               </Breadcrumb>
             )}
 
-            <Stack distribution='equalSpacing' alignment='center'>
+            <Stack
+              distribution='equalSpacing'
+              alignment='center'
+            >
               <Stack.Item>
                 <h2>
                   <strong>{title}</strong>
@@ -110,6 +125,7 @@ export default function Frame({
             </Stack>
 
             <Stack.Item>
+              {featureEnabled && <CommercialEmailEditorBanner page='HOME' />}
               <Content
                 style={{
                   padding: 24,

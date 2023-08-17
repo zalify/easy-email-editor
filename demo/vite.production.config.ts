@@ -35,6 +35,17 @@ export default defineConfig({
             return 'mjml-browser';
           }
         },
+        chunkFileNames(info) {
+          console.log('info.name', info.name);
+          if (
+            ['mjml-browser', 'html2canvas', 'browser-image-compression'].some(name =>
+              info.name?.includes(name),
+            )
+          ) {
+            return '[name].js';
+          }
+          return '[name]-[hash].js';
+        },
       },
     },
   },
