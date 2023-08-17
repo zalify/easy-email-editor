@@ -1,7 +1,7 @@
 import { IconEye, IconEyeInvisible } from '@arco-design/web-react/icon';
 import React, { useCallback } from 'react';
-import { Stack, TextStyle, useBlock } from 'easy-email-editor';
-import { BasicType, BlockManager } from 'easy-email-core';
+import { Stack, TextStyle, useBlock, useFocusIdx } from 'easy-email-editor';
+import { BasicType, BlockManager, getParentByIdx } from 'easy-email-core';
 import { BlockLayer } from '@extensions/BlockLayer';
 
 export interface AttributesPanelWrapper {
@@ -10,8 +10,21 @@ export interface AttributesPanelWrapper {
   children: React.ReactNode | React.ReactElement;
 }
 export const AttributesPanelWrapper: React.FC<AttributesPanelWrapper> = props => {
-  const { focusBlock, setFocusBlock } = useBlock();
-  const block = focusBlock && BlockManager.getBlockByType(focusBlock.type);
+  const { focusBlock, setFocusBlock, values } = useBlock();
+  const { focusIdx } = useFocusIdx();
+  let block;
+
+  const parentBlock = getParentByIdx(values, focusIdx );
+
+  const isChildren = parentBlock?.type !== BasicType.PAGE
+  let type:any = parentBlock?.type;
+
+  if(isChildren){
+    block = focusBlock && BlockManager.getBlockByType(type);
+  }
+  else{
+    block = focusBlock && BlockManager.getBlockByType(focusBlock.type);
+  }
 
   const onChangeHidden = useCallback(
     (val: string | boolean) => {
