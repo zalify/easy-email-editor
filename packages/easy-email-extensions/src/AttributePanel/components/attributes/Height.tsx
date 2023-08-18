@@ -23,6 +23,13 @@ export function Height({
             inline={inline}
             config={config}
           />
+          <TextField
+            label={t('Height')}
+            name={`${focusIdx}.data.value.content`}
+            quickchange
+            inline={inline}
+            config={config}
+          />
         </Stack.Item>
       </Stack>
     );

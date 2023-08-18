@@ -34,7 +34,7 @@ export interface IBlockData<
   };
   attributes: Attr & { 'css-class'?: string; };
   children: IBlockData[];
-  json: any;
+  json?: any;
 }
 
 export interface create<T extends any = any> {

@@ -28,6 +28,5 @@ export default function createMyCustomBlock(json: any) {
   BlockManager.registerBlocks({ [json.type]: block });
 
   const allBlocks = BlockManager.getBlocks();
-  console.log(allBlocks, 'AllBlock');
   return block;
 }

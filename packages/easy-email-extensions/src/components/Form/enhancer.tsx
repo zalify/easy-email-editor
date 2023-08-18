@@ -23,10 +23,10 @@ export interface EnhancerProps {
 }
 
 const parse = (v: any) => v;
-export default function enhancer<P extends { onChange?: (...rest: any) => any }>(
+export default function enhancer<P extends { onChange?: (...rest: any) => any; }>(
   Component: React.FC<any>,
   changeAdapter: (args: Parameters<NonNullable<P['onChange']>>) => any,
-  option?: { debounceTime: number },
+  option?: { debounceTime: number; },
 ) {
   return (props: EnhancerProps & Omit<P, 'value' | 'onChange' | 'mutators'>) => {
     const {

@@ -17,9 +17,9 @@ export interface BlockGroup {
 export interface PropsProviderProps {
   children?: React.ReactNode;
   height: string;
-  fontList?: { value: string; label: string }[];
+  fontList?: { value: string; label: string; }[];
   onAddCollection?: (payload: CollectedBlock) => void;
-  onRemoveCollection?: (payload: { id: string }) => void;
+  onRemoveCollection?: (payload: { id: string; }) => void;
   onUploadImage?: (data: Blob) => Promise<string>;
   interactiveStyle?: {
     hoverColor?: string;
@@ -29,10 +29,11 @@ export interface PropsProviderProps {
   };
   autoComplete?: boolean;
   dashed?: boolean;
-  socialIcons?: Array<{ content: string; image: string }>;
+  socialIcons?: Array<{ content: string; image: string; }>;
 
   mergeTagGenerate?: (m: string) => string;
   onChangeMergeTag?: (ptah: string, val: any) => any;
+  setMergeTags?: (newObject: Record<string, any>) => any;
   renderMergeTagContent?: (props: {
     onChange: (val: string) => void;
     isSelect: boolean;

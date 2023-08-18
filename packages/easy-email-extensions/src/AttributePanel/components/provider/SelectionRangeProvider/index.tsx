@@ -8,7 +8,7 @@ export const SelectionRangeContext = React.createContext<{
   setSelectionRange: React.Dispatch<React.SetStateAction<Range | null>>;
 }>({
   selectionRange: null,
-  setSelectionRange: () => {},
+  setSelectionRange: () => { },
 });
 
 export const SelectionRangeProvider: React.FC<{
@@ -25,7 +25,7 @@ export const SelectionRangeProvider: React.FC<{
           if (toolbar && toolbar.contains(range.commonAncestorContainer)) return;
           setSelectionRange(range);
         }
-      } catch (error) {}
+      } catch (error) { }
     };
 
     document.addEventListener('selectionchange', onSelectionChange);

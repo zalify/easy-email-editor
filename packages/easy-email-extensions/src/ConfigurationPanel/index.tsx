@@ -81,14 +81,7 @@ export function ConfigurationPanel({
             }
           >
             <FullHeightOverlayScrollbars height={`calc(${height} - 60px)`}>
-              <DataPanel
-                dataObjects={
-                  [
-                    { key: 'logo', value: 'logoImg' },
-                    { key: 'place', value: 'Chandigarh' }
-                  ]
-                }
-              />
+              <DataPanel />
             </FullHeightOverlayScrollbars>
           </Tabs.TabPane>
         </Tabs>

@@ -57,7 +57,7 @@ export function EditPanel({
         >
           <FullHeightOverlayScrollbars height={`calc(${height} - 60px)`}>
             <div style={{ padding: 20 }}>
-              <BlockLayer />
+              {/* <BlockLayer /> */}
             </div>
           </FullHeightOverlayScrollbars>
         </TabPane>

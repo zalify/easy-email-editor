@@ -33,7 +33,7 @@ export const MergeTags: React.FC<{
     const deep = (
       key: string,
       title: string,
-      parent: { [key: string]: any; children?: any[] },
+      parent: { [key: string]: any; children?: any[]; },
       mapData: Array<any> = []
     ) => {
       const currentMapData = {

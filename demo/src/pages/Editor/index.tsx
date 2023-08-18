@@ -12,7 +12,7 @@ import {
 } from '@arco-design/web-react';
 import { useQuery } from '@demo/hooks/useQuery';
 import { useHistory } from 'react-router-dom';
-import { cloneDeep, set, isEqual } from 'lodash';
+import { cloneDeep, set, isEqual, get } from 'lodash';
 import { Loading } from '@demo/components/loading';
 import mjml from 'mjml-browser';
 import services from '@demo/services';
@@ -239,6 +239,8 @@ export default function Editor() {
     pushEvent({ event: 'MJMLExport', payload: { values, mergeTags } });
     navigator.clipboard.writeText(mjmlString);
     saveAs(new Blob([mjmlString], { type: 'text/mjml' }), 'easy-email.mjml');
+
+    return mjmlString;
   };
 
   const onExportHTML = (values: IEmailTemplate) => {
@@ -253,19 +255,20 @@ export default function Editor() {
 
     pushEvent({ event: 'HTMLExport', payload: { values, mergeTags } });
     navigator.clipboard.writeText(html);
+
     saveAs(new Blob([html], { type: 'text/html' }), 'easy-email.html');
+
+    return html;
   };
 
   const onExportJSON = (values: IEmailTemplate) => {
     navigator.clipboard.writeText(JSON.stringify(values, null, 2));
-    saveAs(
-      new Blob([JSON.stringify(values, null, 2)], { type: 'application/json' }),
-      'easy-email.json',
-    );
+
+    return values;
   };
 
   const onExportImage = async (values: IEmailTemplate) => {
-    Message.loading('Loading...');
+    Message.loading('Loading...',);
     const html2canvas = (await import('html2canvas')).default;
     const container = document.createElement('div');
     container.style.position = 'absolute';
@@ -287,8 +290,11 @@ export default function Editor() {
         return canvas.toBlob(resolve, 'png', 0.1);
       });
     });
-    saveAs(blob, 'demo.png');
+
     Message.clear();
+    saveAs(blob, 'demo.png');
+    return blob;
+
   };
 
   const initialValues: IEmailTemplate | null = useMemo(() => {
@@ -362,6 +368,26 @@ export default function Editor() {
     [],
   );
 
+  const saveMyTemplate = async (values: IEmailTemplate) => {
+    const val1 = onExportJSON(values);
+    console.log(val1);
+    const val = onExportHTML(values);
+    console.log(val);
+    const val2 = onExportMJML(values);
+    console.log(val2);
+    const val3 = await onExportImage(values);
+    console.log(val3);
+
+    // dispatch(component.actions.update({
+    //   id: '1313',
+    //   data: {
+    //     templateMjml: val2,
+    //     templateJson: val1,
+    //     templateHtml: val,
+    //   }
+    // }));
+  };
+
   if (!templateData && loading && !categories.length) {
     return (
       <Loading loading={loading}>
@@ -382,11 +408,12 @@ export default function Editor() {
           onUploadImage={onUploadImage}
           onSubmit={onSubmit}
           onChangeMergeTag={onChangeMergeTag}
+          setMergeTags={setMergeTags}
           autoComplete
           enabledLogic
           dashed={false}
           mergeTags={mergeTags}
-          mergeTagGenerate={tag => `{{${tag}}}`}
+          mergeTagGenerate={tag => get(mergeTags, tag)}
           onBeforePreview={onBeforePreview}
           socialIcons={[]}
         >
@@ -402,7 +429,7 @@ export default function Editor() {
                     <Stack alignment='center'>
                       <Button
                         type='outline'
-                        onClick={() => { console.log('DFF SAve'); }}
+                        onClick={() => { saveMyTemplate(values); }}
                         icon={<IconSave />
                         }
                       ></Button>

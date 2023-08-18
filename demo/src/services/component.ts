@@ -62,6 +62,8 @@ export const component = {
   async updateTemplate(
     id: number,
     data: {
+      templateHtml: any;
+      templateMjml: any;
       templateJson: ITemplateJson;
       attributeJson: IAttributeJson;
       categoryId?: string;
