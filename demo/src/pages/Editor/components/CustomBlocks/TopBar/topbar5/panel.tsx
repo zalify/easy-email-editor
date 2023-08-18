@@ -30,7 +30,7 @@ export function topBar5Panel(props: any) {
         {
           "type": "Nav",
           "label": "Links Left Side",
-          "path": ".children[0]children[0]children[0]",
+          "path": ".children.[0].children.[0].children.[0]",
           "properties": [
             {
               "label": "Links",
@@ -144,14 +144,16 @@ export function topBar5Panel(props: any) {
                       style={{ width: '100%' }}
                     >
                       {attribute.properties[0].value.map((props: any, index: number) => {
-                        console.log("contzwfwevweendsft", (focusIdx),(attribute.path),(attribute.properties[0].path),(index),(props.content));
+
+                        console.log("contzwfwevweendsft", (focusIdx),(attribute.path),(attribute.properties[0].path),
+                        (index),(props.content));
                         if (props.content === 'Home') {
                           return (
                             <Grid.Row>
                               <Grid.Col span={11}>
                                 <TextField
                                   label={t('Content')}
-                                  name={`${focusIdx}${attribute.path}${attribute.properties[0].path}.[${index}].${props.content}`}
+                                  name={`${focusIdx}${attribute.path}${attribute.properties[0].path}.[${index}].content`}
                                 />
                               </Grid.Col>
                               <Grid.Col
@@ -160,7 +162,7 @@ export function topBar5Panel(props: any) {
                               >
                                 <TextField
                                   label={t('url')}
-                                  name={`${focusIdx}${attribute.path}${attribute.properties.path}.[${index}].${props.href}`}
+                                  name={`${focusIdx}${attribute.path}${attribute.properties[0].path}.[${index}].href`}
 
                                 />
                               </Grid.Col>
@@ -173,7 +175,7 @@ export function topBar5Panel(props: any) {
                               <Grid.Col span={11}>
                                 <TextField
                                   label={t('Content')}
-                                  name={`${focusIdx}${attribute.path}${attribute.properties.path}.${props.content}`}
+                                  name={`${focusIdx}${attribute.path}${attribute.properties[0].path}.[${index}].content`}
 
                                 />
                               </Grid.Col>
@@ -183,7 +185,7 @@ export function topBar5Panel(props: any) {
                               >
                                 <TextField
                                   label={t('url')}
-                                  name={`${focusIdx}.${props.href}`}
+                                  name={`${focusIdx}${attribute.path}${attribute.properties[0].path}.[${index}].href`}
                                 />
                               </Grid.Col>
                             </Grid.Row>
@@ -266,7 +268,7 @@ export function topBar5Panel(props: any) {
                               <Grid.Col span={11}>
                                 <TextField
                                   label={t('Content')}
-                                  name={`${focusIdx}${props.path}`}
+                                  name={`${focusIdx}${attribute.path}${attribute.properties[0].path}.[${index}].content`}
                                 />
                               </Grid.Col>
                               <Grid.Col
@@ -275,7 +277,7 @@ export function topBar5Panel(props: any) {
                               >
                                 <TextField
                                   label={t('url')}
-                                  name={`${focusIdx}.${props.href}`}
+                                  name={`${focusIdx}${attribute.path}${attribute.properties[0].path}.[${index}].href`}
 
                                 />
                               </Grid.Col>
@@ -288,7 +290,7 @@ export function topBar5Panel(props: any) {
                               <Grid.Col span={11}>
                                 <TextField
                                   label={t('Content')}
-                                  name={`${focusIdx}${props.path}`}
+                                  name={`${focusIdx}${attribute.path}${attribute.properties[0].path}.[${index}].content`}
                                 />
                               </Grid.Col>
                               <Grid.Col
@@ -297,7 +299,7 @@ export function topBar5Panel(props: any) {
                               >
                                 <TextField
                                   label={t('url')}
-                                  name={`${focusIdx}.${props.href}`}
+                                  name={`${focusIdx}${attribute.path}${attribute.properties[0].path}.[${index}].href`}
 
                                 />
                               </Grid.Col>
