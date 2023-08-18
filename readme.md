@@ -54,10 +54,6 @@ Easy email is developed based on the [MJML](https://mjml.io/) and has very good 
 
 Check out the live demo here: <a href="https://email.maocanhua.cn/?utm_source=github" target="_blank" alt="https://email.maocanhua.cn/?utm_source=github">https://email.maocanhua.cn</a>
 
-## Custom Services
-For customized features or paid consultation services, please contact 962491243@qq.com.
-
-
 ## Getting started
 
 ```sh
