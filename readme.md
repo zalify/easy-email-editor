@@ -54,12 +54,6 @@ Easy email is developed based on the [MJML](https://mjml.io/) and has very good 
 
 Check out the live demo here: <a href="https://email.maocanhua.cn/?utm_source=github" target="_blank" alt="https://email.maocanhua.cn/?utm_source=github">https://email.maocanhua.cn</a>
 
-## How does it work?
-
-<img alt="" src="./work.png">
-
-</br>
-
 ## Custom Services
 For customized features or paid consultation services, please contact 962491243@qq.com.
 
@@ -124,6 +118,7 @@ export default function App() {
 
 ```
 
+
 ## Examples
 
 > Please see <a href="https://github.com/m-Ryan/easy-email-demo" target="_blank" alt="https://github.com/m-Ryan/easy-email-demo">https://github.com/m-Ryan/easy-email-demo</a>
@@ -157,6 +152,13 @@ export default function App() {
 | mod+y             | redo                                                                                              |
 | delete/backspace  | delete block                                                                                      |
 | tab / shift + tab | fast select block, if block is focusing,`tab` select next block & `shift + tab` select prev block |
+
+
+## How does it work?
+
+<img alt="" src="./work.png">
+
+</br>
 
 ## Packages
 
