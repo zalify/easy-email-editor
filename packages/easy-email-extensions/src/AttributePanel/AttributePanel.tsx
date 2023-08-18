@@ -11,6 +11,7 @@ import { PresetColorsProvider } from './components/provider/PresetColorsProvider
 import ReactDOM from 'react-dom';
 import { BlockAttributeConfigurationManager } from './utils/BlockAttributeConfigurationManager';
 import { SelectionRangeProvider } from './components/provider/SelectionRangeProvider';
+import { BasicType, getParentByIdx } from '@core';
 
 export interface AttributePanelProps {}
 
@@ -20,7 +21,20 @@ export function AttributePanel() {
 
   const { focusIdx } = useFocusIdx();
 
-  const Com = focusBlock && BlockAttributeConfigurationManager.get(focusBlock.type);
+  const parentBlock = getParentByIdx(values, focusIdx );
+  let Com;
+
+  const isChildren = parentBlock?.type !== BasicType.PAGE
+  let type:any = parentBlock?.type;
+
+  if(isChildren){
+    Com = focusBlock && BlockAttributeConfigurationManager.get(type);
+  }
+  else{
+   Com = focusBlock && BlockAttributeConfigurationManager.get(focusBlock.type);
+  }
+
+
 
   const shadowRoot = getShadowRoot();
 

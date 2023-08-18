@@ -67,9 +67,6 @@ export const CollapseWrapper: React.FC<CollapseWrapperProps> = props => {
           </>
         )}
       </Collapse>
-      <div />
-      <div />
-      <div />
     </Space>
   );
 };

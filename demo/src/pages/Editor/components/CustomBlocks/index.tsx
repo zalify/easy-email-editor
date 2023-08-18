@@ -12,6 +12,7 @@ import { TopBar3 } from './TopBar/topbar3';
 import { TopBar4 } from './TopBar/topbar4';
 import { TopBar5 } from './TopBar/topbar5';
 import { TopBar6 } from './TopBar/topbar6';
+import { topBar5Panel } from './TopBar/topbar5/panel';
 
 BlockManager.registerBlocks({
   [CustomBlocksType.PRODUCT_RECOMMENDATION]: ProductRecommendation,
@@ -28,5 +29,6 @@ BlockManager.registerBlocks({
 
 BlockAttributeConfigurationManager.add({
   [CustomBlocksType.PRODUCT_RECOMMENDATION]: ProductRecommendationPanel,
+  [CustomBlocksType.TOPBAR_5]: topBar5Panel
 
 });

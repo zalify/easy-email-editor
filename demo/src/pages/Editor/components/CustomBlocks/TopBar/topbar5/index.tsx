@@ -19,6 +19,7 @@ const { Column, Section, Wrapper, Text, Button, Image, Group, BasicBlock } = com
 export type ITopBar5 = IBlockData<
   {
     'background-color': string;
+    'background-url': string;
   }
 >;
 
@@ -38,8 +39,8 @@ export const TopBar5 = createCustomBlock<ITopBar5>({
         },
       },
       attributes: {
-        'background-color': 'yellow',
-
+        'background-color': '#ffffff',
+        'background-url':'https://images.unsplash.com/photo-1598124146163-36819847286d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80'
       },
       children: [
         {
@@ -101,7 +102,7 @@ export const TopBar5 = createCustomBlock<ITopBar5>({
                   },
                   attributes: {
                     src: 'https://plus.unsplash.com/premium_photo-1668064108355-ac4e7a7d089e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=401&q=80 ',
-                    width:'40px',
+                    'width':'40px',
                     height:'40px',
                     'border-radius':'40px',
                     align:'center',

@@ -18,7 +18,7 @@ export const AttributesPanelWrapper: React.FC<AttributesPanelWrapper> = props =>
 
   const isChildren = parentBlock?.type !== BasicType.PAGE
   let type:any = parentBlock?.type;
-
+  
   if(isChildren){
     block = focusBlock && BlockManager.getBlockByType(type);
   }
@@ -26,20 +26,10 @@ export const AttributesPanelWrapper: React.FC<AttributesPanelWrapper> = props =>
     block = focusBlock && BlockManager.getBlockByType(focusBlock.type);
   }
 
-  const onChangeHidden = useCallback(
-    (val: string | boolean) => {
-      if (!focusBlock) return;
-      focusBlock.data.hidden = val as any;
-      setFocusBlock({ ...focusBlock });
-    },
-    [focusBlock, setFocusBlock],
-  );
-
   if (!focusBlock || !block) return null;
 
   return (
     <div>
-      {/* <BlockLayer/> */}
       <div
         style={{
           border: '1px solid var(--color-neutral-3, rgb(229, 230, 235))',
@@ -58,7 +48,6 @@ export const AttributesPanelWrapper: React.FC<AttributesPanelWrapper> = props =>
                 spacing='extraTight'
                 alignment='center'
               >
-                <EyeIcon />
                 <TextStyle
                   variation='strong'
                   size='large'
@@ -76,38 +65,3 @@ export const AttributesPanelWrapper: React.FC<AttributesPanelWrapper> = props =>
     </div>
   );
 };
-
-function EyeIcon() {
-  const { setFocusBlock, focusBlock } = useBlock();
-
-  const onToggleVisible = useCallback(
-    (e: React.MouseEvent) => {
-      if (!focusBlock) return null;
-      e.stopPropagation();
-      setFocusBlock({
-        ...focusBlock,
-        data: {
-          ...focusBlock.data,
-          hidden: !focusBlock.data.hidden,
-        },
-      });
-    },
-    [focusBlock, setFocusBlock],
-  );
-
-  if (!focusBlock) return null;
-
-  if (focusBlock.type === BasicType.PAGE) return null;
-
-  return focusBlock.data.hidden ? (
-    <IconEyeInvisible
-      style={{ cursor: 'pointer', fontSize: 18 }}
-      onClick={onToggleVisible}
-    />
-  ) : (
-    <IconEye
-      style={{ cursor: 'pointer', fontSize: 18 }}
-      onClick={onToggleVisible}
-    />
-  );
-}
