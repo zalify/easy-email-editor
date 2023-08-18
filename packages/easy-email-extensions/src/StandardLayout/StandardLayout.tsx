@@ -74,8 +74,8 @@ export const StandardLayout: React.FC<ExtensionProps> = props => {
     >
       <ConfigProvider locale={enUS}>
         <Card
-          style={{ padding: 0 }}
-          bodyStyle={{
+          style={{padding: 0 }}
+          bodyStyle= {{
             padding: 0,
             height: containerHeight,
             overflow: 'hidden',
