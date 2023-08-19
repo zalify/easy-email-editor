@@ -1,5 +1,7 @@
-import { Input as ArcoInput, InputProps as ArcoInputProps } from '@arco-design/web-react';
+import { IconFont, useEditorProps } from '@';
+import { Input as ArcoInput, InputProps as ArcoInputProps, Button, Grid, Popover } from '@arco-design/web-react';
 import React, { useCallback } from 'react';
+import { MergeTags } from '@extensions';
 
 export interface InputProps extends Omit<ArcoInputProps, 'onChange'> {
   quickchange?: boolean;
@@ -14,6 +16,8 @@ export function Input(props: InputProps) {
     onKeyDown: onPropsKeyDown,
     onChange: propsOnChange,
   } = props;
+
+  const { mergeTags } = useEditorProps();
 
   const onChange = useCallback(
     (val: string) => {
@@ -53,10 +57,24 @@ export function Input(props: InputProps) {
   );
 
   return (
-    <ArcoInput
-      {...{ ...props, quickchange: undefined }}
-      onChange={(value) => onChange(value)}
-      onKeyDown={onKeyDown}
-    />
+    <>
+      <Grid.Row style={{ width: '100%' }}>
+
+        {mergeTags && (
+          <Popover
+            trigger='click'
+            content={<MergeTags value={value} onChange={onChange} />}
+          >
+            <Button icon={<IconFont iconName='icon-merge-tags' />} />
+          </Popover>
+        )}
+        <ArcoInput
+          {...{ ...props, quickchange: undefined }}
+          onChange={(value) => onChange(value)}
+          onKeyDown={onKeyDown}
+        />
+      </Grid.Row>
+
+    </>
   );
 }
