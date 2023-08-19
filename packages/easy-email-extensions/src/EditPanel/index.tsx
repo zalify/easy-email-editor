@@ -34,7 +34,7 @@ export function EditPanel({
       width={360}
     >
       <Tabs
-        defaultActiveTab='2'
+        defaultActiveTab='1'
         style={{ width: '100%', padding: 0 }}
         renderTabHeader={(_, DefaultHeader) => (
           <div className={styles.largeTabsHeader}>
@@ -43,20 +43,19 @@ export function EditPanel({
         )}
       >
         <TabPane
-          key='2'
-          title={t('Block')}
-        >
-          <FullHeightOverlayScrollbars height={`calc(${height} - 60px)`}>
-            <Blocks />
-          </FullHeightOverlayScrollbars>
-        </TabPane>
-
-        <TabPane
           key='1'
           title={t('Template')}
         >
           <FullHeightOverlayScrollbars height={`calc(${height} - 60px)`}>
             <TemplateUi />
+          </FullHeightOverlayScrollbars>
+        </TabPane>
+        <TabPane
+          key='2'
+          title={t('Block')}
+        >
+          <FullHeightOverlayScrollbars height={`calc(${height} - 60px)`}>
+            <Blocks />
           </FullHeightOverlayScrollbars>
         </TabPane>
       </Tabs>
