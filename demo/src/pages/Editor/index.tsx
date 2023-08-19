@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-wrap-multilines */
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import template from '@demo/store/template';
@@ -14,10 +13,8 @@ import { useQuery } from '@demo/hooks/useQuery';
 import { useHistory } from 'react-router-dom';
 import { cloneDeep, set, isEqual, get } from 'lodash';
 import { Loading } from '@demo/components/loading';
-import mjml from 'mjml-browser';
 import services from '@demo/services';
 import { Liquid } from 'liquidjs';
-import { saveAs } from 'file-saver';
 import {
   EmailEditor,
   EmailEditorProvider,
@@ -31,11 +28,10 @@ import { FormApi } from 'final-form';
 import { UserStorage } from '@demo/utils/user-storage';
 
 import { useCollection } from './components/useCollection';
-import { AdvancedType, IBlockData, JsonToMjml } from 'easy-email-core';
+import { AdvancedType, IBlockData } from 'easy-email-core';
 import {
   BlockMarketManager,
   ExtensionProps,
-  MjmlToJson,
   StandardLayout,
 } from 'easy-email-extensions';
 import { AutoSaveAndRestoreEmail } from '@demo/components/AutoSaveAndRestoreEmail';
@@ -46,10 +42,16 @@ import { testMergeTags } from './testMergeTags';
 import { useMergeTagsModal } from './components/useMergeTagsModal';
 
 import { useWindowSize } from 'react-use';
-import { Uploader } from '@demo/utils/Uploader';
 import enUS from '@arco-design/web-react/es/locale/en-US';
 import { IconSave } from '@arco-design/web-react/icon';
 import component from '@demo/store/component';
+import templateList from '@demo/store/templateList';
+import {
+  onExportHTML,
+  onExportImage,
+  onExportJSON,
+  onExportMJML
+} from '@demo/utils/exportUtility';
 
 const imageCompression = import('browser-image-compression');
 
@@ -106,10 +108,16 @@ export default function Editor() {
     setMergeTags,
   } = useMergeTagsModal(testMergeTags);
 
-  // My Code
+  // List Blocks
   const list = useAppSelector('component');
   useEffect(() => {
     dispatch(component.actions.fetch({}));
+  }, [dispatch]);
+
+  // List Blocks
+  const templates = useAppSelector('templateList');
+  useEffect(() => {
+    dispatch(templateList.actions.fetch(undefined));
   }, [dispatch]);
 
   useEffect(() => {
@@ -121,6 +129,7 @@ export default function Editor() {
     }
   }, [collectionCategory]);
 
+  // Get Template Data By Doing API Call on Component mount
   useEffect(() => {
     if (id) {
       if (!userId) {
@@ -139,6 +148,7 @@ export default function Editor() {
     };
   }, [dispatch, id, userId]);
 
+  // Compress Image & Upload
   const onUploadImage = async (blob: Blob) => {
     const compressionFile = await (
       await imageCompression
@@ -148,6 +158,7 @@ export default function Editor() {
     return services.common.uploadByQiniu(compressionFile);
   };
 
+  // Method to update merge tag value
   const onChangeMergeTag = useCallback((path: string, val: any) => {
     setMergeTags(old => {
       const newObj = cloneDeep(old);
@@ -156,147 +167,7 @@ export default function Editor() {
     });
   }, []);
 
-  const onImportMJML = async ({
-    restart,
-  }: {
-    restart: (val: IEmailTemplate) => void;
-  }) => {
-    const uploader = new Uploader(() => Promise.resolve(''), {
-      accept: 'text/mjml',
-      limit: 1,
-    });
-
-    const [file] = await uploader.chooseFile();
-    const reader = new FileReader();
-    const pageData = await new Promise<[string, IEmailTemplate['content']]>(
-      (resolve, reject) => {
-        reader.onload = function (evt) {
-          if (!evt.target) {
-            reject();
-            return;
-          }
-          try {
-            const pageData = MjmlToJson(evt.target.result as any);
-            resolve([file.name, pageData]);
-          } catch (error) {
-            reject();
-          }
-        };
-        reader.readAsText(file);
-      },
-    );
-
-    restart({
-      subject: pageData[0],
-      content: pageData[1],
-      subTitle: '',
-    });
-  };
-
-  const onImportJSON = async ({
-    restart,
-  }: {
-    restart: (val: IEmailTemplate) => void;
-  }) => {
-    const uploader = new Uploader(() => Promise.resolve(''), {
-      accept: 'application/json',
-      limit: 1,
-    });
-
-    const [file] = await uploader.chooseFile();
-    const reader = new FileReader();
-    const emailTemplate = await new Promise<IEmailTemplate>((resolve, reject) => {
-      reader.onload = function (evt) {
-        if (!evt.target) {
-          reject();
-          return;
-        }
-        try {
-          const template = JSON.parse(evt.target.result as any) as IEmailTemplate;
-          resolve(template);
-        } catch (error) {
-          reject();
-        }
-      };
-      reader.readAsText(file);
-    });
-
-    restart({
-      subject: emailTemplate.subject,
-      content: emailTemplate.content,
-      subTitle: emailTemplate.subTitle,
-    });
-  };
-
-  const onExportMJML = (values: IEmailTemplate) => {
-    const mjmlString = JsonToMjml({
-      data: values.content,
-      mode: 'production',
-      context: values.content,
-      dataSource: mergeTags,
-    });
-
-    pushEvent({ event: 'MJMLExport', payload: { values, mergeTags } });
-    navigator.clipboard.writeText(mjmlString);
-    saveAs(new Blob([mjmlString], { type: 'text/mjml' }), 'easy-email.mjml');
-
-    return mjmlString;
-  };
-
-  const onExportHTML = (values: IEmailTemplate) => {
-    const mjmlString = JsonToMjml({
-      data: values.content,
-      mode: 'production',
-      context: values.content,
-      dataSource: mergeTags,
-    });
-
-    const html = mjml(mjmlString, {}).html;
-
-    pushEvent({ event: 'HTMLExport', payload: { values, mergeTags } });
-    navigator.clipboard.writeText(html);
-
-    saveAs(new Blob([html], { type: 'text/html' }), 'easy-email.html');
-
-    return html;
-  };
-
-  const onExportJSON = (values: IEmailTemplate) => {
-    navigator.clipboard.writeText(JSON.stringify(values, null, 2));
-
-    return values;
-  };
-
-  const onExportImage = async (values: IEmailTemplate) => {
-    Message.loading('Loading...',);
-    const html2canvas = (await import('html2canvas')).default;
-    const container = document.createElement('div');
-    container.style.position = 'absolute';
-    container.style.left = '-9999px';
-    const mjmlString = JsonToMjml({
-      data: values.content,
-      mode: 'production',
-      context: values.content,
-      dataSource: mergeTags,
-    });
-
-    const html = mjml(mjmlString, {}).html;
-
-    container.innerHTML = html;
-    document.body.appendChild(container);
-
-    const blob = await new Promise<any>(resolve => {
-      html2canvas(container, { useCORS: true }).then(canvas => {
-        return canvas.toBlob(resolve, 'png', 0.1);
-      });
-    });
-
-    Message.clear();
-    saveAs(blob, 'demo.png');
-    return blob;
-
-  };
-
+  // Load Template Data into the Editor
   const initialValues: IEmailTemplate | null = useMemo(() => {
     if (!templateData) return null;
     const sourceData = cloneDeep(templateData.content) as IBlockData;
@@ -306,6 +177,7 @@ export default function Editor() {
     };
   }, [templateData]);
 
+  // Update the Json
   const categories = useMemo(() => {
     if (!list) return [];
     const newList = cloneDeep(list);
@@ -314,6 +186,7 @@ export default function Editor() {
     );
     return defaultCategories;
   }, [list]);
+
 
   const onSubmit = useCallback(
     async (
@@ -359,6 +232,7 @@ export default function Editor() {
     [dispatch, history, id, initialValues],
   );
 
+  // Method to do Preview with Injected Data
   const onBeforePreview: EmailEditorProviderProps['onBeforePreview'] = useCallback(
     (html: string, mergeTags) => {
       const engine = new Liquid();
@@ -371,11 +245,11 @@ export default function Editor() {
   const saveMyTemplate = async (values: IEmailTemplate) => {
     const val1 = onExportJSON(values);
     console.log(val1);
-    const val = onExportHTML(values);
+    const val = onExportHTML(values, mergeTags);
     console.log(val);
-    const val2 = onExportMJML(values);
+    const val2 = onExportMJML(values, mergeTags);
     console.log(val2);
-    const val3 = await onExportImage(values);
+    const val3 = await onExportImage(values, mergeTags);
     console.log(val3);
 
     // dispatch(component.actions.update({
@@ -440,6 +314,7 @@ export default function Editor() {
                   compact={!smallScene}
                   categories={categories}
                   changeCategories={changeCategories}
+                  templates={templates}
                 >
                   <EmailEditor />
                 </StandardLayout>

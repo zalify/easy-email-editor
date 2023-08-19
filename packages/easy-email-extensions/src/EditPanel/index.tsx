@@ -2,7 +2,6 @@ import { Layout, Tabs } from '@arco-design/web-react';
 import { useEditorProps } from 'easy-email-editor';
 import React from 'react';
 import { Blocks } from './Blocks';
-import { BlockLayer } from '@extensions/BlockLayer';
 import { FullHeightOverlayScrollbars } from '@extensions/components/FullHeightOverlayScrollbars';
 import styles from './index.module.scss';
 import { ConfigurationDrawer } from './ConfigurationDrawer';

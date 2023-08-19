@@ -7,6 +7,7 @@ import './index.scss';
 export interface TabsProps {
   children?: React.ReactNode;
   tabBarExtraContent?: React.ReactNode;
+  titlePanelContent?: React.ReactNode;
   style?: React.CSSProperties;
   className?: string;
   onChange?: (id: string) => void;
@@ -61,7 +62,7 @@ const Tabs: React.FC<TabsProps> = props => {
           <Stack alignment='center'>
             {React.Children.map(
               props.children as any,
-              (item: { props: { tab: TabPaneProps }; key: string }, index) => {
+              (item: { props: { tab: TabPaneProps; }; key: string; }, index) => {
                 return (
                   <div
                     key={item.key}
@@ -80,12 +81,13 @@ const Tabs: React.FC<TabsProps> = props => {
               },
             )}
           </Stack>
+          {props.titlePanelContent}
           {props.tabBarExtraContent}
         </Stack>
       </div>
       {React.Children.map(
         props.children as any,
-        (item: { props: { tab: TabPaneProps }; key: string }, index) => {
+        (item: { props: { tab: TabPaneProps; }; key: string; }, index) => {
           const visible = (!activeTab && index === 0) || item.key === activeTab;
           return (
             <div

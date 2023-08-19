@@ -14,6 +14,7 @@ import { useEditorProps } from '@/hooks/useEditorProps';
 import './index.scss';
 import '@/assets/font/iconfont.css';
 import { EventManager, EventType } from '@/utils/EventManager';
+import { HeaderPanel } from './components/HeaderPanel';
 
 (window as any).global = window; // react-codemirror
 
@@ -52,6 +53,7 @@ export const EmailEditor = () => {
           onChange={onChangeTab}
           style={{ height: '100%', width: '100%' }}
           tabBarExtraContent={<ToolsPanel />}
+          titlePanelContent={<HeaderPanel />}
         >
           <TabPane
             style={{ height: 'calc(100% - 50px)' }}

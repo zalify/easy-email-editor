@@ -48,6 +48,7 @@ export interface PropsProviderProps {
   ) => string | Promise<string>;
   enabledLogic?: boolean;
   locale?: Record<string, string>;
+  templates: any,
 }
 
 const defaultMergeTagGenerate = (m: string) => `{{${m}}}`;
@@ -65,6 +66,7 @@ export const EditorPropsContext = React.createContext<
   onUploadImage: undefined,
   autoComplete: false,
   dashed: true,
+  templates: [],
   mergeTagGenerate: defaultMergeTagGenerate,
   enabledLogic: false,
 });

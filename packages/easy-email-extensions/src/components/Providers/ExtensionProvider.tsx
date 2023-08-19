@@ -48,6 +48,7 @@ export interface ExtensionProps extends BlockLayerProps {
   mjmlReadOnly?: boolean;
   compact?: boolean;
   changeCategories?: (category: string) => void;
+  templates?: Array<Record<string, any>>;
 }
 
 export const ExtensionContext = React.createContext<ExtensionProps>({
