@@ -39,7 +39,7 @@ export function RichTextToolBar(props: { onChange: (s: string) => void; }) {
               }}
             />
 
-            <Tools onChange={props.onChange} />
+            {/* <Tools onChange={props.onChange} /> */}
           </div>
         </>,
         root

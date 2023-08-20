@@ -4,7 +4,7 @@ import { useBlock } from './useBlock';
 import { getEditorRoot, getShadowRoot } from '@/utils';
 import { useFocusIdx } from './useFocusIdx';
 import { useEditorContext } from './useEditorContext';
-import { getNodeIdxFromClassName } from 'easy-email-core';
+import { getNodeIdxFromClassName } from '@core';
 import { getBlockNodeByChildEle } from '@/utils/getBlockNodeByChildEle';
 
 function isContentEditFocus() {
