@@ -72,7 +72,7 @@ export function ConfigurationPanel({
           >
             <FullHeightOverlayScrollbars height={`calc(${height} - 60px)`}>
               {/* <BlockLayer/> */}
-              <AttributePanel/>
+              <AttributePanel />
               {/* <GlobalAttributePanel/> */}
             </FullHeightOverlayScrollbars>
           </Tabs.TabPane>

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import { BlockType, getChildIdx } from 'easy-email-core';
+import { BlockManager, BlockType, getChildIdx } from 'easy-email-core';
 import { useHoverIdx } from '@/hooks/useHoverIdx';
 import { useDataTransfer } from '@/hooks/useDataTransfer';
 import { isUndefined } from 'lodash';
@@ -25,7 +25,9 @@ export const BlockAvatarWrapper: React.FC<BlockAvatarWrapperProps> = props => {
 
   const onDragStart = useCallback(
     (ev: React.DragEvent) => {
-      createMyCustomBlock(json);
+      if (!BlockManager.getBlockByType(type)) {
+        createMyCustomBlock(json);
+      }
       if (action === 'add') {
         setDataTransfer({
           type: type,

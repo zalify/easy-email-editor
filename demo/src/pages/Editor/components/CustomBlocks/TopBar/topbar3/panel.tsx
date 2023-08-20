@@ -1,248 +1,206 @@
-import {
-  IBlockData,
-  BasicType,
-  components,
-  createCustomBlock,
-  AdvancedType,
-  mergeBlock,
-} from 'easy-email-core';
-
-import { CustomBlocksType } from '../../constants';
+import { Collapse, Grid, Space } from '@arco-design/web-react';
+import { Stack } from '@demo/components/Stack';
+import { useFocusIdx } from 'easy-email-editor';
+import { AttributesPanelWrapper, CollapseWrapper, ColorPickerField, ImageUploaderField, TextField } from 'easy-email-extensions';
 import React from 'react';
 
-const { BasicBlock } = components;
+export function TopBar3Panel(props: any) {
+  const { focusIdx } = useFocusIdx();
 
-export type ITopBar2 = IBlockData<
+  const topBar3AttributeJson =
   {
-    'background-color': string;
-    'button-color': string;
-    'button-text-color': string;
-    'product-name-color': string;
-    'product-price-color': string;
-    'title-color': string;
-  },
-  {
-    title: string;
-    buttonText: string;
-    quantity: number;
-  }
->;
-
-
-export const TopBar2 = createCustomBlock<ITopBar2>({
-  name: 'TopBar 2',
-  type: CustomBlocksType.TOPBAR_2,
-  validParentType: [BasicType.PAGE, AdvancedType.WRAPPER, BasicType.WRAPPER],
-  create: (payload: any) => {
-    const defaultData: ITopBar2 = {
-      type: CustomBlocksType.TOPBAR_2,
-      data: {
-        value: {
-          title: 'You might also like',
-          buttonText: 'Buy now',
-          quantity: 3,
-        },
+    components: [
+      {
+        "type": "BlockLevel",
+        "label": "Top Bar 5 Block",
+        "path": "",
+        "properties": [
+          {
+            "label": "Background Color",
+            "path": ".attributes.background-color",
+            "value": "#ffffff"
+          },
+          {
+            "label": "Background Image",
+            "path": ".attributes.background-url",
+            "value": "https://s3.com/path"
+          }
+        ]
       },
-      attributes: {
-        'background-color': '#ffffff',
-        'button-text-color': '#ffffff',
-        'button-color': '#414141',
-        'product-name-color': '#414141',
-        'product-price-color': '#414141',
-        'title-color': '#222222',
+      {
+        "type": "Nav",
+        "label": "Links Right Side",
+        "path": ".children.[0].children.[1].children.[0]",
+        "properties": [
+          {
+            "label": "Links",
+            "path": ".data.value.links",
+            "value": [
+              {
+                "href": "/gettings-started-onboard",
+                "content": "Home"
+              },
+              {
+                "href": "/try-it-live",
+                "content": "About"
+              },
+              {
+                "href": "/privacy",
+                "content": "privacy"
+              }
+            ]
+          }
+        ]
       },
-      children: [
+      {
+        "type": "logo",
+        "label": "Logo",
+        "path": ".children[0]children[0]children[0]",
+        "properties": [
+          {
+            "label": "Image",
+            "path": ".attributes.src",
+            "value": "https://plus.unsplash.com/premium_photo-1668064108355-ac4e7a7d089e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=401&q=80"
+          },
+          {
+            "label": "Width",
+            "path": ".attributes.width",
+            "value": "40px"
+          },
+          {
+            "label": "Height",
+            "path": ".attributes.height",
+            "value": "40px"
+          }
+        ]
+      }
+    ]
+  };
+
+  return (
+    <AttributesPanelWrapper style={{ padding: '20px' }}>
+      <Stack vertical>
         {
-          type: BasicType.SECTION,
-          children: [
-            {
-              type:BasicType.COLUMN,
-              children:[
-                {
-                  type: BasicType.TEXT,
-                  children: [],
-                  data: {
-                    value: {
-                      content: 'Gluelabs'
-                    }
-                  },
-                  attributes: {
-                    'font-weight':'600',
-                    'line-height':'30px',
-                    'font-size':'20px',
-                    padding:'0px 0px 0px 0px',
-                    align:'center'
+          topBar3AttributeJson.components.map((attribute: any, index: number) => {
+            if (attribute.type === 'BlockLevel') {
+              return (
+                attribute.properties.map((prop: any, index: number) => {
+                  if (prop.label === 'Background Color') {
+                    return (
+                      <ColorPickerField
+                        label='Background color'
+                        name={`${focusIdx}${prop.path}`}
+                        inline
+                      />
+                    );
                   }
-                },
-              ],
-              data: {
-                value: {}
-              },
-              attributes: {}
+                  if (prop.label === 'Background Image') {
+                    return (
+                      <>
+                        <ImageUploaderField
+                          label={prop.label}
+                          name={`${focusIdx}${prop.path}`}
+                          inline
+                        />
+                      </>
+                    );
+                  }
+                })
+              );
             }
-          ],
-          data: {
-            value: {},
-          },
-          attributes: {},
-        },
-        {
-          type: BasicType.SECTION,
-          children:[
-            {
-              type: BasicType.GROUP,
-              children: [
-                {
-                  type: BasicType.COLUMN,
-                  children: [{
-                    type: BasicType.TEXT,
-                    children: [],
-                    data: {
-                      value: {
-                        content: 'custom'
-                      }
-                    },
-                    attributes: {
-                    'font-weight':'400',
-                    'line-height':'20px',
-                    'font-size':'16px',
-                    padding:'0px 0px 0px 0px',
-                    align:'center'
-                    },
-                  },],
-                  data: {
-                    value: {
 
-                    },
-                  },
-                  attributes: {},
-                },
+            if (attribute.type === 'logo') {
+              return (
+                <CollapseWrapper defaultActiveKey={['0', '1', '2']}>
+                  <Collapse.Item
+                    contentStyle={{ padding: 0 }}
+                    name='1'
+                    header={t(attribute.label)}
+                  >
+                    <Space
+                      direction='vertical'
+                      style={{ width: '100%' }}
+                    >
+                      {attribute.properties.map((props: any, index: number) => {
+                        console.log("cimage", (focusIdx), (attribute.path), (props.path));
+                        if (props.label === 'Image') {
+                          return (
+                            <TextField
+                              label={props.label}
+                              name={`${focusIdx}${attribute.path}${props.path}`}
+                              inline
+                            />
+                          );
+                        }
+                        if (props.label === 'Width') {
+                          console.log("pathsssssssss", props.path);
+                          return (
+                            <TextField
+                              label={props.label}
+                              name={`${focusIdx}${attribute.path}${props.path}`}
+                            />
+                          );
+                        }
+                        if (props.label === 'Height') {
+                          return (
+                            <TextField
+                              label={props.label}
+                              name={`${focusIdx}${attribute.path}${props.path}`}
+                            />
+                          );
+                        }
+                      })}
+                    </Space>
 
-                {
-                  type: BasicType.COLUMN,
-                  children: [{
-                    type: BasicType.TEXT,
-                    children: [],
-                    data: {
-                      value: {
-                        content: 'hello'
-                      },
-                    },
-                    attributes: {
-                      'font-weight':'400',
-                    'line-height':'20px',
-                    'font-size':'16px',
-                    padding:'0px 0px 0px 0px',
-                    align:'center'
-                    },
-                  },],
-                  data: {
-                    value: {
+                  </Collapse.Item>
+                </CollapseWrapper>
+              );
+            }
 
-                    },
-                  },
-                  attributes: {},
-                },
 
-                {
-                  type: BasicType.COLUMN,
-                  children: [{
-                    type: BasicType.TEXT,
-                    children: [],
-                    data: {
-                      value: {
-                        content: 'home'
-                      },
-                    },
-                    attributes: {
-                      'font-weight':'400',
-                    'line-height':'20px',
-                    'font-size':'16px',
-                    padding:'0px 0px 0px 0px',
-                    align:'center'
-                    },
-                  },],
-                  data: {
-                    value: {
+            if (attribute.type = 'Nav') {
+              return (
+                <CollapseWrapper defaultActiveKey={['0', '1', '2']}>
+                  <Collapse.Item
+                    contentStyle={{ padding: 0 }}
+                    name='1'
+                    header={t(attribute.label)}
+                  >
+                    <Space
+                      direction='vertical'
+                      style={{ width: '100%' }}
+                    >
+                      {attribute.properties[0].value.map((props: any, index: number) => {
+                        return (
+                          <Grid.Row>
+                            <Grid.Col span={11}>
+                              <TextField
+                                label={t('Content')}
+                                name={`${focusIdx}${attribute.path}${attribute.properties[0].path}.[${index}].content`}
+                              />
+                            </Grid.Col>
+                            <Grid.Col
+                              offset={1}
+                              span={11}
+                            >
+                              <TextField
+                                label={t('url')}
+                                name={`${focusIdx}${attribute.path}${attribute.properties[0].path}.[${index}].href`}
 
-                    },
-                  },
-                  attributes: {},
-                },
+                              />
+                            </Grid.Col>
+                          </Grid.Row>
+                        );
+                      })}
+                    </Space>
 
-                {
-                  type: BasicType.COLUMN,
-                  children: [{
-                    type: BasicType.TEXT,
-                    children: [],
-                    data: {
-                      value: {
-                        content: 'custom block title',
-                      },
-                    },
-                    attributes: {
-                      'font-weight':'400',
-                    'line-height':'20px',
-                    'font-size':'16px',
-                    padding:'0px 0px 0px 0px',
-                    align:'center'
-                    },
-                  },],
-                  data: {
-                    value: {
-
-                    },
-                  },
-                  attributes: {},
-                },
-
-                {
-                  type: BasicType.COLUMN,
-                  children: [{
-                    type: BasicType.TEXT,
-                    children: [],
-                    data: {
-                      value: {
-                        content: 'block title',
-                      },
-                    },
-                    attributes: {
-                      'font-weight':'400',
-                    'line-height':'20px',
-                    'font-size':'16px',
-                    padding:'0px 0px 0px 0px',
-                    align:'center'
-                    },
-                  },],
-                  data: {
-                    value: {
-
-                    },
-                  },
-                  attributes: {},
-                },
-              ],
-              data: {
-                value: {
-                },
-              },
-              attributes: {},
-            },
-          ],
-          data:{
-            value:{}
-          },
-          attributes:{}
+                  </Collapse.Item>
+                </CollapseWrapper>
+              );
+            }
+          })
         }
-      ],
-    };
-    return mergeBlock(defaultData, payload);
-  },
-  render: (params: any) => {
-    const { data, idx, mode, context, dataSource } = params;
-
-    return (
-      <BasicBlock tag='mj-wrapper' params={params}></BasicBlock>
-    );
-  },
-});
+      </Stack>
+    </AttributesPanelWrapper>
+  );
+}

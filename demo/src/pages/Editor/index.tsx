@@ -28,7 +28,7 @@ import { FormApi } from 'final-form';
 import { UserStorage } from '@demo/utils/user-storage';
 
 import { useCollection } from './components/useCollection';
-import { AdvancedType, IBlockData } from 'easy-email-core';
+import { IBlockData } from 'easy-email-core';
 import {
   BlockMarketManager,
   ExtensionProps,
@@ -52,6 +52,7 @@ import {
   onExportJSON,
   onExportMJML
 } from '@demo/utils/exportUtility';
+import { CustomBlocksType } from './components/CustomBlocks/constants';
 
 const imageCompression = import('browser-image-compression');
 
@@ -61,28 +62,18 @@ export default function Editor() {
       label: 'Content',
       active: true,
       blocks: [
-        {
-          type: AdvancedType.TEXT,
-        },
-        {
-          type: AdvancedType.IMAGE,
-          payload: { attributes: { padding: '0px 0px 0px 0px' } },
-        },
-        {
-          type: AdvancedType.BUTTON,
-        },
-        {
-          type: AdvancedType.SOCIAL,
-        },
-        {
-          type: AdvancedType.DIVIDER,
-        },
-        {
-          type: AdvancedType.SPACER,
-        },
-        {
-          type: AdvancedType.HERO,
-        }
+        // {
+        //   type: CustomBlocksType.TOPBAR_3,
+        // },
+        // {
+        //   type: CustomBlocksType.TOPBAR_4,
+        // },
+        // {
+        //   type: CustomBlocksType.TOPBAR_5,
+        // },
+        // {
+        //   type: CustomBlocksType.TOPBAR_6,
+        // }
       ],
     }
   ];
@@ -181,9 +172,11 @@ export default function Editor() {
   const categories = useMemo(() => {
     if (!list) return [];
     const newList = cloneDeep(list);
-    defaultCategories[0].blocks = newList.map((l: any) =>
-      l.templateJson
-    );
+    const filteredList = newList.map((l: any) => l.templateJson);
+    defaultCategories[0].blocks = [
+      ...defaultCategories[0].blocks,
+      ...filteredList,
+    ];
     return defaultCategories;
   }, [list]);
 
