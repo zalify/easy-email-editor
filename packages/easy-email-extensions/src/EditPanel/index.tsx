@@ -52,10 +52,10 @@ export function EditPanel({
         </TabPane>
         <TabPane
           key='2'
-          title={t('Templates')}
+          title={t('Blocks')}
         >
           <FullHeightOverlayScrollbars height={`calc(${height} - 60px)`}>
-            <TemplateUi />
+            <Blocks />
           </FullHeightOverlayScrollbars>
         </TabPane>
       </Tabs>
