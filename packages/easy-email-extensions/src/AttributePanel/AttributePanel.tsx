@@ -21,20 +21,7 @@ export function AttributePanel() {
 
   const { focusIdx } = useFocusIdx();
 
-  const parentBlock = getParentByIdx(values, focusIdx );
-  let Com;
-
-  const isChildren = parentBlock?.type !== BasicType.PAGE
-  let type:any = parentBlock?.type;
-
-  if(isChildren){
-    Com = focusBlock && BlockAttributeConfigurationManager.get(type);
-  }
-  else{
-   Com = focusBlock && BlockAttributeConfigurationManager.get(focusBlock.type);
-  }
-
-
+  const Com = focusBlock && BlockAttributeConfigurationManager.get(focusBlock.type);
 
   const shadowRoot = getShadowRoot();
 
