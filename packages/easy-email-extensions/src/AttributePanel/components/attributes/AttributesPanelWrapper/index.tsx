@@ -12,19 +12,7 @@ export interface AttributesPanelWrapper {
 export const AttributesPanelWrapper: React.FC<AttributesPanelWrapper> = props => {
   const { focusBlock, setFocusBlock, values } = useBlock();
   const { focusIdx } = useFocusIdx();
-  let block;
-
-  const parentBlock = getParentByIdx(values, focusIdx );
-
-  const isChildren = parentBlock?.type !== BasicType.PAGE
-  let type:any = parentBlock?.type;
-  
-  if(isChildren){
-    block = focusBlock && BlockManager.getBlockByType(type);
-  }
-  else{
-    block = focusBlock && BlockManager.getBlockByType(focusBlock.type);
-  }
+  const block = focusBlock && BlockManager.getBlockByType(focusBlock.type);
 
   if (!focusBlock || !block) return null;
 
