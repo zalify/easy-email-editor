@@ -120,8 +120,10 @@ export default function App() {
 
 ## Examples
 
-> Please see <a href="https://github.com/m-Ryan/easy-email-demo" target="_blank" alt="https://github.com/m-Ryan/easy-email-demo">https://github.com/m-Ryan/easy-email-demo</a>
+> Vite: <a href="https://github.com/m-Ryan/easy-email-demo" target="_blank" alt="https://github.com/m-Ryan/easy-email-demo">https://github.com/m-Ryan/easy-email-demo</a>
 
+> Nextjs: <a href="https://github.com/m-Ryan/easy-email-nextjs-demo" target="_blank" alt="https://github.com/m-Ryan/easy-email-nextjs-demo">https://github.com/m-Ryan/easy-email-nextjs-demo</a>
+ 
 </br>
 
 ## Configuration
