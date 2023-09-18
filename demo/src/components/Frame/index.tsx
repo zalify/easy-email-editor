@@ -3,7 +3,6 @@ import { Layout, Menu, Breadcrumb } from '@arco-design/web-react';
 import { Stack } from '../Stack';
 import { pushEvent } from '@demo/utils/pushEvent';
 import { githubButtonGenerate } from '@demo/utils/githubButtonGenerate';
-import { CommercialEmailEditorBanner } from '../CommercialEmailEditorBanner';
 import { useShowCommercialEditor } from '@demo/hooks/useShowCommercialEditor';
 
 const { SubMenu } = Menu;
@@ -125,7 +124,6 @@ export default function Frame({
             </Stack>
 
             <Stack.Item>
-              {featureEnabled && <CommercialEmailEditorBanner page='HOME' />}
               <Content
                 style={{
                   padding: 24,

@@ -67,7 +67,7 @@ import localesData from 'easy-email-localization/locales/locales.json';
 import { Uploader } from '@demo/utils/Uploader';
 import axios from 'axios';
 import enUS from '@arco-design/web-react/es/locale/en-US';
-import { CommercialEmailEditorBanner } from '@demo/components/CommercialEmailEditorBanner';
+
 import { useShowCommercialEditor } from '@demo/hooks/useShowCommercialEditor';
 
 console.log(localesData);
@@ -518,7 +518,7 @@ export default function Editor() {
         <style>{themeStyleText}</style>
         <EmailEditorProvider
           key={id}
-          height={featureEnabled ? 'calc(100vh - 128px)' : 'calc(100vh - 68px)'}
+          height={featureEnabled ? 'calc(100vh - 108px)' : 'calc(100vh - 68px)'}
           data={initialValues}
           // interactiveStyle={{
           //   hoverColor: '#78A349',
@@ -668,7 +668,7 @@ export default function Editor() {
                     </Stack>
                   }
                 />
-                {featureEnabled && <CommercialEmailEditorBanner page='EDITOR' />}
+
                 <StandardLayout
                   compact={!smallScene}
                   categories={defaultCategories}

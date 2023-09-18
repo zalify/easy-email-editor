@@ -1,5 +1,5 @@
-import { posthog } from '@demo/utils/posthog';
 import { useEffect, useState } from 'react';
+import { posthog } from '../utils/posthog';
 
 export const useShowCommercialEditor = () => {
   const [featureEnabled, setFeatureEnabled] = useState(false);
