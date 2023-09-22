@@ -11,9 +11,6 @@
 <p align="center">
 
   <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg">
-  <a aria-label="NPM version" href="https://www.npmjs.com/package/easy-email-editor">
-    <img alt="" src="https://badgen.net/npm/v/easy-email-editor">
-  </a>
   <a aria-label="React version" href="https://react.js">
     <img alt="" src="https://img.shields.io/badge/React-18.2-yellow.svg">
   </a>
@@ -23,7 +20,6 @@
   <a aria-label="Package size" href="https://www.typescriptlang.org/">
     <img alt="Using TypeScript" src="https://img.shields.io/badge/%3C/%3E-TypeScript-brightgreenred.svg">
   </a>
-  <img alt="" src="https://badgen.net/npm/license/easy-email-editor">
 </p>
 
 ## Join Our Community
@@ -55,7 +51,7 @@ Easy email is developed based on the [MJML](https://mjml.io/) and has very good 
 Check out the live demo here: <a href="https://email.maocanhua.cn/?utm_source=github" target="_blank" alt="https://email.maocanhua.cn/?utm_source=github">https://email.maocanhua.cn</a>
 
 ## Custom Services
-For customized features or paid consultation services, please contact 962491243@qq.com.
+For customized features or paid consultation services, please contact ch.mao@qq.com.
 
 ## Getting started
 
