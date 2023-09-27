@@ -6,10 +6,6 @@ export const useShowCommercialEditor = () => {
 
   useEffect(() => {
     posthog.onFeatureFlags(function () {
-      console.log(
-        'posthog.show_advanced_editor',
-        posthog.isFeatureEnabled('show_advanced_editor'),
-      );
       if (posthog.isFeatureEnabled('show_advanced_editor')) {
         setFeatureEnabled(true);
       }

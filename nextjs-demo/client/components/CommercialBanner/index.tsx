@@ -1,3 +1,4 @@
+import { useShowCommercialEditor } from '@/client/hooks/useShowCommercialEditor';
 import { useShowLiveChat } from '@/client/hooks/useShowLiveChat';
 import { pushEvent } from '@/client/utils/pushEvent';
 import { Alert } from '@arco-design/web-react';
@@ -11,13 +12,15 @@ export const CommercialBanner = ({ page }: { page: 'HOME' | 'EDITOR' }) => {
     true,
   );
 
+  const { featureEnabled } = useShowCommercialEditor();
+
   const { showLiveChat } = useShowLiveChat();
 
   useEffect(() => {
     pushEvent({ event: `Show_Banner_at_${page}` });
   }, [page]);
 
-  if (!visible) return null;
+  if (!visible || !featureEnabled) return null;
   return (
     <Alert
       closable

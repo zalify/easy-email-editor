@@ -4,9 +4,9 @@ import axios from 'axios';
 const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dwkp0e1yo/image/upload';
 
 export function useUpload() {
-  const upload = useCallback(async (file: Blob, organizationId: string) => {
-    if (!file || !organizationId) {
-      throw new Error('Missing file or organizationId');
+  const upload = useCallback(async (file: Blob) => {
+    if (!file) {
+      throw new Error('Missing file');
     }
     const data = new FormData();
     data.append('file', file);

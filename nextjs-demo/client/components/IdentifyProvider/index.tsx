@@ -1,4 +1,3 @@
-import { posthog } from '@/client/utils/posthog';
 import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 
@@ -19,10 +18,15 @@ export const IdentifyProvider = () => {
   }, [user]);
 
   useEffect(() => {
-    if (user?.email) {
-      posthog.identify(user.email, {
-        email: user.name,
-      });
+    const userEmail = user?.email;
+    if (userEmail) {
+      import('@/client/utils/posthog')
+        .then(d => d.posthog)
+        .then(posthog => {
+          posthog.identify(userEmail, {
+            email: user?.name,
+          });
+        });
     }
   }, [user]);
 

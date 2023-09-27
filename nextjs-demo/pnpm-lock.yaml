@@ -7,6 +7,7 @@ specifiers:
   '@arco-themes/react-easy-email-theme-purple': ^0.0.3
   '@next-auth/prisma-adapter': 1.0.7
   '@prisma/client': 4.2.0
+  '@types/browser-image-compression': ^1.0.9
   '@types/file-saver': ^2.0.5
   '@types/lodash': ^4.14.199
   '@types/mjml': ^4.7.1
@@ -16,11 +17,13 @@ specifiers:
   '@types/react': 17.0.44
   '@types/react-dom': ^18.2.7
   axios: ^1.5.0
+  browser-image-compression: ^2.0.2
   classnames: ^2.3.2
   dayjs: ^1.11.9
   easy-email-core: ^4.12.2
   easy-email-editor: ^4.12.2
   easy-email-extensions: ^4.14.1
+  easy-email-localization: ^4.14.0
   file-saver: ^2.0.5
   final-form: ^4.20.10
   html2canvas: ^1.4.1
@@ -53,17 +56,20 @@ dependencies:
   '@arco-themes/react-easy-email-theme-purple': 0.0.3_mfmf5on6o5e5av6mjwylnnhday
   '@next-auth/prisma-adapter': 1.0.7_n3q6jiznnpyzpjam722vwaia4q
   '@prisma/client': 4.2.0_prisma@4.2.0
+  '@types/browser-image-compression': 1.0.9
   '@types/file-saver': 2.0.5
   '@types/lodash': 4.14.199
   '@types/mjml': 4.7.1
   '@types/passport-google-oauth20': 2.0.12
   '@types/react-dom': 18.2.7
   axios: 1.5.0
+  browser-image-compression: 2.0.2
   classnames: 2.3.2
   dayjs: 1.11.10
   easy-email-core: 4.12.2_biqbaboplfbrettd7655fr4n2y
   easy-email-editor: 4.12.2_boblbsdunzibqviqeodsrqybri
   easy-email-extensions: 4.14.1_p72j6yfq24valatajggkrctuqq
+  easy-email-localization: 4.14.0
   file-saver: 2.0.5
   final-form: 4.20.10
   html2canvas: 1.4.1
@@ -367,6 +373,13 @@ packages:
     dependencies:
       '@types/connect': 3.4.36
       '@types/node': 16.11.26
+    dev: false
+
+  /@types/browser-image-compression/1.0.9:
+    resolution: {integrity: sha512-fuEfHm2aG4u8AY9BSSEt2L46x+j/mWk9D9jCJ2+lB+TtflzXwZ328QPKr6HQxJu0ynDpc7XttvSAnx+4AP6QXA==}
+    deprecated: This is a stub types definition. browser-image-compression provides its own type definitions, so you do not need this installed.
+    dependencies:
+      browser-image-compression: 2.0.2
     dev: false
 
   /@types/connect/3.4.36:
@@ -687,6 +700,12 @@ packages:
     resolution: {integrity: sha512-XnAIvQ8eM+kC6aULx6wuQiwVsnzsi9d3WxzV3FpWTGA19F621kwdbsAcFKXgKUHZWsy+mY6iL1sHTxWEFCytDA==}
     dependencies:
       balanced-match: 1.0.2
+    dev: false
+
+  /browser-image-compression/2.0.2:
+    resolution: {integrity: sha512-pBLlQyUf6yB8SmmngrcOw3EoS4RpQ1BcylI3T9Yqn7+4nrQTXJD4sJDe5ODnJdrvNMaio5OicFo75rDyJD2Ucw==}
+    dependencies:
+      uzip: 0.20201231.0
     dev: false
 
   /buffer/6.0.3:
@@ -1012,6 +1031,10 @@ packages:
       react-use: 17.4.0_biqbaboplfbrettd7655fr4n2y
     transitivePeerDependencies:
       - '@types/react'
+    dev: false
+
+  /easy-email-localization/4.14.0:
+    resolution: {integrity: sha512-P0twk7V65gZkfelGXruX5XgTZWlksP5AlPZsvdFcdcoEiWQhQ3LUvQ3/z94irAQoUhBHGgZg+J+M1JNr6GxAIg==}
     dev: false
 
   /editorconfig/1.0.4:
@@ -2768,6 +2791,10 @@ packages:
       diff: 5.0.0
       kleur: 4.1.4
       sade: 1.8.1
+    dev: false
+
+  /uzip/0.20201231.0:
+    resolution: {integrity: sha512-OZeJfZP+R0z9D6TmBgLq2LHzSSptGMGDGigGiEe0pr8UBe/7fdflgHlHBNDASTXB5jnFuxHpNaJywSg8YFeGng==}
     dev: false
 
   /v8-compile-cache-lib/3.0.0:

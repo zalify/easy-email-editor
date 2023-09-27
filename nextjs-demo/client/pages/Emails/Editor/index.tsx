@@ -4,6 +4,7 @@ import { BlockManager, BasicType, AdvancedType, JsonToMjml } from 'easy-email-co
 import {
   EmailEditor,
   EmailEditorProvider,
+  EmailEditorProviderProps,
   IEmailTemplate,
   Stack,
 } from 'easy-email-editor';
@@ -25,12 +26,36 @@ import {
 } from '@arco-design/web-react';
 import 'easy-email-editor/lib/style.css';
 import 'easy-email-extensions/lib/style.css';
+import localesData from 'easy-email-localization/locales/locales.json';
+
+const fontList = [
+  'Arial',
+  'Tahoma',
+  'Verdana',
+  'Times New Roman',
+  'Courier New',
+  'Georgia',
+  'Lato',
+  'Montserrat',
+  '黑体',
+  '仿宋',
+  '楷体',
+  '标楷体',
+  '华文仿宋',
+  '华文楷体',
+  '宋体',
+  '微软雅黑',
+].map(item => ({ value: item, label: item }));
 
 // theme, If you need to change the theme, you can make a duplicate in https://arco.design/themes/design/1799/setting/base/Color
 
 import { Config } from 'final-form';
 import mjml from 'mjml-browser';
-import { useGetEmailTemplateQuery, useUpdateEmailTemplateMutation } from '@/client/hooks';
+import {
+  useGetEmailTemplateQuery,
+  useUpdateEmailTemplateMutation,
+  useUpload,
+} from '@/client/hooks';
 import { useRouter } from 'next/router';
 import FullScreenLoading from '@/client/components/FullScreenLoading';
 import { pushEvent } from '@/client/utils/pushEvent';
@@ -46,6 +71,9 @@ import purpleTheme from '!!raw-loader!@arco-themes/react-easy-email-theme-purple
 import greenTheme from '!!raw-loader!@arco-themes/react-easy-email-theme-green/css/arco.css';
 import { useSession } from 'next-auth/react';
 import { CommercialBanner } from '@/client/components/CommercialBanner';
+import { cloneDeep } from 'lodash';
+
+const imageCompression = import('browser-image-compression');
 
 const defaultCategories: ExtensionProps['categories'] = [
   {
@@ -121,6 +149,8 @@ export default function App() {
     mergeTags,
     setMergeTags,
   } = useMergeTagsModal(testMergeTags);
+
+  const { upload } = useUpload();
 
   const session = useSession();
   const user = session.data?.user;
@@ -199,6 +229,15 @@ export default function App() {
   const onChangeTheme = useCallback(t => {
     setTheme(t);
   }, []);
+
+  const onBeforePreview: EmailEditorProviderProps['onBeforePreview'] = useCallback(
+    (html: string, mergeTags) => {
+      const engine = new Liquid();
+      const tpl = engine.parse(html);
+      return engine.renderSync(tpl, mergeTags);
+    },
+    [],
+  );
 
   const onExportMJML = (values: IEmailTemplate) => {
     pushEvent({
@@ -285,6 +324,15 @@ export default function App() {
     });
   };
 
+  const onUploadImage = async (blob: Blob) => {
+    const compressionFile = await (
+      await imageCompression
+    ).default(blob as File, {
+      maxWidthOrHeight: 1440,
+    });
+    return upload(compressionFile);
+  };
+
   const onImportJSON = async ({
     restart,
   }: {
@@ -334,6 +382,15 @@ export default function App() {
         autoComplete
         dashed={false}
         onSubmit={onSubmit}
+        onUploadImage={onUploadImage}
+        fontList={fontList}
+        enabledLogic
+        // enabledMergeTagsBadge
+        mergeTags={mergeTags}
+        mergeTagGenerate={tag => `{{${tag}}}`}
+        onBeforePreview={onBeforePreview}
+        socialIcons={[]}
+        locale={(localesData as any)[locale]}
       >
         {({ values }, { submit, restart }) => {
           return (
@@ -444,7 +501,7 @@ export default function App() {
                         window.open('https://github.com/m-Ryan', '_blank');
                       }}
                     >
-                      <strong>Commercial Editor</strong>
+                      <strong>Contact</strong>
                     </Button>
                     <Button
                       target='_blank'
