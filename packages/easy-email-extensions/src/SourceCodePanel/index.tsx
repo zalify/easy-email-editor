@@ -33,26 +33,28 @@ export function SourceCodePanel({ jsonReadOnly, mjmlReadOnly }: { jsonReadOnly: 
 
   const onChangeCode = useCallback(
     (event: React.FocusEvent<HTMLTextAreaElement>) => {
-      try {
-        const parseValue = JSON.parse(
-          JSON.stringify(eval('(' + event.target.value + ')')),
-        ) as IBlockData;
+      if(!jsonReadOnly){
+        try {
+          const parseValue = JSON.parse(
+            JSON.stringify(eval('(' + event.target.value + ')')),
+          ) as IBlockData;
 
-        const block = BlockManager.getBlockByType(parseValue.type);
-        if (!block) {
-          throw new Error(t('Invalid content'));
+          const block = BlockManager.getBlockByType(parseValue.type);
+          if (!block) {
+            throw new Error(t('Invalid content'));
+          }
+          if (
+            !parseValue.data ||
+            !parseValue.data.value ||
+            !parseValue.attributes ||
+            !Array.isArray(parseValue.children)
+          ) {
+            throw new Error(t('Invalid content'));
+          }
+          setValueByIdx(focusIdx, parseValue);
+        } catch (error: any) {
+          Message.error(error?.message || error);
         }
-        if (
-          !parseValue.data ||
-          !parseValue.data.value ||
-          !parseValue.attributes ||
-          !Array.isArray(parseValue.children)
-        ) {
-          throw new Error(t('Invalid content'));
-        }
-        setValueByIdx(focusIdx, parseValue);
-      } catch (error: any) {
-        Message.error(error?.message || error);
       }
     },
     [focusIdx, setValueByIdx],
@@ -60,22 +62,24 @@ export function SourceCodePanel({ jsonReadOnly, mjmlReadOnly }: { jsonReadOnly: 
 
   const onMjmlChange = useCallback(
     (event: React.FocusEvent<HTMLTextAreaElement>) => {
-      try {
-        const parseValue = MjmlToJson(event.target.value);
-        if (parseValue.type !== BasicType.PAGE) {
-          const parentBlock = getParentByIdx(values, focusIdx)!;
-          const parseBlock = BlockManager.getBlockByType(parseValue.type);
+      if(!mjmlReadOnly){
+        try {
+          const parseValue = MjmlToJson(event.target.value);
+          if (parseValue.type !== BasicType.PAGE) {
+            const parentBlock = getParentByIdx(values, focusIdx)!;
+            const parseBlock = BlockManager.getBlockByType(parseValue.type);
 
-          if (!parseBlock?.validParentType.includes(parentBlock?.type)) {
+            if (!parseBlock?.validParentType.includes(parentBlock?.type)) {
+              throw new Error(t('Invalid content'));
+            }
+          } else if (focusIdx !== getPageIdx()) {
             throw new Error(t('Invalid content'));
           }
-        } else if (focusIdx !== getPageIdx()) {
-          throw new Error(t('Invalid content'));
-        }
 
-        setValueByIdx(focusIdx, parseValue);
-      } catch (error) {
-        Message.error(t('Invalid content'));
+          setValueByIdx(focusIdx, parseValue);
+        } catch (error) {
+          Message.error(t('Invalid content'));
+        }
       }
     },
     [focusIdx, setValueByIdx, values],
