@@ -1,1 +1,0 @@
-export { SimpleLayout } from './SimpleLayout';

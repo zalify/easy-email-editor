@@ -1,44 +1,84 @@
 {
-  "name": "easy-email",
+  "name": "easy-email-demo",
+  "license": "MIT",
+  "description": "Email editor demo",
+  "version": "2.2.1",
+  "author": "m-Ryan",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:m-Ryan/easy-email.git"
+  },
+  "keywords": [
+    "easy email editor demo"
+  ],
+  "files": [
+    "lib"
+  ],
+  "main": "./lib/index.js",
   "scripts": {
-    "install-all": "lerna exec -- yarn --force && cd demo && yarn --force",
-    "vercel-install": "lerna exec -- yarn install --network-concurrency 1 && cd demo && yarn install --network-concurrency 1",
-    "build": "yarn build:core && yarn build:editor && yarn build:extensions",
-    "build:core": "cd packages/easy-email-core && yarn build",
-    "build:editor": "cd packages/easy-email-editor && yarn build",
-    "build:extensions": "cd packages/easy-email-extensions && yarn build",
-    "dev": "cd demo && yarn dev",
-    "demo": "cd demo && yarn build",
-    "test": "yarn test:core && yarn test:extensions",
-    "test:core": "cd packages/easy-email-core && yarn test",
-    "test:extensions": "cd packages/easy-email-extensions && yarn test",
-    "translate": "ts-node scripts/translate.ts",
-    "lint": "lerna exec -- yarn format"
+    "dev": "vite",
+    "preview": "vite preview",
+    "build": "vite build --config vite.production.config.ts",
+    "template": "ts-node scripts/makeTemplates.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn test && yarn lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/*.{js,jsx,ts,tsx}, example/*.{js,jsx,ts,tsx}": [
+      "yarn lint"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.21",
+    "@vitejs/plugin-react-refresh": "^1.3.6",
+    "cross-env": "^7.0.3",
+    "less": "^4.1.2",
+    "rimraf": "^3.0.2",
+    "sass": "^1.43.4",
+    "typescript": "^4.4.4",
+    "vite": "^2.6.14",
+    "vite-plugin-html": "^2.1.1",
+    "vite-plugin-style-import": "^1.3.0"
   },
   "dependencies": {
+    "@arco-design/web-react": "^2.36.1",
+    "@arco-themes/react-easy-email-theme": "^0.0.3",
+    "@arco-themes/react-easy-email-theme-green": "^0.0.1",
+    "@arco-themes/react-easy-email-theme-purple": "^0.0.3",
+    "@reduxjs/toolkit": "^1.6.2",
     "@sendgrid/mail": "^7.7.0",
-    "@types/file-saver": "^2.0.5",
+    "@sentry/browser": "^7.11.1",
+    "@sentry/tracing": "^7.11.1",
+    "@types/fs-extra": "^9.0.13",
+    "@types/mustache": "^4.1.2",
+    "@types/react-router-dom": "^5.1.9",
+    "axios": "^0.24.0",
+    "browser-image-compression": "^1.0.17",
     "easy-email-core": "^4.12.2",
     "easy-email-editor": "^4.12.2",
     "easy-email-extensions": "^4.14.2",
-    "easy-localized-translation": "^1.1.0",
+    "easy-email-localization": "^4.14.0",
     "file-saver": "^2.0.5",
-    "lerna": "^4.0.0",
-    "liquidjs": "^9.34.1",
-    "react-final-form": "^6.5.9"
-  },
-  "devDependencies": {
-    "@types/fs-extra": "^11.0.1",
-    "@types/he": "^1.2.2",
-    "@types/jest": "^29.5.6",
-    "@types/js-beautify": "^1.14.2",
-    "@types/lodash": "^4.14.191",
-    "@types/node": "^18.8.4",
-    "@types/react": "^18.2.33",
-    "@types/react-dom": "^18.2.14",
-    "@types/uuid": "^9.0.6",
-    "@typescript-eslint/eslint-plugin": "^5.22.0",
-    "dotenv": "^16.0.3",
-    "tsc-alias": "^1.8.8"
+    "final-form": "^4.20.4",
+    "fs-extra": "^10.0.1",
+    "html2canvas": "^1.3.2",
+    "liquidjs": "^9.40.0",
+    "mjml-browser": "^4.10.4",
+    "mustache": "^4.2.0",
+    "qs": "^6.10.1",
+    "react": "17.0.2",
+    "react-color": "^2.19.3",
+    "react-dom": "17.0.2",
+    "react-final-form": "^6.5.9",
+    "react-redux": "7.2.2",
+    "react-router-dom": "^5.3.3",
+    "react-use": "^17.3.1",
+    "redux": "^4.1.2",
+    "ts-node": "^10.7.0",
+    "uuid": "^8.3.2",
+    "yup": "^0.32.11"
   }
 }
