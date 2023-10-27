@@ -45,7 +45,7 @@ function App() {
               <Route
                 path='/'
                 exact
-                component={Home}
+                component={Editor}
               />
               <Route
                 path='/editor'

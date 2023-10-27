@@ -26,6 +26,15 @@ export default createSliceState({
     },
   },
   effects: {
+    fetchByJson: async (state, { json }: { json: string; }) => {
+      try {
+        const data = JSON.parse(json);
+        return getAdaptor(data);
+      } catch (error) {
+        history.replace('/');
+        throw error;
+      }
+    },
     fetchById: async (
       state,
       {
@@ -126,7 +135,7 @@ export default createSliceState({
         }
       }
     },
-    removeById: async (state, payload: { id: number; success: () => void }) => {
+    removeById: async (state, payload: { id: number; success: () => void; }) => {
       try {
         await article.deleteArticle(payload.id);
         payload.success();
