@@ -18,16 +18,27 @@
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",
     "@types/file-saver": "^2.0.5",
+    "easy-email-core": "^4.12.2",
+    "easy-email-editor": "^4.12.2",
+    "easy-email-extensions": "^4.14.2",
     "easy-localized-translation": "^1.1.0",
     "file-saver": "^2.0.5",
     "lerna": "^4.0.0",
-    "liquidjs": "^9.34.1"
+    "liquidjs": "^9.34.1",
+    "react-final-form": "^6.5.9"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.1",
+    "@types/he": "^1.2.2",
+    "@types/jest": "^29.5.6",
+    "@types/js-beautify": "^1.14.2",
     "@types/lodash": "^4.14.191",
     "@types/node": "^18.8.4",
+    "@types/react": "^18.2.33",
+    "@types/react-dom": "^18.2.14",
+    "@types/uuid": "^9.0.6",
     "@typescript-eslint/eslint-plugin": "^5.22.0",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "tsc-alias": "^1.8.8"
   }
 }
