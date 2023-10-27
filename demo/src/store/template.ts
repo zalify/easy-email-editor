@@ -26,10 +26,17 @@ export default createSliceState({
     },
   },
   effects: {
-    fetchByJson: async (state, { json }: { json: string; }) => {
+    fetchByJson: async (
+      state,
+      {
+        json
+      }: {
+        json: any;
+      },
+    ) => {
       try {
-        const data = JSON.parse(json);
-        return getAdaptor(data);
+        const jsonData = JSON.parse(json);
+        return getAdaptor(jsonData)
       } catch (error) {
         history.replace('/');
         throw error;
