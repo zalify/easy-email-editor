@@ -343,9 +343,6 @@ export default function Editor() {
           payLoad: "template received",
           sender: 1,
         };
-
-
-
         postMessageToParent(responseMessage);
       }
     });
