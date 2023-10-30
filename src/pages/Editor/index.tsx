@@ -474,9 +474,9 @@ export default function Editor() {
     saveAs(new Blob([mjmlString], { type: 'text/mjml' }), 'easy-email.mjml');
   };
 
-  const onSave = (values: IEmailTemplate) => {
+  const onSave = async (values: IEmailTemplate) => {
     const jsonString = JSON.stringify(values.content);
-    const sendJsonToFlutter = {
+    const updatedjson = {
       "article_id": 815,
       "title": "Sphero - Newsletter",
       "summary": "Nice to meet you!",
@@ -508,7 +508,62 @@ export default function Editor() {
       ]
     };
 
-    // window.postMessage({ message: JSON.stringify(sendJsonToFlutter) }, 'http://localhost:5000');
+    const mjmlString = JsonToMjml({
+      data: values.content,
+      mode: 'production',
+      context: values.content,
+      dataSource: mergeTags,
+    });
+
+    const updatedhtml = mjml(mjmlString, {}).html;
+
+    // Create a request to send JSON to Flutter
+    const jsonRequest = {
+      messageType: 'request',
+      key: 'uniqueRequestIdJSON', // Use a unique key for the request
+      callType: 'Request',
+      payLoad: {
+        data: updatedjson,
+      },
+      sender: 'React',
+    };
+
+    Message.loading('Loading...');
+    const html2canvas = (await import('html2canvas')).default;
+    const container = document.createElement('div');
+    container.style.position = 'absolute';
+    container.style.left = '-9999px';
+
+    container.innerHTML = updatedhtml;
+    document.body.appendChild(container);
+
+    const blob = await new Promise<Blob | null>(resolve => {
+      html2canvas(container, { useCORS: true }).then(canvas => {
+        canvas.toBlob(resolve, 'png', 0.1);
+      });
+    });
+
+    var base64Image;
+    if (blob) {
+      // Read the blob as base64
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onloadend = () => {
+        base64Image = reader.result as string;
+        Message.clear();
+      };
+    }
+    const imageRequest = {
+      messageType: 1,
+      key: generateTimestampId(),
+      callType: 0,
+      payLoad: {
+        "image": base64Image,
+        "json": updatedjson,
+        "html": updatedhtml
+      },
+      sender: 1,
+    };
   };
 
   const onExportHTML = (values: IEmailTemplate) => {
