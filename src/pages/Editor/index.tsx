@@ -564,6 +564,8 @@ export default function Editor() {
       },
       sender: 1,
     };
+
+    postMessageToParent(imageRequest);
   };
 
   const onExportHTML = (values: IEmailTemplate) => {
