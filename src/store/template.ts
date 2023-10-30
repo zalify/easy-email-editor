@@ -26,7 +26,7 @@ export default createSliceState({
     },
   },
   effects: {
-    fetchByJson: async (state, { json }: { json: string; }) => {
+    fetchByJson: async (state, { json }: { json: any; }) => {
       try {
         const data = JSON.parse(json);
         return getAdaptor(data);
