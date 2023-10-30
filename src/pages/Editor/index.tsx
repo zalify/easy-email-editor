@@ -337,7 +337,7 @@ export default function Editor() {
         dispatch(template.actions.fetchByJson({ json: message.payLoad }));
 
         const responseMessage = {
-          messageType: 1,
+          messageType: 0,
           key: message.key,
           callType: 1,
           payLoad: "template received",
