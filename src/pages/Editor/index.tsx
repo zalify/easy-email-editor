@@ -293,12 +293,10 @@ export default function Editor() {
 
     window.addEventListener('message', (event) => {
       console.log("Inside addEventListener - React"); // This will log the message sent from the Dart/Flutter app
-      console.log("event data - " + event.data);// This will log the message sent from the Dart/Flutter ap
 
 
-      const message = event.data;
-
-      if (!message) {
+      const message = JSON.parse(event.data);
+      if (!message) { //default template
         const jsonData = {
           "article_id": 815,
           "title": "Sphero - Newsletter",
@@ -331,13 +329,12 @@ export default function Editor() {
           ]
         };
         dispatch(template.actions.fetchByJson({ json: jsonData }));
-      } else if (message.messageType === 1) {
+      } else if (message.messageType === 3) {
         // let jsonParsedData = JSON.parse(jsonData);
         // const stringifyJsonData= JSON.stringify(jsonParsedData);
         dispatch(template.actions.fetchByJson({ json: message.payLoad }));
-
         const responseMessage = {
-          messageType: 0,
+          messageType: 3,
           key: message.key,
           callType: 1,
           payLoad: "template received",
