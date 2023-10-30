@@ -331,7 +331,7 @@ export default function Editor() {
           ]
         };
         dispatch(template.actions.fetchByJson({ json: jsonData }));
-      } else if (message.messageType === 'request') {
+      } else if (message.messageType === 1) {
         // let jsonParsedData = JSON.parse(jsonData);
         // const stringifyJsonData= JSON.stringify(jsonParsedData);
         dispatch(template.actions.fetchByJson({ json: message.payLoad }));
@@ -343,6 +343,7 @@ export default function Editor() {
           payLoad: "template received",
           sender: 1,
         };
+
         postMessageToParent(responseMessage);
       }
     });
