@@ -543,28 +543,24 @@ export default function Editor() {
       });
     });
 
-    var base64Image;
-    if (blob) {
-      // Read the blob as base64
-      const reader = new FileReader();
-      reader.readAsDataURL(blob);
-      reader.onloadend = () => {
-        base64Image = reader.result as string;
-        Message.clear();
-      };
-    }
+    // var base64Image: string | undefined;
+    // if (blob) {
+    //   // Read the blob as base64
+    //   const reader = new FileReader();
+    //   reader.readAsDataURL(blob);
+    //   reader.onloadend = () => {
+    //     debugger;
+    //     base64Image = reader.result as string;
+    //     Message.clear();
+    //   };
+    // }
     const imageRequest = {
       messageType: 1,
       key: generateTimestampId(),
       callType: 0,
-      payLoad: {
-        "image": base64Image,
-        "json": updatedjson,
-        "html": updatedhtml
-      },
+      payLoad: JSON.stringify(updatedjson),
       sender: 1,
     };
-
     postMessageToParent(imageRequest);
   };
 
