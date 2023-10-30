@@ -339,10 +339,11 @@ export default function Editor() {
         const responseMessage = {
           messageType: 1,
           key: message.key,
-          callType: 'Response',
+          callType: 1,
           payLoad: "template received",
-          sender: 'React',
+          sender: 1,
         };
+
 
 
         postMessageToParent(responseMessage);
@@ -350,11 +351,11 @@ export default function Editor() {
     });
 
     const initializationMessage = {
-      messageType: 'init',
+      messageType: 0,
       key: generateTimestampId(),
-      callType: 'Request',
-      payLoad: "ready to recieve",
-      sender: 'React',
+      callType: 0,
+      payLoad: "ready to receive",
+      sender: 1,
     };
     postMessageToParent(initializationMessage);
 
@@ -522,7 +523,6 @@ export default function Editor() {
       context: values.content,
       dataSource: mergeTags,
     });
-    debugger;
 
     const html = mjml(mjmlString, {}).html;
 
@@ -537,7 +537,6 @@ export default function Editor() {
     // Log the JSON string to the console
     console.log(jsonString);
 
-    debugger;
     navigator.clipboard.writeText(JSON.stringify(values, null, 2));
     saveAs(
       new Blob([JSON.stringify(values, null, 2)], { type: 'application/json' }),
