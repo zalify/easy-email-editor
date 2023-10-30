@@ -474,7 +474,8 @@ export default function Editor() {
     saveAs(new Blob([mjmlString], { type: 'text/mjml' }), 'easy-email.mjml');
   };
 
-  const onSave = async (values: IEmailTemplate) => {
+  const onSave = (values: IEmailTemplate) => {
+    Message.loading('Loading...');
     const jsonString = JSON.stringify(values.content);
     const updatedjson = {
       "article_id": 815,
@@ -528,20 +529,20 @@ export default function Editor() {
       sender: 'React',
     };
 
-    Message.loading('Loading...');
-    const html2canvas = (await import('html2canvas')).default;
-    const container = document.createElement('div');
-    container.style.position = 'absolute';
-    container.style.left = '-9999px';
 
-    container.innerHTML = updatedhtml;
-    document.body.appendChild(container);
+    // const html2canvas = (await import('html2canvas')).default;
+    // const container = document.createElement('div');
+    // container.style.position = 'absolute';
+    // container.style.left = '-9999px';
 
-    const blob = await new Promise<Blob | null>(resolve => {
-      html2canvas(container, { useCORS: true }).then(canvas => {
-        canvas.toBlob(resolve, 'png', 0.1);
-      });
-    });
+    // container.innerHTML = updatedhtml;
+    // document.body.appendChild(container);
+
+    // const blob = await new Promise<Blob | null>(resolve => {
+    //   html2canvas(container, { useCORS: true }).then(canvas => {
+    //     canvas.toBlob(resolve, 'png', 0.1);
+    //   });
+    // });
 
     // var base64Image: string | undefined;
     // if (blob) {
@@ -551,7 +552,7 @@ export default function Editor() {
     //   reader.onloadend = () => {
     //     debugger;
     //     base64Image = reader.result as string;
-    //     Message.clear();
+
     //   };
     // }
     const imageRequest = {
@@ -562,6 +563,7 @@ export default function Editor() {
       sender: 1,
     };
     postMessageToParent(imageRequest);
+    Message.clear();
   };
 
   const onExportHTML = (values: IEmailTemplate) => {
@@ -732,7 +734,13 @@ export default function Editor() {
                   style={{ background: 'var(--color-bg-2)' }}
                   backIcon
                   title='Edit'
-                  onBack={() => history.push('/')}
+                  onBack={() => postMessageToParent({
+                    messageType: 2,
+                    key: generateTimestampId(),
+                    callType: 0,
+                    payLoad: "close",
+                    sender: 1,
+                  })}
                   extra={
                     <Stack alignment='center'>
                       <Button
