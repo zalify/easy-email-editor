@@ -484,7 +484,7 @@ export default function Editor() {
     saveAs(new Blob([mjmlString], { type: 'text/mjml' }), 'easy-email.mjml');
   };
 
-  const onSave = (values: IEmailTemplate) => {
+  const onSave = async (values: IEmailTemplate) => {
     Message.loading('Loading...');
 
     const jsonString = JSON.stringify(values.content);
@@ -520,40 +520,51 @@ export default function Editor() {
 
     const updatedhtml = mjml(mjmlString, {}).html;
 
-    // const html2canvas = (await import('html2canvas')).default;
-    // const container = document.createElement('div');
-    // container.style.position = 'absolute';
-    // container.style.left = '-9999px';
 
-    // container.innerHTML = updatedhtml;
-    // document.body.appendChild(container);
+    const html2canvas = (await import('html2canvas')).default;
+    const container = document.createElement('div');
+    container.style.position = 'absolute';
+    container.style.left = '-9999px';
 
-    // const blob = await new Promise<Blob | null>(resolve => {
-    //   html2canvas(container, { useCORS: true }).then(canvas => {
-    //     canvas.toBlob(resolve, 'png', 0.1);
-    //   });
-    // });
+    const html = mjml(mjmlString, {}).html;
 
-    // var base64Image: string | undefined;
-    // if (blob) {
-    //   // Read the blob as base64
-    //   const reader = new FileReader();
-    //   reader.readAsDataURL(blob);
-    //   reader.onloadend = () => {
-    //     debugger;
-    //     base64Image = reader.result as string;
+    container.innerHTML = html;
+    document.body.appendChild(container);
 
-    //   };
-    // }
+    const canvas = await html2canvas(container, { useCORS: true });
+
+    var base64Image;
+
+    canvas.toBlob(async (blob) => {
+      if (blob) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          // The base64 string is available in reader.result
+          base64Image = reader.result as string;
+          // Print the base64 image to the console
+          console.log(base64Image);
+          // Now you can do something with the base64Image, such as saving it or displaying it.
+          // For example, you can save it as a file or display it as an image.
+        };
+        reader.readAsDataURL(blob);
+      } else {
+        // Handle the case where no blob was created
+        console.error('Failed to create a blob from the canvas.');
+      }
+    }, 'image/png', 0.1);
+
     const imageRequest = {
       messageType: 1,
       key: generateTimestampId(),
       callType: 0,
-      payLoad: JSON.stringify(updatedjson),
-      sender: 1,
+      payLoad: {
+        "json": JSON.stringify(updatedjson),
+        "image": base64Image,
+        sender: 1,
+      }
     };
     postMessageToParent(imageRequest);
-    // Message.clear();
+    Message.clear();
   };
 
   const onExportHTML = (values: IEmailTemplate) => {
@@ -882,7 +893,7 @@ export default function Editor() {
       </div>
     </ConfigProvider>
   );
-}
+};
 
 function replaceStandardBlockToAdvancedBlock(blockData: IBlockData) {
   const map = {

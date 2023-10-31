@@ -16,7 +16,8 @@ const defaultData = [
 ];
 
 const extraBlocksData = JSON.parse(
-  localStorage.getItem(COLLECTION_KEY) || JSON.stringify(defaultData)
+  // localStorage.getItem(COLLECTION_KEY) ||
+  JSON.stringify(defaultData)
 );
 
 export default createSliceState({
@@ -24,12 +25,12 @@ export default createSliceState({
   initialState: extraBlocksData as BlockGroup[],
   reducers: {
     set: (state, action) => state,
-    add: (state, action: { payload: CollectedBlock }) => {
+    add: (state, action: { payload: CollectedBlock; }) => {
       state[0].blocks.push(action.payload);
-      localStorage.setItem(COLLECTION_KEY, JSON.stringify(state));
+      // localStorage.setItem(COLLECTION_KEY, JSON.stringify(state));
       return state;
     },
-    remove(state, action: { payload: { id: string } }) {
+    remove(state, action: { payload: { id: string; }; }) {
       state[0].blocks = state[0].blocks.filter(
         (item) => item.id !== action.payload.id
       );

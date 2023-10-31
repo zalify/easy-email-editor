@@ -21,7 +21,7 @@ window.setUser = (user: IConfigUser) => {
   if (!user.categoryId) {
     throw new Error('Need categoryId');
   }
-  localStorage.setItem(DEFAULT_USER_KEY, JSON.stringify(user));
+  // localStorage.setItem(DEFAULT_USER_KEY, JSON.stringify(user));s
   UserStorage.logout();
   window.location.reload();
 };
@@ -29,13 +29,13 @@ window.setUser = (user: IConfigUser) => {
 window.getUser = () => USER;
 
 window.removeUser = () => {
-  localStorage.setItem(DEFAULT_USER_KEY, '');
+  // localStorage.setItem(DEFAULT_USER_KEY, '');
   window.location.reload();
 };
 
 export function getUserConfig(defaultUser: IConfigUser): IConfigUser {
   try {
-    const newUser = JSON.parse(localStorage.getItem(DEFAULT_USER_KEY)!);
+    // const newUser = JSON.parse(localStorage.getItem(DEFAULT_USER_KEY)!);
     if (!newUser) return defaultUser;
     return newUser;
   } catch (error) {
