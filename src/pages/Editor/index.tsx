@@ -297,6 +297,8 @@ export default function Editor() {
         }
       ]
     };
+    window.GlobalObject = JSON.stringify(jsonData);
+
 
     dispatch(template.actions.fetchByJson({ json: JSON.stringify(jsonData) }));
 
@@ -339,7 +341,7 @@ export default function Editor() {
         };
         dispatch(template.actions.fetchByJson({ json: jsonData }));
       } else if (message.messageType === 3) {
-        window.GlobalObject = JSON.stringify(message.payLoad);
+        window.GlobalObject = message.payLoad;
         // let jsonParsedData = JSON.parse(jsonData);
         // const stringifyJsonData= JSON.stringify(jsonParsedData);
         dispatch(template.actions.fetchByJson({ json: message.payLoad }));
@@ -511,6 +513,7 @@ export default function Editor() {
       },
       "tags": currentJson.tags
     };
+
     const mjmlString = JsonToMjml({
       data: values.content,
       mode: 'production',
