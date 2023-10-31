@@ -339,7 +339,7 @@ export default function Editor() {
         };
         dispatch(template.actions.fetchByJson({ json: jsonData }));
       } else if (message.messageType === 3) {
-        window.GlobalObject = JSON.stringify(message.payLoad);
+        window.GlobalObject = message.payLoad;
         // let jsonParsedData = JSON.parse(jsonData);
         // const stringifyJsonData= JSON.stringify(jsonParsedData);
         dispatch(template.actions.fetchByJson({ json: message.payLoad }));
@@ -412,7 +412,7 @@ export default function Editor() {
     const reader = new FileReader();
     const pageData = await new Promise<[string, IEmailTemplate['content']]>(
       (resolve, reject) => {
-        reader.onload = function (evt) {
+        reader.onload = function(evt) {
           if (!evt.target) {
             reject();
             return;
@@ -436,8 +436,8 @@ export default function Editor() {
   };
 
   const onImportJSON = async ({
-    restart,
-  }: {
+                                restart,
+                              }: {
     restart: (val: IEmailTemplate) => void;
   }) => {
     const uploader = new Uploader(() => Promise.resolve(''), {
@@ -448,7 +448,7 @@ export default function Editor() {
     const [file] = await uploader.chooseFile();
     const reader = new FileReader();
     const emailTemplate = await new Promise<IEmailTemplate>((resolve, reject) => {
-      reader.onload = function (evt) {
+      reader.onload = function(evt) {
         if (!evt.target) {
           reject();
           return;
@@ -492,24 +492,24 @@ export default function Editor() {
     const currentJson = JSON.parse(window.GlobalObject);
 
     const updatedjson = {
-      "article_id": currentJson.article_id,
-      "title": currentJson.title,
-      "summary": currentJson.summary,
-      "picture": currentJson.picture,
-      "category_id": currentJson.category_id,
-      "origin_source": currentJson.origin_source,
-      "readcount": currentJson.readcount,
-      "user_id": currentJson.user_id,
-      "secret": currentJson.secret,
-      "level": currentJson.level,
-      "created_at": currentJson.created_at,
-      "updated_at": currentJson.updated_at,
-      "deleted_at": currentJson.deleted_at,
-      "content": {
-        "article_id": currentJson.article_id,
-        "content": jsonString,
+      'article_id': currentJson.article_id,
+      'title': currentJson.title,
+      'summary': currentJson.summary,
+      'picture': currentJson.picture,
+      'category_id': currentJson.category_id,
+      'origin_source': currentJson.origin_source,
+      'readcount': currentJson.readcount,
+      'user_id': currentJson.user_id,
+      'secret': currentJson.secret,
+      'level': currentJson.level,
+      'created_at': currentJson.created_at,
+      'updated_at': currentJson.updated_at,
+      'deleted_at': currentJson.deleted_at,
+      'content': {
+        'article_id': currentJson.article_id,
+        'content': jsonString,
       },
-      "tags": currentJson.tags
+      'tags': currentJson.tags,
     };
     const mjmlString = JsonToMjml({
       data: values.content,
@@ -566,7 +566,6 @@ export default function Editor() {
     postMessageToParent(imageRequest);
     Message.clear();
   };
-
   const onExportHTML = (values: IEmailTemplate) => {
     const mjmlString = JsonToMjml({
       data: values.content,
