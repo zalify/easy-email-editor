@@ -277,8 +277,8 @@ export default function Editor() {
       "user_id": 107,
       "secret": 0,
       "level": 10,
-      "created_at": 1645698574,
-      "updated_at": 1645865730,
+      "created_at": Date.now(),
+      "updated_at": Date.now(),
       "deleted_at": 0,
       "content": {
         "article_id": 815,
@@ -536,33 +536,32 @@ export default function Editor() {
 
     const canvas = await html2canvas(container, { useCORS: true });
 
-    var base64Image;
-
-    canvas.toBlob(async (blob) => {
-      if (blob) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          // The base64 string is available in reader.result
-          base64Image = reader.result as string;
-          // Print the base64 image to the console
-          console.log(base64Image);
-          // Now you can do something with the base64Image, such as saving it or displaying it.
-          // For example, you can save it as a file or display it as an image.
-        };
-        reader.readAsDataURL(blob);
-      } else {
-        // Handle the case where no blob was created
-        console.error('Failed to create a blob from the canvas.');
-      }
-    }, 'image/png', 0.1);
-
+    // var base64Image;
+    //
+    // canvas.toBlob(async (blob) => {
+    //   if (blob) {
+    //     const reader = new FileReader();
+    //     reader.onload = () => {
+    //       // The base64 string is available in reader.result
+    //       base64Image = reader.result as string;
+    //       // Print the base64 image to the console
+    //       console.log(base64Image);
+    //       // Now you can do something with the base64Image, such as saving it or displaying it.
+    //       // For example, you can save it as a file or display it as an image.
+    //     };
+    //     reader.readAsDataURL(blob);
+    //   } else {
+    //     // Handle the case where no blob was created
+    //     console.error('Failed to create a blob from the canvas.');
+    //   }
+    // }, 'image/png', 0.1);
     const imageRequest = {
       messageType: 1,
       key: generateTimestampId(),
       callType: 0,
       payLoad: JSON.stringify({
         'json': JSON.stringify(updatedjson),
-        'image': base64Image,
+        'image': "base64Image",
       }),
       sender: 1,
     };
