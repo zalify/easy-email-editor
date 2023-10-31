@@ -837,10 +837,10 @@ export default function Editor() {
                           <strong>Export</strong>
                         </Button>
                       </Dropdown>
-                      <Button onClick={() => setVisible(true)}>
+                      {/* <Button onClick={() => setVisible(true)}>
                         <strong>Try responsive editor</strong>
-                      </Button>
-                      <a
+                      </Button> */}
+                      {/* <a
                         href='https://www.buymeacoffee.com/easyemail?utm_source=webside&utm_medium=button&utm_content=donate'
                         target='_blank'
                         onClick={ev => {
@@ -862,7 +862,7 @@ export default function Editor() {
                           src='https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png'
                           alt='Buy Me A Coffee'
                         />
-                      </a>
+                      </a> */}
                     </Stack>
                   }
                 />
