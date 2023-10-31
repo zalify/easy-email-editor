@@ -266,39 +266,39 @@ export default function Editor() {
   // }, [collectionCategory]);
 
   useEffect(() => {
-    // const jsonData = {
-    //     "article_id": 815,
-    //     "title": "Sphero - Newsletter",
-    //     "summary": "Nice to meet you!",
-    //     "picture": "https://assets.maocanhua.cn/4262aa6d-5d8e-4774-8f7c-1af28cb18ed4-",
-    //     "category_id": 96,
-    //     "origin_source": "",
-    //     "readcount": 11,
-    //     "user_id": 107,
-    //     "secret": 0,
-    //     "level": 10,
-    //     "created_at": 1645698574,
-    //     "updated_at": 1645865730,
-    //     "deleted_at": 0,
-    //     "content": {
-    //       "article_id": 815,
-    //       "content": "{\"type\":\"page\",\"data\":{\"value\":{\"breakpoint\":\"480px\",\"headAttributes\":\"\",\"font-size\":\"14px\",\"font-weight\":\"400\",\"line-height\":\"1.7\",\"headStyles\":[],\"fonts\":[],\"responsive\":true,\"font-family\":\"-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans','Helvetica Neue', sans-serif\",\"text-color\":\"#000000\"}},\"attributes\":{\"background-color\":\"#efeeea\",\"width\":\"600px\"},\"children\":[{\"type\":\"advanced_wrapper\",\"data\":{\"value\":{}},\"attributes\":{\"padding\":\"20px 0px 20px 0px\",\"border\":\"none\",\"direction\":\"ltr\",\"text-align\":\"center\"},\"children\":[]}]}"
-    //     },
-    //     "tags": [
-    //       {
-    //         "tag_id": 74,
-    //         "name": "券包",
-    //         "picture": "http://assets.maocanhua.cn/Fqpjw0PHvSPy4sh0giFmkpuxgKhU",
-    //         "desc": "券包",
-    //         "created_at": 1576227276,
-    //         "user_id": 77,
-    //         "updated_at": 0,
-    //         "deleted_at": 0
-    //       }
-    //     ]
-    //   };
+    const jsonData = {
+      "article_id": 815,
+      "title": "Sphero - Newsletter",
+      "summary": "Nice to meet you!",
+      "picture": "https://assets.maocanhua.cn/4262aa6d-5d8e-4774-8f7c-1af28cb18ed4-",
+      "category_id": 96,
+      "origin_source": "",
+      "readcount": 11,
+      "user_id": 107,
+      "secret": 0,
+      "level": 10,
+      "created_at": 1645698574,
+      "updated_at": 1645865730,
+      "deleted_at": 0,
+      "content": {
+        "article_id": 815,
+        "content": "{\"type\":\"page\",\"data\":{\"value\":{\"breakpoint\":\"480px\",\"headAttributes\":\"\",\"font-size\":\"14px\",\"font-weight\":\"400\",\"line-height\":\"1.7\",\"headStyles\":[],\"fonts\":[],\"responsive\":true,\"font-family\":\"-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans','Helvetica Neue', sans-serif\",\"text-color\":\"#000000\"}},\"attributes\":{\"background-color\":\"#efeeea\",\"width\":\"600px\"},\"children\":[{\"type\":\"advanced_wrapper\",\"data\":{\"value\":{}},\"attributes\":{\"padding\":\"20px 0px 20px 0px\",\"border\":\"none\",\"direction\":\"ltr\",\"text-align\":\"center\"},\"children\":[]}]}"
+      },
+      "tags": [
+        {
+          "tag_id": 74,
+          "name": "券包",
+          "picture": "http://assets.maocanhua.cn/Fqpjw0PHvSPy4sh0giFmkpuxgKhU",
+          "desc": "券包",
+          "created_at": 1576227276,
+          "user_id": 77,
+          "updated_at": 0,
+          "deleted_at": 0
+        }
+      ]
+    };
 
-    //   dispatch(template.actions.fetchByJson({ json: JSON.stringify(jsonData) }));
+    dispatch(template.actions.fetchByJson({ json: JSON.stringify(jsonData) }));
 
     window.addEventListener('message', (event) => {
       console.log('Inside addEventListener - React'); // This will log the message sent from the Dart/Flutter app
