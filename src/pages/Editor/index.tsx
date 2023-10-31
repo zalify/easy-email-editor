@@ -234,7 +234,7 @@ export default function Editor() {
   const smallScene = width < 1400;
 
   const { openModal, modal } = useEmailModal();
-  const { id, userId } = useQuery();
+  // const { id, userId } = useQuery();
   const loading = useLoading(template.loadings.fetchByJson);
   const {
     modal: mergeTagsModal,
@@ -253,6 +253,8 @@ export default function Editor() {
     const id = 'req' + timestamp;
     return id;
   };
+
+  const id = generateTimestampId();
 
   // useEffect(() => {
   //   if (collectionCategory) {
