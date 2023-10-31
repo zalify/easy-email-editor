@@ -504,11 +504,12 @@ export default function Editor() {
       "updated_at": currentJson.updated_at,
       "deleted_at": currentJson.deleted_at,
       "content": {
-        "article_id": currentJson.content.article_id,
+        "article_id": currentJson.article_id,
         "content": jsonString,
       },
       "tags": currentJson.tags
     };
+    debugger;
     const mjmlString = JsonToMjml({
       data: values.content,
       mode: 'production',
@@ -562,6 +563,7 @@ export default function Editor() {
       payLoad: JSON.stringify(updatedjson),
       sender: 1,
     };
+    debugger;
     postMessageToParent(imageRequest);
     // Message.clear();
   };
