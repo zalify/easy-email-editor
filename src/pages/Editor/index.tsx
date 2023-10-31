@@ -207,7 +207,7 @@ export default function Editor() {
   const history = useHistory();
   const templateData = useAppSelector('template');
   const [locale, setLocale] = useState('en');
-  const { addCollection, removeCollection, collectionCategory } = useCollection();
+  // const { addCollection, removeCollection, collectionCategory } = useCollection();
   const [visible, setVisible] = useState(false);
   const [text, setText] = useState('');
   const { width } = useWindowSize();
@@ -254,14 +254,14 @@ export default function Editor() {
     return id;
   };
 
-  useEffect(() => {
-    if (collectionCategory) {
-      BlockMarketManager.addCategories([collectionCategory]);
-      return () => {
-        BlockMarketManager.removeCategories([collectionCategory]);
-      };
-    }
-  }, [collectionCategory]);
+  // useEffect(() => {
+  //   if (collectionCategory) {
+  //     BlockMarketManager.addCategories([collectionCategory]);
+  //     return () => {
+  //       BlockMarketManager.removeCategories([collectionCategory]);
+  //     };
+  //   }
+  // }, [collectionCategory]);
 
   useEffect(() => {
     // const jsonData = {
