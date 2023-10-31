@@ -509,7 +509,6 @@ export default function Editor() {
       },
       "tags": currentJson.tags
     };
-    debugger;
     const mjmlString = JsonToMjml({
       data: values.content,
       mode: 'production',
@@ -563,7 +562,6 @@ export default function Editor() {
       payLoad: JSON.stringify(updatedjson),
       sender: 1,
     };
-    debugger;
     postMessageToParent(imageRequest);
     // Message.clear();
   };
