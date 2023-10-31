@@ -278,7 +278,7 @@ export default function Editor() {
       "secret": 0,
       "level": 10,
       "created_at": 1645698574,
-      "updated_at": Date.now(),
+      "updated_at": 1645865730,
       "deleted_at": 0,
       "content": {
         "article_id": 815,
@@ -505,7 +505,7 @@ export default function Editor() {
       'secret': currentJson.secret,
       'level': currentJson.level,
       'created_at': currentJson.created_at,
-      'updated_at': currentJson.updated_at,
+      'updated_at': Date.now(),
       'deleted_at': currentJson.deleted_at,
       'content': {
         'article_id': currentJson.article_id,
