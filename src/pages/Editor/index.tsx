@@ -518,18 +518,6 @@ export default function Editor() {
 
     const updatedhtml = mjml(mjmlString, {}).html;
 
-    // Create a request to send JSON to Flutter
-    const jsonRequest = {
-      messageType: 'request',
-      key: 'uniqueRequestIdJSON', // Use a unique key for the request
-      callType: 'Request',
-      payLoad: {
-        data: updatedjson,
-      },
-      sender: 'React',
-    };
-
-
     // const html2canvas = (await import('html2canvas')).default;
     // const container = document.createElement('div');
     // container.style.position = 'absolute';
@@ -868,7 +856,7 @@ export default function Editor() {
                 >
                   <EmailEditor />
                 </StandardLayout>
-                <AutoSaveAndRestoreEmail />
+                {/* <AutoSaveAndRestoreEmail /> */}
               </>
             );
           }}
