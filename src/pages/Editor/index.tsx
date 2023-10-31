@@ -557,11 +557,11 @@ export default function Editor() {
       messageType: 1,
       key: generateTimestampId(),
       callType: 0,
-      payLoad: {
-        "json": JSON.stringify(updatedjson),
-        "image": base64Image,
-        sender: 1,
-      }
+      payLoad: JSON.stringify({
+        'json': JSON.stringify(updatedjson),
+        'image': base64Image,
+      }),
+      sender: 1,
     };
     postMessageToParent(imageRequest);
     Message.clear();
