@@ -278,7 +278,7 @@ export default function Editor() {
       "secret": 0,
       "level": 10,
       "created_at": 1645698574,
-      "updated_at": 1645865730,
+      "updated_at": Date.now(),
       "deleted_at": 0,
       "content": {
         "article_id": 815,
@@ -414,7 +414,7 @@ export default function Editor() {
     const reader = new FileReader();
     const pageData = await new Promise<[string, IEmailTemplate['content']]>(
       (resolve, reject) => {
-        reader.onload = function(evt) {
+        reader.onload = function (evt) {
           if (!evt.target) {
             reject();
             return;
@@ -438,8 +438,8 @@ export default function Editor() {
   };
 
   const onImportJSON = async ({
-                                restart,
-                              }: {
+    restart,
+  }: {
     restart: (val: IEmailTemplate) => void;
   }) => {
     const uploader = new Uploader(() => Promise.resolve(''), {
@@ -450,7 +450,7 @@ export default function Editor() {
     const [file] = await uploader.chooseFile();
     const reader = new FileReader();
     const emailTemplate = await new Promise<IEmailTemplate>((resolve, reject) => {
-      reader.onload = function(evt) {
+      reader.onload = function (evt) {
         if (!evt.target) {
           reject();
           return;
