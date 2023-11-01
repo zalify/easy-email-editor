@@ -5,7 +5,7 @@ import Page from '@demo/components/Page';
 import store from '@demo/store';
 import '@demo/styles/common.scss';
 import { history } from './utils/history';
-import Home from '@demo/pages/Home';
+// import Home from '@demo/pages/Home';
 
 const Editor = React.lazy(() => import('@demo/pages/Editor'));
 
@@ -35,7 +35,7 @@ function App() {
                   color: 'rgba(0, 0, 0, 0.65)',
                 }}
               >
-                Please wait a moment.
+                {/* Please wait a moment. */}
               </p>
             </div>
           }
