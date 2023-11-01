@@ -74,7 +74,7 @@ console.log(localesData);
 
 declare global {
   interface Window {
-    GlobalObject: string;
+    CurrentJSON: string;
   }
 }
 
@@ -297,7 +297,7 @@ export default function Editor() {
         }
       ]
     };
-    window.GlobalObject = JSON.stringify(jsonData);
+    window.CurrentJSON = JSON.stringify(jsonData);
 
 
     dispatch(template.actions.fetchByJson({ json: JSON.stringify(jsonData) }));
@@ -310,7 +310,7 @@ export default function Editor() {
         if (!message) { //default template
           dispatch(template.actions.fetchByJson({ json: jsonData }));
         } else if (message.messageType === 3) {
-          window.GlobalObject = message.payLoad;
+          window.CurrentJSON = message.payLoad;
           // let jsonParsedData = JSON.parse(jsonData);
           // const stringifyJsonData= JSON.stringify(jsonParsedData);
           dispatch(template.actions.fetchByJson({ json: message.payLoad }));
@@ -463,7 +463,7 @@ export default function Editor() {
 
     const jsonString = JSON.stringify(values.content);
 
-    const currentJson = JSON.parse(window.GlobalObject);
+    const currentJson = JSON.parse(window.CurrentJSON);
 
     const updatedjson = {
       'article_id': currentJson.article_id,
