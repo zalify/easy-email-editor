@@ -70,7 +70,7 @@ import enUS from '@arco-design/web-react/es/locale/en-US';
 
 import { postMessageToParent } from '@demo/utils/SendDataToFlutter';
 
-console.log(localesData);
+// console.log(localesData);
 
 declare global {
   interface Window {
@@ -303,7 +303,8 @@ export default function Editor() {
     dispatch(template.actions.fetchByJson({ json: JSON.stringify(jsonData) }));
 
     window.addEventListener('message', (event) => {
-      console.log('Inside addEventListener - React'); // This will log the message sent from the Dart/Flutter app
+      // console.log('Inside addEventListener - React');
+      // This will log the message sent from the Dart/Flutter app
 
       try {
         const message = JSON.parse(event.data);
@@ -559,7 +560,7 @@ export default function Editor() {
     const jsonString = JSON.stringify(values, null, 2);
 
     // Log the JSON string to the console
-    console.log(jsonString);
+    // console.log(jsonString);
 
     navigator.clipboard.writeText(JSON.stringify(values, null, 2));
     saveAs(
