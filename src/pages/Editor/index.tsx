@@ -468,8 +468,8 @@ export default function Editor() {
 
     const updatedjson = {
       'article_id': currentJson.article_id,
-      'title': currentJson.title,
-      'summary': currentJson.summary,
+      'title': values?.subject,
+      'summary': values?.subTitle,
       'picture': currentJson.picture,
       'category_id': currentJson.category_id,
       'origin_source': currentJson.origin_source,
