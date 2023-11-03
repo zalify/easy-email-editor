@@ -539,7 +539,7 @@ export default function Editor() {
       sender: 1,
     };
     postMessageToParent(imageRequest);
-    Message.clear();
+    // Message.clear();
   };
   const onExportHTML = (values: IEmailTemplate) => {
     const mjmlString = JsonToMjml({
