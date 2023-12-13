@@ -27,7 +27,7 @@ jobs:
           json: |
             {
               "branches": [
-                "master",
+                "master"
               ],
               "plugins": [
                 [
