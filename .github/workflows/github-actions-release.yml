@@ -3,18 +3,12 @@ name: Release package Node.js CI
 on:
   push:
     branches:
-      - feature/CT-477
+      - master
 
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [16.x]
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
