@@ -1,0 +1,114 @@
+name: Release package Node.js CI
+
+on:
+  push:
+    branches:
+      - feature/CT-477
+
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure semantic release
+        uses: devops-actions/json-to-file@v1.0.3
+        with:
+          json: |
+            {
+              "branches": [
+                "master",
+              ],
+              "plugins": [
+                [
+                  "@semantic-release/commit-analyzer",
+                  {
+                    "preset": "angular",
+                    "releaseRules": [
+                      {"type": "docs", "release": "minor"},
+                      {"type": "refactor", "release": "minor"},
+                      {"type": "fix", "release": "patch"},
+                      {"type": "style", "release": "minor"},
+                      {"type": "feature", "release": "minor"},
+                      {"type": "feat", "release": "minor"},
+                      {"type": "chore", "release": "minor"},
+                      {"type": "build", "release": "minor"},
+                      {"type": "ci", "release": "minor"},
+                      {"type": "test", "release": "minor"},
+                      {"type": "perf", "release": "minor"}
+                    ],
+                    "parserOpts": {
+                      "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES"]
+                    }
+                  }
+                ],
+                [
+                  "@semantic-release/release-notes-generator",
+                  {
+                    "preset": "conventionalcommits",
+                    "parserOpts": {
+                      "issuePrefixes": "[A-Z]+\\-",
+                      "issuePrefixesCaseSensitive": true
+                    },
+                    "presetConfig": {
+                      "commitUrlFormat": "{{host}}/{{owner}}/{{repository}}/commits/{{hash}}",
+                      "compareUrlFormat": "{{host}}/{{owner}}/{{repository}}/compare/{{currentTag}}%0D{{previousTag}}#diff",
+                      "issueUrlFormat": "https://welkinhealth.atlassian.net/browse/{{prefix}}{{id}}"
+                    }
+                  }
+                ],
+                [
+                  "@semantic-release/github",
+                  {
+                    "successComment": false,
+                    "failComment": false
+                  }
+                ]
+              ]
+            }
+          filename: ".releaserc.json"
+
+      - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v4
+        id: semantic
+        with:
+          extra_plugins: |
+            @semantic-release/git
+            @semantic-release/github
+            @semantic-release/release-notes-generator
+            @commitlint/config-conventional
+            @commitlint/cli
+        env:
+          DEBUG: 'semantic-release:*'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Use Node.js 16.x
+        if: steps.semantic.outputs.new_release_published == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 16.x
+          cache: 'npm'
+          registry-url: 'https://npm.pkg.github.com/@welkincloud-io'
+          scope: '@welkincloud-io'
+
+      - name: Install dependencies
+        if: steps.semantic.outputs.new_release_published == 'true'
+        run: npm install
+
+      - name: Publish package
+        if: steps.semantic.outputs.new_release_published == 'true'
+        run: |
+          npm version ${{ steps.semantic.outputs.new_release_version }}
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

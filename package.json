@@ -1,5 +1,9 @@
 {
   "name": "easy-email",
+  "repository": "https://github.com/welkincloud-io/easy-email.git",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/@welkincloud-io"
+  },
   "scripts": {
     "install-all": "lerna exec -- yarn --force && cd demo && yarn --force",
     "vercel-install": "lerna exec -- yarn install --network-concurrency 1 && cd demo && yarn install --network-concurrency 1",
