@@ -1,10 +1,15 @@
 import type { PrismaClient, Prisma } from '@prisma/client';
+import axios from 'axios';
 import { omit, pick } from 'lodash';
 import type { Adapter } from 'next-auth/adapters';
 
 export function PrismaAdapter(p: PrismaClient): Adapter {
   return {
-    createUser: data => p.user.create({ data: omit(data, 'loginType') }), // 改了这里
+    createUser: async data => {
+      const user = await p.user.create({ data: omit(data, 'loginType') });
+      axios.post('https://api-easyemail.vercel.app/api/public/track', { user });
+      return user;
+    }, // 改了这里
     getUser: id => p.user.findUnique({ where: { id } }),
     getUserByEmail: email => p.user.findUnique({ where: { email } }),
     async getUserByAccount(provider_providerAccountId) {
@@ -16,8 +21,8 @@ export function PrismaAdapter(p: PrismaClient): Adapter {
     },
     updateUser: ({ id, ...data }) => p.user.update({ where: { id }, data }),
     deleteUser: id => p.user.delete({ where: { id } }),
-    linkAccount: data => {
-      return p.account.create({
+    linkAccount: async data => {
+      const user = (await p.account.create({
         data: pick(data, [
           'provider',
           'type',
@@ -29,7 +34,9 @@ export function PrismaAdapter(p: PrismaClient): Adapter {
           'scope',
           'userId',
         ]),
-      }) as any;
+      })) as any;
+
+      return user;
     },
     unlinkAccount: provider_providerAccountId =>
       p.account.delete({ where: { provider_providerAccountId } }) as any,

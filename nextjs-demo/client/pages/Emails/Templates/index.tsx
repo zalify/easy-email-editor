@@ -4,6 +4,7 @@ import {
   useDeleteEmailTemplateMutation,
   useGetEmailTemplatesQuery,
 } from '@/client/hooks';
+import { useShowCommercialEditor } from '@/client/hooks/useShowCommercialEditor';
 import {
   Button,
   Card,
@@ -14,6 +15,7 @@ import {
   Menu,
   Message,
   PageHeader,
+  Space,
   Table,
   TableColumnProps,
 } from '@arco-design/web-react';
@@ -22,6 +24,7 @@ import { EmailTemplate } from '@prisma/client';
 import Link from 'next/link';
 
 function Index() {
+  const { featureEnabled } = useShowCommercialEditor();
   const { fetching, data, getEmailTemplatesQuery } = useGetEmailTemplatesQuery();
 
   const { fetching: deleteLoading, deleteEmailTemplateMutation } =
@@ -167,12 +170,24 @@ function Index() {
             <PageHeader
               title='Emails'
               extra={
-                <Button
-                  type='primary'
-                  href={`/emails/create`}
-                >
-                  Create Template
-                </Button>
+                <Space>
+                  {featureEnabled && (
+                    <Button
+                      status='success'
+                      type='primary'
+                      href='https://demo.easyemail.pro?utm_source=trypro'
+                    >
+                      Try commercial version
+                    </Button>
+                  )}
+
+                  <Button
+                    type='primary'
+                    href={`/emails/create`}
+                  >
+                    Create Template
+                  </Button>
+                </Space>
               }
             />
           </Layout.Header>

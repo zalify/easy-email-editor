@@ -33,20 +33,17 @@ export const CommercialBanner = ({ page }: { page: 'HOME' | 'EDITOR' }) => {
         <div>
           <div>
             Is the current Easy Email not meeting <strong>your requirements</strong> ?
-            It's time to try our more powerful commercial version of the email editor.{' '}
             <span>
               {showLiveChat ? (
                 <>
                   <a
-                    href='#'
                     onClick={() => {
-                      pushEvent({ event: `Contact_at_${page}` });
-                      (window as any).$crisp?.push(['do', 'chat:open']);
+                      pushEvent({ event: `view_at_${page}` });
                     }}
-                    target='_blank'
+                    href='https://www.easyemail.pro?utm_source=easyemail'
                     style={{ fontSize: 16 }}
                   >
-                    <strong>Open Live Chat</strong>
+                    <strong> Check commercial version</strong>
                   </a>
                 </>
               ) : (
