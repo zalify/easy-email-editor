@@ -20,10 +20,13 @@ export function useFontFamily() {
       fonts.unshift(...options);
     }
 
-    return fonts.map(item => ({ value: item.value, label: <span style={{ fontFamily: item.value }}>{item.label}</span> }));
+    return fonts.map(item => ({
+      value: item.value,
+      label: item.label,
+    }));
   }, [addFonts, defaultFontList]);
 
   return {
-    fontList
+    fontList,
   };
 }

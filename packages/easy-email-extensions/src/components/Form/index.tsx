@@ -1,5 +1,4 @@
 import {
-  InputNumber,
   Input as ArcoInput,
   Switch,
   Slider,
@@ -22,9 +21,10 @@ import { CheckBoxGroup } from './CheckBoxGroup';
 import { EditTab, EditTabProps } from './EditTab';
 import { EditGridTab, EditGridTabProps } from './EditGridTab';
 import { InlineText, InlineTextProps } from './InlineTextField';
-import { AutoCompleteProps, AutoComplete } from './AutoComplete';
+import AutoComplete, { AutoCompleteProps } from './AutoComplete';
 import { InputSearchProps } from '@arco-design/web-react/es/Input';
 import { ColorPickerField } from './ColorPickerField';
+import InputNumber from './InputNumber';
 
 export { RichTextField } from './RichTextField';
 
@@ -37,7 +37,7 @@ export const InputWithUnitField = enhancer<InputWithUnitProps>(
 
 export const SearchField = enhancer<InputSearchProps>(ArcoInput.Search, val => val);
 
-export const TextAreaField = enhancer<TextAreaProps>(ArcoInput.TextArea, val => val);
+export const TextAreaField = TextField;
 
 export const NumberField = enhancer<InputNumberProps>(InputNumber, e => e);
 

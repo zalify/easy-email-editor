@@ -538,6 +538,7 @@ export default function Editor() {
           locale={localesData[locale]}
         >
           {({ values }, { submit, restart }) => {
+            console.log({ values });
             return (
               <>
                 <PageHeader

@@ -13,7 +13,10 @@ import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/at
 import { FontFamily } from '../../attributes/FontFamily';
 import { pixelAdapter } from '../../adapter';
 
-interface PageProps { hideSubTitle?: boolean; hideSubject?: boolean}
+interface PageProps {
+  hideSubTitle?: boolean;
+  hideSubject?: boolean;
+}
 export function Page({ hideSubTitle, hideSubject }: PageProps) {
   const { focusIdx } = useFocusIdx();
 
@@ -33,6 +36,7 @@ export function Page({ hideSubTitle, hideSubject }: PageProps) {
                   label={t('Subject')}
                   name={'subject'}
                   inline
+                  autoComplete='off'
                 />
               )}
               {!hideSubTitle && (
@@ -128,7 +132,8 @@ export function Page({ hideSubTitle, hideSubject }: PageProps) {
               </Grid.Row>
 
               <TextAreaField
-                autoSize
+                multiline={4}
+                maxHeight={120}
                 label={t('User style')}
                 name={`${focusIdx}.data.value.user-style.content`}
               />

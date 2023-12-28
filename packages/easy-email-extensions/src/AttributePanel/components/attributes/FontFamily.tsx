@@ -10,8 +10,6 @@ export function FontFamily({ name }: { name?: string }) {
   return useMemo(() => {
     return (
       <AutoCompleteField
-        style={{ minWidth: 100, flex: 1 }}
-        showSearch
         label={t('Font family')}
         name={name || `${focusIdx}.attributes.font-family`}
         options={fontList}

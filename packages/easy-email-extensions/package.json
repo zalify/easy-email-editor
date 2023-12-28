@@ -43,7 +43,7 @@
     "@types/jsdom": "^16.2.13",
     "@types/lodash": "^4.14.178",
     "@types/node": "^16.11.7",
-    "@types/react": "^18.2.2",
+    "@types/react": "^18.2.25",
     "@types/react-color": "^3.0.6",
     "@types/react-dom": "^18.2.3",
     "@types/uuid": "^8.3.4",

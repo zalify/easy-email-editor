@@ -1,7 +1,11 @@
-import { Input as ArcoInput, InputProps as ArcoInputProps } from '@arco-design/web-react';
+// import { Input as ArcoInput, InputProps as ArcoInputProps } from '@arco-design/web-react';
 import React, { useCallback } from 'react';
+import {
+  TextField as PolarisTextField,
+  TextFieldProps as PolarisTextFieldProps,
+} from '@shopify/polaris';
 
-export interface InputProps extends Omit<ArcoInputProps, 'onChange'> {
+export interface InputProps extends Omit<PolarisTextFieldProps, 'onChange'> {
   quickchange?: boolean;
   value: string;
   onChange: (val: string) => void;
@@ -9,9 +13,9 @@ export interface InputProps extends Omit<ArcoInputProps, 'onChange'> {
 
 export function Input(props: InputProps) {
   const {
-    quickchange,
+    // quickchange,
     value = '',
-    onKeyDown: onPropsKeyDown,
+    // onKeyDown: onPropsKeyDown,
     onChange: propsOnChange,
   } = props;
 
@@ -19,44 +23,45 @@ export function Input(props: InputProps) {
     (val: string) => {
       propsOnChange(val);
     },
-    [propsOnChange]
+    [propsOnChange],
   );
 
-  const onKeyDown = useCallback(
-    (ev: React.KeyboardEvent<HTMLInputElement>) => {
-      if (onPropsKeyDown) {
-        onPropsKeyDown?.(ev);
-      }
+  // const onKeyDown = useCallback(
+  //   (ev: React.KeyboardEvent<HTMLInputElement>) => {
+  //     if (onPropsKeyDown) {
+  //       onPropsKeyDown?.(ev);
+  //     }
 
-      if (quickchange) {
-        let step = 0;
-        if (ev.key === 'ArrowUp') {
-          step = 1;
-        }
-        if (ev.key === 'ArrowDown') {
-          step = -1;
-        }
+  //     if (quickchange) {
+  //       let step = 0;
+  //       if (ev.key === 'ArrowUp') {
+  //         step = 1;
+  //       }
+  //       if (ev.key === 'ArrowDown') {
+  //         step = -1;
+  //       }
 
-        if (step) {
-          if (/^\d+/.test(value)) {
-            ev.preventDefault();
-            onChange(
-              String(value).replace(/^(\d+)/, (_, match) => {
-                return (Number(match) + step).toString();
-              })
-            );
-          }
-        }
-      }
-    },
-    [onPropsKeyDown, quickchange, value, onChange]
-  );
+  //       if (step) {
+  //         if (/^\d+/.test(value)) {
+  //           ev.preventDefault();
+  //           onChange(
+  //             String(value).replace(/^(\d+)/, (_, match) => {
+  //               return (Number(match) + step).toString();
+  //             }),
+  //           );
+  //         }
+  //       }
+  //     }
+  //   },
+  //   [onPropsKeyDown, quickchange, value, onChange],
+  // );
 
   return (
-    <ArcoInput
-      {...{ ...props, quickchange: undefined }}
-      onChange={(value) => onChange(value)}
-      onKeyDown={onKeyDown}
+    <PolarisTextField
+      {...props}
+      // {...{ ...props, quickchange: undefined }}
+      onChange={onChange}
+      // onKeyDown={onKeyDown}
     />
   );
 }
