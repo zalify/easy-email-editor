@@ -13,3 +13,5 @@ stats.html
 
 # webstorm
 .idea
+package-lock.json
+demo/package-lock.json
