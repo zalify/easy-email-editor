@@ -1,9 +1,11 @@
 import React, { useCallback } from 'react';
-import { InputWithUnitField } from '../../../components/Form';
+import { InputWithUnitField, NumberField, TextField } from '../../../components/Form';
 import { useFocusIdx, useBlock } from 'easy-email-editor';
 import { BasicType, getParentByIdx } from 'easy-email-core';
 import { InputWithUnitProps } from '@extensions/components/Form/InputWithUnit';
 import { UseFieldConfig } from 'react-final-form';
+import { pixelAdapter } from '../adapter';
+import { percentAdapter } from '../adapter/percent.adapter';
 
 export function Width({
   inline = false,
@@ -31,13 +33,16 @@ export function Width({
   );
 
   return (
-    <InputWithUnitField
-      validate={validate}
-      label={t('Width')}
-      inline={inline}
+    <TextField
+      autoComplete='off'
+      // validate={validate}
+      label='Width'
+      suffix='%'
+      config={percentAdapter}
+      type='number'
+      min={1}
+      max={100}
       name={`${focusIdx}.attributes.width`}
-      unitOptions={unitOptions}
-      config={config}
     />
   );
 }

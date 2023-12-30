@@ -36,39 +36,40 @@ export function Background() {
   const { onUploadImage } = useEditorProps();
   return useMemo(() => {
     return (
-      <Space
-        key={focusIdx}
-        direction='vertical'
-      >
-        <ImageUploaderField
-          label={t('Background image')}
-          name={`${focusIdx}.attributes.background-url`}
-          helpText={t(
-            'The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.',
-          )}
-          uploadHandler={onUploadImage}
-        />
+      // <Space
+      //   key={focusIdx}
+      //   direction='vertical'
+      // >
+      //   <ImageUploaderField
+      //     label={t('Background image')}
+      //     name={`${focusIdx}.attributes.background-url`}
+      //     helpText={t(
+      //       'The image suffix should be .jpg, jpeg, png, gif, etc. Otherwise, the picture may not be displayed normally.',
+      //     )}
+      //     uploadHandler={onUploadImage}
+      //   />
 
-        <Grid.Row>
-          <Grid.Col span={11}>
-            <BackgroundColor />
-          </Grid.Col>
-          <Grid.Col
-            offset={1}
-            span={11}
-          >
-            <SelectField
-              label={t('Background repeat')}
-              name={`${focusIdx}.attributes.background-repeat`}
-              options={backgroundRepeatOptions}
-            />
-          </Grid.Col>
-        </Grid.Row>
-        <TextField
-          label={t('Background size')}
-          name={`${focusIdx}.attributes.background-size`}
-        />
-      </Space>
+      //   <Grid.Row>
+      //     <Grid.Col span={11}>
+      //       <BackgroundColor />
+      //     </Grid.Col>
+      //     <Grid.Col
+      //       offset={1}
+      //       span={11}
+      //     >
+      //       <SelectField
+      //         label={t('Background repeat')}
+      //         name={`${focusIdx}.attributes.background-repeat`}
+      //         options={backgroundRepeatOptions}
+      //       />
+      //     </Grid.Col>
+      //   </Grid.Row>
+      //   <TextField
+      //     label={t('Background size')}
+      //     name={`${focusIdx}.attributes.background-size`}
+      //   />
+      // </Space>
+      <BackgroundColor />
     );
-  }, [focusIdx, onUploadImage]);
+  }, []);
 }

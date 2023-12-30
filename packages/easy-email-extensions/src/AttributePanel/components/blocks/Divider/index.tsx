@@ -12,53 +12,42 @@ import { Collapse, Grid, Space } from '@arco-design/web-react';
 import { Stack } from 'easy-email-editor';
 import { ClassName } from '../../attributes/ClassName';
 import { CollapseWrapper } from '../../attributes/CollapseWrapper';
+import Collapsible from '../../UI/Collapsible';
+import { InlineGrid } from '@shopify/polaris';
 
 export function Divider() {
   return (
     <AttributesPanelWrapper>
-      <CollapseWrapper defaultActiveKey={['-1', '0', '1', '2', '3']}>
-        <Collapse.Item name='1' header={t('Dimension')}>
-          <Space direction='vertical'>
-            <Grid.Row>
-              <Grid.Col span={11}>
-                <Width unitOptions='percent' />
-              </Grid.Col>
-              <Grid.Col offset={1} span={11} />
-            </Grid.Row>
+      <Collapsible title='Dimension'>
+        <InlineGrid columns={1}>
+          <Width unitOptions='percent' />
+          <Align />
+          <Padding />
+        </InlineGrid>
+      </Collapsible>
 
-            <Align />
-            <Padding />
-          </Space>
-        </Collapse.Item>
+      <Collapsible title='Border'>
+        <InlineGrid
+          columns={2}
+          gap='300'
+        >
+          <BorderWidth />
+          <BorderStyle />
+        </InlineGrid>
+        <BorderColor />
+      </Collapsible>
 
-        <Collapse.Item name='2' header={t('Border')}>
-          <Stack wrap={false} spacing='tight'>
-            <div style={{ width: 50 }}>
-              <BorderWidth />
-            </div>
-            <div style={{ width: 100 }}>
-              <BorderStyle />
-            </div>
-            <div style={{ width: 100 }}>
-              <BorderColor />
-            </div>
-          </Stack>
-        </Collapse.Item>
-
-        <Collapse.Item name='3' header={t('Background')}>
-          <Grid.Row>
-            <Grid.Col span={11}>
-              <ContainerBackgroundColor title={t('Background')} />
-            </Grid.Col>
-            <Grid.Col offset={1} span={11} />
-          </Grid.Row>
-        </Collapse.Item>
-        <Collapse.Item name='4' header={t('Extra')}>
-          <Grid.Col span={24}>
-            <ClassName />
-          </Grid.Col>
-        </Collapse.Item>
-      </CollapseWrapper>
+      <Collapsible title='Background'>
+        <ContainerBackgroundColor title='Background color' />
+      </Collapsible>
+      {/* <Collapse.Item
+        name='4'
+        header={t('Extra')}
+      >
+        <Grid.Col span={24}>
+          <ClassName />
+        </Grid.Col>
+      </Collapse.Item> */}
     </AttributesPanelWrapper>
   );
 }

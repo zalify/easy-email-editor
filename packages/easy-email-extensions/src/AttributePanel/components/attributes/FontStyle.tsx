@@ -17,7 +17,7 @@ const options = [
   },
 ];
 
-export function FontStyle({ name }: { name?: string }) {
+export function FontStyle({ name, gap }: { name?: string; gap?: string }) {
   const { focusIdx } = useFocusIdx();
 
   return (
@@ -25,6 +25,7 @@ export function FontStyle({ name }: { name?: string }) {
       label={t('Font style')}
       name={name || `${focusIdx}.attributes.font-style`}
       options={options}
+      gap={gap}
     />
   );
 }

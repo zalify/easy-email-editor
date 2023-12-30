@@ -1,27 +1,24 @@
-import { classnames } from '@/utils/classnames';
+import {
+  Button as PolarisButton,
+  ButtonProps as PolarisButtonProps,
+} from '@shopify/polaris';
 import React from 'react';
 import './index.scss';
 
-export interface ButtonProps {
-  children?: React.ReactNode;
-  disabled?: boolean;
-  title?: string;
+export interface ButtonProps extends Omit<PolarisButtonProps, 'children'> {
   noBorder?: boolean;
-  onClick?: React.DOMAttributes<HTMLButtonElement>['onClick'];
+  title?: string;
+  children?: React.ReactNode | string | JSX.Element;
 }
-export const Button: React.FC<ButtonProps> = props => {
+export const Button = ({ children, ...props }: ButtonProps) => {
   return (
-    <button
+    <PolarisButton
       onClick={props.onClick}
-      className={classnames(
-        'easy-email-editor-button',
-        props.noBorder && 'easy-email-editor-noBorder',
-      )}
       title={props.title}
       disabled={props.disabled}
-      type='button'
+      {...props}
     >
-      <>{props.children}</>
-    </button>
+      <>{children}</>
+    </PolarisButton>
   );
 };

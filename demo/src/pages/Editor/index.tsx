@@ -131,44 +131,6 @@ const defaultCategories: ExtensionProps['categories'] = [
       },
     ],
   },
-  {
-    label: 'Custom',
-    active: true,
-    displayType: 'custom',
-    blocks: [
-      <BlockAvatarWrapper type={CustomBlocksType.PRODUCT_RECOMMENDATION}>
-        <div
-          style={{
-            position: 'relative',
-            border: '1px solid #ccc',
-            marginBottom: 20,
-            width: '80%',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-          }}
-        >
-          <img
-            src={
-              'http://res.cloudinary.com/dwkp0e1yo/image/upload/v1665841389/ctbjtig27parugrztdhk.png'
-            }
-            style={{
-              maxWidth: '100%',
-            }}
-          />
-          <div
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              zIndex: 2,
-            }}
-          />
-        </div>
-      </BlockAvatarWrapper>,
-    ],
-  },
 ];
 
 const imageCompression = import('browser-image-compression');
@@ -666,6 +628,7 @@ export default function Editor() {
                 <StandardLayout
                   compact={!smallScene}
                   categories={defaultCategories}
+                  showSourceCode={false}
                 >
                   <EmailEditor />
                 </StandardLayout>

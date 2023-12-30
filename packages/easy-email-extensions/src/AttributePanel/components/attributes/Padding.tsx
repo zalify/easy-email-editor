@@ -1,10 +1,19 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
-import { InputWithUnitField } from '../../../components/Form';
-import { useFocusIdx, Stack, useBlock, TextStyle, IconFont } from 'easy-email-editor';
+import {
+  Bleed,
+  BlockStack,
+  Button,
+  InlineGrid,
+  InlineStack,
+  Text,
+  Tooltip,
+} from '@shopify/polaris';
+import { CancelMinor } from '@shopify/polaris-icons';
 import { createBlockDataByType } from 'easy-email-core';
-import { Form, useFormState } from 'react-final-form';
-import { Button, Grid, Space, Tooltip } from '@arco-design/web-react';
+import { useBlock, useFocusIdx } from 'easy-email-editor';
 import { get } from 'lodash';
+import React, { useCallback, useEffect, useMemo } from 'react';
+import { Form, useFormState } from 'react-final-form';
+import { NumberField } from '../../../components/Form';
 import { pixelAdapter } from '../adapter';
 
 export interface PaddingProps {
@@ -84,72 +93,72 @@ export function Padding(props: PaddingProps = {}) {
       {() => {
         return (
           <>
-            <Stack
-              vertical
-              spacing='extraTight'
-            >
-              <Space align='center'>
-                <TextStyle variation='strong'>{title}</TextStyle>
+            <BlockStack gap='100'>
+              <InlineStack
+                blockAlign='center'
+                gap='100'
+              >
+                <Text
+                  as='p'
+                  variant='headingMd'
+                >
+                  {title}
+                </Text>
                 {showResetAll && (
                   <Tooltip content='Remove all padding'>
-                    <Button
-                      onClick={onResetPadding}
-                      size='mini'
-                      icon={(
-                        <IconFont
-                          iconName='icon-remove'
-                          size={12}
-                        />
-                      )}
-                    />
+                    <Bleed marginBlockEnd='200'>
+                      <Button
+                        onClick={onResetPadding}
+                        icon={CancelMinor}
+                        variant='plain'
+                      />
+                    </Bleed>
                   </Tooltip>
                 )}
-              </Space>
+              </InlineStack>
 
-              <Grid.Row>
-                <Grid.Col span={11}>
-                  <InputWithUnitField
-                    label={t('Top (px)')}
-                    name='top'
-                    autoComplete='off'
-                    config={pixelAdapter}
-                  />
-                </Grid.Col>
-                <Grid.Col
-                  offset={1}
-                  span={11}
-                >
-                  <InputWithUnitField
-                    label={t('Left (px)')}
-                    name='left'
-                    autoComplete='off'
-                    config={pixelAdapter}
-                  />
-                </Grid.Col>
-              </Grid.Row>
+              <InlineGrid
+                columns={2}
+                gap='300'
+              >
+                <NumberField
+                  label='Top'
+                  name='top'
+                  autoComplete='off'
+                  config={pixelAdapter}
+                  suffix='px'
+                />
 
-              <Grid.Row>
-                <Grid.Col span={11}>
-                  <InputWithUnitField
-                    label={t('Bottom (px)')}
-                    name='bottom'
-                    config={pixelAdapter}
-                    autoComplete='off'
-                  />
-                </Grid.Col>
-                <Grid.Col
-                  offset={1}
-                  span={11}
-                >
-                  <InputWithUnitField
-                    label={t('Right (px)')}
-                    name='right'
-                    autoComplete='off'
-                    config={pixelAdapter}
-                  />
-                </Grid.Col>
-              </Grid.Row>
-            </Stack>
+                <NumberField
+                  label='Left'
+                  name='left'
+                  autoComplete='off'
+                  config={pixelAdapter}
+                  suffix='px'
+                />
+              </InlineGrid>
+
+              <InlineGrid
+                columns={2}
+                gap='300'
+              >
+                <NumberField
+                  label='Bottom'
+                  name='bottom'
+                  config={pixelAdapter}
+                  autoComplete='off'
+                  suffix='px'
+                />
+
+                <NumberField
+                  label='px'
+                  name='right'
+                  autoComplete='off'
+                  config={pixelAdapter}
+                  suffix='px'
+                />
+              </InlineGrid>
+            </BlockStack>
             <PaddingChangeWrapper onChange={onChancePadding} />
           </>
         );

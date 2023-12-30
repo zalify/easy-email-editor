@@ -5,7 +5,6 @@ import {
   Input,
   Menu,
   Message,
-  Modal,
   Popover,
   Spin,
   Button as ArcoButton,
@@ -17,22 +16,21 @@ import { classnames } from '@extensions/AttributePanel/utils/classnames';
 import { previewLoadImage } from '@extensions/AttributePanel/utils/previewLoadImage';
 import { MergeTags } from '@extensions';
 import { IconFont, useEditorProps } from 'easy-email-editor';
+import { InlineGrid, TextField, Modal } from '@shopify/polaris';
 
 export interface ImageUploaderProps {
   onChange: (val: string) => void;
   value: string;
   label: string;
   uploadHandler?: UploaderServer;
-  autoCompleteOptions?: Array<{ value: string; label: React.ReactNode; }>;
+  autoCompleteOptions?: Array<{ value: string; label: React.ReactNode }>;
 }
 
 export function ImageUploader(props: ImageUploaderProps) {
   const { mergeTags } = useEditorProps();
   const [isUploading, setIsUploading] = useState(false);
   const [preview, setPreview] = useState(false);
-  const uploadHandlerRef = useRef<UploaderServer | null | undefined>(
-    props.uploadHandler
-  );
+  const uploadHandlerRef = useRef<UploaderServer | null | undefined>(props.uploadHandler);
 
   const onChange = props.onChange;
 
@@ -47,10 +45,10 @@ export function ImageUploader(props: ImageUploaderProps) {
       accept: 'image/*',
     });
 
-    uploader.on('start', (photos) => {
+    uploader.on('start', photos => {
       setIsUploading(true);
 
-      uploader.on('end', (data) => {
+      uploader.on('end', data => {
         const url = data[0]?.url;
         if (url) {
           onChange(url);
@@ -88,7 +86,7 @@ export function ImageUploader(props: ImageUploaderProps) {
         }
       }
     },
-    [props]
+    [props],
   );
 
   const onRemove = useCallback(() => {
@@ -109,7 +107,10 @@ export function ImageUploader(props: ImageUploaderProps) {
 
     if (!props.value) {
       return (
-        <div className={styles['upload']} onClick={onUpload}>
+        <div
+          className={styles['upload']}
+          onClick={onUpload}
+        >
           <IconPlus />
           <div>Upload</div>
         </div>
@@ -121,10 +122,16 @@ export function ImageUploader(props: ImageUploaderProps) {
         <div className={classnames(styles['info'])}>
           <img src={props.value} />
           <div className={styles['btn-wrap']}>
-            <a title={t('Preview')} onClick={() => setPreview(true)}>
+            <a
+              title={t('Preview')}
+              onClick={() => setPreview(true)}
+            >
               <IconEye />
             </a>
-            <a title={t('Remove')} onClick={() => onRemove()}>
+            <a
+              title={t('Remove')}
+              onClick={() => onRemove()}
+            >
               <IconDelete />
             </a>
           </div>
@@ -134,18 +141,27 @@ export function ImageUploader(props: ImageUploaderProps) {
   }, [isUploading, onRemove, onUpload, props.value]);
 
   if (!props.uploadHandler) {
-    return <Input value={props.value} onChange={onChange} />;
+    return (
+      <Input
+        value={props.value}
+        onChange={onChange}
+      />
+    );
   }
 
   return (
     <div className={styles.wrap}>
-      <div className={styles['container']}>
+      <InlineGrid columns={1}>
         {content}
-        <Grid.Row style={{ width: '100%' }}>
-          {mergeTags && (
+        {/* {mergeTags && (
             <Popover
               trigger='click'
-              content={<MergeTags value={props.value} onChange={onChange} />}
+              content={
+                <MergeTags
+                  value={props.value}
+                  onChange={onChange}
+                />
+              }
             >
               <ArcoButton icon={<IconFont iconName='icon-merge-tags' />} />
             </Popover>
@@ -156,36 +172,56 @@ export function ImageUploader(props: ImageUploaderProps) {
             value={props.value}
             onChange={onChange}
             disabled={isUploading}
-
-          />
-          {props.autoCompleteOptions && (
+          /> */}
+        <TextField
+          autoComplete='off'
+          value={props.value}
+          onChange={onChange}
+          disabled={isUploading}
+        />
+        {/* {props.autoCompleteOptions && (
             <Dropdown
-              position="tr"
-              droplist={(
-                <Menu onClickMenuItem={(indexStr) => {
-                  if (!props.autoCompleteOptions) return;
-                  onChange(props.autoCompleteOptions[+indexStr]?.value);
-                }}
+              position='tr'
+              droplist={
+                <Menu
+                  onClickMenuItem={indexStr => {
+                    if (!props.autoCompleteOptions) return;
+                    onChange(props.autoCompleteOptions[+indexStr]?.value);
+                  }}
                 >
-                  {
-                    props.autoCompleteOptions.map((item, index) => {
-                      return (
-                        <Menu.Item style={{ display: 'flex', alignItems: 'center' }} key={index.toString()}>
-                          <img src={item.value} style={{ width: 20, height: 20 }} />&emsp;<span>{item.label}</span>
-                        </Menu.Item>
-                      );
-                    })
-                  }
+                  {props.autoCompleteOptions.map((item, index) => {
+                    return (
+                      <Menu.Item
+                        style={{ display: 'flex', alignItems: 'center' }}
+                        key={index.toString()}
+                      >
+                        <img
+                          src={item.value}
+                          style={{ width: 20, height: 20 }}
+                        />
+                        &emsp;<span>{item.label}</span>
+                      </Menu.Item>
+                    );
+                  })}
                 </Menu>
-              )}
+              }
             >
               <ArcoButton icon={<IconAt />} />
             </Dropdown>
-          )}
-        </Grid.Row>
-      </div>
-      <Modal visible={preview} footer={null} onCancel={() => setPreview(false)}>
-        <img alt={t('Preview')} style={{ width: '100%' }} src={props.value} />
+          )} */}
+      </InlineGrid>
+      <Modal
+        title='Preview'
+        open={preview}
+        footer={null}
+        onClose={() => setPreview(false)}
+        titleHidden
+      >
+        <img
+          alt={t('Preview')}
+          style={{ width: '100%' }}
+          src={props.value}
+        />
       </Modal>
     </div>
   );

@@ -1,25 +1,44 @@
-import React, { useMemo } from 'react';
-import { InputWithUnitField, TextField } from '../../../components/Form';
+import { InlineGrid } from '@shopify/polaris';
 import { useFocusIdx } from 'easy-email-editor';
-import { Grid } from '@arco-design/web-react';
+import React, { useMemo } from 'react';
+import { SelectField } from '../../../components/Form';
 
 export function Border() {
   const { focusIdx } = useFocusIdx();
 
   return useMemo(() => {
     return (
-      <Grid.Row>
-        <Grid.Col span={11}>
-          <TextField label={t('Border')} name={`${focusIdx}.attributes.border`} />
-        </Grid.Col>
-        <Grid.Col offset={1} span={11}>
-          <InputWithUnitField
-            label={t('Border radius')}
-            name={`${focusIdx}.attributes.border-radius`}
-            unitOptions='percent'
-          />
-        </Grid.Col>
-      </Grid.Row>
+      <InlineGrid columns={1}>
+        <SelectField
+          label='Style'
+          name={`${focusIdx}.attributes.border`}
+          options={[
+            {
+              label: 'solid',
+              value: 'solid',
+            },
+            {
+              label: 'dashed',
+              value: 'dashed',
+            },
+            {
+              label: 'dotted',
+              value: 'dotted',
+            },
+            {
+              label: 'none',
+              value: 'none',
+            },
+          ]}
+        />
+
+        {/* <InputWithUnitField
+          label={t('Border radius')}
+          name={`${focusIdx}.attributes.border-radius`}
+          unitOptions='percent'
+          suffix='%'
+        /> */}
+      </InlineGrid>
     );
   }, [focusIdx]);
 }

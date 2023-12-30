@@ -85,7 +85,10 @@ export function ConfigurationPanel({
             }
           >
             <FullHeightOverlayScrollbars height={`calc(${height} - 60px)`}>
-              <SourceCodePanel jsonReadOnly={jsonReadOnly} mjmlReadOnly={mjmlReadOnly} />
+              <SourceCodePanel
+                jsonReadOnly={jsonReadOnly}
+                mjmlReadOnly={mjmlReadOnly}
+              />
             </FullHeightOverlayScrollbars>
           </Tabs.TabPane>
         </Tabs>

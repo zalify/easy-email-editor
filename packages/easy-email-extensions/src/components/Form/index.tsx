@@ -39,7 +39,9 @@ export const SearchField = enhancer<InputSearchProps>(ArcoInput.Search, val => v
 
 export const TextAreaField = TextField;
 
-export const NumberField = enhancer<InputNumberProps>(InputNumber, e => e);
+export const NumberField = enhancer<InputNumberProps>(InputNumber, e => {
+  return e;
+});
 
 export const SliderField = enhancer<SliderProps>(Slider, e => e);
 

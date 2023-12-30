@@ -23,7 +23,13 @@ const options = [
   },
 ];
 
-export function Align({ inline }: { inline?: boolean }) {
+export function Align({
+  inline,
+  align,
+}: {
+  inline?: boolean;
+  align?: 'space-between' | 'center';
+}) {
   const { focusIdx } = useFocusIdx();
 
   return (
@@ -31,6 +37,7 @@ export function Align({ inline }: { inline?: boolean }) {
       label={t('Align')}
       name={`${focusIdx}.attributes.align`}
       options={options}
+      align={align}
     />
   );
 }

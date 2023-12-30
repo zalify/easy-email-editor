@@ -16,9 +16,11 @@ export interface RadioGroupProps extends Omit<PolarisRadioButtonProps, 'onChange
   value?: string;
   type?: 'radio' | 'button';
   vertical?: boolean;
+  align?: 'space-between' | 'center';
+  gap?: string;
 }
 
-export const RadioGroup = (props: any) => {
+export const RadioGroup = (props: RadioGroupProps) => {
   const handleChange = useCallback(
     (newChecked: boolean, id: string) => {
       if (newChecked) {
@@ -45,8 +47,9 @@ export const RadioGroup = (props: any) => {
   }
   return (
     <InlineStack
-      gap='500'
       blockAlign='center'
+      align={props.align}
+      gap={props.gap || '500'}
     >
       {optionsMarkup}
     </InlineStack>

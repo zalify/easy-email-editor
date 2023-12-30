@@ -3,6 +3,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { Button } from '../Button';
 import { Stack } from '../Stack';
 import './index.scss';
+import { ButtonGroup } from '@shopify/polaris';
 
 export interface TabsProps {
   children?: React.ReactNode;
@@ -13,6 +14,7 @@ export interface TabsProps {
   onBeforeChange?: (current: string, next: string) => boolean;
   defaultActiveTab?: string;
   activeTab?: string;
+  variant?: string;
 }
 export interface TabPaneProps {
   children?: React.ReactNode;
@@ -58,28 +60,50 @@ const Tabs: React.FC<TabsProps> = props => {
           distribution='equalSpacing'
           alignment='center'
         >
-          <Stack alignment='center'>
-            {React.Children.map(
-              props.children as any,
-              (item: { props: { tab: TabPaneProps }; key: string }, index) => {
-                return (
-                  <div
-                    key={item.key}
-                    onClick={() => onClick(item.key)}
-                    className={classnames(
-                      'easy-email-editor-tabItem',
-                      !activeTab && index === 0 && 'easy-email-editor-tabActiveItem',
-                      activeTab === item.key && 'easy-email-editor-tabActiveItem',
-                    )}
-                  >
-                    <Button noBorder>
-                      <>{item.props.tab}</>
-                    </Button>
-                  </div>
-                );
-              },
-            )}
-          </Stack>
+          {props.variant === 'segmented' ? (
+            <>
+              <ButtonGroup variant='segmented'>
+                {React.Children.map(
+                  props.children as any,
+                  (item: { props: { tab: TabPaneProps }; key: string }, index) => {
+                    return (
+                      <Button
+                        noBorder
+                        key={index}
+                        disabled={activeTab === item.key}
+                        onClick={() => onClick(item.key)}
+                      >
+                        <>{item.props.tab}</>
+                      </Button>
+                    );
+                  },
+                )}
+              </ButtonGroup>
+            </>
+          ) : (
+            <Stack alignment='center'>
+              {React.Children.map(
+                props.children as any,
+                (item: { props: { tab: TabPaneProps }; key: string }, index) => {
+                  return (
+                    <div
+                      key={item.key}
+                      onClick={() => onClick(item.key)}
+                      className={classnames(
+                        'easy-email-editor-tabItem',
+                        !activeTab && index === 0 && 'easy-email-editor-tabActiveItem',
+                        activeTab === item.key && 'easy-email-editor-tabActiveItem',
+                      )}
+                    >
+                      <Button noBorder>
+                        <>{item.props.tab}</>
+                      </Button>
+                    </div>
+                  );
+                },
+              )}
+            </Stack>
+          )}
           {props.tabBarExtraContent}
         </Stack>
       </div>

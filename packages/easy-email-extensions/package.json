@@ -77,6 +77,7 @@
   },
   "dependencies": {
     "@arco-design/web-react": "^2.36.1",
+    "@shopify/polaris-icons": "^7.13.0",
     "codemirror": "^5.63.3",
     "color": "^4.2.3",
     "final-form": "^4.20.4",
