@@ -1,5 +1,5 @@
 {
-  "name": "easy-email",
+  "name": "polaris-easy-email",
   "scripts": {
     "install-all": "lerna exec -- yarn --force && cd demo && yarn --force",
     "vercel-install": "lerna exec -- yarn install --network-concurrency 1 && cd demo && yarn install --network-concurrency 1",

@@ -1,35 +1,26 @@
+import { Space } from '@arco-design/web-react';
+import { BlockStack, InlineGrid } from '@shopify/polaris';
+import { useEditorProps, useFocusIdx } from 'easy-email-editor';
 import React from 'react';
-import { Padding } from '../../attributes/Padding';
-import { Border } from '../../attributes/Border';
-import { BackgroundColor } from '../../attributes/BackgroundColor';
-import { Color } from '../../attributes/Color';
-import { Link } from '../../attributes/Link';
-import { Width } from '../../attributes/Width';
-import { ContainerBackgroundColor } from '../../attributes/ContainerBackgroundColor';
+import { useField } from 'react-final-form';
+import { TextField } from '../../../../components/Form';
+import Collapsible from '../../UI/Collapsible';
 import { Align } from '../../attributes/Align';
+import { AttributesPanelWrapper } from '../../attributes/AttributesPanelWrapper';
+import { BackgroundColor } from '../../attributes/BackgroundColor';
+import { Border } from '../../attributes/Border';
+import { Color } from '../../attributes/Color';
+import { ContainerBackgroundColor } from '../../attributes/ContainerBackgroundColor';
+import { FontFamily } from '../../attributes/FontFamily';
 import { FontSize } from '../../attributes/FontSize';
 import { FontStyle } from '../../attributes/FontStyle';
 import { FontWeight } from '../../attributes/FontWeight';
-import { FontFamily } from '../../attributes/FontFamily';
-import { TextDecoration } from '../../attributes/TextDecoration';
-import { LineHeight } from '../../attributes/LineHeight';
 import { LetterSpacing } from '../../attributes/LetterSpacing';
-import {
-  Collapse,
-  Grid,
-  Popover,
-  Space,
-  Button as ArcoButton,
-} from '@arco-design/web-react';
-import { TextField } from '../../../../components/Form';
-import { IconFont, useEditorProps, useFocusIdx } from 'easy-email-editor';
-import { AttributesPanelWrapper } from '../../attributes/AttributesPanelWrapper';
-import { MergeTags } from '../../attributes';
-import { useField } from 'react-final-form';
-import { ClassName } from '../../attributes/ClassName';
-import { CollapseWrapper } from '../../attributes/CollapseWrapper';
-import Collapsible from '../../UI/Collapsible';
-import { BlockStack, InlineGrid } from '@shopify/polaris';
+import { LineHeight } from '../../attributes/LineHeight';
+import { Link } from '../../attributes/Link';
+import { Padding } from '../../attributes/Padding';
+import { TextDecoration } from '../../attributes/TextDecoration';
+import { Width } from '../../attributes/Width';
 
 export function Button() {
   const { focusIdx } = useFocusIdx();
@@ -44,6 +35,7 @@ export function Button() {
       <Collapsible title='Setting'>
         <Space direction='vertical'>
           <TextField
+            autoComplete='off'
             label='Content'
             name={`${focusIdx}.data.value.content`}
           />
