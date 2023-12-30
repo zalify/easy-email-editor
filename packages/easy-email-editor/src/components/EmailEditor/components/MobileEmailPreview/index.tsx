@@ -104,6 +104,7 @@ export function MobileEmailPreview() {
                   height: '100%',
                   overflow: 'auto',
                   margin: 'auto',
+                  paddingTop: 0,
                 }}
               >
                 <>{reactNode}</>

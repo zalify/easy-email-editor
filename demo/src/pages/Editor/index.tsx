@@ -85,9 +85,9 @@ const defaultCategories: ExtensionProps['categories'] = [
       {
         type: AdvancedType.BUTTON,
       },
-      {
-        type: AdvancedType.SOCIAL,
-      },
+      // {
+      //   type: AdvancedType.SOCIAL,
+      // },
       {
         type: AdvancedType.DIVIDER,
       },

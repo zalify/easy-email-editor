@@ -26,7 +26,10 @@ import { EyeIcon } from './components/EyeIcon';
 import { BlockTree, BlockTreeProps } from './components/BlockTree';
 import { ContextMenu } from './components/ContextMenu';
 import { classnames } from '@extensions/utils/classnames';
-import { getDirectionFormDropPosition, useAvatarWrapperDrop } from './hooks/useAvatarWrapperDrop';
+import {
+  getDirectionFormDropPosition,
+  useAvatarWrapperDrop,
+} from './hooks/useAvatarWrapperDrop';
 import { getIconNameByBlockType } from '@extensions/utils/getIconNameByBlockType';
 import { Space } from '@arco-design/web-react';
 import { getBlockTitle } from '@extensions/utils/getBlockTitle';
@@ -272,7 +275,7 @@ export function BlockLayer(props: BlockLayerProps) {
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       />
-      {contextMenuData && (
+      {/* {contextMenuData && (
         <ContextMenu
           onClose={onCloseContextMenu}
           moveBlock={moveBlock}
@@ -280,7 +283,7 @@ export function BlockLayer(props: BlockLayerProps) {
           removeBlock={removeBlock}
           contextMenuData={contextMenuData}
         />
-      )}
+      )} */}
     </div>
   );
 }

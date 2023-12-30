@@ -1,5 +1,5 @@
 import { Autocomplete, AutocompleteProps } from '@shopify/polaris';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   AutoComplete as ArcoAutoComplete,
   AutoCompleteProps as ArcoAutoCompleteProps,
@@ -39,7 +39,7 @@ export interface AutoCompleteProps
 
 const AutoComplete = (props: AutoCompleteProps) => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([props.value]);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(props.value);
   const [options, setOptions] = useState(props.options);
 
   const updateText = useCallback(
@@ -79,7 +79,7 @@ const AutoComplete = (props: AutoCompleteProps) => {
     <Autocomplete.TextField
       onChange={updateText}
       label={props?.label}
-      value={inputValue}
+      value={props.value}
       placeholder='Search'
       autoComplete='off'
     />

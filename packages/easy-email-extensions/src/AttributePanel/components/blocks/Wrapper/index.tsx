@@ -7,42 +7,53 @@ import { Collapse, Grid } from '@arco-design/web-react';
 import { Stack, useFocusIdx } from 'easy-email-editor';
 import { ClassName } from '../../attributes/ClassName';
 import { CollapseWrapper } from '../../attributes/CollapseWrapper';
+import Collapsible from '../../UI/Collapsible';
 
 export function Wrapper() {
   const { focusIdx } = useFocusIdx();
   return (
     <AttributesPanelWrapper style={{ padding: 0 }}>
-      <CollapseWrapper defaultActiveKey={['0', '1', '2']}>
-        <Collapse.Item name='0' header={t('Dimension')}>
-          <Stack vertical spacing='tight'>
-            <Padding />
-          </Stack>
-        </Collapse.Item>
-        <Collapse.Item name='1' header={t('Background')}>
-          <Stack vertical spacing='tight'>
-            <Background />
-          </Stack>
-        </Collapse.Item>
-        <Collapse.Item name='2' header={t('Border')}>
-          <Stack vertical spacing='tight'>
-            <TextField
-              label={t('Border')}
-              name={`${focusIdx}.attributes.border`}
-              inline
-            />
-            <TextField
-              label={t('Background border radius')}
-              name={`${focusIdx}.attributes.border-radius`}
-              inline
-            />
-          </Stack>
-        </Collapse.Item>
-        <Collapse.Item name='4' header={t('Extra')}>
-          <Grid.Col span={24}>
-            <ClassName />
-          </Grid.Col>
-        </Collapse.Item>
-      </CollapseWrapper>
+      <Collapsible title='Dimension'>
+        <Stack
+          vertical
+          spacing='tight'
+        >
+          <Padding />
+        </Stack>
+      </Collapsible>
+      <Collapsible title='Background'>
+        <Stack
+          vertical
+          spacing='tight'
+        >
+          <Background />
+        </Stack>
+      </Collapsible>
+      <Collapsible title='Border'>
+        <Stack
+          vertical
+          spacing='tight'
+        >
+          <TextField
+            label={t('Border')}
+            name={`${focusIdx}.attributes.border`}
+            inline
+          />
+          <TextField
+            label={t('Background border radius')}
+            name={`${focusIdx}.attributes.border-radius`}
+            inline
+          />
+        </Stack>
+      </Collapsible>
+      {/* <Collapse.Item
+        name='4'
+        header={t('Extra')}
+      >
+        <Grid.Col span={24}>
+          <ClassName />
+        </Grid.Col>
+      </Collapse.Item> */}
     </AttributesPanelWrapper>
   );
 }

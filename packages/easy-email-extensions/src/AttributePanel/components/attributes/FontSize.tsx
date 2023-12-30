@@ -8,9 +8,11 @@ export function FontSize() {
 
   return (
     <InputWithUnitField
-      label={t('Font size (px)')}
+      label='Font size'
       name={`${focusIdx}.attributes.font-size`}
       config={pixelAdapter}
+      suffix='px'
+      type='number'
       autoComplete='off'
     />
   );

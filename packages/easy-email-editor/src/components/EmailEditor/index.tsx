@@ -8,12 +8,13 @@ import { ActiveTabKeys } from '../Provider/BlocksProvider';
 import { DesktopEmailPreview } from './components/DesktopEmailPreview';
 import { MobileEmailPreview } from './components/MobileEmailPreview';
 import { EditEmailPreview } from './components/EditEmailPreview';
-import { IconFont } from '../IconFont';
 import { TabPane, Tabs } from '@/components/UI/Tabs';
 import { useEditorProps } from '@/hooks/useEditorProps';
 import './index.scss';
 import '@/assets/font/iconfont.css';
 import { EventManager, EventType } from '@/utils/EventManager';
+import { Icon } from '@shopify/polaris';
+import { MobileMajor, DesktopMajor, DragDropMajor } from '@shopify/polaris-icons';
 
 (window as any).global = window; // react-codemirror
 
@@ -59,33 +60,21 @@ export const EmailEditor = () => {
         >
           <TabPane
             style={{ height: 'calc(100% - 50px)' }}
-            tab={
-              <Stack spacing='tight'>
-                <IconFont iconName='icon-editor' />
-              </Stack>
-            }
+            tab={<Icon source={DragDropMajor} />}
             key={ActiveTabKeys.EDIT}
           >
             <EditEmailPreview />
           </TabPane>
           <TabPane
             style={{ height: 'calc(100% - 50px)' }}
-            tab={
-              <Stack spacing='tight'>
-                <IconFont iconName='icon-desktop' />
-              </Stack>
-            }
+            tab={<Icon source={DesktopMajor} />}
             key={ActiveTabKeys.PC}
           >
             <DesktopEmailPreview />
           </TabPane>
           <TabPane
             style={{ height: 'calc(100% - 50px)' }}
-            tab={
-              <Stack spacing='tight'>
-                <IconFont iconName='icon-mobile' />
-              </Stack>
-            }
+            tab={<Icon source={MobileMajor} />}
             key={ActiveTabKeys.MOBILE}
           >
             <MobileEmailPreview />

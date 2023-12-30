@@ -1,7 +1,8 @@
 import { InlineGrid } from '@shopify/polaris';
 import { useFocusIdx } from 'easy-email-editor';
 import React, { useMemo } from 'react';
-import { SelectField } from '../../../components/Form';
+import { InputWithUnitField, SelectField } from '../../../components/Form';
+import { pixelAdapter } from '../adapter';
 
 export function Border() {
   const { focusIdx } = useFocusIdx();
@@ -32,12 +33,13 @@ export function Border() {
           ]}
         />
 
-        {/* <InputWithUnitField
+        <InputWithUnitField
           label={t('Border radius')}
           name={`${focusIdx}.attributes.border-radius`}
-          unitOptions='percent'
-          suffix='%'
-        /> */}
+          suffix='px'
+          config={pixelAdapter}
+          type='number'
+        />
       </InlineGrid>
     );
   }, [focusIdx]);
