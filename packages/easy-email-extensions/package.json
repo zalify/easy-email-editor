@@ -2,8 +2,8 @@
   "name": "polaris-easy-email-extensions",
   "license": "MIT",
   "description": "Email editor",
-  "version": "4.14.1",
-  "author": "m-Ryan",
+  "version": "0.0.1",
+  "author": "cnhien12",
   "repository": {
     "type": "git",
     "url": "git@github.com:m-Ryan/easy-email.git"
