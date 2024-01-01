@@ -1,21 +1,19 @@
-import React, { useCallback } from 'react';
-import { InputWithUnitField, NumberField, TextField } from '../../../components/Form';
-import { useFocusIdx, useBlock } from 'easy-email-editor';
+import { RangeSliderProps } from '@shopify/polaris';
 import { BasicType, getParentByIdx } from 'easy-email-core';
-import { InputWithUnitProps } from '@extensions/components/Form/InputWithUnit';
+import { useBlock, useFocusIdx } from 'easy-email-editor';
+import React, { useCallback, useMemo } from 'react';
 import { UseFieldConfig } from 'react-final-form';
+import { RangeSliderField } from '../../../components/Form';
 import { pixelAdapter } from '../adapter';
 import { percentAdapter } from '../adapter/percent.adapter';
 
 export function Width({
-  inline = false,
-  unitOptions,
-  config,
+  suffix,
+  min = 100,
+  max = 800,
 }: {
-  inline?: boolean;
-  unitOptions?: InputWithUnitProps['unitOptions'];
   config?: UseFieldConfig<any>;
-}) {
+} & Partial<RangeSliderProps>) {
   const { focusIdx } = useFocusIdx();
   const { focusBlock, values } = useBlock();
   const parentType = getParentByIdx(values, focusIdx)?.type;
@@ -32,17 +30,28 @@ export function Width({
     [focusBlock?.type, parentType],
   );
 
+  const configMemo = useMemo(() => {
+    if (suffix === '%') {
+      return percentAdapter;
+    }
+    if (suffix === 'px') {
+      return pixelAdapter;
+    }
+    return undefined;
+  }, [suffix]);
+
   return (
-    <TextField
+    <RangeSliderField
       autoComplete='off'
       // validate={validate}
       label='Width'
-      suffix='%'
-      config={percentAdapter}
-      type='number'
-      min={1}
-      max={100}
+      suffix={suffix}
+      config={configMemo}
+      // type='number'
+      min={min}
+      max={max}
       name={`${focusIdx}.attributes.width`}
+      showTextField
     />
   );
 }

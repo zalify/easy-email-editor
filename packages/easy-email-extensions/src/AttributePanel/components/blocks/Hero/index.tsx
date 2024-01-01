@@ -1,22 +1,17 @@
-import React from 'react';
-import { BackgroundColor } from '@extensions/AttributePanel/components/attributes/BackgroundColor';
+import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
+import { Height } from '@extensions/AttributePanel/components/attributes/Height';
+import { Padding } from '@extensions/AttributePanel/components/attributes/Padding';
+import { Width } from '@extensions/AttributePanel/components/attributes/Width';
 import {
   ImageUploaderField,
-  InputWithUnitField,
   RadioGroupField,
-  TextField,
+  RangeSliderField,
 } from '@extensions/components/Form';
-import { Width } from '@extensions/AttributePanel/components/attributes/Width';
-import { Height } from '@extensions/AttributePanel/components/attributes/Height';
-import { VerticalAlign } from '@extensions/AttributePanel/components/attributes/VerticalAlign';
-import { Padding } from '@extensions/AttributePanel/components/attributes/Padding';
-import { Collapse, Grid, Space } from '@arco-design/web-react';
-import { useEditorProps, useFocusIdx } from 'easy-email-editor';
-import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
-import { ClassName } from '../../attributes/ClassName';
-import { CollapseWrapper } from '../../attributes/CollapseWrapper';
 import { BlockStack, InlineGrid } from '@shopify/polaris';
+import { useEditorProps, useFocusIdx } from 'easy-email-editor';
+import React from 'react';
 import Collapsible from '../../UI/Collapsible';
+import { pixelAdapter } from '../../adapter';
 
 const options = [
   {
@@ -46,11 +41,8 @@ export function Hero() {
             name={`${focusIdx}.attributes.mode`}
             options={options}
           />
-          <InlineGrid
-            gap='300'
-            columns={2}
-          >
-            <Width />
+          <InlineGrid columns={1}>
+            <Width suffix='px' />
             <Height />
           </InlineGrid>
 
@@ -69,22 +61,27 @@ export function Hero() {
             uploadHandler={onUploadImage}
           />
 
-          <InlineGrid
-            columns={2}
-            gap='300'
-          >
-            <InputWithUnitField
+          <InlineGrid columns={1}>
+            <RangeSliderField
               label={t('Background width')}
               name={`${focusIdx}.attributes.background-width`}
+              suffix='px'
+              config={pixelAdapter}
+              min={10}
+              max={200}
             />
 
-            <InputWithUnitField
+            <RangeSliderField
               label={t('Background height')}
               name={`${focusIdx}.attributes.background-height`}
+              suffix='px'
+              config={pixelAdapter}
+              min={10}
+              max={200}
             />
           </InlineGrid>
 
-          <Grid.Row>
+          {/* <Grid.Row>
             <InlineGrid
               columns={2}
               gap='300'
@@ -102,7 +99,7 @@ export function Hero() {
               />
               <BackgroundColor title='Color' />
             </InlineGrid>
-          </Grid.Row>
+          </Grid.Row> */}
         </BlockStack>
       </Collapsible>
       {/* <Collapse.Item

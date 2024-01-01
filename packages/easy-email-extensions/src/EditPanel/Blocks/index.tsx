@@ -117,7 +117,7 @@ function BlockItem({
       <Box
         width='100%'
         borderWidth='025'
-        borderColor='border-secondary'
+        borderColor='border-brand'
         paddingBlock='200'
       >
         <BlockStack

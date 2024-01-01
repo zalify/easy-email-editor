@@ -1,7 +1,11 @@
 import { InlineGrid } from '@shopify/polaris';
 import { useFocusIdx } from 'easy-email-editor';
 import React, { useMemo } from 'react';
-import { InputWithUnitField, SelectField } from '../../../components/Form';
+import {
+  InputWithUnitField,
+  RangeSliderField,
+  SelectField,
+} from '../../../components/Form';
 import { pixelAdapter } from '../adapter';
 
 export function Border() {
@@ -33,12 +37,12 @@ export function Border() {
           ]}
         />
 
-        <InputWithUnitField
+        <RangeSliderField
           label={t('Border radius')}
           name={`${focusIdx}.attributes.border-radius`}
           suffix='px'
           config={pixelAdapter}
-          type='number'
+          showTextField
         />
       </InlineGrid>
     );

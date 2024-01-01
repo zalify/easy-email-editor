@@ -46,12 +46,12 @@ export function EditEmailPreview() {
           outline: 'none',
         }}
       >
-        {/* <div
+        <div
           id='easy-email-plugins'
           style={{
             position: 'relative',
           }}
-        /> */}
+        />
         <div
           className={classnames('shadow-container', SYNC_SCROLL_ELEMENT_CLASS_NAME)}
           style={{

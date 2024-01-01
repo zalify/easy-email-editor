@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
 import { useFocusIdx } from 'easy-email-editor';
-import { TextField } from '../../../components/Form';
+import React, { useMemo } from 'react';
+import { RangeSliderField } from '../../../components/Form';
 import { pixelAdapter } from '../adapter';
 
 export function BorderWidth() {
@@ -8,9 +8,9 @@ export function BorderWidth() {
 
   return useMemo(() => {
     return (
-      <TextField
+      <RangeSliderField
         autoComplete='off'
-        type='number'
+        // type='number'
         suffix='px'
         config={pixelAdapter}
         label={t('Width')}

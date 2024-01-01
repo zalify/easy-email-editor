@@ -53,13 +53,11 @@ export function Image() {
 
       <Collapsible title='Dimension'>
         <BlockStack gap='200'>
-          <InlineGrid
-            columns={2}
-            gap='300'
-          >
-            <Width config={pixelAdapter} />
-            <Height config={imageHeightAdapter} />
-          </InlineGrid>
+          <Width
+            config={pixelAdapter}
+            suffix='px'
+          />
+          {/* <Height /> */}
           <Padding showResetAll />
           <Align align='space-between' />
         </BlockStack>

@@ -1,29 +1,19 @@
-import React, { useState } from 'react';
+import { Align } from '@extensions/AttributePanel/components/attributes/Align';
+import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
+import { Color } from '@extensions/AttributePanel/components/attributes/Color';
+import { ContainerBackgroundColor } from '@extensions/AttributePanel/components/attributes/ContainerBackgroundColor';
+import { FontStyle } from '@extensions/AttributePanel/components/attributes/FontStyle';
+import { FontWeight } from '@extensions/AttributePanel/components/attributes/FontWeight';
+import { Height } from '@extensions/AttributePanel/components/attributes/Height';
+import { LetterSpacing } from '@extensions/AttributePanel/components/attributes/LetterSpacing';
+import { LineHeight } from '@extensions/AttributePanel/components/attributes/LineHeight';
 import { Padding } from '@extensions/AttributePanel/components/attributes/Padding';
 import { TextDecoration } from '@extensions/AttributePanel/components/attributes/TextDecoration';
-import { FontWeight } from '@extensions/AttributePanel/components/attributes/FontWeight';
-import { FontStyle } from '@extensions/AttributePanel/components/attributes/FontStyle';
-import { FontFamily } from '@extensions/AttributePanel/components/attributes/FontFamily';
-import { Height } from '@extensions/AttributePanel/components/attributes/Height';
-import { ContainerBackgroundColor } from '@extensions/AttributePanel/components/attributes/ContainerBackgroundColor';
-import { FontSize } from '@extensions/AttributePanel/components/attributes/FontSize';
-import { Color } from '@extensions/AttributePanel/components/attributes/Color';
-import { Align } from '@extensions/AttributePanel/components/attributes/Align';
-import { LineHeight } from '@extensions/AttributePanel/components/attributes/LineHeight';
-import { LetterSpacing } from '@extensions/AttributePanel/components/attributes/LetterSpacing';
-
-import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
-import { Collapse, Grid, Space, Tooltip, Button } from '@arco-design/web-react';
-import { IconFont } from 'easy-email-editor';
-import { HtmlEditor } from '../../UI/HtmlEditor';
-import { ClassName } from '../../attributes/ClassName';
-import { CollapseWrapper } from '../../attributes/CollapseWrapper';
 import { BlockStack, InlineGrid } from '@shopify/polaris';
+import React from 'react';
 import Collapsible from '../../UI/Collapsible';
 
 export function Text() {
-  const [visible, setVisible] = useState(false);
-
   return (
     <AttributesPanelWrapper hiddenTitle>
       <Collapsible title='Dimension'>
@@ -43,16 +33,11 @@ export function Text() {
       </Collapsible>
       <Collapsible title='Typography'>
         <BlockStack gap='300'>
-          <InlineGrid
-            columns={2}
-            gap='300'
-          >
-            <LineHeight />
-            <LetterSpacing />
-            <TextDecoration />
-            <FontWeight />
-          </InlineGrid>
-          <Align align='space-between' />
+          <LineHeight />
+          <LetterSpacing />
+          <TextDecoration />
+          <FontWeight />
+          <Align />
           <FontStyle gap='1000' />
         </BlockStack>
       </Collapsible>

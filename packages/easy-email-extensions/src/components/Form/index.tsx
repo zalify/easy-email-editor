@@ -1,30 +1,30 @@
 import {
   Input as ArcoInput,
-  Switch,
+  CheckboxGroupProps,
+  InputNumberProps,
   Slider,
   SliderProps,
-  InputNumberProps,
+  Switch,
   SwitchProps,
-  TextAreaProps,
-  CheckboxGroupProps,
   TreeSelect,
   TreeSelectProps,
 } from '@arco-design/web-react';
-import { ImageUploaderProps, ImageUploader } from './ImageUploader';
-import { UploadField as Uploader, UploadFieldProps } from './UploadField';
-import { Select, SelectProps } from './Select';
-import { RadioGroup, RadioGroupProps } from './RadioGroup';
-import enhancer from './enhancer';
-import { Input, InputProps } from './Input';
-import { InputWithUnit, InputWithUnitProps } from './InputWithUnit';
-import { CheckBoxGroup } from './CheckBoxGroup';
-import { EditTab, EditTabProps } from './EditTab';
-import { EditGridTab, EditGridTabProps } from './EditGridTab';
-import { InlineText, InlineTextProps } from './InlineTextField';
-import AutoComplete, { AutoCompleteProps } from './AutoComplete';
 import { InputSearchProps } from '@arco-design/web-react/es/Input';
+import AutoComplete, { AutoCompleteProps } from './AutoComplete';
+import { CheckBoxGroup } from './CheckBoxGroup';
 import { ColorPickerField } from './ColorPickerField';
+import { EditGridTab, EditGridTabProps } from './EditGridTab';
+import { EditTab, EditTabProps } from './EditTab';
+import { ImageUploader, ImageUploaderProps } from './ImageUploader';
+import { InlineText, InlineTextProps } from './InlineTextField';
+import { Input, InputProps } from './Input';
 import InputNumber from './InputNumber';
+import { InputWithUnit, InputWithUnitProps } from './InputWithUnit';
+import { RadioGroup, RadioGroupProps } from './RadioGroup';
+import { RangeSlider, RangeSliderProps } from './RangeSlider';
+import { Select, SelectProps } from './Select';
+import { UploadFieldProps, UploadField as Uploader } from './UploadField';
+import enhancer from './enhancer';
 
 export { RichTextField } from './RichTextField';
 
@@ -65,6 +65,8 @@ export const EditTabField = enhancer<EditTabProps>(EditTab, (e: any[]) => e);
 export const EditGridTabField = enhancer<EditGridTabProps>(EditGridTab, (e: any[]) => e);
 
 export const InlineTextField = enhancer<InlineTextProps>(InlineText, value => value);
+
+export const RangeSliderField = enhancer<RangeSliderProps>(RangeSlider, value => value);
 
 export { ColorPickerField };
 

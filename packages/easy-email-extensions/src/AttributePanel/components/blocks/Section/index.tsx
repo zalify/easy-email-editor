@@ -1,16 +1,11 @@
-import React, { useCallback } from 'react';
-import { Padding } from '@extensions/AttributePanel/components/attributes/Padding';
-import { Background } from '@extensions/AttributePanel/components/attributes/Background';
-import { Border } from '@extensions/AttributePanel/components/attributes/Border';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
-import { Collapse, Grid, Space, Switch } from '@arco-design/web-react';
-import { Stack, useBlock, useFocusIdx } from 'easy-email-editor';
-import { BasicType, BlockManager } from 'easy-email-core';
-import { ClassName } from '../../attributes/ClassName';
-import { CollapseWrapper } from '../../attributes/CollapseWrapper';
+import { Background } from '@extensions/AttributePanel/components/attributes/Background';
+import { Padding } from '@extensions/AttributePanel/components/attributes/Padding';
 import { BlockStack } from '@shopify/polaris';
+import { BasicType, BlockManager } from 'easy-email-core';
+import { useBlock, useFocusIdx } from 'easy-email-editor';
+import React, { useCallback } from 'react';
 import Collapsible from '../../UI/Collapsible';
-import { BorderColor, BorderWidth } from '../../attributes';
 
 export function Section() {
   const { focusBlock, setFocusBlock } = useBlock();
@@ -20,7 +15,7 @@ export function Section() {
   const noWrap = focusBlock?.data.value.noWrap;
 
   const onChange = useCallback(
-    checked => {
+    (checked: boolean) => {
       if (!focusBlock) return;
       focusBlock.data.value.noWrap = checked;
       if (checked) {

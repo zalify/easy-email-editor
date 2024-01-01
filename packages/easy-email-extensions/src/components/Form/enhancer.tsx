@@ -116,7 +116,6 @@ export default function enhancer<P extends { onChange?: (...rest: any) => any }>
         >
           {({ input: { onBlur, onChange, value }, meta }) => {
             // eslint-disable-next-line react-hooks/exhaustive-deps
-
             const debounceCallbackChange = useCallback(
               debounce(
                 val => {
@@ -171,8 +170,8 @@ export default function enhancer<P extends { onChange?: (...rest: any) => any }>
                 help={meta.touched && meta.error ? meta.error : helpText}
               >
                 <Component
-                  autoComplete={autoComplete}
                   {...rest}
+                  autoComplete={autoComplete}
                   name={name}
                   checked={currentValue}
                   value={currentValue}

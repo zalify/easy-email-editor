@@ -1,19 +1,19 @@
-import React from 'react';
 import { useFocusIdx } from 'easy-email-editor';
-import { InputWithUnitField } from '../../../components/Form';
+import React from 'react';
+import { RangeSliderField } from '../../../components/Form';
 import { pixelAdapter } from '../adapter';
 
 export function FontSize() {
   const { focusIdx } = useFocusIdx();
 
   return (
-    <InputWithUnitField
+    <RangeSliderField
       label='Font size'
       name={`${focusIdx}.attributes.font-size`}
       config={pixelAdapter}
-      suffix='px'
-      type='number'
       autoComplete='off'
+      output
+      showTextField
     />
   );
 }

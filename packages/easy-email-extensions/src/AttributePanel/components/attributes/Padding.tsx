@@ -13,7 +13,7 @@ import { useBlock, useFocusIdx } from 'easy-email-editor';
 import { get } from 'lodash';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { Form, useFormState } from 'react-final-form';
-import { NumberField } from '../../../components/Form';
+import { RangeSliderField } from '../../../components/Form';
 import { pixelAdapter } from '../adapter';
 
 export interface PaddingProps {
@@ -56,7 +56,6 @@ export function Padding(props: PaddingProps = {}) {
     const right = paddingList ? paddingList[1] : defaultPaddingList?.[1] || '';
     const bottom = paddingList ? paddingList[2] : defaultPaddingList?.[2] || '';
     const left = paddingList ? paddingList[3] : defaultPaddingList?.[3] || '';
-
     return {
       top,
       left,
@@ -65,7 +64,7 @@ export function Padding(props: PaddingProps = {}) {
     };
   }, [defaultPaddingValue, paddingValue]);
 
-  const onChancePadding = useCallback(
+  const onChangePadding = useCallback(
     (val: string) => {
       if (name) {
         change(name, val);
@@ -116,50 +115,59 @@ export function Padding(props: PaddingProps = {}) {
                   </Tooltip>
                 )}
               </InlineStack>
-
               <InlineGrid
                 columns={2}
                 gap='300'
               >
-                <NumberField
+                <RangeSliderField
                   label='Top'
                   name='top'
                   autoComplete='off'
                   config={pixelAdapter}
                   suffix='px'
+                  min={0}
+                  max={200}
+                  showTextField={false}
                 />
 
-                <NumberField
+                <RangeSliderField
                   label='Left'
                   name='left'
                   autoComplete='off'
                   config={pixelAdapter}
                   suffix='px'
+                  min={0}
+                  max={200}
+                  showTextField={false}
+                  output
                 />
-              </InlineGrid>
 
-              <InlineGrid
-                columns={2}
-                gap='300'
-              >
-                <NumberField
+                <RangeSliderField
                   label='Bottom'
                   name='bottom'
                   config={pixelAdapter}
                   autoComplete='off'
                   suffix='px'
+                  min={0}
+                  max={200}
+                  showTextField={false}
+                  output
                 />
 
-                <NumberField
-                  label='px'
+                <RangeSliderField
+                  label='Right'
                   name='right'
                   autoComplete='off'
                   config={pixelAdapter}
                   suffix='px'
+                  min={0}
+                  max={200}
+                  showTextField={false}
+                  output
                 />
               </InlineGrid>
             </BlockStack>
-            <PaddingChangeWrapper onChange={onChancePadding} />
+            <PaddingChangeWrapper onChange={onChangePadding} />
           </>
         );
       }}

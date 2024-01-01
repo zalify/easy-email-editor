@@ -38,13 +38,15 @@ export const RadioGroup = (props: RadioGroupProps) => {
         id={option.value}
         checked={option.value === props.value}
         onChange={handleChange}
+        value={props.value}
       />
     ));
-  }, [handleChange, props.options, props.value]);
+  }, [handleChange, props]);
 
   if (props.vertical) {
     return <BlockStack>{optionsMarkup}</BlockStack>;
   }
+
   return (
     <InlineStack
       blockAlign='center'

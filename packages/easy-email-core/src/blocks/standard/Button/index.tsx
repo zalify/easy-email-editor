@@ -55,6 +55,7 @@ export const Button = createBlock<IButton>({
         color: '#ffffff',
         'font-weight': 'normal',
         'border-radius': '3px',
+        'font-size': '12px',
         padding: '10px 25px 10px 25px',
         'inner-padding': '10px 25px 10px 25px',
         'line-height': '120%',

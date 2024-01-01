@@ -1,19 +1,21 @@
-import React from 'react';
-import { InputWithUnitField } from '../../../components/Form';
 import { useFocusIdx } from 'easy-email-editor';
+import React from 'react';
+import { RangeSliderField } from '../../../components/Form';
 import { percentAdapter } from '../adapter/percent.adapter';
 
 export function LineHeight({ name }: { name?: string }) {
   const { focusIdx } = useFocusIdx();
 
   return (
-    <InputWithUnitField
-      label={t('Line height')}
+    <RangeSliderField
+      label='Line height'
       name={name || `${focusIdx}.attributes.line-height`}
       config={percentAdapter}
       autoComplete='off'
       suffix='%'
-      type='number'
+      max={300}
+      showTextField
+      // type='number'
     />
   );
 }

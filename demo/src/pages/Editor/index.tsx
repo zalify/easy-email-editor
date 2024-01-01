@@ -68,8 +68,6 @@ import { Uploader } from '@demo/utils/Uploader';
 import axios from 'axios';
 import enUS from '@arco-design/web-react/es/locale/en-US';
 
-console.log(localesData);
-
 const defaultCategories: ExtensionProps['categories'] = [
   {
     label: 'Content',

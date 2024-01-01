@@ -27,10 +27,7 @@ export function Divider() {
       </Collapsible>
 
       <Collapsible title='Border'>
-        <InlineGrid
-          columns={2}
-          gap='300'
-        >
+        <InlineGrid columns={1}>
           <BorderWidth />
           <BorderStyle />
         </InlineGrid>

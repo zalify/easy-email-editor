@@ -45,14 +45,8 @@ export function Button() {
 
       <Collapsible title='Dimension'>
         <BlockStack gap='300'>
-          <InlineGrid
-            columns={2}
-            gap='300'
-          >
-            <Width />
-            <FontWeight />
-          </InlineGrid>
-
+          <Width />
+          <FontWeight />
           <Padding
             title={t('Padding')}
             attributeName='padding'
@@ -80,18 +74,20 @@ export function Button() {
 
       <Collapsible title='Typography'>
         <BlockStack gap='300'>
-          <InlineGrid
-            gap='300'
-            columns={2}
-          >
-            <FontFamily />
-            <FontSize />
-            <FontWeight />
-            <LineHeight />
-            <TextDecoration />
-            <LetterSpacing />
-          </InlineGrid>
-          <Align align='space-between' />
+          <FontFamily />
+          <FontSize />
+          {/* <NewFontSize
+              label='Font size'
+              name={`${focusIdx}.attributes.font-size`}
+              config={pixelAdapter}
+              suffix='px'
+              output
+            /> */}
+          <FontWeight />
+          <LineHeight />
+          <TextDecoration />
+          <LetterSpacing />
+          <Align />
           <FontStyle gap='1000' />
         </BlockStack>
       </Collapsible>

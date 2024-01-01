@@ -1,25 +1,25 @@
 import { useFocusIdx } from 'easy-email-editor';
 import React, { useMemo } from 'react';
-import { TextField } from '../../../components/Form';
+import { RangeSliderField } from '../../../components/Form';
 import { pixelAdapter } from '../adapter';
-import { InlineStack } from '@shopify/polaris';
 
-export function Height() {
+export function Height({ min = 100, max = 800 }) {
   const { focusIdx } = useFocusIdx();
 
   return useMemo(() => {
     return (
-      <InlineStack>
-        <TextField
-          label={t('Height')}
-          type='number'
-          suffix='px'
-          name={`${focusIdx}.attributes.height`}
-          // quickchange
-          config={pixelAdapter}
-          autoComplete='off'
-        />
-      </InlineStack>
+      <RangeSliderField
+        label={t('Height')}
+        // type='number'
+        suffix='px'
+        name={`${focusIdx}.attributes.height`}
+        // quickchange
+        config={pixelAdapter}
+        autoComplete='off'
+        min={min}
+        max={max}
+        showTextField
+      />
     );
-  }, [focusIdx]);
+  }, [focusIdx, max, min]);
 }
