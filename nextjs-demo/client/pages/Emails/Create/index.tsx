@@ -1,18 +1,9 @@
-import {
-  Avatar,
-  Button,
-  Card,
-  Layout,
-  PageHeader,
-  Space,
-  Typography,
-} from '@arco-design/web-react';
+import { Card, Layout, PageHeader, Typography } from '@arco-design/web-react';
 import { useRouter } from 'next/router';
 import { EmailPreviewModal } from './EmailPreviewModal';
 import styles from './index.module.css';
 import template1 from './templates/template1.json';
 import template2 from './templates/template2.json';
-import template3 from './templates/template3.json';
 import template4 from './templates/template4.json';
 import template5 from './templates/template5.json';
 import template6 from './templates/template6.json';
@@ -22,7 +13,6 @@ import template8 from './templates/template8.json';
 const list = [
   template1,
   template2,
-  template3,
   template4,
   template5,
   template6,

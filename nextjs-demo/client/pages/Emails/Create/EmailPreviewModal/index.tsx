@@ -9,6 +9,8 @@ import styles from './index.module.less';
 import { IEmailTemplate } from 'easy-email-editor';
 import { JsonToMjml } from 'easy-email-core';
 import { useCreateEmailTemplateMutation } from '@/client/hooks';
+import { Liquid } from 'liquidjs';
+import { testMergeTags } from '../../Editor/testMergeTags';
 
 const grid = '2vw';
 const MOBILE_WIDTH = 375;
@@ -119,7 +121,11 @@ function EmailItem({ item, isMobile }: { item: IEmailTemplate; isMobile: boolean
       data: item.content,
       mode: 'production',
     });
-    setHtml(mjml(mjmlStr).html);
+
+    const engine = new Liquid();
+    const tpl = engine.parse(mjml(mjmlStr).html);
+
+    setHtml(engine.renderSync(tpl, testMergeTags));
   }, [item.content]);
 
   return (

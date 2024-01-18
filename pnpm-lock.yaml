@@ -7,6 +7,7 @@ specifiers:
   '@types/lodash': ^4.14.191
   '@types/node': ^18.8.4
   '@typescript-eslint/eslint-plugin': ^5.22.0
+  cloudinary: ^1.41.2
   dotenv: ^16.0.3
   easy-localized-translation: ^1.1.0
   file-saver: ^2.0.5
@@ -17,6 +18,7 @@ specifiers:
 dependencies:
   '@sendgrid/mail': 7.7.0
   '@types/file-saver': 2.0.5
+  cloudinary: 1.41.2
   easy-localized-translation: 1.1.0_@types+node@18.17.5
   file-saver: 2.0.5
   lerna: 4.0.0
@@ -1594,6 +1596,24 @@ packages:
     engines: {node: '>=0.8'}
     dev: false
 
+  /cloudinary-core/2.13.0_lodash@4.17.21:
+    resolution: {integrity: sha512-Nt0Q5I2FtenmJghtC4YZ3MZZbGg1wLm84SsxcuVwZ83OyJqG9CNIGp86CiI6iDv3QobaqBUpOT7vg+HqY5HxEA==}
+    peerDependencies:
+      lodash: '>=4.0'
+    dependencies:
+      lodash: 4.17.21
+    dev: false
+
+  /cloudinary/1.41.2:
+    resolution: {integrity: sha512-9gH6ofz+N8AzfjqtmTgB9lVxwWcroHFfMOOM6iiX/g1H+KYz+sArClXWtd0prRE6m/IoBBBbbaJ12yRdJNnMxA==}
+    engines: {node: '>=0.6'}
+    dependencies:
+      cloudinary-core: 2.13.0_lodash@4.17.21
+      core-js: 3.35.0
+      lodash: 4.17.21
+      q: 1.5.1
+    dev: false
+
   /cmd-shim/4.1.0:
     resolution: {integrity: sha512-lb9L7EM4I/ZRVuljLPEtUJOP+xiQVknZ4ZMpMgEp4JzNldPb27HU03hi6K1/6CoIuit/Zm/LQXySErFeXxDprw==}
     engines: {node: '>=10'}
@@ -1757,6 +1777,11 @@ packages:
       git-semver-tags: 4.1.1
       meow: 8.1.2
       q: 1.5.1
+    dev: false
+
+  /core-js/3.35.0:
+    resolution: {integrity: sha512-ntakECeqg81KqMueeGJ79Q5ZgQNR+6eaE8sxGCx62zMbAIj65q+uYvatToew3m6eAGdU4gNZwpZ34NMe4GYswg==}
+    requiresBuild: true
     dev: false
 
   /core-util-is/1.0.2:

@@ -19,6 +19,7 @@
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",
     "@types/file-saver": "^2.0.5",
+    "cloudinary": "^1.41.2",
     "easy-localized-translation": "^1.1.0",
     "file-saver": "^2.0.5",
     "lerna": "^4.0.0",

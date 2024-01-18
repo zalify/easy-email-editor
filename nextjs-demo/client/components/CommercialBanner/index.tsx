@@ -32,7 +32,7 @@ export const CommercialBanner = ({ page }: { page: 'HOME' | 'EDITOR' }) => {
       content={
         <div>
           <div>
-            Is the current Easy Email not meeting <strong>your requirements</strong> ?
+            Is the current Easy Email not meeting <strong>your requirements</strong>?
             <span>
               {showLiveChat ? (
                 <>
@@ -40,6 +40,7 @@ export const CommercialBanner = ({ page }: { page: 'HOME' | 'EDITOR' }) => {
                     onClick={() => {
                       pushEvent({ event: `view_at_${page}` });
                     }}
+                    target='_blank'
                     href='https://www.easyemail.pro?utm_source=easyemail'
                     style={{ fontSize: 16 }}
                   >
@@ -48,7 +49,7 @@ export const CommercialBanner = ({ page }: { page: 'HOME' | 'EDITOR' }) => {
                 </>
               ) : (
                 <>
-                  Contact us for more information. Email:{' '}
+                  &nbsp;Contact us for more information. Email:{' '}
                   <a
                     onClick={() => {
                       pushEvent({ event: `Contact_at_${page}` });
