@@ -32,38 +32,21 @@ export const CommercialBanner = ({ page }: { page: 'HOME' | 'EDITOR' }) => {
       content={
         <div>
           <div>
-            Is the current Easy Email not meeting <strong>your requirements</strong>?
-            <span>
-              {showLiveChat ? (
-                <>
-                  <a
-                    onClick={() => {
-                      pushEvent({ event: `view_at_${page}` });
-                    }}
-                    target='_blank'
-                    href='https://www.easyemail.pro?utm_source=easyemail'
-                    style={{ fontSize: 16 }}
-                  >
-                    <strong> Check commercial version</strong>
-                  </a>
-                </>
-              ) : (
-                <>
-                  &nbsp;Contact us for more information. Email:{' '}
-                  <a
-                    onClick={() => {
-                      pushEvent({ event: `Contact_at_${page}` });
-                    }}
-                    target='_blank'
-                    href='mailto:ch.mao@qq.com'
-                    style={{ fontSize: 16 }}
-                  >
-                    <strong>ch.mao@qq.com</strong>
-                  </a>
-                  .
-                </>
-              )}
-            </span>
+            <strong>
+              Celebrate the Spring Festival with us! Business Edition Email Editor on sale
+              - Enjoy 50% off Premium and Enterprise plans. Don't miss out on this
+              limited-time offer!&nbsp;
+              <a
+                onClick={() => {
+                  pushEvent({ event: `view_at_${page}` });
+                }}
+                target='_blank'
+                href='https://www.easyemail.pro?utm_source=easyemail'
+                style={{ fontSize: 16 }}
+              >
+                Get Started Now!
+              </a>
+            </strong>
           </div>
         </div>
       }

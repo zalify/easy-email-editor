@@ -231,9 +231,18 @@ export default function App() {
                         alt='Buy Me A Coffee'
                       />
                     </a>
+
+                    <Button
+                      target='_blank'
+                      type='primary'
+                      status='success'
+                      loading={updateLoading}
+                      onClick={submit}
+                    >
+                      <strong>Save</strong>
+                    </Button>
                     {featureEnabled && (
                       <Button
-                        status='success'
                         type='primary'
                         target='_blank'
                         href='https://www.easyemail.pro?utm_source=easyemail'
@@ -241,15 +250,6 @@ export default function App() {
                         Try commercial version
                       </Button>
                     )}
-
-                    <Button
-                      target='_blank'
-                      type='primary'
-                      loading={updateLoading}
-                      onClick={submit}
-                    >
-                      <strong>Save</strong>
-                    </Button>
                   </Stack>
                 }
               />

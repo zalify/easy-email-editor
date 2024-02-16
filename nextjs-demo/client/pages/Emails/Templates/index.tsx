@@ -171,22 +171,21 @@ function Index() {
               title='Emails'
               extra={
                 <Space>
+                  <Button
+                    status='success'
+                    type='primary'
+                    href={`/emails/create`}
+                  >
+                    Create Template
+                  </Button>
                   {featureEnabled && (
                     <Button
-                      status='success'
                       type='primary'
                       href='https://demo.easyemail.pro?utm_source=trypro'
                     >
                       Try commercial version
                     </Button>
                   )}
-
-                  <Button
-                    type='primary'
-                    href={`/emails/create`}
-                  >
-                    Create Template
-                  </Button>
                 </Space>
               }
             />
