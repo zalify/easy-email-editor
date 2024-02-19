@@ -45,7 +45,7 @@ Check out the live demo here: <a href="https://email.maocanhua.cn/?utm_source=gi
 
 ## Advanced Version Announcement
 
-We are delighted to announce that we now have a more powerful and customizable commercial version available. Check it out here <a href="https://demo.easyemail.pro/full?utm_source=github" target="_blank" alt="https://demo.easyemail.pro/full?utm_source=github">https://demo.easyemail.pro</a>.
+We are delighted to announce that we now have a more powerful and customizable commercial version available. <a href="https://demo.easyemail.pro/full?utm_source=github" target="_blank">Check it out here </a>.
 
 If you are interested, feel free to contact us at ch.mao@qq.com.
 
