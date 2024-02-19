@@ -22,13 +22,6 @@
   </a>
 </p>
 
-## Join Our Community
-
-<a aria-label="Join Easy Email Discord Community" href="https://discord.gg/bqrAE2zCjn">
-  <img src="./join_discord.png" width="240">
-</a>
-
-
 ## Introduction
 
 Easy email is developed based on the [MJML](https://mjml.io/) and has very good compatibility. At the same time, it can generate code through drag-and-drop editing.
@@ -50,8 +43,11 @@ Easy email is developed based on the [MJML](https://mjml.io/) and has very good 
 
 Check out the live demo here: <a href="https://email.maocanhua.cn/?utm_source=github" target="_blank" alt="https://email.maocanhua.cn/?utm_source=github">https://email.maocanhua.cn</a>
 
-## Custom Services
-For customized features or paid consultation services, please contact ch.mao@qq.com.
+## Advanced Version Announcement
+
+We are delighted to announce that we now have a more powerful and customizable commercial version available. Check it out here <a href="https://demo.easyemail.pro/full?utm_source=github" target="_blank" alt="https://demo.easyemail.pro/full?utm_source=github">https://demo.easyemail.pro</a>.
+
+If you are interested, feel free to contact us at ch.mao@qq.com.
 
 ## Getting started
 
@@ -113,13 +109,12 @@ export default function App() {
 
 ```
 
-
 ## Examples
 
 > Vite: <a href="https://github.com/m-Ryan/easy-email-demo" target="_blank" alt="https://github.com/m-Ryan/easy-email-demo">https://github.com/m-Ryan/easy-email-demo</a>
 
 > Nextjs: <a href="https://github.com/m-Ryan/easy-email-nextjs-demo" target="_blank" alt="https://github.com/m-Ryan/easy-email-nextjs-demo">https://github.com/m-Ryan/easy-email-nextjs-demo</a>
- 
+
 </br>
 
 ## Configuration
@@ -150,7 +145,6 @@ export default function App() {
 | delete/backspace  | delete block                                                                                      |
 | tab / shift + tab | fast select block, if block is focusing,`tab` select next block & `shift + tab` select prev block |
 
-
 ## How does it work?
 
 <img alt="" src="./work.png">
@@ -172,13 +166,13 @@ $ git clone git@github.com:zalify/easy-email.git
 $ cd easy-email
 
 
-$ yarn  
+$ yarn
 $ yarn install-all
 $ yarn dev
 
 ```
-`If you need some new features, we always welcome you to submit a PR.`
 
+`If you need some new features, we always welcome you to submit a PR.`
 
 ## License
 
