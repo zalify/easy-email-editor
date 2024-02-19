@@ -26,7 +26,7 @@
 
 ## Pro Version Announcement
 
-We are delighted to announce that we now have a more powerful and customizable commercial version available. <a href="https://demo.easyemail.pro/full?utm_source=github" target="_blank">Check it out here </a>.
+We are delighted to announce that we now have a more powerful and customizable commercial version available. <a href="https://www.easyemail.pro/?utm_source=github" target="_blank">Check it out here </a>.
 
 If you are interested, feel free to contact us at ch.mao@qq.com.
 
