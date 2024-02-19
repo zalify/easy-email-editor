@@ -22,6 +22,16 @@
   </a>
 </p>
 
+---
+
+## Pro Version Announcement
+
+We are delighted to announce that we now have a more powerful and customizable commercial version available. <a href="https://demo.easyemail.pro/full?utm_source=github" target="_blank">Check it out here </a>.
+
+If you are interested, feel free to contact us at ch.mao@qq.com.
+
+---
+
 ## Introduction
 
 Easy email is developed based on the [MJML](https://mjml.io/) and has very good compatibility. At the same time, it can generate code through drag-and-drop editing.
@@ -42,12 +52,6 @@ Easy email is developed based on the [MJML](https://mjml.io/) and has very good 
 ## Live Demo
 
 Check out the live demo here: <a href="https://email.maocanhua.cn/?utm_source=github" target="_blank" alt="https://email.maocanhua.cn/?utm_source=github">https://email.maocanhua.cn</a>
-
-## Advanced Version Announcement
-
-We are delighted to announce that we now have a more powerful and customizable commercial version available. <a href="https://demo.easyemail.pro/full?utm_source=github" target="_blank">Check it out here </a>.
-
-If you are interested, feel free to contact us at ch.mao@qq.com.
 
 ## Getting started
 
