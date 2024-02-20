@@ -53,7 +53,7 @@ Easy email is developed based on the [MJML](https://mjml.io/) and has very good 
 
 Check out the live demo here: <a href="https://email.maocanhua.cn/?utm_source=github" target="_blank" alt="https://email.maocanhua.cn/?utm_source=github">email.maocanhua.cn</a>
 
-Pro Version live demo here: <a href="https://demo.easyemail.pro/?utm_source=github-live" target="_blank">demo.easyemail.pro</a>.
+Pro version live demo here: <a href="https://demo.easyemail.pro/?utm_source=github-live" target="_blank">demo.easyemail.pro</a>.
 
 
 ## Getting started
