@@ -23,8 +23,6 @@ export const CommercialBanner = ({ page }: { page: 'HOME' | 'EDITOR' }) => {
   if (!visible || !featureEnabled) return null;
   return (
     <Alert
-      closable
-      onClose={() => setVisible(false)}
       style={{
         alignItems: 'flex-start',
       }}
@@ -33,9 +31,8 @@ export const CommercialBanner = ({ page }: { page: 'HOME' | 'EDITOR' }) => {
         <div>
           <div>
             <strong>
-              Celebrate the Spring Festival with us! Business Edition Email Editor on sale
-              - Enjoy 50% off Premium and Enterprise plans. Don't miss out on this
-              limited-time offer!&nbsp;
+              Business Edition Email Editor on sale - Enjoy 50% off Premium and Enterprise
+              plans. Don't miss out on this limited-time offer!&nbsp;
               <a
                 onClick={() => {
                   pushEvent({ event: `view_at_${page}` });
