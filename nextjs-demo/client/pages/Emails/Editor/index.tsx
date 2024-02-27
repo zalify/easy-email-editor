@@ -245,7 +245,7 @@ export default function App() {
                       <Button
                         type='primary'
                         target='_blank'
-                        href='https://www.easyemail.pro?utm_source=easyemail'
+                        href='https://demo.easyemail.pro?utm_source=easyemail'
                       >
                         Try commercial version
                       </Button>

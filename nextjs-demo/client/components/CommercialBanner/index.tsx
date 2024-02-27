@@ -38,7 +38,7 @@ export const CommercialBanner = ({ page }: { page: 'HOME' | 'EDITOR' }) => {
                   pushEvent({ event: `view_at_${page}` });
                 }}
                 target='_blank'
-                href='https://www.easyemail.pro?utm_source=easyemail'
+                href='https://demo.easyemail.pro/full?utm_source=easyemail'
                 style={{ fontSize: 16 }}
               >
                 Get Started Now!
