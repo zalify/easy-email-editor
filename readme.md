@@ -53,6 +53,9 @@ Check out the live demo here: <a href="https://email.maocanhua.cn/?utm_source=gi
 
 Pro version live demo here: <a href="https://demo.easyemail.pro/full?utm_source=github-live" target="_blank">demo.easyemail.pro</a>.
 
+## Related Project
+[smart-mjml](https://github.com/Easy-Email-Pro/smart-mjml)
+
 
 ## Getting started
 
