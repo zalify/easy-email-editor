@@ -26,9 +26,7 @@
 
 ## Pro Version Announcement
 
-We are delighted to announce that we now have a more powerful and customizable commercial version available. <a href="https://github.com/Easy-Email-Pro/easy-email-pro" target="_blank">Check it out here </a>.
-
-If you are interested, feel free to contact us at ch.mao@qq.com.
+We are delighted to announce that we now have a more powerful and customizable commercial version available. <a href="https://www.easyemail.pro/?utm_source=github" target="_blank">Check it out here </a>.
 
 ---
 
@@ -52,9 +50,6 @@ Easy email is developed based on the [MJML](https://mjml.io/) and has very good 
 Check out the live demo here: <a href="https://email.maocanhua.cn/?utm_source=github" target="_blank" alt="https://email.maocanhua.cn/?utm_source=github">email.maocanhua.cn</a>
 
 Pro version live demo here: <a href="https://demo.easyemail.pro/full?utm_source=github-live" target="_blank">demo.easyemail.pro</a>.
-
-## Related Project
-[smart-mjml](https://github.com/Easy-Email-Pro/smart-mjml)
 
 
 ## Getting started
