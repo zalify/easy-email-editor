@@ -19,7 +19,7 @@ export function IconFont(props: {
         pointerEvents: 'auto',
         color: 'inherit',
         ...(props.style as any),
-        fontSize: props.size || props.style?.fontSize,
+        fontSize: props.size || (props.style as any)?.fontSize,
       }}
       className={classnames('iconfont', props.iconName)}
     />

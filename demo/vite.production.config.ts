@@ -20,7 +20,7 @@ export default defineConfig({
   build: {
     minify: true,
     manifest: true,
-    sourcemap: true,
+    sourcemap: false,
     target: 'es2015',
     rollupOptions: {
       output: {
@@ -34,6 +34,16 @@ export default defineConfig({
           if (/\/node_modules\/mjml-browser\/.*/.test(id)) {
             return 'mjml-browser';
           }
+        },
+        chunkFileNames(info) {
+          if (
+            ['mjml-browser', 'html2canvas', 'browser-image-compression'].some(name =>
+              info.name?.includes(name),
+            )
+          ) {
+            return '[name].js';
+          }
+          return '[name]-[hash].js';
         },
       },
     },

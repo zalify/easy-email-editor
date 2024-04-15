@@ -10,7 +10,7 @@ export default createSliceState({
     set: (state, action) => state,
   },
   effects: {
-    fetch: async (state) => {
+    fetch: async state => {
       let provideUserData: IArticle[] = [];
       // if (USER.provideUserId && USER.provideCategoryId) {
       //   // Provided template
@@ -24,13 +24,7 @@ export default createSliceState({
       // }
 
       // user data
-      const data2 = await article.getArticleList({
-        userId: (await UserStorage.getAccount()).user_id,
-        categoryId: USER.categoryId,
-        page: 1,
-        size: 1000,
-      });
-      const list = [...provideUserData, ...data2.list];
+      const list = [...provideUserData];
       list.sort((a, b) => (a.updated_at > b.updated_at ? -1 : 1));
       return list;
     },
