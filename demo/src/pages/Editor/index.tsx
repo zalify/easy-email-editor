@@ -68,6 +68,8 @@ import { Uploader } from '@demo/utils/Uploader';
 import axios from 'axios';
 import enUS from '@arco-design/web-react/es/locale/en-US';
 
+import { useShowCommercialEditor } from '@demo/hooks/useShowCommercialEditor';
+
 console.log(localesData);
 
 const defaultCategories: ExtensionProps['categories'] = [
@@ -193,6 +195,7 @@ const fontList = [
 ].map(item => ({ value: item, label: item }));
 
 export default function Editor() {
+  const { featureEnabled } = useShowCommercialEditor();
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [theme, setTheme] = useState<'blue' | 'green' | 'purple'>('blue');
   const dispatch = useDispatch();
@@ -515,7 +518,7 @@ export default function Editor() {
         <style>{themeStyleText}</style>
         <EmailEditorProvider
           key={id}
-          height={'calc(100vh - 68px)'}
+          height={featureEnabled ? 'calc(100vh - 108px)' : 'calc(100vh - 68px)'}
           data={initialValues}
           // interactiveStyle={{
           //   hoverColor: '#78A349',
@@ -633,8 +636,11 @@ export default function Editor() {
                           <strong>Export</strong>
                         </Button>
                       </Dropdown>
-                      <Button onClick={() => setVisible(true)}>
-                        <strong>Try responsive editor</strong>
+                      <Button
+                        target='_blank'
+                        href='https://github.com/m-Ryan'
+                      >
+                        <strong>Commercial Editor</strong>
                       </Button>
                       <a
                         href='https://www.buymeacoffee.com/easyemail?utm_source=webside&utm_medium=button&utm_content=donate'
@@ -662,6 +668,7 @@ export default function Editor() {
                     </Stack>
                   }
                 />
+
                 <StandardLayout
                   compact={!smallScene}
                   categories={defaultCategories}

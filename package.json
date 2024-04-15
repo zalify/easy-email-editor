@@ -9,6 +9,7 @@
     "build:extensions": "cd packages/easy-email-extensions && yarn build",
     "dev": "cd demo && yarn dev",
     "demo": "cd demo && yarn build",
+    "demo2": "cd nextjs-demo && yarn build",
     "test": "yarn test:core && yarn test:extensions",
     "test:core": "cd packages/easy-email-core && yarn test",
     "test:extensions": "cd packages/easy-email-extensions && yarn test",
@@ -18,10 +19,12 @@
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",
     "@types/file-saver": "^2.0.5",
+    "cloudinary": "^1.41.2",
     "easy-localized-translation": "^1.1.0",
     "file-saver": "^2.0.5",
     "lerna": "^4.0.0",
-    "liquidjs": "^9.34.1"
+    "liquidjs": "^9.34.1",
+    "posthog-js": "^1.76.0"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.1",
