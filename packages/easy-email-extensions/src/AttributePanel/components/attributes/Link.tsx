@@ -1,11 +1,16 @@
 import React, { useMemo } from 'react';
-import { useFocusIdx } from 'easy-email-editor';
+import { useFocusIdx, IconFont } from 'easy-email-editor';
 import { IconLink } from '@arco-design/web-react/icon';
 import { SelectField, TextField } from '../../../components/Form';
-import { Grid } from '@arco-design/web-react';
+import { Grid, Popover, Space, Button as ArcoButton } from '@arco-design/web-react';
+import { MergeTags } from './MergeTags';
+import { useField } from 'react-final-form';
 
 export function Link() {
   const { focusIdx } = useFocusIdx();
+  const { input } = useField(`${focusIdx}.attributes.href`, {
+    parse: v => v,
+  });
 
   return useMemo(() => {
     return (
@@ -13,11 +18,32 @@ export function Link() {
         <Grid.Col span={11}>
           <TextField
             prefix={<IconLink />}
-            label={<span>{t('Href')}&nbsp;&nbsp;&nbsp;</span>}
+            label={
+              <Space>
+                <span>{t('Href')}&nbsp;&nbsp;&nbsp;</span>
+                <Popover
+                  trigger='click'
+                  content={
+                    <MergeTags
+                      value={input.value}
+                      onChange={input.onChange}
+                    />
+                  }
+                >
+                  <ArcoButton
+                    type='text'
+                    icon={<IconFont iconName='icon-merge-tags' />}
+                  />
+                </Popover>
+              </Space>
+            }
             name={`${focusIdx}.attributes.href`}
           />
         </Grid.Col>
-        <Grid.Col offset={1} span={11}>
+        <Grid.Col
+          offset={1}
+          span={11}
+        >
           <SelectField
             label={t('Target')}
             name={`${focusIdx}.attributes.target`}
