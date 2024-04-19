@@ -2,11 +2,11 @@
   "name": "easy-email-editor",
   "license": "MIT",
   "description": "Email editor",
-  "version": "4.12.2",
+  "version": "4.16.0",
   "author": "m-Ryan",
   "repository": {
     "type": "git",
-    "url": "git@github.com:m-Ryan/easy-email.git"
+    "url": "git@github.com:zalify/easy-email.git"
   },
   "keywords": [
     "email editor core"

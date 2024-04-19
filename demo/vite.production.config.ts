@@ -20,7 +20,7 @@ export default defineConfig({
   build: {
     minify: true,
     manifest: true,
-    sourcemap: true,
+    sourcemap: false,
     target: 'es2015',
     rollupOptions: {
       output: {
@@ -36,7 +36,6 @@ export default defineConfig({
           }
         },
         chunkFileNames(info) {
-          console.log('info.name', info.name);
           if (
             ['mjml-browser', 'html2canvas', 'browser-image-compression'].some(name =>
               info.name?.includes(name),

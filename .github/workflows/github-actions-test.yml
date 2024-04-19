@@ -4,7 +4,6 @@ on: [push, pull_request]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -18,18 +17,23 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+          run_install: false
 
       - name: Install dependencies core
-        run: | 
-          cd packages/easy-email-core && yarn
+        run: |
+          cd packages/easy-email-core && pnpm install
 
       - name: Run tests core
-        run: yarn test:core
+        run: pnpm run test:core
 
       - name: Install dependencies extensions
         run: |
-          cd packages/easy-email-extensions && yarn
+          cd packages/easy-email-extensions && pnpm install
 
       - name: Run tests extensions
-        run: yarn test:extensions
+        run: pnpm run test:extensions
