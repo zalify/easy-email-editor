@@ -54,17 +54,17 @@ dependencies:
     specifier: ^1.11.9
     version: 1.11.10
   easy-email-core:
-    specifier: ^4.12.2
-    version: 4.12.2(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^4.16.0
+    version: 4.16.0(react-dom@18.2.0)(react@18.2.0)
   easy-email-editor:
-    specifier: ^4.12.2
-    version: 4.12.2(easy-email-core@4.12.2)(mjml-browser@4.14.1)(react-dom@18.2.0)(react-final-form@6.5.9)(react@18.2.0)
+    specifier: ^4.16.0
+    version: 4.16.0(easy-email-core@4.16.0)(mjml-browser@4.14.1)(react-dom@18.2.0)(react-final-form@6.5.9)(react@18.2.0)
   easy-email-extensions:
-    specifier: ^4.14.1
-    version: 4.14.1(@types/react@17.0.44)(easy-email-core@4.12.2)(easy-email-editor@4.12.2)(react-dom@18.2.0)(react-final-form@6.5.9)(react@18.2.0)
+    specifier: ^4.16.0
+    version: 4.16.0(@types/react@17.0.44)(easy-email-core@4.16.0)(easy-email-editor@4.16.0)(react-dom@18.2.0)(react-final-form@6.5.9)(react@18.2.0)
   easy-email-localization:
-    specifier: ^4.14.0
-    version: 4.14.0
+    specifier: ^4.15.0
+    version: 4.15.0
   file-saver:
     specifier: ^2.0.5
     version: 2.0.5
@@ -1224,8 +1224,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /easy-email-core@4.12.2(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-cfl09YInI4RYuNKhZJykQIMs22QbEYBo+BLtDcbiu2hBzJscPOLZ2mW0MQyhu0LJSiVkie+fmQLqmTXcmCCMfg==}
+  /easy-email-core@4.16.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-ItLAorzSitpSF16IjVnTY0Il4llQFO+Wp4lQmA+aXs2d8p327BghM3hp0rvHHL1HZ/CyAvX45W04AzVNOSfs/Q==}
     peerDependencies:
       react: ^18.2.0
       react-dom: ^18.2.0
@@ -1238,8 +1238,8 @@ packages:
       uuid: 8.3.2
     dev: false
 
-  /easy-email-editor@4.12.2(easy-email-core@4.12.2)(mjml-browser@4.14.1)(react-dom@18.2.0)(react-final-form@6.5.9)(react@18.2.0):
-    resolution: {integrity: sha512-DsGzjJtkxGaEVA+39d6uYd4TL5iUFiFvvq98ATmG+HJP8yvgBphEmGVJ6F8kduMewoEq17AYAwnrb29unvJWlQ==}
+  /easy-email-editor@4.16.0(easy-email-core@4.16.0)(mjml-browser@4.14.1)(react-dom@18.2.0)(react-final-form@6.5.9)(react@18.2.0):
+    resolution: {integrity: sha512-g3680OBipVNXRgUuxfFv9PpyQtt7YMNFSO0VbXziwPVzzvRMqOcb9K0Z7X6QvMHN/8rAiuDwxqG5c2HldF+4FQ==}
     peerDependencies:
       easy-email-core: ^4.3.6
       mjml-browser: ^4.10.4
@@ -1247,7 +1247,7 @@ packages:
       react-dom: ^18.2.0
       react-final-form: ^6.5.7
     dependencies:
-      easy-email-core: 4.12.2(react-dom@18.2.0)(react@18.2.0)
+      easy-email-core: 4.16.0(react-dom@18.2.0)(react@18.2.0)
       final-form: 4.20.10
       final-form-arrays: 3.1.0(final-form@4.20.10)
       final-form-set-field-touched: 1.0.1(final-form@4.20.10)
@@ -1261,8 +1261,8 @@ packages:
       react-use: 17.4.0(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
-  /easy-email-extensions@4.14.1(@types/react@17.0.44)(easy-email-core@4.12.2)(easy-email-editor@4.12.2)(react-dom@18.2.0)(react-final-form@6.5.9)(react@18.2.0):
-    resolution: {integrity: sha512-Ugptc5ivYeElO2HCf9lsCJ2WSEd+I2CyzdkCbCPhhj/d+DbxoN4SPyOIe7WfAwMmyKX6Qu/hxMBeB80bOdhiSA==}
+  /easy-email-extensions@4.16.0(@types/react@17.0.44)(easy-email-core@4.16.0)(easy-email-editor@4.16.0)(react-dom@18.2.0)(react-final-form@6.5.9)(react@18.2.0):
+    resolution: {integrity: sha512-W+40GAWXjnGlEyiklvkPDgjm4lEGbt9HKq9v+0mcSuDSf+npN/7uUeUTWkMhqXNZqSQthhpKITK1YFQnqFoDRg==}
     peerDependencies:
       easy-email-core: ^4.3.6
       easy-email-editor: ^4.3.6
@@ -1273,8 +1273,8 @@ packages:
       '@arco-design/web-react': 2.53.1(@types/react@17.0.44)(react-dom@18.2.0)(react@18.2.0)
       codemirror: 5.65.15
       color: 4.2.3
-      easy-email-core: 4.12.2(react-dom@18.2.0)(react@18.2.0)
-      easy-email-editor: 4.12.2(easy-email-core@4.12.2)(mjml-browser@4.14.1)(react-dom@18.2.0)(react-final-form@6.5.9)(react@18.2.0)
+      easy-email-core: 4.16.0(react-dom@18.2.0)(react@18.2.0)
+      easy-email-editor: 4.16.0(easy-email-core@4.16.0)(mjml-browser@4.14.1)(react-dom@18.2.0)(react-final-form@6.5.9)(react@18.2.0)
       final-form: 4.20.10
       final-form-arrays: 3.1.0(final-form@4.20.10)
       final-form-set-field-touched: 1.0.1(final-form@4.20.10)
@@ -1290,12 +1290,13 @@ packages:
       react-final-form: 6.5.9(final-form@4.20.10)(react@18.2.0)
       react-final-form-arrays: 3.1.4(final-form-arrays@3.1.0)(final-form@4.20.10)(react-final-form@6.5.9)(react@18.2.0)
       react-use: 17.4.0(react-dom@18.2.0)(react@18.2.0)
+      uuid: 9.0.1
     transitivePeerDependencies:
       - '@types/react'
     dev: false
 
-  /easy-email-localization@4.14.0:
-    resolution: {integrity: sha512-P0twk7V65gZkfelGXruX5XgTZWlksP5AlPZsvdFcdcoEiWQhQ3LUvQ3/z94irAQoUhBHGgZg+J+M1JNr6GxAIg==}
+  /easy-email-localization@4.15.0:
+    resolution: {integrity: sha512-uc1Ermu+5CqGXB+pk/3QWnrKBEXsEamt2yJv7p1NdFCcFb65L0UsQhO9A+UF3xLg8NIgb4sHdUlY2pFGIOMGMA==}
     dev: false
 
   /editorconfig@1.0.4:
@@ -3202,6 +3203,11 @@ packages:
   /uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
+
+  /uuid@9.0.1:
+    resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
+    hasBin: true
+    dev: false
 
   /uvu@0.5.3:
     resolution: {integrity: sha512-brFwqA3FXzilmtnIyJ+CxdkInkY/i4ErvP7uV0DnUVxQcQ55reuHphorpF+tZoVHK2MniZ/VJzI7zJQoc9T9Yw==}
