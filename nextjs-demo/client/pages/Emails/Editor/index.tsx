@@ -118,14 +118,12 @@ const defaultCategories: ExtensionProps['categories'] = [
 ];
 
 export default function App() {
-  const { width } = useWindowSize();
   const { featureEnabled } = useShowCommercialEditor();
   const { upload } = useUpload();
 
   const session = useSession();
   const user = session.data?.user;
 
-  const smallScene = width < 1400;
   const router = useRouter();
   const id = router.query.id;
 
@@ -186,12 +184,9 @@ export default function App() {
         onSubmit={onSubmit}
         onUploadImage={onUploadImage}
         fontList={fontList}
-        enabledLogic
-        // enabledMergeTagsBadge
         mergeTags={testMergeTags}
         mergeTagGenerate={tag => `{{${tag}}}`}
         onBeforePreview={onBeforePreview}
-        socialIcons={[]}
       >
         {({ values }, { submit, restart }) => {
           return (
@@ -203,35 +198,6 @@ export default function App() {
                 onBack={() => router.push('/')}
                 extra={
                   <Stack alignment='center'>
-                    <a
-                      href='https://www.buymeacoffee.com/easyemail?utm_source=webside&utm_medium=button&utm_content=donate'
-                      target='_blank'
-                      onClick={ev => {
-                        ev.preventDefault();
-                        pushEvent({
-                          event: 'Donate',
-                          payload: {
-                            user: user.email!,
-                          },
-                        });
-                        window.open(
-                          'https://www.buymeacoffee.com/easyemail?utm_source=webside&utm_medium=button&utm_content=donate',
-                          '_blank',
-                        );
-                      }}
-                    >
-                      <img
-                        style={{
-                          marginTop: -16,
-                          position: 'relative',
-                          top: 11,
-                          height: 32,
-                        }}
-                        src='https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png'
-                        alt='Buy Me A Coffee'
-                      />
-                    </a>
-
                     <Button
                       target='_blank'
                       type='primary'
@@ -255,7 +221,6 @@ export default function App() {
               />
               <CommercialBanner page='EDITOR' />
               <StandardLayout
-                compact={!smallScene}
                 showSourceCode={true}
                 categories={defaultCategories}
               >

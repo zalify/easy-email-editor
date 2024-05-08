@@ -26,7 +26,8 @@
 
 ## Pro Version Announcement
 
-We are delighted to announce that we now have a more powerful and customizable commercial version available. <a href="https://www.easyemail.pro/?utm_source=github" target="_blank">Check it out here </a>.
+We are delighted to announce that we now have a more powerful and customizable commercial version available. If it is for internal use only, then the open-source version is sufficient. However, if your editor is a critical feature, I recommend using the commercial version.
+<a href="https://www.easyemail.pro/?utm_source=github" target="_blank">Check it out here </a>.
 
 ---
 
@@ -68,7 +69,6 @@ import React from 'react';
 import { BlockManager, BasicType, AdvancedType } from 'easy-email-core';
 import { EmailEditor, EmailEditorProvider } from 'easy-email-editor';
 import { ExtensionProps, StandardLayout } from 'easy-email-extensions';
-import { useWindowSize } from 'react-use';
 
 import 'easy-email-editor/lib/style.css';
 import 'easy-email-extensions/lib/style.css';
@@ -83,9 +83,6 @@ const initialValues = {
 };
 
 export default function App() {
-  const { width } = useWindowSize();
-
-  const smallScene = width < 1400;
 
   return (
     <EmailEditorProvider
@@ -97,7 +94,6 @@ export default function App() {
       {({ values }) => {
         return (
           <StandardLayout
-            compact={!smallScene}
             showSourceCode={true}
           >
             <EmailEditor />
@@ -111,53 +107,23 @@ export default function App() {
 
 ```
 
-## Examples
-
-> Vite: <a href="https://github.com/m-Ryan/easy-email-demo" target="_blank" alt="https://github.com/m-Ryan/easy-email-demo">https://github.com/m-Ryan/easy-email-demo</a>
-
-> Nextjs: <a href="https://github.com/m-Ryan/easy-email-nextjs-demo" target="_blank" alt="https://github.com/m-Ryan/easy-email-nextjs-demo">https://github.com/m-Ryan/easy-email-nextjs-demo</a>
-
 </br>
 
 ## Configuration
 
-| property           | Type                                                                                               | Description                                                                                                                          |
-| ------------------ | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| height             | string / number                                                                                    | Set the height of the container                                                                                                      |
-| data               | interface IEmailTemplate { content: IPage; subject: string; subTitle: string; }                    | Source data                                                                                                                          |
-| children           | ( props: FormState<T>,helper: FormApi<IEmailTemplate, Partial<IEmailTemplate>>) => React.ReactNode | ReactNode                                                                                                                            |
-| onSubmit           | Config<IEmailTemplate, Partial<IEmailTemplate>>['onSubmit'];                                       | Called when the commit is triggered manually                                                                                         |
-| fontList           | { value: string; label: string; }[];                                                               | Default font list.                                                                                                                   |
-| interactiveStyle   | { hoverColor?: string; selectedColor?: string;}                                                    | Interactive prompt color                                                                                                             |
-| onUploadImage      | (data: Blob) => Promise<string>;                                                                   | Triggered when an image is pasted or uploaded                                                                                        |
-| onAddCollection    | (payload: CollectedBlock) => void;                                                                 | Add to collection list                                                                                                               |
-| onRemoveCollection | (payload: { id: string; }) => void;                                                                | Remove from collection list                                                                                                          |
-| dashed             | boolean                                                                                            | Show dashed                                                                                                                          |
-| autoComplete       | boolean                                                                                            | Automatically complete missing blocks. For example, Text => Section, will generate Text=>Column=>Section                             |
-| mergeTags          | Object                                                                                             | A merge tag is a bit of specific code that allows you to insert dynamic data into emails. Like `{{user.name}}`, and used for preview |
-| previewInjectData  | Object                                                                                             | Dynamic data for preview, it will overwrite mergeTags.                                                                               |
-| onBeforePreview    | (html: string, mergeTags: PropsProviderProps['mergeTags']) => string                               | Promise<string> You can replace mergeTags when previewing.                                                                           |
-
-## Hotkeys
-
-| hotkey            | Description                                                                                       |
-| ----------------- | ------------------------------------------------------------------------------------------------- |
-| mod+z             | undo                                                                                              |
-| mod+y             | redo                                                                                              |
-| delete/backspace  | delete block                                                                                      |
-| tab / shift + tab | fast select block, if block is focusing,`tab` select next block & `shift + tab` select prev block |
-
-## How does it work?
-
-<img alt="" src="./work.png">
-
-</br>
-
-## Packages
-
-- [easy-email-core](./packages/easy-email-core/readme.md)
-- [easy-email-editor](./packages/easy-email-editor/readme.md)
-- [easy-email-extensions](./packages/easy-email-extensions/readme.md)
+| property          | Type                                                                                               | Description                                                                                                                          |
+| ----------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| height            | string / number                                                                                    | Set the height of the container                                                                                                      |
+| data              | interface IEmailTemplate { content: IPage; subject: string; subTitle: string; }                    | Source data                                                                                                                          |
+| children          | ( props: FormState<T>,helper: FormApi<IEmailTemplate, Partial<IEmailTemplate>>) => React.ReactNode | ReactNode                                                                                                                            |
+| onSubmit          | Config<IEmailTemplate, Partial<IEmailTemplate>>['onSubmit'];                                       | Called when the commit is triggered manually                                                                                         |
+| fontList          | { value: string; label: string; }[];                                                               | Default font list.                                                                                                                   |
+| interactiveStyle  | { hoverColor?: string; selectedColor?: string;}                                                    | Interactive prompt color                                                                                                             |
+| onUploadImage     | (data: Blob) => Promise<string>;                                                                   | Triggered when an image is pasted or uploaded                                                                                        |
+| autoComplete      | boolean                                                                                            | Automatically complete missing blocks. For example, Text => Section, will generate Text=>Column=>Section                             |
+| mergeTags         | Object                                                                                             | A merge tag is a bit of specific code that allows you to insert dynamic data into emails. Like `{{user.name}}`, and used for preview |
+| previewInjectData | Object                                                                                             | Dynamic data for preview, it will overwrite mergeTags.                                                                               |
+| onBeforePreview   | (html: string, mergeTags: PropsProviderProps['mergeTags']) => string                               | Promise<string> You can replace mergeTags when previewing.                                                                           |
 
 </br>
 

@@ -23,13 +23,14 @@ export const CommercialBanner = ({ page }: { page: 'HOME' | 'EDITOR' }) => {
   if (!visible || !featureEnabled) return null;
   return (
     <Alert
+      showIcon={false}
       style={{
         alignItems: 'flex-start',
       }}
       banner
       content={
         <div>
-          <div>
+          <div style={{ fontSize: 16, padding: '10px' }}>
             <strong>
               Business Edition Email Editor on sale - Enjoy 50% off Premium and Enterprise
               plans. Don't miss out on this limited-time offer!&nbsp;

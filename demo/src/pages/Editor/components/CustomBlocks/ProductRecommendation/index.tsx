@@ -10,7 +10,6 @@ import {
 
 import { CustomBlocksType } from '../constants';
 import React from 'react';
-import { getContentEditableClassName } from 'easy-email-editor';
 
 const { Column, Section, Wrapper, Text, Button, Image, Group } = components;
 
@@ -87,7 +86,6 @@ export const ProductRecommendation = createCustomBlock<IProductRecommendation>({
 
     return (
       <Wrapper
-        // add class name when testing preview
         css-class={mode === 'testing' ? getPreviewClassName(idx, data.type) : ''}
         padding='20px 0px 20px 0px'
         border='none'
@@ -108,10 +106,6 @@ export const ProductRecommendation = createCustomBlock<IProductRecommendation>({
               align='center'
               font-weight='bold'
               color={attributes['title-color']}
-              css-class={getContentEditableClassName(
-                BasicType.TEXT,
-                `${idx}.data.value.title`,
-              ).join(' ')}
             >
               {title}
             </Text>
