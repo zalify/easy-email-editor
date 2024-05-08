@@ -32,6 +32,9 @@ dependencies:
   '@types/fs-extra':
     specifier: ^9.0.13
     version: 9.0.13
+  '@types/lodash':
+    specifier: ^4.17.1
+    version: 4.17.1
   '@types/mustache':
     specifier: ^4.1.2
     version: 4.2.1
@@ -44,6 +47,9 @@ dependencies:
   browser-image-compression:
     specifier: ^1.0.17
     version: 1.0.17
+  dayjs:
+    specifier: ^1.11.11
+    version: 1.11.11
   file-saver:
     specifier: ^2.0.5
     version: 2.0.5
@@ -62,6 +68,9 @@ dependencies:
   liquidjs:
     specifier: ^9.40.0
     version: 9.40.0
+  lodash:
+    specifier: ^4.17.21
+    version: 4.17.21
   mjml-browser:
     specifier: ^4.10.4
     version: 4.13.0
@@ -167,7 +176,7 @@ packages:
       b-tween: 0.3.3
       b-validate: 1.4.1
       compute-scroll-into-view: 1.0.17
-      dayjs: 1.11.5
+      dayjs: 1.11.11
       lodash: 4.17.21
       number-precision: 1.5.2
       react: 17.0.2
@@ -640,8 +649,8 @@ packages:
     resolution: {integrity: sha512-aLkWa0C0vO5b4Sr798E26QgOkss68Un0bLjs7u9qxzPT5CG+8DuNTffWES58YzJs3hrVAOs1wonycqEBqNJubA==}
     dev: false
 
-  /@types/lodash@4.14.184:
-    resolution: {integrity: sha512-RoZphVtHbxPZizt4IcILciSWiC6dcn+eZ8oX9IWEYfDMcocdd42f7NPI6fQj+6zI8y4E0L7gu2pcZKLGTRaV9Q==}
+  /@types/lodash@4.17.1:
+    resolution: {integrity: sha512-X+2qazGS3jxLAIz5JDXDzglAF3KpijdhFxlf/V1+hEsOUc+HnWi81L/uv/EvGuV90WY+7mPGFCUDGfQC3Gj95Q==}
     dev: false
 
   /@types/mustache@4.2.1:
@@ -1032,8 +1041,8 @@ packages:
     resolution: {integrity: sha512-uX1KG+x9h5hIJsaKR9xHUeUraxf8IODOwq9JLNPq6BwB04a/xgpq3rcx47l5BZu5zBPlgD342tdke3Hom/nJRA==}
     dev: false
 
-  /dayjs@1.11.5:
-    resolution: {integrity: sha512-CAdX5Q3YW3Gclyo5Vpqkgpj8fSdLQcRuzfX6mC6Phy0nfJ0eGYOeS7m4mt2plDWLAtA4TqTakvbboHvUxfe4iA==}
+  /dayjs@1.11.11:
+    resolution: {integrity: sha512-okzr3f11N6WuqYtZSvm+F776mB41wRZMhKP+hc34YdW+KmtYYK9iqvHSwo2k9FEH3fhGXvOPV6yz2IcSrfRUDg==}
     dev: false
 
   /debug@4.3.4:
@@ -2695,7 +2704,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       '@babel/runtime': 7.18.9
-      '@types/lodash': 4.14.184
+      '@types/lodash': 4.17.1
       lodash: 4.17.21
       lodash-es: 4.17.21
       nanoclone: 0.2.1
