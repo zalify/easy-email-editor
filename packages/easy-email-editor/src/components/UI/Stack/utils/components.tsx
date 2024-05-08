@@ -15,7 +15,7 @@ export function wrapWithComponent<P extends any>(
   return isElementOfType(element, Component) ? (
     element
   ) : (
-    <Component {...props}>{element}</Component>
+    <Component {...(props as any)}>{element}</Component>
   );
 }
 
