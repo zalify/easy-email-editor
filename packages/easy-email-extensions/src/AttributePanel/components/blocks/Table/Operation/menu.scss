@@ -1,0 +1,57 @@
+.easy-email-table-operation-menu {
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
+  font-size: 14px;
+  z-index: 100;
+  overflow: hidden;
+  border-radius: 4px;
+  padding: 4px 0;
+
+  .easy-email-table-operation-menu-dividing {
+    height: 1px;
+    background-color: #efefef;
+  }
+
+
+  .easy-email-table-operation-color-picker {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0 16px 10px;
+    background-color: #fff;
+    overflow: hidden;
+
+    .easy-email-table-operation-color-picker-item {
+      width: 20px;
+      height: 20px;
+      border: 1px solid #595959;
+      margin-right: 5px;
+      margin-bottom: 5px;
+      cursor: pointer;
+    }
+  }
+
+  .easy-email-table-operation-menu-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    line-height: 18px;
+    background-color: #fff;
+    cursor: pointer;
+    color: #595959;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &:hover {
+      background-color: #efefef;
+    }
+
+    .easy-email-table-operation-menu-icon {
+      margin-right: 8px;
+      height: 20px;
+      width: 20px;
+      font-size: 0;
+    }
+  }
+}
+
