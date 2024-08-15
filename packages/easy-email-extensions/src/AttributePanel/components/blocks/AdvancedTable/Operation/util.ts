@@ -1,6 +1,6 @@
-import { ITable } from 'easy-email-core';
 import { DATA_CONTENT_EDITABLE_IDX } from 'easy-email-editor';
 import { IBoundaryRect, IBoundingPosition, IOperationData } from './type';
+import { AdvancedTableBlock } from '@core/blocks/advanced/generateAdvancedTableBlock';
 
 const getEditorElementClientRect = (target: any) => {
   let left = target.offsetLeft;
@@ -258,7 +258,9 @@ export const getCorrectTableIndexBoundary = (
   return tableIndexBoundary;
 };
 
-export const getMaxTdCount = (tableData: ITable['data']['value']['tableSource']) => {
+export const getMaxTdCount = (
+  tableData: AdvancedTableBlock['data']['value']['tableSource'],
+) => {
   let tdCount = 1;
   tableData.forEach(tr => {
     let _tdCount = tr.reduce((count, td) => count + (td.colSpan || 1), 0);

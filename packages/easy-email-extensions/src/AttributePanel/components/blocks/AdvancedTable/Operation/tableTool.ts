@@ -1,4 +1,3 @@
-import { ITable } from 'easy-email-core';
 import TableOperationMenu from './tableOperationMenu';
 import {
   checkEventInBoundingRect,
@@ -8,6 +7,7 @@ import {
   getTdBoundaryIndex,
   getBoundaryRectAndElement,
 } from './util';
+import { AdvancedTableBlock } from '@core/blocks/advanced/generateAdvancedTableBlock';
 
 interface IBorderTool {
   top: Element;
@@ -36,8 +36,8 @@ class TableColumnTool {
   root: Element | undefined = undefined;
 
   tableMenu?: TableOperationMenu;
-  changeTableData?: (e: ITable['data']['value']['tableSource']) => void;
-  tableData: ITable['data']['value']['tableSource'] = [];
+  changeTableData?: (e: AdvancedTableBlock['data']['value']['tableSource']) => void;
+  tableData: AdvancedTableBlock['data']['value']['tableSource'] = [];
 
   constructor(borderTool: IBorderTool, root: Element) {
     if (!borderTool || !root) {

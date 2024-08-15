@@ -88,7 +88,7 @@ const defaultCategories: ExtensionProps['categories'] = [
         type: AdvancedType.WRAPPER,
       },
       {
-        type: BasicType.TABLE,
+        type: AdvancedType.TABLE,
       },
     ],
   },

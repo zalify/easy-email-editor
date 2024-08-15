@@ -20,6 +20,7 @@ import { Navbar } from './Navbar';
 import { Social } from './Social';
 import { Table } from './Table';
 import { BasicType, AdvancedType } from 'easy-email-core';
+import { AdvancedTable } from './AdvancedTable';
 
 export const blocks = {
   [BasicType.PAGE]: Page,
@@ -52,6 +53,7 @@ export const blocks = {
   [AdvancedType.CAROUSEL]: Carousel,
   [AdvancedType.NAVBAR]: Navbar,
   [AdvancedType.SOCIAL]: Social,
+  [AdvancedType.TABLE]: AdvancedTable,
 
   [AdvancedType.HERO]: Hero,
   [AdvancedType.WRAPPER]: Wrapper,

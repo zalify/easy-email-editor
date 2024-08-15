@@ -1,5 +1,5 @@
 import { BasicType, AdvancedType } from 'easy-email-core';
 
 export function isTableBlock(blockType: any) {
-  return blockType === BasicType.TABLE;
+  return blockType === AdvancedType.TABLE;
 }

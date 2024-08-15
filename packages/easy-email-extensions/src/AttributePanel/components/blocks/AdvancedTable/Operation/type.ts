@@ -1,4 +1,4 @@
-import { ITableData } from '@core/blocks/standard/Table';
+import { ITableData } from '@core/blocks/advanced/generateAdvancedTableBlock';
 
 export interface IOperationData extends ITableData {
   top: number;
