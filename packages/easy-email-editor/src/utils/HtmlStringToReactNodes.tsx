@@ -203,7 +203,7 @@ function makeBlockNodeContentEditable(node: ChildNode) {
       tdNodes.forEach((tdNode, tdIndex) => {
         const _idx = idx.replace(
           'data.value.content',
-          `data.value.dataSource.${trIndex}.${tdIndex}.content`,
+          `data.value.tableSource.${trIndex}.${tdIndex}.content`,
         );
         tdNode.setAttribute('contentEditable', 'true');
         tdNode.setAttribute(DATA_CONTENT_EDITABLE_TYPE, ContentEditableType.RichText);

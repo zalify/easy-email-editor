@@ -187,7 +187,7 @@ export const getCellAttr = (el: Element, attrName: string) => {
 
 const getCellIndex = (cellElement: Element) => {
   let idxName = cellElement.getAttribute(DATA_CONTENT_EDITABLE_IDX) as string;
-  idxName = idxName.split('data.value.dataSource.')[1].split('.content')[0];
+  idxName = idxName.split('data.value.tableSource.')[1].split('.content')[0];
 
   return idxName.split('.').map(e => Number(e));
 };
@@ -258,7 +258,7 @@ export const getCorrectTableIndexBoundary = (
   return tableIndexBoundary;
 };
 
-export const getMaxTdCount = (tableData: ITable['data']['value']['dataSource']) => {
+export const getMaxTdCount = (tableData: ITable['data']['value']['tableSource']) => {
   let tdCount = 1;
   tableData.forEach(tr => {
     let _tdCount = tr.reduce((count, td) => count + (td.colSpan || 1), 0);

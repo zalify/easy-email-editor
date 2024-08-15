@@ -36,8 +36,8 @@ class TableColumnTool {
   root: Element | undefined = undefined;
 
   tableMenu?: TableOperationMenu;
-  changeTableData?: (e: ITable['data']['value']['dataSource']) => void;
-  tableData: ITable['data']['value']['dataSource'] = [];
+  changeTableData?: (e: ITable['data']['value']['tableSource']) => void;
+  tableData: ITable['data']['value']['tableSource'] = [];
 
   constructor(borderTool: IBorderTool, root: Element) {
     if (!borderTool || !root) {

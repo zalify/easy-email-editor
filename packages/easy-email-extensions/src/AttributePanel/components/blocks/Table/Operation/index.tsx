@@ -1,5 +1,6 @@
-import { getEditorRoot, getShadowRoot } from '@/utils';
-import React, { useEffect, useRef, useState } from 'react';
+import { getShadowRoot } from '@/utils';
+import { cloneDeep } from 'lodash';
+import React, { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import TableColumnTool from './tableTool';
 import { useBlock, useFocusIdx } from '@';
@@ -33,9 +34,9 @@ export function TableOperation() {
   useEffect(() => {
     if (tool.current) {
       tool.current.changeTableData = (data: any[][]) => {
-        change(`${focusIdx}.data.value.dataSource`, data);
+        change(`${focusIdx}.data.value.tableSource`, cloneDeep(data));
       };
-      tool.current.tableData = focusBlock?.data?.value?.dataSource;
+      tool.current.tableData = cloneDeep(focusBlock?.data?.value?.tableSource || []);
     }
   }, [focusIdx, focusBlock]);
 

@@ -21,7 +21,7 @@ export type ITable = IBlockData<
   },
   {
     content?: string;
-    dataSource: ITableData[][];
+    tableSource: ITableData[][];
   }
 >;
 
@@ -35,7 +35,7 @@ export const Table = createBlock<ITable>({
       type: BasicType.TABLE,
       data: {
         value: {
-          dataSource: [
+          tableSource: [
             [{ content: 'header1' }, { content: 'header2' }, { content: 'header3' }],
             [{ content: 'body1-1' }, { content: 'body1-2' }, { content: 'body1-3' }],
             [{ content: 'body2-1' }, { content: 'body2-2' }, { content: 'body2-3' }],
@@ -58,7 +58,7 @@ export const Table = createBlock<ITable>({
     const textAlign = data.attributes['text-align'];
     const fontStyle = data.attributes['font-style'];
 
-    const content = data.data.value.dataSource
+    const content = data.data.value.tableSource
       .map((tr, index) => {
         const styles = [] as any[];
         if (cellPadding) {
