@@ -50,10 +50,10 @@ class TableColumnTool {
   }
 
   initTool() {
-    // handle right click on quill-better-table
     this.root?.addEventListener('contextmenu', this.handleContextmenu);
     this.root?.addEventListener('mousedown', this.handleMousedown.bind(this));
     document.body.addEventListener('click', this.hideBorder, false);
+    document.body.addEventListener('contextmenu', this.hideTableMenu, false);
     document.addEventListener('keydown', this.hideBorderByKeyDown);
   }
 
@@ -61,6 +61,7 @@ class TableColumnTool {
     this.root?.removeEventListener('mousedown', this.handleMousedown.bind(this));
     this.root?.removeEventListener('contextmenu', this.handleContextmenu);
     document.body.removeEventListener('click', this.hideBorder, false);
+    document.body.removeEventListener('contextmenu', this.hideTableMenu, false);
     document.removeEventListener('keydown', this.hideBorderByKeyDown);
   }
 
@@ -73,6 +74,13 @@ class TableColumnTool {
 
   hideBorderByKeyDown = () => {
     this.visibleBorder(false);
+  };
+
+  hideTableMenu = (e?: any) => {
+    if (e?.target.id === 'VisualEditorEditMode') {
+      return;
+    }
+    this.tableMenu?.hide();
   };
 
   visibleBorder = (show = true) => {
@@ -146,8 +154,10 @@ class TableColumnTool {
       );
       if (checkEventInBoundingRect(selectedBoundary, event)) {
         event.preventDefault();
+        return;
       }
     }
+    this.hideTableMenu();
   };
 
   handleMousedown(event: any) {
