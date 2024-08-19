@@ -215,7 +215,7 @@ const MENU_CONFIG = {
           }
           // left insert cell
           if (tdLeft > left && tdRight >= right) {
-            td.colSpan = colSpan - right - tdLeft - 1;
+            td.colSpan = colSpan - (right - tdLeft) - 1;
             continue;
           }
           // right insert cell
