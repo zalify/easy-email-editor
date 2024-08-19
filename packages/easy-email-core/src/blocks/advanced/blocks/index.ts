@@ -13,10 +13,12 @@ import {
   IGroup,
   IColumn,
   IHero,
+  ITable,
 } from '../../standard';
 import { AdvancedType, BasicType } from '@core/constants';
 import { generateAdvancedContentBlock } from '../generateAdvancedContentBlock';
 import { generateAdvancedLayoutBlock } from '../generateAdvancedLayoutBlock';
+import { generateAdvancedTableBlock } from '../generateAdvancedTableBlock';
 
 export const AdvancedText = generateAdvancedContentBlock<IText>({
   type: AdvancedType.TEXT,
@@ -63,6 +65,11 @@ export const AdvancedSocial = generateAdvancedContentBlock<ISocial>({
   baseType: BasicType.SOCIAL,
 });
 
+export const AdvancedTable = generateAdvancedTableBlock({
+  type: AdvancedType.TABLE,
+  baseType: BasicType.TABLE,
+});
+
 //
 
 export const AdvancedWrapper = generateAdvancedLayoutBlock<IWrapper>({
@@ -97,9 +104,5 @@ export const AdvancedColumn = generateAdvancedLayoutBlock<IColumn>({
 export const AdvancedHero = generateAdvancedLayoutBlock<IHero>({
   type: AdvancedType.HERO,
   baseType: BasicType.HERO,
-  validParentType: [
-    BasicType.WRAPPER,
-    AdvancedType.WRAPPER,
-    BasicType.PAGE,
-  ],
+  validParentType: [BasicType.WRAPPER, AdvancedType.WRAPPER, BasicType.PAGE],
 });

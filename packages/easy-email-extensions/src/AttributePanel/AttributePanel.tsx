@@ -11,6 +11,7 @@ import { PresetColorsProvider } from './components/provider/PresetColorsProvider
 import ReactDOM from 'react-dom';
 import { BlockAttributeConfigurationManager } from './utils/BlockAttributeConfigurationManager';
 import { SelectionRangeProvider } from './components/provider/SelectionRangeProvider';
+import { TableOperation } from './components/blocks/AdvancedTable/Operation';
 
 export interface AttributePanelProps {}
 
@@ -40,6 +41,7 @@ export function AttributePanel() {
         <div style={{ position: 'absolute' }}>
           <RichTextField idx={focusIdx} />
         </div>
+        <TableOperation />
         <>
           {shadowRoot &&
             ReactDOM.createPortal(

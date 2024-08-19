@@ -1,13 +1,26 @@
-import { BasicType, getNodeIdxFromClassName, getNodeTypeFromClassName, MERGE_TAG_CLASS_NAME } from 'easy-email-core';
+import {
+  BasicType,
+  getNodeIdxFromClassName,
+  getNodeTypeFromClassName,
+  MERGE_TAG_CLASS_NAME,
+} from 'easy-email-core';
 import { camelCase } from 'lodash';
 import React from 'react';
 import { isTextBlock } from './isTextBlock';
 import { MergeTagBadge } from './MergeTagBadge';
-import { ContentEditableType, DATA_CONTENT_EDITABLE_IDX, DATA_CONTENT_EDITABLE_TYPE } from '@/constants';
+import {
+  ContentEditableType,
+  DATA_CONTENT_EDITABLE_IDX,
+  DATA_CONTENT_EDITABLE_TYPE,
+} from '@/constants';
 import { isButtonBlock } from './isButtonBlock';
-import { getContentEditableIdxFromClassName, getContentEditableTypeFromClassName } from './contenteditable';
+import {
+  getContentEditableIdxFromClassName,
+  getContentEditableTypeFromClassName,
+} from './contenteditable';
 import { getContentEditableClassName } from './getContentEditableClassName';
 import { isNavbarBlock } from './isNavbarBlock';
+import { isTableBlock } from './isTableBlock';
 
 const domParser = new DOMParser();
 
@@ -21,13 +34,13 @@ export interface HtmlStringToReactNodesOptions {
 
 export function HtmlStringToReactNodes(
   content: string,
-  option: HtmlStringToReactNodesOptions
+  option: HtmlStringToReactNodesOptions,
 ) {
   let doc = domParser.parseFromString(content, 'text/html'); // The average time is about 1.4 ms
-  [...doc.getElementsByTagName('a')].forEach((node) => {
+  [...doc.getElementsByTagName('a')].forEach(node => {
     node.setAttribute('tabIndex', '-1');
   });
-  [...doc.querySelectorAll(`.${MERGE_TAG_CLASS_NAME}`)].forEach((child) => {
+  [...doc.querySelectorAll(`.${MERGE_TAG_CLASS_NAME}`)].forEach(child => {
     const editNode = child.querySelector('div');
     if (editNode) {
       if (option.enabledMergeTagsBadge) {
@@ -37,7 +50,11 @@ export function HtmlStringToReactNodes(
   });
 
   const reactNode = (
-    <RenderReactNode selector={'0'} node={doc.documentElement} index={0} />
+    <RenderReactNode
+      selector={'0'}
+      node={doc.documentElement}
+      index={0}
+    />
   );
 
   return reactNode;
@@ -52,10 +69,10 @@ const RenderReactNode = React.memo(function ({
   index: number;
   selector: string;
 }): React.ReactElement {
-  const attributes: { [key: string]: string; } = {
+  const attributes: { [key: string]: string } = {
     'data-selector': selector,
   };
-  node.getAttributeNames?.().forEach((att) => {
+  node.getAttributeNames?.().forEach(att => {
     if (att) {
       attributes[att] = node.getAttribute(att) || '';
     }
@@ -90,7 +107,6 @@ const RenderReactNode = React.memo(function ({
     }
 
     if (attributes['contenteditable'] === 'true') {
-
       return createElement(tagName, {
         key: performance.now(),
         ...attributes,
@@ -107,13 +123,13 @@ const RenderReactNode = React.memo(function ({
         node.childNodes.length === 0
           ? null
           : [...node.childNodes].map((n, i) => (
-            <RenderReactNode
-              selector={getChildSelector(selector, i)}
-              key={i}
-              node={n as any}
-              index={i}
-            />
-          )),
+              <RenderReactNode
+                selector={getChildSelector(selector, i)}
+                key={i}
+                node={n as any}
+                index={i}
+              />
+            )),
     });
 
     return <>{reactNode}</>;
@@ -143,7 +159,7 @@ function createElement(
     role?: string;
     src?: string;
     dangerouslySetInnerHTML?: any;
-  }
+  },
 ) {
   if (props?.class && props.class.includes('email-block')) {
     const blockType = getNodeTypeFromClassName(props.class);
@@ -180,21 +196,39 @@ function makeBlockNodeContentEditable(node: ChildNode) {
     node.setAttribute('contentEditable', 'true');
     node.setAttribute(DATA_CONTENT_EDITABLE_TYPE, ContentEditableType.Text);
     node.setAttribute(DATA_CONTENT_EDITABLE_IDX, idx);
-
+  } else if (isTableBlock(type)) {
+    const trNodes = node.querySelectorAll('tr');
+    trNodes.forEach((trNode, trIndex) => {
+      const tdNodes = trNode.querySelectorAll('td');
+      tdNodes.forEach((tdNode, tdIndex) => {
+        const _idx = idx.replace(
+          'data.value.content',
+          `data.value.tableSource.${trIndex}.${tdIndex}.content`,
+        );
+        tdNode.setAttribute('contentEditable', 'true');
+        tdNode.setAttribute(DATA_CONTENT_EDITABLE_TYPE, ContentEditableType.RichText);
+        tdNode.setAttribute(DATA_CONTENT_EDITABLE_IDX, _idx);
+      });
+    });
   }
 
   node.childNodes.forEach(makeBlockNodeContentEditable);
-
 }
 
 function makeStandardContentEditable(node: HTMLElement, blockType: string, idx: string) {
-  if (isTextBlock(blockType) || isButtonBlock(blockType)) {
-    node.classList.add(...getContentEditableClassName(blockType, `${idx}.data.value.content`));
+  if (isTextBlock(blockType) || isButtonBlock(blockType) || isTableBlock(blockType)) {
+    node.classList.add(
+      ...getContentEditableClassName(blockType, `${idx}.data.value.content`),
+    );
   }
   if (isNavbarBlock(blockType)) {
     node.querySelectorAll('.mj-link').forEach((anchor, index) => {
-
-      anchor.classList.add(...getContentEditableClassName(blockType, `${idx}.data.value.links.${index}.content`));
+      anchor.classList.add(
+        ...getContentEditableClassName(
+          blockType,
+          `${idx}.data.value.links.${index}.content`,
+        ),
+      );
     });
   }
 }

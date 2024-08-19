@@ -35,7 +35,7 @@ import { pushEvent } from '@demo/utils/pushEvent';
 import { FormApi } from 'final-form';
 import { UserStorage } from '@demo/utils/user-storage';
 
-import { AdvancedType, IBlockData, JsonToMjml } from 'easy-email-core';
+import { AdvancedType, BasicType, IBlockData, JsonToMjml } from 'easy-email-core';
 import { ExtensionProps, MjmlToJson, StandardLayout } from 'easy-email-extensions';
 import { AutoSaveAndRestoreEmail } from '@demo/components/AutoSaveAndRestoreEmail';
 
@@ -86,6 +86,9 @@ const defaultCategories: ExtensionProps['categories'] = [
       },
       {
         type: AdvancedType.WRAPPER,
+      },
+      {
+        type: AdvancedType.TABLE,
       },
     ],
   },

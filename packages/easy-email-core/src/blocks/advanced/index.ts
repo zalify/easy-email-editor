@@ -22,6 +22,7 @@ import {
   AdvancedGroup,
   AdvancedColumn,
   AdvancedHero,
+  AdvancedTable,
 } from './blocks';
 
 export const advancedBlocks = {
@@ -34,6 +35,7 @@ export const advancedBlocks = {
   [AdvancedType.ACCORDION]: AdvancedAccordion,
   [AdvancedType.CAROUSEL]: AdvancedCarousel,
   [AdvancedType.SOCIAL]: AdvancedSocial,
+  [AdvancedType.TABLE]: AdvancedTable,
 
   [AdvancedType.WRAPPER]: AdvancedWrapper,
   [AdvancedType.SECTION]: AdvancedSection,

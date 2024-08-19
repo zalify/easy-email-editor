@@ -38,6 +38,7 @@ export enum AdvancedType {
   SOCIAL = 'advanced_social',
   ACCORDION = 'advanced_accordion',
   CAROUSEL = 'advanced_carousel',
+  TABLE = 'advanced_table',
 
   WRAPPER = 'advanced_wrapper',
   SECTION = 'advanced_section',
