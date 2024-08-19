@@ -206,22 +206,22 @@ const MENU_CONFIG = {
           }
           if (tdLeft >= left && tdRight <= right) {
             deleteIds.push(index);
-            break;
+            continue;
           }
           // operate one cell
           if (tdLeft <= left && tdRight >= right) {
-            td.colSpan = colSpan - right - left - 1;
-            break;
+            td.colSpan = colSpan - (right - left) - 1;
+            continue;
           }
           // left insert cell
           if (tdLeft > left && tdRight >= right) {
             td.colSpan = colSpan - right - tdLeft - 1;
-            break;
+            continue;
           }
           // right insert cell
-          if (tdLeft < left && tdRight > left) {
-            td.colSpan = colSpan - tdRight - left - 1;
-            break;
+          if (tdLeft < left && tdRight >= left) {
+            td.colSpan = colSpan - (tdRight - left) - 1;
+            continue;
           }
         }
         if (deleteIds.length) {
