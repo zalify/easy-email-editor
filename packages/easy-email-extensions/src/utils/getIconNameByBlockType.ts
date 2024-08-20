@@ -40,5 +40,5 @@ export function getIconNameByBlockType(type: string) {
 }
 
 export function setIconsMap(map: Record<string, string>) {
-  iconsMap = {...map};
+  iconsMap = {...iconsMap, ...map};
 }
