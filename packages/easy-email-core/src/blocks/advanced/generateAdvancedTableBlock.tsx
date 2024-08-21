@@ -77,7 +77,7 @@ export function generateAdvancedTableBlock(option: {
   });
 }
 
-export interface ITableData {
+export interface IAdvancedTableData {
   content: string;
   colSpan?: number;
   rowSpan?: number;
@@ -92,6 +92,6 @@ export type AdvancedTableBlock = IBlockData<
   },
   {
     content?: string;
-    tableSource: ITableData[][];
+    tableSource: IAdvancedTableData[][];
   }
 >;
