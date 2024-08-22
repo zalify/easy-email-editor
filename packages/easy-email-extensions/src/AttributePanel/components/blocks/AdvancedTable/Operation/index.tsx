@@ -1,9 +1,8 @@
-import { getShadowRoot } from '@/utils';
 import { cloneDeep } from 'lodash';
 import React, { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import TableColumnTool from './tableTool';
-import { useBlock, useFocusIdx } from '@';
+import { getShadowRoot, useBlock, useFocusIdx } from 'easy-email-editor';
 
 export function TableOperation() {
   const shadowRoot = getShadowRoot();

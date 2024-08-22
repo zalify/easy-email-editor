@@ -1,6 +1,6 @@
-import { ITableData } from '@core/blocks/advanced/generateAdvancedTableBlock';
+import { IAdvancedTableData } from 'easy-email-core';
 
-export interface IOperationData extends ITableData {
+export interface IOperationData extends IAdvancedTableData {
   top: number;
   bottom: number;
   left: number;
