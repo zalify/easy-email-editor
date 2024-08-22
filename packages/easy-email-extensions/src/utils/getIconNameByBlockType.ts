@@ -1,7 +1,7 @@
 import { BasicType, AdvancedType } from 'easy-email-core';
 import { get } from 'lodash';
 
-const iconsMap = {
+let iconsMap = {
   [BasicType.TEXT]: 'icon-text',
   [BasicType.SECTION]: 'icon-section',
   [BasicType.COLUMN]: 'icon-column',
@@ -37,4 +37,8 @@ const iconsMap = {
 
 export function getIconNameByBlockType(type: string) {
   return get(iconsMap, type) || 'icon-number';
+}
+
+export function setIconsMap(map: Record<string, string>) {
+  iconsMap = {...iconsMap, ...map};
 }
