@@ -1,3 +1,4 @@
+import getCellBackgroundSelectorRoot from './tableCellBgSelector';
 import TableOperationMenu from './tableOperationMenu';
 import { IOperationData } from './type';
 
@@ -69,10 +70,7 @@ const MENU_CONFIG = {
             break;
           }
           // pre cell intersect current cell.
-          if (
-            tdLeft > left &&
-            (!tr[index - 1] || (tr[index - 1].right || 0) + 1 === left)
-          ) {
+          if (tdLeft > left && tr[index - 1] && (tr[index - 1].right || 0) + 1 === left) {
             tr.splice(index, 0, { content: '-' } as any);
             break;
           }
@@ -272,6 +270,39 @@ const MENU_CONFIG = {
 
       _this.tableData.splice(_this.tableIndexBoundary.top, deleteCount);
       _this.changeTableData?.(_this.tableData);
+    },
+  },
+  setCellBg: {
+    text: 'Set Background',
+    render(tableOperationMenu: TableOperationMenu) {
+      const bgColorHandler = this.handler.bind(tableOperationMenu);
+      const root = getCellBackgroundSelectorRoot(
+        bgColorHandler,
+        tableOperationMenu.domNode,
+      );
+      return root;
+    },
+    handler(color: string) {
+      const _this = this as unknown as TableOperationMenu;
+      const { top, bottom, left, right } = _this.tableIndexBoundary;
+      _this.tableData.forEach(tr => {
+        for (let index = 0; index < tr.length; index++) {
+          const td = tr[index];
+          const tdTop = tr[index].top || 0;
+          const tdBottom = tr[index].bottom || 0;
+          const tdLeft = tr[index].left || 0;
+          const tdRight = tr[index].right || 0;
+
+          if (tdLeft > right) {
+            break;
+          }
+          if (top <= tdTop && bottom >= tdBottom && left <= tdLeft && right >= tdRight) {
+            td.backgroundColor = color;
+          }
+        }
+      });
+      _this.changeTableData?.(_this.tableData);
+      _this.hide();
     },
   },
 };
