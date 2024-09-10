@@ -99,9 +99,13 @@ export default class TableOperationMenu {
     for (let name in this.menuItems) {
       const itemOption = (this.menuItems as any)[name];
       if (itemOption) {
-        this.domNode.appendChild(this.menuItemCreator(Object.assign({}, itemOption)));
+        this.domNode.appendChild(
+          itemOption.render
+            ? itemOption.render(this)
+            : this.menuItemCreator(Object.assign({}, itemOption)),
+        );
 
-        if (['insertRowDown'].indexOf(name) > -1) {
+        if (['insertRowDown', 'deleteRow'].indexOf(name) > -1) {
           this.domNode.appendChild(dividingCreator());
         }
       }

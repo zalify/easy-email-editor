@@ -57,7 +57,7 @@ export function generateAdvancedTableBlock(option: {
             e =>
               `<td rowspan="${e.rowSpan || 1}" colspan="${
                 e.colSpan || 1
-              }" style="${styles.join(';')}">${e.content}</td>`,
+              }" style="${styles.join(';')}; background-color:${e.backgroundColor};">${e.content}</td>`,
           );
           return `<tr style="text-align:${textAlign};font-style:${fontStyle};">${_trString.join(
             '\n',
@@ -81,6 +81,7 @@ export interface IAdvancedTableData {
   content: string;
   colSpan?: number;
   rowSpan?: number;
+  backgroundColor?: string;
 }
 
 export type AdvancedTableBlock = IBlockData<
