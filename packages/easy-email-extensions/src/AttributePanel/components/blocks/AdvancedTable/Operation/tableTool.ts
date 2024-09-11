@@ -63,6 +63,8 @@ class TableColumnTool {
     document.body.removeEventListener('click', this.hideBorder, false);
     document.body.removeEventListener('contextmenu', this.hideTableMenu, false);
     document.removeEventListener('keydown', this.hideBorderByKeyDown);
+
+    this.tableMenu?.destroy();
   }
 
   hideBorder = (e: any) => {
