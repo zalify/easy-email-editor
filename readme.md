@@ -29,6 +29,9 @@
 We are delighted to announce that we now have a more powerful and customizable commercial version available. If it is for internal use only, then the open-source version is sufficient. However, if your editor is a critical feature, I recommend using the commercial version.
 <a href="https://www.easyemail.pro/?utm_source=github" target="_blank">Check it out here </a>.
 
+## Free email templates for MJML and HTML.
+<a href="https://github.com/Easy-Email-Pro/email-templates" target="_blank">Check it out here </a>.
+
 ---
 
 ## Introduction
