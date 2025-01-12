@@ -3,7 +3,7 @@ import { Border } from '../../attributes/Border';
 import { BackgroundColor } from '../../attributes/BackgroundColor';
 import { FontFamily } from '../../attributes/FontFamily';
 import { AttributesPanelWrapper } from '../../attributes/AttributesPanelWrapper';
-import { useFocusIdx } from 'easy-email-editor';
+import { useFocusIdx } from '@jupitermail/easy-email-editor';
 import { Collapse, Space } from '@arco-design/web-react';
 
 export function AccordionElement() {

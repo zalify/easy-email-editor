@@ -3,9 +3,9 @@ import React from 'react';
 import { IconDelete, IconPlus } from '@arco-design/web-react/icon';
 import { TextField } from '.';
 import { Button } from '@arco-design/web-react';
-import { Stack, TextStyle, useBlock, useFocusIdx } from 'easy-email-editor';
+import { Stack, TextStyle, useBlock, useFocusIdx } from '@jupitermail/easy-email-editor';
 import { Help } from '@extensions/AttributePanel/components/UI/Help';
-import { IPage } from 'easy-email-core';
+import { IPage } from '@jupitermail/easy-email-core';
 
 export function AddFont() {
   const { focusBlock } = useBlock();

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import { BlockType, getChildIdx } from 'easy-email-core';
+import { BlockType, getChildIdx } from '@jupitermail/easy-email-core';
 import { useHoverIdx } from '@/hooks/useHoverIdx';
 import { useDataTransfer } from '@/hooks/useDataTransfer';
 import { isUndefined } from 'lodash';

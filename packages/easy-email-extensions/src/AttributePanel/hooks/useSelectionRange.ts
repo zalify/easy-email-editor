@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { useCallback, useContext } from 'react';
 import { SelectionRangeContext } from '@extensions/AttributePanel/components/provider/SelectionRangeProvider';
-import { getShadowRoot } from 'easy-email-editor';
+import { getShadowRoot } from '@jupitermail/easy-email-editor';
 
 export function useSelectionRange() {
   const { selectionRange, setSelectionRange } = useContext(

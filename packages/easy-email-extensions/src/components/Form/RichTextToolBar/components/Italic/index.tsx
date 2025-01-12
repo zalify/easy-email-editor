@@ -1,8 +1,8 @@
 import { PopoverProps, Tooltip } from '@arco-design/web-react';
 import React, { useCallback, useMemo } from 'react';
-import { IconFont } from 'easy-email-editor';
+import { IconFont } from '@jupitermail/easy-email-editor';
 import { ToolItem } from '../ToolItem';
-import { EMAIL_BLOCK_CLASS_NAME } from 'easy-email-core';
+import { EMAIL_BLOCK_CLASS_NAME } from '@jupitermail/easy-email-core';
 import { useSelectionRange } from '@extensions/AttributePanel/hooks/useSelectionRange';
 
 export interface LinkProps extends PopoverProps {

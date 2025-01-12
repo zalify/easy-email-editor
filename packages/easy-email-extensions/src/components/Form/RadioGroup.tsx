@@ -1,7 +1,7 @@
 import { Radio, RadioGroupProps as ArcoRadioGroupProps } from '@arco-design/web-react';
 import { merge } from 'lodash';
 import React from 'react';
-import { Stack } from 'easy-email-editor';
+import { Stack } from '@jupitermail/easy-email-editor';
 
 export interface RadioGroupProps extends ArcoRadioGroupProps {
   options: Array<{ value: string; label: React.ReactNode }>;

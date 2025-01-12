@@ -3,18 +3,10 @@
   "compilerOptions": {
     "noImplicitAny": false,
     "paths": {
-      "@extensions": [
-        "./src"
-      ],
-      "@extensions/*": [
-        "./src/*"
-      ],
-      "easy-email-core": [
-        "../easy-email-core"
-      ],
-      "easy-email-editor": [
-        "../easy-email-editor"
-      ]
+      "@extensions": ["./src"],
+      "@extensions/*": ["./src/*"],
+      "@jupitermail/easy-email-core": ["../easy-email-core"],
+      "@jupitermail/easy-email-editor": ["../easy-email-editor"]
     }
   }
 }

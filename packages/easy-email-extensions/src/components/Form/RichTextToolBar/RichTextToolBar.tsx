@@ -1,6 +1,6 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
-import { getPluginElement, RICH_TEXT_BAR_ID, useEditorContext } from 'easy-email-editor';
+import { getPluginElement, RICH_TEXT_BAR_ID, useEditorContext } from '@jupitermail/easy-email-editor';
 import { Tools } from './components/Tools';
 import styleText from './shadow-dom.scss?inline';
 

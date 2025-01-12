@@ -1,13 +1,9 @@
 {
-  "name": "easy-email-editor",
+  "name": "@jupitermail/easy-email-editor",
   "license": "MIT",
   "description": "Email editor",
-  "version": "4.16.1",
-  "author": "m-Ryan",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:zalify/easy-email.git"
-  },
+  "version": "4.16.4",
+  "author": "Ali Mahmoudi",
   "keywords": [
     "email editor core"
   ],
@@ -68,7 +64,7 @@
     "vite": "^2.6.14"
   },
   "peerDependencies": {
-    "easy-email-core": "^4.3.6",
+    "@jupitermail/easy-email-core": "^4",
     "mjml-browser": "^4.10.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

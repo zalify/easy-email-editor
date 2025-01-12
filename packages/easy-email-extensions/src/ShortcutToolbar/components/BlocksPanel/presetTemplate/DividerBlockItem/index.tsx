@@ -1,6 +1,6 @@
 import React from 'react';
-import { Stack, TextStyle } from 'easy-email-editor';
-import { AdvancedType, IDivider, RecursivePartial } from 'easy-email-core';
+import { Stack, TextStyle } from '@jupitermail/easy-email-editor';
+import { AdvancedType, IDivider, RecursivePartial } from '@jupitermail/easy-email-core';
 import { BlockMaskWrapper } from '@extensions/ShortcutToolbar/components/BlockMaskWrapper';
 
 const dividerList = [

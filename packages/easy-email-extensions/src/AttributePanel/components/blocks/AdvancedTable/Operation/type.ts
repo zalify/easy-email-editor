@@ -1,4 +1,4 @@
-import { IAdvancedTableData } from 'easy-email-core';
+import { IAdvancedTableData } from '@jupitermail/easy-email-core';
 
 export interface IOperationData extends IAdvancedTableData {
   top: number;

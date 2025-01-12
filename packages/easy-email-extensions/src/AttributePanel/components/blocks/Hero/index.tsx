@@ -6,7 +6,7 @@ import { Height } from '@extensions/AttributePanel/components/attributes/Height'
 import { VerticalAlign } from '@extensions/AttributePanel/components/attributes/VerticalAlign';
 import { Padding } from '@extensions/AttributePanel/components/attributes/Padding';
 import { Collapse, Grid, Space } from '@arco-design/web-react';
-import { useEditorProps, useFocusIdx } from 'easy-email-editor';
+import { useEditorProps, useFocusIdx } from '@jupitermail/easy-email-editor';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
 import { ClassName } from '../../attributes/ClassName';
 import { CollapseWrapper } from '../../attributes/CollapseWrapper';

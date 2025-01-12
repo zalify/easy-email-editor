@@ -1,6 +1,6 @@
-import { IconFont, useBlock, useEditorProps, useFocusIdx } from 'easy-email-editor';
+import { IconFont, useBlock, useEditorProps, useFocusIdx } from '@jupitermail/easy-email-editor';
 import { useAddToCollection } from '@extensions/hooks/useAddToCollection';
-import { getParentIdx } from 'easy-email-core';
+import { getParentIdx } from '@jupitermail/easy-email-core';
 import React from 'react';
 import { ToolItem } from './ToolItem';
 

@@ -1,9 +1,9 @@
 {
-  "name": "easy-email-localization",
+  "name": "@jupitermail/easy-email-localization",
   "license": "MIT",
   "description": "Email editor",
   "version": "4.16.1",
-  "author": "m-Ryan",
+  "author": "Ali Mahmoudi",
   "keywords": [],
   "files": [
     "locales"

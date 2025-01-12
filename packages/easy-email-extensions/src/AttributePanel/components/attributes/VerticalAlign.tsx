@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useFocusIdx, Stack } from 'easy-email-editor';
+import { useFocusIdx, Stack } from '@jupitermail/easy-email-editor';
 import { SelectField } from '../../../components/Form';
 
 const options = [

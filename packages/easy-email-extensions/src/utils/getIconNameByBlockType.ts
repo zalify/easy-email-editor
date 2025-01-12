@@ -1,4 +1,4 @@
-import { BasicType, AdvancedType } from 'easy-email-core';
+import { BasicType, AdvancedType } from '@jupitermail/easy-email-core';
 import { get } from 'lodash';
 
 let iconsMap = {

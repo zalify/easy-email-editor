@@ -4,7 +4,7 @@
     "paths": {
       "@": ["./src"],
       "@/*": ["./src/*"],
-      "easy-email-core": ["../easy-email-core"],
+      "@jupitermail/easy-email-core": ["../easy-email-core"],
       "react": ["./node_modules/@types/react"]
     }
   }

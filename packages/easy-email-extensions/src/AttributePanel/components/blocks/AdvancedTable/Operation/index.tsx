@@ -2,7 +2,7 @@ import { cloneDeep } from 'lodash';
 import React, { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import TableColumnTool from './tableTool';
-import { getShadowRoot, useBlock, useFocusIdx } from 'easy-email-editor';
+import { getShadowRoot, useBlock, useFocusIdx } from '@jupitermail/easy-email-editor';
 
 export function TableOperation() {
   const shadowRoot = getShadowRoot();

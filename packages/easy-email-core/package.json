@@ -1,13 +1,9 @@
 {
-  "name": "easy-email-core",
+  "name": "@jupitermail/easy-email-core",
   "license": "MIT",
   "description": "Email editor",
   "version": "4.16.1",
-  "author": "m-Ryan",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:zalify/easy-email.git"
-  },
+  "author": "Ali Mahmoudi",
   "keywords": [
     "email editor core"
   ],

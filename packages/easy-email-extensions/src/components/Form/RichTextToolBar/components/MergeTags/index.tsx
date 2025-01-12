@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 import { MergeTags as MergeTagsOptions } from '@extensions/AttributePanel';
 import { Popover } from '@arco-design/web-react';
 import { ToolItem } from '../ToolItem';
-import { IconFont } from 'easy-email-editor';
+import { IconFont } from '@jupitermail/easy-email-editor';
 
 export interface MergeTagsProps {
   execCommand: (cmd: string, value: any) => void;

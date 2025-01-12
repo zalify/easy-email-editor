@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { InputWithUnitField } from '../../../components/Form';
-import { useFocusIdx, Stack, useBlock, TextStyle, IconFont } from 'easy-email-editor';
-import { createBlockDataByType } from 'easy-email-core';
+import { useFocusIdx, Stack, useBlock, TextStyle, IconFont } from '@jupitermail/easy-email-editor';
+import { createBlockDataByType } from '@jupitermail/easy-email-core';
 import { Form, useFormState } from 'react-final-form';
 import { Button, Grid, Space, Tooltip } from '@arco-design/web-react';
 import { get } from 'lodash';

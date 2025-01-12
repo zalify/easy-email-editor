@@ -25,7 +25,7 @@
       "@/*": ["./src/*"],
       "@core": ["../easy-email-core/src"],
       "@core/*": ["../easy-email-core/src/*"],
-      "easy-email-core": ["../easy-email-core"],
+      "@jupitermail/easy-email-core": ["../easy-email-core/src/index.tsx"],
       "react": ["./node_modules/@types/react"]
     }
   },

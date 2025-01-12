@@ -1,4 +1,4 @@
-import { IBlockData } from 'easy-email-core';
+import { IBlockData } from '@jupitermail/easy-email-core';
 
 export interface BlockMarketCategory {
   name: string;

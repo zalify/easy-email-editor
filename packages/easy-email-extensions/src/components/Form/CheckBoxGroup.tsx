@@ -1,6 +1,6 @@
 import { merge } from 'lodash';
 import React from 'react';
-import { Stack } from 'easy-email-editor';
+import { Stack } from '@jupitermail/easy-email-editor';
 import { Checkbox, CheckboxGroupProps as ArcoCheckboxGroupProps } from '@arco-design/web-react';
 
 export interface CheckboxGroupProps extends ArcoCheckboxGroupProps<any> {

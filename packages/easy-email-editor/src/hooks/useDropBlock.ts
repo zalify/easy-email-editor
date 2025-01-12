@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, useRef } from 'react';
 
-import { getNodeIdxFromClassName } from 'easy-email-core';
+import { getNodeIdxFromClassName } from '@jupitermail/easy-email-core';
 import { getBlockNodeByChildEle } from '@/utils/getBlockNodeByChildEle';
 import { useBlock } from '@/hooks/useBlock';
 import { getDirectionPosition } from '@/utils/getDirectionPosition';

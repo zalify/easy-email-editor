@@ -5,7 +5,7 @@ import {
   useBlock,
   useEditorContext,
   useFocusIdx,
-} from 'easy-email-editor';
+} from '@jupitermail/easy-email-editor';
 import { RichTextField } from '../components/Form/RichTextField';
 import { PresetColorsProvider } from './components/provider/PresetColorsProvider';
 import ReactDOM from 'react-dom';

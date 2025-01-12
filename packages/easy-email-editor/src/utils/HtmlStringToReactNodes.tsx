@@ -3,7 +3,7 @@ import {
   getNodeIdxFromClassName,
   getNodeTypeFromClassName,
   MERGE_TAG_CLASS_NAME,
-} from 'easy-email-core';
+} from '@jupitermail/easy-email-core';
 import { camelCase } from 'lodash';
 import React from 'react';
 import { isTextBlock } from './isTextBlock';

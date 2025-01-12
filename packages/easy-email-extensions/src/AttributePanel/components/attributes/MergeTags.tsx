@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { Tree, TreeSelect } from '@arco-design/web-react';
 import { get, isObject } from 'lodash';
-import { useBlock, useEditorProps, useFocusIdx } from 'easy-email-editor';
+import { useBlock, useEditorProps, useFocusIdx } from '@jupitermail/easy-email-editor';
 import { getContextMergeTags } from '@extensions/utils/getContextMergeTags';
 
 export const MergeTags: React.FC<{

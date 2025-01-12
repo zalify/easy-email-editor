@@ -16,7 +16,7 @@ import { LineHeight } from '../../attributes/LineHeight';
 import { LetterSpacing } from '../../attributes/LetterSpacing';
 import { Collapse, Grid, Popover, Space, Button as ArcoButton } from '@arco-design/web-react';
 import { TextField } from '../../../../components/Form';
-import { IconFont, useEditorProps, useFocusIdx } from 'easy-email-editor';
+import { IconFont, useEditorProps, useFocusIdx } from '@jupitermail/easy-email-editor';
 import { AttributesPanelWrapper } from '../../attributes/AttributesPanelWrapper';
 import { MergeTags } from '../../attributes';
 import { useField } from 'react-final-form';

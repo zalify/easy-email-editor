@@ -14,7 +14,7 @@ import { Align } from '@extensions/AttributePanel/components/attributes/Align';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
 import { Collapse, Grid, Space } from '@arco-design/web-react';
 import { Border } from '@extensions/AttributePanel/components/attributes/Border';
-import { Stack, useEditorProps, useFocusIdx } from 'easy-email-editor';
+import { Stack, useEditorProps, useFocusIdx } from '@jupitermail/easy-email-editor';
 import { CollapseWrapper } from '../../attributes/CollapseWrapper';
 import { imageHeightAdapter, pixelAdapter } from '../../adapter';
 

@@ -16,7 +16,7 @@ import { Uploader, UploaderServer } from '@extensions/AttributePanel/utils/Uploa
 import { classnames } from '@extensions/AttributePanel/utils/classnames';
 import { previewLoadImage } from '@extensions/AttributePanel/utils/previewLoadImage';
 import { MergeTags } from '@extensions';
-import { IconFont, useEditorProps } from 'easy-email-editor';
+import { IconFont, useEditorProps } from '@jupitermail/easy-email-editor';
 
 export interface ImageUploaderProps {
   onChange: (val: string) => void;

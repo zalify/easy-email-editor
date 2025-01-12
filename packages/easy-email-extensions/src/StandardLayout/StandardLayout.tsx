@@ -1,5 +1,5 @@
 import { Card, ConfigProvider, Layout } from '@arco-design/web-react';
-import { useEditorProps, useFocusIdx } from 'easy-email-editor';
+import { useEditorProps, useFocusIdx } from '@jupitermail/easy-email-editor';
 import React, { useEffect } from 'react';
 import { InteractivePrompt } from '../InteractivePrompt';
 import styles from './index.module.scss';
@@ -11,7 +11,7 @@ import {
   ExtensionProps,
   ExtensionProvider,
 } from '@extensions/components/Providers/ExtensionProvider';
-import { AdvancedType } from 'easy-email-core';
+import { AdvancedType } from '@jupitermail/easy-email-core';
 
 const defaultCategories: ExtensionProps['categories'] = [
   {

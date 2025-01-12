@@ -1,6 +1,6 @@
 import { Collapse, Grid, Space, Typography } from '@arco-design/web-react';
-import { AdvancedType, BlockManager, IBlockData } from 'easy-email-core';
-import { BlockAvatarWrapper, IconFont } from 'easy-email-editor';
+import { AdvancedType, BlockManager, IBlockData } from '@jupitermail/easy-email-core';
+import { BlockAvatarWrapper, IconFont } from '@jupitermail/easy-email-editor';
 import React, { useMemo, useState } from 'react';
 import { IconCaretRight, IconCaretUp } from '@arco-design/web-react/icon';
 import { getIconNameByBlockType } from '@extensions/utils/getIconNameByBlockType';

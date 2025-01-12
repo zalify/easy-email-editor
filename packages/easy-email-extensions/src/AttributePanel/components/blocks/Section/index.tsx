@@ -4,8 +4,8 @@ import { Background } from '@extensions/AttributePanel/components/attributes/Bac
 import { Border } from '@extensions/AttributePanel/components/attributes/Border';
 import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/attributes/AttributesPanelWrapper';
 import { Collapse, Grid, Space, Switch } from '@arco-design/web-react';
-import { Stack, useBlock, useFocusIdx } from 'easy-email-editor';
-import { BasicType, BlockManager } from 'easy-email-core';
+import { Stack, useBlock, useFocusIdx } from '@jupitermail/easy-email-editor';
+import { BasicType, BlockManager } from '@jupitermail/easy-email-core';
 import { ClassName } from '../../attributes/ClassName';
 import { CollapseWrapper } from '../../attributes/CollapseWrapper';
 import { TextField } from '@extensions/components/Form';

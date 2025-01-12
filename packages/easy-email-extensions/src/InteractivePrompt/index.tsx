@@ -1,4 +1,4 @@
-import { ActiveTabKeys, useActiveTab } from 'easy-email-editor';
+import { ActiveTabKeys, useActiveTab } from '@jupitermail/easy-email-editor';
 import React from 'react';
 import { FocusTooltip } from './components/FocusTooltip';
 import { HoverTooltip } from './components/HoverTooltip';

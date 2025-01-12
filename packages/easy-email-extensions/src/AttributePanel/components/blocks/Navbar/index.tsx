@@ -5,8 +5,8 @@ import { AttributesPanelWrapper } from '@extensions/AttributePanel/components/at
 import { Collapse, Grid, Space } from '@arco-design/web-react';
 import { IconLink } from '@arco-design/web-react/icon';
 import { NavbarLinkPadding } from '@extensions/AttributePanel/components/attributes/NavbarLinkPadding';
-import { useFocusIdx, Stack } from 'easy-email-editor';
-import { INavbar } from 'easy-email-core';
+import { useFocusIdx, Stack } from '@jupitermail/easy-email-editor';
+import { INavbar } from '@jupitermail/easy-email-core';
 import { ClassName } from '../../attributes/ClassName';
 import { CollapseWrapper } from '../../attributes/CollapseWrapper';
 import {

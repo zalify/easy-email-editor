@@ -2,7 +2,7 @@ import { useEditorContext } from '@/hooks/useEditorContext';
 import { useEditorProps } from '@/hooks/useEditorProps';
 import { useLazyState } from '@/hooks/useLazyState';
 import { HtmlStringToPreviewReactNodes } from '@/utils/HtmlStringToPreviewReactNodes';
-import { JsonToMjml } from 'easy-email-core';
+import { JsonToMjml } from '@jupitermail/easy-email-core';
 import { cloneDeep, isString } from 'lodash';
 import mjml from 'mjml-browser';
 import React, { useEffect, useMemo, useRef, useState } from 'react';

@@ -1,4 +1,4 @@
-import { ImageManager } from 'easy-email-core';
+import { ImageManager } from '@jupitermail/easy-email-core';
 
 const defaultImagesMap = {
   IMAGE_08:

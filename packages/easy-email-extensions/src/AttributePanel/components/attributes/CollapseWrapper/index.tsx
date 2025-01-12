@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Collapse, Space } from '@arco-design/web-react';
-import { useBlock, useEditorProps } from 'easy-email-editor';
-import { isAdvancedBlock } from 'easy-email-core';
+import { useBlock, useEditorProps } from '@jupitermail/easy-email-editor';
+import { isAdvancedBlock } from '@jupitermail/easy-email-core';
 import { Iteration } from '../Iteration';
 import { Condition } from '../Condition';
 
