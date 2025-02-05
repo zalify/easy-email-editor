@@ -20,7 +20,7 @@ export function EditPanel({
   mjmlReadOnly: boolean;
 }) {
   const { height } = useEditorProps();
-  const { compact = true } = useExtensionProps();
+  const { compact = true, showBlockLayer = true } = useExtensionProps();
 
   return (
     <Layout.Sider
@@ -51,16 +51,18 @@ export function EditPanel({
           </FullHeightOverlayScrollbars>
         </TabPane>
 
-        <TabPane
-          key='1'
-          title={t('Layer')}
-        >
-          <FullHeightOverlayScrollbars height={`calc(${height} - 60px)`}>
-            <div style={{ padding: 20 }}>
-              <BlockLayer />
-            </div>
-          </FullHeightOverlayScrollbars>
-        </TabPane>
+        {showBlockLayer && (
+          <TabPane
+            key='1'
+            title={t('Layer')}
+          >
+            <FullHeightOverlayScrollbars height={`calc(${height} - 60px)`}>
+              <div style={{ padding: 20 }}>
+                <BlockLayer />
+              </div>
+            </FullHeightOverlayScrollbars>
+          </TabPane>
+        )}
       </Tabs>
       {!compact && (
         <ConfigurationDrawer
