@@ -179,6 +179,7 @@ export default function App() {
                 showSourceCode={false}
                 categories={defaultCategories}
                 compact={compact}
+                showBlockLayer={false}
               >
                 <EmailEditor />
               </StandardLayout>
