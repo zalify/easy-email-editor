@@ -30,20 +30,12 @@ We are delighted to announce that we now have a more powerful and customizable c
 <a href="https://www.easyemail.pro/?utm_source=github" target="_blank">Check it out here </a>.
 
 ## Free email templates for MJML and HTML.
-<a href="https://github.com/Easy-Email-Pro/email-templates" target="_blank">Check it out here </a>.
 
----
+<a href="https://github.com/Easy-Email-Pro/email-templates" target="_blank">Check it out here </a>.
 
 ## Introduction
 
 Easy email is developed based on the [MJML](https://mjml.io/) and has very good compatibility. At the same time, it can generate code through drag-and-drop editing.
-
-## Features:
-
-- Drag and drop editor
-- Can be converted into `MJML`, or generated through `MJML`
-- Defined custom block
-- Dynamic rendering
 
 |                  Video Overview                  |
 | :----------------------------------------------: |
@@ -51,20 +43,14 @@ Easy email is developed based on the [MJML](https://mjml.io/) and has very good 
 
 ## Live Demo
 
-Check out the live demo here: <a href="https://email.maocanhua.cn/?utm_source=github" target="_blank" alt="https://email.maocanhua.cn/?utm_source=github">email.maocanhua.cn</a>
+Open source version: <a href="https://email.maocanhua.cn/?utm_source=github" target="_blank" alt="https://email.maocanhua.cn/?utm_source=github">email.maocanhua.cn</a>
 
-Pro version live demo here: <a href="https://demo.easyemail.pro/full?utm_source=github-live" target="_blank">demo.easyemail.pro</a>.
+Commercial version: <a href="https://demo.easyemail.pro/full?utm_source=github-live" target="_blank">demo.easyemail.pro</a>.
 
 ## Getting started
 
 ```sh
 $ npm install --save easy-email-core easy-email-editor easy-email-extensions react-final-form
-```
-
-or
-
-```sh
-$ yarn add easy-email-core easy-email-editor easy-email-extensions react-final-form
 ```
 
 ```js
@@ -75,8 +61,6 @@ import { ExtensionProps, StandardLayout } from 'easy-email-extensions';
 
 import 'easy-email-editor/lib/style.css';
 import 'easy-email-extensions/lib/style.css';
-
-// theme, If you need to change the theme, you can make a duplicate in https://arco.design/themes/design/1799/setting/base/Color
 import '@arco-themes/react-easy-email-theme/css/arco.css';
 
 const initialValues = {
@@ -114,19 +98,14 @@ export default function App() {
 
 ## Configuration
 
-| property          | Type                                                                                               | Description                                                                                                                          |
-| ----------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| height            | string / number                                                                                    | Set the height of the container                                                                                                      |
-| data              | interface IEmailTemplate { content: IPage; subject: string; subTitle: string; }                    | Source data                                                                                                                          |
-| children          | ( props: FormState<T>,helper: FormApi<IEmailTemplate, Partial<IEmailTemplate>>) => React.ReactNode | ReactNode                                                                                                                            |
-| onSubmit          | Config<IEmailTemplate, Partial<IEmailTemplate>>['onSubmit'];                                       | Called when the commit is triggered manually                                                                                         |
-| fontList          | { value: string; label: string; }[];                                                               | Default font list.                                                                                                                   |
-| interactiveStyle  | { hoverColor?: string; selectedColor?: string;}                                                    | Interactive prompt color                                                                                                             |
-| onUploadImage     | (data: Blob) => Promise<string>;                                                                   | Triggered when an image is pasted or uploaded                                                                                        |
-| autoComplete      | boolean                                                                                            | Automatically complete missing blocks. For example, Text => Section, will generate Text=>Column=>Section                             |
-| mergeTags         | Object                                                                                             | A merge tag is a bit of specific code that allows you to insert dynamic data into emails. Like `{{user.name}}`, and used for preview |
-| previewInjectData | Object                                                                                             | Dynamic data for preview, it will overwrite mergeTags.                                                                               |
-| onBeforePreview   | (html: string, mergeTags: PropsProviderProps['mergeTags']) => string                               | Promise<string> You can replace mergeTags when previewing.                                                                           |
+| property      | Type                                                                                               | Description                                   |
+| ------------- | -------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| height        | string / number                                                                                    | Set the height of the container               |
+| data          | interface IEmailTemplate { content: IPage; subject: string; subTitle: string; }                    | Source data                                   |
+| children      | ( props: FormState<T>,helper: FormApi<IEmailTemplate, Partial<IEmailTemplate>>) => React.ReactNode | ReactNode                                     |
+| onSubmit      | Config<IEmailTemplate, Partial<IEmailTemplate>>['onSubmit'];                                       | Called when the commit is triggered manually  |
+| fontList      | { value: string; label: string; }[];                                                               | Default font list.                            |
+| onUploadImage | (data: Blob) => Promise<string>;                                                                   | Triggered when an image is pasted or uploaded |
 
 </br>
 

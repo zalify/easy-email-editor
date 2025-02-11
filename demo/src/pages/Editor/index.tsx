@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-wrap-multilines */
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import template from '@demo/store/template';
 import { useAppSelector } from '@demo/hooks/useAppSelector';
@@ -15,47 +15,35 @@ import {
 } from '@arco-design/web-react';
 import { useQuery } from '@demo/hooks/useQuery';
 import { useHistory } from 'react-router-dom';
-import { cloneDeep, set, isEqual } from 'lodash';
+import { cloneDeep } from 'lodash';
 import { Loading } from '@demo/components/loading';
 import mjml from 'mjml-browser';
 import services from '@demo/services';
-import { IconMoonFill, IconSunFill } from '@arco-design/web-react/icon';
-import { Liquid } from 'liquidjs';
 import { saveAs } from 'file-saver';
 import {
   BlockAvatarWrapper,
   EmailEditor,
   EmailEditorProvider,
-  EmailEditorProviderProps,
   IEmailTemplate,
 } from 'easy-email-editor';
 
 import { Stack } from '@demo/components/Stack';
 import { pushEvent } from '@demo/utils/pushEvent';
-import { FormApi } from 'final-form';
 import { UserStorage } from '@demo/utils/user-storage';
 
-import { AdvancedType, BasicType, IBlockData, JsonToMjml } from 'easy-email-core';
-import { ExtensionProps, MjmlToJson, StandardLayout } from 'easy-email-extensions';
+import { AdvancedType, IBlockData, JsonToMjml } from 'easy-email-core';
+import { ExtensionProps, StandardLayout } from 'easy-email-extensions';
 import { AutoSaveAndRestoreEmail } from '@demo/components/AutoSaveAndRestoreEmail';
-
-// Register external blocks
-import './components/CustomBlocks';
 
 import 'easy-email-editor/lib/style.css';
 import 'easy-email-extensions/lib/style.css';
 import blueTheme from '@arco-themes/react-easy-email-theme/css/arco.css?inline';
-import purpleTheme from '@arco-themes/react-easy-email-theme-purple/css/arco.css?inline';
-import greenTheme from '@arco-themes/react-easy-email-theme-green/css/arco.css?inline';
-import { testMergeTags } from './testMergeTags';
-import { useMergeTagsModal } from './components/useMergeTagsModal';
 
-import { useWindowSize } from 'react-use';
-import { CustomBlocksType } from './components/CustomBlocks/constants';
 import { Uploader } from '@demo/utils/Uploader';
 import enUS from '@arco-design/web-react/es/locale/en-US';
 
 import { useShowCommercialEditor } from '@demo/hooks/useShowCommercialEditor';
+import { useWindowSize } from 'react-use';
 
 const defaultCategories: ExtensionProps['categories'] = [
   {
@@ -67,7 +55,6 @@ const defaultCategories: ExtensionProps['categories'] = [
       },
       {
         type: AdvancedType.IMAGE,
-        payload: { attributes: { padding: '0px 0px 0px 0px' } },
       },
       {
         type: AdvancedType.BUTTON,
@@ -121,74 +108,17 @@ const defaultCategories: ExtensionProps['categories'] = [
       },
     ],
   },
-  {
-    label: 'Custom',
-    active: true,
-    displayType: 'custom',
-    blocks: [
-      <BlockAvatarWrapper type={CustomBlocksType.PRODUCT_RECOMMENDATION}>
-        <div
-          style={{
-            position: 'relative',
-            border: '1px solid #ccc',
-            marginBottom: 20,
-            width: '80%',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-          }}
-        >
-          <img
-            src={
-              'http://res.cloudinary.com/dwkp0e1yo/image/upload/v1665841389/ctbjtig27parugrztdhk.png'
-            }
-            style={{
-              maxWidth: '100%',
-            }}
-          />
-          <div
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              zIndex: 2,
-            }}
-          />
-        </div>
-      </BlockAvatarWrapper>,
-    ],
-  },
 ];
-
-const fontList = [
-  'Arial',
-  'Tahoma',
-  'Verdana',
-  'Times New Roman',
-  'Courier New',
-  'Georgia',
-  'Lato',
-  'Montserrat',
-  '黑体',
-  '仿宋',
-  '楷体',
-  '标楷体',
-  '华文仿宋',
-  '华文楷体',
-  '宋体',
-  '微软雅黑',
-].map(item => ({ value: item, label: item }));
 
 export default function Editor() {
   const { featureEnabled } = useShowCommercialEditor();
   const dispatch = useDispatch();
   const history = useHistory();
   const templateData = useAppSelector('template');
-
+  const { width } = useWindowSize();
+  const compact = width > 1600;
   const { id, userId } = useQuery();
   const loading = useLoading(template.loadings.fetchById);
-  const { mergeTags, setMergeTags } = useMergeTagsModal(testMergeTags);
 
   useEffect(() => {
     if (id) {
@@ -212,95 +142,14 @@ export default function Editor() {
     return services.common.uploadByQiniu(blob);
   };
 
-  const onChangeMergeTag = useCallback((path: string, val: any) => {
-    setMergeTags(old => {
-      const newObj = cloneDeep(old);
-      set(newObj, path, val);
-      return newObj;
-    });
-  }, []);
-
-  const onImportMJML = async ({
-    restart,
-  }: {
-    restart: (val: IEmailTemplate) => void;
-  }) => {
-    const uploader = new Uploader(() => Promise.resolve(''), {
-      accept: 'text/mjml',
-      limit: 1,
-    });
-
-    const [file] = await uploader.chooseFile();
-    const reader = new FileReader();
-    const pageData = await new Promise<[string, IEmailTemplate['content']]>(
-      (resolve, reject) => {
-        reader.onload = function (evt) {
-          if (!evt.target) {
-            reject();
-            return;
-          }
-          try {
-            const pageData = MjmlToJson(evt.target.result as any);
-            resolve([file.name, pageData]);
-          } catch (error) {
-            reject();
-          }
-        };
-        reader.readAsText(file);
-      },
-    );
-
-    restart({
-      subject: pageData[0],
-      content: pageData[1],
-      subTitle: '',
-    });
-  };
-
-  const onImportJSON = async ({
-    restart,
-  }: {
-    restart: (val: IEmailTemplate) => void;
-  }) => {
-    const uploader = new Uploader(() => Promise.resolve(''), {
-      accept: 'application/json',
-      limit: 1,
-    });
-
-    const [file] = await uploader.chooseFile();
-    const reader = new FileReader();
-    const emailTemplate = await new Promise<IEmailTemplate>((resolve, reject) => {
-      reader.onload = function (evt) {
-        if (!evt.target) {
-          reject();
-          return;
-        }
-        try {
-          const template = JSON.parse(evt.target.result as any) as IEmailTemplate;
-          resolve(template);
-        } catch (error) {
-          reject();
-        }
-      };
-      reader.readAsText(file);
-    });
-
-    restart({
-      subject: emailTemplate.subject,
-      content: emailTemplate.content,
-      subTitle: emailTemplate.subTitle,
-    });
-  };
-
   const onExportMJML = (values: IEmailTemplate) => {
     const mjmlString = JsonToMjml({
       data: values.content,
       mode: 'production',
       context: values.content,
-      dataSource: mergeTags,
     });
 
-    pushEvent({ event: 'MJMLExport', payload: { values, mergeTags } });
+    pushEvent({ event: 'MJMLExport', payload: { values } });
     navigator.clipboard.writeText(mjmlString);
     saveAs(new Blob([mjmlString], { type: 'text/mjml' }), 'easy-email.mjml');
   };
@@ -310,12 +159,11 @@ export default function Editor() {
       data: values.content,
       mode: 'production',
       context: values.content,
-      dataSource: mergeTags,
     });
 
     const html = mjml(mjmlString, {}).html;
 
-    pushEvent({ event: 'HTMLExport', payload: { values, mergeTags } });
+    pushEvent({ event: 'HTMLExport', payload: { values } });
     navigator.clipboard.writeText(html);
     saveAs(new Blob([html], { type: 'text/html' }), 'easy-email.html');
   };
@@ -344,15 +192,6 @@ export default function Editor() {
     [dispatch, history, id, initialValues],
   );
 
-  const onBeforePreview: EmailEditorProviderProps['onBeforePreview'] = useCallback(
-    (html: string, mergeTags) => {
-      const engine = new Liquid();
-      const tpl = engine.parse(html);
-      return engine.renderSync(tpl, mergeTags);
-    },
-    [],
-  );
-
   if (!templateData && loading) {
     return (
       <Loading loading={loading}>
@@ -368,18 +207,12 @@ export default function Editor() {
       <div>
         <style>{blueTheme}</style>
         <EmailEditorProvider
-          key={id}
           height={featureEnabled ? 'calc(100vh - 108px)' : 'calc(100vh - 68px)'}
           data={initialValues}
           onUploadImage={onUploadImage}
-          fontList={fontList}
           onSubmit={onSubmit}
-          onChangeMergeTag={onChangeMergeTag}
-          autoComplete
           dashed={false}
-          mergeTags={mergeTags}
-          mergeTagGenerate={tag => `{{${tag}}}`}
-          onBeforePreview={onBeforePreview}
+          compact={compact}
         >
           {({ values }, { submit, restart }) => {
             return (
@@ -391,30 +224,6 @@ export default function Editor() {
                   onBack={() => history.push('/')}
                   extra={
                     <Stack alignment='center'>
-                      <Dropdown
-                        droplist={
-                          <Menu>
-                            <Menu.Item
-                              key='MJML'
-                              onClick={() => onImportMJML({ restart })}
-                            >
-                              Import from MJML
-                            </Menu.Item>
-
-                            <Menu.Item
-                              key='JSON'
-                              onClick={() => onImportJSON({ restart })}
-                            >
-                              Import from JSON
-                            </Menu.Item>
-                          </Menu>
-                        }
-                      >
-                        <Button>
-                          <strong>Import</strong>
-                        </Button>
-                      </Dropdown>
-
                       <Dropdown
                         droplist={
                           <Menu>
@@ -454,7 +263,11 @@ export default function Editor() {
                   }
                 />
 
-                <StandardLayout categories={defaultCategories}>
+                <StandardLayout
+                  categories={defaultCategories}
+                  showSourceCode={false}
+                  showBlockLayer={false}
+                >
                   <EmailEditor />
                 </StandardLayout>
                 <AutoSaveAndRestoreEmail />
