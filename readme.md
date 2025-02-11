@@ -50,17 +50,17 @@ Commercial version: <a href="https://demo.easyemail.pro/full?utm_source=github-l
 ## Getting started
 
 ```sh
-$ npm install --save easy-email-core easy-email-editor easy-email-extensions react-final-form
+$ npm install --save @jupitermail/easy-email-core @jupitermail/easy-email-editor @jupitermail/easy-email-extensions react-final-form
 ```
 
 ```js
 import React from 'react';
-import { BlockManager, BasicType, AdvancedType } from 'easy-email-core';
-import { EmailEditor, EmailEditorProvider } from 'easy-email-editor';
-import { ExtensionProps, StandardLayout } from 'easy-email-extensions';
+import { BlockManager, BasicType, AdvancedType } from '@jupitermail/easy-email-core';
+import { EmailEditor, EmailEditorProvider } from '@jupitermail/easy-email-editor';
+import { ExtensionProps, StandardLayout } from '@jupitermail/easy-email-extensions';
 
-import 'easy-email-editor/lib/style.css';
-import 'easy-email-extensions/lib/style.css';
+import '@jupitermail/easy-email-editor/lib/style.css';
+import '@jupitermail/easy-email-extensions/lib/style.css';
 import '@arco-themes/react-easy-email-theme/css/arco.css';
 
 const initialValues = {
