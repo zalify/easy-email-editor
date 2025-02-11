@@ -4,36 +4,13 @@ import { AdvancedType } from 'easy-email-core';
 import {
   EmailEditor,
   EmailEditorProvider,
-  EmailEditorProviderProps,
   IEmailTemplate,
   Stack,
 } from 'easy-email-editor';
 import { ExtensionProps, StandardLayout } from 'easy-email-extensions';
-import { useWindowSize } from 'react-use';
 import { Button, Message, PageHeader } from '@arco-design/web-react';
 import 'easy-email-editor/lib/style.css';
 import 'easy-email-extensions/lib/style.css';
-
-const fontList = [
-  'Arial',
-  'Tahoma',
-  'Verdana',
-  'Times New Roman',
-  'Courier New',
-  'Georgia',
-  'Lato',
-  'Montserrat',
-  '黑体',
-  '仿宋',
-  '楷体',
-  '标楷体',
-  '华文仿宋',
-  '华文楷体',
-  '宋体',
-  '微软雅黑',
-].map(item => ({ value: item, label: item }));
-
-// theme, If you need to change the theme, you can make a duplicate in https://arco.design/themes/design/1799/setting/base/Color
 
 import { Config } from 'final-form';
 import {
@@ -44,15 +21,12 @@ import {
 import { useRouter } from 'next/router';
 import FullScreenLoading from '@/client/components/FullScreenLoading';
 import { pushEvent } from '@/client/utils/pushEvent';
-import { Liquid } from 'liquidjs';
-import { testMergeTags } from './testMergeTags';
 
 import blueTheme from '!!raw-loader!@arco-themes/react-easy-email-theme/css/arco.css';
 import { useSession } from 'next-auth/react';
 import { CommercialBanner } from '@/client/components/CommercialBanner';
 import { useShowCommercialEditor } from '@/client/hooks/useShowCommercialEditor';
-
-const imageCompression = import('browser-image-compression');
+import { useWindowSize } from 'react-use';
 
 const defaultCategories: ExtensionProps['categories'] = [
   {
@@ -64,7 +38,6 @@ const defaultCategories: ExtensionProps['categories'] = [
       },
       {
         type: AdvancedType.IMAGE,
-        payload: { attributes: { padding: '0px 0px 0px 0px' } },
       },
       {
         type: AdvancedType.BUTTON,
@@ -153,24 +126,11 @@ export default function App() {
     }
   };
 
-  const onBeforePreview: EmailEditorProviderProps['onBeforePreview'] = useCallback(
-    (html: string, mergeTags) => {
-      const engine = new Liquid();
-      const tpl = engine.parse(html);
-      return engine.renderSync(tpl, mergeTags);
-    },
-    [],
-  );
-
   const onUploadImage = async (blob: Blob) => {
-    const compressionFile = await (
-      await imageCompression
-    ).default(blob as File, {
-      maxWidthOrHeight: 1440,
-    });
-    return upload(compressionFile);
+    return upload(blob);
   };
-
+  const { width } = useWindowSize();
+  const compact = width > 1600;
   if (!template || !user) return <FullScreenLoading isFullScreen />;
 
   return (
@@ -179,16 +139,11 @@ export default function App() {
       <EmailEditorProvider
         data={template}
         height={'calc(100vh - 115px)'}
-        autoComplete
         dashed={false}
         onSubmit={onSubmit}
         onUploadImage={onUploadImage}
-        fontList={fontList}
-        mergeTags={testMergeTags}
-        mergeTagGenerate={tag => `{{${tag}}}`}
-        onBeforePreview={onBeforePreview}
       >
-        {({ values }, { submit, restart }) => {
+        {({}, { submit }) => {
           return (
             <>
               <PageHeader
@@ -221,8 +176,10 @@ export default function App() {
               />
               <CommercialBanner page='EDITOR' />
               <StandardLayout
-                showSourceCode={true}
+                showSourceCode={false}
                 categories={defaultCategories}
+                compact={compact}
+                showBlockLayer={false}
               >
                 <EmailEditor />
               </StandardLayout>
