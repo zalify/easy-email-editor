@@ -52,7 +52,7 @@ export function HtmlStringToReactNodes(
   const reactNode = (
     <RenderReactNode
       selector={'0'}
-      node={doc.body.children[0] as HTMLElement}
+      node={doc.documentElement}
       index={0}
     />
   );
