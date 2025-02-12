@@ -13,7 +13,7 @@ export function HtmlStringToPreviewReactNodes(
 ) {
   let doc = domParser.parseFromString(content, 'text/html'); // The average time is about 1.4 ms
   const reactNode = (
-    <RenderReactNode selector={'0'} node={doc.documentElement} index={0} />
+    <RenderReactNode selector={'0'} node={doc.body.children[0] as HTMLElement} index={0} />
   );
 
   return reactNode;
