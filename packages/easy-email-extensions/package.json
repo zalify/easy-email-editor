@@ -2,7 +2,7 @@
   "name": "@jupitermail/easy-email-extensions",
   "license": "MIT",
   "description": "Email editor",
-  "version": "4.16.3",
+  "version": "4.16.4",
   "author": "Ali Mahmoudi",
   "keywords": [
     "email editor core"
