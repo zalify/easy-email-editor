@@ -116,7 +116,7 @@ export const Social: IBlock<ISocial> = createBlock({
           .map((key) => `${key}="${element[key as keyof typeof element]}"`)
           .join(' ');
         return `
-          <mj-social-element ${elementAttributeStr}>${element.content}</mj-social-element>
+          <mj-social-element ${elementAttributeStr}>${element.content ?? ''}</mj-social-element>
           `;
       })
       .join('\n');
