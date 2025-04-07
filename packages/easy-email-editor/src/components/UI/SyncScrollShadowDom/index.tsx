@@ -1,25 +1,28 @@
 import { SYNC_SCROLL_ELEMENT_CLASS_NAME, useActiveTab } from '@';
 import { useDomScrollHeight } from '@/hooks/useDomScrollHeight';
-import { debounce } from 'lodash';
-import React, { useState, useEffect, useCallback } from 'react';
-import ReactDOM from 'react-dom';
+import React, { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 
 // It will be occluded by richText bar, so it needs to be offset
 const offsetTop = 50;
 
-export const SyncScrollShadowDom: React.FC<React.HTMLProps<HTMLElement> & { isActive: boolean; }> = (props) => {
-  const [root, setRoot] = useState<null | ShadowRoot>(null);
-  const [ref, setRef] = useState<null | HTMLDivElement>(null);
+export const SyncScrollShadowDom: React.FC<React.HTMLProps<HTMLElement> & {
+  isActive: boolean;
+}> = (props) => {
+  const iframeRef = useRef<null | HTMLIFrameElement>(null);
+
   const { viewElementRef } = useDomScrollHeight();
   const { activeTab } = useActiveTab();
   const { isActive, ...rest } = props;
 
-  const setFirstVisibleEle = useCallback(debounce((root: HTMLElement) => {
-    if (!root.shadowRoot) return;
+  useEffect(() => {
+    if (!iframeRef.current?.contentDocument) return;
+
+    const root = iframeRef.current;
 
     const { left, width, top: containerTop } = root.getBoundingClientRect();
 
-    const ele = root.shadowRoot.elementFromPoint(left + width / 2, containerTop + offsetTop);
+    const ele = root.contentDocument?.elementFromPoint(left + width / 2, containerTop + offsetTop);
 
     const findSelectorNode = (ele: Element): Element | null => {
       if (ele.getAttribute('data-selector')) {
@@ -43,23 +46,23 @@ export const SyncScrollShadowDom: React.FC<React.HTMLProps<HTMLElement> & { isAc
 
       if (selector) {
         viewElementRef.current = {
-          selector: selector || '',
-          top: selectorDiffTop
+          selector: selector,
+          top: selectorDiffTop,
         };
 
       }
 
     }
-  }, 200), [viewElementRef]);
+  }, [viewElementRef, iframeRef]);
 
   useEffect(() => {
-    if (!isActive || !root) return;
+    if (!isActive || !iframeRef.current) return;
     const viewElement = viewElementRef.current;
-    const scrollEle = root.querySelector(`.${SYNC_SCROLL_ELEMENT_CLASS_NAME}`);
+    const scrollEle = iframeRef.current.querySelector(`.${SYNC_SCROLL_ELEMENT_CLASS_NAME}`);
     if (!scrollEle) return;
 
     if (viewElement) {
-      const viewElementNode = root.querySelector(`[data-selector="${viewElement?.selector}"]`);
+      const viewElementNode = iframeRef.current.querySelector(`[data-selector="${viewElement?.selector}"]`);
 
       if (viewElementNode && scrollEle) {
 
@@ -71,30 +74,26 @@ export const SyncScrollShadowDom: React.FC<React.HTMLProps<HTMLElement> & { isAc
 
       scrollEle.scrollTo(0, 0);
     }
-  }, [root, viewElementRef, activeTab, isActive]);
+  }, [iframeRef, viewElementRef, activeTab, isActive]);
 
   useEffect(() => {
-    if (ref) {
-      const root = ref.attachShadow({ mode: 'open' });
-      setRoot(root);
-      if (!ref.shadowRoot) return;
-
+    if (iframeRef.current?.contentWindow) {
+      if (!iframeRef.current.contentDocument) return;
       const onScroll = () => {
-        if (!ref.shadowRoot) return;
-        setFirstVisibleEle(ref);
+        if (!iframeRef.current?.contentDocument) return;
       };
-      ref.shadowRoot.addEventListener('scroll', onScroll, true);
+      iframeRef.current?.contentDocument.addEventListener('scroll', onScroll, true);
+
       return () => {
-        ref.shadowRoot?.removeEventListener('scroll', onScroll, true);
+        iframeRef.current?.contentDocument?.removeEventListener('scroll', onScroll, true);
       };
     }
-  }, [ref, setFirstVisibleEle]);
+  }, [iframeRef]);
 
   return (
-    <>
-      <div {...(rest as any)} ref={setRef}>
-        {root && ReactDOM.createPortal(props.children, root as any)}
-      </div>
-    </>
+    <iframe title="Email Editor" {...(rest as any)} ref={iframeRef}>
+      {iframeRef?.current?.contentDocument && createPortal(props.children, iframeRef.current.contentDocument.body)}
+    </iframe>
   );
 };
+
