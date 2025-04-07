@@ -1,4 +1,5 @@
 import { IBlockData } from 'easy-email-core';
+import { AvailableTools } from 'easy-email-extensions';
 import React, { useMemo } from 'react';
 
 export interface CollectedBlock {
@@ -47,6 +48,11 @@ export interface PropsProviderProps {
   ) => string | Promise<string>;
   enabledLogic?: boolean;
   locale?: Record<string, string>;
+
+  toolbar?: {
+    tools?: AvailableTools[];
+    suffix?: (execCommand: (cmd: string, value?: any) => void) => React.ReactNode;
+  };
 }
 
 const defaultMergeTagGenerate = (m: string) => `{{${m}}}`;

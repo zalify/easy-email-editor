@@ -26,6 +26,7 @@
       "@core": ["../easy-email-core/src"],
       "@core/*": ["../easy-email-core/src/*"],
       "easy-email-core": ["../easy-email-core"],
+      "easy-email-extensions": ["../easy-email-extensions/src/index.tsx"],
       "react": ["./node_modules/@types/react"]
     }
   },

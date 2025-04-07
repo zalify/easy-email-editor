@@ -27,6 +27,7 @@ import { InputSearchProps } from '@arco-design/web-react/es/Input';
 import { ColorPickerField } from './ColorPickerField';
 
 export { RichTextField } from './RichTextField';
+export { AvailableTools } from './RichTextToolBar';
 
 export const TextField = enhancer<InputProps>(Input, value => value);
 
