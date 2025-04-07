@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MjmlDomRender } from '../EditEmailPreview/components/MjmlDomRender';
 import { useDropBlock } from '@/hooks/useDropBlock';
 import { useHotKeys } from '@/hooks/useHotKeys';
@@ -28,47 +28,44 @@ export function EditEmailPreview() {
     }
   }, [containerRef, setInitialized]);
 
-  return useMemo(
-    () => (
-      <SyncScrollShadowDom
-        isActive={activeTab === ActiveTabKeys.EDIT}
-        id='VisualEditorEditMode'
-        {...{
-          [DATA_ATTRIBUTE_DROP_CONTAINER]: 'true',
+  return (
+    <SyncScrollShadowDom
+      isActive={activeTab === ActiveTabKeys.EDIT}
+      id="VisualEditorEditMode"
+      {...{
+        [DATA_ATTRIBUTE_DROP_CONTAINER]: 'true',
+      }}
+      style={{
+        height: '100%',
+        width: '100%',
+        zIndex: 10,
+        position: 'relative',
+        outline: 'none',
+      }}
+    >
+      <div
+        id="easy-email-plugins"
+        style={{
+          position: 'relative',
         }}
+      />
+      <div
+        className={classnames('shadow-container', SYNC_SCROLL_ELEMENT_CLASS_NAME)}
         style={{
           height: '100%',
+          overflowY: 'auto',
           zIndex: 10,
-          position: 'relative',
-          outline: 'none',
+          paddingLeft: 10,
+          paddingRight: 10,
+          paddingTop: 40,
+          paddingBottom: 40,
+          boxSizing: 'border-box',
         }}
+        ref={setContainerRef}
       >
-        <div
-          id='easy-email-plugins'
-          style={{
-            position: 'relative',
-          }}
-        />
-        <div
-          className={classnames('shadow-container', SYNC_SCROLL_ELEMENT_CLASS_NAME)}
-          style={{
-            height: '100%',
-            overflowY: 'auto',
-            zIndex: 10,
-            paddingLeft: 10,
-            paddingRight: 10,
-            paddingTop: 40,
-            paddingBottom: 40,
-            boxSizing: 'border-box',
-          }}
-          ref={setContainerRef}
-
-        >
-          <MjmlDomRender />
-        </div>
-        <ShadowStyle />
-      </SyncScrollShadowDom>
-    ),
-    [activeTab]
+        <MjmlDomRender />
+      </div>
+      <ShadowStyle />
+    </SyncScrollShadowDom>
   );
 }
