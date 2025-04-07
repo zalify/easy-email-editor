@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { RICH_TEXT_TOOL_BAR } from '@extensions/constants';
-import { getShadowRoot } from 'easy-email-editor';
+import { getIframeDocument } from 'easy-email-editor';
 import React, { useEffect, useMemo, useState } from 'react';
 
 export const SelectionRangeContext = React.createContext<{
@@ -8,7 +8,8 @@ export const SelectionRangeContext = React.createContext<{
   setSelectionRange: React.Dispatch<React.SetStateAction<Range | null>>;
 }>({
   selectionRange: null,
-  setSelectionRange: () => {},
+  setSelectionRange: () => {
+  },
 });
 
 export const SelectionRangeProvider: React.FC<{
@@ -19,13 +20,14 @@ export const SelectionRangeProvider: React.FC<{
   useEffect(() => {
     const onSelectionChange = () => {
       try {
-        const range = (getShadowRoot() as any).getSelection().getRangeAt(0);
+        const range = getIframeDocument()?.getSelection()?.getRangeAt(0);
         if (range) {
-          const toolbar = getShadowRoot().getElementById(RICH_TEXT_TOOL_BAR);
+          const toolbar = getIframeDocument()?.getElementById(RICH_TEXT_TOOL_BAR);
           if (toolbar && toolbar.contains(range.commonAncestorContainer)) return;
           setSelectionRange(range);
         }
-      } catch (error) {}
+      } catch (error) {
+      }
     };
 
     document.addEventListener('selectionchange', onSelectionChange);
