@@ -1,5 +1,9 @@
 import React, { useEffect } from 'react';
-import { ContentEditableType, DATA_CONTENT_EDITABLE_TYPE, getShadowRoot } from 'easy-email-editor';
+import {
+  ContentEditableType,
+  DATA_CONTENT_EDITABLE_TYPE,
+  getIframeDocument,
+} from 'easy-email-editor';
 import { useField, useForm } from 'react-final-form';
 
 export interface InlineTextProps {
@@ -16,7 +20,7 @@ export function InlineText({ idx, onChange, children }: InlineTextProps) {
   useField(idx); // setFieldTouched will be work while register field,
 
   useEffect(() => {
-    const shadowRoot = getShadowRoot();
+    const shadowRoot = getIframeDocument();
 
     const onPaste = (e: ClipboardEvent) => {
       if (!(e.target instanceof Element) || !e.target.getAttribute('contenteditable')) return;
@@ -44,12 +48,12 @@ export function InlineText({ idx, onChange, children }: InlineTextProps) {
       }
     };
 
-    shadowRoot.addEventListener('paste', onPaste as any, true);
-    shadowRoot.addEventListener('input', onInput);
+    shadowRoot?.body.addEventListener('paste', onPaste as any, true);
+    shadowRoot?.body.addEventListener('input', onInput);
 
     return () => {
-      shadowRoot.removeEventListener('paste', onPaste as any, true);
-      shadowRoot.removeEventListener('input', onInput);
+      shadowRoot?.body.removeEventListener('paste', onPaste as any, true);
+      shadowRoot?.body.removeEventListener('input', onInput);
     };
   }, [onChange, setFieldTouched]);
 

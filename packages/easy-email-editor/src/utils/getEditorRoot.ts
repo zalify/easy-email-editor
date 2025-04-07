@@ -1,2 +1,2 @@
 export const getEditorRoot = () =>
-  document.getElementById('VisualEditorEditMode');
+  <HTMLIFrameElement>document.getElementById('VisualEditorEditMode');

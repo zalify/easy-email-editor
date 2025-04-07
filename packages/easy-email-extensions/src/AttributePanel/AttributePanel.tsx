@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  getShadowRoot,
+  getIframeDocument,
   TextStyle,
   useBlock,
   useEditorContext,
@@ -8,12 +8,13 @@ import {
 } from 'easy-email-editor';
 import { RichTextField } from '../components/Form/RichTextField';
 import { PresetColorsProvider } from './components/provider/PresetColorsProvider';
-import ReactDOM from 'react-dom';
 import { BlockAttributeConfigurationManager } from './utils/BlockAttributeConfigurationManager';
 import { SelectionRangeProvider } from './components/provider/SelectionRangeProvider';
 import { TableOperation } from './components/blocks/AdvancedTable/Operation';
+import ReactDOM from 'react-dom';
 
-export interface AttributePanelProps {}
+export interface AttributePanelProps {
+}
 
 export function AttributePanel() {
   const { values, focusBlock } = useBlock();
@@ -23,7 +24,7 @@ export function AttributePanel() {
 
   const Com = focusBlock && BlockAttributeConfigurationManager.get(focusBlock.type);
 
-  const shadowRoot = getShadowRoot();
+  const shadowRoot = getIframeDocument();
 
   if (!initialized) return null;
 
@@ -34,7 +35,7 @@ export function AttributePanel() {
           <Com key={focusIdx} />
         ) : (
           <div style={{ marginTop: 200, padding: '0 50px' }}>
-            <TextStyle size='extraLarge'>{t('No matching components')}</TextStyle>
+            <TextStyle size="extraLarge">{t('No matching components')}</TextStyle>
           </div>
         )}
 
@@ -43,7 +44,7 @@ export function AttributePanel() {
         </div>
         <TableOperation />
         <>
-          {shadowRoot &&
+          {shadowRoot?.body &&
             ReactDOM.createPortal(
               <style>
                 {`
@@ -54,7 +55,7 @@ export function AttributePanel() {
               }
               `}
               </style>,
-              shadowRoot as any,
+              shadowRoot.body as any,
             )}
         </>
       </PresetColorsProvider>
