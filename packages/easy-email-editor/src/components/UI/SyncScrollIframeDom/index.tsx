@@ -6,7 +6,7 @@ import { createPortal } from 'react-dom';
 // It will be occluded by richText bar, so it needs to be offset
 const offsetTop = 50;
 
-export const SyncScrollShadowDom: React.FC<React.HTMLProps<HTMLElement> & {
+export const SyncScrollIframeDom: React.FC<React.HTMLProps<HTMLElement> & {
   isActive: boolean;
 }> = (props) => {
   const iframeRef = useRef<null | HTMLIFrameElement>(null);
@@ -71,24 +71,9 @@ export const SyncScrollShadowDom: React.FC<React.HTMLProps<HTMLElement> & {
         scrollEle.scrollTo(0, scrollEle.scrollTop - viewElement.top);
       }
     } else {
-
       scrollEle.scrollTo(0, 0);
     }
   }, [iframeRef, viewElementRef, activeTab, isActive]);
-
-  useEffect(() => {
-    if (iframeRef.current?.contentWindow) {
-      if (!iframeRef.current.contentDocument) return;
-      const onScroll = () => {
-        if (!iframeRef.current?.contentDocument) return;
-      };
-      iframeRef.current?.contentDocument.addEventListener('scroll', onScroll, true);
-
-      return () => {
-        iframeRef.current?.contentDocument?.removeEventListener('scroll', onScroll, true);
-      };
-    }
-  }, [iframeRef]);
 
   return (
     <iframe title="Email Editor" {...(rest as any)} ref={iframeRef}>

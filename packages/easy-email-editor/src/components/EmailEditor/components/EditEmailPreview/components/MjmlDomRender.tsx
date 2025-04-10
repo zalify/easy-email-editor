@@ -19,9 +19,6 @@ export function MjmlDomRender() {
   const { pageData: content, initialized } = useEditorContext();
   const { dashed, mergeTags, enabledMergeTagsBadge } = useEditorProps();
 
-  const isTextFocusing =
-    getIframeDocument()?.activeElement?.getAttribute('contenteditable') === 'true';
-
   useEffect(() => {
     if (!initialized) return;
 
@@ -35,30 +32,26 @@ export function MjmlDomRender() {
   }, [initialized]);
 
   useEffect(() => {
-    if (!isTextFocus && !isEqual(content, pageData)) {
+    if (!isEqual(content, pageData)) {
       setPageData(cloneDeep(content));
     }
-  }, [content, pageData, setPageData, isTextFocus]);
-
-  useEffect(() => {
-    setIsTextFocus(isTextFocusing);
-  }, [isTextFocusing]);
+  }, [content, pageData, isTextFocus]);
 
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
       if (getIframeDocument()?.contains(e.target as Node)) {
         return;
       }
-      const fixedContainer = document.getElementById(FIXED_CONTAINER_ID);
+      const fixedContainer = getIframeDocument()?.getElementById(FIXED_CONTAINER_ID);
       if (fixedContainer?.contains(e.target as Node)) {
         return;
       }
-      setIsTextFocus(false);
+      // setIsTextFocus(false);
     };
 
-    window.addEventListener('click', onClick);
+    getIframeDocument()?.addEventListener('click', onClick);
     return () => {
-      window.removeEventListener('click', onClick);
+      getIframeDocument()?.removeEventListener('click', onClick);
     };
   }, []);
 
@@ -82,7 +75,7 @@ export function MjmlDomRender() {
   const html = useMemo(() => {
     if (!pageData) return '';
 
-    const renderHtml = mjml(
+    return mjml(
       JsonToMjml({
         data: pageData,
         idx: getPageIdx(),
@@ -91,7 +84,6 @@ export function MjmlDomRender() {
         dataSource: cloneDeep(mergeTags),
       }),
     ).html;
-    return renderHtml;
   }, [mergeTags, pageData]);
 
   return (

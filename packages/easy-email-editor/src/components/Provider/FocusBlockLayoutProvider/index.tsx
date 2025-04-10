@@ -59,6 +59,8 @@ export const FocusBlockLayoutProvider: React.FC<{
     };
   }, [focusBlockNode]);
 
+  console.log(value);
+
   return (
     <FocusBlockLayoutContext.Provider value={value}>
       {props.children}

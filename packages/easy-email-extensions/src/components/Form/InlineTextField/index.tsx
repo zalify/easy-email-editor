@@ -23,27 +23,33 @@ export function InlineText({ idx, onChange, children }: InlineTextProps) {
     const shadowRoot = getIframeDocument();
 
     const onPaste = (e: ClipboardEvent) => {
-      if (!(e.target instanceof Element) || !e.target.getAttribute('contenteditable')) return;
-      e.preventDefault();
+      const target = e.target as HTMLElement;
 
-      const text = e.clipboardData?.getData('text/plain') || '';
-      document.execCommand('insertHTML', false, text);
-      const contentEditableType = e.target.getAttribute(DATA_CONTENT_EDITABLE_TYPE);
-      if (contentEditableType === ContentEditableType.RichText) {
-        onChange(e.target.innerHTML || '');
-      } else if (contentEditableType === ContentEditableType.Text) {
-        onChange(e.target.textContent?.trim() || '');
+      if (target.getAttribute('contenteditable')) {
+
+        e.preventDefault();
+
+        const text = e.clipboardData?.getData('text/plain') ?? '';
+        document.execCommand('insertHTML', false, text);
+        const contentEditableType = target.getAttribute(DATA_CONTENT_EDITABLE_TYPE);
+        if (contentEditableType === ContentEditableType.RichText) {
+          onChange(target.innerHTML || '');
+        } else if (contentEditableType === ContentEditableType.Text) {
+          onChange(target.textContent?.trim() ?? '');
+        }
       }
     };
 
     const onInput = (e: Event) => {
-      if (e.target instanceof Element && e.target.getAttribute('contenteditable')) {
+      const target = e.target as HTMLElement;
 
-        const contentEditableType = e.target.getAttribute(DATA_CONTENT_EDITABLE_TYPE);
+      if (target.getAttribute('contenteditable')) {
+
+        const contentEditableType = target.getAttribute(DATA_CONTENT_EDITABLE_TYPE);
         if (contentEditableType === ContentEditableType.RichText) {
-          onChange(e.target.innerHTML || '');
+          onChange(target.innerHTML || '');
         } else if (contentEditableType === ContentEditableType.Text) {
-          onChange(e.target.textContent?.trim() || '');
+          onChange(target.textContent?.trim() ?? '');
         }
       }
     };

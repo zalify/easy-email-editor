@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { MjmlDomRender } from '../EditEmailPreview/components/MjmlDomRender';
 import { useDropBlock } from '@/hooks/useDropBlock';
 import { useHotKeys } from '@/hooks/useHotKeys';
-import { SyncScrollShadowDom } from '@/components/UI/SyncScrollShadowDom';
 import { ShadowStyle } from './components/ShadowStyle';
 import { useEditorContext } from '@/hooks/useEditorContext';
 import { DATA_ATTRIBUTE_DROP_CONTAINER, SYNC_SCROLL_ELEMENT_CLASS_NAME } from '@/constants';
 import { classnames } from '@/utils/classnames';
 import { ActiveTabKeys } from '@/components/Provider/BlocksProvider';
 import { useActiveTab } from '@/hooks/useActiveTab';
+import { SyncScrollIframeDom } from '@/components/UI/SyncScrollIframeDom';
 
 export function EditEmailPreview() {
   useHotKeys();
@@ -29,7 +29,7 @@ export function EditEmailPreview() {
   }, [containerRef, setInitialized]);
 
   return (
-    <SyncScrollShadowDom
+    <SyncScrollIframeDom
       isActive={activeTab === ActiveTabKeys.EDIT}
       id="VisualEditorEditMode"
       {...{
@@ -66,6 +66,6 @@ export function EditEmailPreview() {
         <MjmlDomRender />
       </div>
       <ShadowStyle />
-    </SyncScrollShadowDom>
+    </SyncScrollIframeDom>
   );
 }

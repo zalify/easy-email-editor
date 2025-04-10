@@ -9,11 +9,11 @@ import {
   RICH_TEXT_BAR_ID,
   useEditorProps,
 } from 'easy-email-editor';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { InlineText, InlineTextProps } from '../InlineTextField';
 import { RichTextToolBar } from '../RichTextToolBar';
 import { Field, FieldInputProps } from 'react-final-form';
-import { debounce } from 'lodash';
+import { useDebounce } from 'react-use';
 
 export const RichTextField = (
   props: Omit<InlineTextProps, 'onChange' | 'mutators'>,
@@ -35,9 +35,9 @@ export const RichTextField = (
       setContentEditableName('');
     };
 
-    window.addEventListener('click', onClick);
+    getIframeDocument()?.addEventListener('click', onClick);
     return () => {
-      window.removeEventListener('click', onClick);
+      getIframeDocument()?.removeEventListener('click', onClick);
     };
   }, []);
 
@@ -76,17 +76,15 @@ export const RichTextField = (
   if (!contentEditableName) return null;
 
   return (
-    <>
-      <Field name={contentEditableName} parse={(v) => v}>
-        {({ input }) => (
-          <FieldWrapper
-            {...props}
-            contentEditableType={contentEditableType}
-            input={input}
-          />
-        )}
-      </Field>
-    </>
+    <Field name={contentEditableName} parse={(v) => v}>
+      {({ input }) => (
+        <FieldWrapper
+          {...props}
+          contentEditableType={contentEditableType}
+          input={input}
+        />
+      )}
+    </Field>
   );
 };
 
@@ -98,27 +96,24 @@ function FieldWrapper(
 ) {
   const { input, contentEditableType, ...rest } = props;
   const { mergeTagGenerate, enabledMergeTagsBadge } = useEditorProps();
+  const [value, setValue] = useState(input.value);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debounceCallbackChange = useCallback(
-    debounce((val) => {
-      if (enabledMergeTagsBadge) {
-        input.onChange(MergeTagBadge.revert(val, mergeTagGenerate));
-      } else {
-        input.onChange(val);
-      }
+  useDebounce(() => {
+    if (enabledMergeTagsBadge) {
+      input.onChange(MergeTagBadge.revert(value, mergeTagGenerate));
+    } else {
+      input.onChange(value);
+    }
 
-      input.onBlur();
-    }, 200),
-    [input],
-  );
+    // input.onBlur();
+  }, 200, [value]);
 
   return (
     <>
       {contentEditableType === ContentEditableType.RichText && (
-        <RichTextToolBar onChange={debounceCallbackChange} />
+        <RichTextToolBar onChange={setValue} />
       )}
-      <InlineText {...rest} onChange={debounceCallbackChange} />
+      <InlineText {...rest} onChange={setValue} />
     </>
   );
 }

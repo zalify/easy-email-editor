@@ -3,11 +3,11 @@ import { ToolItem } from '../ToolItem';
 import { Link, LinkParams } from '../Link';
 import {
   FIXED_CONTAINER_ID,
-  getShadowRoot,
+  getIframeDocument,
   IconFont,
+  MergeTagBadge,
   useEditorProps,
   useFocusBlockLayout,
-  MergeTagBadge,
 } from 'easy-email-editor';
 import { FontFamily } from '../FontFamily';
 import { MergeTags } from '../MergeTags';
@@ -54,7 +54,7 @@ export function Tools(props: ToolsProps) {
         } else {
           document.execCommand(cmd, false, uuid);
 
-          link = getShadowRoot().querySelector(`a[href="${uuid}"`)!;
+          link = getIframeDocument()?.querySelector(`a[href="${uuid}"`)!;
         }
 
         if (target) {
@@ -70,7 +70,7 @@ export function Tools(props: ToolsProps) {
         }
 
         document.execCommand(cmd, false, newContent);
-        const insertMergeTagEle = getShadowRoot().getElementById(uuid);
+        const insertMergeTagEle = getIframeDocument()?.getElementById(uuid);
         if (insertMergeTagEle) {
           insertMergeTagEle.focus();
           setRangeByElement(insertMergeTagEle);
@@ -79,9 +79,9 @@ export function Tools(props: ToolsProps) {
         document.execCommand(cmd, false, val);
       }
 
-      const contenteditableElement = getShadowRoot().activeElement;
+      const contenteditableElement = getIframeDocument()?.activeElement;
       if (contenteditableElement?.getAttribute('contenteditable') === 'true') {
-        const html = getShadowRoot().activeElement?.innerHTML || '';
+        const html = getIframeDocument()?.activeElement?.innerHTML || '';
         props.onChange(html);
       }
     },
@@ -98,9 +98,9 @@ export function Tools(props: ToolsProps) {
   const execCommandWithRange = useCallback(
     (cmd: string, val?: any) => {
       document.execCommand(cmd, false, val);
-      const contenteditableElement = getShadowRoot().activeElement;
+      const contenteditableElement = getIframeDocument()?.activeElement;
       if (contenteditableElement?.getAttribute('contenteditable') === 'true') {
-        const html = getShadowRoot().activeElement?.innerHTML || '';
+        const html = getIframeDocument()?.activeElement?.innerHTML || '';
         props.onChange(html);
       }
     },
@@ -128,103 +128,103 @@ export function Tools(props: ToolsProps) {
             getPopupContainer={getPopoverMountNode}
           />
         )}
-        <div className='easy-email-extensions-divider' />
-        <div className='easy-email-extensions-divider' />
+        <div className="easy-email-extensions-divider" />
+        <div className="easy-email-extensions-divider" />
         <FontFamily
           execCommand={execCommand}
           getPopupContainer={getPopoverMountNode}
         />
-        <div className='easy-email-extensions-divider' />
+        <div className="easy-email-extensions-divider" />
         <FontSize
           execCommand={execCommand}
           getPopupContainer={getPopoverMountNode}
         />
-        <div className='easy-email-extensions-divider' />
+        <div className="easy-email-extensions-divider" />
         <Bold
           currentRange={selectionRange}
           onChange={() => execCommandWithRange('bold')}
         />
-        <div className='easy-email-extensions-divider' />
+        <div className="easy-email-extensions-divider" />
         <Italic
           currentRange={selectionRange}
           onChange={() => execCommandWithRange('italic')}
         />
-        <div className='easy-email-extensions-divider' />
+        <div className="easy-email-extensions-divider" />
         <StrikeThrough
           currentRange={selectionRange}
           onChange={() => execCommandWithRange('strikeThrough')}
         />
-        <div className='easy-email-extensions-divider' />
+        <div className="easy-email-extensions-divider" />
         <Underline
           currentRange={selectionRange}
           onChange={() => execCommandWithRange('underline')}
         />
-        <div className='easy-email-extensions-divider' />
+        <div className="easy-email-extensions-divider" />
         <IconFontColor
           selectionRange={selectionRange}
           execCommand={execCommand}
           getPopoverMountNode={getPopoverMountNode}
         />
-        <div className='easy-email-extensions-divider' />
+        <div className="easy-email-extensions-divider" />
         <IconBgColor
           selectionRange={selectionRange}
           execCommand={execCommand}
           getPopoverMountNode={getPopoverMountNode}
         />
 
-        <div className='easy-email-extensions-divider' />
+        <div className="easy-email-extensions-divider" />
         <Link
           currentRange={selectionRange}
           onChange={values => execCommand('createLink', values)}
           getPopupContainer={getPopoverMountNode}
         />
-        <div className='easy-email-extensions-divider' />
+        <div className="easy-email-extensions-divider" />
         <Unlink
           currentRange={selectionRange}
           onChange={() => execCommand('')}
         />
-        <div className='easy-email-extensions-divider' />
+        <div className="easy-email-extensions-divider" />
 
         <ToolItem
           onClick={() => execCommand('justifyLeft')}
-          icon={<IconFont iconName='icon-align-left' />}
+          icon={<IconFont iconName="icon-align-left" />}
           title={t('Align left')}
         />
         <ToolItem
           onClick={() => execCommand('justifyCenter')}
-          icon={<IconFont iconName='icon-align-center' />}
+          icon={<IconFont iconName="icon-align-center" />}
           title={t('Align center')}
         />
         <ToolItem
           onClick={() => execCommand('justifyRight')}
-          icon={<IconFont iconName='icon-align-right' />}
+          icon={<IconFont iconName="icon-align-right" />}
           title={t('Align right')}
         />
-        <div className='easy-email-extensions-divider' />
+        <div className="easy-email-extensions-divider" />
         <ToolItem
           onClick={() => execCommand('insertOrderedList')}
-          icon={<IconFont iconName='icon-list-ol' />}
+          icon={<IconFont iconName="icon-list-ol" />}
           title={t('Orderlist')}
         />
         <ToolItem
           onClick={() => execCommand('insertUnorderedList')}
-          icon={<IconFont iconName='icon-list-ul' />}
+          icon={<IconFont iconName="icon-list-ul" />}
           title={t('Unorderlist')}
         />
-        <div className='easy-email-extensions-divider' />
+        <div className="easy-email-extensions-divider" />
 
         <ToolItem
           onClick={() => execCommand('insertHorizontalRule')}
-          icon={<IconFont iconName='icon-line' />}
+          icon={<IconFont iconName="icon-line" />}
           title={t('Line')}
         />
-        <div className='easy-email-extensions-divider' />
+        <div className="easy-email-extensions-divider" />
         <ToolItem
           onClick={() => execCommand('removeFormat')}
-          icon={<IconFont iconName='icon-close' />}
+          icon={<IconFont iconName="icon-close" />}
           title={t('Remove format')}
         />
-        <div className='easy-email-extensions-divider' />
+        <div className="easy-email-extensions-divider" />
       </div>
     </div>
   );
