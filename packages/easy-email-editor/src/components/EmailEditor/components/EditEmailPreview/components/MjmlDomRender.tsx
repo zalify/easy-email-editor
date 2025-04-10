@@ -86,27 +86,29 @@ export function MjmlDomRender() {
     ).html;
   }, [mergeTags, pageData]);
 
-  return (
-    <div
-      {...{
-        [DATA_RENDER_COUNT]: count++,
-      }}
-      data-dashed={dashed}
-      ref={ref}
-      style={{
-        outline: 'none',
-        position: 'relative',
-      }}
-      role="tabpanel"
-      tabIndex={0}
-    >
-      {ref.current &&
-        createPortal(
-          HtmlStringToReactNodes(html, {
-            enabledMergeTagsBadge: Boolean(enabledMergeTagsBadge),
-          }),
-          ref.current,
-        )}
-    </div>
-  );
+  return useMemo(() => {
+    return (
+      <div
+        {...{
+          [DATA_RENDER_COUNT]: count++,
+        }}
+        data-dashed={dashed}
+        ref={ref}
+        style={{
+          outline: 'none',
+          position: 'relative',
+        }}
+        role="tabpanel"
+        tabIndex={0}
+      >
+        {ref.current &&
+          createPortal(
+            HtmlStringToReactNodes(html, {
+              enabledMergeTagsBadge: Boolean(enabledMergeTagsBadge),
+            }),
+            ref.current,
+          )}
+      </div>
+    );
+  }, [dashed, ref, html, enabledMergeTagsBadge]);
 }

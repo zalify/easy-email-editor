@@ -2,14 +2,15 @@ import React from 'react';
 import { getPluginElement, RICH_TEXT_BAR_ID, useEditorContext } from 'easy-email-editor';
 import { Tools } from './components/Tools';
 import styleText from './shadow-dom.scss?inline';
+import { createPortal } from 'react-dom';
 
 export function RichTextToolBar(props: { onChange: (s: string) => void; }) {
   const { initialized } = useEditorContext();
   const root = initialized && getPluginElement();
 
-  // if (!root) return null;
+  if (!root) return null;
 
-  return (
+  return createPortal(
     <>
       <style dangerouslySetInnerHTML={{ __html: styleText }} />
       <div
@@ -38,6 +39,6 @@ export function RichTextToolBar(props: { onChange: (s: string) => void; }) {
 
         <Tools onChange={props.onChange} />
       </div>
-    </>
-  );
+    </>,
+    root);
 }

@@ -12,6 +12,7 @@ import { createPortal } from 'react-dom';
 import stylesText from './MergeTagBadge.scss?inline';
 import { classnames } from '@extensions/utils/classnames';
 import { useSelectionRange } from '@extensions/AttributePanel/hooks/useSelectionRange';
+import { getEditorRoot } from '@/utils/getEditorRoot';
 
 const removeAllActiveBadge = () => {
   getIframeDocument()?.querySelectorAll('.easy-email-merge-tag')
@@ -48,7 +49,7 @@ export function MergeTagBadgePrompt() {
   useEffect(() => {
 
     const onBlur = (ev: MouseEvent) => {
-      if (ev.target === getIframeDocument()) {
+      if (ev.target === getEditorRoot()) {
         return;
       }
       setTarget(null);

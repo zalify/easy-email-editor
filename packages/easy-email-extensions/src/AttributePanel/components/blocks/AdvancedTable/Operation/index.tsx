@@ -21,9 +21,10 @@ export function TableOperation() {
       left: leftRef.current,
       right: rightRef.current,
     };
+
     tool.current = new TableColumnTool(
       borderTool,
-      shadowRoot?.querySelector('body') as any,
+      shadowRoot.querySelector('body'),
     );
     return () => {
       tool.current?.destroy();

@@ -52,9 +52,9 @@ export function Tools(props: ToolsProps) {
         if (linkData.linkNode) {
           link = linkData.linkNode;
         } else {
-          document.execCommand(cmd, false, uuid);
+          getIframeDocument()?.execCommand(cmd, false, uuid);
 
-          link = getIframeDocument()?.querySelector(`a[href="${uuid}"`)!;
+          link = getIframeDocument()?.body?.querySelector(`a[href="${uuid}"`)!;
         }
 
         if (target) {
@@ -69,14 +69,14 @@ export function Tools(props: ToolsProps) {
           newContent = MergeTagBadge.transform(val, uuid);
         }
 
-        document.execCommand(cmd, false, newContent);
+        getIframeDocument()?.execCommand(cmd, false, newContent);
         const insertMergeTagEle = getIframeDocument()?.getElementById(uuid);
         if (insertMergeTagEle) {
           insertMergeTagEle.focus();
           setRangeByElement(insertMergeTagEle);
         }
       } else {
-        document.execCommand(cmd, false, val);
+        getIframeDocument()?.execCommand(cmd, false, val);
       }
 
       const contenteditableElement = getIframeDocument()?.activeElement;
@@ -97,10 +97,10 @@ export function Tools(props: ToolsProps) {
 
   const execCommandWithRange = useCallback(
     (cmd: string, val?: any) => {
-      document.execCommand(cmd, false, val);
-      const contenteditableElement = getIframeDocument()?.activeElement;
-      if (contenteditableElement?.getAttribute('contenteditable') === 'true') {
-        const html = getIframeDocument()?.activeElement?.innerHTML || '';
+      getIframeDocument()?.execCommand(cmd, false, val);
+      const contenteditableElement = getIframeDocument()?.getSelection()?.focusNode as HTMLElement | null;
+      if (contenteditableElement?.getAttribute && contenteditableElement?.getAttribute('contenteditable') === 'true') {
+        const html = contenteditableElement.innerHTML ?? '';
         props.onChange(html);
       }
     },
