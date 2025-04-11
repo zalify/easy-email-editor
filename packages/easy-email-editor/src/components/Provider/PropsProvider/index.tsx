@@ -1,5 +1,4 @@
 import { IBlockData } from 'easy-email-core';
-import { AvailableTools } from 'easy-email-extensions';
 import React, { useMemo } from 'react';
 
 export interface CollectedBlock {
@@ -13,6 +12,23 @@ export interface CollectedBlock {
 export interface BlockGroup {
   title: string;
   blocks: Array<CollectedBlock>;
+}
+
+export enum AvailableTools {
+  MergeTags = 'mergeTags',
+  FontFamily = 'fontFamily',
+  FontSize = 'fontSize',
+  Bold = 'bold',
+  Italic = 'italic',
+  StrikeThrough = 'strikeThrough',
+  Underline = 'underline',
+  IconFontColor = 'iconFontColor',
+  IconBgColor = 'iconBgColor',
+  Link = 'link',
+  Justify = 'justify',
+  Lists = 'lists',
+  HorizontalRule = 'horizontalRule',
+  RemoveFormat = 'removeFormat',
 }
 
 export interface PropsProviderProps {

@@ -8,6 +8,7 @@ import {
   useEditorProps,
   useFocusBlockLayout,
   MergeTagBadge,
+  AvailableTools,
 } from 'easy-email-editor';
 import { FontFamily } from '../FontFamily';
 import { MergeTags } from '../MergeTags';
@@ -25,23 +26,6 @@ import { RICH_TEXT_TOOL_BAR } from '@extensions/constants';
 
 export interface ToolsProps {
   onChange: (content: string) => any;
-}
-
-export enum AvailableTools {
-  MergeTags = 'mergeTags',
-  FontFamily = 'fontFamily',
-  FontSize = 'fontSize',
-  Bold = 'bold',
-  Italic = 'italic',
-  StrikeThrough = 'strikeThrough',
-  Underline = 'underline',
-  IconFontColor = 'iconFontColor',
-  IconBgColor = 'iconBgColor',
-  Link = 'link',
-  Justify = 'justify',
-  Lists = 'lists',
-  HorizontalRule = 'horizontalRule',
-  RemoveFormat = 'removeFormat',
 }
 
 export function Tools(props: ToolsProps) {
@@ -126,7 +110,22 @@ export function Tools(props: ToolsProps) {
 
   const getPopoverMountNode = () => document.getElementById(FIXED_CONTAINER_ID)!;
 
-  const enabledTools = toolbar?.tools ?? Object.values(AvailableTools);
+  const enabledTools = toolbar?.tools ?? [
+    AvailableTools.MergeTags,
+    AvailableTools.FontFamily,
+    AvailableTools.FontSize,
+    AvailableTools.Bold,
+    AvailableTools.Italic,
+    AvailableTools.StrikeThrough,
+    AvailableTools.Underline,
+    AvailableTools.IconFontColor,
+    AvailableTools.IconBgColor,
+    AvailableTools.Link,
+    AvailableTools.Justify,
+    AvailableTools.Lists,
+    AvailableTools.HorizontalRule,
+    AvailableTools.RemoveFormat,
+  ];
 
   const tools = enabledTools.flatMap(tool => {
     switch (tool) {

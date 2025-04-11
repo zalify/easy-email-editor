@@ -38,6 +38,7 @@ export { Tabs, TabPane } from './components/UI/Tabs';
 export * from './typings';
 export type { StackProps } from './components/UI/Stack';
 export type { PropsProviderProps } from './components/Provider/PropsProvider';
+export { AvailableTools } from './components/Provider/PropsProvider';
 export type { BlockAvatarWrapperProps } from './components/wrapper';
 export type { BlockGroup, CollectedBlock } from './components/Provider/PropsProvider';
 

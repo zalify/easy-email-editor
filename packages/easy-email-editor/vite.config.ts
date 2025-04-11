@@ -39,7 +39,7 @@ export default defineConfig({
     outDir: 'lib',
   },
   optimizeDeps: {
-    include: ['easy-email-core', 'easy-email-extensions'],
+    include: ['easy-email-core'],
   },
   css: {
     modules: {
