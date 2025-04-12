@@ -8,6 +8,7 @@ import {
   useEditorProps,
   useFocusBlockLayout,
   MergeTagBadge,
+  AvailableTools,
 } from 'easy-email-editor';
 import { FontFamily } from '../FontFamily';
 import { MergeTags } from '../MergeTags';
@@ -28,7 +29,7 @@ export interface ToolsProps {
 }
 
 export function Tools(props: ToolsProps) {
-  const { mergeTags, enabledMergeTagsBadge } = useEditorProps();
+  const { mergeTags, enabledMergeTagsBadge, toolbar } = useEditorProps();
   const { focusBlockNode } = useFocusBlockLayout();
   const { selectionRange, restoreRange, setRangeByElement } = useSelectionRange();
 
@@ -109,6 +110,172 @@ export function Tools(props: ToolsProps) {
 
   const getPopoverMountNode = () => document.getElementById(FIXED_CONTAINER_ID)!;
 
+  const enabledTools = toolbar?.tools ?? [
+    AvailableTools.MergeTags,
+    AvailableTools.FontFamily,
+    AvailableTools.FontSize,
+    AvailableTools.Bold,
+    AvailableTools.Italic,
+    AvailableTools.StrikeThrough,
+    AvailableTools.Underline,
+    AvailableTools.IconFontColor,
+    AvailableTools.IconBgColor,
+    AvailableTools.Link,
+    AvailableTools.Justify,
+    AvailableTools.Lists,
+    AvailableTools.HorizontalRule,
+    AvailableTools.RemoveFormat,
+  ];
+
+  const tools = enabledTools.flatMap(tool => {
+    switch (tool) {
+      case AvailableTools.MergeTags:
+        if (!mergeTags) return [];
+        return [
+          <MergeTags
+            key={tool}
+            execCommand={execCommand}
+            getPopupContainer={getPopoverMountNode}
+          />,
+        ];
+      case AvailableTools.FontFamily:
+        return [
+          <FontFamily
+            key={tool}
+            execCommand={execCommand}
+            getPopupContainer={getPopoverMountNode}
+          />,
+        ];
+      case AvailableTools.FontSize:
+        return [
+          <FontSize
+            key={tool}
+            execCommand={execCommand}
+            getPopupContainer={getPopoverMountNode}
+          />,
+        ];
+      case AvailableTools.Bold:
+        return [
+          <Bold
+            key={tool}
+            currentRange={selectionRange}
+            onChange={() => execCommandWithRange('bold')}
+          />,
+        ];
+      case AvailableTools.Italic:
+        return [
+          <Italic
+            key={tool}
+            currentRange={selectionRange}
+            onChange={() => execCommandWithRange('italic')}
+          />,
+        ];
+      case AvailableTools.StrikeThrough:
+        return [
+          <StrikeThrough
+            key={tool}
+            currentRange={selectionRange}
+            onChange={() => execCommandWithRange('strikeThrough')}
+          />,
+        ];
+      case AvailableTools.Underline:
+        return [
+          <Underline
+            key={tool}
+            currentRange={selectionRange}
+            onChange={() => execCommandWithRange('underline')}
+          />,
+        ];
+      case AvailableTools.IconFontColor:
+        return [
+          <IconFontColor
+            selectionRange={selectionRange}
+            execCommand={execCommand}
+            getPopoverMountNode={getPopoverMountNode}
+          />,
+        ];
+      case AvailableTools.IconBgColor:
+        return [
+          <IconBgColor
+            selectionRange={selectionRange}
+            execCommand={execCommand}
+            getPopoverMountNode={getPopoverMountNode}
+          />,
+        ];
+      case AvailableTools.Link:
+        return [
+          <Link
+            key={`${tool}-link`}
+            currentRange={selectionRange}
+            onChange={values => execCommand('createLink', values)}
+            getPopupContainer={getPopoverMountNode}
+          />,
+          <Unlink
+            key={`${tool}-unlink`}
+            currentRange={selectionRange}
+            onChange={() => execCommand('')}
+          />,
+        ];
+      case 'justify':
+        return [
+          <ToolItem
+            key={`${tool}-justify-left`}
+            onClick={() => execCommand('justifyLeft')}
+            icon={<IconFont iconName='icon-align-left' />}
+            title={t('Align left')}
+          />,
+          <ToolItem
+            key={`${tool}-justify-center`}
+            onClick={() => execCommand('justifyCenter')}
+            icon={<IconFont iconName='icon-align-center' />}
+            title={t('Align center')}
+          />,
+          <ToolItem
+            key={`${tool}-justify-right`}
+            onClick={() => execCommand('justifyRight')}
+            icon={<IconFont iconName='icon-align-right' />}
+            title={t('Align right')}
+          />,
+        ];
+      case AvailableTools.Lists:
+        return [
+          <ToolItem
+            key={`${tool}-ordered-list`}
+            onClick={() => execCommand('insertOrderedList')}
+            icon={<IconFont iconName='icon-list-ol' />}
+            title={t('Orderlist')}
+          />,
+          <ToolItem
+            key={`${tool}-unordered-list`}
+            onClick={() => execCommand('insertUnorderedList')}
+            icon={<IconFont iconName='icon-list-ul' />}
+            title={t('Unorderlist')}
+          />,
+        ];
+      case AvailableTools.HorizontalRule:
+        return [
+          <ToolItem
+            key={tool}
+            onClick={() => execCommand('insertHorizontalRule')}
+            icon={<IconFont iconName='icon-line' />}
+            title={t('Line')}
+          />,
+        ];
+      case AvailableTools.RemoveFormat:
+        return [
+          <ToolItem
+            key={tool}
+            onClick={() => execCommand('removeFormat')}
+            icon={<IconFont iconName='icon-close' />}
+            title={t('Remove format')}
+          />,
+        ];
+      default:
+        console.error('Not existing tool', tool);
+        throw new Error(`Not existing tool ${tool}`);
+    }
+  });
+
   return (
     <div
       id={RICH_TEXT_TOOL_BAR}
@@ -121,111 +288,15 @@ export function Tools(props: ToolsProps) {
         }}
       >
         <BasicTools />
-
-        {mergeTags && (
-          <MergeTags
-            execCommand={execCommand}
-            getPopupContainer={getPopoverMountNode}
-          />
-        )}
-        <div className='easy-email-extensions-divider' />
-        <div className='easy-email-extensions-divider' />
-        <FontFamily
-          execCommand={execCommand}
-          getPopupContainer={getPopoverMountNode}
-        />
-        <div className='easy-email-extensions-divider' />
-        <FontSize
-          execCommand={execCommand}
-          getPopupContainer={getPopoverMountNode}
-        />
-        <div className='easy-email-extensions-divider' />
-        <Bold
-          currentRange={selectionRange}
-          onChange={() => execCommandWithRange('bold')}
-        />
-        <div className='easy-email-extensions-divider' />
-        <Italic
-          currentRange={selectionRange}
-          onChange={() => execCommandWithRange('italic')}
-        />
-        <div className='easy-email-extensions-divider' />
-        <StrikeThrough
-          currentRange={selectionRange}
-          onChange={() => execCommandWithRange('strikeThrough')}
-        />
-        <div className='easy-email-extensions-divider' />
-        <Underline
-          currentRange={selectionRange}
-          onChange={() => execCommandWithRange('underline')}
-        />
-        <div className='easy-email-extensions-divider' />
-        <IconFontColor
-          selectionRange={selectionRange}
-          execCommand={execCommand}
-          getPopoverMountNode={getPopoverMountNode}
-        />
-        <div className='easy-email-extensions-divider' />
-        <IconBgColor
-          selectionRange={selectionRange}
-          execCommand={execCommand}
-          getPopoverMountNode={getPopoverMountNode}
-        />
-
-        <div className='easy-email-extensions-divider' />
-        <Link
-          currentRange={selectionRange}
-          onChange={values => execCommand('createLink', values)}
-          getPopupContainer={getPopoverMountNode}
-        />
-        <div className='easy-email-extensions-divider' />
-        <Unlink
-          currentRange={selectionRange}
-          onChange={() => execCommand('')}
-        />
-        <div className='easy-email-extensions-divider' />
-
-        <ToolItem
-          onClick={() => execCommand('justifyLeft')}
-          icon={<IconFont iconName='icon-align-left' />}
-          title={t('Align left')}
-        />
-        <ToolItem
-          onClick={() => execCommand('justifyCenter')}
-          icon={<IconFont iconName='icon-align-center' />}
-          title={t('Align center')}
-        />
-        <ToolItem
-          onClick={() => execCommand('justifyRight')}
-          icon={<IconFont iconName='icon-align-right' />}
-          title={t('Align right')}
-        />
-        <div className='easy-email-extensions-divider' />
-        <ToolItem
-          onClick={() => execCommand('insertOrderedList')}
-          icon={<IconFont iconName='icon-list-ol' />}
-          title={t('Orderlist')}
-        />
-        <ToolItem
-          onClick={() => execCommand('insertUnorderedList')}
-          icon={<IconFont iconName='icon-list-ul' />}
-          title={t('Unorderlist')}
-        />
-        <div className='easy-email-extensions-divider' />
-
-        <ToolItem
-          onClick={() => execCommand('insertHorizontalRule')}
-          icon={<IconFont iconName='icon-line' />}
-          title={t('Line')}
-        />
-        <div className='easy-email-extensions-divider' />
-        <ToolItem
-          onClick={() => execCommand('removeFormat')}
-          icon={<IconFont iconName='icon-close' />}
-          title={t('Remove format')}
-        />
-        <div className='easy-email-extensions-divider' />
+        {tools.flatMap((tool, index) => [
+          tool,
+          <div
+            className='easy-email-extensions-divider'
+            key={`divider-${index}`}
+          />,
+        ])}
       </div>
+      {toolbar?.suffix?.(execCommand)}
     </div>
   );
 }
