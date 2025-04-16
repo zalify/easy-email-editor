@@ -47,7 +47,7 @@ export const RichTextField = (
     const onClick = (e: Event) => {
       const target = e.target as HTMLElement;
 
-      const fixedContainer = document.getElementById(FIXED_CONTAINER_ID);
+      const fixedContainer = root.getElementById(FIXED_CONTAINER_ID);
       const richTextBar = root.getElementById(RICH_TEXT_BAR_ID);
       if (fixedContainer?.contains(target) || richTextBar?.contains(target)) {
         return;

@@ -4,7 +4,11 @@ import { useDropBlock } from '@/hooks/useDropBlock';
 import { useHotKeys } from '@/hooks/useHotKeys';
 import { ShadowStyle } from './components/ShadowStyle';
 import { useEditorContext } from '@/hooks/useEditorContext';
-import { DATA_ATTRIBUTE_DROP_CONTAINER, SYNC_SCROLL_ELEMENT_CLASS_NAME } from '@/constants';
+import {
+  DATA_ATTRIBUTE_DROP_CONTAINER,
+  PLUGINS_CONTAINER_ID,
+  SYNC_SCROLL_ELEMENT_CLASS_NAME,
+} from '@/constants';
 import { classnames } from '@/utils/classnames';
 import { ActiveTabKeys } from '@/components/Provider/BlocksProvider';
 import { useActiveTab } from '@/hooks/useActiveTab';
@@ -44,7 +48,7 @@ export function EditEmailPreview() {
       }}
     >
       <div
-        id="easy-email-plugins"
+        id={PLUGINS_CONTAINER_ID}
         style={{
           position: 'relative',
         }}

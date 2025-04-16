@@ -6,7 +6,7 @@ import { useEditorContext } from '@/hooks/useEditorContext';
 import { classnames } from '@/utils/classnames';
 import { SYNC_SCROLL_ELEMENT_CLASS_NAME } from '@/constants';
 import { createPortal } from 'react-dom';
-import { SyncScrollIframeDom } from '../../../UI/SyncScrollIframeDom';
+import { SyncScrollIframeDom } from '@/components/UI/SyncScrollIframeDom';
 
 export function DesktopEmailPreview() {
   const { activeTab } = useActiveTab();
