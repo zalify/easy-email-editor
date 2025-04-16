@@ -35,7 +35,7 @@ export function MjmlDomRender() {
   }, [initialized]);
 
   useEffect(() => {
-    if (!isEqual(content, pageData)) {
+    if (!isTextFocus && !isEqual(content, pageData)) {
       setPageData(cloneDeep(content));
     }
   }, [content, pageData, isTextFocus]);
