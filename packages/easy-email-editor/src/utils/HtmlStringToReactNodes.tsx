@@ -60,11 +60,11 @@ export function HtmlStringToReactNodes(
   return reactNode;
 }
 
-const RenderReactNode = React.memo(function({
-                                              node,
-                                              index,
-                                              selector,
-                                            }: {
+const RenderReactNode = React.memo(function ({
+  node,
+  index,
+  selector,
+}: {
   node: HTMLElement;
   index: number;
   selector: string;
@@ -123,13 +123,13 @@ const RenderReactNode = React.memo(function({
         node.childNodes.length === 0
           ? null
           : [...node.childNodes].map((n, i) => (
-            <RenderReactNode
-              selector={getChildSelector(selector, i)}
-              key={i}
-              node={n as any}
-              index={i}
-            />
-          )),
+              <RenderReactNode
+                selector={getChildSelector(selector, i)}
+                key={i}
+                node={n as any}
+                index={i}
+              />
+            )),
     });
 
     return <>{reactNode}</>;

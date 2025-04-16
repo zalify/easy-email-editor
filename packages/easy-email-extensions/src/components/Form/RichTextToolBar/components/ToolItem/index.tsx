@@ -1,7 +1,8 @@
 import { Tooltip } from '@arco-design/web-react';
 import { classnames } from '@extensions/utils/classnames';
 import React from 'react';
-import { getIframeDocument, PLUGINS_CONTAINER_ID } from '@';
+import { getIframeDocument } from '@';
+import { RICH_TEXT_TOOL_BAR } from '@extensions';
 
 export const ToolItem: React.FC<{
   title?: string;
@@ -26,7 +27,7 @@ export const ToolItem: React.FC<{
   }
   return (
     <Tooltip mini position="bottom"
-             getPopupContainer={() => getIframeDocument()?.getElementById(PLUGINS_CONTAINER_ID)!}
+             getPopupContainer={() => getIframeDocument()?.getElementById(RICH_TEXT_TOOL_BAR)!}
              content={props.title}
     >
       <button

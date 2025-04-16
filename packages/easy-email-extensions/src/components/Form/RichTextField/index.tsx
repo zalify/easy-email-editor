@@ -107,7 +107,7 @@ function FieldWrapper(
         input.onChange(val);
       }
 
-      // input.onBlur();
+      input.onBlur();
     }, 200),
     [input],
   );

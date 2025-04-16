@@ -4,7 +4,15 @@ import { useDispatch } from 'react-redux';
 import template from '@demo/store/template';
 import { useAppSelector } from '@demo/hooks/useAppSelector';
 import { useLoading } from '@demo/hooks/useLoading';
-import { Button, ConfigProvider, Dropdown, Menu, PageHeader } from '@arco-design/web-react';
+import {
+  Button,
+  ConfigProvider,
+  Dropdown,
+  Menu,
+  Message,
+  PageHeader,
+  Select,
+} from '@arco-design/web-react';
 import { useQuery } from '@demo/hooks/useQuery';
 import { useHistory } from 'react-router-dom';
 import { cloneDeep } from 'lodash';
@@ -12,7 +20,12 @@ import { Loading } from '@demo/components/loading';
 import mjml from 'mjml-browser';
 import services from '@demo/services';
 import { saveAs } from 'file-saver';
-import { EmailEditor, EmailEditorProvider, IEmailTemplate } from 'easy-email-editor';
+import {
+  BlockAvatarWrapper,
+  EmailEditor,
+  EmailEditorProvider,
+  IEmailTemplate,
+} from 'easy-email-editor';
 
 import { Stack } from '@demo/components/Stack';
 import { pushEvent } from '@demo/utils/pushEvent';
@@ -25,6 +38,8 @@ import { AutoSaveAndRestoreEmail } from '@demo/components/AutoSaveAndRestoreEmai
 import 'easy-email-editor/lib/style.css';
 import 'easy-email-extensions/lib/style.css';
 import blueTheme from '@arco-themes/react-easy-email-theme/css/arco.css?inline';
+
+import { Uploader } from '@demo/utils/Uploader';
 import enUS from '@arco-design/web-react/es/locale/en-US';
 
 import { useShowCommercialEditor } from '@demo/hooks/useShowCommercialEditor';
@@ -197,7 +212,7 @@ export default function Editor() {
           onUploadImage={onUploadImage}
           onSubmit={onSubmit}
           dashed={false}
-          compact={false}
+          compact={compact}
         >
           {({ values }, { submit, restart }) => {
             return (
@@ -205,27 +220,27 @@ export default function Editor() {
                 <PageHeader
                   style={{ background: 'var(--color-bg-2)' }}
                   backIcon
-                  title="Edit"
+                  title='Edit'
                   onBack={() => history.push('/')}
                   extra={
-                    <Stack alignment="center">
+                    <Stack alignment='center'>
                       <Dropdown
                         droplist={
                           <Menu>
                             <Menu.Item
-                              key="Export MJML"
+                              key='Export MJML'
                               onClick={() => onExportMJML(values)}
                             >
                               Export MJML
                             </Menu.Item>
                             <Menu.Item
-                              key="Export HTML"
+                              key='Export HTML'
                               onClick={() => onExportHTML(values)}
                             >
                               Export HTML
                             </Menu.Item>
                             <Menu.Item
-                              key="Export JSON"
+                              key='Export JSON'
                               onClick={() => onExportJSON(values)}
                             >
                               Export JSON
@@ -238,9 +253,9 @@ export default function Editor() {
                         </Button>
                       </Dropdown>
                       <Button
-                        type="primary"
-                        target="_blank"
-                        href="https://demo.easyemail.pro?utm_source=easyemail"
+                        type='primary'
+                        target='_blank'
+                        href='https://demo.easyemail.pro?utm_source=easyemail'
                       >
                         Try commercial version
                       </Button>
@@ -250,6 +265,8 @@ export default function Editor() {
 
                 <StandardLayout
                   categories={defaultCategories}
+                  showSourceCode={false}
+                  showBlockLayer={false}
                 >
                   <EmailEditor />
                 </StandardLayout>

@@ -22,10 +22,10 @@ export function HoverTooltip() {
   const rootRef = useRef<DOMRect | null>(null);
 
   useEffect(() => {
-    const shadowRoot = getIframeDocument();
+    const iframeDocument = getIframeDocument();
 
-    if (initialized && shadowRoot) {
-      rootRef.current = shadowRoot.body.getBoundingClientRect();
+    if (initialized && iframeDocument) {
+      rootRef.current = iframeDocument.body.getBoundingClientRect();
     }
   }, [initialized]);
 

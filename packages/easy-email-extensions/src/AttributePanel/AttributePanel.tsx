@@ -24,7 +24,7 @@ export function AttributePanel() {
 
   const Com = focusBlock && BlockAttributeConfigurationManager.get(focusBlock.type);
 
-  const shadowRoot = getIframeDocument();
+  const iframeDocument = getIframeDocument();
 
   if (!initialized) return null;
 
@@ -44,7 +44,7 @@ export function AttributePanel() {
         </div>
         <TableOperation />
         <>
-          {shadowRoot?.body &&
+          {iframeDocument?.body &&
             ReactDOM.createPortal(
               <style>
                 {`
@@ -55,7 +55,7 @@ export function AttributePanel() {
               }
               `}
               </style>,
-              shadowRoot.body as any,
+              iframeDocument.body as any,
             )}
         </>
       </PresetColorsProvider>

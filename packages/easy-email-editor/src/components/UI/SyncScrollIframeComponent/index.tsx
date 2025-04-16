@@ -1,7 +1,7 @@
 import { SYNC_SCROLL_ELEMENT_CLASS_NAME } from '@/constants';
 import { useDomScrollHeight } from '@/hooks/useDomScrollHeight';
 import { debounce } from 'lodash';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 
 interface Props {
@@ -13,12 +13,12 @@ interface Props {
 }
 
 export const SyncScrollIframeComponent = ({
-                                            children,
-                                            title,
-                                            windowRef,
-                                            isActive,
-                                            style,
-                                          }: Props) => {
+  children,
+  title,
+  windowRef,
+  isActive,
+  style,
+}: Props) => {
   const [mountNode, setMountNode] = useState<HTMLElement | null>(null);
   const [contentWindow, setContentWindow] = useState<Window | null>(null);
   const { viewElementRef } = useDomScrollHeight();

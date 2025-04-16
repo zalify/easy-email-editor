@@ -20,7 +20,7 @@ export function InlineText({ idx, onChange, children }: InlineTextProps) {
   useField(idx); // setFieldTouched will be work while register field,
 
   useEffect(() => {
-    const shadowRoot = getIframeDocument();
+    const iframeDocument = getIframeDocument();
 
     const onPaste = (e: ClipboardEvent) => {
       const target = e.target as HTMLElement;
@@ -30,7 +30,7 @@ export function InlineText({ idx, onChange, children }: InlineTextProps) {
         e.preventDefault();
 
         const text = e.clipboardData?.getData('text/plain') ?? '';
-        document.execCommand('insertHTML', false, text);
+        iframeDocument?.execCommand('insertHTML', false, text);
         const contentEditableType = target.getAttribute(DATA_CONTENT_EDITABLE_TYPE);
         if (contentEditableType === ContentEditableType.RichText) {
           onChange(target.innerHTML || '');
@@ -54,12 +54,12 @@ export function InlineText({ idx, onChange, children }: InlineTextProps) {
       }
     };
 
-    shadowRoot?.body.addEventListener('paste', onPaste as any, true);
-    shadowRoot?.body.addEventListener('input', onInput);
+    iframeDocument?.body.addEventListener('paste', onPaste as any, true);
+    iframeDocument?.body.addEventListener('input', onInput);
 
     return () => {
-      shadowRoot?.body.removeEventListener('paste', onPaste as any, true);
-      shadowRoot?.body.removeEventListener('input', onInput);
+      iframeDocument?.body.removeEventListener('paste', onPaste as any, true);
+      iframeDocument?.body.removeEventListener('input', onInput);
     };
   }, [onChange, setFieldTouched]);
 

@@ -9,9 +9,9 @@ import { getBlockNodeByChildEle } from '@/utils/getBlockNodeByChildEle';
 import { getEditorRoot } from '@/utils/getEditorRoot';
 
 function isContentEditFocus() {
-  const isShadowRootFocus = document.activeElement === getEditorRoot();
+  const isIframeFocused = document.activeElement === getEditorRoot();
 
-  if (isShadowRootFocus) {
+  if (isIframeFocused) {
     if (
       getIframeDocument()?.activeElement?.getAttribute(
         'contenteditable',
@@ -60,9 +60,9 @@ export function useHotKeys() {
   // delete
   useEffect(() => {
     const onKeyDown = (ev: KeyboardEvent) => {
-      const isShadowRootFocus = document.activeElement === getEditorRoot();
+      const isIframeFocused = document.activeElement === getEditorRoot();
 
-      if (!isShadowRootFocus) return;
+      if (!isIframeFocused) return;
       if (isContentEditFocus()) return;
       // if (isHotkey('delete', ev) || isHotkey('backspace', ev)) {
       //   removeBlock(focusIdx);
@@ -78,9 +78,9 @@ export function useHotKeys() {
   // focus
   useEffect(() => {
     const onKeyDown = (ev: KeyboardEvent) => {
-      const isShadowRootFocus = document.activeElement === getEditorRoot();
+      const isIframedFocused = document.activeElement === getEditorRoot();
 
-      if (!isShadowRootFocus) return;
+      if (!isIframedFocused) return;
       if (isHotkey('tab', ev) || isHotkey('shift+tab', ev)) {
         setTimeout(() => {
           const activeElement = getIframeDocument()?.activeElement;
@@ -94,10 +94,10 @@ export function useHotKeys() {
         }, 0);
       }
     };
-    window.addEventListener('keydown', onKeyDown);
+    getEditorRoot().contentWindow?.addEventListener('keydown', onKeyDown);
 
     return () => {
-      window.removeEventListener('keydown', onKeyDown);
+      getEditorRoot().contentWindow?.removeEventListener('keydown', onKeyDown);
     };
   }, [focusIdx, removeBlock, setFocusIdx, values]);
 }
