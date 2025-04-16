@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { RICH_TEXT_TOOL_BAR } from '@extensions/constants';
-import { getIframeDocument } from 'easy-email-editor';
+import { FIXED_CONTAINER_ID, getIframeDocument } from 'easy-email-editor';
 import React, { useEffect, useMemo, useState } from 'react';
+import { RICH_TEXT_TOOL_BAR } from '@extensions/constants';
 
 export const SelectionRangeContext = React.createContext<{
   selectionRange: Range | null;
@@ -23,17 +23,17 @@ export const SelectionRangeProvider: React.FC<{
         const range = getIframeDocument()?.getSelection()?.getRangeAt(0);
         if (range) {
           const toolbar = getIframeDocument()?.getElementById(RICH_TEXT_TOOL_BAR);
-          if (toolbar && toolbar.contains(range.commonAncestorContainer)) return;
+          if (toolbar && getIframeDocument()?.getElementById(FIXED_CONTAINER_ID)?.contains(range.commonAncestorContainer)) return;
           setSelectionRange(range);
         }
       } catch (error) {
       }
     };
 
-    document.addEventListener('selectionchange', onSelectionChange);
+    getIframeDocument()?.addEventListener('selectionchange', onSelectionChange);
 
     return () => {
-      document.removeEventListener('selectionchange', onSelectionChange);
+      getIframeDocument()?.removeEventListener('selectionchange', onSelectionChange);
     };
   }, []);
 

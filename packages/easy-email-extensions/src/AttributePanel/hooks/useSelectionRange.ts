@@ -11,24 +11,32 @@ export function useSelectionRange() {
   );
 
   const restoreRange = useCallback((range: Range) => {
-    const selection = getIframeDocument()?.getSelection();
-    selection?.removeAllRanges();
-    const newRange = document.createRange();
-    newRange.setStart(range.startContainer, range.startOffset);
-    newRange.setEnd(range.endContainer, range.endOffset);
+    const iframe = getIframeDocument();
 
-    selection?.addRange(newRange);
+    if (iframe) {
+      const selection = iframe.getSelection();
+      selection?.removeAllRanges();
+      const newRange = iframe.createRange();
+      newRange.setStart(range.startContainer, range.startOffset);
+      newRange.setEnd(range.endContainer, range.endOffset);
+
+      selection?.addRange(newRange);
+    }
   }, []);
 
   const setRangeByElement = useCallback(
     (element: ChildNode) => {
-      const selection = getIframeDocument()?.getSelection();
+      const iframe = getIframeDocument();
 
-      selection?.removeAllRanges();
-      const newRange = document.createRange();
-      newRange.selectNode(element);
-      setSelectionRange(newRange);
-      selection?.addRange(newRange);
+      if (iframe) {
+        const selection = iframe.getSelection();
+
+        selection?.removeAllRanges();
+        const newRange = iframe.createRange();
+        newRange.selectNode(element);
+        setSelectionRange(newRange);
+        selection?.addRange(newRange);
+      }
 
     },
     [setSelectionRange],

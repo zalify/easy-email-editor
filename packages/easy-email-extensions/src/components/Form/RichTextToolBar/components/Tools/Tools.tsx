@@ -107,7 +107,7 @@ export function Tools(props: ToolsProps) {
     [props.onChange],
   );
 
-  const getPopoverMountNode = () => document.getElementById(FIXED_CONTAINER_ID)!;
+  const getPopoverMountNode = () => getIframeDocument()?.getElementById(FIXED_CONTAINER_ID)!;
 
   return (
     <div
@@ -186,41 +186,41 @@ export function Tools(props: ToolsProps) {
         <div className="easy-email-extensions-divider" />
 
         <ToolItem
-          onClick={() => execCommand('justifyLeft')}
+          onClick={() => execCommandWithRange('justifyLeft')}
           icon={<IconFont iconName="icon-align-left" />}
           title={t('Align left')}
         />
         <ToolItem
-          onClick={() => execCommand('justifyCenter')}
+          onClick={() => execCommandWithRange('justifyCenter')}
           icon={<IconFont iconName="icon-align-center" />}
           title={t('Align center')}
         />
         <ToolItem
-          onClick={() => execCommand('justifyRight')}
+          onClick={() => execCommandWithRange('justifyRight')}
           icon={<IconFont iconName="icon-align-right" />}
           title={t('Align right')}
         />
         <div className="easy-email-extensions-divider" />
         <ToolItem
-          onClick={() => execCommand('insertOrderedList')}
+          onClick={() => execCommandWithRange('insertOrderedList')}
           icon={<IconFont iconName="icon-list-ol" />}
           title={t('Orderlist')}
         />
         <ToolItem
-          onClick={() => execCommand('insertUnorderedList')}
+          onClick={() => execCommandWithRange('insertUnorderedList')}
           icon={<IconFont iconName="icon-list-ul" />}
           title={t('Unorderlist')}
         />
         <div className="easy-email-extensions-divider" />
 
         <ToolItem
-          onClick={() => execCommand('insertHorizontalRule')}
+          onClick={() => execCommandWithRange('insertHorizontalRule')}
           icon={<IconFont iconName="icon-line" />}
           title={t('Line')}
         />
         <div className="easy-email-extensions-divider" />
         <ToolItem
-          onClick={() => execCommand('removeFormat')}
+          onClick={() => execCommandWithRange('removeFormat')}
           icon={<IconFont iconName="icon-close" />}
           title={t('Remove format')}
         />

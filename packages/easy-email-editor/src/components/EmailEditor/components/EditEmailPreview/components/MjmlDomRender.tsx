@@ -19,6 +19,9 @@ export function MjmlDomRender() {
   const { pageData: content, initialized } = useEditorContext();
   const { dashed, mergeTags, enabledMergeTagsBadge } = useEditorProps();
 
+  const isTextFocusing =
+    getIframeDocument()?.activeElement?.getAttribute('contenteditable') === 'true';
+
   useEffect(() => {
     if (!initialized) return;
 
@@ -38,6 +41,10 @@ export function MjmlDomRender() {
   }, [content, pageData, isTextFocus]);
 
   useEffect(() => {
+    setIsTextFocus(isTextFocusing);
+  }, [isTextFocusing]);
+
+  useEffect(() => {
     const onClick = (e: MouseEvent) => {
       if (getIframeDocument()?.contains(e.target as Node)) {
         return;
@@ -46,7 +53,7 @@ export function MjmlDomRender() {
       if (fixedContainer?.contains(e.target as Node)) {
         return;
       }
-      // setIsTextFocus(false);
+      setIsTextFocus(false);
     };
 
     getIframeDocument()?.addEventListener('click', onClick);
