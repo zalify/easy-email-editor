@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import { ToolItem } from '../ToolItem';
 import { Link, LinkParams } from '../Link';
 import {
-  FIXED_CONTAINER_ID,
   getIframeDocument,
   IconFont,
   MergeTagBadge,
@@ -107,7 +106,7 @@ export function Tools(props: ToolsProps) {
     [props.onChange],
   );
 
-  const getPopoverMountNode = () => getIframeDocument()?.getElementById(FIXED_CONTAINER_ID)!;
+  const getPopoverMountNode = () => getIframeDocument()?.getElementById(RICH_TEXT_TOOL_BAR)!;
 
   return (
     <div
