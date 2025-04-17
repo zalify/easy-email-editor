@@ -1,4 +1,4 @@
-import { PopoverProps, Tooltip } from '@arco-design/web-react';
+import { PopoverProps } from '@arco-design/web-react';
 import React, { useCallback, useMemo } from 'react';
 import { IconFont } from 'easy-email-editor';
 import { ToolItem } from '../ToolItem';
@@ -35,14 +35,8 @@ export function StrikeThrough(props: LinkProps) {
   }, [node, onChange, setRangeByElement]);
 
   return (
-    <Tooltip
-      color="#fff"
-      position="tl"
-      content={t('Strikethrough')}
-    >
-      <ToolItem title={t('Strikethrough')} isActive={Boolean(node)}
-                icon={<IconFont iconName="icon-strikethrough" />} onClick={onClick}
-      />
-    </Tooltip>
+    <ToolItem title={t('Strikethrough')} isActive={Boolean(node)}
+              icon={<IconFont iconName="icon-strikethrough" />} onClick={onClick}
+    />
   );
 }

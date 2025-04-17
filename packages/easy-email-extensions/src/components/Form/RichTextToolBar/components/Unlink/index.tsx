@@ -1,4 +1,4 @@
-import { PopoverProps, Tooltip } from '@arco-design/web-react';
+import { PopoverProps } from '@arco-design/web-react';
 import React, { useCallback, useMemo } from 'react';
 import { IconFont } from 'easy-email-editor';
 import { ToolItem } from '../ToolItem';
@@ -50,12 +50,6 @@ export function Unlink(props: LinkProps) {
   }, [linkNode, onChange]);
 
   return (
-    <Tooltip
-      color="#fff"
-      position="tl"
-      content={t('Unlink')}
-    >
-      <ToolItem title={t('Unlink')} icon={<IconFont iconName="icon-unlink" />} onClick={onUnlink} />
-    </Tooltip>
+    <ToolItem title={t('Unlink')} icon={<IconFont iconName="icon-unlink" />} onClick={onUnlink} />
   );
 }

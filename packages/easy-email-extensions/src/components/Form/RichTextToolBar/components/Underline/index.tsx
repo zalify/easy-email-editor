@@ -1,4 +1,4 @@
-import { PopoverProps, Tooltip } from '@arco-design/web-react';
+import { PopoverProps } from '@arco-design/web-react';
 import React, { useCallback, useMemo } from 'react';
 import { IconFont } from 'easy-email-editor';
 import { ToolItem } from '../ToolItem';
@@ -35,14 +35,8 @@ export function Underline(props: LinkProps) {
   }, [node, onChange, setRangeByElement]);
 
   return (
-    <Tooltip
-      color="#fff"
-      position="tl"
-      content={t('Underline')}
-    >
-      <ToolItem title={t('Underline')} isActive={Boolean(node)}
-                icon={<IconFont iconName="icon-underline" />} onClick={onClick}
-      />
-    </Tooltip>
+    <ToolItem title={t('Underline')} isActive={Boolean(node)}
+              icon={<IconFont iconName="icon-underline" />} onClick={onClick}
+    />
   );
 }
