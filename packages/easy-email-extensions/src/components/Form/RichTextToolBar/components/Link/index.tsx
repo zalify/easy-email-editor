@@ -22,16 +22,14 @@ function getAnchorElement(
   node: Node | null,
 ): HTMLAnchorElement | null {
   if (!node) return null;
-  if (node instanceof HTMLAnchorElement) {
-    return node;
-  }
-  if (node instanceof Element && node.classList.contains(EMAIL_BLOCK_CLASS_NAME)) return null;
+  if ((node as Element).classList?.contains(EMAIL_BLOCK_CLASS_NAME)) return null;
+  if ((node as Element).tagName?.toLocaleLowerCase() === 'a') return node as HTMLAnchorElement;
 
   return getAnchorElement(node.parentNode);
 }
 
 function getLinkNode(
-  currentRange: Range | null | undefined
+  currentRange: Range | null | undefined,
 ): HTMLAnchorElement | null {
   let linkNode: HTMLAnchorElement | null = null;
   if (!currentRange) return null;
@@ -63,7 +61,7 @@ export function Link(props: LinkProps) {
     (values: LinkParams) => {
       props.onChange(values);
     },
-    [props]
+    [props],
   );
 
   return (
@@ -77,15 +75,15 @@ export function Link(props: LinkProps) {
         return (
           <Tooltip
             {...props}
-            trigger='click'
-            color='#fff'
-            position='tl'
+            trigger="click"
+            color="#fff"
+            position="tl"
             content={(
               <div style={{ color: '#333' }}>
-                <Stack vertical spacing='none'>
+                <Stack vertical spacing="none">
                   <SearchField
-                    size='small'
-                    name='link'
+                    size="small"
+                    name="link"
                     label={t('Link')}
                     labelHidden
                     searchButton={t('Apply')}
@@ -95,13 +93,13 @@ export function Link(props: LinkProps) {
                 </Stack>
                 <Grid.Row>
                   <Grid.Col span={12}>
-                    <Space align='center' size='mini'>
-                      <TextStyle size='smallest'>{t('Target')}</TextStyle>
+                    <Space align="center" size="mini">
+                      <TextStyle size="smallest">{t('Target')}</TextStyle>
                       <SwitchField
-                        size='small'
+                        size="small"
                         label={t('Target')}
                         labelHidden
-                        name='blank'
+                        name="blank"
                         checkedText={t('blank')}
                         uncheckedText={t('self')}
                         inline
@@ -109,13 +107,13 @@ export function Link(props: LinkProps) {
                     </Space>
                   </Grid.Col>
                   <Grid.Col span={12}>
-                    <Space align='center' size='mini'>
-                      <TextStyle size='smallest'>{t('Underline')}</TextStyle>
+                    <Space align="center" size="mini">
+                      <TextStyle size="smallest">{t('Underline')}</TextStyle>
                       <SwitchField
-                        size='small'
+                        size="small"
                         label={t('Underline')}
                         labelHidden
-                        name='underline'
+                        name="underline"
                         checkedText={t('off')}
                         uncheckedText={t('on')}
                         inline
@@ -126,7 +124,9 @@ export function Link(props: LinkProps) {
               </div>
             )}
           >
-            <ToolItem isActive={Boolean(initialValues.link)} title={t('Link')} icon={<IconFont iconName='icon-link' />} />
+            <ToolItem isActive={Boolean(initialValues.link)} title={t('Link')}
+                      icon={<IconFont iconName="icon-link" />}
+            />
           </Tooltip>
         );
       }}

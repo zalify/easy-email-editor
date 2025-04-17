@@ -14,8 +14,8 @@ function getStrikeThroughNode(
   node: Node | null | undefined,
 ): Element | null {
   if (!node) return null;
-  if (node instanceof Element && node.classList.contains(EMAIL_BLOCK_CLASS_NAME)) return null;
-  if (node instanceof Element && node.tagName.toLocaleLowerCase() === 'strike') return node;
+  if ((node as Element).classList?.contains(EMAIL_BLOCK_CLASS_NAME)) return null;
+  if ((node as Element).tagName?.toLocaleLowerCase() === 'strike') return node as Element;
   return getStrikeThroughNode(node.parentNode);
 }
 
@@ -36,11 +36,13 @@ export function StrikeThrough(props: LinkProps) {
 
   return (
     <Tooltip
-      color='#fff'
-      position='tl'
+      color="#fff"
+      position="tl"
       content={t('Strikethrough')}
     >
-      <ToolItem title={t('Strikethrough')} isActive={Boolean(node)} icon={<IconFont iconName='icon-strikethrough' />} onClick={onClick} />
+      <ToolItem title={t('Strikethrough')} isActive={Boolean(node)}
+                icon={<IconFont iconName="icon-strikethrough" />} onClick={onClick}
+      />
     </Tooltip>
   );
 }

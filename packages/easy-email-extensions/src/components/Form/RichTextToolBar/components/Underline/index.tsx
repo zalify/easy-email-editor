@@ -14,8 +14,8 @@ function getUnderlineNode(
   node: Node | null | undefined,
 ): Element | null {
   if (!node) return null;
-  if (node instanceof Element && node.classList.contains(EMAIL_BLOCK_CLASS_NAME)) return null;
-  if (node instanceof Element && node.tagName.toLocaleLowerCase() === 'u') return node;
+  if ((node as Element).classList?.contains(EMAIL_BLOCK_CLASS_NAME)) return null;
+  if ((node as Element).tagName?.toLocaleLowerCase() === 'u') return node as Element;
   return getUnderlineNode(node.parentNode);
 }
 
@@ -36,11 +36,13 @@ export function Underline(props: LinkProps) {
 
   return (
     <Tooltip
-      color='#fff'
-      position='tl'
+      color="#fff"
+      position="tl"
       content={t('Underline')}
     >
-      <ToolItem title={t('Underline')} isActive={Boolean(node)} icon={<IconFont iconName='icon-underline' />} onClick={onClick} />
+      <ToolItem title={t('Underline')} isActive={Boolean(node)}
+                icon={<IconFont iconName="icon-underline" />} onClick={onClick}
+      />
     </Tooltip>
   );
 }

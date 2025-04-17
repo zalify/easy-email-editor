@@ -14,9 +14,9 @@ function getBoldNode(
   node: Node | null | undefined,
 ): Element | null {
   if (!node) return null;
-  if (node instanceof Element && node.classList.contains(EMAIL_BLOCK_CLASS_NAME)) return null;
-  if (node instanceof Element && node.tagName.toLocaleLowerCase() === 'b') return node;
-  return getBoldNode(node.parentNode);
+  if ((node as Element).classList?.contains(EMAIL_BLOCK_CLASS_NAME)) return null;
+  if ((node as Element).tagName?.toLocaleLowerCase() === 'b') return node as Element;
+  return getBoldNode(node.parentElement);
 }
 
 export function Bold(props: LinkProps) {
