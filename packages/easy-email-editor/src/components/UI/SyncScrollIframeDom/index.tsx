@@ -8,6 +8,7 @@ const offsetTop = 50;
 
 export const SyncScrollIframeDom: React.FC<React.HTMLProps<HTMLElement> & {
   isActive: boolean;
+  title?: string;
 }> = (props) => {
   const iframeRef = useRef<null | HTMLIFrameElement>(null);
 
@@ -76,7 +77,7 @@ export const SyncScrollIframeDom: React.FC<React.HTMLProps<HTMLElement> & {
   }, [iframeRef, viewElementRef, activeTab, isActive]);
 
   return (
-    <iframe title="Email Editor" {...(rest as any)} ref={iframeRef}>
+    <iframe title={props.title} {...(rest as any)} ref={iframeRef}>
       {iframeRef?.current?.contentDocument && createPortal(props.children, iframeRef.current.contentDocument.body)}
     </iframe>
   );
