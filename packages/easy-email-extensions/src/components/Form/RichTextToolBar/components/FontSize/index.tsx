@@ -59,10 +59,10 @@ export function FontSize(props: FontSizeProps) {
 
   return (
     <Popover
-      trigger='click'
-      color='#fff'
-      position='left'
-      className='easy-email-extensions-Tools-Popover'
+      trigger="click"
+      color="#fff"
+      position="left"
+      className="easy-email-extensions-Tools-Popover"
       popupVisible={visible}
       onVisibleChange={onVisibleChange}
       content={(
@@ -97,7 +97,7 @@ export function FontSize(props: FontSizeProps) {
     >
       <ToolItem
         title={t('Font size')}
-        icon={<IconFont iconName='icon-font-color' />}
+        icon={<IconFont iconName="icon-font-color" />}
       />
     </Popover>
   );

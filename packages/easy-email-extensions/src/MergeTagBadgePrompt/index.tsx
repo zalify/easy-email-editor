@@ -1,11 +1,10 @@
 import {
+  getBlockNodeByChildEle,
+  getIframeDocument,
+  IconFont,
   useEditorContext,
   useEditorProps,
-  getShadowRoot,
-  getBlockNodeByChildEle,
-  IconFont,
   useRefState,
-  getEditorRoot,
 } from 'easy-email-editor';
 import { get } from 'lodash';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -13,16 +12,16 @@ import { createPortal } from 'react-dom';
 import stylesText from './MergeTagBadge.scss?inline';
 import { classnames } from '@extensions/utils/classnames';
 import { useSelectionRange } from '@extensions/AttributePanel/hooks/useSelectionRange';
+import { getEditorRoot } from '@/utils/getEditorRoot';
 
 const removeAllActiveBadge = () => {
-  getShadowRoot()
-    .querySelectorAll('.easy-email-merge-tag')
-    .forEach((item) => {
-      item.classList.remove('easy-email-merge-tag-focus');
-    });
+  getIframeDocument()?.querySelectorAll('.easy-email-merge-tag')
+  .forEach((item) => {
+    item.classList.remove('easy-email-merge-tag-focus');
+  });
 
-  const popoverNode = getShadowRoot().querySelectorAll(
-    '.easy-email-merge-tag-popover'
+  const popoverNode = getIframeDocument()?.querySelectorAll(
+    '.easy-email-merge-tag-popover',
   );
   if (popoverNode) {
   }
@@ -35,7 +34,7 @@ export function MergeTagBadgePrompt() {
   const [text, setText] = useState('');
   const { setRangeByElement } = useSelectionRange();
 
-  const root = initialized && getShadowRoot();
+  const root = initialized && getIframeDocument();
   const [target, setTarget] = React.useState<HTMLElement | null>(null);
   const targetRef = useRefState(target);
 
@@ -97,9 +96,9 @@ export function MergeTagBadgePrompt() {
       }
     };
 
-    root.addEventListener('click', onClick);
+    root.body.addEventListener('click', onClick);
     return () => {
-      root.removeEventListener('click', onClick);
+      root.body.removeEventListener('click', onClick);
     };
   }, [focusMergeTag, mergeTags, onChangeMergeTag, root]);
 
@@ -135,25 +134,33 @@ export function MergeTagBadgePrompt() {
   return (
     <>
 
-      {root && createPortal(<style>{stylesText}</style>, root as any)}
+      {(root && root?.body) && createPortal(<style>{stylesText}</style>, root.body as any)}
       {textContainer && createPortal(
-        <div ref={popoverRef} onClick={onClick} className={classnames('easy-email-merge-tag-popover')}>
-          <div className='easy-email-merge-tag-popover-container'>
+        <div ref={popoverRef} onClick={onClick}
+             className={classnames('easy-email-merge-tag-popover')}
+        >
+          <div className="easy-email-merge-tag-popover-container">
             <h3>
               <span>{t('Default value')}</span>
-              <IconFont style={{ color: 'rgb(92, 95, 98)' }} iconName='icon-close' onClick={onClose} />
+              <IconFont style={{ color: 'rgb(92, 95, 98)' }} iconName="icon-close"
+                        onClick={onClose}
+              />
             </h3>
             <div className={'easy-email-merge-tag-popover-desc'}>
               <p>
                 {t('If a personalized text value isn\"t available, then a default value is shown.')}
               </p>
-              <div className='easy-email-merge-tag-popover-desc-label'>
-                <input autoFocus value={text} onChange={onChange} type="text" autoComplete='off' maxLength={40} />
-                <div className='easy-email-merge-tag-popover-desc-label-count'>
+              <div className="easy-email-merge-tag-popover-desc-label">
+                <input autoFocus value={text}
+                       onChange={onChange} type="text"
+                       autoComplete="off"
+                       maxLength={40}
+                />
+                <div className="easy-email-merge-tag-popover-desc-label-count">
                   {text.length}/40
                 </div>
               </div>
-              <div className='easy-email-merge-tag-popover-desc-label-button'>
+              <div className="easy-email-merge-tag-popover-desc-label-button">
                 <button onClick={onSave}>{t('Save')}</button>
               </div>
             </div>

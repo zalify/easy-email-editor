@@ -1,4 +1,4 @@
-import { PopoverProps, Tooltip } from '@arco-design/web-react';
+import { PopoverProps } from '@arco-design/web-react';
 import React, { useCallback, useMemo } from 'react';
 import { IconFont } from 'easy-email-editor';
 import { ToolItem } from '../ToolItem';
@@ -14,8 +14,8 @@ function getItalicNode(
   node: Node | null | undefined,
 ): Element | null {
   if (!node) return null;
-  if (node instanceof Element && node.classList.contains(EMAIL_BLOCK_CLASS_NAME)) return null;
-  if (node instanceof Element && node.tagName.toLocaleLowerCase() === 'i') return node;
+  if ((node as Element).classList?.contains(EMAIL_BLOCK_CLASS_NAME)) return null;
+  if ((node as Element).tagName?.toLocaleLowerCase() === 'i') return node as Element;
   return getItalicNode(node.parentNode);
 }
 
@@ -35,12 +35,8 @@ export function Italic(props: LinkProps) {
   }, [node, onChange, setRangeByElement]);
 
   return (
-    <Tooltip
-      color='#fff'
-      position='tl'
-      content={t('Italic')}
-    >
-      <ToolItem title={t('Italic')} isActive={Boolean(node)} icon={<IconFont iconName='icon-italic' />} onClick={onClick} />
-    </Tooltip>
+    <ToolItem title={t('Italic')} isActive={Boolean(node)}
+              icon={<IconFont iconName="icon-italic" />} onClick={onClick}
+    />
   );
 }

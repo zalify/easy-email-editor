@@ -1,35 +1,45 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { useCallback, useContext } from 'react';
-import { SelectionRangeContext } from '@extensions/AttributePanel/components/provider/SelectionRangeProvider';
-import { getShadowRoot } from 'easy-email-editor';
+import {
+  SelectionRangeContext,
+} from '@extensions/AttributePanel/components/provider/SelectionRangeProvider';
+import { getIframeDocument } from 'easy-email-editor';
 
 export function useSelectionRange() {
   const { selectionRange, setSelectionRange } = useContext(
-    SelectionRangeContext
+    SelectionRangeContext,
   );
 
   const restoreRange = useCallback((range: Range) => {
-    const selection = (getShadowRoot() as any).getSelection();
-    selection.removeAllRanges();
-    const newRange = document.createRange();
-    newRange.setStart(range.startContainer, range.startOffset);
-    newRange.setEnd(range.endContainer, range.endOffset);
+    const iframe = getIframeDocument();
 
-    selection.addRange(newRange);
+    if (iframe) {
+      const selection = iframe.getSelection();
+      selection?.removeAllRanges();
+      const newRange = iframe.createRange();
+      newRange.setStart(range.startContainer, range.startOffset);
+      newRange.setEnd(range.endContainer, range.endOffset);
+
+      selection?.addRange(newRange);
+    }
   }, []);
 
   const setRangeByElement = useCallback(
     (element: ChildNode) => {
-      const selection = (getShadowRoot() as any).getSelection();
+      const iframe = getIframeDocument();
 
-      selection.removeAllRanges();
-      const newRange = document.createRange();
-      newRange.selectNode(element);
-      setSelectionRange(newRange);
-      selection.addRange(newRange);
+      if (iframe) {
+        const selection = iframe.getSelection();
+
+        selection?.removeAllRanges();
+        const newRange = iframe.createRange();
+        newRange.selectNode(element);
+        setSelectionRange(newRange);
+        selection?.addRange(newRange);
+      }
 
     },
-    [setSelectionRange]
+    [setSelectionRange],
   );
 
   return {

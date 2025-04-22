@@ -1,14 +1,13 @@
 import {
-  useEditorProps,
-  MergeTagBadge,
-  getEditorRoot,
-  getShadowRoot,
-  FIXED_CONTAINER_ID,
-  RICH_TEXT_BAR_ID,
-  DATA_CONTENT_EDITABLE_IDX,
   CONTENT_EDITABLE_CLASS_NAME,
-  DATA_CONTENT_EDITABLE_TYPE,
   ContentEditableType,
+  DATA_CONTENT_EDITABLE_IDX,
+  DATA_CONTENT_EDITABLE_TYPE,
+  FIXED_CONTAINER_ID,
+  getIframeDocument,
+  MergeTagBadge,
+  RICH_TEXT_BAR_ID,
+  useEditorProps,
 } from 'easy-email-editor';
 import React, { useCallback, useEffect, useState } from 'react';
 import { InlineText, InlineTextProps } from '../InlineTextField';
@@ -17,16 +16,16 @@ import { Field, FieldInputProps } from 'react-final-form';
 import { debounce } from 'lodash';
 
 export const RichTextField = (
-  props: Omit<InlineTextProps, 'onChange' | 'mutators'>
+  props: Omit<InlineTextProps, 'onChange' | 'mutators'>,
 ) => {
   const [contentEditableName, setContentEditableName] = useState('');
   const [contentEditableType, setContentEditableType] = useState<string | null>(
-    CONTENT_EDITABLE_CLASS_NAME
+    CONTENT_EDITABLE_CLASS_NAME,
   );
 
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
-      if (getEditorRoot()?.contains(e.target as Node)) {
+      if (getIframeDocument()?.contains(e.target as Node)) {
         return;
       }
       const fixedContainer = document.getElementById(FIXED_CONTAINER_ID);
@@ -36,24 +35,24 @@ export const RichTextField = (
       setContentEditableName('');
     };
 
-    window.addEventListener('click', onClick);
+    getIframeDocument()?.addEventListener('click', onClick);
     return () => {
-      window.removeEventListener('click', onClick);
+      getIframeDocument()?.removeEventListener('click', onClick);
     };
   }, []);
 
   useEffect(() => {
-    const root = getShadowRoot();
+    const root = getIframeDocument();
     if (!root) return;
     const onClick = (e: Event) => {
       const target = e.target as HTMLElement;
 
-      const fixedContainer = document.getElementById(FIXED_CONTAINER_ID);
+      const fixedContainer = root.getElementById(FIXED_CONTAINER_ID);
       const richTextBar = root.getElementById(RICH_TEXT_BAR_ID);
       if (fixedContainer?.contains(target) || richTextBar?.contains(target)) {
         return;
       }
-      const activeElement = getShadowRoot().activeElement;
+      const activeElement = getIframeDocument()?.activeElement;
       if (!activeElement) {
         setContentEditableName('');
       } else {
@@ -77,17 +76,15 @@ export const RichTextField = (
   if (!contentEditableName) return null;
 
   return (
-    <>
-      <Field name={contentEditableName} parse={(v) => v}>
-        {({ input }) => (
-          <FieldWrapper
-            {...props}
-            contentEditableType={contentEditableType}
-            input={input}
-          />
-        )}
-      </Field>
-    </>
+    <Field name={contentEditableName} parse={(v) => v}>
+      {({ input }) => (
+        <FieldWrapper
+          {...props}
+          contentEditableType={contentEditableType}
+          input={input}
+        />
+      )}
+    </Field>
   );
 };
 
@@ -95,10 +92,11 @@ function FieldWrapper(
   props: Omit<InlineTextProps, 'onChange'> & {
     input: FieldInputProps<any, HTMLElement>;
     contentEditableType: string | null;
-  }
+  },
 ) {
   const { input, contentEditableType, ...rest } = props;
   const { mergeTagGenerate, enabledMergeTagsBadge } = useEditorProps();
+  const [value, setValue] = useState(input.value);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debounceCallbackChange = useCallback(
@@ -111,7 +109,7 @@ function FieldWrapper(
 
       input.onBlur();
     }, 200),
-    [input]
+    [input],
   );
 
   return (

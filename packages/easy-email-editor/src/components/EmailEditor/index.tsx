@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Stack } from '../UI/Stack';
 import { ToolsPanel } from './components/ToolsPanel';
 import { createPortal } from 'react-dom';
@@ -14,16 +14,19 @@ import { useEditorProps } from '@/hooks/useEditorProps';
 import './index.scss';
 import '@/assets/font/iconfont.css';
 import { EventManager, EventType } from '@/utils/EventManager';
+import { getIframeDocument } from '@/utils';
 
 (window as any).global = window; // react-codemirror
 
 export const EmailEditor = () => {
   const { height: containerHeight } = useEditorProps();
   const { setActiveTab, activeTab } = useActiveTab();
+  const iframeDocument = getIframeDocument();
 
   const fixedContainer = useMemo(() => {
-    return createPortal(<div id={FIXED_CONTAINER_ID} />, document.body);
-  }, []);
+    if (!iframeDocument) return null;
+    return createPortal(<div id={FIXED_CONTAINER_ID} />, iframeDocument?.body);
+  }, [iframeDocument]);
 
   const onBeforeChangeTab = useCallback((currentTab: any, nextTab: any) => {
     return EventManager.exec(EventType.ACTIVE_TAB_CHANGE, { currentTab, nextTab });
@@ -56,8 +59,8 @@ export const EmailEditor = () => {
           <TabPane
             style={{ height: 'calc(100% - 50px)' }}
             tab={(
-              <Stack spacing='tight'>
-                <IconFont iconName='icon-editor' />
+              <Stack spacing="tight">
+                <IconFont iconName="icon-editor" />
               </Stack>
             )}
             key={ActiveTabKeys.EDIT}
@@ -67,8 +70,8 @@ export const EmailEditor = () => {
           <TabPane
             style={{ height: 'calc(100% - 50px)' }}
             tab={(
-              <Stack spacing='tight'>
-                <IconFont iconName='icon-desktop' />
+              <Stack spacing="tight">
+                <IconFont iconName="icon-desktop" />
               </Stack>
             )}
             key={ActiveTabKeys.PC}
@@ -78,8 +81,8 @@ export const EmailEditor = () => {
           <TabPane
             style={{ height: 'calc(100% - 50px)' }}
             tab={(
-              <Stack spacing='tight'>
-                <IconFont iconName='icon-mobile' />
+              <Stack spacing="tight">
+                <IconFont iconName="icon-mobile" />
               </Stack>
             )}
             key={ActiveTabKeys.MOBILE}
@@ -90,6 +93,6 @@ export const EmailEditor = () => {
         <>{fixedContainer}</>
       </div>
     ),
-    [activeTab, containerHeight, fixedContainer, onBeforeChangeTab, onChangeTab]
+    [activeTab, containerHeight, fixedContainer, onBeforeChangeTab, onChangeTab],
   );
 };

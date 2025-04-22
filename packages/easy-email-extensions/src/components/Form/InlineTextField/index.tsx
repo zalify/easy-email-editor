@@ -1,5 +1,9 @@
 import React, { useEffect } from 'react';
-import { ContentEditableType, DATA_CONTENT_EDITABLE_TYPE, getShadowRoot } from 'easy-email-editor';
+import {
+  ContentEditableType,
+  DATA_CONTENT_EDITABLE_TYPE,
+  getIframeDocument,
+} from 'easy-email-editor';
 import { useField, useForm } from 'react-final-form';
 
 export interface InlineTextProps {
@@ -16,40 +20,46 @@ export function InlineText({ idx, onChange, children }: InlineTextProps) {
   useField(idx); // setFieldTouched will be work while register field,
 
   useEffect(() => {
-    const shadowRoot = getShadowRoot();
+    const iframeDocument = getIframeDocument();
 
     const onPaste = (e: ClipboardEvent) => {
-      if (!(e.target instanceof Element) || !e.target.getAttribute('contenteditable')) return;
-      e.preventDefault();
+      const target = e.target as HTMLElement;
 
-      const text = e.clipboardData?.getData('text/plain') || '';
-      document.execCommand('insertHTML', false, text);
-      const contentEditableType = e.target.getAttribute(DATA_CONTENT_EDITABLE_TYPE);
-      if (contentEditableType === ContentEditableType.RichText) {
-        onChange(e.target.innerHTML || '');
-      } else if (contentEditableType === ContentEditableType.Text) {
-        onChange(e.target.textContent?.trim() || '');
-      }
-    };
+      if (target.getAttribute('contenteditable')) {
 
-    const onInput = (e: Event) => {
-      if (e.target instanceof Element && e.target.getAttribute('contenteditable')) {
+        e.preventDefault();
 
-        const contentEditableType = e.target.getAttribute(DATA_CONTENT_EDITABLE_TYPE);
+        const text = e.clipboardData?.getData('text/plain') ?? '';
+        iframeDocument?.execCommand('insertHTML', false, text);
+        const contentEditableType = target.getAttribute(DATA_CONTENT_EDITABLE_TYPE);
         if (contentEditableType === ContentEditableType.RichText) {
-          onChange(e.target.innerHTML || '');
+          onChange(target.innerHTML || '');
         } else if (contentEditableType === ContentEditableType.Text) {
-          onChange(e.target.textContent?.trim() || '');
+          onChange(target.textContent?.trim() ?? '');
         }
       }
     };
 
-    shadowRoot.addEventListener('paste', onPaste as any, true);
-    shadowRoot.addEventListener('input', onInput);
+    const onInput = (e: Event) => {
+      const target = e.target as HTMLElement;
+
+      if (target.getAttribute('contenteditable')) {
+
+        const contentEditableType = target.getAttribute(DATA_CONTENT_EDITABLE_TYPE);
+        if (contentEditableType === ContentEditableType.RichText) {
+          onChange(target.innerHTML || '');
+        } else if (contentEditableType === ContentEditableType.Text) {
+          onChange(target.textContent?.trim() ?? '');
+        }
+      }
+    };
+
+    iframeDocument?.body.addEventListener('paste', onPaste as any, true);
+    iframeDocument?.body.addEventListener('input', onInput);
 
     return () => {
-      shadowRoot.removeEventListener('paste', onPaste as any, true);
-      shadowRoot.removeEventListener('input', onInput);
+      iframeDocument?.body.removeEventListener('paste', onPaste as any, true);
+      iframeDocument?.body.removeEventListener('input', onInput);
     };
   }, [onChange, setFieldTouched]);
 

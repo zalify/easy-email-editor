@@ -28,30 +28,28 @@ export function MergeTags(props: MergeTagsProps) {
 
   return (
     <Popover
-      trigger='click'
-      color='#fff'
-      position='left'
+      trigger="click"
+      color="#fff"
+      position="left"
       popupVisible={visible}
       onVisibleChange={onVisibleChange}
       style={{ zIndex: 10 }}
       triggerProps={{
         popupStyle: {
-          backgroundColor: 'var(--color-bg-5);',
+          backgroundColor: 'var(--color-bg-5)',
         },
       }}
-      content={
-        <>
-          <MergeTagsOptions
-            value=''
-            onChange={onChange}
-          />
-        </>
-      }
+      content={(
+        <MergeTagsOptions
+          value=""
+          onChange={onChange}
+        />
+      )}
       getPopupContainer={props.getPopupContainer}
     >
       <ToolItem
         title={t('Merge tag')}
-        icon={<IconFont iconName='icon-merge-tags' />}
+        icon={<IconFont iconName="icon-merge-tags" />}
       />
     </Popover>
   );
