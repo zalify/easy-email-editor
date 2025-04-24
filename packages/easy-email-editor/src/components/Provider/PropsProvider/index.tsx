@@ -14,6 +14,23 @@ export interface BlockGroup {
   blocks: Array<CollectedBlock>;
 }
 
+export enum AvailableTools {
+  MergeTags = 'mergeTags',
+  FontFamily = 'fontFamily',
+  FontSize = 'fontSize',
+  Bold = 'bold',
+  Italic = 'italic',
+  StrikeThrough = 'strikeThrough',
+  Underline = 'underline',
+  IconFontColor = 'iconFontColor',
+  IconBgColor = 'iconBgColor',
+  Link = 'link',
+  Justify = 'justify',
+  Lists = 'lists',
+  HorizontalRule = 'horizontalRule',
+  RemoveFormat = 'removeFormat',
+}
+
 export interface PropsProviderProps {
   children?: React.ReactNode;
   height: string;
@@ -47,6 +64,11 @@ export interface PropsProviderProps {
   ) => string | Promise<string>;
   enabledLogic?: boolean;
   locale?: Record<string, string>;
+
+  toolbar?: {
+    tools?: AvailableTools[];
+    suffix?: (execCommand: (cmd: string, value?: any) => void) => React.ReactNode;
+  };
 }
 
 const defaultMergeTagGenerate = (m: string) => `{{${m}}}`;
