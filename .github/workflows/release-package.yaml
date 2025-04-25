@@ -12,8 +12,26 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm ci
-      - run: npm test
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+          run_install: false
+
+      - name: Install dependencies core
+        run: |
+          cd packages/easy-email-core && pnpm install
+
+      - name: Run tests core
+        run: pnpm run test:core
+
+      - name: Install dependencies extensions
+        run: |
+          cd packages/easy-email-extensions && pnpm install
+
+      - name: Run tests extensions
+        run: pnpm run test:extensions
 
   publish-gpr:
     needs: build
@@ -26,8 +44,40 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          registry-url: https://npm.pkg.github.com/
-      - run: npm ci
-      - run: npm publish
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+          run_install: false
+
+      - name: Setup Registry
         env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          PACKAGE_AUTH_TOKEN: ${{ secrets.PACKAGE_AUTH_TOKEN }}
+        run: pnpm config set @TeamDiverst:registry https://npm.pkg.github.com && && pnpm config set //npm.pkg.github.com/:_authToken $PACKAGE_AUTH_TOKEN
+
+
+      - name: Install dependencies Core
+        run: |
+          cd packages/easy-email-core && pnpm install
+
+      - name: Build and Publish Core
+        run: |
+          cd packages/easy-email-core && pnpm build && pnpm publish --no-git-checks --access=restricted --report-summary
+
+      - name: Install dependencies Extensions and publish
+        run: |
+          cd packages/easy-email-extensions && pnpm install
+
+      - name: Build and Publish Extensions
+        run: |
+          cd packages/easy-email-extensions && pnpm build && pnpm publish --no-git-checks --access=restricted --report-summary
+
+      - name: Install dependencies editor
+        run: |
+          cd packages/easy-email-editor && pnpm install
+
+      - name: Build and Publish Editor
+        run: |
+          cd packages/easy-email-editor && pnpm build && pnpm publish --no-git-checks --access=restricted --report-summary
+

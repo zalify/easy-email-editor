@@ -1,8 +1,8 @@
 {
-  "name": "easy-email-localization",
+  "name": "@TeamDiverst/easy-email-localization",
   "license": "MIT",
   "description": "Email editor",
-  "version": "4.16.1",
+  "version": "5.0.0",
   "author": "m-Ryan",
   "keywords": [],
   "files": [
