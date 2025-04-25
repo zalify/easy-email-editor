@@ -1,8 +1,8 @@
 import { Tooltip } from '@arco-design/web-react';
 import { classnames } from '@extensions/utils/classnames';
 import React from 'react';
-import { getIframeDocument } from '@';
 import { RICH_TEXT_TOOL_BAR } from '@extensions';
+import { getIframeDocument } from '@extensions/utils/getIframeDocument';
 
 export const ToolItem: React.FC<{
   title?: string;

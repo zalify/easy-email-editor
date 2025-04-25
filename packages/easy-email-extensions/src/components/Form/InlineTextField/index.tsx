@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import {
   ContentEditableType,
   DATA_CONTENT_EDITABLE_TYPE,
-  getIframeDocument,
 } from 'easy-email-editor';
 import { useField, useForm } from 'react-final-form';
+import { getIframeDocument } from '@extensions/utils/getIframeDocument';
 
 export interface InlineTextProps {
   idx: string;

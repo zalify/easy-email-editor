@@ -3,7 +3,6 @@ import { ToolItem } from '../ToolItem';
 import { Link, LinkParams } from '../Link';
 import {
   AvailableTools,
-  getIframeDocument,
   IconFont,
   MergeTagBadge,
   useEditorProps,
@@ -22,6 +21,7 @@ import { Italic } from '../Italic';
 import { Bold } from '../Bold';
 import { FontSize } from '../FontSize';
 import { RICH_TEXT_TOOL_BAR } from '@extensions/constants';
+import { getIframeDocument } from '@extensions/utils/getIframeDocument';
 
 export interface ToolsProps {
   onChange: (content: string) => any;

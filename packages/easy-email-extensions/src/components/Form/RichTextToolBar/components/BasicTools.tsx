@@ -1,5 +1,4 @@
 import {
-  getIframeDocument,
   IconFont,
   useBlock,
   useEditorProps,
@@ -9,6 +8,7 @@ import { useAddToCollection } from '@extensions/hooks/useAddToCollection';
 import { getParentIdx } from 'easy-email-core';
 import React from 'react';
 import { ToolItem } from './ToolItem';
+import { getIframeDocument } from '@extensions/utils/getIframeDocument';
 
 export function BasicTools() {
   const { copyBlock, removeBlock } = useBlock();

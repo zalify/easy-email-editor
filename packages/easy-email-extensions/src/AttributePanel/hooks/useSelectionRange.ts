@@ -3,7 +3,7 @@ import { useCallback, useContext } from 'react';
 import {
   SelectionRangeContext,
 } from '@extensions/AttributePanel/components/provider/SelectionRangeProvider';
-import { getIframeDocument } from 'easy-email-editor';
+import { getIframeDocument } from '@extensions/utils/getIframeDocument';
 
 export function useSelectionRange() {
   const { selectionRange, setSelectionRange } = useContext(

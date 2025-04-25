@@ -1,6 +1,5 @@
 import {
   getBlockNodeByChildEle,
-  getIframeDocument,
   IconFont,
   useEditorContext,
   useEditorProps,
@@ -12,7 +11,8 @@ import { createPortal } from 'react-dom';
 import stylesText from './MergeTagBadge.scss?inline';
 import { classnames } from '@extensions/utils/classnames';
 import { useSelectionRange } from '@extensions/AttributePanel/hooks/useSelectionRange';
-import { getEditorRoot } from '@/utils/getEditorRoot';
+import { getEditorRoot } from '@extensions/utils/getEditorRoot';
+import { getIframeDocument } from '@extensions/utils/getIframeDocument';
 
 const removeAllActiveBadge = () => {
   getIframeDocument()?.querySelectorAll('.easy-email-merge-tag')

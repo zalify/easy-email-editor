@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { getIframeDocument } from 'easy-email-editor';
 import React, { useEffect, useMemo, useState } from 'react';
 import { RICH_TEXT_TOOL_BAR } from '@extensions/constants';
+import { getIframeDocument } from '@extensions/utils/getIframeDocument';
 
 export const SelectionRangeContext = React.createContext<{
   selectionRange: Range | null;
@@ -24,7 +24,7 @@ export const SelectionRangeProvider: React.FC<{
         if (range) {
           const toolbar = getIframeDocument()?.getElementById(RICH_TEXT_TOOL_BAR);
           if (toolbar?.contains(range.commonAncestorContainer)) return;
-          
+
           setSelectionRange(range);
         }
       } catch (error) {

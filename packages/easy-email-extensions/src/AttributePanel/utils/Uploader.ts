@@ -1,6 +1,6 @@
 import { uniqueId } from 'lodash';
 import { PromiseEach } from './PromiseEach';
-import { getIframeDocument } from '@';
+import { getIframeDocument } from '@extensions/utils/getIframeDocument';
 
 interface Options {
   limit?: number;

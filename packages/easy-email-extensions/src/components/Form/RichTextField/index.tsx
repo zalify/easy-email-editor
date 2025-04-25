@@ -4,7 +4,6 @@ import {
   DATA_CONTENT_EDITABLE_IDX,
   DATA_CONTENT_EDITABLE_TYPE,
   FIXED_CONTAINER_ID,
-  getIframeDocument,
   MergeTagBadge,
   RICH_TEXT_BAR_ID,
   useEditorProps,
@@ -14,6 +13,7 @@ import { InlineText, InlineTextProps } from '../InlineTextField';
 import { RichTextToolBar } from '../RichTextToolBar';
 import { Field, FieldInputProps } from 'react-final-form';
 import { debounce } from 'lodash';
+import { getIframeDocument } from '@extensions/utils/getIframeDocument';
 
 export const RichTextField = (
   props: Omit<InlineTextProps, 'onChange' | 'mutators'>,

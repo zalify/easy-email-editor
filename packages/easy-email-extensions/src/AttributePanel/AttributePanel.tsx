@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  getIframeDocument,
   TextStyle,
   useBlock,
   useEditorContext,
@@ -12,6 +11,7 @@ import { BlockAttributeConfigurationManager } from './utils/BlockAttributeConfig
 import { SelectionRangeProvider } from './components/provider/SelectionRangeProvider';
 import { TableOperation } from './components/blocks/AdvancedTable/Operation';
 import ReactDOM from 'react-dom';
+import { getIframeDocument } from '@extensions/utils/getIframeDocument';
 
 export interface AttributePanelProps {
 }
