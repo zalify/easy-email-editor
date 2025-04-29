@@ -3,7 +3,7 @@ import styles from './index.module.less';
 import cs from 'classnames';
 import qs from 'query-string';
 import { ReactNode, useEffect, useState } from 'react';
-import { IconEmail } from '@arco-design/web-react/icon';
+import { IconDashboard, IconEmail } from '@arco-design/web-react/icon';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { Navbar } from './NavBar';
@@ -28,15 +28,15 @@ type NavMenuItem = {
 
 const navigationMenus: Array<NavMenuItem> = [
   {
-    label: 'Emails',
-    icon: <IconEmail />,
-    children: [
-      {
-        label: 'Templates',
-        link: '/emails',
-      },
-    ],
+    label: 'Open source version',
+    icon: <IconDashboard />,
+
     link: '/emails',
+  },
+  {
+    label: 'Commercial version',
+    icon: <IconEmail />,
+    link: 'https://demo.easyemail.pro/full?utm_source=open-source-version',
   },
 ];
 

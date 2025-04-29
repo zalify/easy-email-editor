@@ -130,7 +130,7 @@ export default function App() {
     return upload(blob);
   };
   const { width } = useWindowSize();
-  const compact = width > 1600;
+  const compact = width > 1400;
   if (!template || !user) return <FullScreenLoading isFullScreen />;
 
   return (
