@@ -1,4 +1,4 @@
-import { BlockGroup, CollectedBlock } from 'easy-email-editor';
+import { BlockGroup, CollectedBlock } from '@jupitermail/easy-email-editor';
 import createSliceState from './common/createSliceState';
 
 export const COLLECTION_KEY = 'COLLECTION_KEY';
@@ -16,7 +16,7 @@ const defaultData = [
 ];
 
 const extraBlocksData = JSON.parse(
-  localStorage.getItem(COLLECTION_KEY) || JSON.stringify(defaultData)
+  localStorage.getItem(COLLECTION_KEY) || JSON.stringify(defaultData),
 );
 
 export default createSliceState({
@@ -30,9 +30,7 @@ export default createSliceState({
       return state;
     },
     remove(state, action: { payload: { id: string } }) {
-      state[0].blocks = state[0].blocks.filter(
-        (item) => item.id !== action.payload.id
-      );
+      state[0].blocks = state[0].blocks.filter(item => item.id !== action.payload.id);
       return state;
     },
   },

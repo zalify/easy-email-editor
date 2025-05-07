@@ -6,7 +6,7 @@ import {
   getPreviewClassName,
   AdvancedType,
   mergeBlock,
-} from 'easy-email-core';
+} from '@jupitermail/easy-email-core';
 
 import { CustomBlocksType } from '../constants';
 import React from 'react';

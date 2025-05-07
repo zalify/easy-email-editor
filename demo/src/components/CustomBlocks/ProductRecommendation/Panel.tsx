@@ -1,11 +1,11 @@
 import { Stack } from '@demo/components/Stack';
-import { useFocusIdx } from 'easy-email-editor';
+import { useFocusIdx } from '@jupitermail/easy-email-editor';
 import {
   AttributesPanelWrapper,
   ColorPickerField,
   NumberField,
   TextField,
-} from 'easy-email-extensions';
+} from '@jupitermail/easy-email-extensions';
 import React from 'react';
 
 export function Panel() {
