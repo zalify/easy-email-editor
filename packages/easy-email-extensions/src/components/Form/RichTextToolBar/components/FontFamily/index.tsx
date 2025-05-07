@@ -18,7 +18,9 @@ export function FontFamily(props: FontFamilyProps) {
 
   const onChange = useCallback(
     (val: string) => {
-      execCommand('fontName', val);
+      // Use span tag with CSS style for font-family
+      const spanTag = `<span style="font-family: ${val}">`;
+      execCommand('insertHTML', spanTag);
       setVisible(false);
     },
     [execCommand],

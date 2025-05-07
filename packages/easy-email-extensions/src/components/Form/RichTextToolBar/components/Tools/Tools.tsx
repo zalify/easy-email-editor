@@ -70,6 +70,11 @@ export function Tools(props: ToolsProps) {
           newContent = MergeTagBadge.transform(val, uuid);
         }
 
+        if (typeof newContent === 'string' && newContent.startsWith('<span')) {
+          const selectedText = selectionRange.toString();
+          newContent = `${newContent}${selectedText}</span>`;
+        }
+
         document.execCommand(cmd, false, newContent);
         const insertMergeTagEle = getShadowRoot().getElementById(uuid);
         if (insertMergeTagEle) {

@@ -213,6 +213,28 @@ export default function Editor() {
           onSubmit={onSubmit}
           dashed={false}
           compact={compact}
+          fontList={[
+            { value: 'Arial, sans-serif', label: 'Arial' },
+            { value: 'Helvetica, sans-serif', label: 'Helvetica' },
+            { value: 'Times New Roman, serif', label: 'Times New Roman' },
+            { value: 'Georgia, serif', label: 'Georgia' },
+            { value: 'Verdana, sans-serif', label: 'Verdana' },
+            { value: 'Tahoma, sans-serif', label: 'Tahoma' },
+            { value: 'Trebuchet MS, sans-serif', label: 'Trebuchet MS' },
+            { value: 'Impact, sans-serif', label: 'Impact' },
+            { value: 'Comic Sans MS, cursive', label: 'Comic Sans MS' },
+            { value: 'Courier New, monospace', label: 'Courier New' },
+            { value: 'Roboto, sans-serif', label: 'Roboto' },
+            { value: 'Open Sans, sans-serif', label: 'Open Sans' },
+            { value: 'Lato, sans-serif', label: 'Lato' },
+            { value: 'Montserrat, sans-serif', label: 'Montserrat' },
+            { value: 'Poppins, sans-serif', label: 'Poppins' },
+            { value: 'Playfair Display, serif', label: 'Playfair Display' },
+            { value: 'Merriweather, serif', label: 'Merriweather' },
+            { value: 'Source Sans Pro, sans-serif', label: 'Source Sans Pro' },
+            { value: 'Raleway, sans-serif', label: 'Raleway' },
+            { value: 'Ubuntu, sans-serif', label: 'Ubuntu' },
+          ]}
         >
           {({ values }, { submit, restart }) => {
             return (
