@@ -8,6 +8,7 @@ import {
   useEditorProps,
   useFocusBlockLayout,
   MergeTagBadge,
+  AvailableTools,
 } from '@jupitermail/easy-email-editor';
 import { FontFamily } from '../FontFamily';
 import { MergeTags } from '../MergeTags';
