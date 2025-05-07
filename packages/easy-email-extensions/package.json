@@ -2,7 +2,7 @@
   "name": "@jupitermail/easy-email-extensions",
   "license": "MIT",
   "description": "Email editor",
-  "version": "4.16.7",
+  "version": "4.16.8",
   "author": "Ali Mahmoudi",
   "keywords": [
     "email editor core"
@@ -16,6 +16,7 @@
     "dev": "vite",
     "typings": "tsc --declaration --emitDeclarationOnly --project tsconfig.lib.json && tsc-alias -p tsconfig.alias.json",
     "build": "rimraf lib && npm run typings && vite build --config vite.config.ts",
+    "prepublish": "npm run build",
     "format": "eslint --fix  --ext .tsx,.ts,.tsx src/",
     "test": "jest  --coverage"
   },
