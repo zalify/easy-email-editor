@@ -12,6 +12,7 @@ export interface ExtensionProps extends BlockLayerProps {
           type: string;
           payload?: any;
           title?: string | undefined;
+          icon?: React.ComponentType | string;
         }>;
         displayType?: 'grid';
       }
@@ -21,6 +22,7 @@ export interface ExtensionProps extends BlockLayerProps {
         blocks: Array<{
           payload?: any;
           title?: string | undefined;
+          icon?: React.ComponentType | string;
         }>;
         displayType: 'column';
       }
@@ -29,6 +31,7 @@ export interface ExtensionProps extends BlockLayerProps {
         active?: boolean;
         blocks: Array<{
           payload?: any;
+          icon?: React.ComponentType | string;
         }>;
         displayType: 'widget';
       }

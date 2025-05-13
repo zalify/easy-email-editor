@@ -9,7 +9,6 @@ import { useExtensionProps } from '@extensions/components/Providers/ExtensionPro
 
 export function Blocks() {
   const { categories } = useExtensionProps();
-
   const defaultActiveKey = useMemo(
     () => [
       ...categories.filter((item) => item.active).map((item) => item.label),
@@ -87,26 +86,53 @@ function BlockItem({
   type,
   payload,
   title,
-  filterType,
+  icon,
 }: {
   type: string;
   payload?: Partial<IBlockData>;
   title?: string;
   filterType: string | undefined;
+  icon?: React.ComponentType | string;
 }) {
   const block = BlockManager.getBlockByType(type);
+  const isIconProvided = !!icon;
+  const renderIcon = () => {
+    if (isIconProvided) {
+      if (typeof icon === 'function') {
+        const IconComponent = icon ;
+        return <IconComponent />;
+      }
 
+      if (typeof icon === 'string' && icon.startsWith('http')) {
+        return <img src={icon} alt={title || type} style={{ width: 24, height: 24 }} />;
+      }
+
+      if (typeof icon === 'string') {
+        return <i className={icon} style={{ fontSize: 24, color: 'inherit' }} />;
+      }
+    }
+
+    return  (
+      <IconFont
+        style={{ fontSize: 20 }}
+        iconName={getIconNameByBlockType(type)}
+      />
+    )
+  };
+  console.log(`icon name ${getIconNameByBlockType(type)}`);
   return (
     <div className={styles.blockItem}>
       <BlockAvatarWrapper type={type} payload={payload}>
         <div className={styles.blockItemContainer}>
-          <IconFont
-            style={{ fontSize: 20 }}
-            iconName={getIconNameByBlockType(type)}
-          />
-          <Typography.Text style={{ marginTop: 10 }}>
-            {title || block?.name}
-          </Typography.Text>
+        {isIconProvided ? (
+            renderIcon()
+          ) : (
+            <IconFont
+              style={{ fontSize: 20 }}
+              iconName={getIconNameByBlockType(type)}
+            />
+          )}
+          <Typography.Text style={{ marginTop: 10 }}>{title || block?.name}</Typography.Text>
         </div>
       </BlockAvatarWrapper>
     </div>
