@@ -36,7 +36,7 @@ const navigationMenus: Array<NavMenuItem> = [
   {
     label: 'Commercial version',
     icon: <IconEmail />,
-    link: '/api/commercial_login',
+    link: 'https://demo.easyemail.pro/full?utm_source=easyemail',
   },
 ];
 
