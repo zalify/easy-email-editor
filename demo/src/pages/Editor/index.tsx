@@ -44,6 +44,7 @@ import enUS from '@arco-design/web-react/es/locale/en-US';
 
 import { useShowCommercialEditor } from '@demo/hooks/useShowCommercialEditor';
 import { useWindowSize } from 'react-use';
+import { images } from '../../services/images';
 
 const defaultCategories: ExtensionProps['categories'] = [
   {
@@ -127,8 +128,8 @@ export default function Editor() {
           dispatch(template.actions.fetchById({ id: +id, userId: account.user_id }));
         });
       } else {
-        dispatch(template.actions.fetchById({ id: +id, userId: +userId }));
       }
+      dispatch(template.actions.fetchById({ id: +id, userId: +userId }));
     } else {
       dispatch(template.actions.fetchDefaultTemplate(undefined));
     }
@@ -139,7 +140,18 @@ export default function Editor() {
   }, [dispatch, id, userId]);
 
   const onUploadImage = async (blob: Blob) => {
-    return services.common.uploadByQiniu(blob);
+    const { blob_link } = await images.uploadImage({
+      file: blob,
+    });
+    return blob_link;
+  };
+
+  const onGetUserImages = async (page = 1, pageSize = 12) => {
+    return images.getUserImages(page, pageSize);
+  };
+
+  const onDeleteUserImage = async (imageId: string) => {
+    return images.deleteImage(imageId);
   };
 
   const onExportMJML = (values: IEmailTemplate) => {
@@ -169,11 +181,11 @@ export default function Editor() {
   };
 
   const onExportJSON = (values: IEmailTemplate) => {
-    navigator.clipboard.writeText(JSON.stringify(values, null, 2));
-    saveAs(
-      new Blob([JSON.stringify(values, null, 2)], { type: 'application/json' }),
-      'easy-email.json',
-    );
+    navigator.clipboard.writeText(JSON.stringify(values));
+    // saveAs(
+    //   new Blob([JSON.stringify(values, null, 2)], { type: 'application/json' }),
+    //   'easy-email.json',
+    // );
   };
 
   const initialValues: IEmailTemplate | null = useMemo(() => {
@@ -210,6 +222,8 @@ export default function Editor() {
           height={featureEnabled ? 'calc(100vh - 108px)' : 'calc(100vh - 68px)'}
           data={initialValues}
           onUploadImage={onUploadImage}
+          onGetUserImages={onGetUserImages}
+          onDeleteUserImage={onDeleteUserImage}
           onSubmit={onSubmit}
           dashed={false}
           compact={compact}

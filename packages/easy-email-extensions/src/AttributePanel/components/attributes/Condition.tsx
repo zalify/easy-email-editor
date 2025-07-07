@@ -133,14 +133,14 @@ export function Condition() {
       destroyOnHide
       name='Condition'
       header={t('Condition')}
-      extra={
+      extra={(
         <div style={{ marginRight: 10 }}>
           <Switch
             checked={condition?.enabled}
             onChange={onConditionToggle}
           />
         </div>
-      }
+      )}
     >
       {condition?.enabled && (
         <Space
@@ -148,7 +148,7 @@ export function Condition() {
           size='large'
         >
           <List
-            header={
+            header={(
               <Grid.Row justify='space-between'>
                 <Grid.Col span={16}>
                   {condition.groups.length > 1 && (
@@ -177,7 +177,7 @@ export function Condition() {
                   icon={<IconPlus />}
                 />
               </Grid.Row>
-            }
+            )}
             dataSource={condition.groups}
             render={(group, gIndex) => {
               return (

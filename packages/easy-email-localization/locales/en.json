@@ -249,5 +249,16 @@
   "Table": "Table",
   "Make it easy for everyone to compose emails!": "Make it easy for everyone to compose emails!",
   "Accordion text": "Accordion text",
-  "Raw": "Raw"
+  "Raw": "Raw",
+  "Image Gallery": "Image Gallery",
+  "Upload New Image": "Upload New Image",
+  "Loading images...": "Loading images...",
+  "No images uploaded yet": "No images uploaded yet",
+  "Upload Your First Image": "Upload Your First Image",
+  "Image Preview": "Image Preview",
+  "Are you sure you want to delete this image?": "Are you sure you want to delete this image?",
+  "Image deleted successfully": "Image deleted successfully",
+  "Failed to delete image": "Failed to delete image",
+  "Failed to load images": "Failed to load images",
+  "Select": "Select"
 }

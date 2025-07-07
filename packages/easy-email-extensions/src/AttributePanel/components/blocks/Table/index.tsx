@@ -19,14 +19,14 @@ export function Table() {
 
   return (
     <AttributesPanelWrapper
-      extra={
+      extra={(
         <Tooltip content={t('Edit')}>
           <Button
             onClick={() => setVisible(true)}
             icon={<IconFont iconName='icon-html' />}
           />
         </Tooltip>
-      }
+      )}
     >
       <CollapseWrapper defaultActiveKey={['-1', '0', '1', '2', '3']}>
         <Collapse.Item

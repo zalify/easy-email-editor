@@ -8,6 +8,7 @@ export default defineConfig({
     fs: {
       strict: false,
     },
+    port: 4000,
   },
   resolve: {
     alias: {

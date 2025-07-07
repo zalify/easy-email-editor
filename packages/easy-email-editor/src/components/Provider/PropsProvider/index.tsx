@@ -38,6 +38,23 @@ export interface PropsProviderProps {
   onAddCollection?: (payload: CollectedBlock) => void;
   onRemoveCollection?: (payload: { id: string }) => void;
   onUploadImage?: (data: Blob) => Promise<string>;
+  onGetUserImages?: (
+    page?: number,
+    pageSize?: number,
+  ) => Promise<{
+    total_count: number;
+    page_number: number;
+    page_size: number;
+    data: Array<{
+      id: string;
+      filename: string;
+      blob_link: string;
+      file_path: string;
+      created_at: string;
+      updated_at: string;
+    }>;
+  }>;
+  onDeleteUserImage?: (imageId: string) => Promise<boolean>;
   interactiveStyle?: {
     hoverColor?: string;
     selectedColor?: string;
@@ -84,6 +101,8 @@ export const EditorPropsContext = React.createContext<
   onAddCollection: undefined,
   onRemoveCollection: undefined,
   onUploadImage: undefined,
+  onGetUserImages: undefined,
+  onDeleteUserImage: undefined,
   autoComplete: false,
   dashed: true,
   mergeTagGenerate: defaultMergeTagGenerate,

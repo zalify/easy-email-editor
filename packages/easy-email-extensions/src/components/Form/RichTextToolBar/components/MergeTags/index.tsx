@@ -39,14 +39,14 @@ export function MergeTags(props: MergeTagsProps) {
           backgroundColor: 'var(--color-bg-5);',
         },
       }}
-      content={
+      content={(
         <>
           <MergeTagsOptions
             value=''
             onChange={onChange}
           />
         </>
-      }
+      )}
       getPopupContainer={props.getPopupContainer}
     >
       <ToolItem

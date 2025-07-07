@@ -25,6 +25,7 @@ import { InlineText, InlineTextProps } from './InlineTextField';
 import { AutoCompleteProps, AutoComplete } from './AutoComplete';
 import { InputSearchProps } from '@arco-design/web-react/es/Input';
 import { ColorPickerField } from './ColorPickerField';
+import { ImageGallery } from './ImageGallery';
 
 export { RichTextField } from './RichTextField';
 
@@ -65,5 +66,7 @@ export const EditGridTabField = enhancer<EditGridTabProps>(EditGridTab, (e: any[
 export const InlineTextField = enhancer<InlineTextProps>(InlineText, value => value);
 
 export { ColorPickerField };
+
+export { ImageGallery };
 
 export { enhancer };

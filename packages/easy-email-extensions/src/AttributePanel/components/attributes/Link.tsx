@@ -18,17 +18,17 @@ export function Link() {
         <Grid.Col span={11}>
           <TextField
             prefix={<IconLink />}
-            label={
+            label={(
               <Space>
                 <span>{t('Href')}&nbsp;&nbsp;&nbsp;</span>
                 <Popover
                   trigger='click'
-                  content={
+                  content={(
                     <MergeTags
                       value={input.value}
                       onChange={input.onChange}
                     />
-                  }
+                  )}
                 >
                   <ArcoButton
                     type='text'
@@ -36,7 +36,7 @@ export function Link() {
                   />
                 </Popover>
               </Space>
-            }
+            )}
             name={`${focusIdx}.attributes.href`}
           />
         </Grid.Col>

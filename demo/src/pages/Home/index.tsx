@@ -18,6 +18,10 @@ export default function Home() {
     dispatch(templateList.actions.fetch(undefined));
   }, [dispatch]);
 
+  [...templates].forEach(item => {
+    console.log(item.title, item.picture);
+  });
+
   return (
     <Frame
       title='Templates'
@@ -34,8 +38,11 @@ export default function Home() {
     >
       <>
         <Stack>
-          {[...templates, ...list].map((item) => (
-            <CardItem data={item} key={item.article_id} />
+          {[...templates, ...list].map(item => (
+            <CardItem
+              data={item}
+              key={item.article_id}
+            />
           ))}
         </Stack>
       </>

@@ -10,29 +10,35 @@ import {
   Spin,
   Button as ArcoButton,
 } from '@arco-design/web-react';
-import { IconPlus, IconEye, IconDelete, IconAt } from '@arco-design/web-react/icon';
+import {
+  IconPlus,
+  IconEye,
+  IconDelete,
+  IconAt,
+  IconImage,
+} from '@arco-design/web-react/icon';
 import styles from './index.module.scss';
 import { Uploader, UploaderServer } from '@extensions/AttributePanel/utils/Uploader';
 import { classnames } from '@extensions/AttributePanel/utils/classnames';
 import { previewLoadImage } from '@extensions/AttributePanel/utils/previewLoadImage';
 import { MergeTags } from '@extensions';
 import { IconFont, useEditorProps } from '@jupitermail/easy-email-editor';
+import { ImageGallery } from '../ImageGallery';
 
 export interface ImageUploaderProps {
   onChange: (val: string) => void;
   value: string;
   label: string;
   uploadHandler?: UploaderServer;
-  autoCompleteOptions?: Array<{ value: string; label: React.ReactNode; }>;
+  autoCompleteOptions?: Array<{ value: string; label: React.ReactNode }>;
 }
 
 export function ImageUploader(props: ImageUploaderProps) {
   const { mergeTags } = useEditorProps();
   const [isUploading, setIsUploading] = useState(false);
   const [preview, setPreview] = useState(false);
-  const uploadHandlerRef = useRef<UploaderServer | null | undefined>(
-    props.uploadHandler
-  );
+  const [galleryVisible, setGalleryVisible] = useState(false);
+  const uploadHandlerRef = useRef<UploaderServer | null | undefined>(props.uploadHandler);
 
   const onChange = props.onChange;
 
@@ -47,10 +53,10 @@ export function ImageUploader(props: ImageUploaderProps) {
       accept: 'image/*',
     });
 
-    uploader.on('start', (photos) => {
+    uploader.on('start', photos => {
       setIsUploading(true);
 
-      uploader.on('end', (data) => {
+      uploader.on('end', data => {
         const url = data[0]?.url;
         if (url) {
           onChange(url);
@@ -88,12 +94,19 @@ export function ImageUploader(props: ImageUploaderProps) {
         }
       }
     },
-    [props]
+    [props],
   );
 
   const onRemove = useCallback(() => {
     props.onChange('');
   }, [props]);
+
+  const onGallerySelect = useCallback(
+    (imageUrl: string) => {
+      onChange(imageUrl);
+    },
+    [onChange],
+  );
 
   const content = useMemo(() => {
     if (isUploading) {
@@ -109,7 +122,10 @@ export function ImageUploader(props: ImageUploaderProps) {
 
     if (!props.value) {
       return (
-        <div className={styles['upload']} onClick={onUpload}>
+        <div
+          className={styles['upload']}
+          onClick={onUpload}
+        >
           <IconPlus />
           <div>Upload</div>
         </div>
@@ -121,10 +137,16 @@ export function ImageUploader(props: ImageUploaderProps) {
         <div className={classnames(styles['info'])}>
           <img src={props.value} />
           <div className={styles['btn-wrap']}>
-            <a title={t('Preview')} onClick={() => setPreview(true)}>
+            <a
+              title={t('Preview')}
+              onClick={() => setPreview(true)}
+            >
               <IconEye />
             </a>
-            <a title={t('Remove')} onClick={() => onRemove()}>
+            <a
+              title={t('Remove')}
+              onClick={() => onRemove()}
+            >
               <IconDelete />
             </a>
           </div>
@@ -134,7 +156,12 @@ export function ImageUploader(props: ImageUploaderProps) {
   }, [isUploading, onRemove, onUpload, props.value]);
 
   if (!props.uploadHandler) {
-    return <Input value={props.value} onChange={onChange} />;
+    return (
+      <Input
+        value={props.value}
+        onChange={onChange}
+      />
+    );
   }
 
   return (
@@ -145,7 +172,12 @@ export function ImageUploader(props: ImageUploaderProps) {
           {mergeTags && (
             <Popover
               trigger='click'
-              content={<MergeTags value={props.value} onChange={onChange} />}
+              content={(
+                <MergeTags
+                  value={props.value}
+                  onChange={onChange}
+                />
+              )}
             >
               <ArcoButton icon={<IconFont iconName='icon-merge-tags' />} />
             </Popover>
@@ -156,26 +188,36 @@ export function ImageUploader(props: ImageUploaderProps) {
             value={props.value}
             onChange={onChange}
             disabled={isUploading}
-
+          />
+          <ArcoButton
+            icon={<IconImage />}
+            onClick={() => setGalleryVisible(true)}
+            title='Image Gallery'
           />
           {props.autoCompleteOptions && (
             <Dropdown
-              position="tr"
+              position='tr'
               droplist={(
-                <Menu onClickMenuItem={(indexStr) => {
-                  if (!props.autoCompleteOptions) return;
-                  onChange(props.autoCompleteOptions[+indexStr]?.value);
-                }}
+                <Menu
+                  onClickMenuItem={indexStr => {
+                    if (!props.autoCompleteOptions) return;
+                    onChange(props.autoCompleteOptions[+indexStr]?.value);
+                  }}
                 >
-                  {
-                    props.autoCompleteOptions.map((item, index) => {
-                      return (
-                        <Menu.Item style={{ display: 'flex', alignItems: 'center' }} key={index.toString()}>
-                          <img src={item.value} style={{ width: 20, height: 20 }} />&emsp;<span>{item.label}</span>
-                        </Menu.Item>
-                      );
-                    })
-                  }
+                  {props.autoCompleteOptions.map((item, index) => {
+                    return (
+                      <Menu.Item
+                        style={{ display: 'flex', alignItems: 'center' }}
+                        key={index.toString()}
+                      >
+                        <img
+                          src={item.value}
+                          style={{ width: 20, height: 20 }}
+                        />
+                        &emsp;<span>{item.label}</span>
+                      </Menu.Item>
+                    );
+                  })}
                 </Menu>
               )}
             >
@@ -184,9 +226,23 @@ export function ImageUploader(props: ImageUploaderProps) {
           )}
         </Grid.Row>
       </div>
-      <Modal visible={preview} footer={null} onCancel={() => setPreview(false)}>
-        <img alt={t('Preview')} style={{ width: '100%' }} src={props.value} />
+      <Modal
+        visible={preview}
+        footer={null}
+        onCancel={() => setPreview(false)}
+      >
+        <img
+          alt={t('Preview')}
+          style={{ width: '100%' }}
+          src={props.value}
+        />
       </Modal>
+
+      <ImageGallery
+        visible={galleryVisible}
+        onClose={() => setGalleryVisible(false)}
+        onSelect={onGallerySelect}
+      />
     </div>
   );
 }
