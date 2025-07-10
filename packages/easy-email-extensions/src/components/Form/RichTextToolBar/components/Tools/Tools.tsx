@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { ToolItem } from '../ToolItem';
-import { getLinkNode, Link, LinkParams } from '../Link';
+import { Link, LinkParams } from '../Link';
 import {
   FIXED_CONTAINER_ID,
   getShadowRoot,
@@ -76,12 +76,35 @@ export function Tools(props: ToolsProps) {
           insertMergeTagEle.focus();
           setRangeByElement(insertMergeTagEle);
         }
-      } else if (cmd === 'foreColor') {
-        document.execCommand(cmd, false, val);
-        let linkNode: HTMLAnchorElement | null = getLinkNode(selectionRange);
-        if (linkNode) {
-          linkNode.style.color = 'inherit';
+      } else if (cmd === 'fontSize' && val.endsWith('px')) {
+        if (!selectionRange) {
+          console.error('No selection range available for fontSize');
+          return;
         }
+
+        restoreRange(selectionRange);
+
+        if (!focusBlockNode?.contains(selectionRange.commonAncestorContainer)) {
+          console.warn('Selection is outside the editable block');
+          return;
+        }
+
+        const node = selectionRange.startContainer.parentElement;
+        if (node?.tagName === 'SPAN' && node.style.fontSize) {
+          const parent = node;
+          while (parent.firstChild) {
+            parent.parentNode?.insertBefore(parent.firstChild, parent);
+          }
+          parent.remove();
+        }
+
+        const span = document.createElement('span');
+        span.style.fontSize = val;
+
+        span.appendChild(selectionRange.extractContents());
+        selectionRange.insertNode(span);
+
+        setRangeByElement(span);
       } else {
         document.execCommand(cmd, false, val);
       }
