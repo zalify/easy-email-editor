@@ -2,39 +2,10 @@ import React, { useCallback } from 'react';
 
 import { Menu, Popover } from '@arco-design/web-react';
 import { ToolItem } from '../ToolItem';
-import { IconFont } from 'easy-email-editor';
+import { IconFont, useEditorProps } from 'easy-email-editor';
 import styleText from '../../styles/ToolsPopover.css?inline';
 
-const list = [
-  {
-    value: '1',
-    label: '12px',
-  },
-  {
-    value: '2',
-    label: '13px',
-  },
-  {
-    value: '3',
-    label: '16px',
-  },
-  {
-    value: '4',
-    label: '18px',
-  },
-  {
-    value: '5',
-    label: '24px',
-  },
-  {
-    value: '6',
-    label: '32px',
-  },
-  {
-    value: '7',
-    label: '48px',
-  },
-];
+const list = ['12px', '13px', '16px', '18px', '24px', '32px', '48px'];
 
 export interface FontSizeProps {
   execCommand: (cmd: string, value: any) => void;
@@ -43,7 +14,11 @@ export interface FontSizeProps {
 
 export function FontSize(props: FontSizeProps) {
   const { execCommand } = props;
+  const { fontSizeList } = useEditorProps();
+
   const [visible, setVisible] = React.useState(false);
+
+  const currentfontSizeList = fontSizeList?.length ? fontSizeList : list;
 
   const onChange = useCallback(
     (val: string) => {
@@ -81,12 +56,12 @@ export function FontSize(props: FontSizeProps) {
               selectedKeys={[]}
               style={{ border: 'none', padding: 0 }}
             >
-              {list.map(item => (
+              {currentfontSizeList.map(item => (
                 <Menu.Item
                   style={{ lineHeight: '30px', height: 30 }}
-                  key={item.value}
+                  key={item}
                 >
-                  {item.label}
+                  {item}
                 </Menu.Item>
               ))}
             </Menu>
