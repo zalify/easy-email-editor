@@ -122,8 +122,11 @@ $ pnpm run dev
 
 ```
 
+
 `If you need some new features, we always welcome you to submit a PR.`
 
 ## License
 
 The MIT License
+
+[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
