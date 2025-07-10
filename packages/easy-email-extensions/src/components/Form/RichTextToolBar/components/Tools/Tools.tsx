@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { ToolItem } from '../ToolItem';
-import { Link, LinkParams } from '../Link';
+import { getLinkNode, Link, LinkParams } from '../Link';
 import {
   FIXED_CONTAINER_ID,
   getShadowRoot,
@@ -75,6 +75,12 @@ export function Tools(props: ToolsProps) {
         if (insertMergeTagEle) {
           insertMergeTagEle.focus();
           setRangeByElement(insertMergeTagEle);
+        }
+      } else if (cmd === 'foreColor') {
+        document.execCommand(cmd, false, val);
+        let linkNode: HTMLAnchorElement | null = getLinkNode(selectionRange);
+        if (linkNode) {
+          linkNode.style.color = 'inherit';
         }
       } else {
         document.execCommand(cmd, false, val);
