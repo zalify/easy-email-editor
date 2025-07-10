@@ -30,8 +30,8 @@ function getAnchorElement(
   return getAnchorElement(node.parentNode);
 }
 
-function getLinkNode(
-  currentRange: Range | null | undefined
+export function getLinkNode(
+  currentRange: Range | null | undefined,
 ): HTMLAnchorElement | null {
   let linkNode: HTMLAnchorElement | null = null;
   if (!currentRange) return null;
