@@ -265,7 +265,8 @@ export default function Editor() {
 
                 <StandardLayout
                   categories={defaultCategories}
-                  showSourceCode={false}
+                  showSourceCode={true}
+                  mjmlReadOnly={false}
                   showBlockLayer={false}
                 >
                   <EmailEditor />

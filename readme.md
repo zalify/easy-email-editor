@@ -43,7 +43,7 @@ Easy email is developed based on the [MJML](https://mjml.io/) and has very good 
 
 ## Live Demo
 
-Open source version: <a href="https://email.maocanhua.cn/?utm_source=github" target="_blank" alt="https://email.maocanhua.cn/?utm_source=github">email.maocanhua.cn</a>
+Open source version: <a href="https://open-source.easyemail.pro/?utm_source=github" target="_blank" alt="https://open-source.easyemail.pro/?utm_source=github">open-source.easyemail.pro</a>
 
 Commercial version: <a href="https://demo.easyemail.pro/full?utm_source=github-live" target="_blank">demo.easyemail.pro</a>.
 
@@ -122,11 +122,10 @@ $ pnpm run dev
 
 ```
 
-
 `If you need some new features, we always welcome you to submit a PR.`
 
 ## License
 
 The MIT License
 
-[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
+[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com 'Powered by DartNode - Free VPS for Open Source')
