@@ -35,6 +35,7 @@ export interface PropsProviderProps {
   children?: React.ReactNode;
   height: string;
   fontList?: { value: string; label: string }[];
+  fontSizeList?: string[];
   onAddCollection?: (payload: CollectedBlock) => void;
   onRemoveCollection?: (payload: { id: string }) => void;
   onUploadImage?: (data: Blob) => Promise<string>;
