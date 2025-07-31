@@ -8,7 +8,7 @@ export function BasicTools() {
   const { copyBlock, removeBlock } = useBlock();
   const { focusIdx, setFocusIdx } = useFocusIdx();
   const { modal, setModalVisible } = useAddToCollection();
-  const { onAddCollection } = useEditorProps();
+  const { onAddCollection, isSelectParentIcon } = useEditorProps();
 
   const handleAddToCollection = () => {
     if (document.activeElement instanceof HTMLElement) {
@@ -41,11 +41,13 @@ export function BasicTools() {
   return (
     <div style={{ marginRight: 40 }}>
       <span style={{ position: 'relative', marginRight: 10, color: '#fff', fontFamily: '-apple-system, BlinkMacSystemFont, San Francisco, Segoe UI' }}>Text</span>
-      <ToolItem
-        onClick={handleSelectParent}
-        title={t('Select parent block')}
-        icon={<IconFont iconName='icon-back-parent' />}
-      />
+       {isSelectParentIcon && (
+        <ToolItem
+          onClick={handleSelectParent}
+          title={t('Select parent block')}
+          icon={<IconFont iconName='icon-back-parent' />}
+        />
+      )}
       <ToolItem
         onClick={handleCopy}
         title={t('Copy')}

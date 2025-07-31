@@ -35,6 +35,7 @@ export interface PropsProviderProps {
   children?: React.ReactNode;
   height: string;
   fontList?: { value: string; label: string }[];
+  isSelectParentIcon?: boolean
   onAddCollection?: (payload: CollectedBlock) => void;
   onRemoveCollection?: (payload: { id: string }) => void;
   onUploadImage?: (data: Blob) => Promise<string>;
@@ -81,6 +82,7 @@ export const EditorPropsContext = React.createContext<
   children: null,
   height: '100vh',
   fontList: [],
+  isSelectParentIcon: true,
   onAddCollection: undefined,
   onRemoveCollection: undefined,
   onUploadImage: undefined,
@@ -91,12 +93,13 @@ export const EditorPropsContext = React.createContext<
 });
 
 export const PropsProvider: React.FC<PropsProviderProps> = props => {
-  const { dashed = true, mergeTagGenerate = defaultMergeTagGenerate } = props;
+  const { dashed = true, mergeTagGenerate = defaultMergeTagGenerate, isSelectParentIcon = true } = props;
   const formatProps = useMemo(() => {
     return {
       ...props,
       mergeTagGenerate,
       dashed,
+      isSelectParentIcon
     };
   }, [mergeTagGenerate, props, dashed]);
 
