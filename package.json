@@ -20,11 +20,15 @@
     "@sendgrid/mail": "^7.7.0",
     "@types/file-saver": "^2.0.5",
     "cloudinary": "^1.41.2",
+    "easy-email-core": "^4.16.4",
+    "easy-email-editor": "^4.16.3",
+    "easy-email-extensions": "^4.16.4",
     "easy-localized-translation": "^1.1.0",
     "file-saver": "^2.0.5",
     "lerna": "^4.0.0",
     "liquidjs": "^9.34.1",
-    "posthog-js": "^1.76.0"
+    "posthog-js": "^1.76.0",
+    "react-final-form": "^6.5.9"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.1",

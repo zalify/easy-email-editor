@@ -40,16 +40,6 @@ export default function Frame({
               alignment='center'
             >
               <a
-                href='https://www.buymeacoffee.com/easyemail?utm_source=webside&utm_medium=button&utm_content=donate'
-                target='_blank'
-                onClick={() => pushEvent({ event: 'Donate' })}
-              >
-                <img
-                  src='https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png'
-                  alt='Buy Me A Coffee'
-                />
-              </a>
-              <a
                 className='github-button'
                 href='https://github.com/arco-design/easy-email?utm_source=webside&utm_medium=button&utm_content=star'
                 data-size='large'

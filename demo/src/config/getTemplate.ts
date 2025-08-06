@@ -20,39 +20,6 @@ export async function getTemplate(id: string | number) {
     case 'MJML Code - Newsletter.json':
       data = (await import('@demo/templates/MJML Code - Newsletter.json')).default;
       break;
-
-    case 'Racoon - Ecommerce.json':
-      data = (await import('@demo/templates/Racoon - Ecommerce.json')).default;
-      break;
-
-    case 'Real Estate.json':
-      data = (await import('@demo/templates/Real Estate.json')).default;
-      break;
-
-    case 'Shop - Newsletter.json':
-      data = (await import('@demo/templates/Shop - Newsletter.json')).default;
-      break;
-
-    case 'Sphero - Newsletter.json':
-      data = (await import('@demo/templates/Sphero - Newsletter.json')).default;
-      break;
-
-    case 'Star Wars.json':
-      data = (await import('@demo/templates/Star Wars.json')).default;
-      break;
-
-    case 'Stay Updated On Our Shopping.json':
-      data = (await import('@demo/templates/Stay Updated On Our Shopping.json')).default;
-      break;
-
-    case 'We Serve Healthy & Delicious Foods.json':
-      data = (await import('@demo/templates/We Serve Healthy & Delicious Foods.json'))
-        .default;
-      break;
-
-    case `St. Patrick's Day - Newsletter.json`:
-      data = (await import(`@demo/templates/St. Patrick Day - Newsletter.json`)).default;
-      break;
   }
   return data;
 }

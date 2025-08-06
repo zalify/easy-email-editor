@@ -248,17 +248,11 @@ export default function Editor() {
                           </Menu>
                         }
                       >
-                        <Button>
+                        <Button
+                          type='primary'>
                           <strong>Export</strong>
                         </Button>
                       </Dropdown>
-                      <Button
-                        type='primary'
-                        target='_blank'
-                        href='https://demo.easyemail.pro?utm_source=easyemail'
-                      >
-                        Try commercial version
-                      </Button>
                     </Stack>
                   }
                 />

@@ -98,11 +98,6 @@ export function CardItem(props: CardItemProps) {
                 &nbsp;Edit
               </Link>
             </div>
-            <div className={styles.listItem}>
-              <Link to='javascript:void(0)' onClick={onDuplicate}>
-                Duplicate
-              </Link>
-            </div>
           </div>
         )}
       </div>
