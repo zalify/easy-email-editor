@@ -84,7 +84,7 @@ export function useHotKeys() {
       if (isHotkey('tab', ev) || isHotkey('shift+tab', ev)) {
         setTimeout(() => {
           const activeElement = getIframeDocument()?.activeElement;
-          if (activeElement instanceof HTMLElement) {
+          if (activeElement) {
             const blockNode = getBlockNodeByChildEle(activeElement);
             if (blockNode) {
               const idx = getNodeIdxFromClassName(blockNode.classList)!;
