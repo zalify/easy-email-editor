@@ -76,7 +76,7 @@ export function Tools(props: ToolsProps) {
           setRangeByElement(insertMergeTagEle);
         }
       } else if (cmd === 'foreColor') {
-        document.execCommand(cmd, false, val);
+        getIframeDocument()?.execCommand(cmd, false, val);
         let linkNode: HTMLAnchorElement | null = getLinkNode(selectionRange);
         if (linkNode) {
           linkNode.style.color = 'inherit';
