@@ -3,7 +3,7 @@ export { getBlockNodeByIdx } from './getBlockNodeByIdx';
 export { getDirectionPosition } from './getDirectionPosition';
 export { getBlockNodes } from './getBlockNodes';
 export { getEditorRoot } from './getEditorRoot';
-export { getShadowRoot } from './getShadowRoot';
+export { getIframeDocument } from './getIframeDocument';
 export { getPluginElement } from './getPluginElement';
 export { scrollBlockEleIntoView } from './scrollBlockEleIntoView';
 export { isTextBlock } from './isTextBlock';

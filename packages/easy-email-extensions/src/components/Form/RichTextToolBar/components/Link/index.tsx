@@ -22,11 +22,8 @@ function getAnchorElement(
   node: Node | null,
 ): HTMLAnchorElement | null {
   if (!node) return null;
-  if (node instanceof HTMLAnchorElement) {
-    return node;
-  }
-  if (node instanceof Element && node.classList.contains(EMAIL_BLOCK_CLASS_NAME)) return null;
-
+  if ((node as Element).classList?.contains(EMAIL_BLOCK_CLASS_NAME)) return null;
+  if ((node as Element).tagName?.toLocaleLowerCase() === 'a') return node as HTMLAnchorElement;
   return getAnchorElement(node.parentNode);
 }
 

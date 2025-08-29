@@ -1,4 +1,6 @@
-import { uniqueId } from "lodash";
+import { uniqueId } from 'lodash';
+import { PromiseEach } from './PromiseEach';
+import { getIframeDocument } from 'easy-email-editor';
 
 interface Options {
   limit?: number;
@@ -7,6 +9,7 @@ interface Options {
   maxSize?: number;
   autoUpload?: boolean;
 }
+
 interface UploaderOption extends Options {
   limit: number;
 }
@@ -14,7 +17,7 @@ interface UploaderOption extends Options {
 export type UploadItem = {
   idx: string;
   url: string;
-  status: "pending" | "done" | "error";
+  status: 'pending' | 'done' | 'error';
 };
 
 export type UploaderEventMap = {
@@ -49,36 +52,11 @@ export class Uploader {
     this.el = this.createInput();
   }
 
-  private createInput() {
-    if (typeof document === "undefined") return {} as any;
-    Array.from(document.querySelectorAll(".uploader-form-input")).forEach(
-      (el) => {
-        el && document.body.removeChild(el);
-      }
-    );
-    const el = document.createElement("input");
-    el.className = "uploader-form-input";
-    el.type = "file";
-    el.style.display = "block";
-    el.style.opacity = "0";
-    el.style.width = "0";
-    el.style.height = "0";
-    el.style.position = "absolute";
-    el.style.top = "0";
-    el.style.left = "0";
-    el.style.overflow = "hidden";
-    el.multiple = this.options.limit > 1;
-    if (this.options.accept) {
-      el.accept = this.options.accept;
-    }
-    return el;
-  }
-
   public async uploadFiles(files: File[]) {
     const results = files.map((file) => ({ file }));
     const uploadList: UploadItem[] = results.map((item) => ({
-      url: "",
-      status: "pending",
+      url: '',
+      status: 'pending',
       idx: `uploader-${uniqueId()}`,
     }));
 
@@ -90,17 +68,80 @@ export class Uploader {
         try {
           const url = await this.uploadFile(file);
           uploadList[index].url = url;
-          uploadList[index].status = "done";
+          uploadList[index].status = 'done';
         } catch (error) {
-          uploadList[index].status = "error";
+          uploadList[index].status = 'error';
         } finally {
           this.handler.progress.map((fn) => fn(uploadList));
         }
-      })
+      }),
     );
 
     // 上传完成
     this.handler.end.map((fn) => fn(uploadList));
+  }
+
+  public chooseFile() {
+    const el = this.el;
+    getIframeDocument()?.body.appendChild(el);
+    el.click();
+
+    el.onchange = async (e: any) => {
+      let files = e.target.files || [];
+      files = Array.prototype.slice.call(files);
+      if (files.length === 0) {
+        return;
+      }
+      this.checkFile(files);
+      if (this.options.autoUpload) {
+        this.uploadFiles(files);
+      }
+      el.onchange = null;
+      el.parentNode && el.parentNode.removeChild(el);
+    };
+  }
+
+  public on<K extends keyof UploaderEventMap>(
+    event: K,
+    fn: UploaderEventMap[K],
+  ) {
+    // UploaderEventMapHandle[K] === UploaderEventMap[K][]
+    const handler = this.handler[event] as UploaderEventMap[K][];
+    handler.push(fn);
+  }
+
+  public off<K extends keyof UploaderEventMap>(
+    event: K,
+    fn: UploaderEventMap[K],
+  ) {
+    const handles = this.handler[event] as UploaderEventMap[K][];
+    this.handler[event] = handles.filter(
+      (item) => item !== fn,
+    ) as UploaderEventMapHandle[K];
+  }
+
+  private createInput() {
+    Array.from(document.querySelectorAll('.uploader-form-input')).forEach(
+      (el) => {
+        el && document.body.removeChild(el);
+      },
+    );
+    const el = document.createElement('input');
+    el.className = 'uploader-form-input';
+    el.type = 'file';
+    el.style.display = 'block';
+    el.style.opacity = '0';
+    el.style.width = '0';
+    el.style.height = '0';
+    el.style.position = 'absolute';
+    el.style.top = '0';
+    el.style.left = '0';
+    el.style.overflow = 'hidden';
+    el.multiple = this.options.limit > 1;
+    if (this.options.accept) {
+      el.accept = this.options.accept;
+    }
+    return el;
   }
 
   private async uploadFile(result: { file: File }) {
@@ -122,15 +163,15 @@ export class Uploader {
   private checkTypes(files: File[]) {
     const accept = this.options.accept;
     if (accept) {
-      let fileType = "";
-      if (accept.indexOf("image") !== -1) {
-        fileType = "image";
-      } else if (accept.indexOf("video") !== -1) {
-        fileType = "video";
+      let fileType = '';
+      if (accept.indexOf('image') !== -1) {
+        fileType = 'image';
+      } else if (accept.indexOf('video') !== -1) {
+        fileType = 'video';
       }
       for (const file of files) {
         if (file.type.indexOf(fileType) !== 0) {
-          return "上传文件类型错误!";
+          return '上传文件类型错误!';
         }
       }
     }
@@ -149,66 +190,4 @@ export class Uploader {
     }
     return null;
   }
-
-  public chooseFile() {
-    return new Promise<File[]>((resolve) => {
-      const el = this.el;
-      document.body.appendChild(el);
-      el.click();
-
-      el.onchange = async (e: any) => {
-        let files = e.target.files || [];
-        files = Array.prototype.slice.call(files);
-        if (files.length === 0) {
-          return;
-        }
-        this.checkFile(files);
-        if (this.options.autoUpload) {
-          this.uploadFiles(files);
-        }
-        el.onchange = null;
-        el.parentNode && el.parentNode.removeChild(el);
-        resolve(files);
-      };
-    });
-  }
-
-  public on<K extends keyof UploaderEventMap>(
-    event: K,
-    fn: UploaderEventMap[K]
-  ) {
-    // UploaderEventMapHandle[K] === UploaderEventMap[K][]
-    const handler = this.handler[event] as UploaderEventMap[K][];
-    handler.push(fn);
-  }
-
-  public off<K extends keyof UploaderEventMap>(
-    event: K,
-    fn: UploaderEventMap[K]
-  ) {
-    const handles = this.handler[event] as UploaderEventMap[K][];
-    this.handler[event] = handles.filter(
-      (item) => item !== fn
-    ) as UploaderEventMapHandle[K];
-  }
-}
-
-function PromiseEach(promiseLikes: PromiseLike<any>[]) {
-  const datas: Array<any> = [];
-  let count = 0;
-  return new Promise((resolve) => {
-    promiseLikes.forEach(async (promiseLike) => {
-      try {
-        const data = await promiseLike;
-        datas.push(data);
-      } catch (error) {
-        datas.push(error);
-      } finally {
-        count++;
-        if (count === promiseLikes.length) {
-          resolve(true);
-        }
-      }
-    });
-  });
 }
