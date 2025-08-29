@@ -10,15 +10,15 @@
 .node-type-page {
   min-height: 100%;
   padding-bottom: 100px;
+}
+.node-type-page * {
+  user-select: none;
 
   /** In firefox when user select is null you cannot select any styled text.
   This fixes the issue.
   See https://stackoverflow.com/questions/69776749/contenteditable-not-working-properly-on-firefox
   */
   -moz-user-select: text;
-}
-.node-type-page * {
-  user-select: none;
 }
 
 :not(.email-block) {
