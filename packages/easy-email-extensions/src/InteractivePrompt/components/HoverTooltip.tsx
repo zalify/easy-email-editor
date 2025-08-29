@@ -3,11 +3,11 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { BlockManager, getNodeTypeFromClassName } from 'easy-email-core';
 import { createPortal } from 'react-dom';
 import {
+  getIframeDocument,
   useEditorContext,
   useFocusIdx,
   useHoverIdx,
   useLazyState,
-  getIframeDocument
 } from 'easy-email-editor';
 import { awaitForElement } from '@extensions/utils/awaitForElement';
 
@@ -111,14 +111,6 @@ function TipNode(props: TipNodeProps) {
     return `${t('Drag to')} ${title}`;
   }, [direction, title]);
 
-  const color = useMemo(() => {
-    if (type === 'drag') {
-      return 'var(--hover-color)';
-    } else {
-      return 'var(--hover-color)';
-    }
-  }, [type]);
-
   return (
     <div
       style={{
@@ -151,7 +143,7 @@ function TipNode(props: TipNodeProps) {
           width: '100%',
           height: '100%',
           outlineOffset: `-${lineWidth}px`,
-          outline: `${lineWidth}px solid ${color}`,
+          outline: `${lineWidth}px solid var(--hover-color)}`,
         }}
       >
         {type === 'hover' && (
@@ -164,7 +156,7 @@ function TipNode(props: TipNodeProps) {
           >
             <div
               style={{
-                backgroundColor: color,
+                backgroundColor: 'var(--hover-color)',
                 color: '#ffffff',
                 height: '22px',
                 lineHeight: '22px',
@@ -198,7 +190,7 @@ function TipNode(props: TipNodeProps) {
             style={{
               position: 'absolute',
               color: '#ffffff',
-              backgroundColor: color,
+              backgroundColor: 'var(--hover-color)',
               lineHeight: '22px',
               display: 'inline-flex',
               maxWidth: '100%',
