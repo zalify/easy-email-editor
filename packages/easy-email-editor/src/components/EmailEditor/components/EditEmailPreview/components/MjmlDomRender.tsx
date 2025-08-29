@@ -26,10 +26,12 @@ export function MjmlDomRender() {
   useEffect(() => {
     if (!initialized) return;
 
+    // Since the Iframe does not inherit the styles from the parent document,
+    // we need to manually add the blue theme to the iframe.
     const style = getIframeDocument()?.createElement('style');
 
     if (style) {
-      style.textContent = blueTheme
+      style.textContent = blueTheme;
 
       getIframeDocument()?.head.appendChild(style);
     }
