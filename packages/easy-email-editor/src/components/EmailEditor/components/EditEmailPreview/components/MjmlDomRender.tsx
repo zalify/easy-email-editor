@@ -8,6 +8,7 @@ import { getIframeDocument } from '@/utils';
 import { DATA_RENDER_COUNT, FIXED_CONTAINER_ID } from '@/constants';
 import { HtmlStringToReactNodes } from '@/utils/HtmlStringToReactNodes';
 import { createPortal } from 'react-dom';
+import blueTheme from '@arco-themes/react-easy-email-theme/css/arco.css?inline';
 
 let count = 0;
 
@@ -25,13 +26,13 @@ export function MjmlDomRender() {
   useEffect(() => {
     if (!initialized) return;
 
-    // Set the iframe styles so that we can still use arco-design styling.
-    window.parent.document.querySelectorAll('style').forEach((style, _key, _parent) => {
-      let newStyleElement = document.createElement('style');
-      newStyleElement.textContent = style.textContent;
+    const style = getIframeDocument()?.createElement('style');
 
-      getIframeDocument()?.body.appendChild(newStyleElement);
-    });
+    if (style) {
+      style.textContent = blueTheme
+
+      getIframeDocument()?.head.appendChild(style);
+    }
   }, [initialized]);
 
   useEffect(() => {
