@@ -2,10 +2,10 @@ import { cloneDeep } from 'lodash';
 import React, { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import TableColumnTool from './tableTool';
-import { getShadowRoot, useBlock, useFocusIdx } from 'easy-email-editor';
+import { getIframeDocument, useBlock, useFocusIdx } from 'easy-email-editor';
 
 export function TableOperation() {
-  const shadowRoot = getShadowRoot();
+  const iframeDocument = getIframeDocument();
   const { focusIdx } = useFocusIdx();
   const { focusBlock, change } = useBlock();
   const topRef = useRef(null);
@@ -23,7 +23,7 @@ export function TableOperation() {
     };
     tool.current = new TableColumnTool(
       borderTool,
-      shadowRoot.querySelector('body') as any,
+      iframeDocument?.querySelector('body') as any,
     );
     return () => {
       tool.current?.destroy();
@@ -41,7 +41,7 @@ export function TableOperation() {
 
   return (
     <>
-      {shadowRoot &&
+      {iframeDocument &&
         createPortal(
           <>
             <div>
@@ -51,7 +51,7 @@ export function TableOperation() {
               <div ref={rightRef} />
             </div>
           </>,
-          shadowRoot.querySelector('body') as any,
+          iframeDocument.body,
         )}
     </>
   );

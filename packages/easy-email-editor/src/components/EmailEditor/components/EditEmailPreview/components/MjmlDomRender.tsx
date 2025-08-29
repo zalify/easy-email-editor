@@ -1,31 +1,44 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import mjml from 'mjml-browser';
 import { getPageIdx, IPage, JsonToMjml } from 'easy-email-core';
 import { cloneDeep, isEqual } from 'lodash';
 import { useEditorContext } from '@/hooks/useEditorContext';
+import { useEditorProps } from '@/hooks/useEditorProps';
+import { getIframeDocument } from '@/utils';
+import { DATA_RENDER_COUNT, FIXED_CONTAINER_ID } from '@/constants';
 import { HtmlStringToReactNodes } from '@/utils/HtmlStringToReactNodes';
 import { createPortal } from 'react-dom';
-import { useEditorProps } from '@/hooks/useEditorProps';
-import { getEditorRoot, getShadowRoot } from '@/utils';
-import { DATA_RENDER_COUNT, FIXED_CONTAINER_ID } from '@/constants';
 
 let count = 0;
+
 export function MjmlDomRender() {
-  const { pageData: content } = useEditorContext();
+  const ref = useRef<HTMLDivElement | null>(null);
   const [pageData, setPageData] = useState<IPage | null>(null);
-  const [ref, setRef] = useState<HTMLDivElement | null>(null);
-  const { dashed, mergeTags, enabledMergeTagsBadge } = useEditorProps();
   const [isTextFocus, setIsTextFocus] = useState(false);
 
+  const { pageData: content, initialized } = useEditorContext();
+  const { dashed, mergeTags, enabledMergeTagsBadge } = useEditorProps();
+
   const isTextFocusing =
-    document.activeElement === getEditorRoot() &&
-    getShadowRoot().activeElement?.getAttribute('contenteditable') === 'true';
+    getIframeDocument()?.activeElement?.getAttribute('contenteditable') === 'true';
+
+  useEffect(() => {
+    if (!initialized) return;
+
+    // Set the iframe styles so that we can still use arco-design styling.
+    window.parent.document.querySelectorAll('style').forEach((style, _key, _parent) => {
+      let newStyleElement = document.createElement('style');
+      newStyleElement.textContent = style.textContent;
+
+      getIframeDocument()?.body.appendChild(newStyleElement);
+    });
+  }, [initialized]);
 
   useEffect(() => {
     if (!isTextFocus && !isEqual(content, pageData)) {
       setPageData(cloneDeep(content));
     }
-  }, [content, pageData, setPageData, isTextFocus]);
+  }, [content, pageData, isTextFocus]);
 
   useEffect(() => {
     setIsTextFocus(isTextFocusing);
@@ -33,28 +46,28 @@ export function MjmlDomRender() {
 
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
-      if (getEditorRoot()?.contains(e.target as Node)) {
+      if (getIframeDocument()?.contains(e.target as Node)) {
         return;
       }
-      const fixedContainer = document.getElementById(FIXED_CONTAINER_ID);
+      const fixedContainer = getIframeDocument()?.getElementById(FIXED_CONTAINER_ID);
       if (fixedContainer?.contains(e.target as Node)) {
         return;
       }
       setIsTextFocus(false);
     };
 
-    window.addEventListener('click', onClick);
+    getIframeDocument()?.addEventListener('click', onClick);
     return () => {
-      window.removeEventListener('click', onClick);
+      getIframeDocument()?.removeEventListener('click', onClick);
     };
   }, []);
 
   useEffect(() => {
-    const root = getShadowRoot();
+    const root = getIframeDocument();
     if (!root) return;
     const onClick = (e: Event) => {
       const isFocusing =
-        getShadowRoot().activeElement?.getAttribute('contenteditable') === 'true';
+        getIframeDocument()?.activeElement?.getAttribute('contenteditable') === 'true';
       if (isFocusing) {
         setIsTextFocus(true);
       }
@@ -69,7 +82,7 @@ export function MjmlDomRender() {
   const html = useMemo(() => {
     if (!pageData) return '';
 
-    const renderHtml = mjml(
+    return mjml(
       JsonToMjml({
         data: pageData,
         idx: getPageIdx(),
@@ -78,7 +91,6 @@ export function MjmlDomRender() {
         dataSource: cloneDeep(mergeTags),
       }),
     ).html;
-    return renderHtml;
   }, [mergeTags, pageData]);
 
   return useMemo(() => {
@@ -88,23 +100,21 @@ export function MjmlDomRender() {
           [DATA_RENDER_COUNT]: count++,
         }}
         data-dashed={dashed}
-        ref={setRef}
+        ref={ref}
         style={{
           outline: 'none',
           position: 'relative',
         }}
-        role='tabpanel'
+        role="tabpanel"
         tabIndex={0}
       >
-        <>
-          {ref &&
-            createPortal(
-              HtmlStringToReactNodes(html, {
-                enabledMergeTagsBadge: Boolean(enabledMergeTagsBadge),
-              }),
-              ref,
-            )}
-        </>
+        {ref.current &&
+          createPortal(
+            HtmlStringToReactNodes(html, {
+              enabledMergeTagsBadge: Boolean(enabledMergeTagsBadge),
+            }),
+            ref.current,
+          )}
       </div>
     );
   }, [dashed, ref, html, enabledMergeTagsBadge]);

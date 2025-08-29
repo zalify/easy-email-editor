@@ -1,4 +1,4 @@
-import { PopoverProps, Tooltip } from '@arco-design/web-react';
+import { PopoverProps } from '@arco-design/web-react';
 import React, { useCallback, useMemo } from 'react';
 import { IconFont } from 'easy-email-editor';
 import { ToolItem } from '../ToolItem';
@@ -14,9 +14,9 @@ function getBoldNode(
   node: Node | null | undefined,
 ): Element | null {
   if (!node) return null;
-  if (node instanceof Element && node.classList.contains(EMAIL_BLOCK_CLASS_NAME)) return null;
-  if (node instanceof Element && node.tagName.toLocaleLowerCase() === 'b') return node;
-  return getBoldNode(node.parentNode);
+  if ((node as Element).classList?.contains(EMAIL_BLOCK_CLASS_NAME)) return null;
+  if ((node as Element).tagName?.toLocaleLowerCase() === 'b') return node as Element;
+  return getBoldNode(node.parentElement);
 }
 
 export function Bold(props: LinkProps) {
@@ -35,12 +35,11 @@ export function Bold(props: LinkProps) {
   }, [node, onChange, setRangeByElement]);
 
   return (
-    <Tooltip
-      color='#fff'
-      position='tl'
-      content={t('Bold')}
-    >
-      <ToolItem title={t('Bold')} isActive={Boolean(node)} icon={<IconFont iconName='icon-bold' />} onClick={onClick} />
-    </Tooltip>
+    <ToolItem
+      title={t('Bold')}
+      isActive={Boolean(node)}
+      icon={<IconFont iconName="icon-bold" />}
+      onClick={onClick}
+    />
   );
 }

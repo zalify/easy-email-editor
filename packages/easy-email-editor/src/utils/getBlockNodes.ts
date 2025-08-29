@@ -1,4 +1,4 @@
-import { getShadowRoot } from './getShadowRoot';
+import { getIframeDocument } from './getIframeDocument';
 
 export const getBlockNodes = () =>
-  Array.from(getShadowRoot()?.querySelectorAll('.email-block') || []);
+  Array.from(getIframeDocument()?.querySelectorAll('.email-block') || []);

@@ -36,7 +36,7 @@ export function MergeTags(props: MergeTagsProps) {
       style={{ zIndex: 10 }}
       triggerProps={{
         popupStyle: {
-          backgroundColor: 'var(--color-bg-5);',
+          backgroundColor: 'var(--color-bg-5)',
         },
       }}
       content={

@@ -2,13 +2,12 @@ import React, { useCallback } from 'react';
 import { ToolItem } from '../ToolItem';
 import { getLinkNode, Link, LinkParams } from '../Link';
 import {
-  FIXED_CONTAINER_ID,
-  getShadowRoot,
+  AvailableTools,
+  getIframeDocument,
   IconFont,
+  MergeTagBadge,
   useEditorProps,
   useFocusBlockLayout,
-  MergeTagBadge,
-  AvailableTools,
 } from 'easy-email-editor';
 import { FontFamily } from '../FontFamily';
 import { MergeTags } from '../MergeTags';
@@ -53,9 +52,9 @@ export function Tools(props: ToolsProps) {
         if (linkData.linkNode) {
           link = linkData.linkNode;
         } else {
-          document.execCommand(cmd, false, uuid);
+          getIframeDocument()?.execCommand(cmd, false, uuid);
 
-          link = getShadowRoot().querySelector(`a[href="${uuid}"`)!;
+          link = getIframeDocument()?.body?.querySelector(`a[href="${uuid}"`)!;
         }
 
         if (target) {
@@ -70,8 +69,8 @@ export function Tools(props: ToolsProps) {
           newContent = MergeTagBadge.transform(val, uuid);
         }
 
-        document.execCommand(cmd, false, newContent);
-        const insertMergeTagEle = getShadowRoot().getElementById(uuid);
+        getIframeDocument()?.execCommand(cmd, false, newContent);
+        const insertMergeTagEle = getIframeDocument()?.getElementById(uuid);
         if (insertMergeTagEle) {
           insertMergeTagEle.focus();
           setRangeByElement(insertMergeTagEle);
@@ -83,12 +82,12 @@ export function Tools(props: ToolsProps) {
           linkNode.style.color = 'inherit';
         }
       } else {
-        document.execCommand(cmd, false, val);
+        getIframeDocument()?.execCommand(cmd, false, val);
       }
 
-      const contenteditableElement = getShadowRoot().activeElement;
+      const contenteditableElement = getIframeDocument()?.activeElement;
       if (contenteditableElement?.getAttribute('contenteditable') === 'true') {
-        const html = getShadowRoot().activeElement?.innerHTML || '';
+        const html = getIframeDocument()?.activeElement?.innerHTML || '';
         props.onChange(html);
       }
     },
@@ -104,17 +103,17 @@ export function Tools(props: ToolsProps) {
 
   const execCommandWithRange = useCallback(
     (cmd: string, val?: any) => {
-      document.execCommand(cmd, false, val);
-      const contenteditableElement = getShadowRoot().activeElement;
-      if (contenteditableElement?.getAttribute('contenteditable') === 'true') {
-        const html = getShadowRoot().activeElement?.innerHTML || '';
+      getIframeDocument()?.execCommand(cmd, false, val);
+      const contenteditableElement = getIframeDocument()?.getSelection()?.focusNode as HTMLElement | null;
+      if (contenteditableElement?.getAttribute && contenteditableElement?.getAttribute('contenteditable') === 'true') {
+        const html = contenteditableElement.innerHTML ?? '';
         props.onChange(html);
       }
     },
     [props.onChange],
   );
 
-  const getPopoverMountNode = () => document.getElementById(FIXED_CONTAINER_ID)!;
+  const getPopoverMountNode = () => getIframeDocument()?.getElementById(RICH_TEXT_TOOL_BAR)!;
 
   const enabledTools = toolbar?.tools ?? [
     AvailableTools.MergeTags,
@@ -195,6 +194,7 @@ export function Tools(props: ToolsProps) {
       case AvailableTools.IconFontColor:
         return [
           <IconFontColor
+            key={tool}
             selectionRange={selectionRange}
             execCommand={execCommand}
             getPopoverMountNode={getPopoverMountNode}
@@ -203,6 +203,7 @@ export function Tools(props: ToolsProps) {
       case AvailableTools.IconBgColor:
         return [
           <IconBgColor
+            key={tool}
             selectionRange={selectionRange}
             execCommand={execCommand}
             getPopoverMountNode={getPopoverMountNode}
@@ -227,19 +228,19 @@ export function Tools(props: ToolsProps) {
           <ToolItem
             key={`${tool}-justify-left`}
             onClick={() => execCommand('justifyLeft')}
-            icon={<IconFont iconName='icon-align-left' />}
+            icon={<IconFont iconName="icon-align-left" />}
             title={t('Align left')}
           />,
           <ToolItem
             key={`${tool}-justify-center`}
             onClick={() => execCommand('justifyCenter')}
-            icon={<IconFont iconName='icon-align-center' />}
+            icon={<IconFont iconName="icon-align-center" />}
             title={t('Align center')}
           />,
           <ToolItem
             key={`${tool}-justify-right`}
             onClick={() => execCommand('justifyRight')}
-            icon={<IconFont iconName='icon-align-right' />}
+            icon={<IconFont iconName="icon-align-right" />}
             title={t('Align right')}
           />,
         ];
@@ -248,13 +249,13 @@ export function Tools(props: ToolsProps) {
           <ToolItem
             key={`${tool}-ordered-list`}
             onClick={() => execCommand('insertOrderedList')}
-            icon={<IconFont iconName='icon-list-ol' />}
+            icon={<IconFont iconName="icon-list-ol" />}
             title={t('Orderlist')}
           />,
           <ToolItem
             key={`${tool}-unordered-list`}
             onClick={() => execCommand('insertUnorderedList')}
-            icon={<IconFont iconName='icon-list-ul' />}
+            icon={<IconFont iconName="icon-list-ul" />}
             title={t('Unorderlist')}
           />,
         ];
@@ -263,7 +264,7 @@ export function Tools(props: ToolsProps) {
           <ToolItem
             key={tool}
             onClick={() => execCommand('insertHorizontalRule')}
-            icon={<IconFont iconName='icon-line' />}
+            icon={<IconFont iconName="icon-line" />}
             title={t('Line')}
           />,
         ];
@@ -271,8 +272,8 @@ export function Tools(props: ToolsProps) {
         return [
           <ToolItem
             key={tool}
-            onClick={() => execCommand('removeFormat')}
-            icon={<IconFont iconName='icon-close' />}
+            onClick={() => execCommandWithRange('removeFormat')}
+            icon={<IconFont iconName="icon-close" />}
             title={t('Remove format')}
           />,
         ];
@@ -297,7 +298,7 @@ export function Tools(props: ToolsProps) {
         {tools.flatMap((tool, index) => [
           tool,
           <div
-            className='easy-email-extensions-divider'
+            className="easy-email-extensions-divider"
             key={`divider-${index}`}
           />,
         ])}

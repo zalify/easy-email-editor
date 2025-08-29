@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { getNodeIdxFromClassName } from 'easy-email-core';
 import { getBlockNodeByChildEle } from '@/utils/getBlockNodeByChildEle';
@@ -10,6 +10,7 @@ import { useHoverIdx } from './useHoverIdx';
 import { getInsertPosition } from '@/utils/getInsertPosition';
 import { useEditorProps } from './useEditorProps';
 import { DATA_ATTRIBUTE_DROP_CONTAINER } from '@/constants';
+import { IEmailTemplate } from '@';
 
 export function useDropBlock() {
   const [ref, setRef] = useState<HTMLElement | null>(null);
@@ -40,13 +41,12 @@ export function useDropBlock() {
       const onClick = (ev: MouseEvent) => {
         ev.preventDefault(); // prevent link
         if (target !== ev.target) return;
-        if (ev.target instanceof Element) {
-          const target = getBlockNodeByChildEle(ev.target);
-          if (!target) return;
-          const idx = getNodeIdxFromClassName(target.classList)!;
-          setFocusIdx(idx);
-          // scrollBlockEleIntoView({ idx });
-        }
+
+        const trgt = getBlockNodeByChildEle(ev.target as Element);
+        if (!trgt) return;
+        const idx = getNodeIdxFromClassName(trgt.classList)!;
+        setFocusIdx(idx);
+        // scrollBlockEleIntoView({ idx });
       };
 
       ref.addEventListener('mousedown', onMouseDown);
@@ -105,7 +105,7 @@ export function useDropBlock() {
           const directionPosition = getDirectionPosition(ev);
           const idx = getNodeIdxFromClassName(blockNode.classList)!;
           const positionData = getInsertPosition({
-            context: cacheValues.current,
+            context: cacheValues.current as IEmailTemplate,
             idx,
             directionPosition,
             dragType: cacheDataTransfer.current.type,
@@ -140,7 +140,7 @@ export function useDropBlock() {
       const onCheckDragLeave = (ev: DragEvent) => {
         const dropEleList = [
           ...document.querySelectorAll(
-            `[${DATA_ATTRIBUTE_DROP_CONTAINER}="true"]`
+            `[${DATA_ATTRIBUTE_DROP_CONTAINER}="true"]`,
           ),
         ];
         const target = ev.target as HTMLElement;
@@ -219,6 +219,6 @@ export function useDropBlock() {
     () => ({
       setRef,
     }),
-    [setRef]
+    [setRef],
   );
 }

@@ -1,31 +1,31 @@
 import { useEffect } from 'react';
 import isHotkey from 'is-hotkey';
 import { useBlock } from './useBlock';
-import { getEditorRoot, getShadowRoot } from '@/utils';
+import { getIframeDocument } from '@/utils';
 import { useFocusIdx } from './useFocusIdx';
 import { useEditorContext } from './useEditorContext';
 import { getNodeIdxFromClassName } from 'easy-email-core';
 import { getBlockNodeByChildEle } from '@/utils/getBlockNodeByChildEle';
+import { getEditorRoot } from '@/utils/getEditorRoot';
 
 function isContentEditFocus() {
-  const isShadowRootFocus = document.activeElement === getEditorRoot();
-  if (isShadowRootFocus) {
+  const isIframeFocused = document.activeElement === getEditorRoot();
+
+  if (isIframeFocused) {
     if (
-      getEditorRoot()?.shadowRoot?.activeElement?.getAttribute(
-        'contenteditable'
+      getIframeDocument()?.activeElement?.getAttribute(
+        'contenteditable',
       ) === 'true'
     ) {
       return true;
     }
-  } else {
-    if (
-      ['input', 'textarea'].includes(
-        document.activeElement?.tagName.toLocaleLowerCase() || ''
-      ) ||
-      document.activeElement?.getAttribute('contenteditable') === 'true'
-    ) {
-      return true;
-    }
+  } else if (
+    ['input', 'textarea'].includes(
+      getIframeDocument()?.activeElement?.tagName.toLocaleLowerCase() || '',
+    ) ||
+    getIframeDocument()?.activeElement?.getAttribute('contenteditable') === 'true'
+  ) {
+    return true;
   }
   return false;
 }
@@ -37,7 +37,6 @@ export function useHotKeys() {
     formState: { values },
   } = useEditorContext();
 
-  const root = getShadowRoot();
   // redo/undo
   useEffect(() => {
     const onKeyDown = (ev: KeyboardEvent) => {
@@ -61,9 +60,9 @@ export function useHotKeys() {
   // delete
   useEffect(() => {
     const onKeyDown = (ev: KeyboardEvent) => {
-      const isShadowRootFocus = document.activeElement === getEditorRoot();
+      const isIframeFocused = document.activeElement === getEditorRoot();
 
-      if (!isShadowRootFocus) return;
+      if (!isIframeFocused) return;
       if (isContentEditFocus()) return;
       // if (isHotkey('delete', ev) || isHotkey('backspace', ev)) {
       //   removeBlock(focusIdx);
@@ -79,12 +78,12 @@ export function useHotKeys() {
   // focus
   useEffect(() => {
     const onKeyDown = (ev: KeyboardEvent) => {
-      const isShadowRootFocus = document.activeElement === getEditorRoot();
+      const isIframedFocused = document.activeElement === getEditorRoot();
 
-      if (!isShadowRootFocus) return;
+      if (!isIframedFocused) return;
       if (isHotkey('tab', ev) || isHotkey('shift+tab', ev)) {
         setTimeout(() => {
-          const activeElement = getShadowRoot().activeElement;
+          const activeElement = getIframeDocument()?.activeElement;
           if (activeElement instanceof HTMLElement) {
             const blockNode = getBlockNodeByChildEle(activeElement);
             if (blockNode) {
@@ -95,10 +94,10 @@ export function useHotKeys() {
         }, 0);
       }
     };
-    window.addEventListener('keydown', onKeyDown);
+    getEditorRoot()?.contentWindow?.addEventListener('keydown', onKeyDown);
 
     return () => {
-      window.removeEventListener('keydown', onKeyDown);
+      getEditorRoot()?.contentWindow?.removeEventListener('keydown', onKeyDown);
     };
   }, [focusIdx, removeBlock, setFocusIdx, values]);
 }

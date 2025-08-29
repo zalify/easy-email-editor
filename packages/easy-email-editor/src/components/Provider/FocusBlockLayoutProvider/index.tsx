@@ -1,6 +1,6 @@
 import { useFocusIdx } from '@/hooks/useFocusIdx';
 import React, { useEffect, useMemo, useState } from 'react';
-import { getBlockNodeByIdx, getShadowRoot } from '@/utils';
+import { getBlockNodeByIdx, getIframeDocument } from '@/utils';
 import { DATA_RENDER_COUNT } from '@/constants';
 import { useEditorContext } from '@/hooks/useEditorContext';
 import { useRefState } from '@/hooks/useRefState';
@@ -20,7 +20,7 @@ export const FocusBlockLayoutProvider: React.FC<{
   const focusIdxRef = useRefState(focusIdx);
 
   const root = useMemo(() => {
-    return initialized ? getShadowRoot()?.querySelector(`[${DATA_RENDER_COUNT}]`) : null;
+    return initialized ? getIframeDocument()?.querySelector(`[${DATA_RENDER_COUNT}]`) : null;
   }, [initialized]);
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export const FocusBlockLayoutProvider: React.FC<{
 
   useEffect(() => {
     if (!root) return;
-    if (focusIdx) {
+    if (root && focusIdx) {
       root.setAttribute(DATA_RENDER_COUNT, (+new Date()).toString());
     }
   }, [focusIdx, root]);
