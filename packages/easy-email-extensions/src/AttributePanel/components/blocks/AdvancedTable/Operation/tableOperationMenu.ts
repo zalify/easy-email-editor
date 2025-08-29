@@ -1,7 +1,8 @@
-import { setStyle, getCorrectTableIndexBoundary, getMaxTdCount } from './util';
+import { getCorrectTableIndexBoundary, getMaxTdCount, setStyle } from './util';
 import styleText from './menu.scss?inline';
 import { IBoundingPosition, IOperationData } from './type';
 import MENU_CONFIG from './tableMenuConfig';
+import { getIframeDocument } from '@';
 
 const MENU_HEIGHT = 305;
 const MENU_WIDTH = 200;
@@ -23,18 +24,22 @@ export default class TableOperationMenu {
   }
 
   mount() {
+    const iframeDocument = getIframeDocument();
+
     if (this.domNode) {
-      document.body.appendChild(this.domNode);
+      iframeDocument?.body.appendChild(this.domNode);
     }
-    document.body.addEventListener('click', this.hide.bind(this));
+    iframeDocument?.body.addEventListener('click', this.hide.bind(this));
   }
 
   destroy() {
     this.domNode?.remove();
+    const iframeDocument = getIframeDocument();
+
     if (this.styleDom) {
-      document.head.removeChild(this.styleDom);
+      iframeDocument?.head.removeChild(this.styleDom);
     }
-    document.body.removeEventListener('click', this.hide.bind(this));
+    iframeDocument?.body.removeEventListener('click', this.hide.bind(this));
   }
 
   hide() {
@@ -68,6 +73,7 @@ export default class TableOperationMenu {
 
   showMenu({ x, y }: { x: number; y: number }) {
     this.visible = true;
+
     const maxHeight = window.innerHeight;
     const maxWidth = window.innerWidth;
     if (maxWidth - MENU_WIDTH < x) {
@@ -88,51 +94,69 @@ export default class TableOperationMenu {
   }
 
   menuInitial() {
-    this.styleDom = document.createElement('style');
-    this.styleDom.innerText = styleText;
-    document.head.appendChild(this.styleDom);
+    const iframeDocument = getIframeDocument();
+    this.styleDom = iframeDocument?.createElement('style');
+    if (this.styleDom) {
+      this.styleDom.innerText = styleText;
+      iframeDocument?.head.appendChild(this.styleDom);
+    }
 
-    this.domNode = document.createElement('div');
-    this.domNode.classList.add('easy-email-table-operation-menu');
-    setStyle(this.domNode, { display: 'none' });
+    this.domNode = iframeDocument?.createElement('div');
 
-    for (let name in this.menuItems) {
-      const itemOption = (this.menuItems as any)[name];
-      if (itemOption) {
-        this.domNode.appendChild(
-          itemOption.render
-            ? itemOption.render(this)
-            : this.menuItemCreator(Object.assign({}, itemOption)),
-        );
+    if (this.domNode) {
+      this.domNode.classList.add('easy-email-table-operation-menu');
+      setStyle(this.domNode, { display: 'none' });
 
-        if (['insertRowDown', 'deleteRow'].indexOf(name) > -1) {
-          this.domNode.appendChild(dividingCreator());
+      for (let name in this.menuItems) {
+        const itemOption = (this.menuItems as any)[name];
+        if (itemOption) {
+          this.domNode.appendChild(
+            itemOption.render
+              ? itemOption.render(this)
+              : this.menuItemCreator(Object.assign({}, itemOption)),
+          );
+
+          if (['insertRowDown', 'deleteRow'].indexOf(name) > -1) {
+            this.domNode.appendChild(dividingCreator());
+          }
         }
       }
     }
 
     // create dividing line
     function dividingCreator() {
-      const dividing = document.createElement('div');
-      dividing.classList.add('easy-email-table-operation-menu-dividing');
-      return dividing;
+      const iframeDocument = getIframeDocument();
+
+      const dividing = iframeDocument?.createElement('div');
+      dividing?.classList.add('easy-email-table-operation-menu-dividing');
+
+      return dividing as HTMLDivElement;
     }
   }
+
   menuItemCreator({ text, icon, handler }: any) {
-    const node = document.createElement('div');
-    node.classList.add('easy-email-table-operation-menu-item');
+    const iframeDocument = getIframeDocument();
 
-    const iconSpan = document.createElement('span');
-    iconSpan.classList.add('easy-email-table-operation-menu-icon');
-    iconSpan.innerHTML = icon;
+    const node = iframeDocument?.createElement('div');
+    node?.classList.add('easy-email-table-operation-menu-item');
 
-    const textSpan = document.createElement('span');
-    textSpan.classList.add('easy-email-table-operation-menu-text');
-    textSpan.innerText = text;
+    const iconSpan = iframeDocument?.createElement('span');
+    iconSpan?.classList.add('easy-email-table-operation-menu-icon');
+    if (iconSpan) {
+      iconSpan.innerHTML = icon;
+    }
 
-    node.appendChild(iconSpan);
-    node.appendChild(textSpan);
-    node.addEventListener('click', handler.bind(this), false);
+    const textSpan = iframeDocument?.createElement('span');
+    textSpan?.classList.add('easy-email-table-operation-menu-text');
+    if (textSpan) {
+      textSpan.innerText = text;
+    }
+
+    if (node && iconSpan && textSpan) {
+      node.appendChild(iconSpan);
+      node.appendChild(textSpan);
+      node.addEventListener('click', handler.bind(this), false);
+    }
     return node;
   }
 }

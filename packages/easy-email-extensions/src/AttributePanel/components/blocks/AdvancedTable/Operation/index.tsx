@@ -2,10 +2,11 @@ import { cloneDeep } from 'lodash';
 import React, { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import TableColumnTool from './tableTool';
-import { getIframeDocument, useBlock, useFocusIdx } from 'easy-email-editor';
+import { DATA_RENDER_COUNT, getIframeDocument, useBlock, useFocusIdx } from 'easy-email-editor';
 
 export function TableOperation() {
   const iframeDocument = getIframeDocument();
+  const element = iframeDocument?.querySelector(`[${DATA_RENDER_COUNT}]`);
   const { focusIdx } = useFocusIdx();
   const { focusBlock, change } = useBlock();
   const topRef = useRef(null);
@@ -21,14 +22,16 @@ export function TableOperation() {
       left: leftRef.current,
       right: rightRef.current,
     };
-    tool.current = new TableColumnTool(
-      borderTool,
-      iframeDocument?.querySelector('body') as any,
-    );
+    if (element) {
+      tool.current = new TableColumnTool(
+        borderTool,
+        element,
+      );
+    }
     return () => {
       tool.current?.destroy();
     };
-  }, []);
+  }, [element]);
 
   useEffect(() => {
     if (tool.current) {
@@ -37,21 +40,19 @@ export function TableOperation() {
       };
       tool.current.tableData = cloneDeep(focusBlock?.data?.value?.tableSource || []);
     }
-  }, [focusIdx, focusBlock]);
+  }, [focusIdx, focusBlock, change]);
 
   return (
     <>
-      {iframeDocument &&
+      {element &&
         createPortal(
-          <>
             <div>
               <div ref={topRef} />
               <div ref={bottomRef} />
               <div ref={leftRef} />
               <div ref={rightRef} />
-            </div>
-          </>,
-          iframeDocument.body,
+            </div>,
+          element,
         )}
     </>
   );
