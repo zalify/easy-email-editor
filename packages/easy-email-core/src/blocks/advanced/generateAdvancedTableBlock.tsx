@@ -1,4 +1,4 @@
-import { BasicType } from '@core/constants';
+import { AdvancedType, BasicType } from '@core/constants';
 import { IBlockData } from '@core/typings';
 import { createCustomBlock } from '@core/utils/createCustomBlock';
 import { t } from '@core/utils';
@@ -15,7 +15,9 @@ export function generateAdvancedTableBlock(option: {
       return t('Table');
     },
     type: option.type,
-    validParentType: [BasicType.COLUMN],
+    validParentType: [
+      BasicType.COLUMN,
+      AdvancedType.COLUMN,],
     create: payload => {
       const defaultData: AdvancedTableBlock = {
         type: option.type,
