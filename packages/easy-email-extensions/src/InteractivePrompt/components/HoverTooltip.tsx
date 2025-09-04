@@ -143,7 +143,7 @@ function TipNode(props: TipNodeProps) {
           width: '100%',
           height: '100%',
           outlineOffset: `-${lineWidth}px`,
-          outline: `${lineWidth}px solid var(--hover-color)}`,
+          outline: `${lineWidth}px solid var(--hover-color)`,
         }}
       >
         {type === 'hover' && (
