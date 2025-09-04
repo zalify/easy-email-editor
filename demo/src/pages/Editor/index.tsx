@@ -200,6 +200,9 @@ export default function Editor() {
           onSubmit={onSubmit}
           dashed={false}
           compact={compact}
+          mergeTags={{
+            'test': 'test',
+          }}
           fontList={[
             { label: 'Arial', value: 'Arial' },
             { label: 'Arial Black', value: 'Arial Black' },

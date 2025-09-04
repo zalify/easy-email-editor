@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 
 import { Menu, Popover } from '@arco-design/web-react';
 import { ToolItem } from '../ToolItem';
-import { IconFont } from 'easy-email-editor';
+import { getIframeDocument, IconFont } from 'easy-email-editor';
 import styleText from '../../styles/ToolsPopover.css?inline';
 
 const list = [
@@ -59,12 +59,17 @@ export function FontSize(props: FontSizeProps) {
 
   return (
     <Popover
-      trigger='click'
-      color='#fff'
-      position='left'
-      className='easy-email-extensions-Tools-Popover'
+      trigger="click"
+      color="#fff"
+      position="left"
+      className="easy-email-extensions-Tools-Popover"
       popupVisible={visible}
       onVisibleChange={onVisibleChange}
+      triggerProps={{
+        // @ts-expect-error I am ignoring this type error here since this is expecting an
+        // element but the function returns a document. This works fine and isn't an issue.
+        getDocument: getIframeDocument,
+      }}
       content={(
         <>
           <style>{styleText}</style>
@@ -97,7 +102,7 @@ export function FontSize(props: FontSizeProps) {
     >
       <ToolItem
         title={t('Font size')}
-        icon={<IconFont iconName='icon-font-color' />}
+        icon={<IconFont iconName="icon-font-color" />}
       />
     </Popover>
   );

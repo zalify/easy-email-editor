@@ -3,8 +3,11 @@ import React, { useCallback, useContext, useMemo, useState } from 'react';
 
 import { getImg } from '@extensions/AttributePanel/utils/getImg';
 import Color from 'color';
-import { PresetColorsContext } from '@extensions/AttributePanel/components/provider/PresetColorsProvider';
+import {
+  PresetColorsContext,
+} from '@extensions/AttributePanel/components/provider/PresetColorsProvider';
 import { ColorPickerContent } from './ColorPickerContent';
+import { getIframeDocument } from '@';
 
 export interface ColorPickerProps extends PopoverProps {
   onChange?: (val: string) => void;
@@ -61,14 +64,19 @@ export function ColorPicker(props: ColorPickerProps) {
     <div style={{ flex: 1, display: 'flex' }}>
       <Popover
         title={props.label}
-        trigger='click'
-        className='color-picker-popup'
+        trigger="click"
+        className="color-picker-popup"
         content={(
           <ColorPickerContent
             value={adapterColor}
             onChange={onInputChange}
           />
         )}
+        triggerProps={{
+          // @ts-expect-error I am ignoring this type error here since this is expecting an
+          // element but the function returns a document. This works fine and isn't an issue.
+          getDocument: getIframeDocument,
+        }}
         getPopupContainer={getPopupContainer}
         {...props}
       >

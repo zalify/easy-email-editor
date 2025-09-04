@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 
 import { Menu, Popover } from '@arco-design/web-react';
 import { ToolItem } from '../ToolItem';
-import { IconFont } from 'easy-email-editor';
+import { getIframeDocument, IconFont } from 'easy-email-editor';
 import { useFontFamily } from '@extensions/hooks/useFontFamily';
 import styleText from '../../styles/ToolsPopover.css?inline';
 
@@ -37,6 +37,11 @@ export function FontFamily(props: FontFamilyProps) {
       position="left"
       className="easy-email-extensions-Tools-Popover"
       popupVisible={visible}
+      triggerProps={{
+        // @ts-expect-error I am ignoring this type error here since this is expecting an
+        // element but the function returns a document. This works fine and isn't an issue.
+        getDocument: getIframeDocument,
+      }}
       onVisibleChange={onVisibleChange}
       content={(
         <>

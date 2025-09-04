@@ -1,7 +1,7 @@
 import { Grid, PopoverProps, Space, Tooltip } from '@arco-design/web-react';
 import React, { useCallback, useMemo } from 'react';
 import { Form } from 'react-final-form';
-import { IconFont, Stack, TextStyle } from 'easy-email-editor';
+import { getIframeDocument, IconFont, Stack, TextStyle } from 'easy-email-editor';
 import { SearchField, SwitchField } from '@extensions/components/Form';
 import { ToolItem } from '../ToolItem';
 import { EMAIL_BLOCK_CLASS_NAME } from 'easy-email-core';
@@ -60,7 +60,7 @@ export function Link(props: LinkProps) {
     (values: LinkParams) => {
       props.onChange(values);
     },
-    [props]
+    [props],
   );
 
   return (
@@ -74,15 +74,20 @@ export function Link(props: LinkProps) {
         return (
           <Tooltip
             {...props}
-            trigger='click'
-            color='#fff'
-            position='tl'
+            triggerProps={{
+              // @ts-expect-error I am ignoring this type error here since this is expecting an
+              // element but the function returns a document. This works fine and isn't an issue.
+              getDocument: getIframeDocument,
+            }}
+            trigger="click"
+            color="#fff"
+            position="tl"
             content={(
               <div style={{ color: '#333' }}>
-                <Stack vertical spacing='none'>
+                <Stack vertical spacing="none">
                   <SearchField
-                    size='small'
-                    name='link'
+                    size="small"
+                    name="link"
                     label={t('Link')}
                     labelHidden
                     searchButton={t('Apply')}
@@ -92,13 +97,13 @@ export function Link(props: LinkProps) {
                 </Stack>
                 <Grid.Row>
                   <Grid.Col span={12}>
-                    <Space align='center' size='mini'>
-                      <TextStyle size='smallest'>{t('Target')}</TextStyle>
+                    <Space align="center" size="mini">
+                      <TextStyle size="smallest">{t('Target')}</TextStyle>
                       <SwitchField
-                        size='small'
+                        size="small"
                         label={t('Target')}
                         labelHidden
-                        name='blank'
+                        name="blank"
                         checkedText={t('blank')}
                         uncheckedText={t('self')}
                         inline
@@ -106,13 +111,13 @@ export function Link(props: LinkProps) {
                     </Space>
                   </Grid.Col>
                   <Grid.Col span={12}>
-                    <Space align='center' size='mini'>
-                      <TextStyle size='smallest'>{t('Underline')}</TextStyle>
+                    <Space align="center" size="mini">
+                      <TextStyle size="smallest">{t('Underline')}</TextStyle>
                       <SwitchField
-                        size='small'
+                        size="small"
                         label={t('Underline')}
                         labelHidden
-                        name='underline'
+                        name="underline"
                         checkedText={t('off')}
                         uncheckedText={t('on')}
                         inline
@@ -123,7 +128,9 @@ export function Link(props: LinkProps) {
               </div>
             )}
           >
-            <ToolItem isActive={Boolean(initialValues.link)} title={t('Link')} icon={<IconFont iconName='icon-link' />} />
+            <ToolItem isActive={Boolean(initialValues.link)} title={t('Link')}
+                      icon={<IconFont iconName="icon-link" />}
+            />
           </Tooltip>
         );
       }}
