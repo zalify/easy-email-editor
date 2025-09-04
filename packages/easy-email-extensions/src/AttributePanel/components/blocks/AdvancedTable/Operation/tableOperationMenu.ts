@@ -74,8 +74,8 @@ export default class TableOperationMenu {
   showMenu({ x, y }: { x: number; y: number }) {
     this.visible = true;
 
-    const maxHeight = window.innerHeight;
-    const maxWidth = window.innerWidth;
+    const maxHeight = getIframeDocument()!.body.clientHeight;
+    const maxWidth = getIframeDocument()!.body.clientWidth;
     if (maxWidth - MENU_WIDTH < x) {
       x -= MENU_WIDTH;
     }
