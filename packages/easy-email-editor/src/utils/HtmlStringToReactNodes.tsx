@@ -69,7 +69,7 @@ const RenderReactNode = React.memo(function ({
   index: number;
   selector: string;
 }): React.ReactElement {
-  const attributes: { [key: string]: string } = {
+  const attributes: { [key: string]: string; } = {
     'data-selector': selector,
   };
   node.getAttributeNames?.().forEach(att => {
@@ -123,13 +123,13 @@ const RenderReactNode = React.memo(function ({
         node.childNodes.length === 0
           ? null
           : [...node.childNodes].map((n, i) => (
-              <RenderReactNode
-                selector={getChildSelector(selector, i)}
-                key={i}
-                node={n as any}
-                index={i}
-              />
-            )),
+            <RenderReactNode
+              selector={getChildSelector(selector, i)}
+              key={i}
+              node={n as any}
+              index={i}
+            />
+          )),
     });
 
     return <>{reactNode}</>;

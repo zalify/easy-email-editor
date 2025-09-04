@@ -28,6 +28,14 @@ export type IText = IBlockData<
   }
 >;
 
+// Function to detect Persian/Farsi text
+function isPersianText(text: string): boolean {
+  if (!text) return false;
+  // Persian/Farsi Unicode ranges
+  const persianRegex = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
+  return persianRegex.test(text);
+}
+
 export const Text = createBlock<IText>({
   get name() {
     return t('Text');
@@ -52,12 +60,22 @@ export const Text = createBlock<IText>({
   validParentType: [BasicType.COLUMN, BasicType.HERO],
   render(params) {
     const { data } = params;
+    const content = data.data.value.content;
+
+    // Check if content contains Persian text
+    const hasPersian = isPersianText(content);
+
+    // Wrap content with RTL attributes if Persian text is detected
+    const wrappedContent = hasPersian
+      ? `<div dir="rtl" lang="fa" data-rtl="true">${content}</div>`
+      : content;
+
     return (
       <BasicBlock
         params={params}
         tag='mj-text'
       >
-        {data.data.value.content}
+        {wrappedContent}
       </BasicBlock>
     );
   },
