@@ -28,12 +28,14 @@ export function FontFamily(props: FontFamilyProps) {
     setVisible(v);
   }, []);
 
+  if (fontList.length === 0) return null;
+
   return (
     <Popover
-      trigger='click'
-      color='#fff'
-      position='left'
-      className='easy-email-extensions-Tools-Popover'
+      trigger="click"
+      color="#fff"
+      position="left"
+      className="easy-email-extensions-Tools-Popover"
       popupVisible={visible}
       onVisibleChange={onVisibleChange}
       content={(
@@ -68,7 +70,7 @@ export function FontFamily(props: FontFamilyProps) {
     >
       <ToolItem
         title={t('Font family')}
-        icon={<IconFont iconName='icon-font-family' />}
+        icon={<IconFont iconName="icon-font-family" />}
       />
     </Popover>
   );
