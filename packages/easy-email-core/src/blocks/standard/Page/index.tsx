@@ -4,7 +4,6 @@ import { BasicType } from '@core/constants';
 import { createBlock } from '@core/utils/createBlock';
 import { Wrapper } from '../Wrapper';
 import { merge } from 'lodash';
-
 import { generaMjmlMetaData } from '@core/utils/generaMjmlMetaData';
 import { BlockRenderer } from '@core/components/BlockRenderer';
 import { getAdapterAttributesString, getChildIdx, getPageIdx } from '@core/utils';
@@ -18,7 +17,7 @@ export type IPage = IBlockData<
   {
     breakpoint?: string;
     headAttributes: string;
-    fonts?: { name: string; href: string }[];
+    fonts?: { name: string; href: string; }[];
     headStyles?: {
       content?: string;
       inline?: 'inline';
@@ -80,28 +79,46 @@ export const Page = createBlock<IPage>({
       : '';
 
     const nonResponsive = !value.responsive
-      ? `<mj-raw>
-            <meta name="viewport" />
-           </mj-raw>
-           <mj-style inline="inline">.mjml-body { width: ${
-             data.attributes.width || '600px'
-           }; margin: 0px auto; }</mj-style>`
+      ? `<mj-raw><meta name="viewport" /></mj-raw>
+         <mj-style inline="inline">.mjml-body { width: ${data.attributes.width ||
+      '600px'}; margin: 0px auto; }</mj-style>`
       : '';
+
     const styles =
       value.headStyles
         ?.map(
           style =>
-            `<mj-style ${style.inline ? 'inline="inline"' : ''}>${
-              style.content
-            }</mj-style>`,
+            `<mj-style ${style.inline ? 'inline="inline"' : ''}>${style.content}</mj-style>`,
         )
         .join('\n') || '';
 
     const userStyle = value['user-style']
-      ? `<mj-style ${value['user-style'].inline ? 'inline="inline"' : ''}>${
-          value['user-style'].content
-        }</mj-style>`
+      ? `<mj-style ${value['user-style'].inline ? 'inline="inline"' : ''}>${value['user-style'].content}</mj-style>`
       : '';
+
+    // RTL support styles for Persian/Farsi text
+    const rtlStyles = `<mj-style>
+      /* RTL support for Persian/Farsi text */
+      [dir="rtl"], [data-rtl="true"] {
+        direction: rtl !important;
+        text-align: right !important;
+      }
+
+      /* RTL support for lists */
+      [dir="rtl"] ul, [dir="rtl"] ol,
+      [data-rtl="true"] ul, [data-rtl="true"] ol {
+        direction: rtl !important;
+        text-align: right !important;
+        padding-right: 2rem !important;
+        padding-left: 0 !important;
+        list-style-position: inside !important;
+      }
+
+      [dir="rtl"] li, [data-rtl="true"] li {
+        direction: rtl !important;
+        text-align: right !important;
+      }
+    </mj-style>`;
 
     const extraHeadContent = value.extraHeadContent
       ? `<mj-raw>${value.extraHeadContent}</mj-raw>`
@@ -116,30 +133,25 @@ export const Page = createBlock<IPage>({
               ${nonResponsive}
               ${styles}
               ${userStyle}
+              ${rtlStyles}
               ${breakpoint}
               ${extraHeadContent}
               ${value.fonts
-                ?.filter(Boolean)
-                .map(item => `<mj-font name="${item.name}" href="${item.href}" />`)}
+            ?.filter(Boolean)
+            .map(item => `<mj-font name="${item.name}" href="${item.href}" />`)}
             <mj-attributes>
               ${value.headAttributes}
-              ${
-                value['font-family']
-                  ? `<mj-all font-family="${value['font-family'].replace(/"/gm, '')}" />`
-                  : ''
-              }
+              ${value['font-family']
+            ? `<mj-all font-family="${value['font-family'].replace(/"/gm, '')}" />`
+            : ''}
               ${value['font-size'] ? `<mj-text font-size="${value['font-size']}" />` : ''}
               ${value['text-color'] ? `<mj-text color="${value['text-color']}" />` : ''}
-        ${value['line-height'] ? `<mj-text line-height="${value['line-height']}" />` : ''}
-        ${value['font-weight'] ? `<mj-text font-weight="${value['font-weight']}" />` : ''}
-              ${
-                value['content-background-color']
-                  ? `<mj-wrapper background-color="${value['content-background-color']}" />
-             <mj-section background-color="${value['content-background-color']}" />
-            `
-                  : ''
-              }
-
+              ${value['line-height'] ? `<mj-text line-height="${value['line-height']}" />` : ''}
+              ${value['font-weight'] ? `<mj-text font-weight="${value['font-weight']}" />` : ''}
+              ${value['content-background-color']
+            ? `<mj-wrapper background-color="${value['content-background-color']}" />
+                   <mj-section background-color="${value['content-background-color']}" />`
+            : ''}
             </mj-attributes>
           </mj-head>
           <mj-body ${getAdapterAttributesString(params)}>`}
@@ -153,7 +165,7 @@ export const Page = createBlock<IPage>({
           />
         ))}
 
-        {'</mj-body></mjml > '}
+        {'</mj-body></mjml>'}
       </>
     );
   },

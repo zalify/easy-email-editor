@@ -18,6 +18,28 @@ exports[`Test createCustomBlock should render as expected 1`] = `
               
               
               
+              <mj-style>
+      /* RTL support for Persian/Farsi text */
+      [dir=\\"rtl\\"], [data-rtl=\\"true\\"] {
+        direction: rtl !important;
+        text-align: right !important;
+      }
+
+      /* RTL support for lists */
+      [dir=\\"rtl\\"] ul, [dir=\\"rtl\\"] ol,
+      [data-rtl=\\"true\\"] ul, [data-rtl=\\"true\\"] ol {
+        direction: rtl !important;
+        text-align: right !important;
+        padding-right: 2rem !important;
+        padding-left: 0 !important;
+        list-style-position: inside !important;
+      }
+
+      [dir=\\"rtl\\"] li, [data-rtl=\\"true\\"] li {
+        direction: rtl !important;
+        text-align: right !important;
+      }
+    </mj-style>
               <mj-breakpoint width=\\"480px\\" />
               
               
@@ -26,11 +48,10 @@ exports[`Test createCustomBlock should render as expected 1`] = `
               <mj-all font-family=\\"-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans','Helvetica Neue', sans-serif\\" />
               <mj-text font-size=\\"14px\\" />
               <mj-text color=\\"#000000\\" />
-        <mj-text line-height=\\"1.7\\" />
-        <mj-text font-weight=\\"400\\" />
+              <mj-text line-height=\\"1.7\\" />
+              <mj-text font-weight=\\"400\\" />
               
-
             </mj-attributes>
           </mj-head>
-          <mj-body background-color=\\"#efeeea\\" width=\\"600px\\" ><mj-section padding=\\"20px\\" ><mj-column ><mj-image padding=\\"0px 0px 0px 0px\\" width=\\"100px\\" src=\\"https://assets.maocanhua.cn/10dada65-c4fb-4b1f-837e-59a1005bbea6-image.png\\" ></mj-image><mj-button background-color=\\"#4A90E2\\" color=\\"#ffffff\\" href=\\"#\\" >Got it</mj-button></mj-column></mj-section></mj-body></mjml > "
+          <mj-body background-color=\\"#efeeea\\" width=\\"600px\\" ><mj-section padding=\\"20px\\" ><mj-column ><mj-image padding=\\"0px 0px 0px 0px\\" width=\\"100px\\" src=\\"https://assets.maocanhua.cn/10dada65-c4fb-4b1f-837e-59a1005bbea6-image.png\\" ></mj-image><mj-button background-color=\\"#4A90E2\\" color=\\"#ffffff\\" href=\\"#\\" >Got it</mj-button></mj-column></mj-section></mj-body></mjml>"
 `;
