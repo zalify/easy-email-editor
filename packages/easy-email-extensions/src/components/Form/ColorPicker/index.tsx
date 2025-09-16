@@ -7,7 +7,7 @@ import {
   PresetColorsContext,
 } from '@extensions/AttributePanel/components/provider/PresetColorsProvider';
 import { ColorPickerContent } from './ColorPickerContent';
-import { getIframeDocument } from '@';
+import { getIframeDocument } from 'easy-email-editor';
 
 export interface ColorPickerProps extends PopoverProps {
   onChange?: (val: string) => void;

@@ -2,7 +2,7 @@ import { getCorrectTableIndexBoundary, getMaxTdCount, setStyle } from './util';
 import styleText from './menu.scss?inline';
 import { IBoundingPosition, IOperationData } from './type';
 import MENU_CONFIG from './tableMenuConfig';
-import { getIframeDocument } from '@';
+import { getIframeDocument } from 'easy-email-editor';
 
 const MENU_HEIGHT = 305;
 const MENU_WIDTH = 200;
