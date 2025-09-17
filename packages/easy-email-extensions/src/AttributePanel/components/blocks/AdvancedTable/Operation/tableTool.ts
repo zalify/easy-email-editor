@@ -8,7 +8,7 @@ import {
   setStyle,
 } from './util';
 import { AdvancedTableBlock } from 'easy-email-core';
-import { getIframeDocument } from '@';
+import { getIframeDocument } from 'easy-email-editor';
 
 interface IBorderTool {
   top: Element;
