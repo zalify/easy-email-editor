@@ -1,8 +1,14 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
-import { getNodeTypeFromClassName, BlockManager } from 'easy-email-core';
+import { BlockManager, getNodeTypeFromClassName } from 'easy-email-core';
 import { createPortal } from 'react-dom';
-import { getEditorRoot, useEditorContext, useFocusIdx, useHoverIdx, useLazyState } from 'easy-email-editor';
+import {
+  getIframeDocument,
+  useEditorContext,
+  useFocusIdx,
+  useHoverIdx,
+  useLazyState,
+} from 'easy-email-editor';
 import { awaitForElement } from '@extensions/utils/awaitForElement';
 
 export function HoverTooltip() {
@@ -16,8 +22,10 @@ export function HoverTooltip() {
   const rootRef = useRef<DOMRect | null>(null);
 
   useEffect(() => {
-    if (initialized) {
-      rootRef.current = getEditorRoot()!.getBoundingClientRect();
+    const iframeDocument = getIframeDocument();
+
+    if (initialized && iframeDocument) {
+      rootRef.current = iframeDocument.body.getBoundingClientRect();
     }
   }, [initialized]);
 
@@ -57,7 +65,7 @@ export function HoverTooltip() {
     <>
       {createPortal(
         <div
-          id='easy-email-extensions-InteractivePrompt-HoverTooltip'
+          id="easy-email-extensions-InteractivePrompt-HoverTooltip"
           style={{
             position: 'absolute',
             height: '100%',
@@ -99,17 +107,9 @@ function TipNode(props: TipNodeProps) {
       return `${t('Insert after')} ${title}`;
     } else if (direction === 'right' || direction === 'left') {
       return t('Drag here');
-    }    
+    }
     return `${t('Drag to')} ${title}`;
   }, [direction, title]);
-
-  const color = useMemo(() => {
-    if (type === 'drag') {
-      return 'var(--hover-color)';
-    } else {
-      return 'var(--hover-color)';
-    }
-  }, [type]);
 
   return (
     <div
@@ -143,7 +143,7 @@ function TipNode(props: TipNodeProps) {
           width: '100%',
           height: '100%',
           outlineOffset: `-${lineWidth}px`,
-          outline: `${lineWidth}px solid ${color}`,
+          outline: `${lineWidth}px solid var(--hover-color)`,
         }}
       >
         {type === 'hover' && (
@@ -156,7 +156,7 @@ function TipNode(props: TipNodeProps) {
           >
             <div
               style={{
-                backgroundColor: color,
+                backgroundColor: 'var(--hover-color)',
                 color: '#ffffff',
                 height: '22px',
                 lineHeight: '22px',
@@ -190,7 +190,7 @@ function TipNode(props: TipNodeProps) {
             style={{
               position: 'absolute',
               color: '#ffffff',
-              backgroundColor: color,
+              backgroundColor: 'var(--hover-color)',
               lineHeight: '22px',
               display: 'inline-flex',
               maxWidth: '100%',

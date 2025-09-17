@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 
 import { Menu, Popover } from '@arco-design/web-react';
 import { ToolItem } from '../ToolItem';
-import { IconFont } from 'easy-email-editor';
+import { getIframeDocument, IconFont } from 'easy-email-editor';
 import { useFontFamily } from '@extensions/hooks/useFontFamily';
 import styleText from '../../styles/ToolsPopover.css?inline';
 
@@ -28,13 +28,20 @@ export function FontFamily(props: FontFamilyProps) {
     setVisible(v);
   }, []);
 
+  if (fontList.length === 0) return null;
+
   return (
     <Popover
-      trigger='click'
-      color='#fff'
-      position='left'
-      className='easy-email-extensions-Tools-Popover'
+      trigger="click"
+      color="#fff"
+      position="left"
+      className="easy-email-extensions-Tools-Popover"
       popupVisible={visible}
+      triggerProps={{
+        // @ts-expect-error I am ignoring this type error here since this is expecting an
+        // element but the function returns a document. This works fine and isn't an issue.
+        getDocument: getIframeDocument,
+      }}
       onVisibleChange={onVisibleChange}
       content={(
         <>
@@ -68,7 +75,7 @@ export function FontFamily(props: FontFamilyProps) {
     >
       <ToolItem
         title={t('Font family')}
-        icon={<IconFont iconName='icon-font-family' />}
+        icon={<IconFont iconName="icon-font-family" />}
       />
     </Popover>
   );

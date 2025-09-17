@@ -1,10 +1,9 @@
-import { BasicType } from '@core/constants';
-import { IBlock, IBlockData } from '@core/typings';
+import { AdvancedType, BasicType } from '@core/constants';
+import { IBlockData } from '@core/typings';
 import { createCustomBlock } from '@core/utils/createCustomBlock';
-import { TemplateEngineManager, createBlock, t } from '@core/utils';
+import { t } from '@core/utils';
 import { merge } from 'lodash';
 import React from 'react';
-import { IPage, standardBlocks } from '../standard';
 import { BasicBlock } from '@core/components/BasicBlock';
 
 export function generateAdvancedTableBlock(option: {
@@ -16,7 +15,9 @@ export function generateAdvancedTableBlock(option: {
       return t('Table');
     },
     type: option.type,
-    validParentType: [BasicType.COLUMN],
+    validParentType: [
+      BasicType.COLUMN,
+      AdvancedType.COLUMN,],
     create: payload => {
       const defaultData: AdvancedTableBlock = {
         type: option.type,

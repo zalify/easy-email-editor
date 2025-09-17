@@ -33,6 +33,7 @@
     ]
   },
   "dependencies": {
+    "@arco-themes/react-easy-email-theme": "^0.0.3",
     "final-form": "^4.20.4",
     "final-form-arrays": "^3.0.2",
     "final-form-set-field-touched": "^1.0.1",

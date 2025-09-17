@@ -1,5 +1,5 @@
 import { PLUGINS_CONTAINER_ID } from './../constants';
-import { getEditorRoot } from './getEditorRoot';
+import { getIframeDocument } from '@/utils/getIframeDocument';
 
 export const getPluginElement = () =>
-  getEditorRoot()?.shadowRoot?.getElementById(PLUGINS_CONTAINER_ID);
+  getIframeDocument()?.getElementById(PLUGINS_CONTAINER_ID);

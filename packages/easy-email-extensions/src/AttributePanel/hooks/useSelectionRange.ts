@@ -1,35 +1,42 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { useCallback, useContext } from 'react';
-import { SelectionRangeContext } from '@extensions/AttributePanel/components/provider/SelectionRangeProvider';
-import { getShadowRoot } from 'easy-email-editor';
+import {
+  SelectionRangeContext,
+} from '@extensions/AttributePanel/components/provider/SelectionRangeProvider';
+import { getIframeDocument } from 'easy-email-editor';
 
 export function useSelectionRange() {
   const { selectionRange, setSelectionRange } = useContext(
-    SelectionRangeContext
+    SelectionRangeContext,
   );
 
+  const iframe = getIframeDocument();
+
   const restoreRange = useCallback((range: Range) => {
-    const selection = (getShadowRoot() as any).getSelection();
-    selection.removeAllRanges();
-    const newRange = document.createRange();
+
+    const selection = iframe?.getSelection();
+    selection?.removeAllRanges();
+    const newRange = iframe?.createRange()!;
     newRange.setStart(range.startContainer, range.startOffset);
     newRange.setEnd(range.endContainer, range.endOffset);
 
-    selection.addRange(newRange);
-  }, []);
+    selection?.addRange(newRange);
+
+  }, [iframe]);
 
   const setRangeByElement = useCallback(
     (element: ChildNode) => {
-      const selection = (getShadowRoot() as any).getSelection();
+      const selection = iframe?.getSelection();
 
-      selection.removeAllRanges();
-      const newRange = document.createRange();
+      selection?.removeAllRanges();
+      const newRange = iframe?.createRange()!;
       newRange.selectNode(element);
       setSelectionRange(newRange);
-      selection.addRange(newRange);
+      selection?.addRange(newRange);
 
     },
-    [setSelectionRange]
+    [setSelectionRange, iframe],
   );
 
   return {

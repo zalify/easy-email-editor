@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
-import { useFocusIdx, IconFont } from 'easy-email-editor';
+import { getIframeDocument, IconFont, useFocusIdx } from 'easy-email-editor';
 import { IconLink } from '@arco-design/web-react/icon';
 import { SelectField, TextField } from '../../../components/Form';
-import { Grid, Popover, Space, Button as ArcoButton } from '@arco-design/web-react';
+import { Button as ArcoButton, Grid, Popover, Space } from '@arco-design/web-react';
 import { MergeTags } from './MergeTags';
 import { useField } from 'react-final-form';
 
@@ -18,25 +18,30 @@ export function Link() {
         <Grid.Col span={11}>
           <TextField
             prefix={<IconLink />}
-            label={
+            label={(
               <Space>
                 <span>{t('Href')}&nbsp;&nbsp;&nbsp;</span>
                 <Popover
-                  trigger='click'
-                  content={
+                  triggerProps={{
+                    // @ts-expect-error I am ignoring this type error here since this is expecting an
+                    // element but the function returns a document. This works fine and isn't an issue.
+                    getDocument: getIframeDocument,
+                  }}
+                  trigger="click"
+                  content={(
                     <MergeTags
                       value={input.value}
                       onChange={input.onChange}
                     />
-                  }
+                  )}
                 >
                   <ArcoButton
-                    type='text'
-                    icon={<IconFont iconName='icon-merge-tags' />}
+                    type="text"
+                    icon={<IconFont iconName="icon-merge-tags" />}
                   />
                 </Popover>
               </Space>
-            }
+            )}
             name={`${focusIdx}.attributes.href`}
           />
         </Grid.Col>
