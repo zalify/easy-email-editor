@@ -1,13 +1,14 @@
 import TableOperationMenu from './tableOperationMenu';
 import {
   checkEventInBoundingRect,
-  setStyle,
+  getBoundaryRectAndElement,
   getCurrentTable,
   getElementsBoundary,
   getTdBoundaryIndex,
-  getBoundaryRectAndElement,
+  setStyle,
 } from './util';
 import { AdvancedTableBlock } from 'easy-email-core';
+import { getIframeDocument } from '@';
 
 interface IBorderTool {
   top: Element;
@@ -52,23 +53,25 @@ class TableColumnTool {
   initTool() {
     this.root?.addEventListener('contextmenu', this.handleContextmenu);
     this.root?.addEventListener('mousedown', this.handleMousedown.bind(this));
-    document.body.addEventListener('click', this.hideBorder, false);
+    getIframeDocument()?.body.addEventListener('click', this.hideBorder, false);
     document.body.addEventListener('contextmenu', this.hideTableMenu, false);
-    document.addEventListener('keydown', this.hideBorderByKeyDown);
+    getIframeDocument()?.addEventListener('keydown', this.hideBorderByKeyDown);
   }
 
   destroy() {
     this.root?.removeEventListener('mousedown', this.handleMousedown.bind(this));
     this.root?.removeEventListener('contextmenu', this.handleContextmenu);
-    document.body.removeEventListener('click', this.hideBorder, false);
+    getIframeDocument()?.body.removeEventListener('click', this.hideBorder, false);
     document.body.removeEventListener('contextmenu', this.hideTableMenu, false);
-    document.removeEventListener('keydown', this.hideBorderByKeyDown);
+    getIframeDocument()?.removeEventListener('keydown', this.hideBorderByKeyDown);
 
     this.tableMenu?.destroy();
   }
 
   hideBorder = (e: any) => {
-    if (e.target.id === 'VisualEditorEditMode') {
+    console.log(e.target.tag, e.target.tagName);
+
+    if (e.target.tagName === 'TD' || e.target.tagName === 'TH') {
       return;
     }
     this.visibleBorder(false);
@@ -132,7 +135,7 @@ class TableColumnTool {
       'background-color': 'rgb(65, 68, 77)',
       left: `${left}px`,
       top: `${top}px`,
-      width: `2px`,
+      width: '2px',
       height: `${Math.abs(height)}px`,
       position: 'absolute',
       'z-index': 10,
@@ -141,7 +144,7 @@ class TableColumnTool {
       'background-color': 'rgb(65, 68, 77)',
       left: `${left + width}px`,
       top: `${top}px`,
-      width: `2px`,
+      width: '2px',
       height: `${Math.abs(height)}px`,
       position: 'absolute',
       'z-index': 10,
