@@ -9,7 +9,7 @@ export const ToolItem: React.FC<{
   trigger?: string;
   style?: React.CSSProperties;
   isActive?: boolean;
-}> = (props) => {
+}> = props => {
   if (!props.title) {
     return (
       <button
@@ -24,11 +24,14 @@ export const ToolItem: React.FC<{
     );
   }
   return (
-    <Tooltip mini position='bottom' content={props.title}>
+    <Tooltip
+      mini
+      position='bottom'
+      content={props.title}
+    >
       <button
         tabIndex={-1}
         className={classnames('easy-email-extensions-emailToolItem', props.isActive && 'easy-email-extensions-emailToolItem-active')}
-        title={props.title}
         onClick={props.onClick}
         style={props.style}
       >
