@@ -15,6 +15,7 @@ import {
 } from 'easy-email-editor';
 import { cloneDeep } from 'lodash';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import JSON5 from 'json5';
 import { MjmlToJson } from '@extensions/utils/MjmlToJson';
 import styles from './index.module.scss';
 
@@ -35,9 +36,7 @@ export function SourceCodePanel({ jsonReadOnly, mjmlReadOnly }: { jsonReadOnly: 
     (event: React.FocusEvent<HTMLTextAreaElement>) => {
       if(!jsonReadOnly){
         try {
-          const parseValue = JSON.parse(
-            JSON.stringify(eval('(' + event.target.value + ')')),
-          ) as IBlockData;
+          const parseValue = JSON5.parse(event.target.value) as IBlockData;
 
           const block = BlockManager.getBlockByType(parseValue.type);
           if (!block) {
