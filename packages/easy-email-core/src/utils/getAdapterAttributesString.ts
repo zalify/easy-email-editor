@@ -34,9 +34,10 @@ export function getAdapterAttributesString(
   for (let key in attributes) {
     const keyName = key as keyof typeof attributes;
     const val = attributes[keyName];
-    if (isString(val) && val) {
-      const splitter = ' ';
-      attributeStr += `${key}="${val.replace(/"/gm, '')}"` + splitter;
+    if (typeof val === 'boolean') {
+      attributeStr += `${key}="${val.toString()}" `;
+    } else if (isString(val) && val) {
+      attributeStr += `${key}="${val.replace(/"/gm, '')}" `;
     }
   }
 
