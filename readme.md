@@ -6,10 +6,12 @@
     <img src="./logo_text.svg" width="300">
   </a>
 </p>
+<p align="center">
+  <strong>The most developer-friendly email editor based on MJML</strong>
+</p>
 <br>
 
 <p align="center">
-
   <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg">
   <a aria-label="React version" href="https://react.js">
     <img alt="" src="https://img.shields.io/badge/React-18.2-yellow.svg">
@@ -24,14 +26,9 @@
 
 ---
 
-## Pro Version Announcement
+> 💼 **Looking for more features?** Check out [Easy Email Pro](https://www.easyemail.pro/?utm_source=github) with cross-browser support, responsive design, and premium components.
 
-We are delighted to announce that we now have a more powerful and customizable commercial version available. If it is for internal use only, then the open-source version is sufficient. However, if your editor is a critical feature, I recommend using the commercial version.
-<a href="https://www.easyemail.pro/?utm_source=github" target="_blank">Check it out here </a>.
-
-## Free email templates for MJML and HTML.
-
-<a href="https://github.com/Easy-Email-Pro/email-templates" target="_blank">Check it out here </a>.
+---
 
 ## Introduction
 
@@ -41,13 +38,16 @@ Easy email is developed based on the [MJML](https://mjml.io/) and has very good 
 | :----------------------------------------------: |
 | <img src="./StandardLayout.png" alt="Overview" > |
 
-## Live Demo
+## 🎮 Live Demo
 
-Open source version: <a href="https://open-source.easyemail.pro/?utm_source=github" target="_blank" alt="https://open-source.easyemail.pro/?utm_source=github">open-source.easyemail.pro</a>
+- **Open Source**: [open-source.easyemail.pro](https://open-source.easyemail.pro/?utm_source=github)
+- **Pro Version**: [demo.easyemail.pro](https://demo.easyemail.pro/full?utm_source=github-live)
 
-Commercial version: <a href="https://demo.easyemail.pro/full?utm_source=github-live" target="_blank">demo.easyemail.pro</a>.
+## 📧 Free Email Templates
 
-## Getting started
+Looking for ready-to-use templates? Check out our free collection of [MJML and HTML email templates](https://github.com/Easy-Email-Pro/email-templates).
+
+## 🚀 Getting Started
 
 ```sh
 $ npm install --save easy-email-core easy-email-editor easy-email-extensions react-final-form
@@ -96,7 +96,7 @@ export default function App() {
 
 </br>
 
-## Configuration
+## ⚙️ Configuration
 
 | property      | Type                                                                                               | Description                                   |
 | ------------- | -------------------------------------------------------------------------------------------------- | --------------------------------------------- |
@@ -109,7 +109,19 @@ export default function App() {
 
 </br>
 
-## Development
+## 📊 Open Source vs Pro Version
+
+| Feature | Open Source Version | Pro Version |
+|---------|---------------------|-------------|
+| **Browser Compatibility** | Only supports Chrome | Compatible with various browsers (uses iframe) |
+| **React 19 Support** | ❌ Not supported | ✅ Supported |
+| **Responsive Design** | ❌ Not available | ✅ Supports different UI for desktop and mobile |
+| **Advanced Features** | Basic features only | Unsplash library, File Manager, Block Studio, and many more custom blocks |
+| **Technical Support** | Community support | Professional technical support with faster response times |
+
+Learn more about [Easy Email Pro](https://www.easyemail.pro/?utm_source=github).
+
+## 🛠️ Development
 
 ```sh
 $ git clone git@github.com:zalify/easy-email.git
@@ -124,7 +136,6 @@ $ pnpm run dev
 
 `If you need some new features, we always welcome you to submit a PR.`
 
-## License
+## 📄 License
 
 The MIT License
-
