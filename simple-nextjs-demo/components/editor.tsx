@@ -8,6 +8,7 @@ import {
   PageHeader,
   Select,
 } from '@arco-design/web-react';
+import { IconLeft } from '@arco-design/web-react/icon';
 import mjml from 'mjml-browser';
 import { saveAs } from 'file-saver';
 import {
@@ -181,9 +182,52 @@ export default function Editor() {
             return (
               <>
                 <PageHeader
-                  style={{ background: 'var(--color-bg-2)' }}
-                  backIcon
-                  title='Edit'
+                  style={{
+                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    color: '#fff',
+                    padding: '12px 24px',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                  }}
+                  backIcon={
+                    <IconLeft
+                      style={{
+                        color: '#fff',
+                        fontSize: '20px',
+                        fontWeight: 'bold',
+                      }}
+                    />
+                  }
+                  title={
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
+                      <span style={{ color: '#fff', fontWeight: 'bold' }}>Edit</span>
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '12px',
+                          fontSize: '13px',
+                          opacity: 0.95,
+                          flexWrap: 'nowrap',
+                        }}
+                      >
+                        <span style={{ whiteSpace: 'nowrap', color: '#fff' }}>
+                          🚀 Try Easy Email Pro
+                        </span>
+                        <span style={{ whiteSpace: 'nowrap', color: '#fff' }}>
+                          ✅ Cross-browser support
+                        </span>
+                        <span style={{ whiteSpace: 'nowrap', color: '#fff' }}>
+                          ✅ React 19 support
+                        </span>
+                        <span style={{ whiteSpace: 'nowrap', color: '#fff' }}>
+                          ✅ Desktop & Mobile Email Preview
+                        </span>
+                        <span style={{ whiteSpace: 'nowrap', color: '#fff' }}>
+                          ✅ More advanced features
+                        </span>
+                      </div>
+                    </div>
+                  }
                   onBack={() => router.push('/')}
                   extra={
                     <Stack alignment='center'>
@@ -211,7 +255,13 @@ export default function Editor() {
                           </Menu>
                         }
                       >
-                        <Button>
+                        <Button
+                          style={{
+                            background: 'rgba(255,255,255,0.2)',
+                            color: '#fff',
+                            border: 'none',
+                          }}
+                        >
                           <strong>Export</strong>
                         </Button>
                       </Dropdown>
@@ -219,8 +269,14 @@ export default function Editor() {
                         type='primary'
                         target='_blank'
                         href='https://demo.easyemail.pro?utm_source=easyemail'
+                        style={{
+                          background: '#fff',
+                          color: '#667eea',
+                          border: 'none',
+                          fontWeight: 'bold',
+                        }}
                       >
-                        Try commercial version
+                        Try Pro Version
                       </Button>
                     </Stack>
                   }
