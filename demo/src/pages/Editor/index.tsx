@@ -33,14 +33,12 @@ import { pushEvent } from '@demo/utils/pushEvent';
 import { UserStorage } from '@demo/utils/user-storage';
 
 import { AdvancedType, IBlockData, JsonToMjml } from 'easy-email-core';
-import { ExtensionProps, StandardLayout } from 'easy-email-extensions';
-import { AutoSaveAndRestoreEmail } from '@demo/components/AutoSaveAndRestoreEmail';
+import { ExtensionProps, SimpleLayout } from 'easy-email-extensions';
 
 import 'easy-email-editor/lib/style.css';
 import 'easy-email-extensions/lib/style.css';
 import blueTheme from '@arco-themes/react-easy-email-theme/css/arco.css?inline';
 
-import { Uploader } from '@demo/utils/Uploader';
 import enUS from '@arco-design/web-react/es/locale/en-US';
 
 import { useShowCommercialEditor } from '@demo/hooks/useShowCommercialEditor';
@@ -218,116 +216,9 @@ export default function Editor() {
           {({ values }, { submit, restart }) => {
             return (
               <>
-                <PageHeader
-                  style={{
-                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                    color: '#fff',
-                    padding: '12px 24px',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-                  }}
-                  backIcon={
-                    <IconLeft
-                      style={{
-                        color: '#fff',
-                        fontSize: '20px',
-                        fontWeight: 'bold',
-                      }}
-                    />
-                  }
-                  title={
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
-                      <span style={{ color: '#fff', fontWeight: 'bold' }}>Edit</span>
-                      <div
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '12px',
-                          fontSize: '13px',
-                          opacity: 0.95,
-                          flexWrap: 'nowrap',
-                        }}
-                      >
-                        <span style={{ whiteSpace: 'nowrap', color: '#fff' }}>
-                          🚀 Try Easy Email Pro
-                        </span>
-                        <span style={{ whiteSpace: 'nowrap', color: '#fff' }}>
-                          ✅ Cross-browser support
-                        </span>
-                        <span style={{ whiteSpace: 'nowrap', color: '#fff' }}>
-                          ✅ React 19 support
-                        </span>
-                        <span style={{ whiteSpace: 'nowrap', color: '#fff' }}>
-                          ✅ Desktop & Mobile Email Preview
-                        </span>
-                        <span style={{ whiteSpace: 'nowrap', color: '#fff' }}>
-                          ✅ More advanced features
-                        </span>
-                      </div>
-                    </div>
-                  }
-                  onBack={() => history.push('/')}
-                  extra={
-                    <Stack alignment='center'>
-                      <Dropdown
-                        droplist={
-                          <Menu>
-                            <Menu.Item
-                              key='Export MJML'
-                              onClick={() => onExportMJML(values)}
-                            >
-                              Export MJML
-                            </Menu.Item>
-                            <Menu.Item
-                              key='Export HTML'
-                              onClick={() => onExportHTML(values)}
-                            >
-                              Export HTML
-                            </Menu.Item>
-                            <Menu.Item
-                              key='Export JSON'
-                              onClick={() => onExportJSON(values)}
-                            >
-                              Export JSON
-                            </Menu.Item>
-                          </Menu>
-                        }
-                      >
-                        <Button
-                          style={{
-                            background: 'rgba(255,255,255,0.2)',
-                            color: '#fff',
-                            border: 'none',
-                          }}
-                        >
-                          <strong>Export</strong>
-                        </Button>
-                      </Dropdown>
-                      <Button
-                        type='primary'
-                        target='_blank'
-                        href='https://demo.easyemail.pro?utm_source=easyemail'
-                        style={{
-                          background: '#fff',
-                          color: '#667eea',
-                          border: 'none',
-                          fontWeight: 'bold',
-                        }}
-                      >
-                        Try Pro Version
-                      </Button>
-                    </Stack>
-                  }
-                />
-
-                <StandardLayout
-                  categories={defaultCategories}
-                  showSourceCode={true}
-                  mjmlReadOnly={false}
-                  showBlockLayer={false}
-                >
+                <SimpleLayout>
                   <EmailEditor />
-                </StandardLayout>
-                <AutoSaveAndRestoreEmail />
+                </SimpleLayout>
               </>
             );
           }}

@@ -34,9 +34,9 @@
 
 Easy email is developed based on the [MJML](https://mjml.io/) and has very good compatibility. At the same time, it can generate code through drag-and-drop editing.
 
-|                  Video Overview                  |
-| :----------------------------------------------: |
-| <img src="./StandardLayout.png" alt="Overview" > |
+|                 Video Overview                 |
+| :--------------------------------------------: |
+| <img src="./SimpleLayout.png" alt="Overview" > |
 
 ## 🎮 Live Demo
 
@@ -111,13 +111,13 @@ export default function App() {
 
 ## 📊 Open Source vs Pro Version
 
-| Feature | Open Source Version | Pro Version |
-|---------|---------------------|-------------|
-| **Browser Compatibility** | Only supports Chrome | Compatible with various browsers (uses iframe) |
-| **React 19 Support** | ❌ Not supported | ✅ Supported |
-| **Responsive Design** | ❌ Not available | ✅ Supports different UI for desktop and mobile |
-| **Advanced Features** | Basic features only | Unsplash library, File Manager, Block Studio, and many more custom blocks |
-| **Technical Support** | Community support | Professional technical support with faster response times |
+| Feature                   | Open Source Version  | Pro Version                                                               |
+| ------------------------- | -------------------- | ------------------------------------------------------------------------- |
+| **Browser Compatibility** | Only supports Chrome | Compatible with various browsers (uses iframe)                            |
+| **React 19 Support**      | ❌ Not supported     | ✅ Supported                                                              |
+| **Responsive Design**     | ❌ Not available     | ✅ Supports different UI for desktop and mobile                           |
+| **Advanced Features**     | Basic features only  | Unsplash library, File Manager, Block Studio, and many more custom blocks |
+| **Technical Support**     | Community support    | Professional technical support with faster response times                 |
 
 Learn more about [Easy Email Pro](https://www.easyemail.pro/?utm_source=github).
 

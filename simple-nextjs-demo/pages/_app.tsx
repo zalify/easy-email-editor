@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import Script from 'next/script';
 export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
-    import('@/utils/posthog').then(d => d.posthog).then(posthog => {});
+    import('@/utils/posthog').then(d => d.posthog).then(posthog => { });
   }, []);
 
   return (
@@ -70,11 +70,7 @@ export default function App({ Component, pageProps }: AppProps) {
           rel='canonical'
           href='https://open-source.easyemail.pro'
         />
-        <script>
-          {`
-        window.$crisp=[];window.CRISP_WEBSITE_ID="ad250a60-45f2-46a6-ae87-1df4100d6df4";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();
-        `}
-        </script>
+
       </Head>
       <Component {...pageProps} />
     </>

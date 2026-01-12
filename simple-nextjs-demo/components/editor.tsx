@@ -12,15 +12,14 @@ import { IconLeft } from '@arco-design/web-react/icon';
 import mjml from 'mjml-browser';
 import { saveAs } from 'file-saver';
 import {
-  BlockAvatarWrapper,
   EmailEditor,
   EmailEditorProvider,
   IEmailTemplate,
   Stack,
 } from 'easy-email-editor';
 
-import { AdvancedType, IBlockData, JsonToMjml } from 'easy-email-core';
-import { ExtensionProps, StandardLayout } from 'easy-email-extensions';
+import { JsonToMjml } from 'easy-email-core';
+import { SimpleLayout } from 'easy-email-extensions';
 
 import '@arco-themes/react-easy-email-theme/css/arco.css';
 import 'easy-email-editor/lib/style.css';
@@ -28,71 +27,6 @@ import 'easy-email-extensions/lib/style.css';
 
 import enUS from '@arco-design/web-react/es/locale/en-US';
 import { useRouter, useSearchParams } from 'next/navigation';
-
-const defaultCategories: ExtensionProps['categories'] = [
-  {
-    label: 'Content',
-    active: true,
-    blocks: [
-      {
-        type: AdvancedType.TEXT,
-      },
-      {
-        type: AdvancedType.IMAGE,
-      },
-      {
-        type: AdvancedType.BUTTON,
-      },
-      {
-        type: AdvancedType.SOCIAL,
-      },
-      {
-        type: AdvancedType.DIVIDER,
-      },
-      {
-        type: AdvancedType.SPACER,
-      },
-      {
-        type: AdvancedType.HERO,
-      },
-      {
-        type: AdvancedType.WRAPPER,
-      },
-      {
-        type: AdvancedType.TABLE,
-      },
-    ],
-  },
-  {
-    label: 'Layout',
-    active: true,
-    displayType: 'column',
-    blocks: [
-      {
-        title: '2 columns',
-        payload: [
-          ['50%', '50%'],
-          ['33%', '67%'],
-          ['67%', '33%'],
-          ['25%', '75%'],
-          ['75%', '25%'],
-        ],
-      },
-      {
-        title: '3 columns',
-        payload: [
-          ['33.33%', '33.33%', '33.33%'],
-          ['25%', '25%', '50%'],
-          ['50%', '25%', '25%'],
-        ],
-      },
-      {
-        title: '4 columns',
-        payload: [['25%', '25%', '25%', '25%']],
-      },
-    ],
-  },
-];
 
 export default function Editor() {
   const [template, setTemplate] = useState<IEmailTemplate | null>(null);
@@ -282,14 +216,9 @@ export default function Editor() {
                   }
                 />
 
-                <StandardLayout
-                  categories={defaultCategories}
-                  showSourceCode={true}
-                  mjmlReadOnly={false}
-                  showBlockLayer={false}
-                >
+                <SimpleLayout>
                   <EmailEditor />
-                </StandardLayout>
+                </SimpleLayout>
               </>
             );
           }}
