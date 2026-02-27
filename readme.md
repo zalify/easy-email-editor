@@ -57,7 +57,7 @@ $ npm install --save easy-email-core easy-email-editor easy-email-extensions rea
 import React from 'react';
 import { BlockManager, BasicType, AdvancedType } from 'easy-email-core';
 import { EmailEditor, EmailEditorProvider } from 'easy-email-editor';
-import { ExtensionProps, StandardLayout } from 'easy-email-extensions';
+import { ExtensionProps, SimpleLayout } from 'easy-email-extensions';
 
 import 'easy-email-editor/lib/style.css';
 import 'easy-email-extensions/lib/style.css';
@@ -80,11 +80,9 @@ export default function App() {
     >
       {({ values }) => {
         return (
-          <StandardLayout
-            showSourceCode={true}
-          >
+          <SimpleLayout>
             <EmailEditor />
-          </StandardLayout>
+          </SimpleLayout>
         );
       }}
     </EmailEditorProvider>
@@ -116,6 +114,7 @@ export default function App() {
 | **Browser Compatibility** | Only supports Chrome | Compatible with various browsers (uses iframe)                            |
 | **React 19 Support**      | ❌ Not supported     | ✅ Supported                                                              |
 | **Responsive Design**     | ❌ Not available     | ✅ Supports different UI for desktop and mobile                           |
+| **AMP block**             | ❌ Not available	   | ✅ Accordion, Carousel, Form, Product, Reviews, Lucky Wheel               |
 | **Advanced Features**     | Basic features only  | Unsplash library, File Manager, Block Studio, and many more custom blocks |
 | **Technical Support**     | Community support    | Professional technical support with faster response times                 |
 
@@ -139,3 +138,4 @@ $ pnpm run dev
 ## 📄 License
 
 The MIT License
+
