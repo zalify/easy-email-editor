@@ -23,6 +23,7 @@ import { Italic } from '../Italic';
 import { Bold } from '../Bold';
 import { FontSize } from '../FontSize';
 import { RICH_TEXT_TOOL_BAR } from '@extensions/constants';
+import DOMPurify from 'dompurify';
 
 export interface ToolsProps {
   onChange: (content: string) => any;
@@ -89,7 +90,7 @@ export function Tools(props: ToolsProps) {
       const contenteditableElement = getShadowRoot().activeElement;
       if (contenteditableElement?.getAttribute('contenteditable') === 'true') {
         const html = getShadowRoot().activeElement?.innerHTML || '';
-        props.onChange(html);
+        props.onChange(DOMPurify.sanitize(html));
       }
     },
     [
@@ -108,7 +109,7 @@ export function Tools(props: ToolsProps) {
       const contenteditableElement = getShadowRoot().activeElement;
       if (contenteditableElement?.getAttribute('contenteditable') === 'true') {
         const html = getShadowRoot().activeElement?.innerHTML || '';
-        props.onChange(html);
+        props.onChange(DOMPurify.sanitize(html));
       }
     },
     [props.onChange],
