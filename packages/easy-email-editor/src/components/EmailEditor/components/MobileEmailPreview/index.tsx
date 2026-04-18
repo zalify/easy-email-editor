@@ -12,10 +12,8 @@ const MOBILE_WIDTH = 320;
 const MOBILE_Height = 640;
 
 export function MobileEmailPreview() {
-  const { mobileWidth } = usePreviewEmail();
+  const { mobileWidth, errMsg, reactNode } = usePreviewEmail();
   const { activeTab } = useActiveTab();
-
-  const { errMsg, reactNode } = usePreviewEmail();
 
   const isActive = activeTab === ActiveTabKeys.MOBILE;
 
@@ -38,6 +36,7 @@ export function MobileEmailPreview() {
         overflow: 'auto',
         padding: '10px 0px',
         boxSizing: 'border-box',
+        backgroundColor: '#ffffff',
       }}
     >
       <div

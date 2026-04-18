@@ -11,11 +11,14 @@ import { Config, FormApi, FormState } from 'final-form';
 import setFieldTouched from 'final-form-set-field-touched';
 import { FocusBlockLayoutProvider } from '../FocusBlockLayoutProvider';
 import { PreviewEmailProvider } from '../PreviewEmailProvider';
+import { DarkModeProvider } from '../DarkModeProvider';
 import { LanguageProvider } from '../LanguageProvider';
 import { overrideErrorLog, restoreErrorLog } from '@/utils/logger';
 
-export interface EmailEditorProviderProps<T extends IEmailTemplate = any>
-  extends Omit<PropsProviderProps, 'children'> {
+export interface EmailEditorProviderProps<T extends IEmailTemplate = any> extends Omit<
+  PropsProviderProps,
+  'children'
+> {
   data: T;
   children: (
     props: FormState<T>,
@@ -60,19 +63,21 @@ export const EmailEditorProvider = <T extends any>(
         <>
           <PropsProvider {...props}>
             <LanguageProvider locale={props.locale}>
-              <PreviewEmailProvider>
-                <RecordProvider>
-                  <BlocksProvider>
-                    <HoverIdxProvider>
-                      <ScrollProvider>
-                        <FocusBlockLayoutProvider>
-                          <FormWrapper children={children} />
-                        </FocusBlockLayoutProvider>
-                      </ScrollProvider>
-                    </HoverIdxProvider>
-                  </BlocksProvider>
-                </RecordProvider>
-              </PreviewEmailProvider>
+              <DarkModeProvider>
+                <PreviewEmailProvider>
+                  <RecordProvider>
+                    <BlocksProvider>
+                      <HoverIdxProvider>
+                        <ScrollProvider>
+                          <FocusBlockLayoutProvider>
+                            <FormWrapper children={children} />
+                          </FocusBlockLayoutProvider>
+                        </ScrollProvider>
+                      </HoverIdxProvider>
+                    </BlocksProvider>
+                  </RecordProvider>
+                </PreviewEmailProvider>
+              </DarkModeProvider>
             </LanguageProvider>
           </PropsProvider>
           <RegisterFields />

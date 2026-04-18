@@ -8,12 +8,29 @@ export function getChildSelector(selector: string, index: number) {
   return `${selector}-${index}`;
 }
 
-export function HtmlStringToPreviewReactNodes(
-  content: string,
-) {
-  let doc = domParser.parseFromString(content, 'text/html'); // The average time is about 1.4 ms
+export function HtmlStringToPreviewReactNodes(content: string) {
+  let doc = domParser.parseFromString(content, 'text/html');
+  const headStyleNodes = [...doc.head.querySelectorAll('style')].map((node, index) => (
+    <RenderReactNode
+      selector={getChildSelector(getChildSelector('0', 0), index)}
+      node={node as any}
+      index={index}
+      key={`head-style-${index}`}
+    />
+  ));
+  const bodyNodes = [...doc.body.childNodes].map((node, index) => (
+    <RenderReactNode
+      selector={getChildSelector(getChildSelector('0', 1), index)}
+      node={node as any}
+      index={index}
+      key={`body-${index}`}
+    />
+  ));
   const reactNode = (
-    <RenderReactNode selector={'0'} node={doc.documentElement} index={0} />
+    <>
+      {headStyleNodes}
+      {bodyNodes}
+    </>
   );
 
   return reactNode;
@@ -31,7 +48,7 @@ const RenderReactNode = React.memo(function ({
   const attributes: { [key: string]: string; } = {
     'data-selector': selector,
   };
-  node.getAttributeNames?.().forEach((att) => {
+  node.getAttributeNames?.().forEach(att => {
     if (att) {
       attributes[att] = node.getAttribute(att) || '';
     }

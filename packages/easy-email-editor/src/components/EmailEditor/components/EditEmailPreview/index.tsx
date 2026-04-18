@@ -60,6 +60,7 @@ export function EditEmailPreview() {
             paddingTop: 40,
             paddingBottom: 40,
             boxSizing: 'border-box',
+            backgroundColor: '#ffffff',
           }}
           ref={setContainerRef}
 

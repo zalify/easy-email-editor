@@ -7,11 +7,11 @@ import { SyncScrollShadowDom } from '@/components/UI/SyncScrollShadowDom';
 import { classnames } from '@/utils/classnames';
 import { SYNC_SCROLL_ELEMENT_CLASS_NAME } from '@/constants';
 import { createPortal } from 'react-dom';
+import { LIGHT_BG_COLOR } from '@/components/Provider/DarkModeProvider';
 
 export function DesktopEmailPreview() {
   const { activeTab } = useActiveTab();
   const { errMsg, reactNode } = usePreviewEmail();
-
   const { pageData } = useEditorContext();
 
   const fonts = useMemo(() => {
@@ -65,12 +65,12 @@ export function DesktopEmailPreview() {
               height: '100%',
               overflow: 'auto',
               margin: 'auto',
-
               paddingLeft: 10,
               paddingRight: 10,
               paddingTop: 40,
-              paddingBottom: 140,
+              paddingBottom: 40,
               boxSizing: 'border-box',
+              backgroundColor: LIGHT_BG_COLOR,
             }}
           >
             <>{reactNode}</>
