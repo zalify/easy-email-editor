@@ -2,6 +2,10 @@ import React from 'react';
 import iconfontText from '@/assets/font/iconfont.css?inline';
 import styles from '@/styles/block-shadowDom-interactive.css?inline';
 import { useEditorProps } from '@/hooks/useEditorProps';
+import {
+  useDarkMode,
+  DARK_EDITOR_CSS_RAW,
+} from '@/components/Provider/DarkModeProvider';
 
 export function ShadowStyle() {
   const {
@@ -10,6 +14,8 @@ export function ShadowStyle() {
       selectedColor = 'rgb(var(--primary-6, #1890ff))',
     } = {},
   } = useEditorProps();
+
+  const { isDarkMode } = useDarkMode();
 
   return (
     <>
@@ -40,9 +46,9 @@ export function ShadowStyle() {
               -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
             }
 
-
             ${styles}
 
+            ${isDarkMode ? DARK_EDITOR_CSS_RAW : ''}
             `,
         }}
       />

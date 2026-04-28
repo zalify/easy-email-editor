@@ -11,6 +11,7 @@ import { EditEmailPreview } from './components/EditEmailPreview';
 import { IconFont } from '../IconFont';
 import { TabPane, Tabs } from '@/components/UI/Tabs';
 import { useEditorProps } from '@/hooks/useEditorProps';
+import { useDarkMode } from '../Provider/DarkModeProvider';
 import './index.scss';
 import '@/assets/font/iconfont.css';
 import { EventManager, EventType } from '@/utils/EventManager';
@@ -20,6 +21,7 @@ import { EventManager, EventType } from '@/utils/EventManager';
 export const EmailEditor = () => {
   const { height: containerHeight } = useEditorProps();
   const { setActiveTab, activeTab } = useActiveTab();
+  const { isDarkMode, toggleDarkMode } = useDarkMode();
 
   const fixedContainer = useMemo(() => {
     return createPortal(<div id={FIXED_CONTAINER_ID} />, document.body);
@@ -29,9 +31,21 @@ export const EmailEditor = () => {
     return EventManager.exec(EventType.ACTIVE_TAB_CHANGE, { currentTab, nextTab });
   }, []);
 
-  const onChangeTab = useCallback((nextTab: string) => {
-    setActiveTab(nextTab as any);
-  }, [setActiveTab]);
+  const onChangeTab = useCallback(
+    (nextTab: string) => {
+      setActiveTab(nextTab as any);
+    },
+    [setActiveTab],
+  );
+
+  const darkModeToggle = (
+    <IconFont
+      iconName={isDarkMode ? 'icon-eye' : 'icon-eye-invisible'}
+      title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+      onClick={toggleDarkMode}
+      style={{ cursor: 'pointer' }}
+    />
+  );
 
   return useMemo(
     () => (
@@ -52,6 +66,7 @@ export const EmailEditor = () => {
           onChange={onChangeTab}
           style={{ height: '100%', width: '100%' }}
           tabBarExtraContent={<ToolsPanel />}
+          tabBarAfterContent={darkModeToggle}
         >
           <TabPane
             style={{ height: 'calc(100% - 50px)' }}
@@ -90,6 +105,13 @@ export const EmailEditor = () => {
         <>{fixedContainer}</>
       </div>
     ),
-    [activeTab, containerHeight, fixedContainer, onBeforeChangeTab, onChangeTab]
+    [
+      activeTab,
+      containerHeight,
+      fixedContainer,
+      onBeforeChangeTab,
+      onChangeTab,
+      darkModeToggle,
+    ],
   );
 };
