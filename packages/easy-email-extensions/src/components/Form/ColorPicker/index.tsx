@@ -13,6 +13,15 @@ export interface ColorPickerProps extends PopoverProps {
   children?: React.ReactNode;
   showInput?: boolean;
   fixed?: boolean;
+  /**
+   * Render custom popover content in place of the default `<ColorPickerContent>`.
+   * Receives the resolved hex value and an `onChange` that should be called with
+   * the new color string. When omitted, the built-in picker is used.
+   */
+  renderPickerContent?: (params: {
+    value: string;
+    onChange: (val: string) => void;
+  }) => React.ReactNode;
 }
 
 const getCollapseItemEle = (node: HTMLElement | null): HTMLElement => {
@@ -28,7 +37,8 @@ export function ColorPicker(props: ColorPickerProps) {
   const { addCurrentColor } = useContext(PresetColorsContext);
   const [refEle, setRefEle] = useState<HTMLElement | null>(null);
 
-  const { value = '', onChange, children, showInput = true } = props;
+  const { renderPickerContent, ...restProps } = props;
+  const { value = '', onChange, children, showInput = true } = restProps;
 
   const onInputChange = useCallback(
     (value: string) => {
@@ -63,14 +73,18 @@ export function ColorPicker(props: ColorPickerProps) {
         title={props.label}
         trigger='click'
         className='color-picker-popup'
-        content={(
-          <ColorPickerContent
-            value={adapterColor}
-            onChange={onInputChange}
-          />
-        )}
+        content={
+          renderPickerContent
+            ? renderPickerContent({ value: adapterColor, onChange: onInputChange })
+            : (
+              <ColorPickerContent
+                value={adapterColor}
+                onChange={onInputChange}
+              />
+            )
+        }
         getPopupContainer={getPopupContainer}
-        {...props}
+        {...restProps}
       >
         {children || (
           <div
