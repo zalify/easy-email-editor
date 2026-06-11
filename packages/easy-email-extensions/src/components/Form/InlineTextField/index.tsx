@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { ContentEditableType, DATA_CONTENT_EDITABLE_TYPE, getShadowRoot } from 'easy-email-editor';
 import { useField, useForm } from 'react-final-form';
+import DOMPurify from 'dompurify';
 
 export interface InlineTextProps {
   idx: string;
@@ -21,12 +22,13 @@ export function InlineText({ idx, onChange, children }: InlineTextProps) {
     const onPaste = (e: ClipboardEvent) => {
       if (!(e.target instanceof Element) || !e.target.getAttribute('contenteditable')) return;
       e.preventDefault();
-
-      const text = e.clipboardData?.getData('text/plain') || '';
-      document.execCommand('insertHTML', false, text);
+      const html = e.clipboardData?.getData('text/html') || e.clipboardData?.getData('text/plain') || '';
+      const sanitizedHtml = DOMPurify.sanitize(html);
+      document.execCommand('insertHTML', false, sanitizedHtml);
       const contentEditableType = e.target.getAttribute(DATA_CONTENT_EDITABLE_TYPE);
+
       if (contentEditableType === ContentEditableType.RichText) {
-        onChange(e.target.innerHTML || '');
+        onChange(DOMPurify.sanitize(e.target.innerHTML || ''));
       } else if (contentEditableType === ContentEditableType.Text) {
         onChange(e.target.textContent?.trim() || '');
       }
@@ -37,7 +39,7 @@ export function InlineText({ idx, onChange, children }: InlineTextProps) {
 
         const contentEditableType = e.target.getAttribute(DATA_CONTENT_EDITABLE_TYPE);
         if (contentEditableType === ContentEditableType.RichText) {
-          onChange(e.target.innerHTML || '');
+          onChange(DOMPurify.sanitize(e.target.innerHTML || ''));
         } else if (contentEditableType === ContentEditableType.Text) {
           onChange(e.target.textContent?.trim() || '');
         }

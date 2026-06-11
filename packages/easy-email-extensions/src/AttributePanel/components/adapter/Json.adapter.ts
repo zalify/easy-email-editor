@@ -1,4 +1,5 @@
 import { isString } from 'lodash';
+import JSON5 from 'json5';
 
 export const JsonAdapter = {
   format(obj: any) {
@@ -7,7 +8,7 @@ export const JsonAdapter = {
   parse(val: string) {
     if (!val) return undefined;
     try {
-      return JSON.parse(JSON.stringify(eval('(' + val + ')')));
+      return JSON5.parse(val);
     } catch (error) {}
     return val;
   },
