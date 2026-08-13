@@ -1,1 +1,1 @@
-export { StandardLayout } from './StandardLayout';
+export { StandardLayout } from '../features/standard-layout';

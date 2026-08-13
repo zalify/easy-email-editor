@@ -49,10 +49,6 @@ export async function getTemplate(id: string | number) {
       data = (await import('@demo/templates/We Serve Healthy & Delicious Foods.json'))
         .default;
       break;
-
-    case `St. Patrick's Day - Newsletter.json`:
-      data = (await import(`@demo/templates/St. Patrick Day - Newsletter.json`)).default;
-      break;
   }
   return data;
 }

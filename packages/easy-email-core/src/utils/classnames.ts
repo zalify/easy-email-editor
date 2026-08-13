@@ -1,4 +1,6 @@
 
-export function classnames(...rest: any[]) {
-  return rest.filter(item => typeof item === 'string').join(' ');
+export type ClassNameValue = string | false | null | undefined | 0;
+
+export function classnames(...rest: ClassNameValue[]) {
+  return rest.filter((item): item is string => typeof item === 'string').join(' ');
 }

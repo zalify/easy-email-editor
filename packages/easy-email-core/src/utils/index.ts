@@ -13,4 +13,6 @@ export { TemplateEngineManager } from './TemplateEngineManager';
 export { isAdvancedBlock } from './isAdvancedBlock';
 export { I18nManager, t } from './I18nManager';
 export { getAdapterAttributesString } from './getAdapterAttributesString';
+export { classnames } from './classnames';
+export type { ClassNameValue } from './classnames';
 export * from './block';

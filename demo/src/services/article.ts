@@ -10,26 +10,6 @@ export const article = {
       },
     });
   },
-  async getArticleList({
-    size,
-    page,
-    userId,
-    categoryId,
-  }: {
-    page: number;
-    size: number;
-    categoryId: number;
-    userId: number;
-  }): Promise<ListResponse<IArticle>> {
-    return request.get<ListResponse<IArticle>>('/article/visitor/list', {
-      params: {
-        page,
-        size,
-        category_id: categoryId,
-        user_id: userId,
-      },
-    });
-  },
   async addArticle(data: {
     title: string;
     content: string;
@@ -43,21 +23,6 @@ export const article = {
       secret: 0,
     });
   },
-  async updateArticle(
-    id: number,
-    options: {
-      title?: string;
-      content?: string;
-      picture?: string;
-      summary?: string;
-    }
-  ): Promise<IArticle> {
-    return request.post<IArticle>('/article/user/update-article', {
-      ...options,
-      article_id: id,
-      tags: [74],
-    });
-  },
   async deleteArticle(id: number): Promise<string> {
     return request.get('/article/user/delete', {
       params: {
@@ -66,11 +31,6 @@ export const article = {
     });
   },
 };
-
-export interface ListResponse<T> {
-  list: T[];
-  count: number;
-}
 
 interface content {
   article_id: number;

@@ -47,9 +47,6 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (/\/node_modules\/html2canvas\/.*/.test(id)) {
-            return 'html2canvas';
-          }
           if (/\/node_modules\/lodash\/.*/.test(id)) {
             return 'lodash';
           }

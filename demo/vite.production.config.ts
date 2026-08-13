@@ -25,9 +25,6 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (/\/node_modules\/html2canvas\/.*/.test(id)) {
-            return 'html2canvas';
-          }
           if (/\/node_modules\/lodash\/.*/.test(id)) {
             return 'lodash';
           }
@@ -36,11 +33,7 @@ export default defineConfig({
           }
         },
         chunkFileNames(info) {
-          if (
-            ['mjml-browser', 'html2canvas', 'browser-image-compression'].some(name =>
-              info.name?.includes(name),
-            )
-          ) {
+          if (info.name?.includes('mjml-browser')) {
             return '[name].js';
           }
           return '[name]-[hash].js';

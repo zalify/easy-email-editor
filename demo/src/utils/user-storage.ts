@@ -1,6 +1,21 @@
 import axios from 'axios';
-import { IUser } from '@demo/services/user';
 import { USER } from '@demo/constants';
+
+export interface IUser {
+  user_id: number;
+  nickname: string;
+  phone: string;
+  avatar: string;
+  intro: string;
+  domain: string;
+  sex: number;
+  rank: number;
+  created_at: number;
+  updated_at: number;
+  last_login: number;
+  deleted_at: number;
+  token: string;
+}
 
 const sessionKey = 'session-key';
 const tokenKey = 'token-key';

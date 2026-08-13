@@ -1,2 +1,1 @@
-export { SelectionRangeProvider } from './SelectionRangeProvider';
-export { PresetColorsProvider } from './PresetColorsProvider';
+export * from '../../../features/attribute-panel/provider';

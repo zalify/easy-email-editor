@@ -1,1 +1,1 @@
-export { RichTextToolBar } from './RichTextToolBar';
+export { RichTextToolBar } from '../../../shared/form/RichTextToolBar';
