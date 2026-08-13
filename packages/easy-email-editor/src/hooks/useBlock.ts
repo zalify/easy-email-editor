@@ -148,7 +148,8 @@ export function useBlock() {
 
       const positionIndex = getIndexByIdx(destinationIdx);
       if (sourceParent === destinationParent) {
-        destinationParent.children.splice(positionIndex, 0, removed);
+        const adjustedPosition = sourceIndex < positionIndex ? positionIndex - 1 : positionIndex;
+        destinationParent.children.splice(adjustedPosition, 0, removed);
 
         nextFocusIdx =
           destinationParentIdx +

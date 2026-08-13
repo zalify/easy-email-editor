@@ -7,12 +7,18 @@ export default defineConfig({
   resolve: {
     alias: {
       '@demo': path.resolve(__dirname, './src'),
-      react: path.resolve('./node_modules/react'),
+      react: path.resolve(__dirname, './node_modules/react'),
       'react-final-form': path.resolve(__dirname, './node_modules/react-final-form'),
-      'easy-email-localization': path.resolve('../packages/easy-email-localization'),
-      'easy-email-core': path.resolve('../packages/easy-email-core'),
-      'easy-email-editor': path.resolve('../packages/easy-email-editor'),
-      'easy-email-extensions': path.resolve('../packages/easy-email-extensions'),
+      'easy-email-localization': path.resolve(
+        __dirname,
+        '../packages/easy-email-localization',
+      ),
+      'easy-email-core': path.resolve(__dirname, '../packages/easy-email-core'),
+      'easy-email-editor': path.resolve(__dirname, '../packages/easy-email-editor'),
+      'easy-email-extensions': path.resolve(
+        __dirname,
+        '../packages/easy-email-extensions',
+      ),
     },
   },
   optimizeDeps: {},

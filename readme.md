@@ -121,20 +121,6 @@ export default function App() {
 
 Learn more about [Easy Email Pro](https://www.easyemail.pro/?utm_source=github).
 
-## 🛠️ Development
-
-```sh
-$ git clone git@github.com:zalify/easy-email.git
-$ cd easy-email
-
-
-$ pnpm install
-$ pnpm run install-all
-$ pnpm run dev
-
-```
-
-`If you need some new features, we always welcome you to submit a PR.`
 
 ## 📄 License
 
